@@ -146,7 +146,7 @@
 
 </li>
 </ol>
-<h1 id="基于Next的美化"><a href="#基于Next的美化" class="headerlink" title="基于Next的美化"></a>基于<a href="https://github.com/theme-next/hexo-theme-next">Next</a>的美化</h1><h2 id="修改站点配置-config-yml"><a href="#修改站点配置-config-yml" class="headerlink" title="修改站点配置~/ _config.yml"></a>修改站点配置~/ _config.yml</h2><p>site部分：</p>
+<h1 id="基于Next-v7-8-0的美化"><a href="#基于Next-v7-8-0的美化" class="headerlink" title="基于Next v7.8.0的美化"></a>基于<a href="https://github.com/theme-next/hexo-theme-next">Next v7.8.0</a>的美化</h1><h2 id="修改站点配置-config-yml"><a href="#修改站点配置-config-yml" class="headerlink" title="修改站点配置~/ _config.yml"></a>修改站点配置~/ _config.yml</h2><p>site部分：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Site</span><br><span class="line">#博客名</span><br><span class="line">title: AAAAAAA</span><br><span class="line">#副标题</span><br><span class="line">subtitle: bbbbbbb</span><br><span class="line">#对网站的描述，可以自定义，给搜索引擎看</span><br><span class="line">description: CCCCCCCCCCCC </span><br><span class="line">#作者，在博客底部可以看到</span><br><span class="line">author: DDDDDDD </span><br><span class="line">#你的联系邮箱</span><br><span class="line">email: EEEEEEEE@yourmail.com </span><br><span class="line">#中文。如果不填则默认英文</span><br><span class="line">language: zh-CN </span><br></pre></td></tr></table></figure>
 
 
