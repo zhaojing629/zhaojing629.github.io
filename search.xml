@@ -30,6 +30,11 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> npm install -g hexo</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>在Github上创建Repository，Repository  name 中填入<code>username.github.io</code>，点击Create repository</p>
+<blockquote>
+<p>有很多教程中，在此处直接通过：</p>
+<p>在Repository的<code>Setting</code>中的<code>GitHub Pages</code>部分，<code>Choose a theme</code>先选择一个主题，直接可以生成Github主题的网站，此时网站的默认分支是<code>main</code></p>
+<p>而如果后续还是希望用hexo建立，最后新建的是<code>master</code>分支，可能会存在<code>hexo g -d</code>后，网页一直不更新，此时就需要在这个部分把分支切换为<code>master</code>。为了避免这个问题，因此可以跳过这一步。</p>
+</blockquote>
 </li>
 <li><p>在本地创建一个与 Repository 中博客项目同名的文件夹<code>username.github.io</code>后，进入文件夹，右键 <code>Git bash here</code>，输入<code>hexo init</code>初始化文件夹，接着输入<code>npm install</code>安装必备的组件</p>
 </li>
@@ -61,7 +66,7 @@
 <li><p>在根目录下右键并GIt Bash here，然后输入<code>hexo new post &quot;article title&quot;</code>，新建一篇文章，此时在~/source_posts下就出现了<code>article title.md</code>文件，进行编辑即可。</p>
 </li>
 <li><p>为了新建文章方便，可以将~/scaffolds/post.md修改为如下代码：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: &#123;&#123; title &#125;&#125; </span><br><span class="line">date: &#123;&#123; date &#125;&#125; </span><br><span class="line">tags: </span><br><span class="line">categories: </span><br><span class="line">---</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: &#123;&#123; title &#125;&#125; </span><br><span class="line">date: &#123;&#123; date &#125;&#125; </span><br><span class="line">tags: </span><br><span class="line">categories: </span><br><span class="line">---</span><br></pre></td></tr></table></figure>
 
 
 </li>
