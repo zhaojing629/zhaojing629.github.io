@@ -31,9 +31,11 @@
 </li>
 <li><p>在Github上创建Repository，Repository  name 中填入<code>username.github.io</code>，点击Create repository</p>
 <blockquote>
-<p>有很多教程中，在此处直接通过：</p>
-<p>在Repository的<code>Setting</code>中的<code>GitHub Pages</code>部分，<code>Choose a theme</code>先选择一个主题，直接可以生成Github主题的网站，此时网站的默认分支是<code>main</code></p>
-<p>而如果后续还是希望用hexo建立，最后新建的是<code>master</code>分支，可能会存在<code>hexo g -d</code>后，网页一直不更新，此时就需要在这个部分把分支切换为<code>master</code>。为了避免这个问题，因此可以跳过这一步。</p>
+<p>有很多教程中，在此处可以接着：</p>
+<p>在Repository的<code>Setting</code>中的<code>GitHub Pages</code>部分，<code>Choose a theme</code>先选择一个主题，直接可以生成Github主题的网站，再进行后续操作。</p>
+<p>但在<a href="https://www.jiqizhixin.com/articles/2020-09-21-10">2020-10-01后，github新建的默认的库位main而不是master</a>，会导致在<code>hexo g -d</code>后，网页一直不更新，此时就需要在<code>GitHub Pages</code>部分的<code>Source</code>中把分支切换为<code>master</code>。</p>
+<p>为了避免这个问题，可以跳过这一步；也可以在<code>deploy:</code>中把<code>branch: master</code>改成<code>branch: main</code>。</p>
+<p><img src="1.png"></p>
 </blockquote>
 </li>
 <li><p>在本地创建一个与 Repository 中博客项目同名的文件夹<code>username.github.io</code>后，进入文件夹，右键 <code>Git bash here</code>，输入<code>hexo init</code>初始化文件夹，接着输入<code>npm install</code>安装必备的组件</p>
@@ -68,9 +70,15 @@
 <li><p>为了新建文章方便，可以将~/scaffolds/post.md修改为如下代码：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: &#123;&#123; title &#125;&#125; </span><br><span class="line">date: &#123;&#123; date &#125;&#125; </span><br><span class="line">tags: </span><br><span class="line">categories: </span><br><span class="line">---</span><br></pre></td></tr></table></figure>
 
-
 </li>
 </ol>
+<h2 id="在文章中插入图片"><a href="#在文章中插入图片" class="headerlink" title="在文章中插入图片"></a>在文章中插入图片</h2><ol>
+<li>如果只有少量图片，可以在<code>~/source</code>目录下新建<code>images</code>文件夹，通过<code>![](/images/xxx.png)</code>来引用。</li>
+<li>如果图片比较多，可以放建立文章自己的目录，首先在<code>站点配置文件</code>中，将<code>post_asset_folder</code>关键词改成<code>true</code>。之后通过hexo new post “article title”在新建文章时，就会出现与文章名相同的文件夹<code>article title</code>，将图片放入其中后，通过<code>![](XXXX.jpg)</code>直接引用。</li>
+</ol>
+<blockquote>
+<p>以上可以在网页中正确显示，但是在md编辑器，比如Typora中无法显示图片，此时可以在md文件的Front-matter部分，根据文章所有图片存在的位置，添加<code>typora-root-url: ..</code>或者<code>typora-root-url: article title</code>，即可在编辑器中也正常显示图片。</p>
+</blockquote>
 <h2 id="创建分类"><a href="#创建分类" class="headerlink" title="创建分类"></a>创建分类</h2><ol>
 <li><p>在根目录下右键并GIt Bash here，然后输入<code>hexo new page categories</code>，在<code>~/source/categories/</code>出现了<code>index.md</code>，打开增加<code>type: &quot;categories&quot;</code>    </p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2020-11-07 14:37:43</span><br><span class="line">type: &quot;categories&quot;</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
