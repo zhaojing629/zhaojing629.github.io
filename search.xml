@@ -78,8 +78,10 @@
 </ol>
 <blockquote>
 <p>以上可以在网页中正确显示，但是在md编辑器，比如Typora中无法显示图片，此时可以在md文件的Front-matter部分，根据文章所有图片存在的位置，添加<code>typora-root-url: ..</code>或者<code>typora-root-url: article title</code>，即可在编辑器中也正常显示图片。</p>
+<p>另外推荐第二种方法， 因为在Typora的偏好设置中，图像部分，选择复制到指定路径， ./${filename}，之后可以直接在编辑md文件的时候复制图片，文章中会显示图像，并且已经在<code>article title</code>的文件夹下复制了该图片，可以直接在网页上显示。</p>
 </blockquote>
-<h2 id="创建分类"><a href="#创建分类" class="headerlink" title="创建分类"></a>创建分类</h2><ol>
+<ol start="3">
+<li><h2 id="创建分类"><a href="#创建分类" class="headerlink" title="创建分类"></a>创建分类</h2></li>
 <li><p>在根目录下右键并GIt Bash here，然后输入<code>hexo new page categories</code>，在<code>~/source/categories/</code>出现了<code>index.md</code>，打开增加<code>type: &quot;categories&quot;</code>    </p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2020-11-07 14:37:43</span><br><span class="line">type: &quot;categories&quot;</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
 
