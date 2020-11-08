@@ -20,14 +20,19 @@
 <p>一直回车直到出现</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">The key&#39;s randomart image is:</span><br><span class="line">+---[RSA 3072]----+</span><br><span class="line">|          oo     |</span><br><span class="line">|         . .E    |</span><br><span class="line">|          + o    |</span><br><span class="line">|         * + +   |</span><br><span class="line">|        S B + o  |</span><br><span class="line">|         &#x3D; + o.O.|</span><br><span class="line">|        + &#x3D; . OoX|</span><br><span class="line">|       . . +.BoO&#x3D;|</span><br><span class="line">|        ....+&#x3D;*&#x3D;*|</span><br><span class="line">+----[SHA256]-----+</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>打开github，点击头像→<code>setting</code>→<code>SSH and GPG keys</code>→<code>New SSH key</code>，输入<code>Title</code>，再在Git Bash中输入<code>cat ~/.ssh/id_rsa.pub</code>后，复制出现的内容到<code>Key</code>里，点击<code>Add SSH key</code></p>
+<li><p>打开github，点击头像→<code>setting</code>→<code>SSH and GPG keys</code>→<code>New SSH key</code></p>
+<ul>
+<li>输入<code>Title</code></li>
+<li>在Git Bash中输入<code>cat ~/.ssh/id_rsa.pub</code>后，复制出现的内容到<code>Key</code>里</li>
+<li>点击<code>Add SSH key</code></li>
+</ul>
 </li>
 <li><p>在Git Bash中输入<code>ssh -T git@github.com</code>,再输入<code>yes</code>，出现自己的用户名，表示配置成功</p>
 </li>
 </ol>
 <h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><ol>
-<li><p>利用npm命令安装hexo，最后通过 <code>hexo -v</code>验证是否安装成功。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> npm install -g hexo</span></span><br></pre></td></tr></table></figure>
+<li><p>在命令行里利用npm命令安装hexo，最后通过 <code>hexo -v</code>验证是否安装成功。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> npm install -g hexo</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>在Github上创建Repository，Repository  name 中填入<code>username.github.io</code>，点击Create repository</p>
 <blockquote>
@@ -40,54 +45,50 @@
 </li>
 <li><p>在本地创建一个与 Repository 中博客项目同名的文件夹<code>username.github.io</code>后，进入文件夹，右键 <code>Git bash here</code>，输入<code>hexo init</code>初始化文件夹，接着输入<code>npm install</code>安装必备的组件</p>
 </li>
-<li><p>确保git部署npm install hexo-deployer-git –save</p>
+<li><p>确保git部署：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>输入<code>hexo g</code>生成静态网页，再输入<code>hexo s</code>打开本地服务器，然后打开浏览器预览：<a href="http://localhost:4000/">http://localhost:4000/</a></p>
-</li>
-<li><p>按<code>ctrl+c</code>关闭本地服务器。</p>
+<li><p>输入<code>hexo g</code>生成静态网页，再输入<code>hexo s</code>打开本地服务器，然后打开浏览器预览：<a href="http://localhost:4000，按`ctrl+c`关闭本地服务器。">http://localhost:4000，按`ctrl+c`关闭本地服务器。</a></p>
 </li>
 </ol>
 <h2 id="将博客部署到username-github-io"><a href="#将博客部署到username-github-io" class="headerlink" title="将博客部署到username.github.io"></a>将博客部署到username.github.io</h2><ol>
 <li><p>进入 Github 的网站 Repository，点击<code>code</code>→<code>SSH</code>，复制</p>
 </li>
-<li><p>打开网站本地文件夹根目录中的<code>_config.yml</code>，将最后修改为</p>
+<li><p>打开网站文件夹根目录中的~/_config.yml<code>站点配置文件</code>，将<code>deploy</code>部分修改为：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: git@github.com:username&#x2F;username.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+
+<p>同时可以顺便修改site部分</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Site</span><br><span class="line">#博客名</span><br><span class="line">title: AAAAAAA</span><br><span class="line">#副标题</span><br><span class="line">subtitle: bbbbbbb</span><br><span class="line">#对网站的描述，可以自定义，给搜索引擎看</span><br><span class="line">description: CCCCCCCCCCCC </span><br><span class="line">#作者，在博客底部可以看到</span><br><span class="line">author: DDDDDDD </span><br><span class="line">#你的联系邮箱</span><br><span class="line">email: EEEEEEEE@yourmail.com </span><br><span class="line">#中文。如果不填则默认英文</span><br><span class="line">language: zh-CN </span><br></pre></td></tr></table></figure>
 </li>
-<li><p>以后每次修改本地文件后，都需要输入：</p>
+<li><p><u><strong>以后每次修改本地文件后，都需要输入：</strong></u></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s	#预览</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
 
-<p>也可以不预览，直接<code>hexo g -d</code>来更新网站</p>
-</li>
-<li><p>再打开网站就可以了</p>
-</li>
-<li><p>如果修改了内容，hexo g -d后原网页没有反应，可以用<code>ctrl+F5</code>强制刷新</p>
+<p>也可以不预览，直接<code>hexo g -d</code>来更新网站。再打开网站就可以了。如果修改了内容，<code>hexo g -d</code>后原网页没有反应，可以用<code>ctrl+F5</code>强制刷新</p>
 </li>
 </ol>
-<h1 id="文章内容相关"><a href="#文章内容相关" class="headerlink" title="文章内容相关"></a>文章内容相关</h1><h2 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h2><ol>
+<h1 id="文章相关"><a href="#文章相关" class="headerlink" title="文章相关"></a>文章相关</h1><h2 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h2><ol>
 <li><p>在根目录下右键并GIt Bash here，然后输入<code>hexo new post &quot;article title&quot;</code>，新建一篇文章，此时在~/source_posts下就出现了<code>article title.md</code>文件，进行编辑即可。</p>
 </li>
-<li><p>为了新建文章方便，可以将~/scaffolds/post.md修改为如下代码：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: &#123;&#123; title &#125;&#125; </span><br><span class="line">date: &#123;&#123; date &#125;&#125; </span><br><span class="line">tags: </span><br><span class="line">categories: </span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<li><p>为了新建文章方便，可以将~/scaffolds/post.md的Front-matter部分修改为自己默认需要的：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: &#123;&#123; title &#125;&#125; </span><br><span class="line">date: &#123;&#123; date &#125;&#125; </span><br><span class="line">updated: </span><br><span class="line">tags: </span><br><span class="line">categories: </span><br><span class="line">typora-root-url: &#123;&#123; title &#125;&#125; </span><br><span class="line">---</span><br></pre></td></tr></table></figure>
 
 </li>
 </ol>
 <h2 id="在文章中插入图片"><a href="#在文章中插入图片" class="headerlink" title="在文章中插入图片"></a>在文章中插入图片</h2><ol>
-<li>如果只有少量图片，可以在<code>~/source</code>目录下新建<code>images</code>文件夹，通过<code>![](/images/xxx.png)</code>来引用。</li>
-<li>如果图片比较多，可以放建立文章自己的目录，首先在<code>站点配置文件</code>中，将<code>post_asset_folder</code>关键词改成<code>true</code>。之后通过hexo new post “article title”在新建文章时，就会出现与文章名相同的文件夹<code>article title</code>，将图片放入其中后，通过<code>![](XXXX.jpg)</code>直接引用。</li>
+<li>如果只有少量图片，可以在~/source目录下新建images文件夹，通过<code>![](/images/xxx.png)</code>来引用。</li>
+<li>如果图片比较多，可以建立文章自己的目录，在<code>站点配置文件</code>中，将<code>post_asset_folder</code>关键词改成<code>true</code>。之后通过<code>hexo new post &quot;article title&quot;</code>在新建文章时，就会出现与文章名相同的文件夹<code>article title</code>，将图片放入其中后，通过<code>![](XXXX.jpg)</code>直接引用。</li>
+<li>基于md编辑器Typora编辑：<ul>
+<li>以上在Typora中无法显示图片，可以在md文件的Front-matter部分，根据文章所有图片存在的位置，添加<code>typora-root-url: ..</code>或者<code>typora-root-url: article title</code>，即可在编辑器中也正常显示图片。</li>
+<li>在Typora的偏好设置→图像部分→选择复制到指定路径， <code>./$&#123;filename&#125;</code>，之后可以直接在编辑md文件的时候复制图片，文章中会显示图像，并且已经在<code>article title</code>的文件夹下复制了该图片，可以用第二种方法引用。</li>
+<li>Typora编辑器可以直接在图片上的代码右键缩放图片，此时代码会相应的更改为<code>&lt;img src=&quot;1.png&quot; style=&quot;zoom: 50%;&quot; /&gt;</code>，网页上也能成功缩小。</li>
+</ul>
+</li>
 </ol>
-<blockquote>
-<p>以上可以在网页中正确显示，但是在md编辑器，比如Typora中无法显示图片，此时可以在md文件的Front-matter部分，根据文章所有图片存在的位置，添加<code>typora-root-url: ..</code>或者<code>typora-root-url: article title</code>，即可在编辑器中也正常显示图片。</p>
-<p>另外推荐第二种方法， 因为在Typora的偏好设置中，图像部分，选择复制到指定路径， ./${filename}，之后可以直接在编辑md文件的时候复制图片，文章中会显示图像，并且已经在<code>article title</code>的文件夹下复制了该图片，可以直接在网页上显示。</p>
-</blockquote>
-<h3 id="图片显示小一些"><a href="#图片显示小一些" class="headerlink" title="图片显示小一些"></a>图片显示小一些</h3><p>Typora编辑器可以直接在图片上的代码右键缩放，此时代码会相应的更改为<code>&lt;img src=&quot;1.png&quot; style=&quot;zoom: 50%;&quot; /&gt;</code>，网页上也能成功缩小。</p>
-<h3 id="图片的放大功能"><a href="#图片的放大功能" class="headerlink" title="图片的放大功能"></a>图片的放大功能</h3><p>在<code>主题配置文件</code>将fancybox关键词改成true即可，此时点击图片会有浮动的放大功能。</p>
 <h2 id="创建分类"><a href="#创建分类" class="headerlink" title="创建分类"></a>创建分类</h2><ol>
-<li><p>在根目录下右键并GIt Bash here，然后输入<code>hexo new page categories</code>，在<code>~/source/categories/</code>出现了<code>index.md</code>，打开增加<code>type: &quot;categories&quot;</code>    </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2020-11-07 14:37:43</span><br><span class="line">type: &quot;categories&quot;</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<li><p>在根目录下右键并GIt Bash here，然后输入<code>hexo new page categories</code>，在<code>~/source/categories/</code>出现了<code>index.md</code>，打开在Front-matter部分增加<code>type: &quot;categories&quot;</code>    </p>
 </li>
-<li><p>在文章中的categories后增加相应分类即可</p>
-</li>
+<li><p>在文章中的ront-matter中的categories后增加相应分类即可</p>
+<ol>
 <li><p>如果同一篇文章需要放到子分类下，可以用两种方法放到<code>AAA/BBB</code>分类下：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">categories:</span><br><span class="line">  - AAA</span><br><span class="line">  - BBB</span><br></pre></td></tr></table></figure>
 
@@ -97,71 +98,30 @@
 <li><p>如果同一篇文章需要放到两个分类下：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">categories:</span><br><span class="line">  - [AAA]</span><br><span class="line">  - [BBB]</span><br></pre></td></tr></table></figure>
 
+
+</li>
+</ol>
 </li>
 </ol>
 <h2 id="创建标签"><a href="#创建标签" class="headerlink" title="创建标签"></a>创建标签</h2><ol>
-<li><p>在根目录下右键并GIt Bash here，然后输入<code>hexo new page tags</code>，在<code>~/source/tags/</code>出现了<code>index.md</code>，打开增加<code>type: &quot;categories&quot;</code>    </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: tags</span><br><span class="line">date: 2020-11-07 14:43:59</span><br><span class="line">type: &quot;tags&quot;</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<li><p>在根目录下右键并GIt Bash here，然后输入<code>hexo new page tags</code>，在<code>~/source/tags/</code>出现了<code>index.md</code>，打开在Front-matter部分增加<code>type: &quot;categories&quot;</code>    </p>
 </li>
 <li><p>在文章中的tags后增加相应分类即可</p>
-</li>
-<li><p>如果同一篇文章需要多个标签，可以使用<code>tags: [标签1,标签2,标签3]</code></p>
-</li>
-</ol>
-<h2 id="搜索页"><a href="#搜索页" class="headerlink" title="搜索页"></a>搜索页</h2><ol>
-<li><p>在根目录下右键并GIt Bash here，然后输入<code>npm install hexo-generator-searchdb --save</code></p>
-</li>
-<li><p>在<code>站点配置</code>文件中添加搜索设置</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  limit: 10000</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在<code>主题配置文件</code>中的<code>Local Search</code>修改</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">local_search:</span><br><span class="line">  enable: ture</span><br><span class="line">  # If auto, trigger search by changing input.</span><br><span class="line">  # If manual, trigger search by pressing enter key or search button.</span><br><span class="line">  trigger: auto</span><br><span class="line">  # Show top n results per article, show all results by setting to -1</span><br><span class="line">  top_n_per_article: 1</span><br><span class="line">  # Unescape html strings to the readable one.</span><br><span class="line">  unescape: false</span><br><span class="line">  # Preload the search data when the page loads.</span><br><span class="line">  preload: false</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h2 id="主页不显示全文"><a href="#主页不显示全文" class="headerlink" title="主页不显示全文"></a>主页不显示全文</h2><p>有三种方法：</p>
 <ul>
-<li><p>在文章中使用 <!-- more --> 手动进行截断</p>
-</li>
-<li><p>在文章的 front-matter 中添加 description，并提供文章摘录</p>
-</li>
-<li><p>自动形成摘要，在 <code>主题配置文件</code> 中添加：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">auto_excerpt:</span><br><span class="line">  enable: true</span><br><span class="line">  length: 150</span><br></pre></td></tr></table></figure>
-
-</li>
+<li>如果同一篇文章需要多个标签，可以使用<code>tags: [标签1,标签2,标签3]</code></li>
 </ul>
+</li>
+</ol>
 <h2 id="设置页面文章篇数"><a href="#设置页面文章篇数" class="headerlink" title="设置页面文章篇数"></a>设置页面文章篇数</h2><ol>
 <li><p>使用 <code>npm install --save</code> 命令来安装需要的 Hexo 插件。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-generator-index</span><br><span class="line">npm install --save hexo-generator-archive</span><br><span class="line">npm install --save hexo-generator-tag</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>在 <code>站点配置文章</code> 中，per_page 即文章的数量，设定如下选项：</p>
+<li><p>在 <code>站点配置文件</code> 中，per_page 即文章的数量，设定如下选项：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">index_generator:</span><br><span class="line">  per_page: 5  </span><br><span class="line">archive_generator:</span><br><span class="line">  per_page: 20</span><br><span class="line">  yearly: true</span><br><span class="line">  monthly: true</span><br><span class="line">tag_generator:</span><br><span class="line">  per_page: 10</span><br></pre></td></tr></table></figure>
 
 </li>
 </ol>
-<h2 id="打赏功能"><a href="#打赏功能" class="headerlink" title="打赏功能"></a>打赏功能</h2><ol>
-<li><p>将支付二维码放置在<code>source/images/</code> 目录下</p>
-</li>
-<li><p>在<code>主题配置文件</code>的<code>Reward</code>部分，<code>enable</code>改为<code>true</code>，并输入二维码路径</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">reward_settings:</span><br><span class="line">  enable: true</span><br><span class="line">  #开启动画后，XX支付会抖动</span><br><span class="line">  animation: true</span><br><span class="line">  #comment: Donate comment here.</span><br><span class="line">reward:</span><br><span class="line">  wechatpay: &#x2F;images&#x2F;wechatpay.jpg</span><br><span class="line">  #alipay: &#x2F;images&#x2F;alipay.png</span><br><span class="line">  #paypal: &#x2F;images&#x2F;paypal.png</span><br><span class="line">  #bitcoin: &#x2F;images&#x2F;bitcoin.png</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h2 id="评论"><a href="#评论" class="headerlink" title="评论"></a>评论</h2><ol>
-<li>注册并登陆<a href="https://www.leancloud.cn/">LeanCloud</a>，<code>创建应用</code>，输入应用名称后创建</li>
-<li>点击<code>齿轮图标</code>→<code>应用Key</code>，复制<code>AppID</code>，<code>AppKey</code>，在<code>主题配置文件</code>的<code>valine</code>部分修改</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">valine:</span><br><span class="line">  # 是否开启</span><br><span class="line">  enable: true</span><br><span class="line">  # 在lean复制的App ID和App Key</span><br><span class="line">  appid: XXXXXXXXX</span><br><span class="line">  appkey: XXXXXXXX</span><br><span class="line">  # 新留言是否需要通知</span><br><span class="line">  notify: false </span><br><span class="line">  # 验证码</span><br><span class="line">  verify: false </span><br><span class="line">  # 默认留言框内的文字</span><br><span class="line">  placeholder: Just go go </span><br><span class="line">  # 默认头像</span><br><span class="line">  avatar: mm # Gravatar style</span><br><span class="line">  # 默认留言框的头部需要访问者输入的信息</span><br><span class="line">  guest_info: nick,mail,link </span><br><span class="line">  #默认单页的留言条数</span><br><span class="line">  pageSize: 10 # Pagination size</span><br><span class="line">  language: # Language, available values: en, zh-cn</span><br><span class="line">  visitor: false # Article reading statistic</span><br><span class="line">  comment_count: true # If false, comment count will only be displayed in post page, not in home page</span><br><span class="line">  recordIP: false # Whether to record the commenter IP</span><br><span class="line">  serverURLs: # When the custom domain name is enabled, fill it in here (it will be detected automatically by default, no need to fill in)</span><br><span class="line">  #post_meta_order: 0</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>可以在LeanCloud中的<code>储存</code>→<code>结构化数据</code>→<code>Comment</code>中管理评论</li>
-<li>开启后，<code>tag</code>、<code>categories</code>页面也会带有评论， 若需要关闭的话，可以在不想要评论页面下相应的md文件的Front-matter部分添加字段 <code>comments: false</code> 。</li>
-</ol>
-<h1 id="基于Next-v7-8-0的美化"><a href="#基于Next-v7-8-0的美化" class="headerlink" title="基于Next v7.8.0的美化"></a>基于<a href="https://github.com/theme-next/hexo-theme-next">Next v7.8.0</a>的美化</h1><h2 id="修改站点配置-config-yml"><a href="#修改站点配置-config-yml" class="headerlink" title="修改站点配置~/ _config.yml"></a>修改站点配置~/ _config.yml</h2><p>site部分：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Site</span><br><span class="line">#博客名</span><br><span class="line">title: AAAAAAA</span><br><span class="line">#副标题</span><br><span class="line">subtitle: bbbbbbb</span><br><span class="line">#对网站的描述，可以自定义，给搜索引擎看</span><br><span class="line">description: CCCCCCCCCCCC </span><br><span class="line">#作者，在博客底部可以看到</span><br><span class="line">author: DDDDDDD </span><br><span class="line">#你的联系邮箱</span><br><span class="line">email: EEEEEEEE@yourmail.com </span><br><span class="line">#中文。如果不填则默认英文</span><br><span class="line">language: zh-CN </span><br></pre></td></tr></table></figure>
-
-
-<h2 id="修改主题"><a href="#修改主题" class="headerlink" title="修改主题"></a>修改主题</h2><ol>
+<h1 id="基于Next-v7-8-0的构建"><a href="#基于Next-v7-8-0的构建" class="headerlink" title="基于Next v7.8.0的构建"></a>基于<a href="https://github.com/theme-next/hexo-theme-next">Next v7.8.0</a>的构建</h1><h2 id="修改主题"><a href="#修改主题" class="headerlink" title="修改主题"></a>修改主题</h2><ol>
 <li><p>选择主题的github项目，然后点击Cod→SSH，复制后，在~/themes文件夹下右键，GIt Bash here，然后输入：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git clone git@github.com:theme-next&#x2F;hexo-theme-next.git</span><br></pre></td></tr></table></figure>
 </li>
@@ -174,7 +134,7 @@
 </li>
 </ol>
 <h2 id="修改菜单"><a href="#修改菜单" class="headerlink" title="修改菜单"></a>修改菜单</h2><ol>
-<li><p>打开<code>主题配置文件</code>，在<code>menu</code>部分设定菜单的内容，格式为<code>Key: /link/ || icon</code></p>
+<li><p>在<code>主题配置文件</code>的<code>menu</code>部分设定菜单的内容，格式为<code>Key: /link/ || icon</code></p>
 <ul>
 <li><code>key</code>如果如果有默认翻译，会自动加载翻译，如果不存在就不会加载。翻译可以在<code>\themes\hexo-theme-next\languages</code>的<code>.yml</code>文件中修改。</li>
 <li><code>||</code>前面是菜单的链接，后面是菜单的Font Awesome图标。</li>
@@ -185,13 +145,34 @@
 
 </li>
 </ol>
-<h2 id="设置头像"><a href="#设置头像" class="headerlink" title="设置头像"></a>设置头像</h2><p>打开<code>主题配置文件</code>，在<code>avatar</code>部分设置头像的链接。</p>
+<h2 id="增加搜索功能"><a href="#增加搜索功能" class="headerlink" title="增加搜索功能"></a>增加搜索功能</h2><ol>
+<li><p>在根目录下右键并Git Bash here，然后输入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在<code>站点配置</code>文件中添加搜索设置</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  limit: 10000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改<code>主题配置文件</code>中的<code>Local Search</code>：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">local_search:</span><br><span class="line">  enable: ture</span><br><span class="line">  # If auto, trigger search by changing input.</span><br><span class="line">  # If manual, trigger search by pressing enter key or search button.</span><br><span class="line">  trigger: auto</span><br><span class="line">  # Show top n results per article, show all results by setting to -1</span><br><span class="line">  top_n_per_article: 1</span><br><span class="line">  # Unescape html strings to the readable one.</span><br><span class="line">  unescape: false</span><br><span class="line">  # Preload the search data when the page loads.</span><br><span class="line">  preload: false</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="侧栏"><a href="#侧栏" class="headerlink" title="侧栏"></a>侧栏</h2><h3 id="修改侧边栏的位置和出现时机"><a href="#修改侧边栏的位置和出现时机" class="headerlink" title="修改侧边栏的位置和出现时机"></a>修改侧边栏的位置和出现时机</h3><p>修改<code>主题配置文件</code>中的<code>sidebar</code>：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sidebar:</span><br><span class="line">  position: left</span><br><span class="line">  #position: right</span><br><span class="line">  </span><br><span class="line">  #post - 默认行为，在文章页面（拥有目录列表）时显示。</span><br><span class="line">  #always - 在所有页面中都显示</span><br><span class="line">  #hide - 在所有页面中都隐藏（可以手动展开）</span><br><span class="line">  #remove - 完全移除</span><br><span class="line">  display: post</span><br><span class="line"></span><br><span class="line">  # Sidebar padding in pixels.</span><br><span class="line">  padding: 18</span><br><span class="line">  # Sidebar offset from top menubar in pixels (only for Pisces | Gemini).</span><br><span class="line">  offset: 12</span><br><span class="line">  # Enable sidebar on narrow view (only for Muse | Mist).</span><br><span class="line">  onmobile: false</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置头像"><a href="#设置头像" class="headerlink" title="设置头像"></a>设置头像</h3><p>修改<code>主题配置文件</code>中的<code>avatar</code>部分：</p>
 <ul>
 <li><code>url</code>中可以是完整的互联网 URI，也可以将头像放置在<code>source/images/</code> 目录下</li>
 <li>修改<code>rounded</code>，头像可以为圆的</li>
 <li>修改<code>rotated</code>，鼠标移动到头像上头像会旋转</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">avatar:</span><br><span class="line">  url: #&#x2F;images&#x2F;avatar.gif</span><br><span class="line">  rounded: false</span><br><span class="line">  rotated: false</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">avatar:</span><br><span class="line">  #可以是完整的互联网 URI，也可以将头像放置在&#96;source&#x2F;images&#x2F;&#96; 目录下</span><br><span class="line">  url: #&#x2F;images&#x2F;avatar.gif</span><br><span class="line">  #头像可以为圆的</span><br><span class="line">  rounded: false</span><br><span class="line">  #鼠标移动到头像上头像会旋转</span><br><span class="line">  rotated: false</span><br></pre></td></tr></table></figure>
+<h3 id="社交链接"><a href="#社交链接" class="headerlink" title="社交链接"></a>社交链接</h3><p>修改<code>主题配置文件</code>中的<code>social</code>部分：</p>
+<ul>
+<li>email中的mailto注意不要删去</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">social:</span><br><span class="line">  #GitHub: https:&#x2F;&#x2F;github.com&#x2F;yourname || fab fa-github</span><br><span class="line">  #E-Mail: mailto:yourname@gmail.com || fa fa-envelope</span><br><span class="line">  #Weibo: https:&#x2F;&#x2F;weibo.com&#x2F;yourname || fab fa-weibo</span><br><span class="line">  #Google: https:&#x2F;&#x2F;plus.google.com&#x2F;yourname || fab fa-google</span><br><span class="line">  #Twitter: https:&#x2F;&#x2F;twitter.com&#x2F;yourname || fab fa-twitter</span><br><span class="line">  #FB Page: https:&#x2F;&#x2F;www.facebook.com&#x2F;yourname || fab fa-facebook</span><br><span class="line">  #StackOverflow: https:&#x2F;&#x2F;stackoverflow.com&#x2F;yourname || fab fa-stack-overflow</span><br><span class="line">  #YouTube: https:&#x2F;&#x2F;youtube.com&#x2F;yourname || fab fa-youtube</span><br><span class="line">  #Instagram: https:&#x2F;&#x2F;instagram.com&#x2F;yourname || fab fa-instagram</span><br><span class="line">  #Skype: skype:yourname?call|chat || fab fa-skype</span><br><span class="line">social_icons:</span><br><span class="line">  enable: true</span><br><span class="line">  icons_only: false</span><br><span class="line">  transition: false</span><br></pre></td></tr></table></figure>
+
 <h2 id="设置网站访问量"><a href="#设置网站访问量" class="headerlink" title="设置网站访问量"></a>设置网站访问量</h2><ol>
 <li><p>登陆<a href="https://tongji.baidu.com/web/welcome/login">百度统计</a>，<code>新增网站</code>，<code>网站域名</code>和<code>网站首页</code>都填网站的地址即可。</p>
 </li>
@@ -205,24 +186,42 @@
 
 </li>
 </ol>
-<h2 id="添加文章阅读量统计功能"><a href="#添加文章阅读量统计功能" class="headerlink" title="添加文章阅读量统计功能"></a><del>添加文章阅读量统计功能</del></h2><ol>
-<li><p><del>注册并登陆<a href="https://www.leancloud.cn/">LeanCloud</a>，<code>创建应用</code>，输入应用名称后创建</del></p>
+<h2 id="文章相关-1"><a href="#文章相关-1" class="headerlink" title="文章相关"></a>文章相关</h2><h3 id="图片的放大功能"><a href="#图片的放大功能" class="headerlink" title="图片的放大功能"></a>图片的放大功能</h3><p>修改<code>主题配置文件</code>中的<code>fancybox</code>关键词为true即可，此时点击图片会有浮动的放大功能。</p>
+<h3 id="主页不显示全文"><a href="#主页不显示全文" class="headerlink" title="主页不显示全文"></a>主页不显示全文</h3><p>有三种方法：</p>
+<ol>
+<li><p>【推荐】在文章中使用 <!-- more --> 手动进行截断</p>
 </li>
-<li><p><del>点击<code>储存图标</code>→<code>创建 Class</code>来新建Class用来专门保存我们博客的文章访问量等数据</del></p>
-<ul>
-<li><del>Next要求Class名称必须为Counter，所以命名一定要为Counter</del></li>
-<li><del>为了防止阅读量统计不准确，建议ACL权限设置为无限制，然后点击创建Class。</del></li>
-</ul>
+<li><p>在文章的 front-matter 中添加 description，并提供文章摘录</p>
 </li>
-<li><p><del>点击<code>齿轮图标</code>→<code>应用Key</code>，复制<code>AppID</code>，<code>AppKey</code>，在<code>主题配置文件</code>中<code>leancloud_visitors</code>部分修改：</del></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">leancloud_visitors:</span><br><span class="line">  enable: true</span><br><span class="line">  app_id: XXXXXXXXXXXXXX</span><br><span class="line">  app_key: XXXXXXXXXXXXX</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><del>由于<code>app-id</code>和<code>app-key</code>完全暴露，为了防止他人使用，在<code>齿轮图标</code>→<code>安全中心</code>中的<code>Web 安全域名</code>里，增加自己的网站地址并保存。</del></p>
+<li><p>自动形成摘要，在 <code>主题配置文件</code> 中添加：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">auto_excerpt:</span><br><span class="line">  enable: true</span><br><span class="line">  length: 150</span><br></pre></td></tr></table></figure>
+
 </li>
 </ol>
-<p><del>注意：记录文章访问量的唯一标识符是文章的发布日期以及文章的标题，因此请确保这两个数值组合的唯一性，如果你更改了这两个数值，会造成文章阅读数值的清零重计。</del></p>
-<p>按以上步骤添加完毕后，点开文章会出现两个阅读次数，怀疑是设置网站访问量的同时已经设置了文章阅读量的统计，因此暂时删去。</p>
-<h2 id="设置字体格式"><a href="#设置字体格式" class="headerlink" title="设置字体格式"></a>设置字体格式</h2><ol>
+<h3 id="打赏功能"><a href="#打赏功能" class="headerlink" title="打赏功能"></a>打赏功能</h3><ol>
+<li><p>将支付二维码放置在<code>source/images/</code> 目录下</p>
+</li>
+<li><p>修改<code>主题配置文件</code>中的<code>Reward</code>部分：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">reward_settings:</span><br><span class="line">  enable: true</span><br><span class="line">  #开启动画后，XX支付的字会抖动</span><br><span class="line">  animation: true</span><br><span class="line">  #comment: Donate comment here.</span><br><span class="line">reward:</span><br><span class="line">  #二维码路径</span><br><span class="line">  wechatpay: &#x2F;images&#x2F;wechatpay.jpg</span><br><span class="line">  #alipay: &#x2F;images&#x2F;alipay.png</span><br><span class="line">  #paypal: &#x2F;images&#x2F;paypal.png</span><br><span class="line">  #bitcoin: &#x2F;images&#x2F;bitcoin.png</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="评论"><a href="#评论" class="headerlink" title="评论"></a>评论</h3><ol>
+<li>注册并登陆<a href="https://www.leancloud.cn/">LeanCloud</a>，<code>创建应用</code>，输入应用名称后创建</li>
+<li>点击<code>齿轮图标</code>→<code>应用Key</code>，复制<code>AppID</code>，<code>AppKey</code>，在<code>主题配置文件</code>的<code>valine</code>部分修改<ul>
+<li>visitor开启后可能会与百度网站访问量的模块冲突，显示出两个阅读次数，因此可以关闭。</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">valine:</span><br><span class="line">  # 是否开启</span><br><span class="line">  enable: true</span><br><span class="line">  # 在lean复制的App ID和App Key</span><br><span class="line">  appid: XXXXXXXXX</span><br><span class="line">  appkey: XXXXXXXX</span><br><span class="line">  # 新留言是否需要通知</span><br><span class="line">  notify: false </span><br><span class="line">  # 验证码</span><br><span class="line">  verify: false </span><br><span class="line">  # 默认留言框内的文字</span><br><span class="line">  placeholder: Just go go </span><br><span class="line">  # 默认头像</span><br><span class="line">  avatar: mm # Gravatar style</span><br><span class="line">  # 默认留言框的头部需要访问者输入的信息</span><br><span class="line">  guest_info: nick,mail,link </span><br><span class="line">  #默认单页的留言条数</span><br><span class="line">  pageSize: 10 # Pagination size</span><br><span class="line">  language: # Language, available values: en, zh-cn</span><br><span class="line">  visitor: false # Article reading statistic</span><br><span class="line">  comment_count: true # If false, comment count will only be displayed in post page, not in home page</span><br><span class="line">  recordIP: false # Whether to record the commenter IP</span><br><span class="line">  serverURLs: # When the custom domain name is enabled, fill it in here (it will be detected automatically by default, no need to fill in)</span><br><span class="line">  #post_meta_order: 0</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>可以在LeanCloud中的<code>储存</code>→<code>结构化数据</code>→<code>Comment</code>中管理评论</li>
+<li>开启后，<code>tag</code>、<code>categories</code>页面也会带有评论， 若需要关闭的话，可以在不想要评论页面下相应的md文件的Front-matter部分添加字段 <code>comments: false</code> 。</li>
+</ol>
+<h3 id="设置代码高亮主题"><a href="#设置代码高亮主题" class="headerlink" title="设置代码高亮主题"></a>设置代码高亮主题</h3><p>更改<code>主题配置文件</code>中的 <code>highlight_theme</code> 字段即可</p>
+<h3 id="设置字体格式大小行高"><a href="#设置字体格式大小行高" class="headerlink" title="设置字体格式大小行高"></a>设置字体格式大小行高</h3><p>两种方法：</p>
+<ol>
 <li><p><code>主题配置文件</code>中的<code>font</code>部分，有以下几种。</p>
 <ul>
 <li><p>每一项都有一个额外的 <code>external</code> 属性，此属性用来控制是否使用外链字体库。 </p>
@@ -236,24 +235,18 @@
 </li>
 <li><p>控制字体大小也可以在<code>~\themes\hexo-theme-next\source\css\_variables\base.styl</code>中的<code>Font size</code>模块里修改<code>font-size-base</code>，默认为1。</p>
 </li>
-<li><p>修改行高</p>
+</ol>
+<h3 id="修改行高"><a href="#修改行高" class="headerlink" title="修改行高"></a>修改行高</h3><ul>
+<li>在<code>~\themes\hexo-theme-next\source\css\_variables\base.styl</code>中</li>
+</ul>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; Global line height</span><br><span class="line">$line-height-base         &#x3D; 2;</span><br><span class="line">$line-height-code-block   &#x3D; 1.6; &#x2F;&#x2F; Can&#39;t be less than 1.3;</span><br></pre></td></tr></table></figure>
 
+<h3 id="阅读进度条"><a href="#阅读进度条" class="headerlink" title="阅读进度条"></a>阅读进度条</h3><ul>
+<li><code>主题配置文件</code>中：会在<code>Top</code>或者<code>bottom</code>出现一个进度条，代表页面加载进度和阅读进度</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">reading_progress:</span><br><span class="line">  enable: false</span><br><span class="line">  # Available values: top | bottom</span><br><span class="line">  position: top</span><br><span class="line">  color: &quot;#37c6c0&quot;</span><br><span class="line">  height: 3px</span><br></pre></td></tr></table></figure>
 
-
-</li>
-</ol>
-<h2 id="设置代码高亮主题"><a href="#设置代码高亮主题" class="headerlink" title="设置代码高亮主题"></a>设置代码高亮主题</h2><p>更改<code>主题配置文件</code>中的 <code>highlight_theme</code> 字段即可</p>
-<h2 id="侧栏"><a href="#侧栏" class="headerlink" title="侧栏"></a>侧栏</h2><ol>
-<li><p>在<code>主题配置文件</code>中，修改侧边栏的位置和出现时机</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sidebar:</span><br><span class="line">  position: left</span><br><span class="line">  #position: right</span><br><span class="line">  </span><br><span class="line">  #post - 默认行为，在文章页面（拥有目录列表）时显示。</span><br><span class="line">  #always - 在所有页面中都显示</span><br><span class="line">  #hide - 在所有页面中都隐藏（可以手动展开）</span><br><span class="line">  #remove - 完全移除</span><br><span class="line">  display: post</span><br><span class="line"></span><br><span class="line">  # Sidebar padding in pixels.</span><br><span class="line">  padding: 18</span><br><span class="line">  # Sidebar offset from top menubar in pixels (only for Pisces | Gemini).</span><br><span class="line">  offset: 12</span><br><span class="line">  # Enable sidebar on narrow view (only for Muse | Mist).</span><br><span class="line">  onmobile: false</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>侧边栏社交链接，修改为自己的链接即可，并可以修改<code>icons</code>的设置</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">social:</span><br><span class="line">  #GitHub: https:&#x2F;&#x2F;github.com&#x2F;yourname || fab fa-github</span><br><span class="line">  #E-Mail: mailto:yourname@gmail.com || fa fa-envelope</span><br><span class="line">  #Weibo: https:&#x2F;&#x2F;weibo.com&#x2F;yourname || fab fa-weibo</span><br><span class="line">  #Google: https:&#x2F;&#x2F;plus.google.com&#x2F;yourname || fab fa-google</span><br><span class="line">  #Twitter: https:&#x2F;&#x2F;twitter.com&#x2F;yourname || fab fa-twitter</span><br><span class="line">  #FB Page: https:&#x2F;&#x2F;www.facebook.com&#x2F;yourname || fab fa-facebook</span><br><span class="line">  #StackOverflow: https:&#x2F;&#x2F;stackoverflow.com&#x2F;yourname || fab fa-stack-overflow</span><br><span class="line">  #YouTube: https:&#x2F;&#x2F;youtube.com&#x2F;yourname || fab fa-youtube</span><br><span class="line">  #Instagram: https:&#x2F;&#x2F;instagram.com&#x2F;yourname || fab fa-instagram</span><br><span class="line">  #Skype: skype:yourname?call|chat || fab fa-skype</span><br><span class="line">social_icons:</span><br><span class="line">  enable: true</span><br><span class="line">  icons_only: false</span><br><span class="line">  transition: false</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h2 id="设置「背景动画」"><a href="#设置「背景动画」" class="headerlink" title="设置「背景动画」"></a>设置「背景动画」</h2><ol>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="设置「背景动画」"><a href="#设置「背景动画」" class="headerlink" title="设置「背景动画」"></a>设置「背景动画」</h3><ol>
 <li><p>首先在<code>~\themes\hexo-theme-next\source\lib</code>下载</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;theme-next&#x2F;theme-next-three three</span><br><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;theme-next&#x2F;theme-next-canvas-ribbon canvas-ribbon</span><br></pre></td></tr></table></figure>
 </li>
@@ -266,17 +259,20 @@
 </li>
 </ol>
 <p>其他动画的设置：<a href="https://github.com/hustcc/canvas-nest.js/blob/master/README-zh.md">canvas-nest</a></p>
-<h2 id="其他简单设置"><a href="#其他简单设置" class="headerlink" title="其他简单设置"></a>其他简单设置</h2><h3 id="通过一个按钮回到网页顶部"><a href="#通过一个按钮回到网页顶部" class="headerlink" title="通过一个按钮回到网页顶部"></a>通过一个按钮回到网页顶部</h3><ul>
+<h3 id="通过一个按钮回到网页顶部"><a href="#通过一个按钮回到网页顶部" class="headerlink" title="通过一个按钮回到网页顶部"></a>通过一个按钮回到网页顶部</h3><ul>
 <li><code>sidebar</code> 按钮会出现在侧栏下方</li>
 <li><code>scrollpercent</code> 显示阅读百分比</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">back2top:</span><br><span class="line">  enable: true</span><br><span class="line">  sidebar: false</span><br><span class="line">  scrollpercent: false</span><br></pre></td></tr></table></figure>
 
-<h3 id="阅读进度条"><a href="#阅读进度条" class="headerlink" title="阅读进度条"></a>阅读进度条</h3><p>会在<code>Top</code>或者<code>bottom</code>出现一个进度条，代表页面加载进度和阅读进度</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">reading_progress:</span><br><span class="line">  enable: false</span><br><span class="line">  # Available values: top | bottom</span><br><span class="line">  position: top</span><br><span class="line">  color: &quot;#37c6c0&quot;</span><br><span class="line">  height: 3px</span><br></pre></td></tr></table></figure>
+
 
 <h3 id="定位到上次阅读的地方"><a href="#定位到上次阅读的地方" class="headerlink" title="定位到上次阅读的地方"></a>定位到上次阅读的地方</h3><p>根据阅读历史记录，在下次打开页面的时候快速帮助我们定位到上次的位置</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bookmark:</span><br><span class="line">  enable: false</span><br><span class="line">  # Customize the color of the bookmark.</span><br><span class="line">  color: &quot;#222&quot;</span><br><span class="line">  # If auto, save the reading progress when closing the page or clicking the bookmark-icon.</span><br><span class="line">  # If manual, only save it by clicking the bookmark-icon.</span><br><span class="line">  save: auto</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bookmark:</span><br><span class="line">  enable: true</span><br><span class="line">  # Customize the color of the bookmark.</span><br><span class="line">  color: &quot;#222&quot;</span><br><span class="line">  # If auto, save the reading progress when closing the page or clicking the bookmark-icon.</span><br><span class="line">  # If manual, only save it by clicking the bookmark-icon.</span><br><span class="line">  save: auto</span><br></pre></td></tr></table></figure>
+
+
+
+
 
 <h3 id="右上角出现Github的猫"><a href="#右上角出现Github的猫" class="headerlink" title="右上角出现Github的猫"></a>右上角出现Github的猫</h3><p>点击之后可以跳转到其源码页面</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">github_banner:</span><br><span class="line">  enable: false</span><br><span class="line">  permalink: https:&#x2F;&#x2F;github.com&#x2F;yourname</span><br><span class="line">  title: Follow me on GitHub</span><br></pre></td></tr></table></figure>
@@ -288,6 +284,17 @@
       <tags>
         <tag>hexo</tag>
         <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux命令</title>
+    <url>/2020/11/08/Linux%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>系统</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
 </search>
