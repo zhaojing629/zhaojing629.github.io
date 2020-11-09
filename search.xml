@@ -267,6 +267,23 @@
 </li>
 </ol>
 <h2 id="文章相关-1"><a href="#文章相关-1" class="headerlink" title="文章相关"></a>文章相关</h2><h3 id="图片的放大功能"><a href="#图片的放大功能" class="headerlink" title="图片的放大功能"></a>图片的放大功能</h3><p>将<code>主题配置文件</code>中的<code>fancybox</code>关键词为<code>true</code>即可，此时点击图片会有浮动的放大功能。</p>
+<h3 id="显示公式"><a href="#显示公式" class="headerlink" title="显示公式"></a>显示公式</h3><ol>
+<li><p>在<code>主题配置文件</code>中的<code>math</code>部分：</p>
+<ul>
+<li><code>per_pag</code>中，<code>true</code>代表按需要加载公式，在.md文件Front-matter添加<code>mathjax: true</code>才会加载公式。否则在所有页面都加载</li>
+<li><code>mathjax</code>的enable改为<code>true</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">math:</span><br><span class="line">  per_page: true</span><br><span class="line">  mathjax:</span><br><span class="line">    enable: true</span><br><span class="line">    mhchem: false</span><br><span class="line">  katex:</span><br><span class="line">    enable: false</span><br><span class="line">    copy_tex: false</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+</li>
+</ol>
+<p><code>mathjax</code>的关键词为<code>true</code></p>
 <h3 id="主页不显示全文"><a href="#主页不显示全文" class="headerlink" title="主页不显示全文"></a>主页不显示全文</h3><ol>
 <li>在文章中使用 <code>&lt;!-- more --&gt;</code> 手动进行截断</li>
 <li>在文章的 front-matter 中添加 description，并提供文章摘录</li>
@@ -458,7 +475,9 @@
     <title>ADF的SCF相关</title>
     <url>/2019/09/23/SCF%E7%9B%B8%E5%85%B3/</url>
     <content><![CDATA[<h1 id="SCF选项"><a href="#SCF选项" class="headerlink" title="SCF选项"></a>SCF选项</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SCF</span><br><span class="line"> Iterations Niter</span><br><span class="line"> Converge SCFcnv &#123; sconv2 &#125;</span><br><span class="line"> </span><br><span class="line"> AccelerationMethod &#123; ADIIS | LISTi | LISTb | fDIIS | LISTf | MESA | SDIIS &#125;</span><br><span class="line"> MESA [NoFDIIS] [NoLISTb] [NoLISTf] [NoLISTi] [NoSDIIS] [NoADIIS]</span><br><span class="line"> ADIIS</span><br><span class="line">   &#123;THRESH1 a1&#125;</span><br><span class="line">   &#123;THRESH2 a2&#125;</span><br><span class="line"> End</span><br><span class="line"> NoADIIS</span><br><span class="line"> DIIS</span><br><span class="line">   &#123;N n&#125;</span><br><span class="line">   &#123;OK ok&#125;</span><br><span class="line">   &#123;cyc cyc&#125;</span><br><span class="line"> End</span><br><span class="line"> Mixing mix</span><br><span class="line"> Mixing1 mix1</span><br><span class="line"></span><br><span class="line"> OldSCF</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+
 <a id="more"></a>
+
 <h2 id="Iterations"><a href="#Iterations" class="headerlink" title="Iterations"></a>Iterations</h2><p><code>Iterations</code>SCF迭代的最大次数，<code>Niter</code>默认是<code>300</code></p>
 <h2 id="Converge"><a href="#Converge" class="headerlink" title="Converge"></a>Converge</h2><p><code>Converge</code> ：</p>
 <ul>
@@ -493,20 +512,23 @@
 </li>
 </ul>
 </li>
-<li><p><code>Mixing</code>中，指将下一个Fock矩阵确定为<script type="math/tex">F = mix F_{n} + (1-mix) F_{n-1}</script>，<code>mix</code>默认为<code>0.2</code></p>
+<li><p><code>Mixing</code>中，指将下一个Fock矩阵确定为$$F = mix F_{n} + (1-mix) F_{n-1}$$，<code>mix</code>默认为<code>0.2</code></p>
 </li>
-<li><code>Mixing1</code>中指第一个SCF循环的混合参数值不同，默认为<code>0.2</code></li>
+<li><p><code>Mixing1</code>中指第一个SCF循环的混合参数值不同，默认为<code>0.2</code></p>
+</li>
 </ul>
 <h2 id="oldSCF"><a href="#oldSCF" class="headerlink" title="oldSCF"></a>oldSCF</h2><p>在使用<code>Occupations Steep</code>、<code>Lshift</code>，<code>ARH</code>，<code>EDIIS</code>，<code>RESTOCC</code>时，会自动启用<code>oldSCF</code></p>
 <h3 id="Lshift"><a href="#Lshift" class="headerlink" title="Lshift"></a>Lshift</h3><p>能级移动方法，在前一次迭代的轨道表示中，Fock矩阵的对角元素提高虚轨道的<code>vshift</code>hartree。旋轨耦合不支持这种方法。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Lshift vshift</span><br><span class="line">Lshift_err Shift_err</span><br><span class="line">Lshift_cyc Shift_cyc</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li><code>Lshift_err</code>指定一旦SCF error降至阈值以下，程序将关闭能级移动，<code>Shift_err</code>默认值为<code>0</code>。</li>
 <li><code>Lshift_cyc</code>指定在第几个SCF 迭代次数的时候再启动能级移动， <code>Shift_cyc</code>默认为<code>1</code>。</li>
 </ul>
 <h3 id="ARH"><a href="#ARH" class="headerlink" title="ARH"></a>ARH</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SCF</span><br><span class="line">  ARH</span><br><span class="line">    &#123;CONV conv&#125;</span><br><span class="line">    &#123;ITER iter&#125;</span><br><span class="line">    &#123;NSAVED nsaved&#125;</span><br><span class="line">    &#123;START start&#125;</span><br><span class="line">    &#123;FINAL&#125; ...</span><br><span class="line">  End</span><br><span class="line">  ...</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li><code>CONV</code>：当RMS梯度及其最大分量均低于<code>conv</code>，ARH收敛，<code>conv</code>默认是1e-4</li>
+<li><code>CONV</code>：当RMS梯度及其最大分量均低于<code> conv</code>，ARH收敛，<code> conv</code>默认是1e-4</li>
 <li><code>ITER</code>：最大ARH迭代次数，<code>iter</code>默认为500</li>
 <li><code>FINAL</code>：确定ARH完成后是否继续SCF。如果设置了此选项，将执行一次Fock矩阵对角化以获得轨道，并且将停止SCF过程。默认选项为<code>OFF</code>。</li>
 <li><code>START</code>：开始调用ARH的SCF迭代次数，<code>start</code>默认为2。使用较大的值可以为ARH提供更好的初猜</li>
@@ -549,7 +571,8 @@
 </li>
 <li><p>HOMO-LUMO较为接近的情况（0.02Hatree以内），可能造成HOMO-LUMO的震荡。可以使用<code>Lshift vshift</code>方法，不适于激发态的计算、解析频率、旋轨耦合的计算。</p>
 </li>
-<li>使用Electron smearing设定在允许的能量范围内分数占据</li>
+<li><p>使用Electron smearing设定在允许的能量范围内分数占据</p>
+</li>
 </ol>
 ]]></content>
       <categories>

@@ -29,7 +29,7 @@
 <meta property="og:description" content="SCF选项123456789101112131415161718192021SCF Iterations Niter Converge SCFcnv &amp;#123; sconv2 &amp;#125;  AccelerationMethod &amp;#123; ADIIS | LISTi | LISTb | fDIIS | LISTf | MESA | SDIIS &amp;#125; MESA [NoFDIIS] [N">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-09-22T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-11-09T12:34:57.178Z">
+<meta property="article:modified_time" content="2020-11-09T12:46:30.375Z">
 <meta property="article:author" content="Zhao Jing">
 <meta property="article:tag" content="SCF">
 <meta name="twitter:card" content="summary">
@@ -231,7 +231,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-09 20:34:57" itemprop="dateModified" datetime="2020-11-09T20:34:57+08:00">2020-11-09</time>
+                <time title="修改时间：2020-11-09 20:46:30" itemprop="dateModified" datetime="2020-11-09T20:46:30+08:00">2020-11-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -280,7 +280,9 @@
 
       
         <h1 id="SCF选项"><a href="#SCF选项" class="headerlink" title="SCF选项"></a>SCF选项</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">SCF</span><br><span class="line"> Iterations Niter</span><br><span class="line"> Converge SCFcnv &#123; sconv2 &#125;</span><br><span class="line"> </span><br><span class="line"> AccelerationMethod &#123; ADIIS | LISTi | LISTb | fDIIS | LISTf | MESA | SDIIS &#125;</span><br><span class="line"> MESA [NoFDIIS] [NoLISTb] [NoLISTf] [NoLISTi] [NoSDIIS] [NoADIIS]</span><br><span class="line"> ADIIS</span><br><span class="line">   &#123;THRESH1 a1&#125;</span><br><span class="line">   &#123;THRESH2 a2&#125;</span><br><span class="line"> End</span><br><span class="line"> NoADIIS</span><br><span class="line"> DIIS</span><br><span class="line">   &#123;N n&#125;</span><br><span class="line">   &#123;OK ok&#125;</span><br><span class="line">   &#123;cyc cyc&#125;</span><br><span class="line"> End</span><br><span class="line"> Mixing mix</span><br><span class="line"> Mixing1 mix1</span><br><span class="line"></span><br><span class="line"> OldSCF</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+
 <a id="more"></a>
+
 <h2 id="Iterations"><a href="#Iterations" class="headerlink" title="Iterations"></a>Iterations</h2><p><code>Iterations</code>SCF迭代的最大次数，<code>Niter</code>默认是<code>300</code></p>
 <h2 id="Converge"><a href="#Converge" class="headerlink" title="Converge"></a>Converge</h2><p><code>Converge</code> ：</p>
 <ul>
@@ -315,20 +317,23 @@
 </li>
 </ul>
 </li>
-<li><p><code>Mixing</code>中，指将下一个Fock矩阵确定为<script type="math/tex">F = mix F_{n} + (1-mix) F_{n-1}</script>，<code>mix</code>默认为<code>0.2</code></p>
+<li><p><code>Mixing</code>中，指将下一个Fock矩阵确定为$$F = mix F_{n} + (1-mix) F_{n-1}$$，<code>mix</code>默认为<code>0.2</code></p>
 </li>
-<li><code>Mixing1</code>中指第一个SCF循环的混合参数值不同，默认为<code>0.2</code></li>
+<li><p><code>Mixing1</code>中指第一个SCF循环的混合参数值不同，默认为<code>0.2</code></p>
+</li>
 </ul>
 <h2 id="oldSCF"><a href="#oldSCF" class="headerlink" title="oldSCF"></a>oldSCF</h2><p>在使用<code>Occupations Steep</code>、<code>Lshift</code>，<code>ARH</code>，<code>EDIIS</code>，<code>RESTOCC</code>时，会自动启用<code>oldSCF</code></p>
 <h3 id="Lshift"><a href="#Lshift" class="headerlink" title="Lshift"></a>Lshift</h3><p>能级移动方法，在前一次迭代的轨道表示中，Fock矩阵的对角元素提高虚轨道的<code>vshift</code>hartree。旋轨耦合不支持这种方法。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Lshift vshift</span><br><span class="line">Lshift_err Shift_err</span><br><span class="line">Lshift_cyc Shift_cyc</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li><code>Lshift_err</code>指定一旦SCF error降至阈值以下，程序将关闭能级移动，<code>Shift_err</code>默认值为<code>0</code>。</li>
 <li><code>Lshift_cyc</code>指定在第几个SCF 迭代次数的时候再启动能级移动， <code>Shift_cyc</code>默认为<code>1</code>。</li>
 </ul>
 <h3 id="ARH"><a href="#ARH" class="headerlink" title="ARH"></a>ARH</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SCF</span><br><span class="line">  ARH</span><br><span class="line">    &#123;CONV conv&#125;</span><br><span class="line">    &#123;ITER iter&#125;</span><br><span class="line">    &#123;NSAVED nsaved&#125;</span><br><span class="line">    &#123;START start&#125;</span><br><span class="line">    &#123;FINAL&#125; ...</span><br><span class="line">  End</span><br><span class="line">  ...</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li><code>CONV</code>：当RMS梯度及其最大分量均低于<code>conv</code>，ARH收敛，<code>conv</code>默认是1e-4</li>
+<li><code>CONV</code>：当RMS梯度及其最大分量均低于<code> conv</code>，ARH收敛，<code> conv</code>默认是1e-4</li>
 <li><code>ITER</code>：最大ARH迭代次数，<code>iter</code>默认为500</li>
 <li><code>FINAL</code>：确定ARH完成后是否继续SCF。如果设置了此选项，将执行一次Fock矩阵对角化以获得轨道，并且将停止SCF过程。默认选项为<code>OFF</code>。</li>
 <li><code>START</code>：开始调用ARH的SCF迭代次数，<code>start</code>默认为2。使用较大的值可以为ARH提供更好的初猜</li>
@@ -371,7 +376,8 @@
 </li>
 <li><p>HOMO-LUMO较为接近的情况（0.02Hatree以内），可能造成HOMO-LUMO的震荡。可以使用<code>Lshift vshift</code>方法，不适于激发态的计算、解析频率、旋轨耦合的计算。</p>
 </li>
-<li>使用Electron smearing设定在允许的能量范围内分数占据</li>
+<li><p>使用Electron smearing设定在允许的能量范围内分数占据</p>
+</li>
 </ol>
 
     </div>
