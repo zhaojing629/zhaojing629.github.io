@@ -445,7 +445,7 @@
     <url>/2019/09/25/Linux%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h1 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h1><a id="more"></a>
 
-<h2 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h2><p> Copy file 主要用于复制文件或目录。</p>
+<h2 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h2><p> Copy file 主要用于复制文件或目录</p>
 <h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp [选项] [参数]</span><br></pre></td></tr></table></figure>
 
 <h3 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h3><ul>
