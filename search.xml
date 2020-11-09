@@ -74,6 +74,45 @@
 <p>也可以不预览，直接<code>hexo g -d</code>来更新网站。再打开网站就可以了。如果修改了内容，<code>hexo g -d</code>后原网页没有反应，可以用<code>ctrl+F5</code>强制刷新</p>
 </li>
 </ol>
+<h2 id="在多台电脑上操作"><a href="#在多台电脑上操作" class="headerlink" title="在多台电脑上操作"></a>在多台电脑上操作</h2><p>原理：</p>
+<p><code>hexo g -d</code>完成的是将在<del>/public文件夹下生成静态的网页文件，然后将其复制到</del>/.deploy_git文件夹里，再通过Github push到创建的网页分支<code>master</code>上。</p>
+<p>其他文件夹hexo的模块<code>node_modules</code>，文章文件<code>source</code>，主题文件<code>themes</code>等等都没有上传到<code>master</code>上，因此可以通过再创建一个分支来进行同步。</p>
+<ol>
+<li><p>首先在Github的 <code>username.github.io</code> Repository中点击<code>master</code>按钮，输入<code>source</code>并回车，新建一个同步所有文件的分支<code>source</code></p>
+</li>
+<li><p>再通过<code>branches</code>→<code>All branches</code>→<code>change default branch</code>，切换为source后<code>updata</code>，回到 <code>username.github.io</code> Repository中，在<code>code</code>中复制<code>SSH</code></p>
+</li>
+<li><p>新建一个空文件夹XXXX，在此文件夹下右键 <code>Git bash here</code>，输入：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git clone 复制的ssh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>进入XXXX/username.github.io文件夹，将该文件夹下除了.git（默认是隐藏文件）的文件夹全部删除</p>
+</li>
+<li><p>将本来网站的目录下username.github.io除了.deploy_git的文件全部复制到XXXX/username.github.io文件夹，其中有一个<code>.gitignore</code>文件，表示其中的文件不需要上传。另外，因为一个git仓库中不能包含另一个git仓库，如果在theme下git clone了主题文件，需要把相应目录下的.git文件夹删除。</p>
+</li>
+<li><p>在命令行下，<code>cd username.github.io</code>进入该文件夹下，可以看到最后有个<code>(source)</code>表明当前在source分支下：</p>
+<ul>
+<li><code>git add .</code>告诉Git，把文件添加到仓库</li>
+<li><code>git commit</code>告诉Git，把文件提交到仓库，-m后面是修改的说明</li>
+<li><code>git push</code> 将本地分支的更新，推送到远程</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit –m &quot;add branch&quot;</span><br><span class="line">git push </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在其他电脑上的操作如下：</p>
+<ol>
+<li><p>准备工作：在该电脑上需要准备好Git和Node等，配置好<code>SSH key</code>，安装hexo等等</p>
+</li>
+<li><p>新建文件夹YYYYYYY，然后再该文件夹下 <code>git clone 复制的ssh</code>，cd 进入<code>username.github.io</code> 文件夹下，执行<code>npm install</code>下载必要的组件，也会有一个<code>.gitignore</code>文件</p>
+</li>
+<li><p>在该文件夹下修改后，<code>hexo g -d</code>更新网站。</p>
+</li>
+<li><p>然后将更新推送到<code>source</code>分支</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit –m &quot;add branch&quot;</span><br><span class="line">git push </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>以后不管在原本电脑还是其他电脑上，首先<code>git pull</code> 获取更新，然后再进行修改，再推送到<code>source</code>分支。</p>
+</li>
+</ol>
+</li>
+</ol>
 <h1 id="文章相关"><a href="#文章相关" class="headerlink" title="文章相关"></a>文章相关</h1><h2 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h2><ol>
 <li><p>在根目录下右键并GIt Bash here，然后输入<code>hexo new post &quot;article title&quot;</code>，新建一篇文章，此时在~/source_posts下就出现了<code>article title.md</code>文件，进行编辑即可。</p>
 </li>
