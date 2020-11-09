@@ -181,8 +181,6 @@
 <li><p>在<code>主题配置文件</code>~/themes/hexo-theme-next/_config.yml中，在<code>Schemes</code>部分可以选择不同的风格。还可以通过<code>darkmode</code>开启黑暗模式</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#scheme: Muse</span><br><span class="line">#scheme: Mist</span><br><span class="line">#scheme: Pisces</span><br><span class="line">scheme: Gemini</span><br><span class="line"></span><br><span class="line">darkmode: false</span><br></pre></td></tr></table></figure>
 
-
-
 </li>
 </ol>
 <h2 id="修改菜单"><a href="#修改菜单" class="headerlink" title="修改菜单"></a>修改菜单</h2><p>在<code>主题配置文件</code>的<code>Menu Settings</code>部分：</p>
