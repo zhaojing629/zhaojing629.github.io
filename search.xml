@@ -267,23 +267,13 @@
 </li>
 </ol>
 <h2 id="文章相关-1"><a href="#文章相关-1" class="headerlink" title="文章相关"></a>文章相关</h2><h3 id="图片的放大功能"><a href="#图片的放大功能" class="headerlink" title="图片的放大功能"></a>图片的放大功能</h3><p>将<code>主题配置文件</code>中的<code>fancybox</code>关键词为<code>true</code>即可，此时点击图片会有浮动的放大功能。</p>
-<h3 id="显示公式"><a href="#显示公式" class="headerlink" title="显示公式"></a>显示公式</h3><ol>
-<li><p>在<code>主题配置文件</code>中的<code>math</code>部分：</p>
+<h3 id="显示公式"><a href="#显示公式" class="headerlink" title="显示公式"></a>显示公式</h3><p>在<code>主题配置文件</code>中的<code>math</code>部分：</p>
 <ul>
 <li><code>per_pag</code>中，<code>true</code>代表按需要加载公式，在.md文件Front-matter添加<code>mathjax: true</code>才会加载公式。否则在所有页面都加载</li>
 <li><code>mathjax</code>的enable改为<code>true</code></li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">math:</span><br><span class="line">  per_page: true</span><br><span class="line">  mathjax:</span><br><span class="line">    enable: true</span><br><span class="line">    mhchem: false</span><br><span class="line">  katex:</span><br><span class="line">    enable: false</span><br><span class="line">    copy_tex: false</span><br></pre></td></tr></table></figure>
 
-
-
-
-
-
-
-</li>
-</ol>
-<p><code>mathjax</code>的关键词为<code>true</code></p>
 <h3 id="主页不显示全文"><a href="#主页不显示全文" class="headerlink" title="主页不显示全文"></a>主页不显示全文</h3><ol>
 <li>在文章中使用 <code>&lt;!-- more --&gt;</code> 手动进行截断</li>
 <li>在文章的 front-matter 中添加 description，并提供文章摘录</li>
