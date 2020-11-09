@@ -268,10 +268,8 @@
 </ol>
 <h2 id="文章相关-1"><a href="#文章相关-1" class="headerlink" title="文章相关"></a>文章相关</h2><h3 id="图片的放大功能"><a href="#图片的放大功能" class="headerlink" title="图片的放大功能"></a>图片的放大功能</h3><p>将<code>主题配置文件</code>中的<code>fancybox</code>关键词为<code>true</code>即可，此时点击图片会有浮动的放大功能。</p>
 <h3 id="主页不显示全文"><a href="#主页不显示全文" class="headerlink" title="主页不显示全文"></a>主页不显示全文</h3><ol>
-<li><p>在文章中使用 <!-- more --> 手动进行截断</p>
-</li>
-<li><p>在文章的 front-matter 中添加 description，并提供文章摘录</p>
-</li>
+<li>在文章中使用 <code>&lt;!-- more --&gt;</code> 手动进行截断</li>
+<li>在文章的 front-matter 中添加 description，并提供文章摘录</li>
 </ol>
 <h3 id="打赏功能"><a href="#打赏功能" class="headerlink" title="打赏功能"></a>打赏功能</h3><ol>
 <li><p>将支付二维码放置在<code>source/images/</code> 目录下</p>
@@ -412,7 +410,9 @@
   <entry>
     <title>Linux命令</title>
     <url>/2019/09/25/Linux%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<h1 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h1><h2 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h2><p> Copy file 主要用于复制文件或目录。</p>
+    <content><![CDATA[<h1 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h1><a id="more"></a>
+
+<h2 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h2><p> Copy file 主要用于复制文件或目录。</p>
 <h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp [选项] [参数]</span><br></pre></td></tr></table></figure>
 
 <h3 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h3><ul>
@@ -455,9 +455,11 @@
       </tags>
   </entry>
   <entry>
-    <title>SCF相关</title>
+    <title>ADF的SCF相关</title>
     <url>/2019/09/23/SCF%E7%9B%B8%E5%85%B3/</url>
     <content><![CDATA[<h1 id="SCF选项"><a href="#SCF选项" class="headerlink" title="SCF选项"></a>SCF选项</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SCF</span><br><span class="line"> Iterations Niter</span><br><span class="line"> Converge SCFcnv &#123; sconv2 &#125;</span><br><span class="line"> </span><br><span class="line"> AccelerationMethod &#123; ADIIS | LISTi | LISTb | fDIIS | LISTf | MESA | SDIIS &#125;</span><br><span class="line"> MESA [NoFDIIS] [NoLISTb] [NoLISTf] [NoLISTi] [NoSDIIS] [NoADIIS]</span><br><span class="line"> ADIIS</span><br><span class="line">   &#123;THRESH1 a1&#125;</span><br><span class="line">   &#123;THRESH2 a2&#125;</span><br><span class="line"> End</span><br><span class="line"> NoADIIS</span><br><span class="line"> DIIS</span><br><span class="line">   &#123;N n&#125;</span><br><span class="line">   &#123;OK ok&#125;</span><br><span class="line">   &#123;cyc cyc&#125;</span><br><span class="line"> End</span><br><span class="line"> Mixing mix</span><br><span class="line"> Mixing1 mix1</span><br><span class="line"></span><br><span class="line"> OldSCF</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
 
 <h2 id="Iterations"><a href="#Iterations" class="headerlink" title="Iterations"></a>Iterations</h2><p><code>Iterations</code>SCF迭代的最大次数，<code>Niter</code>默认是<code>300</code></p>
 <h2 id="Converge"><a href="#Converge" class="headerlink" title="Converge"></a>Converge</h2><p><code>Converge</code> ：</p>
@@ -563,7 +565,7 @@
         <category>ADF</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
+        <tag>SCF</tag>
       </tags>
   </entry>
 </search>
