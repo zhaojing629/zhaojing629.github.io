@@ -3,9 +3,7 @@
   <entry>
     <title>Linux命令</title>
     <url>/2019/09/25/Linux%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<h1 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h1><a id="more"></a>
-
-<h2 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h2><p> Copy file 主要用于复制文件或目录</p>
+    <content><![CDATA[<h1 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h1><h2 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h2><p> Copy file 主要用于复制文件或目录</p>
 <h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp [选项] [参数]</span><br></pre></td></tr></table></figure>
 
 <h3 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h3><ul>
@@ -51,8 +49,6 @@
     <title>ADF的SCF相关</title>
     <url>/2019/09/23/SCF%E7%9B%B8%E5%85%B3/</url>
     <content><![CDATA[<h1 id="SCF选项"><a href="#SCF选项" class="headerlink" title="SCF选项"></a>SCF选项</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SCF</span><br><span class="line"> Iterations Niter</span><br><span class="line"> Converge SCFcnv &#123; sconv2 &#125;</span><br><span class="line"> </span><br><span class="line"> AccelerationMethod &#123; ADIIS | LISTi | LISTb | fDIIS | LISTf | MESA | SDIIS &#125;</span><br><span class="line"> MESA [NoFDIIS] [NoLISTb] [NoLISTf] [NoLISTi] [NoSDIIS] [NoADIIS]</span><br><span class="line"> ADIIS</span><br><span class="line">   &#123;THRESH1 a1&#125;</span><br><span class="line">   &#123;THRESH2 a2&#125;</span><br><span class="line"> End</span><br><span class="line"> NoADIIS</span><br><span class="line"> DIIS</span><br><span class="line">   &#123;N n&#125;</span><br><span class="line">   &#123;OK ok&#125;</span><br><span class="line">   &#123;cyc cyc&#125;</span><br><span class="line"> End</span><br><span class="line"> Mixing mix</span><br><span class="line"> Mixing1 mix1</span><br><span class="line"></span><br><span class="line"> OldSCF</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
-
-<a id="more"></a>
 
 <h2 id="Iterations"><a href="#Iterations" class="headerlink" title="Iterations"></a>Iterations</h2><p><code>Iterations</code>SCF迭代的最大次数，<code>Niter</code>默认是<code>300</code></p>
 <h2 id="Converge"><a href="#Converge" class="headerlink" title="Converge"></a>Converge</h2><p><code>Converge</code> ：</p>
@@ -149,6 +145,8 @@
 </li>
 <li><p>使用Electron smearing设定在允许的能量范围内分数占据。</p>
 </li>
+<li><p>其他：<a href="https://www.fermitech.com.cn/wiki/doku.php?id=adf:scfnonconvergence">费米维基</a>的2、3、5。</p>
+</li>
 </ol>
 ]]></content>
       <categories>
@@ -166,7 +164,6 @@
 <li><p><a href="https://git-scm.com/">Git</a>：安装完成后在Windows PowerShell中输入<code>git --version</code>验证是否安装成功。</p>
 </li>
 <li><p><a href="https://nodejs.org/en/">Node.js</a>：安装好后在Windows PowerShell输入<code>node -v</code>和<code>npm -v</code>验证是否安装成功。</p>
-<a id="more"></a>
 <h2 id="配置Git"><a href="#配置Git" class="headerlink" title="配置Git"></a>配置Git</h2></li>
 <li><p>在windows菜单中，打开<code>Git Bash</code></p>
 </li>
@@ -646,12 +643,22 @@
 <h3 id="增加网页的小动物"><a href="#增加网页的小动物" class="headerlink" title="增加网页的小动物"></a>增加网页的小动物</h3><ol>
 <li><p>在~下<code>npm install -save hexo-helper-live2d</code>，并在<code>站点配置文件</code>中输入：</p>
 <ul>
-<li><code>NAME</code>可选：<code>chitose</code>、<code>epsilon2_1</code>、<code>haru/01</code>、<code>haru/02</code>、<code>haruto</code>、<code>hibiki</code>、<code>hijiki</code>、<code>izumi</code>、<code>koharu</code>、<code>miku</code>、<code>ni-j</code>、<code>nico</code>、<code>nietzsche</code>、<code>nipsilon</code>、<code>nito</code>、<code>shizuku</code>、<code>tororo</code>、<code>tsumiki</code>、<code>unitychan</code>、<code>wanko</code>、<code>z16</code></li>
+<li><p><code>NAME</code>可选：<code>chitose</code>、<code>epsilon2_1</code>、<code>haru/01</code>、<code>haru/02</code>、<code>haruto</code>、<code>hibiki</code>、<code>hijiki</code>、<code>izumi</code>、<code>koharu</code>、<code>miku</code>、<code>ni-j</code>、<code>nico</code>、<code>nietzsche</code>、<code>nipsilon</code>、<code>nito</code>、<code>shizuku</code>、<code>tororo</code>、<code>tsumiki</code>、<code>unitychan</code>、<code>wanko</code>、<code>z16</code></p>
+</li>
+<li><p><code>display</code>中：<code>width</code>和<code>height</code>分别控制宽度和高度，<code>position</code>控制位置，<code>hOffset</code>和<code>vOffset</code>分别控制水平和垂直的偏移</p>
+</li>
+<li><p> <code>mobile</code>中，<code>show</code>控制是否在移动设备上显示，<code>scale</code>控制在移动设备上的缩放</p>
+</li>
+<li><p> <code>react</code>中<code>opacity</code>控制透明度</p>
+</li>
+<li></li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">live2d:</span><br><span class="line">  enable: true</span><br><span class="line">  scriptFrom: local</span><br><span class="line">  pluginRootPath: live2dw&#x2F;</span><br><span class="line">  pluginJsPath: lib&#x2F;</span><br><span class="line">  pluginModelPath: assets&#x2F;</span><br><span class="line">  tagMode: false</span><br><span class="line">  log: false</span><br><span class="line">  model:</span><br><span class="line">    use: live2d-widget-model-NAME</span><br><span class="line">  display:</span><br><span class="line">    position: right</span><br><span class="line">    width: 150</span><br><span class="line">    height: 300</span><br><span class="line">  mobile:</span><br><span class="line">    show: true</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>在~新建文件夹/live2d_models/NAME，在NAME文件夹下，新建文件NAME.model.json，然后安装模型<code>npm install --save live2d-widget-model-NAME</code></p>
-</li>
+</ol>
+   <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">live2d:</span><br><span class="line">  enable: true</span><br><span class="line">  scriptFrom: local</span><br><span class="line">  pluginRootPath: live2dw&#x2F;</span><br><span class="line">  pluginJsPath: lib&#x2F;</span><br><span class="line">  pluginModelPath: assets&#x2F;</span><br><span class="line">  tagMode: false</span><br><span class="line">  log: false</span><br><span class="line">  model:</span><br><span class="line">    use: live2d-widget-model-NAME</span><br><span class="line">  display:</span><br><span class="line">    hOffset: 0</span><br><span class="line">    vOffset: -20</span><br><span class="line">    position: right</span><br><span class="line">    width: 150</span><br><span class="line">    height: 300</span><br><span class="line">  mobile:</span><br><span class="line">    show: true</span><br><span class="line">    scale: 0.5</span><br><span class="line">  react:</span><br><span class="line">    opacity: 1.0</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在~新建文件夹/live2d_models/NAME，在NAME文件夹下，新建文件NAME.model.json，然后安装模型<code>npm install --save live2d-widget-model-NAME</code></li>
 </ol>
 ]]></content>
       <categories>
