@@ -277,6 +277,9 @@
 
 </li>
 </ol>
+<h2 id="添加文章时自动打开编辑器"><a href="#添加文章时自动打开编辑器" class="headerlink" title="添加文章时自动打开编辑器"></a>添加文章时自动打开编辑器</h2><p>在~/scripts下新建一个脚本，任意命名即可，输入</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> spawn = <span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>).exec;</span><br><span class="line">hexo.on(<span class="string">&#x27;new&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">  spawn(<span class="string">&#x27;start  &quot;markdown编辑器绝对路径.exe&quot; &#x27;</span> + data.path);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
 <h2 id="在文章中插入图片"><a href="#在文章中插入图片" class="headerlink" title="在文章中插入图片"></a>在文章中插入图片</h2><ol>
 <li>如果只有少量图片，可以在~/source目录下新建images文件夹，通过<code>![](/images/xxx.png)</code>来引用。</li>
 <li>如果图片比较多，可以建立文章自己的目录，在<code>站点配置文件</code>中，将<code>post_asset_folder</code>关键词改成<code>true</code>。之后通过<code>hexo new post &quot;article title&quot;</code>在新建文章时，就会出现与文章名相同的文件夹<code>article title</code>，将图片放入其中后，通过<code>![](XXXX.jpg)</code>直接引用。</li>
@@ -674,6 +677,135 @@
       <tags>
         <tag>hexo</tag>
         <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>EDA-NOCV</title>
+    <url>/2020/02/07/EDA-NOCV/</url>
+    <content><![CDATA[<h1 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h1>]]></content>
+      <categories>
+        <category>ADF</category>
+      </categories>
+      <tags>
+        <tag>能量分解</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>双原子分子的光谱项</title>
+    <url>/2020/11/11/%E5%8F%8C%E5%8E%9F%E5%AD%90%E5%88%86%E5%AD%90%E7%9A%84%E5%85%89%E8%B0%B1%E9%A1%B9/</url>
+    <content><![CDATA[<h1 id="简单判断方式："><a href="#简单判断方式：" class="headerlink" title="简单判断方式："></a>简单判断方式：</h1><p>根据分子轨道占据来确定双原子的分子光谱项为$$^{2S+1}\Lambda$$：</p>
+<ol>
+<li><p>首先根据单电子数确定2S+1</p>
+</li>
+<li><p>$$\Lambda$$的确定根据单电子所占据的轨道对应的序号进行加合，注意除了σ以外，其他分子轨道都有简并轨道，因此一个是$$\lambda$$，一个是$$-\lambda$$，比如eg.1和eg.2的区别</p>
+<table>
+<thead>
+<tr>
+<th align="center">$$\lambda$$</th>
+<th align="center">0</th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+<th align="center">4</th>
+<th align="center">5</th>
+<th align="center">6</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">分子轨道符号</td>
+<td align="center">$$\sigma$$</td>
+<td align="center">$$\pi$$</td>
+<td align="center">$$\delta$$</td>
+<td align="center">$$\phi$$</td>
+<td align="center">$$\gamma$$</td>
+<td align="center">$$\eta$$</td>
+<td align="center">$$\iota$$</td>
+</tr>
+<tr>
+<td align="center">$$\Lambda$$</td>
+<td align="center">$$\Sigma$$</td>
+<td align="center">$$\Pi$$</td>
+<td align="center">$$\Delta$$</td>
+<td align="center">$$\Phi$$</td>
+<td align="center">$$\Gamma$$</td>
+<td align="center">$$\Eta$$</td>
+<td align="center">$$\Iota$$</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>当电子态为$$\Sigma$$时：</p>
+<ul>
+<li>波函数关于键轴的平面σ为对称需要用$$+$$表示，反对称用$$-$$表示。</li>
+<li>对于同核双原子分子，如果关于对称中心i对称用$$g$$，反对称用$$u$$表示。</li>
+</ul>
+</li>
+</ol>
+<h1 id="例子：-phi-1-delta-1-pi-1"><a href="#例子：-phi-1-delta-1-pi-1" class="headerlink" title="例子：$$\phi^1\delta^1\pi^1$$"></a>例子：$$\phi^1\delta^1\pi^1$$</h1><table>
+<thead>
+<tr>
+<th align="center">eg.</th>
+<th align="center">$$\phi^1$$</th>
+<th align="center">$$\delta^1$$</th>
+<th align="center">$$\pi^1$$</th>
+<th align="center">$$\Lambda$$</th>
+<th align="left">分子光谱项</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1</td>
+<td align="center">↑—</td>
+<td align="center">↑—</td>
+<td align="center">↑—</td>
+<td align="center">$$3+2+1=6=\Iota$$</td>
+<td align="left">$$^4\Iota$$</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">↑—</td>
+<td align="center">↑—</td>
+<td align="center">—↑</td>
+<td align="center">$$3+2-1=5=\Eta$$</td>
+<td align="left">$$^4\Eta$$</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">↑—</td>
+<td align="center">—↑</td>
+<td align="center">—↑</td>
+<td align="center">$$3-2-1=0=\Sigma$$</td>
+<td align="left">$$^4\Sigma^+$$</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">—↑</td>
+<td align="center">↑—</td>
+<td align="center">↑—</td>
+<td align="center">$$-3+2+1=0=\Sigma$$</td>
+<td align="left">$$^4\Sigma^-$$</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="center">↑—</td>
+<td align="center">—↑</td>
+<td align="center">↓—</td>
+<td align="center">$$3-2+1=2=\Delta$$</td>
+<td align="left">$$^2\Delta$$</td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td align="center">—↑</td>
+<td align="center">↑—</td>
+<td align="center">↓—</td>
+<td align="center">$$-3+2+1=0=\Sigma$$</td>
+<td align="left">$$^2\Sigma^-$$</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+      </categories>
+      <tags>
+        <tag>光谱项</tag>
       </tags>
   </entry>
 </search>
