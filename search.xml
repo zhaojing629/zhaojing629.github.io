@@ -40,7 +40,50 @@
   <entry>
     <title>EDA-NOCV</title>
     <url>/2020/02/07/EDA-NOCV/</url>
-    <content><![CDATA[<h1 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h1>]]></content>
+    <content><![CDATA[<h1 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h1><h2 id="碎片"><a href="#碎片" class="headerlink" title="碎片"></a>碎片</h2><ul>
+<li><p>根据体系，确定碎片是闭壳层还是开壳层</p>
+</li>
+<li><p>可以根据整体分子的对称性指定碎片的对称性</p>
+</li>
+<li><p>有时候默认计算得到的结果可能导致：</p>
+<ul>
+<li>分数占据或</li>
+<li>占据的轨道不正确</li>
+<li>碎片的自旋不匹配</li>
+</ul>
+<p>此时需要根据碎片的对称性，通过<code>IRREPOCCUPATIONS</code>指定其占据方式</p>
+</li>
+</ul>
+<h2 id="整体分子"><a href="#整体分子" class="headerlink" title="整体分子"></a>整体分子</h2><ol>
+<li><p>整体分子的计算不能使用对称性，需要用<code>symmetry nosym</code></p>
+</li>
+<li><p>需要使用<code>ETSNOCV</code>和<code>PRINT &#123;ETSLOWDIN | ETSLOWDIN-Unrestricted&#125;</code>关键词：</p>
+<ul>
+<li><p><code>ETSNOCV</code>指定打印NOCV相关信息的阈值：</p>
+<ul>
+<li><code>RHOKMIN</code>各个SFO对每个变形密度贡献进行总体分析的阈值</li>
+<li><code>EKMIN</code>轨道相互作用能量贡献的阈值</li>
+<li><code>ENOCV</code>NOCV特征值的阈值</li>
+</ul>
+<p>当三个关键词都省略时，只分析NOCV特征值绝对值≥0.05的</p>
+</li>
+<li><p><code>PRINT &#123;ETSLOWDIN | ETSLOWDIN-Unrestricted&#125;</code>中：</p>
+<ul>
+<li>如果计算的是闭壳层碎片，使用<code>PRINT ETSLOWDIN</code>，输出的是总形变密度</li>
+<li>如果计算的是开壳层碎片，使用<code>PRINT ETSLOWDIN-Unrestricted</code>，输出的是α和β两组NOCV</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">ETSNOCV</span><br><span class="line">   &#123;RHOKMIN rhokmin&#125;</span><br><span class="line">   &#123;EKMIN ekmin&#125;</span><br><span class="line">   &#123;ENOCV enocv&#125;</span><br><span class="line">End</span><br><span class="line"><span class="section">PRINT</span> &#123;<span class="attribute">ETSLOWDIN</span> | ETSLOWDIN-Unrestricted&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>还可以根据需要使用<code>PRINT NOCVHirshfeld</code>来区分片段间还是片段内的NOCV，输出文件会打印每个NOCV的$\int{\Delta \rho} = -\Delta Q$值到ETS-NOCV末尾的“Hirshfeld partitioning” ：</p>
+<ul>
+<li>片段间NOCV具有非零积分HirshfeldΔQ值，并且对应于片段之间的电荷转移</li>
+<li>片段内NOCV具有小的ΔQ值，并且对应于片段的极化。</li>
+</ul>
+</li>
+</ol>
+]]></content>
       <categories>
         <category>ADF</category>
       </categories>
@@ -161,7 +204,7 @@
     <url>/2020/11/11/%E5%8F%8C%E5%8E%9F%E5%AD%90%E5%88%86%E5%AD%90%E7%9A%84%E5%85%89%E8%B0%B1%E9%A1%B9/</url>
     <content><![CDATA[<h1 id="2S-1-Lambda-简单确定方法"><a href="#2S-1-Lambda-简单确定方法" class="headerlink" title="$^{2S+1}\Lambda$简单确定方法"></a>$^{2S+1}\Lambda$简单确定方法</h1><p>根据分子轨道占据来确定双原子的分子光谱项为$^{2S+1}\Lambda$：</p>
 <ol>
-<li>首先根据$S=\frac {|α<em>{电子数}-β</em>{电子数}|}{2}$确定$2S+1$</li>
+<li>首先根据<script type="math/tex">S=\frac {|α_{电子数}-β_{电子数}|}{2}</script>确定$2S+1$</li>
 <li>$\Lambda$的确定根据单电子所占据的轨道对应的序号进行加合，注意除了σ以外，其他分子轨道都有简并轨道，因此一个是$\lambda$，一个是$-\lambda$，比如eg.1和eg.2的区别</li>
 </ol>
 <div class="table-container">
@@ -202,13 +245,11 @@
 </tbody>
 </table>
 </div>
-<ol>
-<li>当电子态为$\Sigma$时：<ul>
-<li>波函数关于键轴的平面σ为对称需要用$+$表示，反对称用$-$表示。简单判断方法是看$\Lambda$的加合中有几个$-$，偶数个就为$+$，反之为$-$。</li>
+<p>当电子态为$\Sigma$时：</p>
+<ul>
+<li>波函数关于键轴的平面为对称需要用$+$表示，反对称用$-$表示。简单判断方法是看$\Lambda$的加合中有几个$-$，偶数个就为$+$，反之为$-$</li>
 <li>对于同核双原子分子，如果关于对称中心$i$对称用$g$，反对称用$u$表示。</li>
 </ul>
-</li>
-</ol>
 <p><strong>例子：$\phi^1\delta^1\pi^1$</strong></p>
 <div class="table-container">
 <table>
@@ -596,6 +637,9 @@
 </ul>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="attr">separated_meta:</span> <span class="literal">true</span> </span><br><span class="line">  <span class="attr">item_text_post:</span> <span class="literal">true</span> </span><br><span class="line">  <span class="attr">item_text_total:</span> <span class="literal">true</span> </span><br><span class="line">  <span class="attr">awl:</span> <span class="number">4</span> </span><br><span class="line">  <span class="attr">wpm:</span> <span class="number">275</span> </span><br></pre></td></tr></table></figure>
 </li>
+<li><p>网页中显示的本文字数和阅读时长是分行了的，如果不想分行，打开~\themes\hexo-theme-next\layout_macro\post.swig，将下面一行删去即可：</p>
+<figure class="highlight django"><table><tr><td class="code"><pre><span class="line"><span class="template-tag">&#123;%- <span class="name"><span class="name">if</span></span> theme.symbols_count_time.separated_meta %&#125;</span><span class="xml"><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><span class="template-tag">&#123;%- <span class="name"><span class="name">endif</span></span> %&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
 </ol>
 <h3 id="图片的放大功能"><a href="#图片的放大功能" class="headerlink" title="图片的放大功能"></a>图片的放大功能</h3><p>将<code>主题配置文件</code>中的<code>fancybox</code>关键词为<code>true</code>即可，此时点击图片会有浮动的放大功能。</p>
 <h3 id="显示公式"><a href="#显示公式" class="headerlink" title="显示公式"></a>显示公式</h3><ol>
@@ -615,8 +659,12 @@
 </li>
 </ol>
 <h3 id="主页不显示全文"><a href="#主页不显示全文" class="headerlink" title="主页不显示全文"></a>主页不显示全文</h3><ol>
-<li>在文章中使用 <code>&lt;!-- more --&gt;</code> 手动进行截断</li>
-<li>在文章的 front-matter 中添加 description，并提供文章摘录</li>
+<li><p>在文章中使用 <code>&lt;!-- more --&gt;</code> 手动进行截断</p>
+</li>
+<li><p>在文章的 front-matter 中添加 description，并提供文章摘录</p>
+<p>如果希望摘录在首页是居中的，则将~\themes\hexo-theme-next\layout_macro\post.swig中的<code>&lt;p&gt;&#123;&#123; post.description &#125;&#125;&lt;/p&gt;</code>改为如下即可：</p>
+<figure class="highlight handlebars"><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">p</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span></span><span class="template-variable">&#123;&#123; <span class="name">post.description</span> &#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+</li>
 </ol>
 <h3 id="打赏功能"><a href="#打赏功能" class="headerlink" title="打赏功能"></a>打赏功能</h3><ol>
 <li>将支付二维码放置在<code>source/images/</code> 目录下</li>
@@ -689,6 +737,8 @@
 <li><code>language:</code>设置语言</li>
 </ul>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">creative_commons:</span></span><br><span class="line">  <span class="attr">license:</span> <span class="string">by-nc-sa</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">post:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">language:</span></span><br></pre></td></tr></table></figure>
+<h3 id="修改文章内链接文本样式"><a href="#修改文章内链接文本样式" class="headerlink" title="修改文章内链接文本样式"></a>修改文章内链接文本样式</h3><p>将链接文本设置为 <code>蓝色</code>，鼠标划过时文字 <code>颜色加亮</code>，并显示下划线，在~\source\_data\styles.styl文件中，增加：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.post-body</span> <span class="selector-tag">p</span> <span class="selector-tag">a</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#0593d3</span>;</span><br><span class="line">  <span class="attribute">border-bottom</span>: none;</span><br><span class="line">  <span class="attribute">border-bottom</span>: <span class="number">1px</span> solid <span class="number">#0593d3</span>;</span><br><span class="line">  &amp;<span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#fc6423</span>;</span><br><span class="line">    <span class="attribute">border-bottom</span>: none;</span><br><span class="line">    <span class="attribute">border-bottom</span>: <span class="number">1px</span> solid <span class="number">#fc6423</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.post-body</span> <span class="selector-tag">li</span> <span class="selector-tag">a</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#0593d3</span>;</span><br><span class="line">  <span class="attribute">border-bottom</span>: none;</span><br><span class="line">  <span class="attribute">border-bottom</span>: <span class="number">1px</span> solid <span class="number">#0593d3</span>;</span><br><span class="line">  &amp;<span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#fc6423</span>;</span><br><span class="line">    <span class="attribute">border-bottom</span>: none;</span><br><span class="line">    <span class="attribute">border-bottom</span>: <span class="number">1px</span> solid <span class="number">#fc6423</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="设置「背景动画」"><a href="#设置「背景动画」" class="headerlink" title="设置「背景动画」"></a>设置「背景动画」</h3><ol>
 <li><p>首先在<code>~\themes\hexo-theme-next\source\lib</code>下载</p>
 <figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">git clone https:<span class="regexp">//gi</span>thub.com<span class="regexp">/theme-next/</span>theme-<span class="keyword">next</span>-three three</span><br><span class="line">git clone https:<span class="regexp">//gi</span>thub.com<span class="regexp">/theme-next/</span>theme-<span class="keyword">next</span>-canvas-ribbon canvas-ribbon</span><br></pre></td></tr></table></figure>
