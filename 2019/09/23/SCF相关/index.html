@@ -29,7 +29,7 @@
 <meta property="og:description" content="ADF的SCF选项以及不收敛的处理方法">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-09-22T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-11-11T13:08:14.984Z">
+<meta property="article:modified_time" content="2020-11-13T02:46:57.653Z">
 <meta property="article:author" content="Zhao Jing">
 <meta property="article:tag" content="SCF">
 <meta name="twitter:card" content="summary">
@@ -231,7 +231,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-11 21:08:14" itemprop="dateModified" datetime="2020-11-11T21:08:14+08:00">2020-11-11</time>
+                <time title="修改时间：2020-11-13 10:46:57" itemprop="dateModified" datetime="2020-11-13T10:46:57+08:00">2020-11-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -301,35 +301,28 @@
 <li><code>sconv2</code>表示SCF过程难以收敛时起作用的第二个标准，默认是<code>1e-3</code>，如果达到了，仅发出警告，但是继续计算。仍无法达到的时候SCF不收敛，只能用<code>ALLOW</code>来继续</li>
 </ul>
 <h2 id="AccelerationMethod"><a href="#AccelerationMethod" class="headerlink" title="AccelerationMethod"></a>AccelerationMethod</h2><p><code>AccelerationMethod</code>调用的SCF加速方法，默认情况下为<code>ADIIS</code>，还可以用<code>LISTi</code> | <code>LISTb</code> | <code>fDIIS</code> | <code>LISTf</code> | <code>MESA</code> | <code>SDIIS</code></p>
-<h3 id="MESA"><a href="#MESA" class="headerlink" title="MESA"></a>MESA</h3><p><code>AccelerationMethod MESA</code>是ADIIS, fDIIS, LISTb, LISTf, LISTi和 SDIIS方法的组合</p>
-<p><code>MESA NoSDIIS</code>代表从其中删掉某一种方法，也可以直接使用该关键词调用MESA，优先级大于<code>AccelerationMethod</code>指定的方法。</p>
+<h3 id="MESA"><a href="#MESA" class="headerlink" title="MESA"></a>MESA</h3><p><code>AccelerationMethod MESA</code>是ADIIS, fDIIS, LISTb, LISTf, LISTi和 SDIIS方法的组合<br><code>MESA NoSDIIS</code>代表从其中删掉某一种方法，也可以直接使用该关键词调用MESA，优先级大于<code>AccelerationMethod</code>指定的方法。</p>
 <h3 id="ADIIS"><a href="#ADIIS" class="headerlink" title="ADIIS"></a>ADIIS</h3><p>使用ADIIS + SDIIS方法，根据 [F,P] 交换子矩阵中的最大元素<code>ErrMax</code>来确定具体方法：</p>
 <ul>
 <li>当ErrMax≥<code>a1</code>，只使用A-DIIS系数</li>
 <li>当ErrMax≤ <code>a2</code>，只使用SDIIS系数</li>
-<li>当<code>a2</code>≤ ErrMax≤ <code>a1</code>，根据ErrMax的值按一定的权重来计算</li>
+<li>当<code>a2</code>≤ ErrMax≤ <code>a1</code>，根据ErrMax的值按一定的权重来计算<br><code>a1</code>和<code>a2</code>的默认值是<code>0.01</code>和<code>0.0001</code>，收敛比较困难的时候，可以降低阈值，只使用A-DIIS系数</li>
 </ul>
-<p><code>a1</code>和<code>a2</code>的默认值是<code>0.01</code>和<code>0.0001</code>，收敛比较困难的时候，可以降低阈值，只使用A-DIIS系数</p>
 <h3 id="SDIIS"><a href="#SDIIS" class="headerlink" title="SDIIS"></a>SDIIS</h3><p><code>AccelerationMethod SDIIS</code>与在没有指定<code>oldscf</code>的情况下使用<code>NoADIIS</code>意思相同，采用的是阻尼+SDIIS方法。从简单阻尼（Mixing）开始，持续到<code>ErrMax</code>降低到<code>DIIS OK</code>参数以下，但是不超过<code>DIIS Cyc</code>次迭代。之后使用纯的SDIIS方法。</p>
 <blockquote>
 <p>在指定<code>oldscf</code>的情况下使用<code>NoADIIS</code>会禁用在SCF收敛困难的时候自动切换到ADIIS + SDIIS方法</p>
 </blockquote>
 <ul>
-<li><p>指定<code>NoADIIS</code>时才可以设置 <code>DIIS</code>模块：</p>
-<ul>
-<li><p><code>N</code>用于加速SCF的扩展向量的数量，默认为<code>10</code>，小于2后会禁用DIIS。此数字不仅适用于Pulay DIIS方案，还适用于其他类似DIIS的方法，例如A-DIIS和LIST方法。</p>
-<blockquote>
+<li>指定<code>NoADIIS</code>时才可以设置 <code>DIIS</code>模块：<ul>
+<li><code>N</code>用于加速SCF的扩展向量的数量，默认为<code>10</code>，小于2后会禁用DIIS。此数字不仅适用于Pulay DIIS方案，还适用于其他类似DIIS的方法，例如A-DIIS和LIST方法。<blockquote>
 <p>LIST家族的方法对使用的扩展向量的数量非常敏感，接近收敛时，LIST中的向量数量会增加，但始终受<code>DIIS N</code>的限制，当难以收敛时，可以将<code>DIIS N</code>设置为大于10的值，比如12~20。</p>
 </blockquote>
 </li>
-<li><p><code>OK</code>禁用A-DIIS时，SDIIS起始条件。默认为<code>0.5</code> a.u.。</p>
-</li>
-<li><p><code>Cyc</code>禁用A-DIIS时，无论上面的<code>DIIS OK</code>值如何，SDIIS都会在此迭代下启动，默认值为<code>5</code></p>
-</li>
+<li><code>OK</code>禁用A-DIIS时，SDIIS起始条件。默认为<code>0.5</code> a.u.。</li>
+<li><code>Cyc</code>禁用A-DIIS时，无论上面的<code>DIIS OK</code>值如何，SDIIS都会在此迭代下启动，默认值为<code>5</code></li>
 </ul>
 </li>
-<li><p><code>Mixing</code>中，指将下一个Fock矩阵确定为<script type="math/tex">F = mix F_{n} + (1-mix) F_{n-1}</script>，<code>mix</code>默认为<code>0.2</code></p>
-</li>
+<li><code>Mixing</code>中，指将下一个Fock矩阵确定为<script type="math/tex">F = mix F_{n} + (1-mix) F_{n-1}</script>，<code>mix</code>默认为<code>0.2</code></li>
 <li><code>Mixing1</code>中指第一个SCF循环的混合参数值不同，默认为<code>0.2</code></li>
 </ul>
 <h2 id="oldSCF"><a href="#oldSCF" class="headerlink" title="oldSCF"></a>oldSCF</h2><p>在使用<code>Occupations Steep</code>、<code>Lshift</code>，<code>ARH</code>，<code>EDIIS</code>，<code>RESTOCC</code>时，会自动启用<code>oldSCF</code></p>
@@ -362,32 +355,24 @@
 </li>
 </ul>
 </li>
-</ul>
-<p>缺点：</p>
-<ul>
+<li>缺点：<ul>
 <li>该方法仅适用于NOSYM计算</li>
 <li>在每一步都要计算总能量，计算非常昂贵，而且使用总能量，需要更高的积分精度才能获得稳定的SCF收敛，该方法可能不适用于所有情况，??使用<code>ADDDIFFUSEFIT</code>关键字或更高的<code>ZlmFit</code>质量设置来提高总能量的准确性，从而提高收敛性。??</li>
 </ul>
+</li>
+</ul>
 <h1 id="SCF不收敛"><a href="#SCF不收敛" class="headerlink" title="SCF不收敛"></a>SCF不收敛</h1><ol>
-<li><p>更换SCF加速收敛的方法</p>
-</li>
-<li><p>使用ARH方法</p>
-</li>
-<li><p>修改DIIS算法的参数</p>
-<ul>
+<li>更换SCF加速收敛的方法</li>
+<li>使用ARH方法</li>
+<li>修改DIIS算法的参数<ul>
 <li><code>Mixing</code>高于默认值<code>0.2</code>会有更高的加速度，更低会更稳定的迭代</li>
 <li><code>N</code>默认为<code>10</code>，越大用于加速SCF的扩展向量的数量越多，SCF迭代更稳定，最多到25</li>
-<li><code>Cyc</code>是SDIIS启动的初始SCF迭代步数，默认值为<code>5</code>，更高计算越稳   </li>
+<li><code>Cyc</code>是SDIIS启动的初始SCF迭代步数，默认值为<code>5</code>，更高计算越稳定<br>比如使用如下参数：<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">SCF</span></span><br><span class="line">    <span class="attribute">DIIS</span></span><br><span class="line">      <span class="attribute">N</span> <span class="number">25</span></span><br><span class="line">      <span class="attribute">Cyc</span> <span class="number">30</span></span><br><span class="line">    <span class="attribute">End</span></span><br><span class="line">    <span class="attribute">Mixing</span> <span class="number">0</span>.<span class="number">015</span></span><br><span class="line">    <span class="attribute">Mixing1</span> <span class="number">0</span>.<span class="number">09</span></span><br><span class="line">  <span class="attribute">End</span></span><br></pre></td></tr></table></figure></li>
 </ul>
-<p>比如使用如下参数：</p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">SCF</span></span><br><span class="line">    <span class="attribute">DIIS</span></span><br><span class="line">      <span class="attribute">N</span> <span class="number">25</span></span><br><span class="line">      <span class="attribute">Cyc</span> <span class="number">30</span></span><br><span class="line">    <span class="attribute">End</span></span><br><span class="line">    <span class="attribute">Mixing</span> <span class="number">0</span>.<span class="number">015</span></span><br><span class="line">    <span class="attribute">Mixing1</span> <span class="number">0</span>.<span class="number">09</span></span><br><span class="line">  <span class="attribute">End</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>HOMO-LUMO较为接近的情况（0.02Hatree以内），可能造成HOMO-LUMO的震荡。可以使用<code>Lshift vshift</code>方法，不适于激发态的计算、解析频率、旋轨耦合的计算。</p>
-</li>
-<li><p>使用Electron smearing设定在允许的能量范围内分数占据。</p>
-</li>
-<li><p>其他：<a target="_blank" rel="noopener" href="https://www.fermitech.com.cn/wiki/doku.php?id=adf:scfnonconvergence">费米维基</a>的2、3、5。</p>
-</li>
+<li>HOMO-LUMO较为接近的情况（0.02Hatree以内），可能造成HOMO-LUMO的震荡。可以使用<code>Lshift vshift</code>方法，不适于激发态的计算、解析频率、旋轨耦合的计算。</li>
+<li>使用Electron smearing设定在允许的能量范围内分数占据。</li>
+<li>其他：<a target="_blank" rel="noopener" href="https://www.fermitech.com.cn/wiki/doku.php?id=adf:scfnonconvergence">费米维基</a>的2、3、5。</li>
 </ol>
 
     </div>
