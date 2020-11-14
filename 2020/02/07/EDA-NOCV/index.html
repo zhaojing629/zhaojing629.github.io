@@ -18,7 +18,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="ADF的EDA-NOCV方法的使用">
@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2020/02/07/EDA-NOCV/1.png">
 <meta property="article:published_time" content="2020-02-06T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-11-13T08:34:11.142Z">
+<meta property="article:modified_time" content="2020-11-14T09:28:53.222Z">
 <meta property="article:author" content="Zhao Jing">
 <meta property="article:tag" content="能量分解">
 <meta name="twitter:card" content="summary">
@@ -233,7 +233,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-13 16:34:11" itemprop="dateModified" datetime="2020-11-13T16:34:11+08:00">2020-11-13</time>
+                <time title="修改时间：2020-11-14 17:28:53" itemprop="dateModified" datetime="2020-11-14T17:28:53+08:00">2020-11-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -276,13 +276,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>4.5k</span>
+              <span>5.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>4 分钟</span>
+              <span>5 分钟</span>
             </span>
             <div class="post-description">ADF的EDA-NOCV方法的使用</div>
 
@@ -296,17 +296,21 @@
 
       
         <h1 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h1><h2 id="碎片"><a href="#碎片" class="headerlink" title="碎片"></a>碎片</h2><ul>
-<li>根据体系，确定碎片是闭壳层还是开壳层</li>
-<li>可以根据整体分子的对称性指定碎片的对称性</li>
-<li>有时候默认计算得到的结果可能导致：<ul>
-<li>分数占据</li>
-<li>占据的轨道不正确</li>
-<li>碎片的自旋不匹配<br>此时需要根据碎片的对称性，通过<code>IRREPOCCUPATIONS</code>指定其占据方式</li>
+<li>根据体系，指定电荷和自选多重度，确定碎片是闭壳层还是开壳层<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">charge <span class="number">0</span> <span class="number">-3</span></span><br><span class="line">unrestricted</span><br></pre></td></tr></table></figure></li>
+<li>可以根据整体分子的对称性指定碎片的对称性<ul>
+<li>过渡金属配合物设置对称性的注意事项：<ul>
+<li>金属原子设置为原点，如果是金属团簇，则原点设置在金属团簇的中心，高对称轴设置为z轴（例如金属原子参与成键的是d、f轨道，但是分子却具有C<sub>3</sub>、C<sub>5</sub>、C<sub>7</sub>……这样的奇数的转动对称，这样设置是必须的)。设置方法是在图形界面中Edit→Align→（设置xy平面或者设置z轴），再通过Edit→Set Origin设置原点，最后可以通过View→Axes观看坐标轴来确认。</li>
+<li>近似对称结构，金属碎片需要设置与对称结构相同的点群，例如Oh群八羰基配合物，其中一个羰基被替换为其他结构，金属原子仍然需要设置为Oh群</li>
+<li>NOCV不支持点群，EDA支持，因此虽然NOCV分析默认会做EDA分析，但是建议分别都做一个，便于分析不同对称性的碎片轨道的共价作用  </li>
 </ul>
 </li>
 </ul>
+</li>
+<li>有时候默认计算得到的结果可能导致分数占据、占据的轨道不正确、碎片的自旋不匹配等，尤其是金属原子作为一个碎片，需要注意其电子占据方式、自旋多重度，此时需要根据碎片的闭壳层/开壳层、对称性和占据，通过<code>IRREPOCCUPATIONS</code>来指定其占据方式，也可以在整体分子中通过<code>FRAGOCCUPATIONS</code>指定。<br>eg. 开壳层的β电子指定：    <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">IRREPOCCUPATIONS</span></span><br><span class="line"><span class="attribute">sigma</span> <span class="number">1</span> <span class="number">0</span> <span class="number">0</span>//<span class="number">1</span> <span class="number">1</span> <span class="number">0</span></span><br><span class="line"><span class="attribute">pi</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>//<span class="number">2</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line"><span class="attribute">end</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 <h2 id="整体分子"><a href="#整体分子" class="headerlink" title="整体分子"></a>整体分子</h2><ol>
-<li>首先在分子坐标后面跟上f=name，然后在Fragments中指定t21 文件</li>
+<li>碎片数不局限，在分子坐标后面跟上<code>f=name</code>，然后在<code>Fragments</code>中指定碎片的t21文件，比如：<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">ATOMS</span></span><br><span class="line"><span class="attribute">1</span> H       <span class="number">0</span>.<span class="number">000000000010</span>      -<span class="number">0</span>.<span class="number">000000000016</span>       <span class="number">1</span>.<span class="number">080824461000</span>  f=f<span class="number">1</span> </span><br><span class="line"><span class="attribute">2</span> C      -<span class="number">0</span>.<span class="number">000000000012</span>       <span class="number">0</span>.<span class="number">000000000015</span>       <span class="number">0</span>.<span class="number">036537953000</span>  f=f<span class="number">2</span></span><br><span class="line"><span class="attribute">3</span> N       <span class="number">0</span>.<span class="number">000000000002</span>       <span class="number">0</span>.<span class="number">000000000002</span>      -<span class="number">1</span>.<span class="number">117362414000</span>  f=f<span class="number">2</span></span><br><span class="line"><span class="attribute">END</span> </span><br><span class="line"></span><br><span class="line"><span class="attribute">Fragments</span></span><br><span class="line">    <span class="attribute">f1</span> H.t<span class="number">21</span> </span><br><span class="line">    <span class="attribute">f2</span> CN.t<span class="number">21</span> </span><br><span class="line"><span class="attribute">end</span></span><br></pre></td></tr></table></figure></li>
 <li>整体分子的计算不能使用对称性，需要用<code>symmetry nosym</code></li>
 <li>需要使用<code>ETSNOCV</code>和<code>PRINT &#123;ETSLOWDIN | ETSLOWDIN-Unrestricted&#125;</code>关键词：<ul>
 <li><code>ETSNOCV</code>指定打印NOCV相关信息的阈值：<ul>
@@ -357,7 +361,7 @@
 <li>ADF的结果中包含的依次是<script type="math/tex">ΔE_{Pauli}+ΔE_{elstat}+ΔE_{orb}=ΔE_{int}</script><br><img src="1.png" style="zoom:80%;" /></li>
 <li>键能有两种：<ul>
 <li>一种直接是$ΔE_{int}$</li>
-<li>一种是在$ΔE<em>{int}$的基础上加上准备能$ΔE</em>{prep}$，计算方法是将聚合体中的片段们，分别进行能量最小化，之后的能量降低量之和，即准备能，为正值</li>
+<li>一种是在$ΔE<em>{int}$的基础上加上准备能$ΔE</em>{prep}$，计算方法是将片段，分别进行能量最小化，之后的能量降低量之和，即准备能（＞0）</li>
 </ul>
 </li>
 </ul>
@@ -368,8 +372,9 @@
 <li>与本征值对应的轨道的能量，单位是kcal/mol</li>
 </ol>
 <h2 id="电子转移"><a href="#电子转移" class="headerlink" title="电子转移"></a>电子转移</h2><ul>
-<li>每个本征值的NOCV，电子在片段轨道之间，是如何在SFO碎片轨道中（可以通过SCM→View→Add Isosurface:with phase→Select Field→SFOs选择对应的SFO编号，查看其空间分布形状）转移的：<ul>
-<li>比如本征值为±0.56641的NOCV中，1、7号SFO分别失去0.61238、0.04257个电子，10、2号SFO得到0.62190、0.01341个电子<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">=============================================================</span><br><span class="line"> SFO decomposition of alpha Delta rho k (major contributions):</span><br><span class="line"> =============================================================</span><br><span class="line">  </span><br><span class="line"> Threshold <span class="keyword">for</span> a NOCVs energy (<span class="keyword">in</span> kcal/mol) <span class="keyword">is</span>   <span class="number">2.00000000000000</span>     </span><br><span class="line"> Threshold <span class="keyword">for</span> an individual SFO contribution <span class="keyword">is</span>  <span class="number">1.000000000000000E-002</span></span><br><span class="line"></span><br><span class="line">   <span class="number">1</span>   NOCV eigenvalues:  <span class="number">-0.56641</span>   <span class="number">0.56641</span></span><br><span class="line">       Corresponding Delta E k:<span class="number">-110.85632</span>  (kcal/mol)</span><br><span class="line">       <span class="number">10</span>   SFO contribution:   <span class="number">0.62190</span></span><br><span class="line">        <span class="number">1</span>   SFO contribution:  <span class="number">-0.61238</span></span><br><span class="line">        <span class="number">7</span>   SFO contribution:  <span class="number">-0.04257</span></span><br><span class="line">        <span class="number">2</span>   SFO contribution:   <span class="number">0.01341</span></span><br><span class="line">       Sum <span class="keyword">from</span> all SFOs:   <span class="number">-0.79216E-02</span></span><br></pre></td></tr></table></figure></li>
+<li>每个本征值的NOCV，电子在片段轨道之间，是如何在SFO碎片轨道中转移的：<ul>
+<li>比如本征值为±0.56641的NOCV中，1、7号SFO分别失去0.61238、0.04257个电子，10、2号SFO得到0.62190、0.01341个电子    </li>
+<li>SFO轨道可以在out文件中的<code>S F O s</code>模块查看，也可以通过图形界面查看 （通过SCM→View→Add Isosurface:with phase→Select Field→SFOs选择对应的SFO编号，查看其空间分布形状）<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">=============================================================</span><br><span class="line"> SFO decomposition of alpha Delta rho k (major contributions):</span><br><span class="line"> =============================================================</span><br><span class="line">  </span><br><span class="line"> Threshold <span class="keyword">for</span> a NOCVs energy (<span class="keyword">in</span> kcal/mol) <span class="keyword">is</span>   <span class="number">2.00000000000000</span>     </span><br><span class="line"> Threshold <span class="keyword">for</span> an individual SFO contribution <span class="keyword">is</span>  <span class="number">1.000000000000000E-002</span></span><br><span class="line"></span><br><span class="line">   <span class="number">1</span>   NOCV eigenvalues:  <span class="number">-0.56641</span>   <span class="number">0.56641</span></span><br><span class="line">       Corresponding Delta E k:<span class="number">-110.85632</span>  (kcal/mol)</span><br><span class="line">       <span class="number">10</span>   SFO contribution:   <span class="number">0.62190</span></span><br><span class="line">        <span class="number">1</span>   SFO contribution:  <span class="number">-0.61238</span></span><br><span class="line">        <span class="number">7</span>   SFO contribution:  <span class="number">-0.04257</span></span><br><span class="line">        <span class="number">2</span>   SFO contribution:   <span class="number">0.01341</span></span><br><span class="line">       Sum <span class="keyword">from</span> all SFOs:   <span class="number">-0.79216E-02</span></span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
 <li>通过SCM→View→Add→Isosurface:with phase→Select Field→NOCV Orbitals选择±本征值查看成键前后分子轨道的图像：<ul>
@@ -542,10 +547,10 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/zhaojing629" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaojing629" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+        <a href="https://github.com/zhaojing629" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaojing629" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:295483858@qq.com" title="E-Mail → mailto:295483858@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+        <a href="mailto:295483858@qq.com" title="E-Mail → mailto:295483858@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 
@@ -603,7 +608,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">31k</span>
+    <span title="站点总字数">32k</span>
 </div>
 
         
@@ -771,5 +776,5 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
 });
 </script>
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"vOffset":-100,"position":"right","width":200,"height":400},"mobile":{"show":true,"scale":0.5},"react":{"opacity":1},"dialog":{"enable":false,"hitokoto":false}});</script></body>
+</body>
 </html>
