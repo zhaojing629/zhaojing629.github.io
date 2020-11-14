@@ -759,8 +759,10 @@
 <p>增加看板动画会导致网站底部和访问量消失，因此放弃……</p>
 </li>
 </ol>
-<h3 id="Mist主题首页两篇文章之间间距缩小"><a href="#Mist主题首页两篇文章之间间距缩小" class="headerlink" title="Mist主题首页两篇文章之间间距缩小"></a>Mist主题首页两篇文章之间间距缩小</h3><p>在~\themes\hexo-theme-next\source\css_schemes\Mist_posts-expand.styl文件中，修改该数值即可：</p>
+<h3 id="Mist主题首页两篇文章之间间距缩小和分割线"><a href="#Mist主题首页两篇文章之间间距缩小和分割线" class="headerlink" title="Mist主题首页两篇文章之间间距缩小和分割线"></a>Mist主题首页两篇文章之间间距缩小和分割线</h3><p>在~\themes\hexo-theme-next\source\css_schemes\Mist_posts-expand.styl文件中，修改该数值即可：</p>
 <figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.post-block</span><span class="selector-pseudo">:not(</span><span class="selector-pseudo">:first-child)</span> &#123;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">120px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将 <code>.post-eof</code>部分修改为</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.post-eof</span> &#123;</span><br><span class="line">   <span class="attribute">display</span>: block;</span><br><span class="line"> <span class="comment">//  margin: $post-eof-margin-top auto $post-eof-margin-bottom;  </span></span><br><span class="line">   <span class="attribute">width</span>: <span class="number">100%</span>; <span class="comment">//分割线长度</span></span><br><span class="line">   <span class="attribute">height</span>: <span class="number">1px</span>; <span class="comment">// 分割线高度</span></span><br><span class="line">   <span class="attribute">background</span>: <span class="variable">$grey-light</span>;</span><br><span class="line">   <span class="attribute">text-align</span>: center;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>网站</category>
