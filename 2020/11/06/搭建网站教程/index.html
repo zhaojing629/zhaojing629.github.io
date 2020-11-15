@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2020/11/06/%E6%90%AD%E5%BB%BA%E7%BD%91%E7%AB%99%E6%95%99%E7%A8%8B/1.png">
 <meta property="article:published_time" content="2020-11-06T04:15:00.000Z">
-<meta property="article:modified_time" content="2020-11-15T02:38:11.074Z">
+<meta property="article:modified_time" content="2020-11-15T04:15:41.216Z">
 <meta property="article:author" content="Zhao Jing">
 <meta property="article:tag" content="hexo">
 <meta property="article:tag" content="git">
@@ -224,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-15 10:38:11" itemprop="dateModified" datetime="2020-11-15T10:38:11+08:00">2020-11-15</time>
+                <time title="修改时间：2020-11-15 12:15:41" itemprop="dateModified" datetime="2020-11-15T12:15:41+08:00">2020-11-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -265,14 +265,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>22k</span>
+              <span>23k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>20 分钟</span>
+              <span>21 分钟</span>
             </span>
             <div class="post-description">基于Git、HEXO、和NEXT V7.8.0从头搭建本网站的过程</div>
 
@@ -292,8 +292,8 @@
 <h2 id="配置Git"><a href="#配置Git" class="headerlink" title="配置Git"></a>配置Git</h2><ol>
 <li>在windows菜单中，打开<code>Git Bash</code></li>
 <li>输入用户名和邮箱<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git config --global user.name <span class="string">&quot;username&quot;</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git config --global user.email <span class="string">&quot;邮件地址@youremail.com&quot;</span></span></span><br></pre></td></tr></table></figure></li>
-<li>生成新的SSH Key<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>ssh-keygen -t rsa -C <span class="string">&quot;邮件地址@youremail.com&quot;</span></span><br></pre></td></tr></table></figure>
-一直回车直到出现：<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">The key&#x27;s randomart image is:</span><br><span class="line">  +---[RSA 3072]----+</span><br><span class="line">  |<span class="string">          oo     </span>|</span><br><span class="line">  |<span class="string">         . .E    </span>|</span><br><span class="line">  |<span class="string">          + o    </span>|</span><br><span class="line">  |<span class="string">         * + +   </span>|</span><br><span class="line">  |<span class="string">        S B + o  </span>|</span><br><span class="line">  |<span class="string">         = + o.O.</span>|</span><br><span class="line">  |<span class="string">        + = . OoX</span>|</span><br><span class="line">  |<span class="string">       . . +.BoO=</span>|</span><br><span class="line">  |<span class="string">        ....+=*=*</span>|</span><br><span class="line">  +----[SHA256]-----+</span><br></pre></td></tr></table></figure></li>
+<li>生成新的SSH Key<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ssh-keygen -t rsa -C <span class="string">&quot;邮件地址@youremail.com&quot;</span></span></span><br></pre></td></tr></table></figure>
+一直回车直到出现：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">The key&#x27;s randomart image is:</span><br><span class="line">  +---[RSA 3072]----+</span><br><span class="line">  |          oo     |</span><br><span class="line">  |         . .E    |</span><br><span class="line">  |          + o    |</span><br><span class="line">  |         * + +   |</span><br><span class="line">  |        S B + o  |</span><br><span class="line">  |         = + o.O.|</span><br><span class="line">  |        + = . OoX|</span><br><span class="line">  |       . . +.BoO=|</span><br><span class="line">  |        ....+=*=*|</span><br><span class="line">  +----[SHA256]-----+</span><br></pre></td></tr></table></figure></li>
 <li>打开github，点击头像→<code>setting</code>→<code>SSH and GPG keys</code>→<code>New SSH key</code><ul>
 <li>输入<code>Title</code></li>
 <li>在Git Bash中输入<code>cat ~/.ssh/id_rsa.pub</code>后，复制出现的内容到<code>Key</code>里</li>
@@ -330,27 +330,42 @@
 </ol>
 <h2 id="在多台电脑上操作"><a href="#在多台电脑上操作" class="headerlink" title="在多台电脑上操作"></a>在多台电脑上操作</h2><p>原理：<br><code>hexo g -d</code>完成的是将在~/public文件夹下生成静态的网页文件，然后将其复制到~/.deploy_git文件夹里，再通过Github push到创建的网页分支<code>master</code>上。<br>其他文件夹hexo的模块<code>node_modules</code>，文章文件<code>source</code>，主题文件<code>themes</code>等等都没有上传到<code>master</code>上，因此可以通过再创建一个分支来进行同步。</p>
 <ol>
-<li>首先在Github的 <code>username.github.io</code> Repository中点击<code>master</code>按钮，输入<code>source</code>并回车，新建一个同步所有文件的分支<code>source</code></li>
-<li>再通过<code>branches</code>→<code>All branches</code>→<code>change default branch</code>，切换为source后<code>updata</code>，回到 <code>username.github.io</code> Repository中，在<code>code</code>中复制<code>SSH</code></li>
-<li>新建一个空文件夹XXXX，在此文件夹下右键 <code>Git bash here</code>，输入：<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="keyword">clone</span> <span class="title">复制的ssh</span></span><br></pre></td></tr></table></figure></li>
-<li>进入XXXX/username.github.io文件夹，将该文件夹下除了.git（默认是隐藏文件）的文件夹全部删除</li>
-<li>将本来网站的目录下username.github.io除了.deploy_git的文件全部复制到XXXX/username.github.io文件夹，其中有一个<code>.gitignore</code>文件，表示其中的文件不需要上传。另外，因为一个git仓库中不能包含另一个git仓库，如果在theme下git clone了主题文件，需要把相应目录下的.git文件夹删除。</li>
-<li>在命令行下，<code>cd username.github.io</code>进入该文件夹下，可以看到最后有个<code>(source)</code>表明当前在source分支下：<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">git</span> <span class="keyword">add</span> .</span><br><span class="line"><span class="symbol">git</span> commit –m <span class="string">&quot;add branch&quot;</span></span><br><span class="line"><span class="symbol">git</span> <span class="keyword">push</span> </span><br></pre></td></tr></table></figure>
+<li><p>首先在Github的 <code>username.github.io</code> Repository中点击<code>master</code>按钮，输入<code>source</code>并回车，新建一个同步所有文件的分支<code>source</code></p>
+</li>
+<li><p>再通过<code>branches</code>→<code>All branches</code>→<code>change default branch</code>，切换为source后<code>updata</code>，回到 <code>username.github.io</code> Repository中，在<code>code</code>中复制<code>SSH</code></p>
+</li>
+<li><p>新建一个空文件夹XXXX，在此文件夹下右键 <code>Git bash here</code>，输入：</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="keyword">clone</span> <span class="title">复制的ssh</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>进入XXXX/username.github.io文件夹，将该文件夹下除了.git（默认是隐藏文件）的文件夹全部删除</p>
+</li>
+<li><p>将本来网站的目录下username.github.io除了.deploy_git的文件全部复制到XXXX/username.github.io文件夹，其中有一个<code>.gitignore</code>文件，表示其中的文件不需要上传。另外，因为一个git仓库中不能包含另一个git仓库，如果在theme下git clone了主题文件，需要把相应目录下的.git文件夹删除。</p>
+</li>
+<li><p>在命令行下，<code>cd username.github.io</code>进入该文件夹下，可以看到最后有个<code>(source)</code>表明当前在source分支下：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">git</span> <span class="keyword">add</span> .</span><br><span class="line"><span class="symbol">git</span> commit –m <span class="string">&quot;add branch&quot;</span></span><br><span class="line"><span class="symbol">git</span> <span class="keyword">push</span> </span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>git add .</code>告诉Git，把文件添加到仓库</li>
 <li><code>git commit</code>告诉Git，把文件提交到仓库，-m后面是修改的说明</li>
 <li><code>git push</code> 将本地分支的更新，推送到远程</li>
 </ul>
 </li>
-<li>在其他电脑上的操作如下：<ol>
-<li>准备工作：在该电脑上需要准备好Git和Node等，配置好<code>SSH key</code>，安装hexo等等</li>
-<li>新建文件夹YYYYYYY，然后再该文件夹下 <code>git clone 复制的ssh</code>，cd 进入<code>username.github.io</code> 文件夹下，执行<code>npm install</code>下载必要的组件，也会有一个<code>.gitignore</code>文件</li>
-<li>在该文件夹下修改后，<code>hexo g -d</code>更新网站。</li>
-<li>然后将更新推送到<code>source</code>分支<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">git</span> <span class="keyword">add</span> .</span><br><span class="line"><span class="symbol">git</span> commit –m <span class="string">&quot;add branch&quot;</span></span><br><span class="line"><span class="symbol">git</span> <span class="keyword">push</span> </span><br></pre></td></tr></table></figure></li>
-<li>以后不管在原本电脑还是其他电脑上，首先<code>git pull</code> 获取更新，然后再进行修改，再推送到<code>source</code>分支。</li>
+<li><p>在其他电脑上的操作如下：</p>
+<ol>
+<li><p>准备工作：在该电脑上需要准备好Git和Node等，配置好<code>SSH key</code>，安装hexo等等</p>
+</li>
+<li><p>新建文件夹YYYYYYY，然后再该文件夹下 <code>git clone 复制的ssh</code>，cd 进入<code>username.github.io</code> 文件夹下，执行<code>npm install</code>下载必要的组件，也会有一个<code>.gitignore</code>文件</p>
+</li>
+<li><p>在该文件夹下修改后，<code>hexo g -d</code>更新网站。</p>
+</li>
+<li><p>然后将更新推送到<code>source</code>分支</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">git</span> <span class="keyword">add</span> .</span><br><span class="line"><span class="symbol">git</span> commit –m <span class="string">&quot;add branch&quot;</span></span><br><span class="line"><span class="symbol">git</span> <span class="keyword">push</span> </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>以后不管在原本电脑还是其他电脑上，首先<code>git pull</code> 获取更新，然后再进行修改，再推送到<code>source</code>分支。</p>
+</li>
 </ol>
 </li>
 </ol>
+<p>也可以直接将.git文件移动到username.github.io下，修改<code>.gitignore</code>文件，比如取消node_modules文件夹，这样在其他电脑上就不需要重新下载组件了。然后将该目录下的其他.git文件修改成.git1，完成上传后，再将.git1修改回来，这样可以把所有的上传上去。</p>
 <h1 id="文章相关"><a href="#文章相关" class="headerlink" title="文章相关"></a>文章相关</h1><h2 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h2><ol>
 <li>在根目录下右键并GIt Bash here，然后输入<code>hexo new post &quot;article title&quot;</code>，新建一篇文章，此时在~/source_posts下就出现了<code>article title.md</code>文件，进行编辑即可。</li>
 <li>为了新建文章方便，可以将~/scaffolds/post.md的Front-matter部分修改为自己默认需要的：<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> &#123;&#123; <span class="string">title</span> &#125;&#125; </span><br><span class="line"><span class="attr">date:</span> &#123;&#123; <span class="string">date</span> &#125;&#125; </span><br><span class="line"><span class="attr">updated:</span> </span><br><span class="line"><span class="attr">tags:</span> </span><br><span class="line"><span class="attr">categories:</span> </span><br><span class="line"><span class="attr">typora-root-url:</span> &#123;&#123; <span class="string">title</span> &#125;&#125; </span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
@@ -672,9 +687,7 @@
 </li>
 <li><p>在~新建文件夹/live2d_models/NAME，在NAME文件夹下，新建文件NAME.model.json，然后安装模型<code>npm install --save live2d-widget-model-NAME</code></p>
 </li>
-<li><p>增加看板动画会导致网站底部和访问量消失，解决办法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">   </span><br></pre></td></tr></table></figure>
-</li>
+<li>增加看板动画会导致网站底部和访问量消失，解决办法：<a target="_blank" rel="noopener" href="https://www.zywvvd.com/2020/03/09/next/13_busuanzi_fix_for_live2d/next-busuanzi-fix-live2d/">https://www.zywvvd.com/2020/03/09/next/13_busuanzi_fix_for_live2d/next-busuanzi-fix-live2d/</a></li>
 </ol>
 <h3 id="Mist主题首页两篇文章之间间距缩小和分割线"><a href="#Mist主题首页两篇文章之间间距缩小和分割线" class="headerlink" title="Mist主题首页两篇文章之间间距缩小和分割线"></a>Mist主题首页两篇文章之间间距缩小和分割线</h3><p>在~\themes\hexo-theme-next\source\css_schemes\Mist_posts-expand.styl文件中，修改该数值即可：</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.post-block</span><span class="selector-pseudo">:not(</span><span class="selector-pseudo">:first-child)</span> &#123;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">120px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -894,7 +907,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">32k</span>
+    <span title="站点总字数">36k</span>
 </div>
 
         
