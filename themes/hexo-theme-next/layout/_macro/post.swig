@@ -118,6 +118,8 @@
           {%- endif %}
 
           {%- if not is_index and theme.busuanzi_count.enable and theme.busuanzi_count.post_views %}
+            {#重新分段#}
+            {%- if theme.symbols_count_time.separated_meta %}<br>{%- endif %}
             <span class="post-meta-item" title="{{ __('post.views') }}" id="busuanzi_container_page_pv" style="display: none;">
               <span class="post-meta-item-icon">
                 <i class="{{ theme.busuanzi_count.post_views_icon }}"></i>
@@ -130,7 +132,7 @@
           {{- next_inject('postMeta') }}
 
           {%- if config.symbols_count_time.symbols %}
-          {%- if theme.symbols_count_time.separated_meta %}<br>{%- endif %}
+          {# {%- if theme.symbols_count_time.separated_meta %}<br>{%- endif %} #}
             <span class="post-meta-item" title="{{ __('symbols_count_time.count') }}">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>

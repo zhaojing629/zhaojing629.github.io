@@ -48,7 +48,7 @@ future: true
 highlight:
   enable: true
   line_number: true
-  auto_detect: false
+  auto_detect: true
   tab_replace: ''
   wrap: true
   hljs: false
@@ -123,3 +123,45 @@ search:
   field: post
   format: html
   limit: 1000000
+  
+  
+symbols_count_time:
+  symbols: true 
+  time: true 
+  total_symbols: true 
+  total_time: false
+
+
+live2d:
+  enable: true
+  scriptFrom: local
+  pluginRootPath: live2dw/
+  pluginJsPath: lib/
+  pluginModelPath: assets/
+  tagMode: false
+  log: false
+  model:
+    use: live2d-widget-model-hijiki
+  display:
+    vOffset: -100
+    position: right
+    width: 200
+    height: 400
+  mobile:
+    show: true
+    scale: 0.5
+  react:
+    opacity: 1.0
+  dialog:
+    enable: false
+    hitokoto: false
+
+
+# 标签云
+tag_cloud:
+    textFont: 'ZCOOL XiaoWei'
+    textColor: '#999A99'
+    textHeight: 20
+    outlineColor: '#222222'
+    maxSpeed: 0.05
+    pauseOnSelected: true
