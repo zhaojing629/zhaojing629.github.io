@@ -191,7 +191,7 @@
 <li><code>-amin</code>，<code>-atime</code>分别表示在过去 n 分钟或n天内内被读取过。<code>+n</code>，<code>-n</code>，<code>n</code>分别代表大于，小于和等于。</li>
 <li><code>-cmin</code>，<code>-ctime</code>分别表示在过去 n 分钟或n天内被修改过的文件</li>
 <li><code>-mmin</code>和<code>-mtime</code>分别表示在过去 n 分钟或n天内被更改过的文件或目录（比如权限）</li>
-<li><code>-newer</code>与文件和目录的时间相比；</li>
+<li><code>-anewer</code>,<code>-cnewer</code>,<code>-mnewer</code>与文件和目录的时间相比更新的</li>
 <li></li>
 <li><code>-size</code>查找符合指定的文件大小的文件，<code>b</code>代表512字节，<code>c</code>是字节，<code>w</code>是字（2字节），<code>k</code>是千字节，<code>M</code>是兆字节，<code>G</code>是吉字节。</li>
 <li><code>-empty</code>寻找文件大小为0 Byte的文件，或目录下没有任何子目录或文件的空目录；</li>
