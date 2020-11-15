@@ -221,51 +221,48 @@
 </ul>
 </li>
 </ul>
-<h3 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h3><ul>
-<li>匹配名字：<ul>
+<h3 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h3><h4 id="匹配名字"><a href="#匹配名字" class="headerlink" title="匹配名字"></a>匹配名字</h4><ul>
 <li>将目前目录及其子目录下所有名字为*.c的文件列出来<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -name &quot;*.c&quot; </span><br><span class="line">find . -iname &quot;*.c&quot; #不区分大小写</span><br></pre></td></tr></table></figure></li>
 <li>匹配文件路径或者文件<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find /usr/ -path &quot;*local*&quot;</span><br></pre></td></tr></table></figure></li>
 <li>基于正则表达式匹配文件路径<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -regex &quot;.*\(\.txt\|\.pdf\)$&quot;</span><br></pre></td></tr></table></figure></li>
 <li>否定：找出/home下不是以.txt结尾的文件<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find /home ! -name &quot;*.txt&quot;</span><br></pre></td></tr></table></figure></li>
-<li>查找当前目录或者子目录下所有.txt文件，但是跳过子目录sk  <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -path &quot;./sk&quot; -prune -o -name &quot;*.txt&quot; -print</span><br></pre></td></tr></table></figure></li>
-</ul>
+<li>查找当前目录或者子目录下所有.txt文件，但是跳过子目录sk  <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -path &quot;./sk&quot; -prune -o -name &quot;*.txt&quot; -print</span><br></pre></td></tr></table></figure>
 </li>
-<li>根据文件类型  <ul>
-<li>将目前目录其其下子目录中所有一般文件列出：<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -type f</span><br></pre></td></tr></table></figure></li>
 </ul>
+<h4 id="根据文件类型"><a href="#根据文件类型" class="headerlink" title="根据文件类型"></a>根据文件类型</h4><ul>
+<li>将目前目录其其下子目录中所有一般文件列出：<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -type f</span><br></pre></td></tr></table></figure>
 </li>
-<li>根据目录深度<ul>
+</ul>
+<h4 id="根据目录深度"><a href="#根据目录深度" class="headerlink" title="根据目录深度"></a>根据目录深度</h4><ul>
 <li>向下最大深度限制为3<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -maxdepth 3 -type f</span><br></pre></td></tr></table></figure></li>
-<li>搜索出深度距离当前目录至少2个子目录的所有文件<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -mindepth 2 -type f</span><br></pre></td></tr></table></figure></li>
-</ul>
+<li>搜索出深度距离当前目录至少2个子目录的所有文件<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -mindepth 2 -type f</span><br></pre></td></tr></table></figure>
 </li>
-<li>根据时间戳<ul>
+</ul>
+<h4 id="根据时间戳"><a href="#根据时间戳" class="headerlink" title="根据时间戳"></a>根据时间戳</h4><ul>
 <li>搜索最近七天内被访问过的所有文件：<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -type f -atime -7</span><br></pre></td></tr></table></figure></li>
 <li>将目前目录及其子目录下所有超过 20 天更新过的文件列出<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -ctime -20</span><br></pre></td></tr></table></figure></li>
-<li>找出比file.log修改时间更长的所有文件<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -type f -newer file.log</span><br></pre></td></tr></table></figure></li>
-</ul>
+<li>找出比file.log修改时间更长的所有文件<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -type f -newer file.log</span><br></pre></td></tr></table></figure>
 </li>
-<li>根据文件大小<ul>
-<li>查找系统中所有文件大于10KB的文件，并列出它们的完整路径<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find / -type f -size +10k -exec ls -l &#123;&#125; \;</span><br></pre></td></tr></table></figure></li>
 </ul>
+<h4 id="根据文件大小"><a href="#根据文件大小" class="headerlink" title="根据文件大小"></a>根据文件大小</h4><ul>
+<li>查找系统中所有文件大于10KB的文件，并列出它们的完整路径<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find / -type f -size +10k -exec ls -l &#123;&#125; \;</span><br></pre></td></tr></table></figure>
 </li>
-<li>删除匹配文件<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -type f -name &quot;*.txt&quot; -delete</span><br></pre></td></tr></table></figure></li>
-<li>根据文件权限/所有权进行匹配<ul>
+</ul>
+<h4 id="删除匹配文件"><a href="#删除匹配文件" class="headerlink" title="删除匹配文件"></a>删除匹配文件</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -type f -name &quot;*.txt&quot; -delete</span><br></pre></td></tr></table></figure>
+<h4 id="根据文件权限-所有权进行匹配"><a href="#根据文件权限-所有权进行匹配" class="headerlink" title="根据文件权限/所有权进行匹配"></a>根据文件权限/所有权进行匹配</h4><ul>
 <li>查找前目录中文件属主具有读、写权限，并且文件所属组的用户和其他用户具有读权限的文件<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -type f -perm 644 -exec ls -l &#123;&#125; \;</span><br></pre></td></tr></table></figure></li>
-<li>找出当前目录用户tom拥有的所有文件<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -type f -user tom</span><br></pre></td></tr></table></figure></li>
-</ul>
+<li>找出当前目录用户tom拥有的所有文件<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -type f -user tom</span><br></pre></td></tr></table></figure>
 </li>
-<li>结合其他命令：<ul>
+</ul>
+<h4 id="结合其他命令"><a href="#结合其他命令" class="headerlink" title="结合其他命令"></a>结合其他命令</h4><ul>
 <li>查找/var/log目录中更改时间在7日以前的普通文件，并在删除之前询问它们<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find /var/log -type f -mtime +7 -ok rm &#123;&#125; \;</span><br></pre></td></tr></table></figure></li>
 <li>查找当前目录下所有.txt文件并把他们拼接起来写入到all.txt文件中<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -type f -name &quot;*.txt&quot; -exec cat &#123;&#125; \;&gt; all.txt</span><br></pre></td></tr></table></figure></li>
 <li>将30天前的.log文件移动到old目录中<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -type f -mtime +30 -name &quot;*.log&quot; -exec cp &#123;&#125; old \;</span><br></pre></td></tr></table></figure></li>
 <li>找出当前目录下所有.txt文件并以“File:文件名”的形式打印出来<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -type f -name &quot;*.txt&quot; -exec printf &quot;File: %s\n&quot; &#123;&#125; \;</span><br></pre></td></tr></table></figure></li>
 <li>查找名字是Rn*的文件，并将名字中Rn的文件替换成Xe，加-type d表示修改目录<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find ./ -name &quot;Rn*&quot; -exec rename Rn Xe &#123;&#125; \;</span><br><span class="line">find . -type d -name &quot;Rn*&quot; -exec rename Rn Xe &#123;&#125; \;</span><br></pre></td></tr></table></figure></li>
 <li>删除除了名字为<em>run或者adf</em>的其他一般文件  <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -type f -not \( -name &quot;*run&quot; -or -name &quot;adf*&quot; \) -delete</span><br></pre></td></tr></table></figure></li>
-<li>将目录下所有一般文件中的_NR换成_SR，也可以用for循环<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -type f | xargs perl -pi -e &#x27;s|_NR|_SR|g&#x27;</span><br><span class="line">  </span><br><span class="line">for i in `find . -type f`</span><br><span class="line">do</span><br><span class="line">  sed -i &#x27;s/_NR/_SR/g&#x27; $i</span><br><span class="line">done</span><br></pre></td></tr></table></figure></li>
+<li>将目录下所有一般文件中的_NR换成_SR，也可以用for循环<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -type f | xargs perl -pi -e &#x27;s|_NR|_SR|g&#x27;</span><br><span class="line"></span><br><span class="line">for i in `find . -type f`</span><br><span class="line">do</span><br><span class="line">  sed -i &#x27;s/_NR/_SR/g&#x27; $i</span><br><span class="line">done</span><br></pre></td></tr></table></figure></li>
 <li>将目录下所有一般文件中某一句后面加上一句<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">for i in `find ./$path -type f`</span><br><span class="line">do</span><br><span class="line"> sed -i &#x27;/NUCLEARMODEL gaussian/arelativistic scalar zora&#x27; $i</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
 </li>
 </ul>
 <h1 id="文档编辑"><a href="#文档编辑" class="headerlink" title="文档编辑"></a>文档编辑</h1><h1 id="文件传输"><a href="#文件传输" class="headerlink" title="文件传输"></a>文件传输</h1><h1 id="磁盘管理"><a href="#磁盘管理" class="headerlink" title="磁盘管理"></a>磁盘管理</h1><h1 id="磁盘维护"><a href="#磁盘维护" class="headerlink" title="磁盘维护"></a>磁盘维护</h1><h1 id="网络通讯"><a href="#网络通讯" class="headerlink" title="网络通讯"></a>网络通讯</h1><h1 id="系统管理"><a href="#系统管理" class="headerlink" title="系统管理"></a>系统管理</h1><h1 id="系统设置"><a href="#系统设置" class="headerlink" title="系统设置"></a>系统设置</h1><h1 id="备份压缩"><a href="#备份压缩" class="headerlink" title="备份压缩"></a>备份压缩</h1><h1 id="设备管理"><a href="#设备管理" class="headerlink" title="设备管理"></a>设备管理</h1><h1 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h1>  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
