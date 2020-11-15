@@ -1,247 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Linux命令</title>
-    <url>/2019/09/25/Linux%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<h1 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h1><h2 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h2><p> Copy file 主要用于复制文件或目录</p>
-<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp [选项] [参数]</span><br></pre></td></tr></table></figure>
-<h3 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h3><ul>
-<li><code>-a</code>：此选项通常在复制目录时使用，它保留链接、文件属性，并复制目录下的所有内容。其作用等于-dpR参数组合。</li>
-<li><code>-d</code>：复制时保留链接。这里所说的链接相当于Windows系统中的快捷方式。</li>
-<li><code>-f</code>：覆盖已经存在的目标文件而不给出提示。</li>
-<li><code>-i</code>：与-f选项相反，在覆盖目标文件之前给出提示，要求用户确认是否覆盖，回答”y”时目标文件将被覆盖。</li>
-<li><code>-p</code>：除复制文件的内容外，还把修改时间和访问权限也复制到新文件中。</li>
-<li><code>-r</code>：若给出的源文件是一个目录文件，此时将复制该目录下所有的子目录和文件。</li>
-<li><code>-l</code>：不复制文件，只是生成链接文件。</li>
-</ul>
-<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><ul>
-<li><p>使用指令”cp”将当前目录”test/“下的所有文件复制到新目录”newtest”下：</p>
-<ul>
-<li>注意：用户使用该指令复制目录时，必须使用参数”-r”或者”-R”</li>
-</ul>
-<figure class="highlight haxe"><table><tr><td class="code"><pre><span class="line">cp –r test/ <span class="keyword">new</span><span class="type">test</span>  </span><br></pre></td></tr></table></figure>
-</li>
-<li><p>将一个路径下的多个文件复制到另一路径</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">cp</span> C<span class="number">2</span>v/&#123;<span class="number">7</span>_C<span class="number">2</span>v.run, adf<span class="number">17</span>.sub&#125; ........</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>交互式地将目录/usr/men中的以m打头的所有.c文件复制到目录/usr/zh中</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">cp -i <span class="regexp">/usr/m</span>en m*.c <span class="regexp">/usr/</span>zh</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>将文件file1复制为file2：【会将一个已经存在的文件file1复制并重命名为file2】</p>
-<h1 id="文档编辑"><a href="#文档编辑" class="headerlink" title="文档编辑"></a>文档编辑</h1><h1 id="文件传输"><a href="#文件传输" class="headerlink" title="文件传输"></a>文件传输</h1><h1 id="磁盘管理"><a href="#磁盘管理" class="headerlink" title="磁盘管理"></a>磁盘管理</h1><h1 id="磁盘维护"><a href="#磁盘维护" class="headerlink" title="磁盘维护"></a>磁盘维护</h1><h1 id="网络通讯"><a href="#网络通讯" class="headerlink" title="网络通讯"></a>网络通讯</h1><h1 id="系统管理"><a href="#系统管理" class="headerlink" title="系统管理"></a>系统管理</h1><h1 id="系统设置"><a href="#系统设置" class="headerlink" title="系统设置"></a>系统设置</h1><h1 id="备份压缩"><a href="#备份压缩" class="headerlink" title="备份压缩"></a>备份压缩</h1><h1 id="设备管理"><a href="#设备管理" class="headerlink" title="设备管理"></a>设备管理</h1><h1 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h1>]]></content>
-      <categories>
-        <category>系统</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ADF的SCF相关</title>
-    <url>/2019/09/23/SCF%E7%9B%B8%E5%85%B3/</url>
-    <content><![CDATA[<h1 id="SCF选项"><a href="#SCF选项" class="headerlink" title="SCF选项"></a>SCF选项</h1><figure class="highlight puppet"><table><tr><td class="code"><pre><span class="line">SCF</span><br><span class="line"> Iterations Niter</span><br><span class="line"> Converge <span class="keyword">SCFcnv</span> &#123; sconv2 &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">AccelerationMethod</span> &#123; ADIIS | LISTi | LISTb | fDIIS | LISTf | MESA | SDIIS &#125;</span><br><span class="line"> <span class="keyword">MESA</span> [NoFDIIS] [NoLISTb] [NoLISTf] [NoLISTi] [NoSDIIS] [NoADIIS]</span><br><span class="line"> ADIIS</span><br><span class="line">   &#123;THRESH1 a1&#125;</span><br><span class="line">   &#123;THRESH2 a2&#125;</span><br><span class="line"> End</span><br><span class="line"> NoADIIS</span><br><span class="line"> DIIS</span><br><span class="line">   &#123;N n&#125;</span><br><span class="line">   &#123;OK ok&#125;</span><br><span class="line">   &#123;cyc cyc&#125;</span><br><span class="line"> End</span><br><span class="line"> Mixing mix</span><br><span class="line"> Mixing1 mix1</span><br><span class="line"></span><br><span class="line"> OldSCF</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
-<h2 id="Iterations"><a href="#Iterations" class="headerlink" title="Iterations"></a>Iterations</h2><p><code>Iterations</code>SCF迭代的最大次数，<code>Niter</code>默认是<code>300</code></p>
-<h2 id="Converge"><a href="#Converge" class="headerlink" title="Converge"></a>Converge</h2><p><code>Converge</code> ：</p>
-<ul>
-<li><code>SCFcnv</code>表示停止迭代的收敛限，默认是<code>1e-6</code>。</li>
-<li><code>sconv2</code>表示SCF过程难以收敛时起作用的第二个标准，默认是<code>1e-3</code>，如果达到了，仅发出警告，但是继续计算。仍无法达到的时候SCF不收敛，只能用<code>ALLOW</code>来继续</li>
-</ul>
-<h2 id="AccelerationMethod"><a href="#AccelerationMethod" class="headerlink" title="AccelerationMethod"></a>AccelerationMethod</h2><p><code>AccelerationMethod</code>调用的SCF加速方法，默认情况下为<code>ADIIS</code>，还可以用<code>LISTi</code> | <code>LISTb</code> | <code>fDIIS</code> | <code>LISTf</code> | <code>MESA</code> | <code>SDIIS</code></p>
-<h3 id="MESA"><a href="#MESA" class="headerlink" title="MESA"></a>MESA</h3><p><code>AccelerationMethod MESA</code>是ADIIS, fDIIS, LISTb, LISTf, LISTi和 SDIIS方法的组合<br><code>MESA NoSDIIS</code>代表从其中删掉某一种方法，也可以直接使用该关键词调用MESA，优先级大于<code>AccelerationMethod</code>指定的方法。</p>
-<h3 id="ADIIS"><a href="#ADIIS" class="headerlink" title="ADIIS"></a>ADIIS</h3><p>使用ADIIS + SDIIS方法，根据 [F,P] 交换子矩阵中的最大元素<code>ErrMax</code>来确定具体方法：</p>
-<ul>
-<li>当ErrMax≥<code>a1</code>，只使用A-DIIS系数</li>
-<li>当ErrMax≤ <code>a2</code>，只使用SDIIS系数</li>
-<li>当<code>a2</code>≤ ErrMax≤ <code>a1</code>，根据ErrMax的值按一定的权重来计算<br><code>a1</code>和<code>a2</code>的默认值是<code>0.01</code>和<code>0.0001</code>，收敛比较困难的时候，可以降低阈值，只使用A-DIIS系数</li>
-</ul>
-<h3 id="SDIIS"><a href="#SDIIS" class="headerlink" title="SDIIS"></a>SDIIS</h3><p><code>AccelerationMethod SDIIS</code>与在没有指定<code>oldscf</code>的情况下使用<code>NoADIIS</code>意思相同，采用的是阻尼+SDIIS方法。从简单阻尼（Mixing）开始，持续到<code>ErrMax</code>降低到<code>DIIS OK</code>参数以下，但是不超过<code>DIIS Cyc</code>次迭代。之后使用纯的SDIIS方法。</p>
-<blockquote>
-<p>在指定<code>oldscf</code>的情况下使用<code>NoADIIS</code>会禁用在SCF收敛困难的时候自动切换到ADIIS + SDIIS方法</p>
-</blockquote>
-<ul>
-<li>指定<code>NoADIIS</code>时才可以设置 <code>DIIS</code>模块：<ul>
-<li><code>N</code>用于加速SCF的扩展向量的数量，默认为<code>10</code>，小于2后会禁用DIIS。此数字不仅适用于Pulay DIIS方案，还适用于其他类似DIIS的方法，例如A-DIIS和LIST方法。<blockquote>
-<p>LIST家族的方法对使用的扩展向量的数量非常敏感，接近收敛时，LIST中的向量数量会增加，但始终受<code>DIIS N</code>的限制，当难以收敛时，可以将<code>DIIS N</code>设置为大于10的值，比如12~20。</p>
-</blockquote>
-</li>
-<li><code>OK</code>禁用A-DIIS时，SDIIS起始条件。默认为<code>0.5</code> a.u.。</li>
-<li><code>Cyc</code>禁用A-DIIS时，无论上面的<code>DIIS OK</code>值如何，SDIIS都会在此迭代下启动，默认值为<code>5</code></li>
-</ul>
-</li>
-<li><code>Mixing</code>中，指将下一个Fock矩阵确定为<script type="math/tex">F = mix F_{n} + (1-mix) F_{n-1}</script>，<code>mix</code>默认为<code>0.2</code></li>
-<li><code>Mixing1</code>中指第一个SCF循环的混合参数值不同，默认为<code>0.2</code></li>
-</ul>
-<h2 id="oldSCF"><a href="#oldSCF" class="headerlink" title="oldSCF"></a>oldSCF</h2><p>在使用<code>Occupations Steep</code>、<code>Lshift</code>，<code>ARH</code>，<code>EDIIS</code>，<code>RESTOCC</code>时，会自动启用<code>oldSCF</code></p>
-<h3 id="Lshift"><a href="#Lshift" class="headerlink" title="Lshift"></a>Lshift</h3><p>能级移动方法，在前一次迭代的轨道表示中，Fock矩阵的对角元素提高虚轨道的<code>vshift</code>hartree。旋轨耦合不支持这种方法。</p>
-<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">Lshift</span> <span class="string">vshift</span></span><br><span class="line"><span class="attr">Lshift_err</span> <span class="string">Shift_err</span></span><br><span class="line"><span class="attr">Lshift_cyc</span> <span class="string">Shift_cyc</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>Lshift_err</code>指定一旦SCF error降至阈值以下，程序将关闭能级移动，<code>Shift_err</code>默认值为<code>0</code>。</li>
-<li><code>Lshift_cyc</code>指定在第几个SCF 迭代次数的时候再启动能级移动， <code>Shift_cyc</code>默认为<code>1</code>。</li>
-</ul>
-<h3 id="ARH"><a href="#ARH" class="headerlink" title="ARH"></a>ARH</h3><figure class="highlight dust"><table><tr><td class="code"><pre><span class="line"><span class="xml">SCF</span></span><br><span class="line"><span class="xml">  ARH</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;CONV conv&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;ITER iter&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;NSAVED nsaved&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;START start&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;FINAL&#125;</span><span class="xml"> ...</span></span><br><span class="line"><span class="xml">  End</span></span><br><span class="line"><span class="xml">  ...</span></span><br><span class="line"><span class="xml">End</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>CONV</code>：当RMS梯度及其最大分量均低于<code>conv</code>，ARH收敛，<code>conv</code>默认是1e-4</li>
-<li><code>ITER</code>：最大ARH迭代次数，<code>iter</code>默认为500</li>
-<li><code>FINAL</code>：确定ARH完成后是否继续SCF。如果设置了此选项，将执行一次Fock矩阵对角化以获得轨道，并且将停止SCF过程。默认选项为<code>OFF</code>。</li>
-<li><code>START</code>：开始调用ARH的SCF迭代次数，<code>start</code>默认为2。使用较大的值可以为ARH提供更好的初猜</li>
-<li><code>NSAVED</code>：保存密度和Fock矩阵的数量。 <code>nsaved</code>默认为8。在非常接近费米能级的轨道数很大的收敛困难时，应使用较大的<code>nsaved</code>值。</li>
-<li>默认的最小化方法是“Untransformed Pre-conditioned Conjugate Gradient”，可以使用以下两个关键词更改：<ul>
-<li><code>NOPRECOND</code>：禁用Untransformed Pre-conditioned CG最小化，不能在第二周期后的元素里使用</li>
-<li><code>TRANSPCG</code>：启用Transformed Pre-conditioned CG 方法，SCF可能会更好的收敛。</li>
-</ul>
-</li>
-<li>在每一步SCF中，先执行常规CG最小化，跟踪总步长，如果在某个微迭代中步长超过了信任半径，则过程将在缩小的空间中切换到信任半径优化，在能级移动参数mu收敛后立即中止。在CG最小化期间生成的所有试验矢量的缩小空间中，将最终步骤计算为牛顿步骤。可以通过以下关键词修改参数：<ul>
-<li><code>NOSWITCHING</code>：关闭从普通CG到缩小的空间中的信任半径最小化的切换。在某些情况下，使用此选项有助于减少SCF循环的总数。</li>
-<li><code>SHIFTED</code>：设置此选项将在第一次微迭代中打开信任半径优化。</li>
-<li><code>CGITER=cgiter</code>：设置微迭代的最大数量。</li>
-<li>确定置信半径：<ul>
-<li><code>TRUSTR=trustr</code>：信任半径的初始值。默认为<code>0.5</code></li>
-<li><code>MAXTRUSTR=maxtrustr</code>：最大信任半径值。默认为<code>0.5</code>，并且不会改变。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>缺点：<ul>
-<li>该方法仅适用于NOSYM计算</li>
-<li>在每一步都要计算总能量，计算非常昂贵，而且使用总能量，需要更高的积分精度才能获得稳定的SCF收敛，该方法可能不适用于所有情况，??使用<code>ADDDIFFUSEFIT</code>关键字或更高的<code>ZlmFit</code>质量设置来提高总能量的准确性，从而提高收敛性。??</li>
-</ul>
-</li>
-</ul>
-<h1 id="SCF不收敛"><a href="#SCF不收敛" class="headerlink" title="SCF不收敛"></a>SCF不收敛</h1><ol>
-<li>更换SCF加速收敛的方法</li>
-<li>使用ARH方法</li>
-<li>修改DIIS算法的参数<ul>
-<li><code>Mixing</code>高于默认值<code>0.2</code>会有更高的加速度，更低会更稳定的迭代</li>
-<li><code>N</code>默认为<code>10</code>，越大用于加速SCF的扩展向量的数量越多，SCF迭代更稳定，最多到25</li>
-<li><code>Cyc</code>是SDIIS启动的初始SCF迭代步数，默认值为<code>5</code>，更高计算越稳定<br>比如使用如下参数：<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">SCF</span></span><br><span class="line">    <span class="attribute">DIIS</span></span><br><span class="line">      <span class="attribute">N</span> <span class="number">25</span></span><br><span class="line">      <span class="attribute">Cyc</span> <span class="number">30</span></span><br><span class="line">    <span class="attribute">End</span></span><br><span class="line">    <span class="attribute">Mixing</span> <span class="number">0</span>.<span class="number">015</span></span><br><span class="line">    <span class="attribute">Mixing1</span> <span class="number">0</span>.<span class="number">09</span></span><br><span class="line">  <span class="attribute">End</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li>HOMO-LUMO较为接近的情况（0.02Hatree以内），可能造成HOMO-LUMO的震荡。可以使用<code>Lshift vshift</code>方法，不适于激发态的计算、解析频率、旋轨耦合的计算。</li>
-<li>使用Electron smearing设定在允许的能量范围内分数占据。</li>
-<li>其他：<a href="https://www.fermitech.com.cn/wiki/doku.php?id=adf:scfnonconvergence">费米维基</a>的2、3、5。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>ADF</category>
-      </categories>
-      <tags>
-        <tag>SCF</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>EDA-NOCV</title>
-    <url>/2020/02/07/EDA-NOCV/</url>
-    <content><![CDATA[<h1 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h1><h2 id="碎片"><a href="#碎片" class="headerlink" title="碎片"></a>碎片</h2><ul>
-<li>根据体系，指定电荷和自选多重度，确定碎片是闭壳层还是开壳层<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">charge <span class="number">0</span> <span class="number">-3</span></span><br><span class="line">unrestricted</span><br></pre></td></tr></table></figure></li>
-<li>可以根据整体分子的对称性指定碎片的对称性<ul>
-<li>过渡金属配合物设置对称性的注意事项：<ul>
-<li>金属原子设置为原点，如果是金属团簇，则原点设置在金属团簇的中心，高对称轴设置为z轴（例如金属原子参与成键的是d、f轨道，但是分子却具有C<sub>3</sub>、C<sub>5</sub>、C<sub>7</sub>……这样的奇数的转动对称，这样设置是必须的)。设置方法是在图形界面中Edit→Align→（设置xy平面或者设置z轴），再通过Edit→Set Origin设置原点，最后可以通过View→Axes观看坐标轴来确认。</li>
-<li>近似对称结构，金属碎片需要设置与对称结构相同的点群，例如Oh群八羰基配合物，其中一个羰基被替换为其他结构，金属原子仍然需要设置为Oh群</li>
-<li>NOCV不支持点群，EDA支持，因此虽然NOCV分析默认会做EDA分析，但是建议分别都做一个，便于分析不同对称性的碎片轨道的共价作用  </li>
-</ul>
-</li>
-</ul>
-</li>
-<li>有时候默认计算得到的结果可能导致分数占据、占据的轨道不正确、碎片的自旋不匹配等，尤其是金属原子作为一个碎片，需要注意其电子占据方式、自旋多重度，此时需要根据碎片的闭壳层/开壳层、对称性和占据，通过<code>IRREPOCCUPATIONS</code>来指定其占据方式，也可以在整体分子中通过<code>FRAGOCCUPATIONS</code>指定。<br>eg. 开壳层的β电子指定：    <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">IRREPOCCUPATIONS</span></span><br><span class="line"><span class="attribute">sigma</span> <span class="number">1</span> <span class="number">0</span> <span class="number">0</span>//<span class="number">1</span> <span class="number">1</span> <span class="number">0</span></span><br><span class="line"><span class="attribute">pi</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>//<span class="number">2</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line"><span class="attribute">end</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="整体分子"><a href="#整体分子" class="headerlink" title="整体分子"></a>整体分子</h2><ol>
-<li>碎片数不局限，在分子坐标后面跟上<code>f=name</code>，然后在<code>Fragments</code>中指定碎片的t21文件，比如：<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">ATOMS</span></span><br><span class="line"><span class="attribute">1</span> H       <span class="number">0</span>.<span class="number">000000000010</span>      -<span class="number">0</span>.<span class="number">000000000016</span>       <span class="number">1</span>.<span class="number">080824461000</span>  f=f<span class="number">1</span> </span><br><span class="line"><span class="attribute">2</span> C      -<span class="number">0</span>.<span class="number">000000000012</span>       <span class="number">0</span>.<span class="number">000000000015</span>       <span class="number">0</span>.<span class="number">036537953000</span>  f=f<span class="number">2</span></span><br><span class="line"><span class="attribute">3</span> N       <span class="number">0</span>.<span class="number">000000000002</span>       <span class="number">0</span>.<span class="number">000000000002</span>      -<span class="number">1</span>.<span class="number">117362414000</span>  f=f<span class="number">2</span></span><br><span class="line"><span class="attribute">END</span> </span><br><span class="line"></span><br><span class="line"><span class="attribute">Fragments</span></span><br><span class="line">    <span class="attribute">f1</span> H.t<span class="number">21</span> </span><br><span class="line">    <span class="attribute">f2</span> CN.t<span class="number">21</span> </span><br><span class="line"><span class="attribute">end</span></span><br></pre></td></tr></table></figure></li>
-<li>整体分子的计算不能使用对称性，需要用<code>symmetry nosym</code></li>
-<li>需要使用<code>ETSNOCV</code>和<code>PRINT &#123;ETSLOWDIN | ETSLOWDIN-Unrestricted&#125;</code>关键词：<ul>
-<li><code>ETSNOCV</code>指定打印NOCV相关信息的阈值：<ul>
-<li><code>RHOKMIN</code>各个SFO对每个变形密度贡献进行总体分析的阈值</li>
-<li><code>EKMIN</code>轨道相互作用能量贡献的阈值</li>
-<li><code>ENOCV</code>NOCV特征值的阈值<br>当三个关键词都省略时，只分析NOCV特征值绝对值≥0.05的</li>
-</ul>
-</li>
-<li><code>PRINT &#123;ETSLOWDIN | ETSLOWDIN-Unrestricted&#125;</code>中：<ul>
-<li>如果计算的是闭壳层碎片，使用<code>PRINT ETSLOWDIN</code>，输出的是总形变密度</li>
-<li>如果计算的是开壳层碎片，使用<code>PRINT ETSLOWDIN-Unrestricted</code>，输出的是α和β两组NOCV   <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">ETSNOCV</span><br><span class="line">   &#123;RHOKMIN rhokmin&#125;</span><br><span class="line">   &#123;EKMIN ekmin&#125;</span><br><span class="line">   &#123;ENOCV enocv&#125;</span><br><span class="line">End</span><br><span class="line"><span class="section">PRINT</span> &#123;<span class="attribute">ETSLOWDIN</span> | ETSLOWDIN-Unrestricted&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>还可以根据需要使用<code>PRINT NOCVHirshfeld</code>来区分片段间还是片段内的NOCV，输出文件会打印每个NOCV的$\int{\Delta \rho} = -\Delta Q$值到ETS-NOCV末尾的“Hirshfeld partitioning” ：<ul>
-<li>片段间NOCV具有非零积分Hirshfeld$\Delta Q$值，并且对应于片段之间的电荷转移</li>
-<li>片段内NOCV具有小的$\Delta Q$值，并且对应于片段的极化。</li>
-</ul>
-</li>
-</ol>
-<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><h3 id="HCN拆分成H-和CN-闭壳层分析"><a href="#HCN拆分成H-和CN-闭壳层分析" class="headerlink" title="HCN拆分成H+和CN-闭壳层分析"></a>HCN拆分成H<sup>+</sup>和CN<sup>-</sup>闭壳层分析</h3><p>H<sup>+</sup></p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> H       <span class="number">0.000000000010</span>      <span class="number">-0.000000000016</span>       <span class="number">1.080824461000</span>    </span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line"></span><br><span class="line">CHARGE <span class="number">1.0</span></span><br><span class="line"></span><br><span class="line">……</span><br></pre></td></tr></table></figure>
-<p>CN<sup>-</sup></p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> N       <span class="number">0.000000000002</span>       <span class="number">0.000000000002</span>      <span class="number">-1.117362414000</span>    </span><br><span class="line"><span class="number">2</span> C      <span class="number">-0.000000000012</span>       <span class="number">0.000000000015</span>       <span class="number">0.036537953000</span>    </span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line"></span><br><span class="line">CHARGE <span class="number">-1.0</span></span><br><span class="line">……</span><br></pre></td></tr></table></figure>
-<p>HCN</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> H       <span class="number">0.000000000010</span>      <span class="number">-0.000000000016</span>       <span class="number">1.080824461000</span>  f=f1 </span><br><span class="line"><span class="number">2</span> C      <span class="number">-0.000000000012</span>       <span class="number">0.000000000015</span>       <span class="number">0.036537953000</span>  f=f2</span><br><span class="line"><span class="number">3</span> N       <span class="number">0.000000000002</span>       <span class="number">0.000000000002</span>      <span class="number">-1.117362414000</span>  f=f2</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line"></span><br><span class="line">FRAGOCCUPATIONS</span><br><span class="line">Region_1</span><br><span class="line">A <span class="number">0</span><span class="comment">//0</span></span><br><span class="line">SUBEND</span><br><span class="line">Region_2</span><br><span class="line">A <span class="number">5</span><span class="comment">//5</span></span><br><span class="line">SUBEND</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">Fragments</span><br><span class="line">    f1 H.t21 </span><br><span class="line">    f2 CN.t21 </span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">ETSNOCV</span><br><span class="line">PRINT ETSLOWDIN-UNRESTRICTED</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
-<p>输出结果中，为α和β两组NOCV</p>
-<h3 id="HCN拆分成H和CN开壳层分析"><a href="#HCN拆分成H和CN开壳层分析" class="headerlink" title="HCN拆分成H和CN开壳层分析"></a>HCN拆分成H和CN开壳层分析</h3><p>H</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> H       <span class="number">0.000000000013</span>      <span class="number">-0.000000000021</span>       <span class="number">2.374453386206</span>    </span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
-<p>CN</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> N       <span class="number">0.000000000004</span>      <span class="number">-0.000000000003</span>       <span class="number">0.176266511365</span>    </span><br><span class="line"><span class="number">2</span> C      <span class="number">-0.000000000009</span>       <span class="number">0.000000000010</span>       <span class="number">1.330166878460</span>    </span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
-<p>HCN</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> H       <span class="number">0.000000000013</span>      <span class="number">-0.000000000021</span>       <span class="number">2.374453386206</span>  f=f1</span><br><span class="line"><span class="number">2</span> C      <span class="number">-0.000000000009</span>       <span class="number">0.000000000010</span>       <span class="number">1.330166878460</span>  f=f2 </span><br><span class="line"><span class="number">3</span> N       <span class="number">0.000000000004</span>      <span class="number">-0.000000000003</span>       <span class="number">0.176266511365</span>  f=f2</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line"></span><br><span class="line">FRAGOCCUPATIONS</span><br><span class="line">Region_1</span><br><span class="line">A <span class="number">1</span><span class="comment">//0</span></span><br><span class="line">SUBEND</span><br><span class="line">Region_2</span><br><span class="line">A <span class="number">4</span><span class="comment">//5</span></span><br><span class="line">SUBEND</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">Fragments</span><br><span class="line">    f1 H.t21 </span><br><span class="line">    f2 CN.t21 </span><br><span class="line">end</span><br><span class="line">ETSNOCV</span><br><span class="line">PRINT ETSLOWDIN-UNRESTRICTED</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
-<h1 id="EDA分解结果"><a href="#EDA分解结果" class="headerlink" title="EDA分解结果"></a>EDA分解结果</h1><ul>
-<li>总的能量<script type="math/tex">ΔE_{total}＝ΔE_{elstat}＋ΔE_{Pauli}＋ΔE_{orb}+ΔE_{prep}+(ΔE_{disp})</script>分为以下几项：<ul>
-<li>泡利排斥$ΔE_{Pauli}$：两个片段占据轨道之间的排斥作用，会导致能量升高（＞0），电子和电子之间的泡利排斥大概在1玻尔的范围内。</li>
-<li>静电吸引$ΔE_{elstat}$：分子中片段局部位置不是电中心，会存在简单的的 静电相互作用能，会让能量降低（＜0）</li>
-<li>轨道作用$ΔE_{orb}$：本质是共价作用（电子的共享）（＜0）<ul>
-<li>一个片段占据轨道另一个片段空轨道之间的“电子转移”，能量降低</li>
-<li>一个片段自身占据轨道与空轨道的电子转移，能量降低</li>
-</ul>
-</li>
-<li>$ΔE_{prep}$：准备能，片段从它的自由状态（孤立存在的时候，能量最低点），能量升高，变形为在分子中的形状，这个过程所增加的能量，该项非负</li>
-<li>色散作用$ΔE_{disp}$：在使用色散修正泛函的话才存在</li>
-</ul>
-</li>
-<li>ADF的结果中包含的依次是<script type="math/tex">ΔE_{Pauli}+ΔE_{elstat}+ΔE_{orb}=ΔE_{int}</script><br><img src="1.png" style="zoom:80%;" /></li>
-<li>键能有两种：<ul>
-<li>一种直接是$ΔE_{int}$</li>
-<li>一种是在$ΔE<em>{int}$的基础上加上准备能$ΔE</em>{prep}$，计算方法是将片段，分别进行能量最小化，之后的能量降低量之和，即准备能（＞0）</li>
-</ul>
-</li>
-</ul>
-<h1 id="NOCV结果"><a href="#NOCV结果" class="headerlink" title="NOCV结果"></a>NOCV结果</h1><h2 id="轨道相互作用能"><a href="#轨道相互作用能" class="headerlink" title="轨道相互作用能"></a>轨道相互作用能</h2><p>轨道相互作用能的贡献根据闭壳层（只有一组）和开壳层（分为α和β两组）的结果列出：<br><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">================</span><br><span class="line">Alpha resolution</span><br><span class="line">================</span><br><span class="line"> </span><br><span class="line"><span class="number">1.</span> Eigenvalue pairs <span class="keyword">from</span> diagonalization of DeltaP expressed <span class="keyword">in</span> Lowdin - alpha:</span><br><span class="line">   <span class="number">1</span>  <span class="number">-0.56641</span>   <span class="number">31</span>   <span class="number">0.56641</span></span><br><span class="line">   <span class="number">2</span>  <span class="number">-0.12938</span>   <span class="number">30</span>   <span class="number">0.12938</span></span><br><span class="line">   <span class="number">3</span>  <span class="number">-0.06636</span>   <span class="number">29</span>   <span class="number">0.06636</span></span><br><span class="line">   <span class="number">4</span>  <span class="number">-0.06636</span>   <span class="number">28</span>   <span class="number">0.06636</span></span><br><span class="line"><span class="number">2.</span> Orbital Interaction Energy Contributions <span class="keyword">from</span> each NOCV pair - alpha(<span class="keyword">in</span> a.u.)</span><br><span class="line">  <span class="number">1</span>  <span class="number">-0.17666</span></span><br><span class="line">  <span class="number">2</span>  <span class="number">-0.01565</span></span><br><span class="line">  <span class="number">3</span>  <span class="number">-0.00352</span></span><br><span class="line">  <span class="number">4</span>  <span class="number">-0.00352</span></span><br><span class="line"><span class="number">3.</span> Orbital Interaction Energy Contributions <span class="keyword">from</span> each NOCV pair - alpha(<span class="keyword">in</span> kcal/mol)</span><br><span class="line">  <span class="number">1</span><span class="number">-110.85632</span></span><br><span class="line">  <span class="number">2</span>  <span class="number">-9.81984</span></span><br><span class="line">  <span class="number">3</span>  <span class="number">-2.21067</span></span><br><span class="line">  <span class="number">4</span>  <span class="number">-2.21067</span></span><br><span class="line">Total sum [alpha]:  <span class="number">-125.507539810232</span>  </span><br></pre></td></tr></table></figure></p>
-<ol>
-<li>本征值，按本征值的绝对值的大小列出，也即贡献的大小</li>
-<li>与本征值对应的轨道的能量，单位是Hatree</li>
-<li>与本征值对应的轨道的能量，单位是kcal/mol</li>
-</ol>
-<h2 id="电子转移"><a href="#电子转移" class="headerlink" title="电子转移"></a>电子转移</h2><ul>
-<li>每个本征值的NOCV，电子在片段轨道之间，是如何在SFO碎片轨道中转移的：<ul>
-<li>比如本征值为±0.56641的NOCV中，1、7号SFO分别失去0.61238、0.04257个电子，10、2号SFO得到0.62190、0.01341个电子    </li>
-<li>SFO轨道可以在out文件中的<code>S F O s</code>模块查看，也可以通过图形界面查看 （通过SCM→View→Add Isosurface:with phase→Select Field→SFOs选择对应的SFO编号，查看其空间分布形状）<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">=============================================================</span><br><span class="line"> SFO decomposition of alpha Delta rho k (major contributions):</span><br><span class="line"> =============================================================</span><br><span class="line">  </span><br><span class="line"> Threshold <span class="keyword">for</span> a NOCVs energy (<span class="keyword">in</span> kcal/mol) <span class="keyword">is</span>   <span class="number">2.00000000000000</span>     </span><br><span class="line"> Threshold <span class="keyword">for</span> an individual SFO contribution <span class="keyword">is</span>  <span class="number">1.000000000000000E-002</span></span><br><span class="line"></span><br><span class="line">   <span class="number">1</span>   NOCV eigenvalues:  <span class="number">-0.56641</span>   <span class="number">0.56641</span></span><br><span class="line">       Corresponding Delta E k:<span class="number">-110.85632</span>  (kcal/mol)</span><br><span class="line">       <span class="number">10</span>   SFO contribution:   <span class="number">0.62190</span></span><br><span class="line">        <span class="number">1</span>   SFO contribution:  <span class="number">-0.61238</span></span><br><span class="line">        <span class="number">7</span>   SFO contribution:  <span class="number">-0.04257</span></span><br><span class="line">        <span class="number">2</span>   SFO contribution:   <span class="number">0.01341</span></span><br><span class="line">       Sum <span class="keyword">from</span> all SFOs:   <span class="number">-0.79216E-02</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li>通过SCM→View→Add→Isosurface:with phase→Select Field→NOCV Orbitals选择±本征值查看成键前后分子轨道的图像：<ul>
-<li>选择本征值为负的，表示轨道相互作用前分子轨道的图像</li>
-<li>选择本征值为正的，表示轨道相互作用后分子轨道的图像</li>
-</ul>
-</li>
-<li>通过SCM→View→Add→Isosurface:with phase→Select Field→NOCV def Density选对应的本征值观看轨道图像显示成键时的电子转移：<ul>
-<li>红色区域，代表这个区域失去了电子</li>
-<li>蓝色区域，代表这个区域得到了电子<br>由于电子得失比较少，因此等值面的大小需要改到0.005左右。</li>
-</ul>
-</li>
-<li>NOCV def Densities，是“正本征值NOCV orbital的模方” - “负本征值NOCV orbital的模方”：<ul>
-<li>负本征值NOCV Orbital实际上一部分是占据电子的，另一部分是不占据电子的</li>
-<li>正本征值NOCV Orbital则是形成化学键，整个轨道上都占了电子的<br>因此NOCV def Densities表示电子的流向，负值表示失去电子，正值表示得到电子。只有NOCV def Density能够可靠地、直观地、明确无误地表征成键作用，文献中一般也只讨论NOCV def Density。</li>
-</ul>
-</li>
-<li>开壳层体系中NOCV def Density会分成α和β两组，如果需要看整体的，则需要Fields→Calculated，在Select Fields中选择配对的α和β轨道，中间的符号换成+，然后在SCM→View→Add→Isosurface:with phase→Select Field选择C-1。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>ADF</category>
-      </categories>
-      <tags>
-        <tag>能量分解</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>双原子分子的光谱项</title>
     <url>/2020/11/11/%E5%8F%8C%E5%8E%9F%E5%AD%90%E5%88%86%E5%AD%90%E7%9A%84%E5%85%89%E8%B0%B1%E9%A1%B9/</url>
     <content><![CDATA[<h1 id="2S-1-Lambda-简单确定方法"><a href="#2S-1-Lambda-简单确定方法" class="headerlink" title="$^{2S+1}\Lambda$简单确定方法"></a>$^{2S+1}\Lambda$简单确定方法</h1><p>根据分子轨道占据来确定双原子的分子光谱项为$^{2S+1}\Lambda$：</p>
@@ -365,6 +124,247 @@
       </categories>
       <tags>
         <tag>光谱项</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>EDA-NOCV</title>
+    <url>/2020/02/07/EDA-NOCV/</url>
+    <content><![CDATA[<h1 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h1><h2 id="碎片"><a href="#碎片" class="headerlink" title="碎片"></a>碎片</h2><ul>
+<li>根据体系，指定电荷和自选多重度，确定碎片是闭壳层还是开壳层<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">charge <span class="number">0</span> <span class="number">-3</span></span><br><span class="line">unrestricted</span><br></pre></td></tr></table></figure></li>
+<li>可以根据整体分子的对称性指定碎片的对称性<ul>
+<li>过渡金属配合物设置对称性的注意事项：<ul>
+<li>金属原子设置为原点，如果是金属团簇，则原点设置在金属团簇的中心，高对称轴设置为z轴（例如金属原子参与成键的是d、f轨道，但是分子却具有C<sub>3</sub>、C<sub>5</sub>、C<sub>7</sub>……这样的奇数的转动对称，这样设置是必须的)。设置方法是在图形界面中Edit→Align→（设置xy平面或者设置z轴），再通过Edit→Set Origin设置原点，最后可以通过View→Axes观看坐标轴来确认。</li>
+<li>近似对称结构，金属碎片需要设置与对称结构相同的点群，例如Oh群八羰基配合物，其中一个羰基被替换为其他结构，金属原子仍然需要设置为Oh群</li>
+<li>NOCV不支持点群，EDA支持，因此虽然NOCV分析默认会做EDA分析，但是建议分别都做一个，便于分析不同对称性的碎片轨道的共价作用  </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>有时候默认计算得到的结果可能导致分数占据、占据的轨道不正确、碎片的自旋不匹配等，尤其是金属原子作为一个碎片，需要注意其电子占据方式、自旋多重度，此时需要根据碎片的闭壳层/开壳层、对称性和占据，通过<code>IRREPOCCUPATIONS</code>来指定其占据方式，也可以在整体分子中通过<code>FRAGOCCUPATIONS</code>指定。<br>eg. 开壳层的β电子指定：    <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">IRREPOCCUPATIONS</span></span><br><span class="line"><span class="attribute">sigma</span> <span class="number">1</span> <span class="number">0</span> <span class="number">0</span>//<span class="number">1</span> <span class="number">1</span> <span class="number">0</span></span><br><span class="line"><span class="attribute">pi</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>//<span class="number">2</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line"><span class="attribute">end</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="整体分子"><a href="#整体分子" class="headerlink" title="整体分子"></a>整体分子</h2><ol>
+<li>碎片数不局限，在分子坐标后面跟上<code>f=name</code>，然后在<code>Fragments</code>中指定碎片的t21文件，比如：<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">ATOMS</span></span><br><span class="line"><span class="attribute">1</span> H       <span class="number">0</span>.<span class="number">000000000010</span>      -<span class="number">0</span>.<span class="number">000000000016</span>       <span class="number">1</span>.<span class="number">080824461000</span>  f=f<span class="number">1</span> </span><br><span class="line"><span class="attribute">2</span> C      -<span class="number">0</span>.<span class="number">000000000012</span>       <span class="number">0</span>.<span class="number">000000000015</span>       <span class="number">0</span>.<span class="number">036537953000</span>  f=f<span class="number">2</span></span><br><span class="line"><span class="attribute">3</span> N       <span class="number">0</span>.<span class="number">000000000002</span>       <span class="number">0</span>.<span class="number">000000000002</span>      -<span class="number">1</span>.<span class="number">117362414000</span>  f=f<span class="number">2</span></span><br><span class="line"><span class="attribute">END</span> </span><br><span class="line"></span><br><span class="line"><span class="attribute">Fragments</span></span><br><span class="line">    <span class="attribute">f1</span> H.t<span class="number">21</span> </span><br><span class="line">    <span class="attribute">f2</span> CN.t<span class="number">21</span> </span><br><span class="line"><span class="attribute">end</span></span><br></pre></td></tr></table></figure></li>
+<li>整体分子的计算不能使用对称性，需要用<code>symmetry nosym</code></li>
+<li>需要使用<code>ETSNOCV</code>和<code>PRINT &#123;ETSLOWDIN | ETSLOWDIN-Unrestricted&#125;</code>关键词：<ul>
+<li><code>ETSNOCV</code>指定打印NOCV相关信息的阈值：<ul>
+<li><code>RHOKMIN</code>各个SFO对每个变形密度贡献进行总体分析的阈值</li>
+<li><code>EKMIN</code>轨道相互作用能量贡献的阈值</li>
+<li><code>ENOCV</code>NOCV特征值的阈值<br>当三个关键词都省略时，只分析NOCV特征值绝对值≥0.05的</li>
+</ul>
+</li>
+<li><code>PRINT &#123;ETSLOWDIN | ETSLOWDIN-Unrestricted&#125;</code>中：<ul>
+<li>如果计算的是闭壳层碎片，使用<code>PRINT ETSLOWDIN</code>，输出的是总形变密度</li>
+<li>如果计算的是开壳层碎片，使用<code>PRINT ETSLOWDIN-Unrestricted</code>，输出的是α和β两组NOCV   <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">ETSNOCV</span><br><span class="line">   &#123;RHOKMIN rhokmin&#125;</span><br><span class="line">   &#123;EKMIN ekmin&#125;</span><br><span class="line">   &#123;ENOCV enocv&#125;</span><br><span class="line">End</span><br><span class="line"><span class="section">PRINT</span> &#123;<span class="attribute">ETSLOWDIN</span> | ETSLOWDIN-Unrestricted&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>还可以根据需要使用<code>PRINT NOCVHirshfeld</code>来区分片段间还是片段内的NOCV，输出文件会打印每个NOCV的$\int{\Delta \rho} = -\Delta Q$值到ETS-NOCV末尾的“Hirshfeld partitioning” ：<ul>
+<li>片段间NOCV具有非零积分Hirshfeld$\Delta Q$值，并且对应于片段之间的电荷转移</li>
+<li>片段内NOCV具有小的$\Delta Q$值，并且对应于片段的极化。</li>
+</ul>
+</li>
+</ol>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><h3 id="HCN拆分成H-和CN-闭壳层分析"><a href="#HCN拆分成H-和CN-闭壳层分析" class="headerlink" title="HCN拆分成H+和CN-闭壳层分析"></a>HCN拆分成H<sup>+</sup>和CN<sup>-</sup>闭壳层分析</h3><p>H<sup>+</sup></p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> H       <span class="number">0.000000000010</span>      <span class="number">-0.000000000016</span>       <span class="number">1.080824461000</span>    </span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line"></span><br><span class="line">CHARGE <span class="number">1.0</span></span><br><span class="line"></span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<p>CN<sup>-</sup></p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> N       <span class="number">0.000000000002</span>       <span class="number">0.000000000002</span>      <span class="number">-1.117362414000</span>    </span><br><span class="line"><span class="number">2</span> C      <span class="number">-0.000000000012</span>       <span class="number">0.000000000015</span>       <span class="number">0.036537953000</span>    </span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line"></span><br><span class="line">CHARGE <span class="number">-1.0</span></span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<p>HCN</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> H       <span class="number">0.000000000010</span>      <span class="number">-0.000000000016</span>       <span class="number">1.080824461000</span>  f=f1 </span><br><span class="line"><span class="number">2</span> C      <span class="number">-0.000000000012</span>       <span class="number">0.000000000015</span>       <span class="number">0.036537953000</span>  f=f2</span><br><span class="line"><span class="number">3</span> N       <span class="number">0.000000000002</span>       <span class="number">0.000000000002</span>      <span class="number">-1.117362414000</span>  f=f2</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line"></span><br><span class="line">FRAGOCCUPATIONS</span><br><span class="line">Region_1</span><br><span class="line">A <span class="number">0</span><span class="comment">//0</span></span><br><span class="line">SUBEND</span><br><span class="line">Region_2</span><br><span class="line">A <span class="number">5</span><span class="comment">//5</span></span><br><span class="line">SUBEND</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">Fragments</span><br><span class="line">    f1 H.t21 </span><br><span class="line">    f2 CN.t21 </span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">ETSNOCV</span><br><span class="line">PRINT ETSLOWDIN-UNRESTRICTED</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<p>输出结果中，为α和β两组NOCV</p>
+<h3 id="HCN拆分成H和CN开壳层分析"><a href="#HCN拆分成H和CN开壳层分析" class="headerlink" title="HCN拆分成H和CN开壳层分析"></a>HCN拆分成H和CN开壳层分析</h3><p>H</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> H       <span class="number">0.000000000013</span>      <span class="number">-0.000000000021</span>       <span class="number">2.374453386206</span>    </span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<p>CN</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> N       <span class="number">0.000000000004</span>      <span class="number">-0.000000000003</span>       <span class="number">0.176266511365</span>    </span><br><span class="line"><span class="number">2</span> C      <span class="number">-0.000000000009</span>       <span class="number">0.000000000010</span>       <span class="number">1.330166878460</span>    </span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<p>HCN</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> H       <span class="number">0.000000000013</span>      <span class="number">-0.000000000021</span>       <span class="number">2.374453386206</span>  f=f1</span><br><span class="line"><span class="number">2</span> C      <span class="number">-0.000000000009</span>       <span class="number">0.000000000010</span>       <span class="number">1.330166878460</span>  f=f2 </span><br><span class="line"><span class="number">3</span> N       <span class="number">0.000000000004</span>      <span class="number">-0.000000000003</span>       <span class="number">0.176266511365</span>  f=f2</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line"></span><br><span class="line">FRAGOCCUPATIONS</span><br><span class="line">Region_1</span><br><span class="line">A <span class="number">1</span><span class="comment">//0</span></span><br><span class="line">SUBEND</span><br><span class="line">Region_2</span><br><span class="line">A <span class="number">4</span><span class="comment">//5</span></span><br><span class="line">SUBEND</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">Fragments</span><br><span class="line">    f1 H.t21 </span><br><span class="line">    f2 CN.t21 </span><br><span class="line">end</span><br><span class="line">ETSNOCV</span><br><span class="line">PRINT ETSLOWDIN-UNRESTRICTED</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<h1 id="EDA分解结果"><a href="#EDA分解结果" class="headerlink" title="EDA分解结果"></a>EDA分解结果</h1><ul>
+<li>总的能量<script type="math/tex">ΔE_{total}＝ΔE_{elstat}＋ΔE_{Pauli}＋ΔE_{orb}+ΔE_{prep}+(ΔE_{disp})</script>分为以下几项：<ul>
+<li>泡利排斥$ΔE_{Pauli}$：两个片段占据轨道之间的排斥作用，会导致能量升高（＞0），电子和电子之间的泡利排斥大概在1玻尔的范围内。</li>
+<li>静电吸引$ΔE_{elstat}$：分子中片段局部位置不是电中心，会存在简单的的 静电相互作用能，会让能量降低（＜0）</li>
+<li>轨道作用$ΔE_{orb}$：本质是共价作用（电子的共享）（＜0）<ul>
+<li>一个片段占据轨道另一个片段空轨道之间的“电子转移”，能量降低</li>
+<li>一个片段自身占据轨道与空轨道的电子转移，能量降低</li>
+</ul>
+</li>
+<li>$ΔE_{prep}$：准备能，片段从它的自由状态（孤立存在的时候，能量最低点），能量升高，变形为在分子中的形状，这个过程所增加的能量，该项非负</li>
+<li>色散作用$ΔE_{disp}$：在使用色散修正泛函的话才存在</li>
+</ul>
+</li>
+<li>ADF的结果中包含的依次是<script type="math/tex">ΔE_{Pauli}+ΔE_{elstat}+ΔE_{orb}=ΔE_{int}</script><br><img src="1.png" style="zoom:80%;" /></li>
+<li>键能有两种：<ul>
+<li>一种直接是$ΔE_{int}$</li>
+<li>一种是在$ΔE<em>{int}$的基础上加上准备能$ΔE</em>{prep}$，计算方法是将片段，分别进行能量最小化，之后的能量降低量之和，即准备能（＞0）</li>
+</ul>
+</li>
+</ul>
+<h1 id="NOCV结果"><a href="#NOCV结果" class="headerlink" title="NOCV结果"></a>NOCV结果</h1><h2 id="轨道相互作用能"><a href="#轨道相互作用能" class="headerlink" title="轨道相互作用能"></a>轨道相互作用能</h2><p>轨道相互作用能的贡献根据闭壳层（只有一组）和开壳层（分为α和β两组）的结果列出：<br><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">================</span><br><span class="line">Alpha resolution</span><br><span class="line">================</span><br><span class="line"> </span><br><span class="line"><span class="number">1.</span> Eigenvalue pairs <span class="keyword">from</span> diagonalization of DeltaP expressed <span class="keyword">in</span> Lowdin - alpha:</span><br><span class="line">   <span class="number">1</span>  <span class="number">-0.56641</span>   <span class="number">31</span>   <span class="number">0.56641</span></span><br><span class="line">   <span class="number">2</span>  <span class="number">-0.12938</span>   <span class="number">30</span>   <span class="number">0.12938</span></span><br><span class="line">   <span class="number">3</span>  <span class="number">-0.06636</span>   <span class="number">29</span>   <span class="number">0.06636</span></span><br><span class="line">   <span class="number">4</span>  <span class="number">-0.06636</span>   <span class="number">28</span>   <span class="number">0.06636</span></span><br><span class="line"><span class="number">2.</span> Orbital Interaction Energy Contributions <span class="keyword">from</span> each NOCV pair - alpha(<span class="keyword">in</span> a.u.)</span><br><span class="line">  <span class="number">1</span>  <span class="number">-0.17666</span></span><br><span class="line">  <span class="number">2</span>  <span class="number">-0.01565</span></span><br><span class="line">  <span class="number">3</span>  <span class="number">-0.00352</span></span><br><span class="line">  <span class="number">4</span>  <span class="number">-0.00352</span></span><br><span class="line"><span class="number">3.</span> Orbital Interaction Energy Contributions <span class="keyword">from</span> each NOCV pair - alpha(<span class="keyword">in</span> kcal/mol)</span><br><span class="line">  <span class="number">1</span><span class="number">-110.85632</span></span><br><span class="line">  <span class="number">2</span>  <span class="number">-9.81984</span></span><br><span class="line">  <span class="number">3</span>  <span class="number">-2.21067</span></span><br><span class="line">  <span class="number">4</span>  <span class="number">-2.21067</span></span><br><span class="line">Total sum [alpha]:  <span class="number">-125.507539810232</span>  </span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>本征值，按本征值的绝对值的大小列出，也即贡献的大小</li>
+<li>与本征值对应的轨道的能量，单位是Hatree</li>
+<li>与本征值对应的轨道的能量，单位是kcal/mol</li>
+</ol>
+<h2 id="电子转移"><a href="#电子转移" class="headerlink" title="电子转移"></a>电子转移</h2><ul>
+<li>每个本征值的NOCV，电子在片段轨道之间，是如何在SFO碎片轨道中转移的：<ul>
+<li>比如本征值为±0.56641的NOCV中，1、7号SFO分别失去0.61238、0.04257个电子，10、2号SFO得到0.62190、0.01341个电子    </li>
+<li>SFO轨道可以在out文件中的<code>S F O s</code>模块查看，也可以通过图形界面查看 （通过SCM→View→Add Isosurface:with phase→Select Field→SFOs选择对应的SFO编号，查看其空间分布形状）<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">=============================================================</span><br><span class="line"> SFO decomposition of alpha Delta rho k (major contributions):</span><br><span class="line"> =============================================================</span><br><span class="line">  </span><br><span class="line"> Threshold <span class="keyword">for</span> a NOCVs energy (<span class="keyword">in</span> kcal/mol) <span class="keyword">is</span>   <span class="number">2.00000000000000</span>     </span><br><span class="line"> Threshold <span class="keyword">for</span> an individual SFO contribution <span class="keyword">is</span>  <span class="number">1.000000000000000E-002</span></span><br><span class="line"></span><br><span class="line">   <span class="number">1</span>   NOCV eigenvalues:  <span class="number">-0.56641</span>   <span class="number">0.56641</span></span><br><span class="line">       Corresponding Delta E k:<span class="number">-110.85632</span>  (kcal/mol)</span><br><span class="line">       <span class="number">10</span>   SFO contribution:   <span class="number">0.62190</span></span><br><span class="line">        <span class="number">1</span>   SFO contribution:  <span class="number">-0.61238</span></span><br><span class="line">        <span class="number">7</span>   SFO contribution:  <span class="number">-0.04257</span></span><br><span class="line">        <span class="number">2</span>   SFO contribution:   <span class="number">0.01341</span></span><br><span class="line">       Sum <span class="keyword">from</span> all SFOs:   <span class="number">-0.79216E-02</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>通过SCM→View→Add→Isosurface:with phase→Select Field→NOCV Orbitals选择±本征值查看成键前后分子轨道的图像：<ul>
+<li>选择本征值为负的，表示轨道相互作用前分子轨道的图像</li>
+<li>选择本征值为正的，表示轨道相互作用后分子轨道的图像</li>
+</ul>
+</li>
+<li>通过SCM→View→Add→Isosurface:with phase→Select Field→NOCV def Density选对应的本征值观看轨道图像显示成键时的电子转移：<ul>
+<li>红色区域，代表这个区域失去了电子</li>
+<li>蓝色区域，代表这个区域得到了电子<br>由于电子得失比较少，因此等值面的大小需要改到0.005左右。</li>
+</ul>
+</li>
+<li>NOCV def Densities，是“正本征值NOCV orbital的模方” - “负本征值NOCV orbital的模方”：<ul>
+<li>负本征值NOCV Orbital实际上一部分是占据电子的，另一部分是不占据电子的</li>
+<li>正本征值NOCV Orbital则是形成化学键，整个轨道上都占了电子的<br>因此NOCV def Densities表示电子的流向，负值表示失去电子，正值表示得到电子。只有NOCV def Density能够可靠地、直观地、明确无误地表征成键作用，文献中一般也只讨论NOCV def Density。</li>
+</ul>
+</li>
+<li>开壳层体系中NOCV def Density会分成α和β两组，如果需要看整体的，则需要Fields→Calculated，在Select Fields中选择配对的α和β轨道，中间的符号换成+，然后在SCM→View→Add→Isosurface:with phase→Select Field选择C-1。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>ADF</category>
+      </categories>
+      <tags>
+        <tag>能量分解</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ADF的SCF相关</title>
+    <url>/2019/09/23/SCF%E7%9B%B8%E5%85%B3/</url>
+    <content><![CDATA[<h1 id="SCF选项"><a href="#SCF选项" class="headerlink" title="SCF选项"></a>SCF选项</h1><figure class="highlight puppet"><table><tr><td class="code"><pre><span class="line">SCF</span><br><span class="line"> Iterations Niter</span><br><span class="line"> Converge <span class="keyword">SCFcnv</span> &#123; sconv2 &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">AccelerationMethod</span> &#123; ADIIS | LISTi | LISTb | fDIIS | LISTf | MESA | SDIIS &#125;</span><br><span class="line"> <span class="keyword">MESA</span> [NoFDIIS] [NoLISTb] [NoLISTf] [NoLISTi] [NoSDIIS] [NoADIIS]</span><br><span class="line"> ADIIS</span><br><span class="line">   &#123;THRESH1 a1&#125;</span><br><span class="line">   &#123;THRESH2 a2&#125;</span><br><span class="line"> End</span><br><span class="line"> NoADIIS</span><br><span class="line"> DIIS</span><br><span class="line">   &#123;N n&#125;</span><br><span class="line">   &#123;OK ok&#125;</span><br><span class="line">   &#123;cyc cyc&#125;</span><br><span class="line"> End</span><br><span class="line"> Mixing mix</span><br><span class="line"> Mixing1 mix1</span><br><span class="line"></span><br><span class="line"> OldSCF</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<h2 id="Iterations"><a href="#Iterations" class="headerlink" title="Iterations"></a>Iterations</h2><p><code>Iterations</code>SCF迭代的最大次数，<code>Niter</code>默认是<code>300</code></p>
+<h2 id="Converge"><a href="#Converge" class="headerlink" title="Converge"></a>Converge</h2><p><code>Converge</code> ：</p>
+<ul>
+<li><code>SCFcnv</code>表示停止迭代的收敛限，默认是<code>1e-6</code>。</li>
+<li><code>sconv2</code>表示SCF过程难以收敛时起作用的第二个标准，默认是<code>1e-3</code>，如果达到了，仅发出警告，但是继续计算。仍无法达到的时候SCF不收敛，只能用<code>ALLOW</code>来继续</li>
+</ul>
+<h2 id="AccelerationMethod"><a href="#AccelerationMethod" class="headerlink" title="AccelerationMethod"></a>AccelerationMethod</h2><p><code>AccelerationMethod</code>调用的SCF加速方法，默认情况下为<code>ADIIS</code>，还可以用<code>LISTi</code> | <code>LISTb</code> | <code>fDIIS</code> | <code>LISTf</code> | <code>MESA</code> | <code>SDIIS</code></p>
+<h3 id="MESA"><a href="#MESA" class="headerlink" title="MESA"></a>MESA</h3><p><code>AccelerationMethod MESA</code>是ADIIS, fDIIS, LISTb, LISTf, LISTi和 SDIIS方法的组合<br><code>MESA NoSDIIS</code>代表从其中删掉某一种方法，也可以直接使用该关键词调用MESA，优先级大于<code>AccelerationMethod</code>指定的方法。</p>
+<h3 id="ADIIS"><a href="#ADIIS" class="headerlink" title="ADIIS"></a>ADIIS</h3><p>使用ADIIS + SDIIS方法，根据 [F,P] 交换子矩阵中的最大元素<code>ErrMax</code>来确定具体方法：</p>
+<ul>
+<li>当ErrMax≥<code>a1</code>，只使用A-DIIS系数</li>
+<li>当ErrMax≤ <code>a2</code>，只使用SDIIS系数</li>
+<li>当<code>a2</code>≤ ErrMax≤ <code>a1</code>，根据ErrMax的值按一定的权重来计算<br><code>a1</code>和<code>a2</code>的默认值是<code>0.01</code>和<code>0.0001</code>，收敛比较困难的时候，可以降低阈值，只使用A-DIIS系数</li>
+</ul>
+<h3 id="SDIIS"><a href="#SDIIS" class="headerlink" title="SDIIS"></a>SDIIS</h3><p><code>AccelerationMethod SDIIS</code>与在没有指定<code>oldscf</code>的情况下使用<code>NoADIIS</code>意思相同，采用的是阻尼+SDIIS方法。从简单阻尼（Mixing）开始，持续到<code>ErrMax</code>降低到<code>DIIS OK</code>参数以下，但是不超过<code>DIIS Cyc</code>次迭代。之后使用纯的SDIIS方法。</p>
+<blockquote>
+<p>在指定<code>oldscf</code>的情况下使用<code>NoADIIS</code>会禁用在SCF收敛困难的时候自动切换到ADIIS + SDIIS方法</p>
+</blockquote>
+<ul>
+<li>指定<code>NoADIIS</code>时才可以设置 <code>DIIS</code>模块：<ul>
+<li><code>N</code>用于加速SCF的扩展向量的数量，默认为<code>10</code>，小于2后会禁用DIIS。此数字不仅适用于Pulay DIIS方案，还适用于其他类似DIIS的方法，例如A-DIIS和LIST方法。<blockquote>
+<p>LIST家族的方法对使用的扩展向量的数量非常敏感，接近收敛时，LIST中的向量数量会增加，但始终受<code>DIIS N</code>的限制，当难以收敛时，可以将<code>DIIS N</code>设置为大于10的值，比如12~20。</p>
+</blockquote>
+</li>
+<li><code>OK</code>禁用A-DIIS时，SDIIS起始条件。默认为<code>0.5</code> a.u.。</li>
+<li><code>Cyc</code>禁用A-DIIS时，无论上面的<code>DIIS OK</code>值如何，SDIIS都会在此迭代下启动，默认值为<code>5</code></li>
+</ul>
+</li>
+<li><code>Mixing</code>中，指将下一个Fock矩阵确定为<script type="math/tex">F = mix F_{n} + (1-mix) F_{n-1}</script>，<code>mix</code>默认为<code>0.2</code></li>
+<li><code>Mixing1</code>中指第一个SCF循环的混合参数值不同，默认为<code>0.2</code></li>
+</ul>
+<h2 id="oldSCF"><a href="#oldSCF" class="headerlink" title="oldSCF"></a>oldSCF</h2><p>在使用<code>Occupations Steep</code>、<code>Lshift</code>，<code>ARH</code>，<code>EDIIS</code>，<code>RESTOCC</code>时，会自动启用<code>oldSCF</code></p>
+<h3 id="Lshift"><a href="#Lshift" class="headerlink" title="Lshift"></a>Lshift</h3><p>能级移动方法，在前一次迭代的轨道表示中，Fock矩阵的对角元素提高虚轨道的<code>vshift</code>hartree。旋轨耦合不支持这种方法。</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">Lshift</span> <span class="string">vshift</span></span><br><span class="line"><span class="attr">Lshift_err</span> <span class="string">Shift_err</span></span><br><span class="line"><span class="attr">Lshift_cyc</span> <span class="string">Shift_cyc</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Lshift_err</code>指定一旦SCF error降至阈值以下，程序将关闭能级移动，<code>Shift_err</code>默认值为<code>0</code>。</li>
+<li><code>Lshift_cyc</code>指定在第几个SCF 迭代次数的时候再启动能级移动， <code>Shift_cyc</code>默认为<code>1</code>。</li>
+</ul>
+<h3 id="ARH"><a href="#ARH" class="headerlink" title="ARH"></a>ARH</h3><figure class="highlight dust"><table><tr><td class="code"><pre><span class="line"><span class="xml">SCF</span></span><br><span class="line"><span class="xml">  ARH</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;CONV conv&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;ITER iter&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;NSAVED nsaved&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;START start&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;FINAL&#125;</span><span class="xml"> ...</span></span><br><span class="line"><span class="xml">  End</span></span><br><span class="line"><span class="xml">  ...</span></span><br><span class="line"><span class="xml">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>CONV</code>：当RMS梯度及其最大分量均低于<code>conv</code>，ARH收敛，<code>conv</code>默认是1e-4</li>
+<li><code>ITER</code>：最大ARH迭代次数，<code>iter</code>默认为500</li>
+<li><code>FINAL</code>：确定ARH完成后是否继续SCF。如果设置了此选项，将执行一次Fock矩阵对角化以获得轨道，并且将停止SCF过程。默认选项为<code>OFF</code>。</li>
+<li><code>START</code>：开始调用ARH的SCF迭代次数，<code>start</code>默认为2。使用较大的值可以为ARH提供更好的初猜</li>
+<li><code>NSAVED</code>：保存密度和Fock矩阵的数量。 <code>nsaved</code>默认为8。在非常接近费米能级的轨道数很大的收敛困难时，应使用较大的<code>nsaved</code>值。</li>
+<li>默认的最小化方法是“Untransformed Pre-conditioned Conjugate Gradient”，可以使用以下两个关键词更改：<ul>
+<li><code>NOPRECOND</code>：禁用Untransformed Pre-conditioned CG最小化，不能在第二周期后的元素里使用</li>
+<li><code>TRANSPCG</code>：启用Transformed Pre-conditioned CG 方法，SCF可能会更好的收敛。</li>
+</ul>
+</li>
+<li>在每一步SCF中，先执行常规CG最小化，跟踪总步长，如果在某个微迭代中步长超过了信任半径，则过程将在缩小的空间中切换到信任半径优化，在能级移动参数mu收敛后立即中止。在CG最小化期间生成的所有试验矢量的缩小空间中，将最终步骤计算为牛顿步骤。可以通过以下关键词修改参数：<ul>
+<li><code>NOSWITCHING</code>：关闭从普通CG到缩小的空间中的信任半径最小化的切换。在某些情况下，使用此选项有助于减少SCF循环的总数。</li>
+<li><code>SHIFTED</code>：设置此选项将在第一次微迭代中打开信任半径优化。</li>
+<li><code>CGITER=cgiter</code>：设置微迭代的最大数量。</li>
+<li>确定置信半径：<ul>
+<li><code>TRUSTR=trustr</code>：信任半径的初始值。默认为<code>0.5</code></li>
+<li><code>MAXTRUSTR=maxtrustr</code>：最大信任半径值。默认为<code>0.5</code>，并且不会改变。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>该方法仅适用于NOSYM计算</li>
+<li>在每一步都要计算总能量，计算非常昂贵，而且使用总能量，需要更高的积分精度才能获得稳定的SCF收敛，该方法可能不适用于所有情况，??使用<code>ADDDIFFUSEFIT</code>关键字或更高的<code>ZlmFit</code>质量设置来提高总能量的准确性，从而提高收敛性。??</li>
+</ul>
+</li>
+</ul>
+<h1 id="SCF不收敛"><a href="#SCF不收敛" class="headerlink" title="SCF不收敛"></a>SCF不收敛</h1><ol>
+<li>更换SCF加速收敛的方法</li>
+<li>使用ARH方法</li>
+<li>修改DIIS算法的参数<ul>
+<li><code>Mixing</code>高于默认值<code>0.2</code>会有更高的加速度，更低会更稳定的迭代</li>
+<li><code>N</code>默认为<code>10</code>，越大用于加速SCF的扩展向量的数量越多，SCF迭代更稳定，最多到25</li>
+<li><code>Cyc</code>是SDIIS启动的初始SCF迭代步数，默认值为<code>5</code>，更高计算越稳定<br>比如使用如下参数：<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">SCF</span></span><br><span class="line">    <span class="attribute">DIIS</span></span><br><span class="line">      <span class="attribute">N</span> <span class="number">25</span></span><br><span class="line">      <span class="attribute">Cyc</span> <span class="number">30</span></span><br><span class="line">    <span class="attribute">End</span></span><br><span class="line">    <span class="attribute">Mixing</span> <span class="number">0</span>.<span class="number">015</span></span><br><span class="line">    <span class="attribute">Mixing1</span> <span class="number">0</span>.<span class="number">09</span></span><br><span class="line">  <span class="attribute">End</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>HOMO-LUMO较为接近的情况（0.02Hatree以内），可能造成HOMO-LUMO的震荡。可以使用<code>Lshift vshift</code>方法，不适于激发态的计算、解析频率、旋轨耦合的计算。</li>
+<li>使用Electron smearing设定在允许的能量范围内分数占据。</li>
+<li>其他：<a href="https://www.fermitech.com.cn/wiki/doku.php?id=adf:scfnonconvergence">费米维基</a>的2、3、5。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>ADF</category>
+      </categories>
+      <tags>
+        <tag>SCF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux命令</title>
+    <url>/2019/09/25/Linux%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h1 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h1><h2 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h2><p> Copy file 主要用于复制文件或目录</p>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp [选项] [参数]</span><br></pre></td></tr></table></figure>
+<h3 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h3><ul>
+<li><code>-a</code>：此选项通常在复制目录时使用，它保留链接、文件属性，并复制目录下的所有内容。其作用等于-dpR参数组合。</li>
+<li><code>-d</code>：复制时保留链接。这里所说的链接相当于Windows系统中的快捷方式。</li>
+<li><code>-f</code>：覆盖已经存在的目标文件而不给出提示。</li>
+<li><code>-i</code>：与-f选项相反，在覆盖目标文件之前给出提示，要求用户确认是否覆盖，回答”y”时目标文件将被覆盖。</li>
+<li><code>-p</code>：除复制文件的内容外，还把修改时间和访问权限也复制到新文件中。</li>
+<li><code>-r</code>：若给出的源文件是一个目录文件，此时将复制该目录下所有的子目录和文件。</li>
+<li><code>-l</code>：不复制文件，只是生成链接文件。</li>
+</ul>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><ul>
+<li><p>使用指令”cp”将当前目录”test/“下的所有文件复制到新目录”newtest”下：</p>
+<ul>
+<li>注意：用户使用该指令复制目录时，必须使用参数”-r”或者”-R”</li>
+</ul>
+<figure class="highlight haxe"><table><tr><td class="code"><pre><span class="line">cp –r test/ <span class="keyword">new</span><span class="type">test</span>  </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将一个路径下的多个文件复制到另一路径</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">cp</span> C<span class="number">2</span>v/&#123;<span class="number">7</span>_C<span class="number">2</span>v.run, adf<span class="number">17</span>.sub&#125; ........</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>交互式地将目录/usr/men中的以m打头的所有.c文件复制到目录/usr/zh中</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">cp -i <span class="regexp">/usr/m</span>en m*.c <span class="regexp">/usr/</span>zh</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>将文件file1复制为file2：【会将一个已经存在的文件file1复制并重命名为file2】</p>
+<h1 id="文档编辑"><a href="#文档编辑" class="headerlink" title="文档编辑"></a>文档编辑</h1><h1 id="文件传输"><a href="#文件传输" class="headerlink" title="文件传输"></a>文件传输</h1><h1 id="磁盘管理"><a href="#磁盘管理" class="headerlink" title="磁盘管理"></a>磁盘管理</h1><h1 id="磁盘维护"><a href="#磁盘维护" class="headerlink" title="磁盘维护"></a>磁盘维护</h1><h1 id="网络通讯"><a href="#网络通讯" class="headerlink" title="网络通讯"></a>网络通讯</h1><h1 id="系统管理"><a href="#系统管理" class="headerlink" title="系统管理"></a>系统管理</h1><h1 id="系统设置"><a href="#系统设置" class="headerlink" title="系统设置"></a>系统设置</h1><h1 id="备份压缩"><a href="#备份压缩" class="headerlink" title="备份压缩"></a>备份压缩</h1><h1 id="设备管理"><a href="#设备管理" class="headerlink" title="设备管理"></a>设备管理</h1><h1 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h1>]]></content>
+      <categories>
+        <category>系统</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
