@@ -1,117 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>EDA-NOCV</title>
-    <url>/2020/02/07/EDA-NOCV/</url>
-    <content><![CDATA[<h1 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h1><h2 id="碎片"><a href="#碎片" class="headerlink" title="碎片"></a>碎片</h2><ul>
-<li>根据体系，指定电荷和自选多重度，确定碎片是闭壳层还是开壳层<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">charge <span class="number">0</span> <span class="number">-3</span></span><br><span class="line">unrestricted</span><br></pre></td></tr></table></figure></li>
-<li>可以根据整体分子的对称性指定碎片的对称性<ul>
-<li>过渡金属配合物设置对称性的注意事项：<ul>
-<li>金属原子设置为原点，如果是金属团簇，则原点设置在金属团簇的中心，高对称轴设置为z轴（例如金属原子参与成键的是d、f轨道，但是分子却具有C<sub>3</sub>、C<sub>5</sub>、C<sub>7</sub>……这样的奇数的转动对称，这样设置是必须的)。设置方法是在图形界面中Edit→Align→（设置xy平面或者设置z轴），再通过Edit→Set Origin设置原点，最后可以通过View→Axes观看坐标轴来确认。</li>
-<li>近似对称结构，金属碎片需要设置与对称结构相同的点群，例如Oh群八羰基配合物，其中一个羰基被替换为其他结构，金属原子仍然需要设置为Oh群</li>
-<li>NOCV不支持点群，EDA支持，因此虽然NOCV分析默认会做EDA分析，但是建议分别都做一个，便于分析不同对称性的碎片轨道的共价作用  </li>
-</ul>
-</li>
-</ul>
-</li>
-<li>有时候默认计算得到的结果可能导致分数占据、占据的轨道不正确、碎片的自旋不匹配等，尤其是金属原子作为一个碎片，需要注意其电子占据方式、自旋多重度，此时需要根据碎片的闭壳层/开壳层、对称性和占据，通过<code>IRREPOCCUPATIONS</code>来指定其占据方式，也可以在整体分子中通过<code>FRAGOCCUPATIONS</code>指定。<br>eg. 开壳层的β电子指定：    <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">IRREPOCCUPATIONS</span></span><br><span class="line"><span class="attribute">sigma</span> <span class="number">1</span> <span class="number">0</span> <span class="number">0</span>//<span class="number">1</span> <span class="number">1</span> <span class="number">0</span></span><br><span class="line"><span class="attribute">pi</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>//<span class="number">2</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line"><span class="attribute">end</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="整体分子"><a href="#整体分子" class="headerlink" title="整体分子"></a>整体分子</h2><ol>
-<li>碎片数不局限，在分子坐标后面跟上<code>f=name</code>，然后在<code>Fragments</code>中指定碎片的t21文件，比如：<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">ATOMS</span></span><br><span class="line"><span class="attribute">1</span> H       <span class="number">0</span>.<span class="number">000000000010</span>      -<span class="number">0</span>.<span class="number">000000000016</span>       <span class="number">1</span>.<span class="number">080824461000</span>  f=f<span class="number">1</span> </span><br><span class="line"><span class="attribute">2</span> C      -<span class="number">0</span>.<span class="number">000000000012</span>       <span class="number">0</span>.<span class="number">000000000015</span>       <span class="number">0</span>.<span class="number">036537953000</span>  f=f<span class="number">2</span></span><br><span class="line"><span class="attribute">3</span> N       <span class="number">0</span>.<span class="number">000000000002</span>       <span class="number">0</span>.<span class="number">000000000002</span>      -<span class="number">1</span>.<span class="number">117362414000</span>  f=f<span class="number">2</span></span><br><span class="line"><span class="attribute">END</span> </span><br><span class="line"></span><br><span class="line"><span class="attribute">Fragments</span></span><br><span class="line">    <span class="attribute">f1</span> H.t<span class="number">21</span> </span><br><span class="line">    <span class="attribute">f2</span> CN.t<span class="number">21</span> </span><br><span class="line"><span class="attribute">end</span></span><br></pre></td></tr></table></figure></li>
-<li>整体分子的计算不能使用对称性，需要用<code>symmetry nosym</code></li>
-<li>需要使用<code>ETSNOCV</code>和<code>PRINT &#123;ETSLOWDIN | ETSLOWDIN-Unrestricted&#125;</code>关键词：<ul>
-<li><code>ETSNOCV</code>指定打印NOCV相关信息的阈值：<ul>
-<li><code>RHOKMIN</code>各个SFO对每个变形密度贡献进行总体分析的阈值</li>
-<li><code>EKMIN</code>轨道相互作用能量贡献的阈值</li>
-<li><code>ENOCV</code>NOCV特征值的阈值<br>当三个关键词都省略时，只分析NOCV特征值绝对值≥0.05的</li>
-</ul>
-</li>
-<li><code>PRINT &#123;ETSLOWDIN | ETSLOWDIN-Unrestricted&#125;</code>中：<ul>
-<li>如果计算的是闭壳层碎片，使用<code>PRINT ETSLOWDIN</code>，输出的是总形变密度</li>
-<li>如果计算的是开壳层碎片，使用<code>PRINT ETSLOWDIN-Unrestricted</code>，输出的是α和β两组NOCV   <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">ETSNOCV</span><br><span class="line">   &#123;RHOKMIN rhokmin&#125;</span><br><span class="line">   &#123;EKMIN ekmin&#125;</span><br><span class="line">   &#123;ENOCV enocv&#125;</span><br><span class="line">End</span><br><span class="line"><span class="section">PRINT</span> &#123;<span class="attribute">ETSLOWDIN</span> | ETSLOWDIN-Unrestricted&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>还可以根据需要使用<code>PRINT NOCVHirshfeld</code>来区分片段间还是片段内的NOCV，输出文件会打印每个NOCV的$\int{\Delta \rho} = -\Delta Q$值到ETS-NOCV末尾的“Hirshfeld partitioning” ：<ul>
-<li>片段间NOCV具有非零积分Hirshfeld$\Delta Q$值，并且对应于片段之间的电荷转移</li>
-<li>片段内NOCV具有小的$\Delta Q$值，并且对应于片段的极化。</li>
-</ul>
-</li>
-</ol>
-<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><h3 id="HCN拆分成H-和CN-闭壳层分析"><a href="#HCN拆分成H-和CN-闭壳层分析" class="headerlink" title="HCN拆分成H+和CN-闭壳层分析"></a>HCN拆分成H<sup>+</sup>和CN<sup>-</sup>闭壳层分析</h3><p>H<sup>+</sup></p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> H       <span class="number">0.000000000010</span>      <span class="number">-0.000000000016</span>       <span class="number">1.080824461000</span>    </span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line"></span><br><span class="line">CHARGE <span class="number">1.0</span></span><br><span class="line"></span><br><span class="line">……</span><br></pre></td></tr></table></figure>
-<p>CN<sup>-</sup></p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> N       <span class="number">0.000000000002</span>       <span class="number">0.000000000002</span>      <span class="number">-1.117362414000</span>    </span><br><span class="line"><span class="number">2</span> C      <span class="number">-0.000000000012</span>       <span class="number">0.000000000015</span>       <span class="number">0.036537953000</span>    </span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line"></span><br><span class="line">CHARGE <span class="number">-1.0</span></span><br><span class="line">……</span><br></pre></td></tr></table></figure>
-<p>HCN</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> H       <span class="number">0.000000000010</span>      <span class="number">-0.000000000016</span>       <span class="number">1.080824461000</span>  f=f1 </span><br><span class="line"><span class="number">2</span> C      <span class="number">-0.000000000012</span>       <span class="number">0.000000000015</span>       <span class="number">0.036537953000</span>  f=f2</span><br><span class="line"><span class="number">3</span> N       <span class="number">0.000000000002</span>       <span class="number">0.000000000002</span>      <span class="number">-1.117362414000</span>  f=f2</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line"></span><br><span class="line">FRAGOCCUPATIONS</span><br><span class="line">Region_1</span><br><span class="line">A <span class="number">0</span><span class="comment">//0</span></span><br><span class="line">SUBEND</span><br><span class="line">Region_2</span><br><span class="line">A <span class="number">5</span><span class="comment">//5</span></span><br><span class="line">SUBEND</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">Fragments</span><br><span class="line">    f1 H.t21 </span><br><span class="line">    f2 CN.t21 </span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">ETSNOCV</span><br><span class="line">PRINT ETSLOWDIN-UNRESTRICTED</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
-<p>输出结果中，为α和β两组NOCV</p>
-<h3 id="HCN拆分成H和CN开壳层分析"><a href="#HCN拆分成H和CN开壳层分析" class="headerlink" title="HCN拆分成H和CN开壳层分析"></a>HCN拆分成H和CN开壳层分析</h3><p>H</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> H       <span class="number">0.000000000013</span>      <span class="number">-0.000000000021</span>       <span class="number">2.374453386206</span>    </span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
-<p>CN</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> N       <span class="number">0.000000000004</span>      <span class="number">-0.000000000003</span>       <span class="number">0.176266511365</span>    </span><br><span class="line"><span class="number">2</span> C      <span class="number">-0.000000000009</span>       <span class="number">0.000000000010</span>       <span class="number">1.330166878460</span>    </span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
-<p>HCN</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> H       <span class="number">0.000000000013</span>      <span class="number">-0.000000000021</span>       <span class="number">2.374453386206</span>  f=f1</span><br><span class="line"><span class="number">2</span> C      <span class="number">-0.000000000009</span>       <span class="number">0.000000000010</span>       <span class="number">1.330166878460</span>  f=f2 </span><br><span class="line"><span class="number">3</span> N       <span class="number">0.000000000004</span>      <span class="number">-0.000000000003</span>       <span class="number">0.176266511365</span>  f=f2</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line"></span><br><span class="line">FRAGOCCUPATIONS</span><br><span class="line">Region_1</span><br><span class="line">A <span class="number">1</span><span class="comment">//0</span></span><br><span class="line">SUBEND</span><br><span class="line">Region_2</span><br><span class="line">A <span class="number">4</span><span class="comment">//5</span></span><br><span class="line">SUBEND</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">Fragments</span><br><span class="line">    f1 H.t21 </span><br><span class="line">    f2 CN.t21 </span><br><span class="line">end</span><br><span class="line">ETSNOCV</span><br><span class="line">PRINT ETSLOWDIN-UNRESTRICTED</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
-<h1 id="EDA分解结果"><a href="#EDA分解结果" class="headerlink" title="EDA分解结果"></a>EDA分解结果</h1><ul>
-<li>总的能量<script type="math/tex">ΔE_{total}＝ΔE_{elstat}＋ΔE_{Pauli}＋ΔE_{orb}+ΔE_{prep}+(ΔE_{disp})</script>分为以下几项：<ul>
-<li>泡利排斥$ΔE_{Pauli}$：两个片段占据轨道之间的排斥作用，会导致能量升高（＞0），电子和电子之间的泡利排斥大概在1玻尔的范围内。</li>
-<li>静电吸引$ΔE_{elstat}$：分子中片段局部位置不是电中心，会存在简单的的 静电相互作用能，会让能量降低（＜0）</li>
-<li>轨道作用$ΔE_{orb}$：本质是共价作用（电子的共享）（＜0）<ul>
-<li>一个片段占据轨道另一个片段空轨道之间的“电子转移”，能量降低</li>
-<li>一个片段自身占据轨道与空轨道的电子转移，能量降低</li>
-</ul>
-</li>
-<li>$ΔE_{prep}$：准备能，片段从它的自由状态（孤立存在的时候，能量最低点），能量升高，变形为在分子中的形状，这个过程所增加的能量，该项非负</li>
-<li>色散作用$ΔE_{disp}$：在使用色散修正泛函的话才存在</li>
-</ul>
-</li>
-<li>ADF的结果中包含的依次是<script type="math/tex">ΔE_{Pauli}+ΔE_{elstat}+ΔE_{orb}=ΔE_{int}</script><br><img src="1.png" style="zoom:80%;" /></li>
-<li>键能有两种：<ul>
-<li>一种直接是$ΔE_{int}$</li>
-<li>一种是在$ΔE<em>{int}$的基础上加上准备能$ΔE</em>{prep}$，计算方法是将片段，分别进行能量最小化，之后的能量降低量之和，即准备能（＞0）</li>
-</ul>
-</li>
-</ul>
-<h1 id="NOCV结果"><a href="#NOCV结果" class="headerlink" title="NOCV结果"></a>NOCV结果</h1><h2 id="轨道相互作用能"><a href="#轨道相互作用能" class="headerlink" title="轨道相互作用能"></a>轨道相互作用能</h2><p>轨道相互作用能的贡献根据闭壳层（只有一组）和开壳层（分为α和β两组）的结果列出：<br><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">================</span><br><span class="line">Alpha resolution</span><br><span class="line">================</span><br><span class="line"> </span><br><span class="line"><span class="number">1.</span> Eigenvalue pairs <span class="keyword">from</span> diagonalization of DeltaP expressed <span class="keyword">in</span> Lowdin - alpha:</span><br><span class="line">   <span class="number">1</span>  <span class="number">-0.56641</span>   <span class="number">31</span>   <span class="number">0.56641</span></span><br><span class="line">   <span class="number">2</span>  <span class="number">-0.12938</span>   <span class="number">30</span>   <span class="number">0.12938</span></span><br><span class="line">   <span class="number">3</span>  <span class="number">-0.06636</span>   <span class="number">29</span>   <span class="number">0.06636</span></span><br><span class="line">   <span class="number">4</span>  <span class="number">-0.06636</span>   <span class="number">28</span>   <span class="number">0.06636</span></span><br><span class="line"><span class="number">2.</span> Orbital Interaction Energy Contributions <span class="keyword">from</span> each NOCV pair - alpha(<span class="keyword">in</span> a.u.)</span><br><span class="line">  <span class="number">1</span>  <span class="number">-0.17666</span></span><br><span class="line">  <span class="number">2</span>  <span class="number">-0.01565</span></span><br><span class="line">  <span class="number">3</span>  <span class="number">-0.00352</span></span><br><span class="line">  <span class="number">4</span>  <span class="number">-0.00352</span></span><br><span class="line"><span class="number">3.</span> Orbital Interaction Energy Contributions <span class="keyword">from</span> each NOCV pair - alpha(<span class="keyword">in</span> kcal/mol)</span><br><span class="line">  <span class="number">1</span><span class="number">-110.85632</span></span><br><span class="line">  <span class="number">2</span>  <span class="number">-9.81984</span></span><br><span class="line">  <span class="number">3</span>  <span class="number">-2.21067</span></span><br><span class="line">  <span class="number">4</span>  <span class="number">-2.21067</span></span><br><span class="line">Total sum [alpha]:  <span class="number">-125.507539810232</span>  </span><br></pre></td></tr></table></figure></p>
-<ol>
-<li>本征值，按本征值的绝对值的大小列出，也即贡献的大小</li>
-<li>与本征值对应的轨道的能量，单位是Hatree</li>
-<li>与本征值对应的轨道的能量，单位是kcal/mol</li>
-</ol>
-<h2 id="电子转移"><a href="#电子转移" class="headerlink" title="电子转移"></a>电子转移</h2><ul>
-<li>每个本征值的NOCV，电子在片段轨道之间，是如何在SFO碎片轨道中转移的：<ul>
-<li>比如本征值为±0.56641的NOCV中，1、7号SFO分别失去0.61238、0.04257个电子，10、2号SFO得到0.62190、0.01341个电子    </li>
-<li>SFO轨道可以在out文件中的<code>S F O s</code>模块查看，也可以通过图形界面查看 （通过SCM→View→Add Isosurface:with phase→Select Field→SFOs选择对应的SFO编号，查看其空间分布形状）<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">=============================================================</span><br><span class="line"> SFO decomposition of alpha Delta rho k (major contributions):</span><br><span class="line"> =============================================================</span><br><span class="line">  </span><br><span class="line"> Threshold <span class="keyword">for</span> a NOCVs energy (<span class="keyword">in</span> kcal/mol) <span class="keyword">is</span>   <span class="number">2.00000000000000</span>     </span><br><span class="line"> Threshold <span class="keyword">for</span> an individual SFO contribution <span class="keyword">is</span>  <span class="number">1.000000000000000E-002</span></span><br><span class="line"></span><br><span class="line">   <span class="number">1</span>   NOCV eigenvalues:  <span class="number">-0.56641</span>   <span class="number">0.56641</span></span><br><span class="line">       Corresponding Delta E k:<span class="number">-110.85632</span>  (kcal/mol)</span><br><span class="line">       <span class="number">10</span>   SFO contribution:   <span class="number">0.62190</span></span><br><span class="line">        <span class="number">1</span>   SFO contribution:  <span class="number">-0.61238</span></span><br><span class="line">        <span class="number">7</span>   SFO contribution:  <span class="number">-0.04257</span></span><br><span class="line">        <span class="number">2</span>   SFO contribution:   <span class="number">0.01341</span></span><br><span class="line">       Sum <span class="keyword">from</span> all SFOs:   <span class="number">-0.79216E-02</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li>通过SCM→View→Add→Isosurface:with phase→Select Field→NOCV Orbitals选择±本征值查看成键前后分子轨道的图像：<ul>
-<li>选择本征值为负的，表示轨道相互作用前分子轨道的图像</li>
-<li>选择本征值为正的，表示轨道相互作用后分子轨道的图像</li>
-</ul>
-</li>
-<li>通过SCM→View→Add→Isosurface:with phase→Select Field→NOCV def Density选对应的本征值观看轨道图像显示成键时的电子转移：<ul>
-<li>红色区域，代表这个区域失去了电子</li>
-<li>蓝色区域，代表这个区域得到了电子<br>由于电子得失比较少，因此等值面的大小需要改到0.005左右。</li>
-</ul>
-</li>
-<li>NOCV def Densities，是“正本征值NOCV orbital的模方” - “负本征值NOCV orbital的模方”：<ul>
-<li>负本征值NOCV Orbital实际上一部分是占据电子的，另一部分是不占据电子的</li>
-<li>正本征值NOCV Orbital则是形成化学键，整个轨道上都占了电子的<br>因此NOCV def Densities表示电子的流向，负值表示失去电子，正值表示得到电子。只有NOCV def Density能够可靠地、直观地、明确无误地表征成键作用，文献中一般也只讨论NOCV def Density。</li>
-</ul>
-</li>
-<li>开壳层体系中NOCV def Density会分成α和β两组，如果需要看整体的，则需要Fields→Calculated，在Select Fields中选择配对的α和β轨道，中间的符号换成+，然后在SCM→View→Add→Isosurface:with phase→Select Field选择C-1。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>ADF</category>
-      </categories>
-      <tags>
-        <tag>能量分解</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux命令</title>
     <url>/2019/09/25/Linux%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h1 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h1><h2 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h2><p> Copy file 主要用于复制文件或目录</p>
@@ -239,6 +128,117 @@
       </categories>
       <tags>
         <tag>SCF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>EDA-NOCV</title>
+    <url>/2020/02/07/EDA-NOCV/</url>
+    <content><![CDATA[<h1 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h1><h2 id="碎片"><a href="#碎片" class="headerlink" title="碎片"></a>碎片</h2><ul>
+<li>根据体系，指定电荷和自选多重度，确定碎片是闭壳层还是开壳层<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">charge <span class="number">0</span> <span class="number">-3</span></span><br><span class="line">unrestricted</span><br></pre></td></tr></table></figure></li>
+<li>可以根据整体分子的对称性指定碎片的对称性<ul>
+<li>过渡金属配合物设置对称性的注意事项：<ul>
+<li>金属原子设置为原点，如果是金属团簇，则原点设置在金属团簇的中心，高对称轴设置为z轴（例如金属原子参与成键的是d、f轨道，但是分子却具有C<sub>3</sub>、C<sub>5</sub>、C<sub>7</sub>……这样的奇数的转动对称，这样设置是必须的)。设置方法是在图形界面中Edit→Align→（设置xy平面或者设置z轴），再通过Edit→Set Origin设置原点，最后可以通过View→Axes观看坐标轴来确认。</li>
+<li>近似对称结构，金属碎片需要设置与对称结构相同的点群，例如Oh群八羰基配合物，其中一个羰基被替换为其他结构，金属原子仍然需要设置为Oh群</li>
+<li>NOCV不支持点群，EDA支持，因此虽然NOCV分析默认会做EDA分析，但是建议分别都做一个，便于分析不同对称性的碎片轨道的共价作用  </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>有时候默认计算得到的结果可能导致分数占据、占据的轨道不正确、碎片的自旋不匹配等，尤其是金属原子作为一个碎片，需要注意其电子占据方式、自旋多重度，此时需要根据碎片的闭壳层/开壳层、对称性和占据，通过<code>IRREPOCCUPATIONS</code>来指定其占据方式，也可以在整体分子中通过<code>FRAGOCCUPATIONS</code>指定。<br>eg. 开壳层的β电子指定：    <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">IRREPOCCUPATIONS</span></span><br><span class="line"><span class="attribute">sigma</span> <span class="number">1</span> <span class="number">0</span> <span class="number">0</span>//<span class="number">1</span> <span class="number">1</span> <span class="number">0</span></span><br><span class="line"><span class="attribute">pi</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>//<span class="number">2</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line"><span class="attribute">end</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="整体分子"><a href="#整体分子" class="headerlink" title="整体分子"></a>整体分子</h2><ol>
+<li>碎片数不局限，在分子坐标后面跟上<code>f=name</code>，然后在<code>Fragments</code>中指定碎片的t21文件，比如：<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">ATOMS</span></span><br><span class="line"><span class="attribute">1</span> H       <span class="number">0</span>.<span class="number">000000000010</span>      -<span class="number">0</span>.<span class="number">000000000016</span>       <span class="number">1</span>.<span class="number">080824461000</span>  f=f<span class="number">1</span> </span><br><span class="line"><span class="attribute">2</span> C      -<span class="number">0</span>.<span class="number">000000000012</span>       <span class="number">0</span>.<span class="number">000000000015</span>       <span class="number">0</span>.<span class="number">036537953000</span>  f=f<span class="number">2</span></span><br><span class="line"><span class="attribute">3</span> N       <span class="number">0</span>.<span class="number">000000000002</span>       <span class="number">0</span>.<span class="number">000000000002</span>      -<span class="number">1</span>.<span class="number">117362414000</span>  f=f<span class="number">2</span></span><br><span class="line"><span class="attribute">END</span> </span><br><span class="line"></span><br><span class="line"><span class="attribute">Fragments</span></span><br><span class="line">    <span class="attribute">f1</span> H.t<span class="number">21</span> </span><br><span class="line">    <span class="attribute">f2</span> CN.t<span class="number">21</span> </span><br><span class="line"><span class="attribute">end</span></span><br></pre></td></tr></table></figure></li>
+<li>整体分子的计算不能使用对称性，需要用<code>symmetry nosym</code></li>
+<li>需要使用<code>ETSNOCV</code>和<code>PRINT &#123;ETSLOWDIN | ETSLOWDIN-Unrestricted&#125;</code>关键词：<ul>
+<li><code>ETSNOCV</code>指定打印NOCV相关信息的阈值：<ul>
+<li><code>RHOKMIN</code>各个SFO对每个变形密度贡献进行总体分析的阈值</li>
+<li><code>EKMIN</code>轨道相互作用能量贡献的阈值</li>
+<li><code>ENOCV</code>NOCV特征值的阈值<br>当三个关键词都省略时，只分析NOCV特征值绝对值≥0.05的</li>
+</ul>
+</li>
+<li><code>PRINT &#123;ETSLOWDIN | ETSLOWDIN-Unrestricted&#125;</code>中：<ul>
+<li>如果计算的是闭壳层碎片，使用<code>PRINT ETSLOWDIN</code>，输出的是总形变密度</li>
+<li>如果计算的是开壳层碎片，使用<code>PRINT ETSLOWDIN-Unrestricted</code>，输出的是α和β两组NOCV   <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">ETSNOCV</span><br><span class="line">   &#123;RHOKMIN rhokmin&#125;</span><br><span class="line">   &#123;EKMIN ekmin&#125;</span><br><span class="line">   &#123;ENOCV enocv&#125;</span><br><span class="line">End</span><br><span class="line"><span class="section">PRINT</span> &#123;<span class="attribute">ETSLOWDIN</span> | ETSLOWDIN-Unrestricted&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>还可以根据需要使用<code>PRINT NOCVHirshfeld</code>来区分片段间还是片段内的NOCV，输出文件会打印每个NOCV的$\int{\Delta \rho} = -\Delta Q$值到ETS-NOCV末尾的“Hirshfeld partitioning” ：<ul>
+<li>片段间NOCV具有非零积分Hirshfeld$\Delta Q$值，并且对应于片段之间的电荷转移</li>
+<li>片段内NOCV具有小的$\Delta Q$值，并且对应于片段的极化。</li>
+</ul>
+</li>
+</ol>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><h3 id="HCN拆分成H-和CN-闭壳层分析"><a href="#HCN拆分成H-和CN-闭壳层分析" class="headerlink" title="HCN拆分成H+和CN-闭壳层分析"></a>HCN拆分成H<sup>+</sup>和CN<sup>-</sup>闭壳层分析</h3><p>H<sup>+</sup></p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> H       <span class="number">0.000000000010</span>      <span class="number">-0.000000000016</span>       <span class="number">1.080824461000</span>    </span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line"></span><br><span class="line">CHARGE <span class="number">1.0</span></span><br><span class="line"></span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<p>CN<sup>-</sup></p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> N       <span class="number">0.000000000002</span>       <span class="number">0.000000000002</span>      <span class="number">-1.117362414000</span>    </span><br><span class="line"><span class="number">2</span> C      <span class="number">-0.000000000012</span>       <span class="number">0.000000000015</span>       <span class="number">0.036537953000</span>    </span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line"></span><br><span class="line">CHARGE <span class="number">-1.0</span></span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<p>HCN</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> H       <span class="number">0.000000000010</span>      <span class="number">-0.000000000016</span>       <span class="number">1.080824461000</span>  f=f1 </span><br><span class="line"><span class="number">2</span> C      <span class="number">-0.000000000012</span>       <span class="number">0.000000000015</span>       <span class="number">0.036537953000</span>  f=f2</span><br><span class="line"><span class="number">3</span> N       <span class="number">0.000000000002</span>       <span class="number">0.000000000002</span>      <span class="number">-1.117362414000</span>  f=f2</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line"></span><br><span class="line">FRAGOCCUPATIONS</span><br><span class="line">Region_1</span><br><span class="line">A <span class="number">0</span><span class="comment">//0</span></span><br><span class="line">SUBEND</span><br><span class="line">Region_2</span><br><span class="line">A <span class="number">5</span><span class="comment">//5</span></span><br><span class="line">SUBEND</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">Fragments</span><br><span class="line">    f1 H.t21 </span><br><span class="line">    f2 CN.t21 </span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">ETSNOCV</span><br><span class="line">PRINT ETSLOWDIN-UNRESTRICTED</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<p>输出结果中，为α和β两组NOCV</p>
+<h3 id="HCN拆分成H和CN开壳层分析"><a href="#HCN拆分成H和CN开壳层分析" class="headerlink" title="HCN拆分成H和CN开壳层分析"></a>HCN拆分成H和CN开壳层分析</h3><p>H</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> H       <span class="number">0.000000000013</span>      <span class="number">-0.000000000021</span>       <span class="number">2.374453386206</span>    </span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<p>CN</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> N       <span class="number">0.000000000004</span>      <span class="number">-0.000000000003</span>       <span class="number">0.176266511365</span>    </span><br><span class="line"><span class="number">2</span> C      <span class="number">-0.000000000009</span>       <span class="number">0.000000000010</span>       <span class="number">1.330166878460</span>    </span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<p>HCN</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> H       <span class="number">0.000000000013</span>      <span class="number">-0.000000000021</span>       <span class="number">2.374453386206</span>  f=f1</span><br><span class="line"><span class="number">2</span> C      <span class="number">-0.000000000009</span>       <span class="number">0.000000000010</span>       <span class="number">1.330166878460</span>  f=f2 </span><br><span class="line"><span class="number">3</span> N       <span class="number">0.000000000004</span>      <span class="number">-0.000000000003</span>       <span class="number">0.176266511365</span>  f=f2</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line"></span><br><span class="line">FRAGOCCUPATIONS</span><br><span class="line">Region_1</span><br><span class="line">A <span class="number">1</span><span class="comment">//0</span></span><br><span class="line">SUBEND</span><br><span class="line">Region_2</span><br><span class="line">A <span class="number">4</span><span class="comment">//5</span></span><br><span class="line">SUBEND</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">Fragments</span><br><span class="line">    f1 H.t21 </span><br><span class="line">    f2 CN.t21 </span><br><span class="line">end</span><br><span class="line">ETSNOCV</span><br><span class="line">PRINT ETSLOWDIN-UNRESTRICTED</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<h1 id="EDA分解结果"><a href="#EDA分解结果" class="headerlink" title="EDA分解结果"></a>EDA分解结果</h1><ul>
+<li>总的能量<script type="math/tex">ΔE_{total}＝ΔE_{elstat}＋ΔE_{Pauli}＋ΔE_{orb}+ΔE_{prep}+(ΔE_{disp})</script>分为以下几项：<ul>
+<li>泡利排斥$ΔE_{Pauli}$：两个片段占据轨道之间的排斥作用，会导致能量升高（＞0），电子和电子之间的泡利排斥大概在1玻尔的范围内。</li>
+<li>静电吸引$ΔE_{elstat}$：分子中片段局部位置不是电中心，会存在简单的的 静电相互作用能，会让能量降低（＜0）</li>
+<li>轨道作用$ΔE_{orb}$：本质是共价作用（电子的共享）（＜0）<ul>
+<li>一个片段占据轨道另一个片段空轨道之间的“电子转移”，能量降低</li>
+<li>一个片段自身占据轨道与空轨道的电子转移，能量降低</li>
+</ul>
+</li>
+<li>$ΔE_{prep}$：准备能，片段从它的自由状态（孤立存在的时候，能量最低点），能量升高，变形为在分子中的形状，这个过程所增加的能量，该项非负</li>
+<li>色散作用$ΔE_{disp}$：在使用色散修正泛函的话才存在</li>
+</ul>
+</li>
+<li>ADF的结果中包含的依次是<script type="math/tex">ΔE_{Pauli}+ΔE_{elstat}+ΔE_{orb}=ΔE_{int}</script><br><img src="1.png" style="zoom:80%;" /></li>
+<li>键能有两种：<ul>
+<li>一种直接是$ΔE_{int}$</li>
+<li>一种是在$ΔE<em>{int}$的基础上加上准备能$ΔE</em>{prep}$，计算方法是将片段，分别进行能量最小化，之后的能量降低量之和，即准备能（＞0）</li>
+</ul>
+</li>
+</ul>
+<h1 id="NOCV结果"><a href="#NOCV结果" class="headerlink" title="NOCV结果"></a>NOCV结果</h1><h2 id="轨道相互作用能"><a href="#轨道相互作用能" class="headerlink" title="轨道相互作用能"></a>轨道相互作用能</h2><p>轨道相互作用能的贡献根据闭壳层（只有一组）和开壳层（分为α和β两组）的结果列出：<br><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">================</span><br><span class="line">Alpha resolution</span><br><span class="line">================</span><br><span class="line"> </span><br><span class="line"><span class="number">1.</span> Eigenvalue pairs <span class="keyword">from</span> diagonalization of DeltaP expressed <span class="keyword">in</span> Lowdin - alpha:</span><br><span class="line">   <span class="number">1</span>  <span class="number">-0.56641</span>   <span class="number">31</span>   <span class="number">0.56641</span></span><br><span class="line">   <span class="number">2</span>  <span class="number">-0.12938</span>   <span class="number">30</span>   <span class="number">0.12938</span></span><br><span class="line">   <span class="number">3</span>  <span class="number">-0.06636</span>   <span class="number">29</span>   <span class="number">0.06636</span></span><br><span class="line">   <span class="number">4</span>  <span class="number">-0.06636</span>   <span class="number">28</span>   <span class="number">0.06636</span></span><br><span class="line"><span class="number">2.</span> Orbital Interaction Energy Contributions <span class="keyword">from</span> each NOCV pair - alpha(<span class="keyword">in</span> a.u.)</span><br><span class="line">  <span class="number">1</span>  <span class="number">-0.17666</span></span><br><span class="line">  <span class="number">2</span>  <span class="number">-0.01565</span></span><br><span class="line">  <span class="number">3</span>  <span class="number">-0.00352</span></span><br><span class="line">  <span class="number">4</span>  <span class="number">-0.00352</span></span><br><span class="line"><span class="number">3.</span> Orbital Interaction Energy Contributions <span class="keyword">from</span> each NOCV pair - alpha(<span class="keyword">in</span> kcal/mol)</span><br><span class="line">  <span class="number">1</span><span class="number">-110.85632</span></span><br><span class="line">  <span class="number">2</span>  <span class="number">-9.81984</span></span><br><span class="line">  <span class="number">3</span>  <span class="number">-2.21067</span></span><br><span class="line">  <span class="number">4</span>  <span class="number">-2.21067</span></span><br><span class="line">Total sum [alpha]:  <span class="number">-125.507539810232</span>  </span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>本征值，按本征值的绝对值的大小列出，也即贡献的大小</li>
+<li>与本征值对应的轨道的能量，单位是Hatree</li>
+<li>与本征值对应的轨道的能量，单位是kcal/mol</li>
+</ol>
+<h2 id="电子转移"><a href="#电子转移" class="headerlink" title="电子转移"></a>电子转移</h2><ul>
+<li>每个本征值的NOCV，电子在片段轨道之间，是如何在SFO碎片轨道中转移的：<ul>
+<li>比如本征值为±0.56641的NOCV中，1、7号SFO分别失去0.61238、0.04257个电子，10、2号SFO得到0.62190、0.01341个电子    </li>
+<li>SFO轨道可以在out文件中的<code>S F O s</code>模块查看，也可以通过图形界面查看 （通过SCM→View→Add Isosurface:with phase→Select Field→SFOs选择对应的SFO编号，查看其空间分布形状）<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">=============================================================</span><br><span class="line"> SFO decomposition of alpha Delta rho k (major contributions):</span><br><span class="line"> =============================================================</span><br><span class="line">  </span><br><span class="line"> Threshold <span class="keyword">for</span> a NOCVs energy (<span class="keyword">in</span> kcal/mol) <span class="keyword">is</span>   <span class="number">2.00000000000000</span>     </span><br><span class="line"> Threshold <span class="keyword">for</span> an individual SFO contribution <span class="keyword">is</span>  <span class="number">1.000000000000000E-002</span></span><br><span class="line"></span><br><span class="line">   <span class="number">1</span>   NOCV eigenvalues:  <span class="number">-0.56641</span>   <span class="number">0.56641</span></span><br><span class="line">       Corresponding Delta E k:<span class="number">-110.85632</span>  (kcal/mol)</span><br><span class="line">       <span class="number">10</span>   SFO contribution:   <span class="number">0.62190</span></span><br><span class="line">        <span class="number">1</span>   SFO contribution:  <span class="number">-0.61238</span></span><br><span class="line">        <span class="number">7</span>   SFO contribution:  <span class="number">-0.04257</span></span><br><span class="line">        <span class="number">2</span>   SFO contribution:   <span class="number">0.01341</span></span><br><span class="line">       Sum <span class="keyword">from</span> all SFOs:   <span class="number">-0.79216E-02</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>通过SCM→View→Add→Isosurface:with phase→Select Field→NOCV Orbitals选择±本征值查看成键前后分子轨道的图像：<ul>
+<li>选择本征值为负的，表示轨道相互作用前分子轨道的图像</li>
+<li>选择本征值为正的，表示轨道相互作用后分子轨道的图像</li>
+</ul>
+</li>
+<li>通过SCM→View→Add→Isosurface:with phase→Select Field→NOCV def Density选对应的本征值观看轨道图像显示成键时的电子转移：<ul>
+<li>红色区域，代表这个区域失去了电子</li>
+<li>蓝色区域，代表这个区域得到了电子<br>由于电子得失比较少，因此等值面的大小需要改到0.005左右。</li>
+</ul>
+</li>
+<li>NOCV def Densities，是“正本征值NOCV orbital的模方” - “负本征值NOCV orbital的模方”：<ul>
+<li>负本征值NOCV Orbital实际上一部分是占据电子的，另一部分是不占据电子的</li>
+<li>正本征值NOCV Orbital则是形成化学键，整个轨道上都占了电子的<br>因此NOCV def Densities表示电子的流向，负值表示失去电子，正值表示得到电子。只有NOCV def Density能够可靠地、直观地、明确无误地表征成键作用，文献中一般也只讨论NOCV def Density。</li>
+</ul>
+</li>
+<li>开壳层体系中NOCV def Density会分成α和β两组，如果需要看整体的，则需要Fields→Calculated，在Select Fields中选择配对的α和β轨道，中间的符号换成+，然后在SCM→View→Add→Isosurface:with phase→Select Field选择C-1。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>ADF</category>
+      </categories>
+      <tags>
+        <tag>能量分解</tag>
       </tags>
   </entry>
   <entry>
@@ -756,7 +756,9 @@
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">live2d:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">scriptFrom:</span> <span class="string">local</span></span><br><span class="line">  <span class="attr">pluginRootPath:</span> <span class="string">live2dw/</span></span><br><span class="line">  <span class="attr">pluginJsPath:</span> <span class="string">lib/</span></span><br><span class="line">  <span class="attr">pluginModelPath:</span> <span class="string">assets/</span></span><br><span class="line">  <span class="attr">tagMode:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">log:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">model:</span></span><br><span class="line">    <span class="attr">use:</span> <span class="string">live2d-widget-model-NAME</span></span><br><span class="line">  <span class="attr">display:</span></span><br><span class="line">    <span class="attr">hOffset:</span> <span class="number">0</span></span><br><span class="line">    <span class="attr">vOffset:</span> <span class="number">-20</span></span><br><span class="line">    <span class="attr">position:</span> <span class="string">right</span></span><br><span class="line">    <span class="attr">width:</span> <span class="number">150</span></span><br><span class="line">    <span class="attr">height:</span> <span class="number">300</span></span><br><span class="line">  <span class="attr">mobile:</span></span><br><span class="line">    <span class="attr">show:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">scale:</span> <span class="number">0.5</span></span><br><span class="line">  <span class="attr">react:</span></span><br><span class="line">    <span class="attr">opacity:</span> <span class="number">1.0</span></span><br><span class="line">  <span class="attr">dialog:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">hitokoto:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>在~新建文件夹/live2d_models/NAME，在NAME文件夹下，新建文件NAME.model.json，然后安装模型<code>npm install --save live2d-widget-model-NAME</code></p>
-<p>增加看板动画会导致网站底部和访问量消失，因此放弃……</p>
+</li>
+<li><p>增加看板动画会导致网站底部和访问量消失，解决办法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">   </span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h3 id="Mist主题首页两篇文章之间间距缩小和分割线"><a href="#Mist主题首页两篇文章之间间距缩小和分割线" class="headerlink" title="Mist主题首页两篇文章之间间距缩小和分割线"></a>Mist主题首页两篇文章之间间距缩小和分割线</h3><p>在~\themes\hexo-theme-next\source\css_schemes\Mist_posts-expand.styl文件中，修改该数值即可：</p>

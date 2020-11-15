@@ -985,7 +985,7 @@ pre .javascript .function {
   color: var(--brand-hover-color);
 }
 .site-title {
-  font-family: 'EB Garamond', "Noto Serif SC", sans-serif;
+  font-family: 'Pacifico', 'EB Garamond', "Noto Serif SC", sans-serif;
   font-size: 1.375em;
   font-weight: normal;
   margin: 0;
@@ -1200,7 +1200,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #a625ff;
+  background: #259a1f;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2455,9 +2455,13 @@ hr {
 }
 .posts-expand .post-eof {
   display: none;
+  width: 100%;
+  height: 1px;
+  background: #ccc;
+  text-align: center;
 }
 .posts-expand .post-block:not(:first-child) {
-  margin-top: 70px;
+  margin-top: 60px;
 }
 .posts-expand .post-title,
 .posts-expand .post-meta {
