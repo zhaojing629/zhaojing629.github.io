@@ -14,7 +14,7 @@
      console.log('tag cloud plugin rock and roll!');
 
      try {
-         TagCanvas.textFont = 'EB Garamond, Noto Serif SC';
+         TagCanvas.textFont = 'ZCOOL XiaoWei';
          TagCanvas.textColour = '#999A99';
          TagCanvas.textHeight = 20;
          TagCanvas.outlineColour = '#222222';
