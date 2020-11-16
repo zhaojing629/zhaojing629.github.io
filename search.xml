@@ -274,6 +274,99 @@
       </tags>
   </entry>
   <entry>
+    <title>ADF的SCF相关</title>
+    <url>/2019/09/23/SCF%E7%9B%B8%E5%85%B3/</url>
+    <content><![CDATA[<h1 id="SCF选项"><a href="#SCF选项" class="headerlink" title="SCF选项"></a>SCF选项</h1><figure class="highlight puppet"><table><tr><td class="code"><pre><span class="line">SCF</span><br><span class="line"> Iterations Niter</span><br><span class="line"> Converge <span class="keyword">SCFcnv</span> &#123; sconv2 &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">AccelerationMethod</span> &#123; ADIIS | LISTi | LISTb | fDIIS | LISTf | MESA | SDIIS &#125;</span><br><span class="line"> <span class="keyword">MESA</span> [NoFDIIS] [NoLISTb] [NoLISTf] [NoLISTi] [NoSDIIS] [NoADIIS]</span><br><span class="line"> ADIIS</span><br><span class="line">   &#123;THRESH1 a1&#125;</span><br><span class="line">   &#123;THRESH2 a2&#125;</span><br><span class="line"> End</span><br><span class="line"> NoADIIS</span><br><span class="line"> DIIS</span><br><span class="line">   &#123;N n&#125;</span><br><span class="line">   &#123;OK ok&#125;</span><br><span class="line">   &#123;cyc cyc&#125;</span><br><span class="line"> End</span><br><span class="line"> Mixing mix</span><br><span class="line"> Mixing1 mix1</span><br><span class="line"></span><br><span class="line"> OldSCF</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<h2 id="Iterations"><a href="#Iterations" class="headerlink" title="Iterations"></a>Iterations</h2><p><code>Iterations</code>SCF迭代的最大次数，<code>Niter</code>默认是<code>300</code></p>
+<h2 id="Converge"><a href="#Converge" class="headerlink" title="Converge"></a>Converge</h2><p><code>Converge</code> ：</p>
+<ul>
+<li><code>SCFcnv</code>表示停止迭代的收敛限，默认是<code>1e-6</code>。</li>
+<li><code>sconv2</code>表示SCF过程难以收敛时起作用的第二个标准，默认是<code>1e-3</code>，如果达到了，仅发出警告，但是继续计算。仍无法达到的时候SCF不收敛，只能用<code>ALLOW</code>来继续</li>
+</ul>
+<h2 id="AccelerationMethod"><a href="#AccelerationMethod" class="headerlink" title="AccelerationMethod"></a>AccelerationMethod</h2><p><code>AccelerationMethod</code>调用的SCF加速方法，默认情况下为<code>ADIIS</code>，还可以用<code>LISTi</code> | <code>LISTb</code> | <code>fDIIS</code> | <code>LISTf</code> | <code>MESA</code> | <code>SDIIS</code></p>
+<h3 id="MESA"><a href="#MESA" class="headerlink" title="MESA"></a>MESA</h3><p><code>AccelerationMethod MESA</code>是ADIIS, fDIIS, LISTb, LISTf, LISTi和 SDIIS方法的组合<br><code>MESA NoSDIIS</code>代表从其中删掉某一种方法，也可以直接使用该关键词调用MESA，优先级大于<code>AccelerationMethod</code>指定的方法。</p>
+<h3 id="ADIIS"><a href="#ADIIS" class="headerlink" title="ADIIS"></a>ADIIS</h3><p>使用ADIIS + SDIIS方法，根据 [F,P] 交换子矩阵中的最大元素<code>ErrMax</code>来确定具体方法：</p>
+<ul>
+<li>当ErrMax≥<code>a1</code>，只使用A-DIIS系数</li>
+<li>当ErrMax≤ <code>a2</code>，只使用SDIIS系数</li>
+<li>当<code>a2</code>≤ ErrMax≤ <code>a1</code>，根据ErrMax的值按一定的权重来计算<br><code>a1</code>和<code>a2</code>的默认值是<code>0.01</code>和<code>0.0001</code>，收敛比较困难的时候，可以降低阈值，只使用A-DIIS系数</li>
+</ul>
+<h3 id="SDIIS"><a href="#SDIIS" class="headerlink" title="SDIIS"></a>SDIIS</h3><p><code>AccelerationMethod SDIIS</code>与在没有指定<code>oldscf</code>的情况下使用<code>NoADIIS</code>意思相同，采用的是阻尼+SDIIS方法。从简单阻尼（Mixing）开始，持续到<code>ErrMax</code>降低到<code>DIIS OK</code>参数以下，但是不超过<code>DIIS Cyc</code>次迭代。之后使用纯的SDIIS方法。</p>
+<blockquote>
+<p>在指定<code>oldscf</code>的情况下使用<code>NoADIIS</code>会禁用在SCF收敛困难的时候自动切换到ADIIS + SDIIS方法</p>
+</blockquote>
+<ul>
+<li>指定<code>NoADIIS</code>时才可以设置 <code>DIIS</code>模块：<ul>
+<li><code>N</code>用于加速SCF的扩展向量的数量，默认为<code>10</code>，小于2后会禁用DIIS。此数字不仅适用于Pulay DIIS方案，还适用于其他类似DIIS的方法，例如A-DIIS和LIST方法。<blockquote>
+<p>LIST家族的方法对使用的扩展向量的数量非常敏感，接近收敛时，LIST中的向量数量会增加，但始终受<code>DIIS N</code>的限制，当难以收敛时，可以将<code>DIIS N</code>设置为大于10的值，比如12~20。</p>
+</blockquote>
+</li>
+<li><code>OK</code>禁用A-DIIS时，SDIIS起始条件。默认为<code>0.5</code> a.u.。</li>
+<li><code>Cyc</code>禁用A-DIIS时，无论上面的<code>DIIS OK</code>值如何，SDIIS都会在此迭代下启动，默认值为<code>5</code></li>
+</ul>
+</li>
+<li><code>Mixing</code>中，指将下一个Fock矩阵确定为<script type="math/tex">F = mix F_{n} + (1-mix) F_{n-1}</script>，<code>mix</code>默认为<code>0.2</code></li>
+<li><code>Mixing1</code>中指第一个SCF循环的混合参数值不同，默认为<code>0.2</code></li>
+</ul>
+<h2 id="oldSCF"><a href="#oldSCF" class="headerlink" title="oldSCF"></a>oldSCF</h2><p>在使用<code>Occupations Steep</code>、<code>Lshift</code>，<code>ARH</code>，<code>EDIIS</code>，<code>RESTOCC</code>时，会自动启用<code>oldSCF</code></p>
+<h3 id="Lshift"><a href="#Lshift" class="headerlink" title="Lshift"></a>Lshift</h3><p>能级移动方法，在前一次迭代的轨道表示中，Fock矩阵的对角元素提高虚轨道的<code>vshift</code>hartree。旋轨耦合不支持这种方法。</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">Lshift</span> <span class="string">vshift</span></span><br><span class="line"><span class="attr">Lshift_err</span> <span class="string">Shift_err</span></span><br><span class="line"><span class="attr">Lshift_cyc</span> <span class="string">Shift_cyc</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Lshift_err</code>指定一旦SCF error降至阈值以下，程序将关闭能级移动，<code>Shift_err</code>默认值为<code>0</code>。</li>
+<li><code>Lshift_cyc</code>指定在第几个SCF 迭代次数的时候再启动能级移动， <code>Shift_cyc</code>默认为<code>1</code>。</li>
+</ul>
+<h3 id="ARH"><a href="#ARH" class="headerlink" title="ARH"></a>ARH</h3><figure class="highlight dust"><table><tr><td class="code"><pre><span class="line"><span class="xml">SCF</span></span><br><span class="line"><span class="xml">  ARH</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;CONV conv&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;ITER iter&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;NSAVED nsaved&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;START start&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;FINAL&#125;</span><span class="xml"> ...</span></span><br><span class="line"><span class="xml">  End</span></span><br><span class="line"><span class="xml">  ...</span></span><br><span class="line"><span class="xml">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>CONV</code>：当RMS梯度及其最大分量均低于<code>conv</code>，ARH收敛，<code>conv</code>默认是1e-4</li>
+<li><code>ITER</code>：最大ARH迭代次数，<code>iter</code>默认为500</li>
+<li><code>FINAL</code>：确定ARH完成后是否继续SCF。如果设置了此选项，将执行一次Fock矩阵对角化以获得轨道，并且将停止SCF过程。默认选项为<code>OFF</code>。</li>
+<li><code>START</code>：开始调用ARH的SCF迭代次数，<code>start</code>默认为2。使用较大的值可以为ARH提供更好的初猜</li>
+<li><code>NSAVED</code>：保存密度和Fock矩阵的数量。 <code>nsaved</code>默认为8。在非常接近费米能级的轨道数很大的收敛困难时，应使用较大的<code>nsaved</code>值。</li>
+<li>默认的最小化方法是“Untransformed Pre-conditioned Conjugate Gradient”，可以使用以下两个关键词更改：<ul>
+<li><code>NOPRECOND</code>：禁用Untransformed Pre-conditioned CG最小化，不能在第二周期后的元素里使用</li>
+<li><code>TRANSPCG</code>：启用Transformed Pre-conditioned CG 方法，SCF可能会更好的收敛。</li>
+</ul>
+</li>
+<li>在每一步SCF中，先执行常规CG最小化，跟踪总步长，如果在某个微迭代中步长超过了信任半径，则过程将在缩小的空间中切换到信任半径优化，在能级移动参数mu收敛后立即中止。在CG最小化期间生成的所有试验矢量的缩小空间中，将最终步骤计算为牛顿步骤。可以通过以下关键词修改参数：<ul>
+<li><code>NOSWITCHING</code>：关闭从普通CG到缩小的空间中的信任半径最小化的切换。在某些情况下，使用此选项有助于减少SCF循环的总数。</li>
+<li><code>SHIFTED</code>：设置此选项将在第一次微迭代中打开信任半径优化。</li>
+<li><code>CGITER=cgiter</code>：设置微迭代的最大数量。</li>
+<li>确定置信半径：<ul>
+<li><code>TRUSTR=trustr</code>：信任半径的初始值。默认为<code>0.5</code></li>
+<li><code>MAXTRUSTR=maxtrustr</code>：最大信任半径值。默认为<code>0.5</code>，并且不会改变。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>该方法仅适用于NOSYM计算</li>
+<li>在每一步都要计算总能量，计算非常昂贵，而且使用总能量，需要更高的积分精度才能获得稳定的SCF收敛，该方法可能不适用于所有情况，??使用<code>ADDDIFFUSEFIT</code>关键字或更高的<code>ZlmFit</code>质量设置来提高总能量的准确性，从而提高收敛性。??</li>
+</ul>
+</li>
+</ul>
+<h1 id="SCF不收敛"><a href="#SCF不收敛" class="headerlink" title="SCF不收敛"></a>SCF不收敛</h1><ol>
+<li>更换SCF加速收敛的方法</li>
+<li>使用ARH方法</li>
+<li>修改DIIS算法的参数<ul>
+<li><code>Mixing</code>高于默认值<code>0.2</code>会有更高的加速度，更低会更稳定的迭代</li>
+<li><code>N</code>默认为<code>10</code>，越大用于加速SCF的扩展向量的数量越多，SCF迭代更稳定，最多到25</li>
+<li><code>Cyc</code>是SDIIS启动的初始SCF迭代步数，默认值为<code>5</code>，更高计算越稳定<br>比如使用如下参数：<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">SCF</span></span><br><span class="line">    <span class="attribute">DIIS</span></span><br><span class="line">      <span class="attribute">N</span> <span class="number">25</span></span><br><span class="line">      <span class="attribute">Cyc</span> <span class="number">30</span></span><br><span class="line">    <span class="attribute">End</span></span><br><span class="line">    <span class="attribute">Mixing</span> <span class="number">0</span>.<span class="number">015</span></span><br><span class="line">    <span class="attribute">Mixing1</span> <span class="number">0</span>.<span class="number">09</span></span><br><span class="line">  <span class="attribute">End</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>HOMO-LUMO较为接近的情况（0.02Hatree以内），可能造成HOMO-LUMO的震荡。可以使用<code>Lshift vshift</code>方法，不适于激发态的计算、解析频率、旋轨耦合的计算。</li>
+<li>使用Electron smearing设定在允许的能量范围内分数占据。</li>
+<li>其他：<a href="https://www.fermitech.com.cn/wiki/doku.php?id=adf:scfnonconvergence">费米维基</a>的2、3、5。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>ADF</category>
+      </categories>
+      <tags>
+        <tag>SCF</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>双原子分子的光谱项</title>
     <url>/2020/11/11/%E5%8F%8C%E5%8E%9F%E5%AD%90%E5%88%86%E5%AD%90%E7%9A%84%E5%85%89%E8%B0%B1%E9%A1%B9/</url>
     <content><![CDATA[<h1 id="2S-1-Lambda-简单确定方法"><a href="#2S-1-Lambda-简单确定方法" class="headerlink" title="$^{2S+1}\Lambda$简单确定方法"></a>$^{2S+1}\Lambda$简单确定方法</h1><p>根据分子轨道占据来确定双原子的分子光谱项为$^{2S+1}\Lambda$：</p>
@@ -397,99 +490,6 @@
       </categories>
       <tags>
         <tag>光谱项</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ADF的SCF相关</title>
-    <url>/2019/09/23/SCF%E7%9B%B8%E5%85%B3/</url>
-    <content><![CDATA[<h1 id="SCF选项"><a href="#SCF选项" class="headerlink" title="SCF选项"></a>SCF选项</h1><figure class="highlight puppet"><table><tr><td class="code"><pre><span class="line">SCF</span><br><span class="line"> Iterations Niter</span><br><span class="line"> Converge <span class="keyword">SCFcnv</span> &#123; sconv2 &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">AccelerationMethod</span> &#123; ADIIS | LISTi | LISTb | fDIIS | LISTf | MESA | SDIIS &#125;</span><br><span class="line"> <span class="keyword">MESA</span> [NoFDIIS] [NoLISTb] [NoLISTf] [NoLISTi] [NoSDIIS] [NoADIIS]</span><br><span class="line"> ADIIS</span><br><span class="line">   &#123;THRESH1 a1&#125;</span><br><span class="line">   &#123;THRESH2 a2&#125;</span><br><span class="line"> End</span><br><span class="line"> NoADIIS</span><br><span class="line"> DIIS</span><br><span class="line">   &#123;N n&#125;</span><br><span class="line">   &#123;OK ok&#125;</span><br><span class="line">   &#123;cyc cyc&#125;</span><br><span class="line"> End</span><br><span class="line"> Mixing mix</span><br><span class="line"> Mixing1 mix1</span><br><span class="line"></span><br><span class="line"> OldSCF</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
-<h2 id="Iterations"><a href="#Iterations" class="headerlink" title="Iterations"></a>Iterations</h2><p><code>Iterations</code>SCF迭代的最大次数，<code>Niter</code>默认是<code>300</code></p>
-<h2 id="Converge"><a href="#Converge" class="headerlink" title="Converge"></a>Converge</h2><p><code>Converge</code> ：</p>
-<ul>
-<li><code>SCFcnv</code>表示停止迭代的收敛限，默认是<code>1e-6</code>。</li>
-<li><code>sconv2</code>表示SCF过程难以收敛时起作用的第二个标准，默认是<code>1e-3</code>，如果达到了，仅发出警告，但是继续计算。仍无法达到的时候SCF不收敛，只能用<code>ALLOW</code>来继续</li>
-</ul>
-<h2 id="AccelerationMethod"><a href="#AccelerationMethod" class="headerlink" title="AccelerationMethod"></a>AccelerationMethod</h2><p><code>AccelerationMethod</code>调用的SCF加速方法，默认情况下为<code>ADIIS</code>，还可以用<code>LISTi</code> | <code>LISTb</code> | <code>fDIIS</code> | <code>LISTf</code> | <code>MESA</code> | <code>SDIIS</code></p>
-<h3 id="MESA"><a href="#MESA" class="headerlink" title="MESA"></a>MESA</h3><p><code>AccelerationMethod MESA</code>是ADIIS, fDIIS, LISTb, LISTf, LISTi和 SDIIS方法的组合<br><code>MESA NoSDIIS</code>代表从其中删掉某一种方法，也可以直接使用该关键词调用MESA，优先级大于<code>AccelerationMethod</code>指定的方法。</p>
-<h3 id="ADIIS"><a href="#ADIIS" class="headerlink" title="ADIIS"></a>ADIIS</h3><p>使用ADIIS + SDIIS方法，根据 [F,P] 交换子矩阵中的最大元素<code>ErrMax</code>来确定具体方法：</p>
-<ul>
-<li>当ErrMax≥<code>a1</code>，只使用A-DIIS系数</li>
-<li>当ErrMax≤ <code>a2</code>，只使用SDIIS系数</li>
-<li>当<code>a2</code>≤ ErrMax≤ <code>a1</code>，根据ErrMax的值按一定的权重来计算<br><code>a1</code>和<code>a2</code>的默认值是<code>0.01</code>和<code>0.0001</code>，收敛比较困难的时候，可以降低阈值，只使用A-DIIS系数</li>
-</ul>
-<h3 id="SDIIS"><a href="#SDIIS" class="headerlink" title="SDIIS"></a>SDIIS</h3><p><code>AccelerationMethod SDIIS</code>与在没有指定<code>oldscf</code>的情况下使用<code>NoADIIS</code>意思相同，采用的是阻尼+SDIIS方法。从简单阻尼（Mixing）开始，持续到<code>ErrMax</code>降低到<code>DIIS OK</code>参数以下，但是不超过<code>DIIS Cyc</code>次迭代。之后使用纯的SDIIS方法。</p>
-<blockquote>
-<p>在指定<code>oldscf</code>的情况下使用<code>NoADIIS</code>会禁用在SCF收敛困难的时候自动切换到ADIIS + SDIIS方法</p>
-</blockquote>
-<ul>
-<li>指定<code>NoADIIS</code>时才可以设置 <code>DIIS</code>模块：<ul>
-<li><code>N</code>用于加速SCF的扩展向量的数量，默认为<code>10</code>，小于2后会禁用DIIS。此数字不仅适用于Pulay DIIS方案，还适用于其他类似DIIS的方法，例如A-DIIS和LIST方法。<blockquote>
-<p>LIST家族的方法对使用的扩展向量的数量非常敏感，接近收敛时，LIST中的向量数量会增加，但始终受<code>DIIS N</code>的限制，当难以收敛时，可以将<code>DIIS N</code>设置为大于10的值，比如12~20。</p>
-</blockquote>
-</li>
-<li><code>OK</code>禁用A-DIIS时，SDIIS起始条件。默认为<code>0.5</code> a.u.。</li>
-<li><code>Cyc</code>禁用A-DIIS时，无论上面的<code>DIIS OK</code>值如何，SDIIS都会在此迭代下启动，默认值为<code>5</code></li>
-</ul>
-</li>
-<li><code>Mixing</code>中，指将下一个Fock矩阵确定为<script type="math/tex">F = mix F_{n} + (1-mix) F_{n-1}</script>，<code>mix</code>默认为<code>0.2</code></li>
-<li><code>Mixing1</code>中指第一个SCF循环的混合参数值不同，默认为<code>0.2</code></li>
-</ul>
-<h2 id="oldSCF"><a href="#oldSCF" class="headerlink" title="oldSCF"></a>oldSCF</h2><p>在使用<code>Occupations Steep</code>、<code>Lshift</code>，<code>ARH</code>，<code>EDIIS</code>，<code>RESTOCC</code>时，会自动启用<code>oldSCF</code></p>
-<h3 id="Lshift"><a href="#Lshift" class="headerlink" title="Lshift"></a>Lshift</h3><p>能级移动方法，在前一次迭代的轨道表示中，Fock矩阵的对角元素提高虚轨道的<code>vshift</code>hartree。旋轨耦合不支持这种方法。</p>
-<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">Lshift</span> <span class="string">vshift</span></span><br><span class="line"><span class="attr">Lshift_err</span> <span class="string">Shift_err</span></span><br><span class="line"><span class="attr">Lshift_cyc</span> <span class="string">Shift_cyc</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>Lshift_err</code>指定一旦SCF error降至阈值以下，程序将关闭能级移动，<code>Shift_err</code>默认值为<code>0</code>。</li>
-<li><code>Lshift_cyc</code>指定在第几个SCF 迭代次数的时候再启动能级移动， <code>Shift_cyc</code>默认为<code>1</code>。</li>
-</ul>
-<h3 id="ARH"><a href="#ARH" class="headerlink" title="ARH"></a>ARH</h3><figure class="highlight dust"><table><tr><td class="code"><pre><span class="line"><span class="xml">SCF</span></span><br><span class="line"><span class="xml">  ARH</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;CONV conv&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;ITER iter&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;NSAVED nsaved&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;START start&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;FINAL&#125;</span><span class="xml"> ...</span></span><br><span class="line"><span class="xml">  End</span></span><br><span class="line"><span class="xml">  ...</span></span><br><span class="line"><span class="xml">End</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>CONV</code>：当RMS梯度及其最大分量均低于<code>conv</code>，ARH收敛，<code>conv</code>默认是1e-4</li>
-<li><code>ITER</code>：最大ARH迭代次数，<code>iter</code>默认为500</li>
-<li><code>FINAL</code>：确定ARH完成后是否继续SCF。如果设置了此选项，将执行一次Fock矩阵对角化以获得轨道，并且将停止SCF过程。默认选项为<code>OFF</code>。</li>
-<li><code>START</code>：开始调用ARH的SCF迭代次数，<code>start</code>默认为2。使用较大的值可以为ARH提供更好的初猜</li>
-<li><code>NSAVED</code>：保存密度和Fock矩阵的数量。 <code>nsaved</code>默认为8。在非常接近费米能级的轨道数很大的收敛困难时，应使用较大的<code>nsaved</code>值。</li>
-<li>默认的最小化方法是“Untransformed Pre-conditioned Conjugate Gradient”，可以使用以下两个关键词更改：<ul>
-<li><code>NOPRECOND</code>：禁用Untransformed Pre-conditioned CG最小化，不能在第二周期后的元素里使用</li>
-<li><code>TRANSPCG</code>：启用Transformed Pre-conditioned CG 方法，SCF可能会更好的收敛。</li>
-</ul>
-</li>
-<li>在每一步SCF中，先执行常规CG最小化，跟踪总步长，如果在某个微迭代中步长超过了信任半径，则过程将在缩小的空间中切换到信任半径优化，在能级移动参数mu收敛后立即中止。在CG最小化期间生成的所有试验矢量的缩小空间中，将最终步骤计算为牛顿步骤。可以通过以下关键词修改参数：<ul>
-<li><code>NOSWITCHING</code>：关闭从普通CG到缩小的空间中的信任半径最小化的切换。在某些情况下，使用此选项有助于减少SCF循环的总数。</li>
-<li><code>SHIFTED</code>：设置此选项将在第一次微迭代中打开信任半径优化。</li>
-<li><code>CGITER=cgiter</code>：设置微迭代的最大数量。</li>
-<li>确定置信半径：<ul>
-<li><code>TRUSTR=trustr</code>：信任半径的初始值。默认为<code>0.5</code></li>
-<li><code>MAXTRUSTR=maxtrustr</code>：最大信任半径值。默认为<code>0.5</code>，并且不会改变。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>缺点：<ul>
-<li>该方法仅适用于NOSYM计算</li>
-<li>在每一步都要计算总能量，计算非常昂贵，而且使用总能量，需要更高的积分精度才能获得稳定的SCF收敛，该方法可能不适用于所有情况，??使用<code>ADDDIFFUSEFIT</code>关键字或更高的<code>ZlmFit</code>质量设置来提高总能量的准确性，从而提高收敛性。??</li>
-</ul>
-</li>
-</ul>
-<h1 id="SCF不收敛"><a href="#SCF不收敛" class="headerlink" title="SCF不收敛"></a>SCF不收敛</h1><ol>
-<li>更换SCF加速收敛的方法</li>
-<li>使用ARH方法</li>
-<li>修改DIIS算法的参数<ul>
-<li><code>Mixing</code>高于默认值<code>0.2</code>会有更高的加速度，更低会更稳定的迭代</li>
-<li><code>N</code>默认为<code>10</code>，越大用于加速SCF的扩展向量的数量越多，SCF迭代更稳定，最多到25</li>
-<li><code>Cyc</code>是SDIIS启动的初始SCF迭代步数，默认值为<code>5</code>，更高计算越稳定<br>比如使用如下参数：<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">SCF</span></span><br><span class="line">    <span class="attribute">DIIS</span></span><br><span class="line">      <span class="attribute">N</span> <span class="number">25</span></span><br><span class="line">      <span class="attribute">Cyc</span> <span class="number">30</span></span><br><span class="line">    <span class="attribute">End</span></span><br><span class="line">    <span class="attribute">Mixing</span> <span class="number">0</span>.<span class="number">015</span></span><br><span class="line">    <span class="attribute">Mixing1</span> <span class="number">0</span>.<span class="number">09</span></span><br><span class="line">  <span class="attribute">End</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li>HOMO-LUMO较为接近的情况（0.02Hatree以内），可能造成HOMO-LUMO的震荡。可以使用<code>Lshift vshift</code>方法，不适于激发态的计算、解析频率、旋轨耦合的计算。</li>
-<li>使用Electron smearing设定在允许的能量范围内分数占据。</li>
-<li>其他：<a href="https://www.fermitech.com.cn/wiki/doku.php?id=adf:scfnonconvergence">费米维基</a>的2、3、5。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>ADF</category>
-      </categories>
-      <tags>
-        <tag>SCF</tag>
       </tags>
   </entry>
   <entry>
