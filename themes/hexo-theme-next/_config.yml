@@ -872,9 +872,9 @@ canvas_ribbon:
 # For more information: https://github.com/hustcc/canvas-nest.js
 canvas_nest:
   enable: true
-  onmobile: true # Display on mobile or not
+  onmobile: false # Display on mobile or not
   color: "0,0,0" # RGB values, use `,` to separate
-  opacity: 0.5 # The opacity of line: 0~1
+  opacity: 0.3 # The opacity of line: 0~1
   zIndex: -1 # z-index property of the background
   count: 99 # The number of lines
 
