@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=EB Garamond:300,300italic,400,400italic,700,700italic|Dancing Script:300,300italic,400,400italic,700,700italic|ZCOOL XiaoWei:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="输入文件简单学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="molpro输入文件">
+<meta property="og:url" content="http://example.com/2020/01/17/molpro1/index.html">
+<meta property="og:site_name" content="Jing&#39;s Notes">
+<meta property="og:description" content="输入文件简单学习">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-01-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-11-16T13:59:27.036Z">
+<meta property="article:author" content="Zhao Jing">
+<meta property="article:tag" content="输入文件">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2020/01/17/molpro1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+  <title>molpro输入文件 | Jing's Notes</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d23c6dd5b34ecbaba18b829b9084946";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jing's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/01/17/molpro1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="Zhao Jing">
+      <meta itemprop="description" content="做一棵树，只为岁月而生长。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jing's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          molpro输入文件
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-17 00:00:00" itemprop="dateCreated datePublished" datetime="2020-01-17T00:00:00+08:00">2020-01-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-16 21:59:27" itemprop="dateModified" datetime="2020-11-16T21:59:27+08:00">2020-11-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/molpro/" itemprop="url" rel="index"><span itemprop="name">molpro</span></a>
+                </span>
+            </span>
+
+          
+            <br>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/01/17/molpro1/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/01/17/molpro1/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+            <div class="post-description">输入文件简单学习</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="运行molpro"><a href="#运行molpro" class="headerlink" title="运行molpro"></a>运行molpro</h1><h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>在UNIX系统中，MOLPRO通过unix命令molpro访问：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">molpro</span> <span class="selector-attr">[options]</span> <span class="selector-attr">[datafile]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>datafile</code>：输入文件，可以取任何名字，但是要避免使用.out作为后缀，一般用.inp。unix中出现在molpro输入文件中的文件名总是转化为小写。</p>
+</li>
+<li><p>options：大部分选项都有合适的系统默认值，但是也可以在命令行中、环境变量MOLPRO OPTIONS中或文件./molpro.rc，$HOME/.molprorc，和library文件目录下的tuning.rc中（优先级递减）：</p>
+<ul>
+<li><p><code>-o [outfile]</code> ：自定义输出名</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">molpro</span> <span class="selector-tag">-o</span> <span class="selector-tag">water</span><span class="selector-class">.output</span> <span class="selector-tag">h2o</span><span class="selector-class">.inp</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>-d [directory]</code> ：定义放置临时文件的目录</p>
+</li>
+<li><p><code>-s</code>：不保存旧的输出文件，只是覆盖。</p>
+</li>
+<li><p><code>-m n_scale</code>：指定分配给程序的工作内存，单位是word=8byte</p>
+<ul>
+<li><code>k</code>，<code>m</code>，<code>g</code>分别为10<sup>3</sup>，10<sup>6</sup>，10<sup>9</sup></li>
+<li><code>K</code>，<code>M</code>，<code>G</code>分别为2<sup>10</sup>，2<sup>20</sup>，2<sup>30</sup></li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#需要<span class="number">1000</span>word的内存</span><br><span class="line">-m <span class="number">1</span>k</span><br><span class="line">#需要<span class="number">1024</span>word的内存</span><br><span class="line">-M <span class="number">1</span>K</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>用于并行执行的选项（在使用串行MOLPRO时，将忽略这些选项）：</p>
+<ul>
+<li><p><code>-n</code>：定义设置的并行进程个数</p>
+<p>并行内存计算eg. 为具有4个并行计算过程的作业指定100×10<sup>6</sup>个word：100×10<sup>6</sup>×8×4=3.2×10<sup>9</sup>byte</p>
+</li>
+<li><p><code>-N</code> ：等指定工作节点的主机名</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="输出文件"><a href="#输出文件" class="headerlink" title="输出文件"></a>输出文件</h2><h3 id="out文件"><a href="#out文件" class="headerlink" title="out文件"></a>out文件</h3><ul>
+<li>执行结果会把输出写到一个名称输入文件截掉扩展名并加上<code>.out</code>产生的文件中。如果输出文件已经存在，防止覆盖文件，会把旧文件重命名为后缀为<code>.out_1</code>的文件中。如果命令行没有给出<code>datafile</code>，那么从标准输入读取数据。</li>
+</ul>
+<h3 id="punch文件"><a href="#punch文件" class="headerlink" title="punch文件"></a>punch文件</h3><p>punch文件是output文件的简易形式，它包含了最重要的数据和结果，例如几何结构，能量，偶极矩等。可以用独立的程序readpun处理，它用关键词选择特定的结果，并根据用户提供的格式产生排列好的表格。</p>
+<h3 id="xml文件"><a href="#xml文件" class="headerlink" title="xml文件"></a>xml文件</h3><p>除了生成.out文件外，还用. XML后缀创建结构化XML文件(实际上是.out文件的父文件)。这个文件可以用于结果的自动后处理，例如MolproView程序的图形化呈现。</p>
+<h3 id="9个二进制文件"><a href="#9个二进制文件" class="headerlink" title="9个二进制文件"></a>9个二进制文件</h3><ul>
+<li><p>程序通过它们的编号（1到9）可以简单地识别它们。</p>
+</li>
+<li><p>默认是临时文件，通常由程序动态分配，scratch文件用于存储MOLPRO所需的所有中间数据，用户通常根本不会看到这些文件。但是用FILE命令可以把计算出的数据作为轨道和能量保存到永久文件中，并在以后的阶段使用它们重启计算。</p>
+</li>
+<li><p>每个文件都是直接访问，字可寻址的（word addressable；1个字通常是64位），并且在任意长度的记录中组织起来。每个记录的名称、地址和长度都保存在文件开始的目录中。</p>
+</li>
+<li><p>文件类型：</p>
+<ul>
+<li>文件1：主文件，存有基组，几何结构，以及单电子和双电子积分。</li>
+<li>文件2：默认是转存文件，用于存储波函的信息，即：轨道，轨道能量，可选的CI矢量，以及密度矩阵。</li>
+<li>文件3：辅助文件，和文件2一起用于续算</li>
+<li>文件4~8：草稿文件空间，用来分类积分，存储转换的积分和CI矢量。这些文件通常无需存为永久文件。</li>
+</ul>
+<p>通常文件1和2（以及3）被声明为用于续算的永久文件（参见<code>FILE</code>）。文件2对于重新启动计算是必不可少的，而文件1上的积分可以重新启动，也可以重新计算。把波函信息存储在文件2中是非常有用的，因为对于每个新的结构，积分文件都会被改写，而一个计算中的轨道和CI因子可以用作下一个相近几何结构计算的初始猜测。</p>
+</li>
+</ul>
+<h1 id="输入文件格式"><a href="#输入文件格式" class="headerlink" title="输入文件格式"></a>输入文件格式</h1><h2 id="一般输入结构和规则"><a href="#一般输入结构和规则" class="headerlink" title="一般输入结构和规则"></a>一般输入结构和规则</h2><figure class="highlight erlang-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">***,title			! 标题（可选）</span><br><span class="line">memory,<span class="number">4</span>,m 			! 内存指定（可选）</span><br><span class="line">file,<span class="number">1</span>,name.int 	! 命名永久的积分文件（可选）</span><br><span class="line">file,<span class="number">2</span>,name.wfu 	! 命名永久的波函文件（可选）</span><br><span class="line"></span><br><span class="line">gprint,options 		! 全局打印选项（可选）</span><br><span class="line">gthresh,options 	! 全局阈值（可选）</span><br><span class="line">gdirect[,options] 	! 全局直接积分选项（可选）</span><br><span class="line">gexpec,opnames 		! 单电子算符的全局定义（可选）</span><br><span class="line"></span><br><span class="line">basis=basisname 	! 基的定义。如果不出现，使用cc-pVDZ</span><br><span class="line">geometry=&#123;...&#125; 		! 结构定义。</span><br><span class="line"></span><br><span class="line">var1=value,var2=value,... 	! 设定结构和/或波函定义中的变量</span><br><span class="line"></span><br><span class="line">&#123;command,options 		! 程序或流程的名称</span><br><span class="line">directive,data,option 	! 命令的指令（可选）</span><br><span class="line">...</span><br><span class="line">&#125; 				! 结束命令区</span><br><span class="line">--- 			! 结束输入（可选）</span><br></pre></td></tr></table></figure>
+<ul>
+<li>输了memory卡应该是紧随标题的第一个以外，其他basis，geometry，gprint，gdirect，gthresh，gexpec，以及变量定义的顺序是任意的。</li>
+<li>可以在一个程序后调用其它几个程序。在程序的调用之间还可以重新定义基组和/或分子结构；程序将会自动确认是否需要重新计算积分。</li>
+</ul>
+<p>一般规则：</p>
+<ul>
+<li><code>,</code>移到下一个制表位，即用来划定输入范围。</li>
+<li><code>;</code>结束记录，开始一个新的记录。用分号隔开的基本命令单位称为卡（card）。一个给定的输入行可以包含多个有效命令（用；隔开），也可以只有一个。</li>
+<li><code>!</code>忽略该输入行后面的内容（用于注释）。</li>
+<li>内容不区分大小写，统一转换为大写处理。引号中的内容会被认为是字符串，不会进行大小写转换。</li>
+<li>整数后面加上<code>.</code>，程序只读取浮点数</li>
+</ul>
+<p>一般只占用一行的命令：</p>
+<ul>
+<li><code>***</code>总是第一个数据行，title可以任选，但是如果文件1用于续算，title必须总是相同。这个卡的作用是重新设置所有程序的计数器等。如果忽略<em>*</em>卡，title假定用默认值，全是空格。</li>
+<li><code>INCLUDE</code>包含其它的输入文件。使用<code>INCLUDE</code>可以打开辅助输入文件。如果遇到了<code>INCLUDE</code>命令，则打开新的输入文件并读取到结束，然后在第一个输入文件中继续INCLUDE卡之后的输入。<code>INCLUDE</code>也可以嵌套。</li>
+<li><code>FILE</code>指定已命名的文件</li>
+<li><code>TEXT</code>打印文本</li>
+<li><code>TITLE</code>定义运行的标题或表格的标题</li>
+<li><p><code>CON</code>指定轨道组态</p>
+</li>
+<li><p><code>---</code>结束文件（忽略之后的输入）</p>
+</li>
+</ul>
+<h2 id="memory卡"><a href="#memory卡" class="headerlink" title="memory卡"></a>memory卡</h2><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">MEMORY,</span>n,scale<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>与命令行中的<code>-m</code>不同，scale中<code>k</code>，<code>m</code>，<code>g</code>不区分大小写，统一按10<sup>3</sup>，10<sup>6</sup>，10<sup>9</sup></li>
+<li>优先于命令行中的<code>-m</code>。两者都省略的话，程序将使用默认的内存大小8mw (64 Mb)。</li>
+</ul>
+<p>MOLPRO可以根据用户的需要动态分配内存。因此不需要保存有不同内存大小的不同版本程序。所需要的内存大小取决于分子的大小、基组、分子的对称性和使用的方法，因此很难提前预测。大多数计算运行在16mw或更少，但在大的情况下，低对称性可能需要更多。一个比较好的选择是64MW（512MB），前提是系统有足够的内存。</p>
+<ul>
+<li>算到一半但是没有报错就停止了，可以将.sub文件中并行核数设大一些，比如24，再将molpro中的并行设置-n中的设置小一些。</li>
+</ul>
+<h2 id="file卡"><a href="#file卡" class="headerlink" title="file卡"></a>file卡</h2><p>对所有的永久文件，默认设置是RESTART。所有的临时文件在需要时通常自动分配。I/O缓存分配到动态内存的顶端，缓存的大小会减少可用的内存。因此MEMORY卡必须出现在第一个FILE卡之前。</p>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FILE</span>,<span class="keyword">file</span>,<span class="keyword">name</span>,[<span class="keyword">status</span>]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>file</code>是逻辑MOLPRO文件序号(1-9)</li>
+<li><code>name</code>是文件名（将被转换成小写字母）</li>
+<li><code>status</code>可以是：<ul>
+<li><code>UNKNOWN</code>打开永久文件。如果存在，自动续算。这是默认的。</li>
+<li><code>OLD</code>作用同<code>UNKNOWN</code>。如果该文件不存在，不会发生错误。</li>
+<li><code>NEW</code> 打开永久文件。如果已经存在，则清除，不续算。</li>
+<li><code>ERASE</code> 作用同<code>NEW</code>。</li>
+<li><code>SCRATCH</code> 打开临时文件。如果已经存在，则清除，不续算。任务完成后，文件不<br>再存在。</li>
+<li><code>DELETE</code> 作用同<code>SCRATCH</code>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><ul>
+<li><p>分配永久文件1的名称H2O.INT，如果存在会使用它进行续算。比如第一个输入中只计算了hf和ccsd(t)，使用了该指令，后续计算casscf和MRCI的时候，指定了相同的文件，，MOLPRO将自动恢复保存在给定文件中的所有数据，积分和轨道将被重新启动。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">FILE</span>,<span class="number">1</span>,H<span class="number">2</span>O.INT</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>分配永久文件2的名称H2O.WFU，即禁用自动重启机制</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">FILE</span>,<span class="number">2</span>,H<span class="number">2</span>O.WFU,NEW</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在大多数情况下，文件1可能非常大(它包含两个电子的积分)，而重新计算积分的成本可能只占总时间的一小部分，因此可以只在输入中只定义文件2，积分会自动重新计算。</p>
+</li>
+</ul>
+<h2 id="geometry卡"><a href="#geometry卡" class="headerlink" title="geometry卡"></a>geometry卡</h2><p>定义分子结构可以用标准Z矩阵形式，或XYZ形式。GEOMETRY必须出现在其它修改分子结构的命令之后。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[SYMMETRY, options ]</span></span><br><span class="line"><span class="string">[ORIENT, options ]</span> </span><br><span class="line"><span class="string">[ANGSTROM ]</span> </span><br><span class="line"><span class="string">[BOHR]</span></span><br><span class="line">geometry=&#123; </span><br><span class="line">原子说明 </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>symmetry</code>选项<ul>
+<li><code>SYMMETRY,NOSYM</code>禁止使用对称性，也可以只用<code>NOSYM</code></li>
+<li><code>SYMMETRY,AUTO</code>允许使用对称性</li>
+</ul>
+</li>
+</ul>
+<h3 id="xyz输入"><a href="#xyz输入" class="headerlink" title="xyz输入"></a>xyz输入</h3><ul>
+<li>第一行是原子个数，第二行是任意的标题，前两行可以省略。坐标中单位默认为Å。</li>
+<li>元素符号后面可以加序号，用于对于同一类型不同原子使用不同的基组。</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">geometry=&#123;</span><br><span class="line">   <span class="number">4</span></span><br><span class="line">  FORMALDEHYDE</span><br><span class="line">C          <span class="number">0.0000000000</span>        <span class="number">0.0000000000</span>       <span class="number">-0.5265526741</span></span><br><span class="line">O          <span class="number">0.0000000000</span>        <span class="number">0.0000000000</span>        <span class="number">0.6555124750</span></span><br><span class="line">H          <span class="number">0.0000000000</span>       <span class="number">-0.9325664988</span>       <span class="number">-1.1133424527</span></span><br><span class="line">H          <span class="number">0.0000000000</span>        <span class="number">0.9325664988</span>       <span class="number">-1.1133424527</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Z矩阵输入"><a href="#Z矩阵输入" class="headerlink" title="Z矩阵输入"></a>Z矩阵输入</h3><ul>
+<li>坐标默认为玻尔 bohr，可以使用<code>angstrom</code>关键词改变</li>
+</ul>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">angstrom</span><br><span class="line">geometry=&#123;</span><br><span class="line"><span class="keyword">C</span></span><br><span class="line"><span class="keyword">O</span>   <span class="keyword">C</span>  <span class="number">1.182</span></span><br><span class="line">H1  <span class="keyword">C</span>  <span class="number">1.102</span>  <span class="keyword">O</span>  <span class="number">122.1789</span></span><br><span class="line">H2  <span class="keyword">C</span>  <span class="number">1.102</span>  <span class="keyword">O</span>  <span class="number">122.1789</span>  H1  <span class="number">180</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>有用可戳(●ˇ∀ˇ●)</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="Zhao Jing 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Zhao Jing
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2020/01/17/molpro1/" title="molpro输入文件">http://example.com/2020/01/17/molpro1/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/" rel="tag"><i class="fa fa-tag"></i> 输入文件</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/09/25/Linux%E5%91%BD%E4%BB%A4/" rel="prev" title="Linux命令">
+      <i class="fa fa-chevron-left"></i> Linux命令
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/07/EDA-NOCV/" rel="next" title="EDA-NOCV">
+      EDA-NOCV <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E8%A1%8Cmolpro"><span class="nav-number">1.</span> <span class="nav-text">运行molpro</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%85%A5"><span class="nav-number">1.1.</span> <span class="nav-text">输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">输出文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#out%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.1.</span> <span class="nav-text">out文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#punch%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">punch文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xml%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.3.</span> <span class="nav-text">xml文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9%E4%B8%AA%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.4.</span> <span class="nav-text">9个二进制文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">输入文件格式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E8%BE%93%E5%85%A5%E7%BB%93%E6%9E%84%E5%92%8C%E8%A7%84%E5%88%99"><span class="nav-number">2.1.</span> <span class="nav-text">一般输入结构和规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#memory%E5%8D%A1"><span class="nav-number">2.2.</span> <span class="nav-text">memory卡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#file%E5%8D%A1"><span class="nav-number">2.3.</span> <span class="nav-text">file卡</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">2.3.1.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#geometry%E5%8D%A1"><span class="nav-number">2.4.</span> <span class="nav-text">geometry卡</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#xyz%E8%BE%93%E5%85%A5"><span class="nav-number">2.4.1.</span> <span class="nav-text">xyz输入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Z%E7%9F%A9%E9%98%B5%E8%BE%93%E5%85%A5"><span class="nav-number">2.4.2.</span> <span class="nav-text">Z矩阵输入</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhao Jing"
+      src="/images/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">Zhao Jing</p>
+  <div class="site-description" itemprop="description">做一棵树，只为岁月而生长。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaojing629" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaojing629" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:295483858@qq.com" title="E-Mail → mailto:295483858@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+<div class="sidebar-categories" p align="left">
+  <font size="2">
+  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/molpro/">molpro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F/">系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%AB%99/">网站</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/">计算化学</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/ADF/">ADF</a></li></ul></li></ul>
+  </font>
+  </p /div>
+
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title"></h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/" rel="tag">输入文件</a><span class="tag-list-count">1</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-flask"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhao Jing</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">40k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='0,0,0' opacity='0.3' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : '3L90wCaNUKa1MzSQcAhzkLtk-gzGzoHsz',
+      appKey     : 'fQ4t73jXnb71Y9zQWfXj5bIP',
+      placeholder: "可以输入您发现文中的错误或建议~(。・∀・)ノ",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

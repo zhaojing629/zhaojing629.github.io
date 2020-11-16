@@ -265,6 +265,21 @@
 <li>将目录下所有一般文件中某一句后面加上一句<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">for i in `find ./$path -type f`</span><br><span class="line">do</span><br><span class="line"> sed -i &#x27;/NUCLEARMODEL gaussian/arelativistic scalar zora&#x27; $i</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<h2 id="rename"><a href="#rename" class="headerlink" title="rename"></a>rename</h2><h3 id="语法-3"><a href="#语法-3" class="headerlink" title="语法"></a>语法</h3><p>不同Liunx下的语法不同，CentOS下的是：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rename [options] expression replacement file</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-v</code>显示哪些文件被修改了</li>
+<li>通配符：<ul>
+<li><code>?</code> 可替代单个字符</li>
+<li><code>*</code>可替代多个字符</li>
+<li><code>[]</code>可替代[]中的任意单个字符</li>
+</ul>
+</li>
+</ul>
+<h3 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h3><ul>
+<li>将所有htm文件改成html文件<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rename .htm .html *.htm</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 <h1 id="文档编辑"><a href="#文档编辑" class="headerlink" title="文档编辑"></a>文档编辑</h1><h1 id="文件传输"><a href="#文件传输" class="headerlink" title="文件传输"></a>文件传输</h1><h1 id="磁盘管理"><a href="#磁盘管理" class="headerlink" title="磁盘管理"></a>磁盘管理</h1><h1 id="磁盘维护"><a href="#磁盘维护" class="headerlink" title="磁盘维护"></a>磁盘维护</h1><h1 id="网络通讯"><a href="#网络通讯" class="headerlink" title="网络通讯"></a>网络通讯</h1><h1 id="系统管理"><a href="#系统管理" class="headerlink" title="系统管理"></a>系统管理</h1><h1 id="系统设置"><a href="#系统设置" class="headerlink" title="系统设置"></a>系统设置</h1><h1 id="备份压缩"><a href="#备份压缩" class="headerlink" title="备份压缩"></a>备份压缩</h1><h1 id="设备管理"><a href="#设备管理" class="headerlink" title="设备管理"></a>设备管理</h1><h1 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h1>  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>系统</category>
@@ -910,6 +925,148 @@
       <tags>
         <tag>hexo</tag>
         <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>molpro输入文件</title>
+    <url>/2020/01/17/molpro1/</url>
+    <content><![CDATA[<h1 id="运行molpro"><a href="#运行molpro" class="headerlink" title="运行molpro"></a>运行molpro</h1><h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>在UNIX系统中，MOLPRO通过unix命令molpro访问：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">molpro</span> <span class="selector-attr">[options]</span> <span class="selector-attr">[datafile]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>datafile</code>：输入文件，可以取任何名字，但是要避免使用.out作为后缀，一般用.inp。unix中出现在molpro输入文件中的文件名总是转化为小写。</p>
+</li>
+<li><p>options：大部分选项都有合适的系统默认值，但是也可以在命令行中、环境变量MOLPRO OPTIONS中或文件./molpro.rc，$HOME/.molprorc，和library文件目录下的tuning.rc中（优先级递减）：</p>
+<ul>
+<li><p><code>-o [outfile]</code> ：自定义输出名</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">molpro</span> <span class="selector-tag">-o</span> <span class="selector-tag">water</span><span class="selector-class">.output</span> <span class="selector-tag">h2o</span><span class="selector-class">.inp</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>-d [directory]</code> ：定义放置临时文件的目录</p>
+</li>
+<li><p><code>-s</code>：不保存旧的输出文件，只是覆盖。</p>
+</li>
+<li><p><code>-m n_scale</code>：指定分配给程序的工作内存，单位是word=8byte</p>
+<ul>
+<li><code>k</code>，<code>m</code>，<code>g</code>分别为10<sup>3</sup>，10<sup>6</sup>，10<sup>9</sup></li>
+<li><code>K</code>，<code>M</code>，<code>G</code>分别为2<sup>10</sup>，2<sup>20</sup>，2<sup>30</sup></li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">#需要<span class="number">1000</span>word的内存</span><br><span class="line">-m <span class="number">1</span>k</span><br><span class="line">#需要<span class="number">1024</span>word的内存</span><br><span class="line">-M <span class="number">1</span>K</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>用于并行执行的选项（在使用串行MOLPRO时，将忽略这些选项）：</p>
+<ul>
+<li><p><code>-n</code>：定义设置的并行进程个数</p>
+<p>并行内存计算eg. 为具有4个并行计算过程的作业指定100×10<sup>6</sup>个word：100×10<sup>6</sup>×8×4=3.2×10<sup>9</sup>byte</p>
+</li>
+<li><p><code>-N</code> ：等指定工作节点的主机名</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="输出文件"><a href="#输出文件" class="headerlink" title="输出文件"></a>输出文件</h2><h3 id="out文件"><a href="#out文件" class="headerlink" title="out文件"></a>out文件</h3><ul>
+<li>执行结果会把输出写到一个名称输入文件截掉扩展名并加上<code>.out</code>产生的文件中。如果输出文件已经存在，防止覆盖文件，会把旧文件重命名为后缀为<code>.out_1</code>的文件中。如果命令行没有给出<code>datafile</code>，那么从标准输入读取数据。</li>
+</ul>
+<h3 id="punch文件"><a href="#punch文件" class="headerlink" title="punch文件"></a>punch文件</h3><p>punch文件是output文件的简易形式，它包含了最重要的数据和结果，例如几何结构，能量，偶极矩等。可以用独立的程序readpun处理，它用关键词选择特定的结果，并根据用户提供的格式产生排列好的表格。</p>
+<h3 id="xml文件"><a href="#xml文件" class="headerlink" title="xml文件"></a>xml文件</h3><p>除了生成.out文件外，还用. XML后缀创建结构化XML文件(实际上是.out文件的父文件)。这个文件可以用于结果的自动后处理，例如MolproView程序的图形化呈现。</p>
+<h3 id="9个二进制文件"><a href="#9个二进制文件" class="headerlink" title="9个二进制文件"></a>9个二进制文件</h3><ul>
+<li><p>程序通过它们的编号（1到9）可以简单地识别它们。</p>
+</li>
+<li><p>默认是临时文件，通常由程序动态分配，scratch文件用于存储MOLPRO所需的所有中间数据，用户通常根本不会看到这些文件。但是用FILE命令可以把计算出的数据作为轨道和能量保存到永久文件中，并在以后的阶段使用它们重启计算。</p>
+</li>
+<li><p>每个文件都是直接访问，字可寻址的（word addressable；1个字通常是64位），并且在任意长度的记录中组织起来。每个记录的名称、地址和长度都保存在文件开始的目录中。</p>
+</li>
+<li><p>文件类型：</p>
+<ul>
+<li>文件1：主文件，存有基组，几何结构，以及单电子和双电子积分。</li>
+<li>文件2：默认是转存文件，用于存储波函的信息，即：轨道，轨道能量，可选的CI矢量，以及密度矩阵。</li>
+<li>文件3：辅助文件，和文件2一起用于续算</li>
+<li>文件4~8：草稿文件空间，用来分类积分，存储转换的积分和CI矢量。这些文件通常无需存为永久文件。</li>
+</ul>
+<p>通常文件1和2（以及3）被声明为用于续算的永久文件（参见<code>FILE</code>）。文件2对于重新启动计算是必不可少的，而文件1上的积分可以重新启动，也可以重新计算。把波函信息存储在文件2中是非常有用的，因为对于每个新的结构，积分文件都会被改写，而一个计算中的轨道和CI因子可以用作下一个相近几何结构计算的初始猜测。</p>
+</li>
+</ul>
+<h1 id="输入文件格式"><a href="#输入文件格式" class="headerlink" title="输入文件格式"></a>输入文件格式</h1><h2 id="一般输入结构和规则"><a href="#一般输入结构和规则" class="headerlink" title="一般输入结构和规则"></a>一般输入结构和规则</h2><figure class="highlight erlang-repl"><table><tr><td class="code"><pre><span class="line">***,title			! 标题（可选）</span><br><span class="line">memory,<span class="number">4</span>,m 			! 内存指定（可选）</span><br><span class="line">file,<span class="number">1</span>,name.int 	! 命名永久的积分文件（可选）</span><br><span class="line">file,<span class="number">2</span>,name.wfu 	! 命名永久的波函文件（可选）</span><br><span class="line"></span><br><span class="line">gprint,options 		! 全局打印选项（可选）</span><br><span class="line">gthresh,options 	! 全局阈值（可选）</span><br><span class="line">gdirect[,options] 	! 全局直接积分选项（可选）</span><br><span class="line">gexpec,opnames 		! 单电子算符的全局定义（可选）</span><br><span class="line"></span><br><span class="line">basis=basisname 	! 基的定义。如果不出现，使用cc-pVDZ</span><br><span class="line">geometry=&#123;...&#125; 		! 结构定义。</span><br><span class="line"></span><br><span class="line">var1=value,var2=value,... 	! 设定结构和/或波函定义中的变量</span><br><span class="line"></span><br><span class="line">&#123;command,options 		! 程序或流程的名称</span><br><span class="line">directive,data,option 	! 命令的指令（可选）</span><br><span class="line">...</span><br><span class="line">&#125; 				! 结束命令区</span><br><span class="line">--- 			! 结束输入（可选）</span><br></pre></td></tr></table></figure>
+<ul>
+<li>输了memory卡应该是紧随标题的第一个以外，其他basis，geometry，gprint，gdirect，gthresh，gexpec，以及变量定义的顺序是任意的。</li>
+<li>可以在一个程序后调用其它几个程序。在程序的调用之间还可以重新定义基组和/或分子结构；程序将会自动确认是否需要重新计算积分。</li>
+</ul>
+<p>一般规则：</p>
+<ul>
+<li><code>,</code>移到下一个制表位，即用来划定输入范围。</li>
+<li><code>;</code>结束记录，开始一个新的记录。用分号隔开的基本命令单位称为卡（card）。一个给定的输入行可以包含多个有效命令（用；隔开），也可以只有一个。</li>
+<li><code>!</code>忽略该输入行后面的内容（用于注释）。</li>
+<li>内容不区分大小写，统一转换为大写处理。引号中的内容会被认为是字符串，不会进行大小写转换。</li>
+<li>整数后面加上<code>.</code>，程序只读取浮点数</li>
+</ul>
+<p>一般只占用一行的命令：</p>
+<ul>
+<li><code>***</code>总是第一个数据行，title可以任选，但是如果文件1用于续算，title必须总是相同。这个卡的作用是重新设置所有程序的计数器等。如果忽略<em>*</em>卡，title假定用默认值，全是空格。</li>
+<li><code>INCLUDE</code>包含其它的输入文件。使用<code>INCLUDE</code>可以打开辅助输入文件。如果遇到了<code>INCLUDE</code>命令，则打开新的输入文件并读取到结束，然后在第一个输入文件中继续INCLUDE卡之后的输入。<code>INCLUDE</code>也可以嵌套。</li>
+<li><code>FILE</code>指定已命名的文件</li>
+<li><code>TEXT</code>打印文本</li>
+<li><code>TITLE</code>定义运行的标题或表格的标题</li>
+<li><p><code>CON</code>指定轨道组态</p>
+</li>
+<li><p><code>---</code>结束文件（忽略之后的输入）</p>
+</li>
+</ul>
+<h2 id="memory卡"><a href="#memory卡" class="headerlink" title="memory卡"></a>memory卡</h2><figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">MEMORY,</span>n,scale<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>与命令行中的<code>-m</code>不同，scale中<code>k</code>，<code>m</code>，<code>g</code>不区分大小写，统一按10<sup>3</sup>，10<sup>6</sup>，10<sup>9</sup></li>
+<li>优先于命令行中的<code>-m</code>。两者都省略的话，程序将使用默认的内存大小8mw (64 Mb)。</li>
+</ul>
+<p>MOLPRO可以根据用户的需要动态分配内存。因此不需要保存有不同内存大小的不同版本程序。所需要的内存大小取决于分子的大小、基组、分子的对称性和使用的方法，因此很难提前预测。大多数计算运行在16mw或更少，但在大的情况下，低对称性可能需要更多。一个比较好的选择是64MW（512MB），前提是系统有足够的内存。</p>
+<ul>
+<li>算到一半但是没有报错就停止了，可以将.sub文件中并行核数设大一些，比如24，再将molpro中的并行设置-n中的设置小一些。</li>
+</ul>
+<h2 id="file卡"><a href="#file卡" class="headerlink" title="file卡"></a>file卡</h2><p>对所有的永久文件，默认设置是RESTART。所有的临时文件在需要时通常自动分配。I/O缓存分配到动态内存的顶端，缓存的大小会减少可用的内存。因此MEMORY卡必须出现在第一个FILE卡之前。</p>
+<figure class="highlight fortran"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FILE</span>,<span class="keyword">file</span>,<span class="keyword">name</span>,[<span class="keyword">status</span>]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>file</code>是逻辑MOLPRO文件序号(1-9)</li>
+<li><code>name</code>是文件名（将被转换成小写字母）</li>
+<li><code>status</code>可以是：<ul>
+<li><code>UNKNOWN</code>打开永久文件。如果存在，自动续算。这是默认的。</li>
+<li><code>OLD</code>作用同<code>UNKNOWN</code>。如果该文件不存在，不会发生错误。</li>
+<li><code>NEW</code> 打开永久文件。如果已经存在，则清除，不续算。</li>
+<li><code>ERASE</code> 作用同<code>NEW</code>。</li>
+<li><code>SCRATCH</code> 打开临时文件。如果已经存在，则清除，不续算。任务完成后，文件不<br>再存在。</li>
+<li><code>DELETE</code> 作用同<code>SCRATCH</code>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><ul>
+<li><p>分配永久文件1的名称H2O.INT，如果存在会使用它进行续算。比如第一个输入中只计算了hf和ccsd(t)，使用了该指令，后续计算casscf和MRCI的时候，指定了相同的文件，，MOLPRO将自动恢复保存在给定文件中的所有数据，积分和轨道将被重新启动。</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">FILE</span>,<span class="number">1</span>,H<span class="number">2</span>O.INT</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>分配永久文件2的名称H2O.WFU，即禁用自动重启机制</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">FILE</span>,<span class="number">2</span>,H<span class="number">2</span>O.WFU,NEW</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在大多数情况下，文件1可能非常大(它包含两个电子的积分)，而重新计算积分的成本可能只占总时间的一小部分，因此可以只在输入中只定义文件2，积分会自动重新计算。</p>
+</li>
+</ul>
+<h2 id="geometry卡"><a href="#geometry卡" class="headerlink" title="geometry卡"></a>geometry卡</h2><p>定义分子结构可以用标准Z矩阵形式，或XYZ形式。GEOMETRY必须出现在其它修改分子结构的命令之后。</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="string">[SYMMETRY, options ]</span></span><br><span class="line"><span class="string">[ORIENT, options ]</span> </span><br><span class="line"><span class="string">[ANGSTROM ]</span> </span><br><span class="line"><span class="string">[BOHR]</span></span><br><span class="line">geometry=&#123; </span><br><span class="line">原子说明 </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>symmetry</code>选项<ul>
+<li><code>SYMMETRY,NOSYM</code>禁止使用对称性，也可以只用<code>NOSYM</code></li>
+<li><code>SYMMETRY,AUTO</code>允许使用对称性</li>
+</ul>
+</li>
+</ul>
+<h3 id="xyz输入"><a href="#xyz输入" class="headerlink" title="xyz输入"></a>xyz输入</h3><ul>
+<li>第一行是原子个数，第二行是任意的标题，前两行可以省略。坐标中单位默认为Å。</li>
+<li>元素符号后面可以加序号，用于对于同一类型不同原子使用不同的基组。</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">geometry=&#123;</span><br><span class="line">   <span class="number">4</span></span><br><span class="line">  FORMALDEHYDE</span><br><span class="line">C          <span class="number">0.0000000000</span>        <span class="number">0.0000000000</span>       <span class="number">-0.5265526741</span></span><br><span class="line">O          <span class="number">0.0000000000</span>        <span class="number">0.0000000000</span>        <span class="number">0.6555124750</span></span><br><span class="line">H          <span class="number">0.0000000000</span>       <span class="number">-0.9325664988</span>       <span class="number">-1.1133424527</span></span><br><span class="line">H          <span class="number">0.0000000000</span>        <span class="number">0.9325664988</span>       <span class="number">-1.1133424527</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Z矩阵输入"><a href="#Z矩阵输入" class="headerlink" title="Z矩阵输入"></a>Z矩阵输入</h3><ul>
+<li>坐标默认为玻尔 bohr，可以使用<code>angstrom</code>关键词改变</li>
+</ul>
+<figure class="highlight mathematica"><table><tr><td class="code"><pre><span class="line">angstrom</span><br><span class="line">geometry=&#123;</span><br><span class="line"><span class="keyword">C</span></span><br><span class="line"><span class="keyword">O</span>   <span class="keyword">C</span>  <span class="number">1.182</span></span><br><span class="line">H1  <span class="keyword">C</span>  <span class="number">1.102</span>  <span class="keyword">O</span>  <span class="number">122.1789</span></span><br><span class="line">H2  <span class="keyword">C</span>  <span class="number">1.102</span>  <span class="keyword">O</span>  <span class="number">122.1789</span>  H1  <span class="number">180</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>molpro</category>
+      </categories>
+      <tags>
+        <tag>输入文件</tag>
       </tags>
   </entry>
 </search>
