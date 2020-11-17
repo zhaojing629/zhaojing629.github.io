@@ -517,6 +517,7 @@
 <figure class="highlight mathematica"><table><tr><td class="code"><pre><span class="line">angstrom</span><br><span class="line">geometry=&#123;</span><br><span class="line"><span class="keyword">C</span></span><br><span class="line"><span class="keyword">O</span>   <span class="keyword">C</span>  <span class="number">1.182</span></span><br><span class="line">H1  <span class="keyword">C</span>  <span class="number">1.102</span>  <span class="keyword">O</span>  <span class="number">122.1789</span></span><br><span class="line">H2  <span class="keyword">C</span>  <span class="number">1.102</span>  <span class="keyword">O</span>  <span class="number">122.1789</span>  H1  <span class="number">180</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h1 id="对称性"><a href="#对称性" class="headerlink" title="对称性"></a>对称性</h1>]]></content>
       <categories>
+        <category>计算化学</category>
         <category>molpro</category>
       </categories>
       <tags>
@@ -528,6 +529,7 @@
     <url>/2019/11/16/molpro%E7%9A%84HF%E8%AE%A1%E7%AE%97/</url>
     <content><![CDATA[]]></content>
       <categories>
+        <category>计算化学</category>
         <category>molpro</category>
       </categories>
       <tags>
@@ -678,6 +680,7 @@
 </ul>
 ]]></content>
       <categories>
+        <category>计算化学</category>
         <category>molpro</category>
       </categories>
       <tags>
