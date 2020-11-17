@@ -29,7 +29,7 @@
 <meta property="og:description" content="输入文件简单学习">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-11-12T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-11-17T09:06:02.127Z">
+<meta property="article:modified_time" content="2020-11-17T15:34:25.671Z">
 <meta property="article:author" content="Zhao Jing">
 <meta property="article:tag" content="输入文件">
 <meta name="twitter:card" content="summary">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-17 17:06:02" itemprop="dateModified" datetime="2020-11-17T17:06:02+08:00">2020-11-17</time>
+                <time title="修改时间：2020-11-17 23:34:25" itemprop="dateModified" datetime="2020-11-17T23:34:25+08:00">2020-11-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -266,14 +266,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4k</span>
+              <span>6.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
+              <span>6 分钟</span>
             </span>
             <div class="post-description">输入文件简单学习</div>
 
@@ -293,17 +293,12 @@
 </li>
 <li><p>options：大部分选项都有合适的系统默认值，但是也可以在命令行中、环境变量MOLPRO OPTIONS中或文件./molpro.rc，$HOME/.molprorc，和library文件目录下的tuning.rc中（优先级递减）：</p>
 <ul>
-<li><p><code>-o [outfile]</code> ：自定义输出名</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">molpro</span> <span class="selector-tag">-o</span> <span class="selector-tag">water</span><span class="selector-class">.output</span> <span class="selector-tag">h2o</span><span class="selector-class">.inp</span></span><br></pre></td></tr></table></figure>
-</li>
 <li><p><code>-d [directory]</code> ：定义放置临时文件的目录</p>
 </li>
-<li><p><code>-s</code>：不保存旧的输出文件，只是覆盖。</p>
-</li>
-<li><p><code>-m n_scale</code>：指定分配给程序的工作内存，单位是word=8byte</p>
+<li><p><code>-m n_scale</code>：<span id=mm>指定分配给程序的工作内存，单位是word=8byte</span></p>
 <ul>
 <li><code>k</code>，<code>m</code>，<code>g</code>分别为10<sup>3</sup>，10<sup>6</sup>，10<sup>9</sup></li>
-<li><code>K</code>，<code>M</code>，<code>G</code>分别为2<sup>10</sup>，2<sup>20</sup>，2<sup>30</sup></li>
+<li><code>K</code>，<code>M</code>，<code>G</code>分别为2<sup>10</sup>，2<sup>20</sup>，2<sup>30</sup> </li>
 </ul>
 <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#需要<span class="number">1000</span>word的内存</span><br><span class="line">-m <span class="number">1</span>k</span><br><span class="line">#需要<span class="number">1024</span>word的内存</span><br><span class="line">-M <span class="number">1</span>K</span><br></pre></td></tr></table></figure>
 </li>
@@ -318,11 +313,26 @@
 </ul>
 </li>
 </ul>
-<h2 id="输出文件"><a href="#输出文件" class="headerlink" title="输出文件"></a>输出文件</h2><h3 id="out文件"><a href="#out文件" class="headerlink" title="out文件"></a>out文件</h3><ul>
-<li>执行结果会把输出写到一个名称输入文件截掉扩展名并加上<code>.out</code>产生的文件中。如果输出文件已经存在，防止覆盖文件，会把旧文件重命名为后缀为<code>.out_1</code>的文件中。如果命令行没有给出<code>datafile</code>，那么从标准输入读取数据。</li>
+<h2 id="输出文件"><a href="#输出文件" class="headerlink" title="输出文件"></a>输出文件</h2><h3 id="out文件"><a href="#out文件" class="headerlink" title="out文件"></a>out文件</h3><p>执行结果会把输出写到一个名称输入文件截掉扩展名并加上<code>.out</code>产生的文件中。如果输出文件已经存在，防止覆盖文件，会把旧文件重命名为后缀为<code>.out_1</code>的文件中。如果命令行没有给出<code>datafile</code>，那么从标准输入读取数据。在命令行中可以有其他方式：</p>
+<ul>
+<li><p><code>-o [outfile]</code> ：自定义输出名</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">molpro</span> <span class="selector-tag">-o</span> <span class="selector-tag">water</span><span class="selector-class">.output</span> <span class="selector-tag">h2o</span><span class="selector-class">.inp</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>-s</code>：不保存旧的输出文件，只是覆盖。</p>
+</li>
 </ul>
 <h3 id="punch文件"><a href="#punch文件" class="headerlink" title="punch文件"></a>punch文件</h3><p>punch文件是output文件的简易形式，它包含了最重要的数据和结果，例如几何结构，能量，偶极矩等。可以用独立的程序readpun处理，它用关键词选择特定的结果，并根据用户提供的格式产生排列好的表格。</p>
-<h3 id="xml文件"><a href="#xml文件" class="headerlink" title="xml文件"></a>xml文件</h3><p>除了生成.out文件外，还用. XML后缀创建结构化XML文件(实际上是.out文件的父文件)。这个文件可以用于结果的自动处理，例如Jmol程序的图形化呈现。</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PUNCH,</span>filename,[REWIND]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>指定的<code>filename</code>会在unix中转换成小写</p>
+</li>
+<li><p>punch文件如果已经存在，则对其添加内容，如果指定了<code>REWIND</code>或者<code>NEW</code>，punch文件中所有以前的信息都被覆盖。</p>
+</li>
+<li><p>eg.</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">PUNCH</span>,H<span class="number">2</span>O.PUN</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="xml文件"><a href="#xml文件" class="headerlink" title="xml文件"></a>xml文件</h3><p>除了生成.out文件外，还用. XML后缀创建结构化XML文件(实际上是.out文件的父文件)。这个文件可以用于结果的自动处理，例如<a target="_blank" rel="noopener" href="http://jmol.sourceforge.net/">Jmol程序</a>（需要下载<a target="_blank" rel="noopener" href="https://www.java.com/en/download/manual.jsp">java运行环境JRE</a>）的图形化呈现。</p>
 <h3 id="9个二进制文件"><a href="#9个二进制文件" class="headerlink" title="9个二进制文件"></a>9个二进制文件</h3><ul>
 <li><p>程序通过它们的编号（1到9）可以简单地识别它们。</p>
 </li>
@@ -337,10 +347,43 @@
 <li>文件3：辅助文件，和文件2一起用于续算</li>
 <li>文件4~8：草稿文件空间，用来分类积分，存储转换的积分和CI矢量。这些文件通常无需存为永久文件。</li>
 </ul>
-<p>通常文件1和2（以及3）被声明为用于续算的永久文件（参见<code>FILE</code>）。文件2对于重新启动计算是必不可少的，而文件1上的积分可以重新启动，也可以重新计算。把波函信息存储在文件2中是非常有用的，因为对于每个新的结构，积分文件都会被改写，而一个计算中的轨道和CI因子可以用作下一个相近几何结构计算的初始猜测。</p>
+<p>通常文件1和2（以及3）被声明为用于续算的永久文件（<a href="#file卡">参见<code>FILE</code></a>）。文件2对于重新启动计算是必不可少的，而文件1上的积分可以重新启动，也可以重新计算。把波函信息存储在文件2中是非常有用的，因为对于每个新的结构，积分文件都会被改写，而一个计算中的轨道和CI因子可以用作下一个相近几何结构计算的初始猜测。</p>
 </li>
 </ul>
-<h1 id="输入文件格式"><a href="#输入文件格式" class="headerlink" title="输入文件格式"></a>输入文件格式</h1><h2 id="一般输入结构和规则"><a href="#一般输入结构和规则" class="headerlink" title="一般输入结构和规则"></a>一般输入结构和规则</h2><figure class="highlight erlang-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">***,title			! 标题（可选）</span><br><span class="line">memory,<span class="number">4</span>,m 			! 内存指定（可选）</span><br><span class="line">file,<span class="number">1</span>,name.int 	! 命名永久的积分文件（可选）</span><br><span class="line">file,<span class="number">2</span>,name.wfu 	! 命名永久的波函文件（可选）</span><br><span class="line"></span><br><span class="line">gprint,options 		! 全局打印选项（可选）</span><br><span class="line">gthresh,options 	! 全局阈值（可选）</span><br><span class="line">gdirect[,options] 	! 全局直接积分选项（可选）</span><br><span class="line">gexpec,opnames 		! 单电子算符的全局定义（可选）</span><br><span class="line"></span><br><span class="line">basis=basisname 	! 基的定义。如果不出现，使用cc-pVDZ</span><br><span class="line">geometry=&#123;...&#125; 		! 结构定义。</span><br><span class="line"></span><br><span class="line">var1=value,var2=value,... 	! 设定结构和/或波函定义中的变量</span><br><span class="line"></span><br><span class="line">&#123;command,options 		! 程序或流程的名称</span><br><span class="line">directive,data,option 	! 命令的指令（可选）</span><br><span class="line">...</span><br><span class="line">&#125; 				! 结束命令区</span><br><span class="line">--- 			! 结束输入（可选）</span><br></pre></td></tr></table></figure>
+<h3 id="记录文件"><a href="#记录文件" class="headerlink" title="记录文件"></a>记录文件</h3><ul>
+<li>记录文件的名称是正整数，引用格式为record.file，比如2100.2表示命名为2100的2文件。记录文件的名称比较随意，它们的数值与记录在文件中的顺序无关。</li>
+<li><p>不要使用≥2000的记录名字，因为有一些默认的记录为：</p>
+<ul>
+<li><code>2100</code>：RHF转存记录（闭壳层和开壳层）</li>
+<li><code>2200</code>：UHF转存记录</li>
+<li><code>2140</code>：MCSCF转存记录</li>
+<li><code>4100</code>：CPHF续算信息</li>
+<li><code>5000</code>：MCSCF梯度信息</li>
+<li><code>5100</code>：CP-MCSCF梯度信息</li>
+<li><code>5200</code>：MP2梯度信息</li>
+<li><code>5300</code>：Hessian续算信息</li>
+<li><code>5400</code>：频率续算信息</li>
+<li><code>6300</code>：域的续算信息</li>
+</ul>
+</li>
+<li><p>如果一个输入包含同一类型的几个波函计算，例如不同活性空间的几个MCSCF计算，则对同一类型的每个计算，记录编号加1。比如第一个SCF计算的结果存储在转存记录2100.2中，第二个SCF计算存于2101.2记录，第一个MCSCF计算存于2140.2，第二个MCSCF存于2141.2等等。这些数字和输入中出现的顺序有关，而不是按照计算实际执行的顺序。</p>
+</li>
+</ul>
+<h3 id="put输出其他格式"><a href="#put输出其他格式" class="headerlink" title="put输出其他格式"></a>put输出其他格式</h3><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PUT,style,<span class="keyword">file</span>,<span class="keyword">status</span>,info</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>style</code>：<ul>
+<li><code>GAUSSIAN</code>：写一个完整的GAUSSIAN输入文件，默认为<code># sp</code>计算</li>
+<li><code>XYZ</code>：输出xyz文件</li>
+<li><code>XYZGRAD</code>：包含能量梯度的XYZ文件（列依次是：x，y，z，charge，gx，gy，gz，梯度为-1*eV/A）</li>
+<li><code>CRD</code>：坐标将用CHARMm CRD格式书写</li>
+<li><code>MOLDEN</code>：将创建用于MOLDEN可视化程序的接口文件</li>
+<li><code>IRSPEC</code>：gnuplot输入文件，该文件可用于绘制IR光谱</li>
+<li>忽略则写入当前结构的Z矩阵，可能的话还写入梯度。</li>
+</ul>
+</li>
+<li>file定义写入数据的文件名；如果为空，数据将写入到输出流中。如果忽略status或设置为NEW，那么文件中所有的旧内容都被清除；否则对文件追加。</li>
+</ul>
+<h1 id="输入文件一般结构和规则"><a href="#输入文件一般结构和规则" class="headerlink" title="输入文件一般结构和规则"></a>输入文件一般结构和规则</h1><figure class="highlight erlang-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">***,title			! 标题（可选）</span><br><span class="line">memory,<span class="number">4</span>,m 			! 内存指定（可选）</span><br><span class="line">file,<span class="number">1</span>,name.int 	! 命名永久的积分文件（可选）</span><br><span class="line">file,<span class="number">2</span>,name.wfu 	! 命名永久的波函文件（可选）</span><br><span class="line"></span><br><span class="line">gprint,options 		! 全局打印选项（可选）</span><br><span class="line">gthresh,options 	! 全局阈值（可选）</span><br><span class="line">gdirect[,options] 	! 全局直接积分选项（可选）</span><br><span class="line">gexpec,opnames 		! 单电子算符的全局定义（可选）</span><br><span class="line"></span><br><span class="line">basis=basisname 	! 基的定义。如果不出现，使用cc-pVDZ</span><br><span class="line">geometry=&#123;...&#125; 		! 结构定义。</span><br><span class="line"></span><br><span class="line">var1=value,var2=value,... 	! 设定结构和/或波函定义中的变量</span><br><span class="line"></span><br><span class="line">&#123;command,options 		! 程序或流程的名称</span><br><span class="line">directive,data,option 	! 命令的指令（可选）</span><br><span class="line">...</span><br><span class="line">&#125; 				! 结束命令区</span><br><span class="line">--- 			! 结束输入（可选）</span><br></pre></td></tr></table></figure>
 <ul>
 <li>输了memory卡应该是紧随标题的第一个以外，其他basis，geometry，gprint，gdirect，gthresh，gexpec，以及变量定义的顺序是任意的。</li>
 <li>可以在一个程序后调用其它几个程序。在程序的调用之间还可以重新定义基组和/或分子结构；程序将会自动确认是否需要重新计算积分。</li>
@@ -365,16 +408,16 @@
 <li><p><code>---</code>结束文件（忽略之后的输入）</p>
 </li>
 </ul>
-<h2 id="memory卡"><a href="#memory卡" class="headerlink" title="memory卡"></a>memory卡</h2><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">MEMORY,</span>n,scale<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<h1 id="memory卡"><a href="#memory卡" class="headerlink" title="memory卡"></a>memory卡</h1><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">MEMORY,</span>n,scale<span class="comment">;</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>与命令行中的<code>-m</code>不同，scale中<code>k</code>，<code>m</code>，<code>g</code>不区分大小写，统一按10<sup>3</sup>，10<sup>6</sup>，10<sup>9</sup></li>
+<li><a href="#mm">与命令行中的<code>-m</code>不同</a>，scale中<code>k</code>，<code>m</code>，<code>g</code>不区分大小写，统一按10<sup>3</sup>，10<sup>6</sup>，10<sup>9</sup></li>
 <li>优先于命令行中的<code>-m</code>。两者都省略的话，程序将使用默认的内存大小8mw (64 Mb)。</li>
 </ul>
 <p>MOLPRO可以根据用户的需要动态分配内存。因此不需要保存有不同内存大小的不同版本程序。所需要的内存大小取决于分子的大小、基组、分子的对称性和使用的方法，因此很难提前预测。大多数计算运行在16mw或更少，但在大的情况下，低对称性可能需要更多。一个比较好的选择是64MW（512MB），前提是系统有足够的内存。</p>
 <ul>
 <li>算到一半但是没有报错就停止了，可以将.sub文件中并行核数设大一些，比如24，再将molpro中的并行设置-n中的设置小一些。</li>
 </ul>
-<h2 id="file卡"><a href="#file卡" class="headerlink" title="file卡"></a>file卡</h2><p>对所有的永久文件，默认设置是RESTART。所有的临时文件在需要时通常自动分配。I/O缓存分配到动态内存的顶端，缓存的大小会减少可用的内存。因此MEMORY卡必须出现在第一个FILE卡之前。</p>
+<h1 id="file卡"><a href="#file卡" class="headerlink" title="file卡"></a>file卡</h1><p>对所有的永久文件，默认设置是RESTART。所有的临时文件在需要时通常自动分配。I/O缓存分配到动态内存的顶端，缓存的大小会减少可用的内存。因此MEMORY卡必须出现在第一个FILE卡之前。</p>
 <figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FILE</span>,<span class="keyword">file</span>,<span class="keyword">name</span>,[<span class="keyword">status</span>]</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>file</code>是逻辑MOLPRO文件序号(1-9)</li>
@@ -389,7 +432,8 @@
 </ul>
 </li>
 </ul>
-<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><ul>
+<p>例子：</p>
+<ul>
 <li><p>分配永久文件1的名称H2O.INT，如果存在会使用它进行续算。比如第一个输入中只计算了hf和ccsd(t)，使用了该指令，后续计算casscf和MRCI的时候，指定了相同的文件，，MOLPRO将自动恢复保存在给定文件中的所有数据，积分和轨道将被重新启动。</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">FILE</span>,<span class="number">1</span>,H<span class="number">2</span>O.INT</span><br></pre></td></tr></table></figure>
 </li>
@@ -399,25 +443,62 @@
 <li><p>在大多数情况下，文件1可能非常大(它包含两个电子的积分)，而重新计算积分的成本可能只占总时间的一小部分，因此可以只在输入中只定义文件2，积分会自动重新计算。</p>
 </li>
 </ul>
-<h2 id="geometry卡"><a href="#geometry卡" class="headerlink" title="geometry卡"></a>geometry卡</h2><p>定义分子结构可以用标准Z矩阵形式，或XYZ形式。GEOMETRY必须出现在其它修改分子结构的命令之后。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[SYMMETRY, options ]</span></span><br><span class="line"><span class="string">[ORIENT, options ]</span> </span><br><span class="line"><span class="string">[ANGSTROM ]</span> </span><br><span class="line"><span class="string">[BOHR]</span></span><br><span class="line">geometry=&#123; </span><br><span class="line">原子说明 </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<h1 id="print-gprint-全局打印选项"><a href="#print-gprint-全局打印选项" class="headerlink" title="print/gprint 全局打印选项"></a>print/gprint 全局打印选项</h1><p>通常，有两种打印选项：一种是局部的，由print指令指定，仅在一个作业步骤中使用；一种是全局的，在各个程序以外可以用GPRINT命令设置全局打印选项（g可用可不用，用了可以避免与程序特定的PRINT卡相混淆）。局部打印命令是特定方法输入的一部分，因此必须直接遵循相应的命令。全局打印选项作用于所有后续方法。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">GPRINT</span>,key<span class="number">1</span>[=value<span class="number">1</span>],key<span class="number">2</span>[=value<span class="number">2</span>],. . .</span><br><span class="line"><span class="attribute">NOGPRINT</span>,key<span class="number">1</span>,key<span class="number">2</span>,. . .</span><br></pre></td></tr></table></figure>
+<ul>
+<li>除了<code>DISTANCE</code>，<code>ANGLES</code>，和<code>VARIABLE</code>之外，全部选项默认都不打印。<code>key</code>有：<ul>
+<li><code>BASIS</code>：打印基的信息</li>
+<li><code>DISTANCE</code>：打印键长（默认）</li>
+<li><code>ANGLES</code>：打印键角信息（默认=0）。如果大于0，还打印二面角</li>
+<li><code>ORBITAL</code>：打印SCF和MCSCF的轨道</li>
+<li><code>CIVECTOR</code>：打印MCSCF的CI矢量（注意，默认情况下只打印大于0.05的CI系数。）</li>
+<li><code>PAIRS</code>：打印CI和CCSD中的电子对列表</li>
+<li><code>CS</code>：打印CI和CCSD中的单激发信息</li>
+<li><code>CP</code>：打印CI和CCSD中的对激发信息</li>
+<li><code>REF</code>：打印CI中的参考CSF及其因子</li>
+<li><code>PSPACE</code>：打印p-空间组态</li>
+<li><code>MICRO</code>：打印MCSCF和CI中的微迭代</li>
+<li><code>CPU</code>：打印详细的CPU信息</li>
+<li><code>IO</code>：打印详细的I/O信息</li>
+<li><code>VARIABLE</code>：每当变量设置或改变时，就打印变量（默认）</li>
+</ul>
+</li>
+<li>value可以省略，当values，大于0的值可用于调试，在有些情况下会给出更多的信息。</li>
+<li><code>NOGPRINT,key</code>等价于<code>PRINT, key =-1</code>。</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gprint,basis             !<span class="builtin-name">print</span> basis <span class="builtin-name">set</span> information</span><br><span class="line">gprint,orbitals          !<span class="builtin-name">print</span> occupied orbitals</span><br><span class="line">gprint,<span class="attribute">orbitals</span>=2        !<span class="builtin-name">print</span> occupied <span class="keyword">and</span> the two lowest virtual orbitals</span><br><span class="line">                         !<span class="keyword">in</span> each symmetry</span><br><span class="line">gprint,civector          !<span class="builtin-name">print</span> configuration coefficients</span><br></pre></td></tr></table></figure>
+<h1 id="geometry卡"><a href="#geometry卡" class="headerlink" title="geometry卡"></a>geometry卡</h1><p>定义分子结构可以用标准Z矩阵形式，或XYZ形式。GEOMETRY必须出现在其它修改分子结构的命令之后。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[SYMMETRY, options ]</span></span><br><span class="line"><span class="string">[ORIENT, options ]</span> </span><br><span class="line"><span class="string">[ANGSTROM]</span> </span><br><span class="line"><span class="string">[BOHR]</span></span><br><span class="line">geometry=&#123; </span><br><span class="line">原子说明 </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>symmetry</code>选项<ul>
 <li><code>SYMMETRY,NOSYM</code>禁止使用对称性，也可以只用<code>NOSYM</code></li>
 <li><code>SYMMETRY,AUTO</code>允许使用对称性</li>
 </ul>
 </li>
+<li><code>orient</code>选项：（也可以用<code>CENTRE=MASS|CHARGE</code>指定对称中心。）<ul>
+<li><code>CHARGE</code>：定位分子，使得电荷中心是原点，轴是四极矩的本征矢。</li>
+<li><code>MASS</code>：定位分子，使得质心是原点，轴是惯性张量的本征矢（对Z矩阵输入是默认的）</li>
+<li><code>NOORIENT</code>：禁止分子重新定位（对XYZ输入是默认的） </li>
+<li><code>SIGNX=±1</code>：强制第一个非零x坐标为正或负。类似地，可以用<code>SIGNY</code>和<code>SIGNZ</code>设置y、 z坐标。这对固定遍及几种不同计算和结构的分子方位非常有用。也可以设定系统变量<code>ZSIGNX</code>，<code>ZSIGNY</code>，<code>ZSIGNZ</code>为正值或负值来获得同样的效果。</li>
+<li><code>PLANEXZ</code>：对于C<sub>2v</sub>和D<sub>2h</sub>点群，强制主平面是xz，而不是默认的yz。结构构建程序尝试交换坐标轴，使尽可能多的原子位于主平面中，因此对于平面分子的特殊情况，这意味着所有原子都会位于主平面。也可以指定<code>PLANEYZ</code>和<code>PLANEXY</code>，但是后者目前对C2v点群会发生错误。</li>
 </ul>
-<h3 id="xyz输入"><a href="#xyz输入" class="headerlink" title="xyz输入"></a>xyz输入</h3><ul>
+</li>
+<li><code>geometry</code>也可以通过<code>geometry=file</code>从文件中读取</li>
+</ul>
+<h2 id="xyz输入"><a href="#xyz输入" class="headerlink" title="xyz输入"></a>xyz输入</h2><ul>
 <li>第一行是原子个数，第二行是任意的标题，前两行可以省略。坐标中单位默认为Å。</li>
 <li>元素符号后面可以加序号，用于对于同一类型不同原子使用不同的基组。</li>
 </ul>
 <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">geometry=&#123;</span><br><span class="line">   <span class="number">4</span></span><br><span class="line">  FORMALDEHYDE</span><br><span class="line">C          <span class="number">0.0000000000</span>        <span class="number">0.0000000000</span>       <span class="number">-0.5265526741</span></span><br><span class="line">O          <span class="number">0.0000000000</span>        <span class="number">0.0000000000</span>        <span class="number">0.6555124750</span></span><br><span class="line">H          <span class="number">0.0000000000</span>       <span class="number">-0.9325664988</span>       <span class="number">-1.1133424527</span></span><br><span class="line">H          <span class="number">0.0000000000</span>        <span class="number">0.9325664988</span>       <span class="number">-1.1133424527</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Z矩阵输入"><a href="#Z矩阵输入" class="headerlink" title="Z矩阵输入"></a>Z矩阵输入</h3><ul>
+<h2 id="Z矩阵输入"><a href="#Z矩阵输入" class="headerlink" title="Z矩阵输入"></a>Z矩阵输入</h2><ul>
 <li>坐标默认为玻尔 bohr，可以使用<code>angstrom</code>关键词改变</li>
 </ul>
 <figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">angstrom</span><br><span class="line">geometry=&#123;</span><br><span class="line"><span class="keyword">C</span></span><br><span class="line"><span class="keyword">O</span>   <span class="keyword">C</span>  <span class="number">1.182</span></span><br><span class="line">H1  <span class="keyword">C</span>  <span class="number">1.102</span>  <span class="keyword">O</span>  <span class="number">122.1789</span></span><br><span class="line">H2  <span class="keyword">C</span>  <span class="number">1.102</span>  <span class="keyword">O</span>  <span class="number">122.1789</span>  H1  <span class="number">180</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="对称性"><a href="#对称性" class="headerlink" title="对称性"></a>对称性</h1>
+<p>也可以通过Z矩阵输入XYZ形式</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">angstrom</span><br><span class="line">geometry=&#123;</span><br><span class="line">C,,        <span class="number">0.0000000000</span> ,     <span class="number">0.0000000000</span> ,    <span class="number">-0.5265526741</span></span><br><span class="line">O,,        <span class="number">0.0000000000</span> ,     <span class="number">0.0000000000</span> ,     <span class="number">0.6555124750</span></span><br><span class="line">H,,        <span class="number">0.0000000000</span> ,    <span class="number">-0.9325664988</span> ,    <span class="number">-1.1133424527</span></span><br><span class="line">H,,        <span class="number">0.0000000000</span> ,     <span class="number">0.9325664988</span> ,    <span class="number">-1.1133424527</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也可以使用变量</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">geometry=&#123;</span><br><span class="line"><span class="keyword">C</span></span><br><span class="line"><span class="keyword">O</span>  , <span class="keyword">C</span> , rco</span><br><span class="line">H1 , <span class="keyword">C</span> , rch , <span class="keyword">O</span> , hco</span><br><span class="line">H2 , <span class="keyword">C</span> , rch , <span class="keyword">O</span> , hco , H1 , <span class="number">180</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">rco=<span class="number">1.182</span> Ang</span><br><span class="line">rch=<span class="number">1.102</span> Ang</span><br><span class="line">hco=<span class="number">122.1789</span> <span class="keyword">Degree</span></span><br></pre></td></tr></table></figure>
+<h1 id="基组"><a href="#基组" class="headerlink" title="基组"></a>基组</h1><h2 id="赝势"><a href="#赝势" class="headerlink" title="赝势"></a>赝势</h2><h3 id="通过ECP库的输入"><a href="#通过ECP库的输入" class="headerlink" title="通过ECP库的输入"></a>通过ECP库的输入</h3>
     </div>
 
     
@@ -534,7 +615,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E8%A1%8Cmolpro"><span class="nav-number">1.</span> <span class="nav-text">运行molpro</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%85%A5"><span class="nav-number">1.1.</span> <span class="nav-text">输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">输出文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#out%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.1.</span> <span class="nav-text">out文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#punch%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">punch文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xml%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.3.</span> <span class="nav-text">xml文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9%E4%B8%AA%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.4.</span> <span class="nav-text">9个二进制文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">输入文件格式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E8%BE%93%E5%85%A5%E7%BB%93%E6%9E%84%E5%92%8C%E8%A7%84%E5%88%99"><span class="nav-number">2.1.</span> <span class="nav-text">一般输入结构和规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#memory%E5%8D%A1"><span class="nav-number">2.2.</span> <span class="nav-text">memory卡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#file%E5%8D%A1"><span class="nav-number">2.3.</span> <span class="nav-text">file卡</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">2.3.1.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#geometry%E5%8D%A1"><span class="nav-number">2.4.</span> <span class="nav-text">geometry卡</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#xyz%E8%BE%93%E5%85%A5"><span class="nav-number">2.4.1.</span> <span class="nav-text">xyz输入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Z%E7%9F%A9%E9%98%B5%E8%BE%93%E5%85%A5"><span class="nav-number">2.4.2.</span> <span class="nav-text">Z矩阵输入</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E7%A7%B0%E6%80%A7"><span class="nav-number">3.</span> <span class="nav-text">对称性</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E8%A1%8Cmolpro"><span class="nav-number">1.</span> <span class="nav-text">运行molpro</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%85%A5"><span class="nav-number">1.1.</span> <span class="nav-text">输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">输出文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#out%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.1.</span> <span class="nav-text">out文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#punch%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">punch文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xml%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.3.</span> <span class="nav-text">xml文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9%E4%B8%AA%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.4.</span> <span class="nav-text">9个二进制文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.5.</span> <span class="nav-text">记录文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#put%E8%BE%93%E5%87%BA%E5%85%B6%E4%BB%96%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.2.6.</span> <span class="nav-text">put输出其他格式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6%E4%B8%80%E8%88%AC%E7%BB%93%E6%9E%84%E5%92%8C%E8%A7%84%E5%88%99"><span class="nav-number">2.</span> <span class="nav-text">输入文件一般结构和规则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#memory%E5%8D%A1"><span class="nav-number">3.</span> <span class="nav-text">memory卡</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#file%E5%8D%A1"><span class="nav-number">4.</span> <span class="nav-text">file卡</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#print-gprint-%E5%85%A8%E5%B1%80%E6%89%93%E5%8D%B0%E9%80%89%E9%A1%B9"><span class="nav-number">5.</span> <span class="nav-text">print&#x2F;gprint 全局打印选项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#geometry%E5%8D%A1"><span class="nav-number">6.</span> <span class="nav-text">geometry卡</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#xyz%E8%BE%93%E5%85%A5"><span class="nav-number">6.1.</span> <span class="nav-text">xyz输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Z%E7%9F%A9%E9%98%B5%E8%BE%93%E5%85%A5"><span class="nav-number">6.2.</span> <span class="nav-text">Z矩阵输入</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%BB%84"><span class="nav-number">7.</span> <span class="nav-text">基组</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%9D%E5%8A%BF"><span class="nav-number">7.1.</span> <span class="nav-text">赝势</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87ECP%E5%BA%93%E7%9A%84%E8%BE%93%E5%85%A5"><span class="nav-number">7.1.1.</span> <span class="nav-text">通过ECP库的输入</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -630,7 +711,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">41k</span>
+    <span title="站点总字数">45k</span>
 </div>
 
         
