@@ -1,6 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>ADF的SCF相关</title>
+    <url>/2019/09/23/SCF%E7%9B%B8%E5%85%B3/</url>
+    <content><![CDATA[<h1 id="SCF选项"><a href="#SCF选项" class="headerlink" title="SCF选项"></a>SCF选项</h1><figure class="highlight puppet"><table><tr><td class="code"><pre><span class="line">SCF</span><br><span class="line"> Iterations Niter</span><br><span class="line"> Converge <span class="keyword">SCFcnv</span> &#123; sconv2 &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">AccelerationMethod</span> &#123; ADIIS | LISTi | LISTb | fDIIS | LISTf | MESA | SDIIS &#125;</span><br><span class="line"> <span class="keyword">MESA</span> [NoFDIIS] [NoLISTb] [NoLISTf] [NoLISTi] [NoSDIIS] [NoADIIS]</span><br><span class="line"> ADIIS</span><br><span class="line">   &#123;THRESH1 a1&#125;</span><br><span class="line">   &#123;THRESH2 a2&#125;</span><br><span class="line"> End</span><br><span class="line"> NoADIIS</span><br><span class="line"> DIIS</span><br><span class="line">   &#123;N n&#125;</span><br><span class="line">   &#123;OK ok&#125;</span><br><span class="line">   &#123;cyc cyc&#125;</span><br><span class="line"> End</span><br><span class="line"> Mixing mix</span><br><span class="line"> Mixing1 mix1</span><br><span class="line"></span><br><span class="line"> OldSCF</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<h2 id="Iterations"><a href="#Iterations" class="headerlink" title="Iterations"></a>Iterations</h2><p><code>Iterations</code>SCF迭代的最大次数，<code>Niter</code>默认是<code>300</code></p>
+<h2 id="Converge"><a href="#Converge" class="headerlink" title="Converge"></a>Converge</h2><p><code>Converge</code> ：</p>
+<ul>
+<li><code>SCFcnv</code>表示停止迭代的收敛限，默认是<code>1e-6</code>。</li>
+<li><code>sconv2</code>表示SCF过程难以收敛时起作用的第二个标准，默认是<code>1e-3</code>，如果达到了，仅发出警告，但是继续计算。仍无法达到的时候SCF不收敛，只能用<code>ALLOW</code>来继续</li>
+</ul>
+<h2 id="AccelerationMethod"><a href="#AccelerationMethod" class="headerlink" title="AccelerationMethod"></a>AccelerationMethod</h2><p><code>AccelerationMethod</code>调用的SCF加速方法，默认情况下为<code>ADIIS</code>，还可以用<code>LISTi</code> | <code>LISTb</code> | <code>fDIIS</code> | <code>LISTf</code> | <code>MESA</code> | <code>SDIIS</code></p>
+<h3 id="MESA"><a href="#MESA" class="headerlink" title="MESA"></a>MESA</h3><p><code>AccelerationMethod MESA</code>是ADIIS, fDIIS, LISTb, LISTf, LISTi和 SDIIS方法的组合<br><code>MESA NoSDIIS</code>代表从其中删掉某一种方法，也可以直接使用该关键词调用MESA，优先级大于<code>AccelerationMethod</code>指定的方法。</p>
+<h3 id="ADIIS"><a href="#ADIIS" class="headerlink" title="ADIIS"></a>ADIIS</h3><p>使用ADIIS + SDIIS方法，根据 [F,P] 交换子矩阵中的最大元素<code>ErrMax</code>来确定具体方法：</p>
+<ul>
+<li>当ErrMax≥<code>a1</code>，只使用A-DIIS系数</li>
+<li>当ErrMax≤ <code>a2</code>，只使用SDIIS系数</li>
+<li>当<code>a2</code>≤ ErrMax≤ <code>a1</code>，根据ErrMax的值按一定的权重来计算<br><code>a1</code>和<code>a2</code>的默认值是<code>0.01</code>和<code>0.0001</code>，收敛比较困难的时候，可以降低阈值，只使用A-DIIS系数</li>
+</ul>
+<h3 id="SDIIS"><a href="#SDIIS" class="headerlink" title="SDIIS"></a>SDIIS</h3><p><code>AccelerationMethod SDIIS</code>与在没有指定<code>oldscf</code>的情况下使用<code>NoADIIS</code>意思相同，采用的是阻尼+SDIIS方法。从简单阻尼（Mixing）开始，持续到<code>ErrMax</code>降低到<code>DIIS OK</code>参数以下，但是不超过<code>DIIS Cyc</code>次迭代。之后使用纯的SDIIS方法。</p>
+<blockquote>
+<p>在指定<code>oldscf</code>的情况下使用<code>NoADIIS</code>会禁用在SCF收敛困难的时候自动切换到ADIIS + SDIIS方法</p>
+</blockquote>
+<ul>
+<li>指定<code>NoADIIS</code>时才可以设置 <code>DIIS</code>模块：<ul>
+<li><code>N</code>用于加速SCF的扩展向量的数量，默认为<code>10</code>，小于2后会禁用DIIS。此数字不仅适用于Pulay DIIS方案，还适用于其他类似DIIS的方法，例如A-DIIS和LIST方法。<blockquote>
+<p>LIST家族的方法对使用的扩展向量的数量非常敏感，接近收敛时，LIST中的向量数量会增加，但始终受<code>DIIS N</code>的限制，当难以收敛时，可以将<code>DIIS N</code>设置为大于10的值，比如12~20。</p>
+</blockquote>
+</li>
+<li><code>OK</code>禁用A-DIIS时，SDIIS起始条件。默认为<code>0.5</code> a.u.。</li>
+<li><code>Cyc</code>禁用A-DIIS时，无论上面的<code>DIIS OK</code>值如何，SDIIS都会在此迭代下启动，默认值为<code>5</code></li>
+</ul>
+</li>
+<li><code>Mixing</code>中，指将下一个Fock矩阵确定为<script type="math/tex">F = mix F_{n} + (1-mix) F_{n-1}</script>，<code>mix</code>默认为<code>0.2</code></li>
+<li><code>Mixing1</code>中指第一个SCF循环的混合参数值不同，默认为<code>0.2</code></li>
+</ul>
+<h2 id="oldSCF"><a href="#oldSCF" class="headerlink" title="oldSCF"></a>oldSCF</h2><p>在使用<code>Occupations Steep</code>、<code>Lshift</code>，<code>ARH</code>，<code>EDIIS</code>，<code>RESTOCC</code>时，会自动启用<code>oldSCF</code></p>
+<h3 id="Lshift"><a href="#Lshift" class="headerlink" title="Lshift"></a>Lshift</h3><p>能级移动方法，在前一次迭代的轨道表示中，Fock矩阵的对角元素提高虚轨道的<code>vshift</code>hartree。旋轨耦合不支持这种方法。</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">Lshift</span> <span class="string">vshift</span></span><br><span class="line"><span class="attr">Lshift_err</span> <span class="string">Shift_err</span></span><br><span class="line"><span class="attr">Lshift_cyc</span> <span class="string">Shift_cyc</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Lshift_err</code>指定一旦SCF error降至阈值以下，程序将关闭能级移动，<code>Shift_err</code>默认值为<code>0</code>。</li>
+<li><code>Lshift_cyc</code>指定在第几个SCF 迭代次数的时候再启动能级移动， <code>Shift_cyc</code>默认为<code>1</code>。</li>
+</ul>
+<h3 id="ARH"><a href="#ARH" class="headerlink" title="ARH"></a>ARH</h3><figure class="highlight dust"><table><tr><td class="code"><pre><span class="line"><span class="xml">SCF</span></span><br><span class="line"><span class="xml">  ARH</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;CONV conv&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;ITER iter&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;NSAVED nsaved&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;START start&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;FINAL&#125;</span><span class="xml"> ...</span></span><br><span class="line"><span class="xml">  End</span></span><br><span class="line"><span class="xml">  ...</span></span><br><span class="line"><span class="xml">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>CONV</code>：当RMS梯度及其最大分量均低于<code>conv</code>，ARH收敛，<code>conv</code>默认是1e-4</li>
+<li><code>ITER</code>：最大ARH迭代次数，<code>iter</code>默认为500</li>
+<li><code>FINAL</code>：确定ARH完成后是否继续SCF。如果设置了此选项，将执行一次Fock矩阵对角化以获得轨道，并且将停止SCF过程。默认选项为<code>OFF</code>。</li>
+<li><code>START</code>：开始调用ARH的SCF迭代次数，<code>start</code>默认为2。使用较大的值可以为ARH提供更好的初猜</li>
+<li><code>NSAVED</code>：保存密度和Fock矩阵的数量。 <code>nsaved</code>默认为8。在非常接近费米能级的轨道数很大的收敛困难时，应使用较大的<code>nsaved</code>值。</li>
+<li>默认的最小化方法是“Untransformed Pre-conditioned Conjugate Gradient”，可以使用以下两个关键词更改：<ul>
+<li><code>NOPRECOND</code>：禁用Untransformed Pre-conditioned CG最小化，不能在第二周期后的元素里使用</li>
+<li><code>TRANSPCG</code>：启用Transformed Pre-conditioned CG 方法，SCF可能会更好的收敛。</li>
+</ul>
+</li>
+<li>在每一步SCF中，先执行常规CG最小化，跟踪总步长，如果在某个微迭代中步长超过了信任半径，则过程将在缩小的空间中切换到信任半径优化，在能级移动参数mu收敛后立即中止。在CG最小化期间生成的所有试验矢量的缩小空间中，将最终步骤计算为牛顿步骤。可以通过以下关键词修改参数：<ul>
+<li><code>NOSWITCHING</code>：关闭从普通CG到缩小的空间中的信任半径最小化的切换。在某些情况下，使用此选项有助于减少SCF循环的总数。</li>
+<li><code>SHIFTED</code>：设置此选项将在第一次微迭代中打开信任半径优化。</li>
+<li><code>CGITER=cgiter</code>：设置微迭代的最大数量。</li>
+<li>确定置信半径：<ul>
+<li><code>TRUSTR=trustr</code>：信任半径的初始值。默认为<code>0.5</code></li>
+<li><code>MAXTRUSTR=maxtrustr</code>：最大信任半径值。默认为<code>0.5</code>，并且不会改变。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>该方法仅适用于NOSYM计算</li>
+<li>在每一步都要计算总能量，计算非常昂贵，而且使用总能量，需要更高的积分精度才能获得稳定的SCF收敛，该方法可能不适用于所有情况，??使用<code>ADDDIFFUSEFIT</code>关键字或更高的<code>ZlmFit</code>质量设置来提高总能量的准确性，从而提高收敛性。??</li>
+</ul>
+</li>
+</ul>
+<h1 id="SCF不收敛"><a href="#SCF不收敛" class="headerlink" title="SCF不收敛"></a>SCF不收敛</h1><ol>
+<li>更换SCF加速收敛的方法</li>
+<li>使用ARH方法</li>
+<li>修改DIIS算法的参数<ul>
+<li><code>Mixing</code>高于默认值<code>0.2</code>会有更高的加速度，更低会更稳定的迭代</li>
+<li><code>N</code>默认为<code>10</code>，越大用于加速SCF的扩展向量的数量越多，SCF迭代更稳定，最多到25</li>
+<li><code>Cyc</code>是SDIIS启动的初始SCF迭代步数，默认值为<code>5</code>，更高计算越稳定<br>比如使用如下参数：<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">SCF</span></span><br><span class="line">    <span class="attribute">DIIS</span></span><br><span class="line">      <span class="attribute">N</span> <span class="number">25</span></span><br><span class="line">      <span class="attribute">Cyc</span> <span class="number">30</span></span><br><span class="line">    <span class="attribute">End</span></span><br><span class="line">    <span class="attribute">Mixing</span> <span class="number">0</span>.<span class="number">015</span></span><br><span class="line">    <span class="attribute">Mixing1</span> <span class="number">0</span>.<span class="number">09</span></span><br><span class="line">  <span class="attribute">End</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>HOMO-LUMO较为接近的情况（0.02Hatree以内），可能造成HOMO-LUMO的震荡。可以使用<code>Lshift vshift</code>方法，不适于激发态的计算、解析频率、旋轨耦合的计算。</li>
+<li>使用Electron smearing设定在允许的能量范围内分数占据。</li>
+<li>其他：<a href="https://www.fermitech.com.cn/wiki/doku.php?id=adf:scfnonconvergence">费米维基</a>的2、3、5。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>ADF</category>
+      </categories>
+      <tags>
+        <tag>SCF</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>EDA-NOCV</title>
     <url>/2020/02/07/EDA-NOCV/</url>
     <content><![CDATA[<h1 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h1><h2 id="碎片"><a href="#碎片" class="headerlink" title="碎片"></a>碎片</h2><ul>
@@ -289,96 +382,180 @@
       </tags>
   </entry>
   <entry>
-    <title>ADF的SCF相关</title>
-    <url>/2019/09/23/SCF%E7%9B%B8%E5%85%B3/</url>
-    <content><![CDATA[<h1 id="SCF选项"><a href="#SCF选项" class="headerlink" title="SCF选项"></a>SCF选项</h1><figure class="highlight puppet"><table><tr><td class="code"><pre><span class="line">SCF</span><br><span class="line"> Iterations Niter</span><br><span class="line"> Converge <span class="keyword">SCFcnv</span> &#123; sconv2 &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">AccelerationMethod</span> &#123; ADIIS | LISTi | LISTb | fDIIS | LISTf | MESA | SDIIS &#125;</span><br><span class="line"> <span class="keyword">MESA</span> [NoFDIIS] [NoLISTb] [NoLISTf] [NoLISTi] [NoSDIIS] [NoADIIS]</span><br><span class="line"> ADIIS</span><br><span class="line">   &#123;THRESH1 a1&#125;</span><br><span class="line">   &#123;THRESH2 a2&#125;</span><br><span class="line"> End</span><br><span class="line"> NoADIIS</span><br><span class="line"> DIIS</span><br><span class="line">   &#123;N n&#125;</span><br><span class="line">   &#123;OK ok&#125;</span><br><span class="line">   &#123;cyc cyc&#125;</span><br><span class="line"> End</span><br><span class="line"> Mixing mix</span><br><span class="line"> Mixing1 mix1</span><br><span class="line"></span><br><span class="line"> OldSCF</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
-<h2 id="Iterations"><a href="#Iterations" class="headerlink" title="Iterations"></a>Iterations</h2><p><code>Iterations</code>SCF迭代的最大次数，<code>Niter</code>默认是<code>300</code></p>
-<h2 id="Converge"><a href="#Converge" class="headerlink" title="Converge"></a>Converge</h2><p><code>Converge</code> ：</p>
-<ul>
-<li><code>SCFcnv</code>表示停止迭代的收敛限，默认是<code>1e-6</code>。</li>
-<li><code>sconv2</code>表示SCF过程难以收敛时起作用的第二个标准，默认是<code>1e-3</code>，如果达到了，仅发出警告，但是继续计算。仍无法达到的时候SCF不收敛，只能用<code>ALLOW</code>来继续</li>
-</ul>
-<h2 id="AccelerationMethod"><a href="#AccelerationMethod" class="headerlink" title="AccelerationMethod"></a>AccelerationMethod</h2><p><code>AccelerationMethod</code>调用的SCF加速方法，默认情况下为<code>ADIIS</code>，还可以用<code>LISTi</code> | <code>LISTb</code> | <code>fDIIS</code> | <code>LISTf</code> | <code>MESA</code> | <code>SDIIS</code></p>
-<h3 id="MESA"><a href="#MESA" class="headerlink" title="MESA"></a>MESA</h3><p><code>AccelerationMethod MESA</code>是ADIIS, fDIIS, LISTb, LISTf, LISTi和 SDIIS方法的组合<br><code>MESA NoSDIIS</code>代表从其中删掉某一种方法，也可以直接使用该关键词调用MESA，优先级大于<code>AccelerationMethod</code>指定的方法。</p>
-<h3 id="ADIIS"><a href="#ADIIS" class="headerlink" title="ADIIS"></a>ADIIS</h3><p>使用ADIIS + SDIIS方法，根据 [F,P] 交换子矩阵中的最大元素<code>ErrMax</code>来确定具体方法：</p>
-<ul>
-<li>当ErrMax≥<code>a1</code>，只使用A-DIIS系数</li>
-<li>当ErrMax≤ <code>a2</code>，只使用SDIIS系数</li>
-<li>当<code>a2</code>≤ ErrMax≤ <code>a1</code>，根据ErrMax的值按一定的权重来计算<br><code>a1</code>和<code>a2</code>的默认值是<code>0.01</code>和<code>0.0001</code>，收敛比较困难的时候，可以降低阈值，只使用A-DIIS系数</li>
-</ul>
-<h3 id="SDIIS"><a href="#SDIIS" class="headerlink" title="SDIIS"></a>SDIIS</h3><p><code>AccelerationMethod SDIIS</code>与在没有指定<code>oldscf</code>的情况下使用<code>NoADIIS</code>意思相同，采用的是阻尼+SDIIS方法。从简单阻尼（Mixing）开始，持续到<code>ErrMax</code>降低到<code>DIIS OK</code>参数以下，但是不超过<code>DIIS Cyc</code>次迭代。之后使用纯的SDIIS方法。</p>
-<blockquote>
-<p>在指定<code>oldscf</code>的情况下使用<code>NoADIIS</code>会禁用在SCF收敛困难的时候自动切换到ADIIS + SDIIS方法</p>
-</blockquote>
-<ul>
-<li>指定<code>NoADIIS</code>时才可以设置 <code>DIIS</code>模块：<ul>
-<li><code>N</code>用于加速SCF的扩展向量的数量，默认为<code>10</code>，小于2后会禁用DIIS。此数字不仅适用于Pulay DIIS方案，还适用于其他类似DIIS的方法，例如A-DIIS和LIST方法。<blockquote>
-<p>LIST家族的方法对使用的扩展向量的数量非常敏感，接近收敛时，LIST中的向量数量会增加，但始终受<code>DIIS N</code>的限制，当难以收敛时，可以将<code>DIIS N</code>设置为大于10的值，比如12~20。</p>
-</blockquote>
-</li>
-<li><code>OK</code>禁用A-DIIS时，SDIIS起始条件。默认为<code>0.5</code> a.u.。</li>
-<li><code>Cyc</code>禁用A-DIIS时，无论上面的<code>DIIS OK</code>值如何，SDIIS都会在此迭代下启动，默认值为<code>5</code></li>
-</ul>
-</li>
-<li><code>Mixing</code>中，指将下一个Fock矩阵确定为<script type="math/tex">F = mix F_{n} + (1-mix) F_{n-1}</script>，<code>mix</code>默认为<code>0.2</code></li>
-<li><code>Mixing1</code>中指第一个SCF循环的混合参数值不同，默认为<code>0.2</code></li>
-</ul>
-<h2 id="oldSCF"><a href="#oldSCF" class="headerlink" title="oldSCF"></a>oldSCF</h2><p>在使用<code>Occupations Steep</code>、<code>Lshift</code>，<code>ARH</code>，<code>EDIIS</code>，<code>RESTOCC</code>时，会自动启用<code>oldSCF</code></p>
-<h3 id="Lshift"><a href="#Lshift" class="headerlink" title="Lshift"></a>Lshift</h3><p>能级移动方法，在前一次迭代的轨道表示中，Fock矩阵的对角元素提高虚轨道的<code>vshift</code>hartree。旋轨耦合不支持这种方法。</p>
-<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">Lshift</span> <span class="string">vshift</span></span><br><span class="line"><span class="attr">Lshift_err</span> <span class="string">Shift_err</span></span><br><span class="line"><span class="attr">Lshift_cyc</span> <span class="string">Shift_cyc</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>Lshift_err</code>指定一旦SCF error降至阈值以下，程序将关闭能级移动，<code>Shift_err</code>默认值为<code>0</code>。</li>
-<li><code>Lshift_cyc</code>指定在第几个SCF 迭代次数的时候再启动能级移动， <code>Shift_cyc</code>默认为<code>1</code>。</li>
-</ul>
-<h3 id="ARH"><a href="#ARH" class="headerlink" title="ARH"></a>ARH</h3><figure class="highlight dust"><table><tr><td class="code"><pre><span class="line"><span class="xml">SCF</span></span><br><span class="line"><span class="xml">  ARH</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;CONV conv&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;ITER iter&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;NSAVED nsaved&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;START start&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;FINAL&#125;</span><span class="xml"> ...</span></span><br><span class="line"><span class="xml">  End</span></span><br><span class="line"><span class="xml">  ...</span></span><br><span class="line"><span class="xml">End</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>CONV</code>：当RMS梯度及其最大分量均低于<code>conv</code>，ARH收敛，<code>conv</code>默认是1e-4</li>
-<li><code>ITER</code>：最大ARH迭代次数，<code>iter</code>默认为500</li>
-<li><code>FINAL</code>：确定ARH完成后是否继续SCF。如果设置了此选项，将执行一次Fock矩阵对角化以获得轨道，并且将停止SCF过程。默认选项为<code>OFF</code>。</li>
-<li><code>START</code>：开始调用ARH的SCF迭代次数，<code>start</code>默认为2。使用较大的值可以为ARH提供更好的初猜</li>
-<li><code>NSAVED</code>：保存密度和Fock矩阵的数量。 <code>nsaved</code>默认为8。在非常接近费米能级的轨道数很大的收敛困难时，应使用较大的<code>nsaved</code>值。</li>
-<li>默认的最小化方法是“Untransformed Pre-conditioned Conjugate Gradient”，可以使用以下两个关键词更改：<ul>
-<li><code>NOPRECOND</code>：禁用Untransformed Pre-conditioned CG最小化，不能在第二周期后的元素里使用</li>
-<li><code>TRANSPCG</code>：启用Transformed Pre-conditioned CG 方法，SCF可能会更好的收敛。</li>
-</ul>
-</li>
-<li>在每一步SCF中，先执行常规CG最小化，跟踪总步长，如果在某个微迭代中步长超过了信任半径，则过程将在缩小的空间中切换到信任半径优化，在能级移动参数mu收敛后立即中止。在CG最小化期间生成的所有试验矢量的缩小空间中，将最终步骤计算为牛顿步骤。可以通过以下关键词修改参数：<ul>
-<li><code>NOSWITCHING</code>：关闭从普通CG到缩小的空间中的信任半径最小化的切换。在某些情况下，使用此选项有助于减少SCF循环的总数。</li>
-<li><code>SHIFTED</code>：设置此选项将在第一次微迭代中打开信任半径优化。</li>
-<li><code>CGITER=cgiter</code>：设置微迭代的最大数量。</li>
-<li>确定置信半径：<ul>
-<li><code>TRUSTR=trustr</code>：信任半径的初始值。默认为<code>0.5</code></li>
-<li><code>MAXTRUSTR=maxtrustr</code>：最大信任半径值。默认为<code>0.5</code>，并且不会改变。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>缺点：<ul>
-<li>该方法仅适用于NOSYM计算</li>
-<li>在每一步都要计算总能量，计算非常昂贵，而且使用总能量，需要更高的积分精度才能获得稳定的SCF收敛，该方法可能不适用于所有情况，??使用<code>ADDDIFFUSEFIT</code>关键字或更高的<code>ZlmFit</code>质量设置来提高总能量的准确性，从而提高收敛性。??</li>
-</ul>
-</li>
-</ul>
-<h1 id="SCF不收敛"><a href="#SCF不收敛" class="headerlink" title="SCF不收敛"></a>SCF不收敛</h1><ol>
-<li>更换SCF加速收敛的方法</li>
-<li>使用ARH方法</li>
-<li>修改DIIS算法的参数<ul>
-<li><code>Mixing</code>高于默认值<code>0.2</code>会有更高的加速度，更低会更稳定的迭代</li>
-<li><code>N</code>默认为<code>10</code>，越大用于加速SCF的扩展向量的数量越多，SCF迭代更稳定，最多到25</li>
-<li><code>Cyc</code>是SDIIS启动的初始SCF迭代步数，默认值为<code>5</code>，更高计算越稳定<br>比如使用如下参数：<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">SCF</span></span><br><span class="line">    <span class="attribute">DIIS</span></span><br><span class="line">      <span class="attribute">N</span> <span class="number">25</span></span><br><span class="line">      <span class="attribute">Cyc</span> <span class="number">30</span></span><br><span class="line">    <span class="attribute">End</span></span><br><span class="line">    <span class="attribute">Mixing</span> <span class="number">0</span>.<span class="number">015</span></span><br><span class="line">    <span class="attribute">Mixing1</span> <span class="number">0</span>.<span class="number">09</span></span><br><span class="line">  <span class="attribute">End</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li>HOMO-LUMO较为接近的情况（0.02Hatree以内），可能造成HOMO-LUMO的震荡。可以使用<code>Lshift vshift</code>方法，不适于激发态的计算、解析频率、旋轨耦合的计算。</li>
-<li>使用Electron smearing设定在允许的能量范围内分数占据。</li>
-<li>其他：<a href="https://www.fermitech.com.cn/wiki/doku.php?id=adf:scfnonconvergence">费米维基</a>的2、3、5。</li>
-</ol>
-]]></content>
+    <title>molpro的HF计算</title>
+    <url>/2019/11/16/molpro%E7%9A%84HF%E8%AE%A1%E7%AE%97/</url>
+    <content><![CDATA[]]></content>
       <categories>
-        <category>计算化学</category>
-        <category>ADF</category>
+        <category>molpro</category>
       </categories>
       <tags>
-        <tag>SCF</tag>
+        <tag>HF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>molpro的对称性</title>
+    <url>/2020/11/16/molpro%E7%9A%84%E5%AF%B9%E7%A7%B0%E6%80%A7/</url>
+    <content><![CDATA[<ul>
+<li>MOLPRO只能使用阿贝尔点群对称性，对于有简并对称性的分子，必须使用阿贝尔子群，如下：</li>
+</ul>
+<p><img src="1.png"  div align=left/></p>
+<ul>
+<li>对于每个点群的不可约表示，编号为1至8，顺序如下：</li>
+</ul>
+<p><img src="2.png"  /></p>
+<p><img src="3.png"  /></p>
+<p><img src="4.png"  /></p>
+<ul>
+<li>轨道和基函数的引用格式一般是<code>序号.不可约表示编号</code>，比如3.2表示所用点群对称性的第二个不可约表示的第三个轨道。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>molpro</category>
+      </categories>
+      <tags>
+        <tag>点群</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>molpro基础</title>
+    <url>/2019/11/13/molpro1/</url>
+    <content><![CDATA[<h1 id="运行molpro"><a href="#运行molpro" class="headerlink" title="运行molpro"></a>运行molpro</h1><h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>在UNIX系统中，MOLPRO通过unix命令molpro访问：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">molpro</span> <span class="selector-attr">[options]</span> <span class="selector-attr">[datafile]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>datafile</code>：输入文件，可以取任何名字，但是要避免使用.out作为后缀，一般用.inp。unix中出现在molpro输入文件中的文件名总是转化为小写。</p>
+</li>
+<li><p>options：大部分选项都有合适的系统默认值，但是也可以在命令行中、环境变量MOLPRO OPTIONS中或文件./molpro.rc，$HOME/.molprorc，和library文件目录下的tuning.rc中（优先级递减）：</p>
+<ul>
+<li><p><code>-o [outfile]</code> ：自定义输出名</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">molpro</span> <span class="selector-tag">-o</span> <span class="selector-tag">water</span><span class="selector-class">.output</span> <span class="selector-tag">h2o</span><span class="selector-class">.inp</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>-d [directory]</code> ：定义放置临时文件的目录</p>
+</li>
+<li><p><code>-s</code>：不保存旧的输出文件，只是覆盖。</p>
+</li>
+<li><p><code>-m n_scale</code>：指定分配给程序的工作内存，单位是word=8byte</p>
+<ul>
+<li><code>k</code>，<code>m</code>，<code>g</code>分别为10<sup>3</sup>，10<sup>6</sup>，10<sup>9</sup></li>
+<li><code>K</code>，<code>M</code>，<code>G</code>分别为2<sup>10</sup>，2<sup>20</sup>，2<sup>30</sup></li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">#需要<span class="number">1000</span>word的内存</span><br><span class="line">-m <span class="number">1</span>k</span><br><span class="line">#需要<span class="number">1024</span>word的内存</span><br><span class="line">-M <span class="number">1</span>K</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>用于并行执行的选项（在使用串行MOLPRO时，将忽略这些选项）：</p>
+<ul>
+<li><p><code>-n</code>：定义设置的并行进程个数</p>
+<p>并行内存计算eg. 为具有4个并行计算过程的作业指定100×10<sup>6</sup>个word：100×10<sup>6</sup>×8×4=3.2×10<sup>9</sup>byte</p>
+</li>
+<li><p><code>-N</code> ：等指定工作节点的主机名</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="输出文件"><a href="#输出文件" class="headerlink" title="输出文件"></a>输出文件</h2><h3 id="out文件"><a href="#out文件" class="headerlink" title="out文件"></a>out文件</h3><ul>
+<li>执行结果会把输出写到一个名称输入文件截掉扩展名并加上<code>.out</code>产生的文件中。如果输出文件已经存在，防止覆盖文件，会把旧文件重命名为后缀为<code>.out_1</code>的文件中。如果命令行没有给出<code>datafile</code>，那么从标准输入读取数据。</li>
+</ul>
+<h3 id="punch文件"><a href="#punch文件" class="headerlink" title="punch文件"></a>punch文件</h3><p>punch文件是output文件的简易形式，它包含了最重要的数据和结果，例如几何结构，能量，偶极矩等。可以用独立的程序readpun处理，它用关键词选择特定的结果，并根据用户提供的格式产生排列好的表格。</p>
+<h3 id="xml文件"><a href="#xml文件" class="headerlink" title="xml文件"></a>xml文件</h3><p>除了生成.out文件外，还用. XML后缀创建结构化XML文件(实际上是.out文件的父文件)。这个文件可以用于结果的自动后处理，例如MolproView程序的图形化呈现。</p>
+<h3 id="9个二进制文件"><a href="#9个二进制文件" class="headerlink" title="9个二进制文件"></a>9个二进制文件</h3><ul>
+<li><p>程序通过它们的编号（1到9）可以简单地识别它们。</p>
+</li>
+<li><p>默认是临时文件，通常由程序动态分配，scratch文件用于存储MOLPRO所需的所有中间数据，用户通常根本不会看到这些文件。但是用FILE命令可以把计算出的数据作为轨道和能量保存到永久文件中，并在以后的阶段使用它们重启计算。</p>
+</li>
+<li><p>每个文件都是直接访问，字可寻址的（word addressable；1个字通常是64位），并且在任意长度的记录中组织起来。每个记录的名称、地址和长度都保存在文件开始的目录中。</p>
+</li>
+<li><p>文件类型：</p>
+<ul>
+<li>文件1：主文件，存有基组，几何结构，以及单电子和双电子积分。</li>
+<li>文件2：默认是转存文件，用于存储波函的信息，即：轨道，轨道能量，可选的CI矢量，以及密度矩阵。</li>
+<li>文件3：辅助文件，和文件2一起用于续算</li>
+<li>文件4~8：草稿文件空间，用来分类积分，存储转换的积分和CI矢量。这些文件通常无需存为永久文件。</li>
+</ul>
+<p>通常文件1和2（以及3）被声明为用于续算的永久文件（参见<code>FILE</code>）。文件2对于重新启动计算是必不可少的，而文件1上的积分可以重新启动，也可以重新计算。把波函信息存储在文件2中是非常有用的，因为对于每个新的结构，积分文件都会被改写，而一个计算中的轨道和CI因子可以用作下一个相近几何结构计算的初始猜测。</p>
+</li>
+</ul>
+<h1 id="输入文件格式"><a href="#输入文件格式" class="headerlink" title="输入文件格式"></a>输入文件格式</h1><h2 id="一般输入结构和规则"><a href="#一般输入结构和规则" class="headerlink" title="一般输入结构和规则"></a>一般输入结构和规则</h2><figure class="highlight erlang-repl"><table><tr><td class="code"><pre><span class="line">***,title			! 标题（可选）</span><br><span class="line">memory,<span class="number">4</span>,m 			! 内存指定（可选）</span><br><span class="line">file,<span class="number">1</span>,name.int 	! 命名永久的积分文件（可选）</span><br><span class="line">file,<span class="number">2</span>,name.wfu 	! 命名永久的波函文件（可选）</span><br><span class="line"></span><br><span class="line">gprint,options 		! 全局打印选项（可选）</span><br><span class="line">gthresh,options 	! 全局阈值（可选）</span><br><span class="line">gdirect[,options] 	! 全局直接积分选项（可选）</span><br><span class="line">gexpec,opnames 		! 单电子算符的全局定义（可选）</span><br><span class="line"></span><br><span class="line">basis=basisname 	! 基的定义。如果不出现，使用cc-pVDZ</span><br><span class="line">geometry=&#123;...&#125; 		! 结构定义。</span><br><span class="line"></span><br><span class="line">var1=value,var2=value,... 	! 设定结构和/或波函定义中的变量</span><br><span class="line"></span><br><span class="line">&#123;command,options 		! 程序或流程的名称</span><br><span class="line">directive,data,option 	! 命令的指令（可选）</span><br><span class="line">...</span><br><span class="line">&#125; 				! 结束命令区</span><br><span class="line">--- 			! 结束输入（可选）</span><br></pre></td></tr></table></figure>
+<ul>
+<li>输了memory卡应该是紧随标题的第一个以外，其他basis，geometry，gprint，gdirect，gthresh，gexpec，以及变量定义的顺序是任意的。</li>
+<li>可以在一个程序后调用其它几个程序。在程序的调用之间还可以重新定义基组和/或分子结构；程序将会自动确认是否需要重新计算积分。</li>
+</ul>
+<p>一般规则：</p>
+<ul>
+<li><code>,</code>移到下一个制表位，即用来划定输入范围。</li>
+<li><code>;</code>结束记录，开始一个新的记录。用分号隔开的基本命令单位称为卡（card）。一个给定的输入行可以包含多个有效命令（用；隔开），也可以只有一个。</li>
+<li><code>!</code>忽略该输入行后面的内容（用于注释）。</li>
+<li>内容不区分大小写，统一转换为大写处理。引号中的内容会被认为是字符串，不会进行大小写转换。</li>
+<li>整数后面加上<code>.</code>，程序只读取浮点数</li>
+</ul>
+<p>一般只占用一行的命令：</p>
+<ul>
+<li><code>***</code>总是第一个数据行，title可以任选，但是如果文件1用于续算，title必须总是相同。这个卡的作用是重新设置所有程序的计数器等。如果忽略<em>*</em>卡，title假定用默认值，全是空格。</li>
+<li><code>INCLUDE</code>包含其它的输入文件。使用<code>INCLUDE</code>可以打开辅助输入文件。如果遇到了<code>INCLUDE</code>命令，则打开新的输入文件并读取到结束，然后在第一个输入文件中继续INCLUDE卡之后的输入。<code>INCLUDE</code>也可以嵌套。</li>
+<li><code>FILE</code>指定已命名的文件</li>
+<li><code>TEXT</code>打印文本</li>
+<li><code>TITLE</code>定义运行的标题或表格的标题</li>
+<li><p><code>CON</code>指定轨道组态</p>
+</li>
+<li><p><code>---</code>结束文件（忽略之后的输入）</p>
+</li>
+</ul>
+<h2 id="memory卡"><a href="#memory卡" class="headerlink" title="memory卡"></a>memory卡</h2><figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">MEMORY,</span>n,scale<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>与命令行中的<code>-m</code>不同，scale中<code>k</code>，<code>m</code>，<code>g</code>不区分大小写，统一按10<sup>3</sup>，10<sup>6</sup>，10<sup>9</sup></li>
+<li>优先于命令行中的<code>-m</code>。两者都省略的话，程序将使用默认的内存大小8mw (64 Mb)。</li>
+</ul>
+<p>MOLPRO可以根据用户的需要动态分配内存。因此不需要保存有不同内存大小的不同版本程序。所需要的内存大小取决于分子的大小、基组、分子的对称性和使用的方法，因此很难提前预测。大多数计算运行在16mw或更少，但在大的情况下，低对称性可能需要更多。一个比较好的选择是64MW（512MB），前提是系统有足够的内存。</p>
+<ul>
+<li>算到一半但是没有报错就停止了，可以将.sub文件中并行核数设大一些，比如24，再将molpro中的并行设置-n中的设置小一些。</li>
+</ul>
+<h2 id="file卡"><a href="#file卡" class="headerlink" title="file卡"></a>file卡</h2><p>对所有的永久文件，默认设置是RESTART。所有的临时文件在需要时通常自动分配。I/O缓存分配到动态内存的顶端，缓存的大小会减少可用的内存。因此MEMORY卡必须出现在第一个FILE卡之前。</p>
+<figure class="highlight fortran"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FILE</span>,<span class="keyword">file</span>,<span class="keyword">name</span>,[<span class="keyword">status</span>]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>file</code>是逻辑MOLPRO文件序号(1-9)</li>
+<li><code>name</code>是文件名（将被转换成小写字母）</li>
+<li><code>status</code>可以是：<ul>
+<li><code>UNKNOWN</code>打开永久文件。如果存在，自动续算。这是默认的。</li>
+<li><code>OLD</code>作用同<code>UNKNOWN</code>。如果该文件不存在，不会发生错误。</li>
+<li><code>NEW</code> 打开永久文件。如果已经存在，则清除，不续算。</li>
+<li><code>ERASE</code> 作用同<code>NEW</code>。</li>
+<li><code>SCRATCH</code> 打开临时文件。如果已经存在，则清除，不续算。任务完成后，文件不<br>再存在。</li>
+<li><code>DELETE</code> 作用同<code>SCRATCH</code>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><ul>
+<li><p>分配永久文件1的名称H2O.INT，如果存在会使用它进行续算。比如第一个输入中只计算了hf和ccsd(t)，使用了该指令，后续计算casscf和MRCI的时候，指定了相同的文件，，MOLPRO将自动恢复保存在给定文件中的所有数据，积分和轨道将被重新启动。</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">FILE</span>,<span class="number">1</span>,H<span class="number">2</span>O.INT</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>分配永久文件2的名称H2O.WFU，即禁用自动重启机制</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">FILE</span>,<span class="number">2</span>,H<span class="number">2</span>O.WFU,NEW</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在大多数情况下，文件1可能非常大(它包含两个电子的积分)，而重新计算积分的成本可能只占总时间的一小部分，因此可以只在输入中只定义文件2，积分会自动重新计算。</p>
+</li>
+</ul>
+<h2 id="geometry卡"><a href="#geometry卡" class="headerlink" title="geometry卡"></a>geometry卡</h2><p>定义分子结构可以用标准Z矩阵形式，或XYZ形式。GEOMETRY必须出现在其它修改分子结构的命令之后。</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="string">[SYMMETRY, options ]</span></span><br><span class="line"><span class="string">[ORIENT, options ]</span> </span><br><span class="line"><span class="string">[ANGSTROM ]</span> </span><br><span class="line"><span class="string">[BOHR]</span></span><br><span class="line">geometry=&#123; </span><br><span class="line">原子说明 </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>symmetry</code>选项<ul>
+<li><code>SYMMETRY,NOSYM</code>禁止使用对称性，也可以只用<code>NOSYM</code></li>
+<li><code>SYMMETRY,AUTO</code>允许使用对称性</li>
+</ul>
+</li>
+</ul>
+<h3 id="xyz输入"><a href="#xyz输入" class="headerlink" title="xyz输入"></a>xyz输入</h3><ul>
+<li>第一行是原子个数，第二行是任意的标题，前两行可以省略。坐标中单位默认为Å。</li>
+<li>元素符号后面可以加序号，用于对于同一类型不同原子使用不同的基组。</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">geometry=&#123;</span><br><span class="line">   <span class="number">4</span></span><br><span class="line">  FORMALDEHYDE</span><br><span class="line">C          <span class="number">0.0000000000</span>        <span class="number">0.0000000000</span>       <span class="number">-0.5265526741</span></span><br><span class="line">O          <span class="number">0.0000000000</span>        <span class="number">0.0000000000</span>        <span class="number">0.6555124750</span></span><br><span class="line">H          <span class="number">0.0000000000</span>       <span class="number">-0.9325664988</span>       <span class="number">-1.1133424527</span></span><br><span class="line">H          <span class="number">0.0000000000</span>        <span class="number">0.9325664988</span>       <span class="number">-1.1133424527</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Z矩阵输入"><a href="#Z矩阵输入" class="headerlink" title="Z矩阵输入"></a>Z矩阵输入</h3><ul>
+<li>坐标默认为玻尔 bohr，可以使用<code>angstrom</code>关键词改变</li>
+</ul>
+<figure class="highlight mathematica"><table><tr><td class="code"><pre><span class="line">angstrom</span><br><span class="line">geometry=&#123;</span><br><span class="line"><span class="keyword">C</span></span><br><span class="line"><span class="keyword">O</span>   <span class="keyword">C</span>  <span class="number">1.182</span></span><br><span class="line">H1  <span class="keyword">C</span>  <span class="number">1.102</span>  <span class="keyword">O</span>  <span class="number">122.1789</span></span><br><span class="line">H2  <span class="keyword">C</span>  <span class="number">1.102</span>  <span class="keyword">O</span>  <span class="number">122.1789</span>  H1  <span class="number">180</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="对称性"><a href="#对称性" class="headerlink" title="对称性"></a>对称性</h1>]]></content>
+      <categories>
+        <category>molpro</category>
+      </categories>
+      <tags>
+        <tag>输入文件</tag>
       </tags>
   </entry>
   <entry>
@@ -925,148 +1102,6 @@
       <tags>
         <tag>hexo</tag>
         <tag>git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>molpro输入文件</title>
-    <url>/2020/01/17/molpro1/</url>
-    <content><![CDATA[<h1 id="运行molpro"><a href="#运行molpro" class="headerlink" title="运行molpro"></a>运行molpro</h1><h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>在UNIX系统中，MOLPRO通过unix命令molpro访问：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">molpro</span> <span class="selector-attr">[options]</span> <span class="selector-attr">[datafile]</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><p><code>datafile</code>：输入文件，可以取任何名字，但是要避免使用.out作为后缀，一般用.inp。unix中出现在molpro输入文件中的文件名总是转化为小写。</p>
-</li>
-<li><p>options：大部分选项都有合适的系统默认值，但是也可以在命令行中、环境变量MOLPRO OPTIONS中或文件./molpro.rc，$HOME/.molprorc，和library文件目录下的tuning.rc中（优先级递减）：</p>
-<ul>
-<li><p><code>-o [outfile]</code> ：自定义输出名</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">molpro</span> <span class="selector-tag">-o</span> <span class="selector-tag">water</span><span class="selector-class">.output</span> <span class="selector-tag">h2o</span><span class="selector-class">.inp</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>-d [directory]</code> ：定义放置临时文件的目录</p>
-</li>
-<li><p><code>-s</code>：不保存旧的输出文件，只是覆盖。</p>
-</li>
-<li><p><code>-m n_scale</code>：指定分配给程序的工作内存，单位是word=8byte</p>
-<ul>
-<li><code>k</code>，<code>m</code>，<code>g</code>分别为10<sup>3</sup>，10<sup>6</sup>，10<sup>9</sup></li>
-<li><code>K</code>，<code>M</code>，<code>G</code>分别为2<sup>10</sup>，2<sup>20</sup>，2<sup>30</sup></li>
-</ul>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">#需要<span class="number">1000</span>word的内存</span><br><span class="line">-m <span class="number">1</span>k</span><br><span class="line">#需要<span class="number">1024</span>word的内存</span><br><span class="line">-M <span class="number">1</span>K</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>用于并行执行的选项（在使用串行MOLPRO时，将忽略这些选项）：</p>
-<ul>
-<li><p><code>-n</code>：定义设置的并行进程个数</p>
-<p>并行内存计算eg. 为具有4个并行计算过程的作业指定100×10<sup>6</sup>个word：100×10<sup>6</sup>×8×4=3.2×10<sup>9</sup>byte</p>
-</li>
-<li><p><code>-N</code> ：等指定工作节点的主机名</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="输出文件"><a href="#输出文件" class="headerlink" title="输出文件"></a>输出文件</h2><h3 id="out文件"><a href="#out文件" class="headerlink" title="out文件"></a>out文件</h3><ul>
-<li>执行结果会把输出写到一个名称输入文件截掉扩展名并加上<code>.out</code>产生的文件中。如果输出文件已经存在，防止覆盖文件，会把旧文件重命名为后缀为<code>.out_1</code>的文件中。如果命令行没有给出<code>datafile</code>，那么从标准输入读取数据。</li>
-</ul>
-<h3 id="punch文件"><a href="#punch文件" class="headerlink" title="punch文件"></a>punch文件</h3><p>punch文件是output文件的简易形式，它包含了最重要的数据和结果，例如几何结构，能量，偶极矩等。可以用独立的程序readpun处理，它用关键词选择特定的结果，并根据用户提供的格式产生排列好的表格。</p>
-<h3 id="xml文件"><a href="#xml文件" class="headerlink" title="xml文件"></a>xml文件</h3><p>除了生成.out文件外，还用. XML后缀创建结构化XML文件(实际上是.out文件的父文件)。这个文件可以用于结果的自动后处理，例如MolproView程序的图形化呈现。</p>
-<h3 id="9个二进制文件"><a href="#9个二进制文件" class="headerlink" title="9个二进制文件"></a>9个二进制文件</h3><ul>
-<li><p>程序通过它们的编号（1到9）可以简单地识别它们。</p>
-</li>
-<li><p>默认是临时文件，通常由程序动态分配，scratch文件用于存储MOLPRO所需的所有中间数据，用户通常根本不会看到这些文件。但是用FILE命令可以把计算出的数据作为轨道和能量保存到永久文件中，并在以后的阶段使用它们重启计算。</p>
-</li>
-<li><p>每个文件都是直接访问，字可寻址的（word addressable；1个字通常是64位），并且在任意长度的记录中组织起来。每个记录的名称、地址和长度都保存在文件开始的目录中。</p>
-</li>
-<li><p>文件类型：</p>
-<ul>
-<li>文件1：主文件，存有基组，几何结构，以及单电子和双电子积分。</li>
-<li>文件2：默认是转存文件，用于存储波函的信息，即：轨道，轨道能量，可选的CI矢量，以及密度矩阵。</li>
-<li>文件3：辅助文件，和文件2一起用于续算</li>
-<li>文件4~8：草稿文件空间，用来分类积分，存储转换的积分和CI矢量。这些文件通常无需存为永久文件。</li>
-</ul>
-<p>通常文件1和2（以及3）被声明为用于续算的永久文件（参见<code>FILE</code>）。文件2对于重新启动计算是必不可少的，而文件1上的积分可以重新启动，也可以重新计算。把波函信息存储在文件2中是非常有用的，因为对于每个新的结构，积分文件都会被改写，而一个计算中的轨道和CI因子可以用作下一个相近几何结构计算的初始猜测。</p>
-</li>
-</ul>
-<h1 id="输入文件格式"><a href="#输入文件格式" class="headerlink" title="输入文件格式"></a>输入文件格式</h1><h2 id="一般输入结构和规则"><a href="#一般输入结构和规则" class="headerlink" title="一般输入结构和规则"></a>一般输入结构和规则</h2><figure class="highlight erlang-repl"><table><tr><td class="code"><pre><span class="line">***,title			! 标题（可选）</span><br><span class="line">memory,<span class="number">4</span>,m 			! 内存指定（可选）</span><br><span class="line">file,<span class="number">1</span>,name.int 	! 命名永久的积分文件（可选）</span><br><span class="line">file,<span class="number">2</span>,name.wfu 	! 命名永久的波函文件（可选）</span><br><span class="line"></span><br><span class="line">gprint,options 		! 全局打印选项（可选）</span><br><span class="line">gthresh,options 	! 全局阈值（可选）</span><br><span class="line">gdirect[,options] 	! 全局直接积分选项（可选）</span><br><span class="line">gexpec,opnames 		! 单电子算符的全局定义（可选）</span><br><span class="line"></span><br><span class="line">basis=basisname 	! 基的定义。如果不出现，使用cc-pVDZ</span><br><span class="line">geometry=&#123;...&#125; 		! 结构定义。</span><br><span class="line"></span><br><span class="line">var1=value,var2=value,... 	! 设定结构和/或波函定义中的变量</span><br><span class="line"></span><br><span class="line">&#123;command,options 		! 程序或流程的名称</span><br><span class="line">directive,data,option 	! 命令的指令（可选）</span><br><span class="line">...</span><br><span class="line">&#125; 				! 结束命令区</span><br><span class="line">--- 			! 结束输入（可选）</span><br></pre></td></tr></table></figure>
-<ul>
-<li>输了memory卡应该是紧随标题的第一个以外，其他basis，geometry，gprint，gdirect，gthresh，gexpec，以及变量定义的顺序是任意的。</li>
-<li>可以在一个程序后调用其它几个程序。在程序的调用之间还可以重新定义基组和/或分子结构；程序将会自动确认是否需要重新计算积分。</li>
-</ul>
-<p>一般规则：</p>
-<ul>
-<li><code>,</code>移到下一个制表位，即用来划定输入范围。</li>
-<li><code>;</code>结束记录，开始一个新的记录。用分号隔开的基本命令单位称为卡（card）。一个给定的输入行可以包含多个有效命令（用；隔开），也可以只有一个。</li>
-<li><code>!</code>忽略该输入行后面的内容（用于注释）。</li>
-<li>内容不区分大小写，统一转换为大写处理。引号中的内容会被认为是字符串，不会进行大小写转换。</li>
-<li>整数后面加上<code>.</code>，程序只读取浮点数</li>
-</ul>
-<p>一般只占用一行的命令：</p>
-<ul>
-<li><code>***</code>总是第一个数据行，title可以任选，但是如果文件1用于续算，title必须总是相同。这个卡的作用是重新设置所有程序的计数器等。如果忽略<em>*</em>卡，title假定用默认值，全是空格。</li>
-<li><code>INCLUDE</code>包含其它的输入文件。使用<code>INCLUDE</code>可以打开辅助输入文件。如果遇到了<code>INCLUDE</code>命令，则打开新的输入文件并读取到结束，然后在第一个输入文件中继续INCLUDE卡之后的输入。<code>INCLUDE</code>也可以嵌套。</li>
-<li><code>FILE</code>指定已命名的文件</li>
-<li><code>TEXT</code>打印文本</li>
-<li><code>TITLE</code>定义运行的标题或表格的标题</li>
-<li><p><code>CON</code>指定轨道组态</p>
-</li>
-<li><p><code>---</code>结束文件（忽略之后的输入）</p>
-</li>
-</ul>
-<h2 id="memory卡"><a href="#memory卡" class="headerlink" title="memory卡"></a>memory卡</h2><figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">MEMORY,</span>n,scale<span class="comment">;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>与命令行中的<code>-m</code>不同，scale中<code>k</code>，<code>m</code>，<code>g</code>不区分大小写，统一按10<sup>3</sup>，10<sup>6</sup>，10<sup>9</sup></li>
-<li>优先于命令行中的<code>-m</code>。两者都省略的话，程序将使用默认的内存大小8mw (64 Mb)。</li>
-</ul>
-<p>MOLPRO可以根据用户的需要动态分配内存。因此不需要保存有不同内存大小的不同版本程序。所需要的内存大小取决于分子的大小、基组、分子的对称性和使用的方法，因此很难提前预测。大多数计算运行在16mw或更少，但在大的情况下，低对称性可能需要更多。一个比较好的选择是64MW（512MB），前提是系统有足够的内存。</p>
-<ul>
-<li>算到一半但是没有报错就停止了，可以将.sub文件中并行核数设大一些，比如24，再将molpro中的并行设置-n中的设置小一些。</li>
-</ul>
-<h2 id="file卡"><a href="#file卡" class="headerlink" title="file卡"></a>file卡</h2><p>对所有的永久文件，默认设置是RESTART。所有的临时文件在需要时通常自动分配。I/O缓存分配到动态内存的顶端，缓存的大小会减少可用的内存。因此MEMORY卡必须出现在第一个FILE卡之前。</p>
-<figure class="highlight fortran"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FILE</span>,<span class="keyword">file</span>,<span class="keyword">name</span>,[<span class="keyword">status</span>]</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>file</code>是逻辑MOLPRO文件序号(1-9)</li>
-<li><code>name</code>是文件名（将被转换成小写字母）</li>
-<li><code>status</code>可以是：<ul>
-<li><code>UNKNOWN</code>打开永久文件。如果存在，自动续算。这是默认的。</li>
-<li><code>OLD</code>作用同<code>UNKNOWN</code>。如果该文件不存在，不会发生错误。</li>
-<li><code>NEW</code> 打开永久文件。如果已经存在，则清除，不续算。</li>
-<li><code>ERASE</code> 作用同<code>NEW</code>。</li>
-<li><code>SCRATCH</code> 打开临时文件。如果已经存在，则清除，不续算。任务完成后，文件不<br>再存在。</li>
-<li><code>DELETE</code> 作用同<code>SCRATCH</code>。</li>
-</ul>
-</li>
-</ul>
-<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><ul>
-<li><p>分配永久文件1的名称H2O.INT，如果存在会使用它进行续算。比如第一个输入中只计算了hf和ccsd(t)，使用了该指令，后续计算casscf和MRCI的时候，指定了相同的文件，，MOLPRO将自动恢复保存在给定文件中的所有数据，积分和轨道将被重新启动。</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">FILE</span>,<span class="number">1</span>,H<span class="number">2</span>O.INT</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>分配永久文件2的名称H2O.WFU，即禁用自动重启机制</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">FILE</span>,<span class="number">2</span>,H<span class="number">2</span>O.WFU,NEW</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在大多数情况下，文件1可能非常大(它包含两个电子的积分)，而重新计算积分的成本可能只占总时间的一小部分，因此可以只在输入中只定义文件2，积分会自动重新计算。</p>
-</li>
-</ul>
-<h2 id="geometry卡"><a href="#geometry卡" class="headerlink" title="geometry卡"></a>geometry卡</h2><p>定义分子结构可以用标准Z矩阵形式，或XYZ形式。GEOMETRY必须出现在其它修改分子结构的命令之后。</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="string">[SYMMETRY, options ]</span></span><br><span class="line"><span class="string">[ORIENT, options ]</span> </span><br><span class="line"><span class="string">[ANGSTROM ]</span> </span><br><span class="line"><span class="string">[BOHR]</span></span><br><span class="line">geometry=&#123; </span><br><span class="line">原子说明 </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>symmetry</code>选项<ul>
-<li><code>SYMMETRY,NOSYM</code>禁止使用对称性，也可以只用<code>NOSYM</code></li>
-<li><code>SYMMETRY,AUTO</code>允许使用对称性</li>
-</ul>
-</li>
-</ul>
-<h3 id="xyz输入"><a href="#xyz输入" class="headerlink" title="xyz输入"></a>xyz输入</h3><ul>
-<li>第一行是原子个数，第二行是任意的标题，前两行可以省略。坐标中单位默认为Å。</li>
-<li>元素符号后面可以加序号，用于对于同一类型不同原子使用不同的基组。</li>
-</ul>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">geometry=&#123;</span><br><span class="line">   <span class="number">4</span></span><br><span class="line">  FORMALDEHYDE</span><br><span class="line">C          <span class="number">0.0000000000</span>        <span class="number">0.0000000000</span>       <span class="number">-0.5265526741</span></span><br><span class="line">O          <span class="number">0.0000000000</span>        <span class="number">0.0000000000</span>        <span class="number">0.6555124750</span></span><br><span class="line">H          <span class="number">0.0000000000</span>       <span class="number">-0.9325664988</span>       <span class="number">-1.1133424527</span></span><br><span class="line">H          <span class="number">0.0000000000</span>        <span class="number">0.9325664988</span>       <span class="number">-1.1133424527</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Z矩阵输入"><a href="#Z矩阵输入" class="headerlink" title="Z矩阵输入"></a>Z矩阵输入</h3><ul>
-<li>坐标默认为玻尔 bohr，可以使用<code>angstrom</code>关键词改变</li>
-</ul>
-<figure class="highlight mathematica"><table><tr><td class="code"><pre><span class="line">angstrom</span><br><span class="line">geometry=&#123;</span><br><span class="line"><span class="keyword">C</span></span><br><span class="line"><span class="keyword">O</span>   <span class="keyword">C</span>  <span class="number">1.182</span></span><br><span class="line">H1  <span class="keyword">C</span>  <span class="number">1.102</span>  <span class="keyword">O</span>  <span class="number">122.1789</span></span><br><span class="line">H2  <span class="keyword">C</span>  <span class="number">1.102</span>  <span class="keyword">O</span>  <span class="number">122.1789</span>  H1  <span class="number">180</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>molpro</category>
-      </categories>
-      <tags>
-        <tag>输入文件</tag>
       </tags>
   </entry>
 </search>
