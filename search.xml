@@ -205,46 +205,6 @@
       </tags>
   </entry>
   <entry>
-    <title>molpro的HF计算</title>
-    <url>/2019/11/16/molpro%E7%9A%84HF%E8%AE%A1%E7%AE%97/</url>
-    <content><![CDATA[<h1 id="调用方法"><a href="#调用方法" class="headerlink" title="调用方法"></a>调用方法</h1><ul>
-<li><code>HF</code>或<code>RHF</code>，自旋限制Hartree-Fock程序，开壳层和比可曾都可以，或者用<code>HF-SCF</code>、<code>RHF-SCF</code>也可以。</li>
-<li><code>UHF</code>或<code>UHF-SCF</code>，自旋非限制Hartree-Fock程序</li>
-</ul>
-<h1 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h1><h2 id="定义波函数"><a href="#定义波函数" class="headerlink" title="定义波函数"></a>定义波函数</h2><figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">WF,</span>elec,sym,spin</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p><code>OCC</code>定义每个对称性的占据轨道数，轨道的总数必须等于(总电子数+spin)/2</p>
-</li>
-<li><p><code>CLOSED</code>定义闭壳层轨道，可用于开壳层计算，指定每个对称性中闭壳层轨道的数量。</p>
-</li>
-<li><p><code>OPEN</code>指定开壳层轨道，即指定单占据轨道，单占据轨道的数量必须等于spin，其对称性乘<br>积必须等于sym，如果<code>orbi.sym</code>为负，这个轨道将用负自旋占据（仅允许在UHF中）。</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">OPEN</span>,<span class="selector-tag">orb1</span><span class="selector-class">.sym1</span>,<span class="selector-tag">orb</span><span class="selector-class">.sym2</span>,..<span class="selector-class">.orbn</span><span class="selector-class">.symn</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>O<sub>2</sub></p>
-<ul>
-<li><p>轨道占据为$1\sigma<em>g^21\sigma_u^22\sigma_g^22\sigma_u^23\sigma_g^21\pi</em>{u,x}^21\pi<em>{u,y}^21\pi</em>{g,x}^11\pi_{g,y}^1$</p>
-</li>
-<li><p>$\sigma<em>g$，$\pi</em>{u,x}$，$\pi<em>{u,y}，$$\sigma_u$，$\pi</em>{g,x}$，$\pi<em>{g,y}$的对称性分别对应于$D</em>{2h}$的1，2，3，5，6，7，则<code>OCC</code>中为<code>3,1,1,,2,1,1</code></p>
-</li>
-<li><p>$\pi<em>{g,x}$，$\pi</em>{g,y}$相乘为4（$B<em>{2g}\times B</em>{3g}=B_{1g}$），<code>wf</code>的对称性是4</p>
-</li>
-<li><p>$\pi<em>{u,x}$，$\pi</em>{u,y}$相乘也为4，所以需要用<code>OPEN</code>进一步明确开壳层的轨道</p>
-</li>
-<li><p>输入文件为：</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">&#123;hf</span><br><span class="line">wf,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span></span><br><span class="line">occ,<span class="number">3</span>,<span class="number">1</span>,<span class="number">1</span>,,<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span></span><br><span class="line">open,<span class="number">1.6</span>,<span class="number">1.7</span>&#125; </span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>molpro</category>
-      </categories>
-      <tags>
-        <tag>HF</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux命令</title>
     <url>/2019/09/25/Linux%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h1 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h1><h2 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h2><p>Change mode 修改文件或目录的权限</p>
@@ -643,6 +603,46 @@
       </categories>
       <tags>
         <tag>输入文件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>molpro的HF计算</title>
+    <url>/2019/11/16/molpro%E7%9A%84HF%E8%AE%A1%E7%AE%97/</url>
+    <content><![CDATA[<h1 id="调用方法"><a href="#调用方法" class="headerlink" title="调用方法"></a>调用方法</h1><ul>
+<li><code>HF</code>或<code>RHF</code>，自旋限制Hartree-Fock程序，开壳层和比可曾都可以，或者用<code>HF-SCF</code>、<code>RHF-SCF</code>也可以。</li>
+<li><code>UHF</code>或<code>UHF-SCF</code>，自旋非限制Hartree-Fock程序</li>
+</ul>
+<h1 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h1><h2 id="定义波函数"><a href="#定义波函数" class="headerlink" title="定义波函数"></a>定义波函数</h2><figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">WF,</span>elec,sym,spin</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>OCC</code>定义每个对称性的占据轨道数，轨道的总数必须等于(总电子数+spin)/2</p>
+</li>
+<li><p><code>CLOSED</code>定义闭壳层轨道，可用于开壳层计算，指定每个对称性中闭壳层轨道的数量。</p>
+</li>
+<li><p><code>OPEN</code>指定开壳层轨道，即指定单占据轨道，单占据轨道的数量必须等于spin，其对称性乘<br>积必须等于sym，如果<code>orbi.sym</code>为负，这个轨道将用负自旋占据（仅允许在UHF中）。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">OPEN</span>,<span class="selector-tag">orb1</span><span class="selector-class">.sym1</span>,<span class="selector-tag">orb</span><span class="selector-class">.sym2</span>,..<span class="selector-class">.orbn</span><span class="selector-class">.symn</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>O<sub>2</sub></p>
+<ul>
+<li><p>轨道占据为$1\sigma<em>g^21\sigma_u^22\sigma_g^22\sigma_u^23\sigma_g^21\pi</em>{u,x}^21\pi<em>{u,y}^21\pi</em>{g,x}^11\pi_{g,y}^1$</p>
+</li>
+<li><p>$\sigma<em>g$，$\pi</em>{u,x}$，$\pi<em>{u,y}，$$\sigma_u$，$\pi</em>{g,x}$，$\pi<em>{g,y}$的对称性分别对应于$D</em>{2h}$的1，2，3，5，6，7，则<code>OCC</code>中为<code>3,1,1,,2,1,1</code></p>
+</li>
+<li><p>$\pi<em>{g,x}$，$\pi</em>{g,y}$相乘为4（$B<em>{2g}\times B</em>{3g}=B_{1g}$），<code>wf</code>的对称性是4</p>
+</li>
+<li><p>$\pi<em>{u,x}$，$\pi</em>{u,y}$相乘也为4，所以需要用<code>OPEN</code>进一步明确开壳层的轨道</p>
+</li>
+<li><p>输入文件为：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">&#123;hf</span><br><span class="line">wf,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span></span><br><span class="line">occ,<span class="number">3</span>,<span class="number">1</span>,<span class="number">1</span>,,<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span></span><br><span class="line">open,<span class="number">1.6</span>,<span class="number">1.7</span>&#125; </span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>molpro</category>
+      </categories>
+      <tags>
+        <tag>HF</tag>
       </tags>
   </entry>
   <entry>
