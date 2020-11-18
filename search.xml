@@ -469,14 +469,23 @@
 </ul>
 <h3 id="put输出其他格式"><a href="#put输出其他格式" class="headerlink" title="put输出其他格式"></a>put输出其他格式</h3><figure class="highlight fortran"><table><tr><td class="code"><pre><span class="line">PUT,style,<span class="keyword">file</span>,<span class="keyword">status</span>,info</span><br></pre></td></tr></table></figure>
 <ul>
-<li><code>style</code>：<ul>
-<li><code>GAUSSIAN</code>：写一个完整的GAUSSIAN输入文件，默认为<code># sp</code>计算</li>
-<li><code>XYZ</code>：输出xyz文件</li>
-<li><code>XYZGRAD</code>：包含能量梯度的XYZ文件（列依次是：x，y，z，charge，gx，gy，gz，梯度为-1*eV/A）</li>
-<li><code>CRD</code>：坐标将用CHARMm CRD格式书写</li>
-<li><code>MOLDEN</code>：将创建用于MOLDEN可视化程序的接口文件</li>
-<li><code>IRSPEC</code>：gnuplot输入文件，该文件可用于绘制IR光谱</li>
-<li>忽略则写入当前结构的Z矩阵，可能的话还写入梯度。</li>
+<li><p><code>style</code>：</p>
+<ul>
+<li><p><code>GAUSSIAN</code>：写一个完整的GAUSSIAN输入文件，默认为<code># sp</code>计算</p>
+</li>
+<li><p><code>XYZ</code>：输出xyz文件</p>
+</li>
+<li><p><code>XYZGRAD</code>：包含能量梯度的XYZ文件（列依次是：x，y，z，charge，gx，gy，gz，梯度为-1*eV/A）</p>
+</li>
+<li><p><code>CRD</code>：坐标将用CHARMm CRD格式书写</p>
+</li>
+<li><p><code>MOLDEN</code>：将创建用于MOLDEN可视化程序的接口文件</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">put</span>,molden,h<span class="number">2</span>o.molden;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>IRSPEC</code>：gnuplot输入文件，该文件可用于绘制IR光谱</p>
+</li>
+<li><p>忽略则写入当前结构的Z矩阵，可能的话还写入梯度。</p>
+</li>
 </ul>
 </li>
 <li>file定义写入数据的文件名；如果为空，数据将写入到输出流中。如果忽略status或设置为NEW，那么文件中所有的旧内容都被清除；否则对文件追加。</li>
