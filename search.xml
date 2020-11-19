@@ -794,7 +794,7 @@
 </ul>
 <p><code>OCC</code>，<code>CORE</code>，和<code>CLOSED</code>命令一般在每个有关的程序模块中都是必须的；但是程序会记住最近一次使用的值，因此如果不改变前面的轨道空间值的话，这些命令可以忽略。这一信息也保存在续算中。</p>
 <h2 id="含义"><a href="#含义" class="headerlink" title="含义"></a>含义</h2><ul>
-<li><code>OCC</code>：<code>mi</code>是不可约表示i的占据轨道数（包括芯轨道/冻结轨道和闭壳层轨道）</li>
+<li><code>OCC</code>：<code>mi</code>是不可约表示i的占据轨道数（包括<code>CORE</code>/<code>FROZEN</code>轨道和<code>CLOSED</code>轨道）</li>
 <li><code>CORE</code>：芯轨道数</li>
 <li><code>CLOSED</code>：<code>cli</code>闭壳层轨道数（包括芯轨道）</li>
 <li><code>FROZEN</code>只能用于MCSCF程序，表示不做优化的冻芯轨道</li>
@@ -881,7 +881,7 @@
 </div>
 <p>当电子态为$\Sigma$时：</p>
 <ul>
-<li>波函数关于键轴的平面为对称需要用$+$表示，反对称用$-$表示。简单判断方法是看$\Lambda$的加合中有几个$-$，偶数个就为$+$，反之为$-$</li>
+<li>波函数关于键轴的平面（σ<sub>xz</sub>）为对称需要用$+$表示，反对称用$-$表示。<del>简单判断方法是看$\Lambda$的加合中有几个$-$，偶数个就为$+$，反之为$-$</del></li>
 <li>对于同核双原子分子，如果关于对称中心$i$对称用$g$，反对称用$u$表示。</li>
 </ul>
 <p><strong>例子：$\phi^1\delta^1\pi^1$</strong></p>
@@ -949,6 +949,8 @@
 </tbody>
 </table>
 </div>
+<p>例子：O<sub>2</sub></p>
+<p><img src="/1.png" alt=""></p>
 <h1 id="2S-1-Lambda-Omega-中-Omega-的确定"><a href="#2S-1-Lambda-Omega-中-Omega-的确定" class="headerlink" title="$^{2S+1}\Lambda_\Omega$中$\Omega$的确定"></a>$^{2S+1}\Lambda_\Omega$中$\Omega$的确定</h1><p>$\Omega$为$\pm{(S+\Lambda)}$，$\pm{(S+\Lambda-1)}$……一共$2(S+\Lambda)+1$项</p>
 <p>例子：$^4H$中$S+\Lambda=\frac{3}{2}+5=\frac{13}{2}$，则$\Omega$为$\pm\frac{13}{2}$，$\pm\frac{11}{2}$，$\pm\frac{9}{2}$，$\pm\frac{7}{2}$，$\pm\frac{5}{2}$，$\pm\frac{3}{2}$，$\pm\frac{1}{2}$一共14项。</p>
 ]]></content>
@@ -1381,6 +1383,116 @@
       <tags>
         <tag>hexo</tag>
         <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>molpro的多组态计算</title>
+    <url>/2019/11/17/molpro%E7%9A%84%E5%A4%9A%E7%BB%84%E6%80%81%E8%AE%A1%E7%AE%97/</url>
+    <content><![CDATA[<h1 id="全活性空间自洽场CASSCF"><a href="#全活性空间自洽场CASSCF" class="headerlink" title="全活性空间自洽场CASSCF"></a>全活性空间自洽场CASSCF</h1><figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">casscf</span></span><br></pre></td></tr></table></figure>
+<p>全活性空间自洽场<code>CASSCF</code>，此命令的别名是<code>mcscf</code>或<code>multi</code>。这个命令后面可选地跟着定义波函数的进一步输入。</p>
+<h2 id="轨道子空间的定义"><a href="#轨道子空间的定义" class="headerlink" title="轨道子空间的定义"></a>轨道子空间的定义</h2><p>在一个CASSCF波函数中，已占据轨道空间被划分为一组非活性或闭壳层轨道和一组活性轨道：</p>
+<ul>
+<li>所有的非活性轨道在每个Slater行列式中都被双占据。</li>
+<li>活性轨道有不同的占据，所有可能的Slater行列式(或conﬁguration state functions，CSFs)都被考虑在内，通过把N<sub>act</sub>（=N<sub>el</sub>-2m<sub>closed</sub>）个电子以各种可能的方式分布在活性轨道中。（在m<sub>closed</sub>是封闭外壳的数量(不活跃)轨道，N<sub>el</sub>是电子的总数）因此，它对应于活性空间中的一个完整CI。</li>
+</ul>
+<p>具体定义方法</p>
+<ul>
+<li><code>occ,m1,m2……m8;</code>定义每个对称性中的占据轨道：<ul>
+<li>如果没有给定，默认来自最近的MCSCF计算。如果没有，则使用最小的价轨道集的轨道，即使用全部价轨道空间。</li>
+</ul>
+</li>
+<li><p><code>FROZEN,n1,n2,...,record.file;</code>定义每个对称性中的冻芯轨道，这些轨道在全部组态中都是双占据的，并且不会被优化。</p>
+<ul>
+<li><code>record.file</code>是冻芯轨道的记录名称；如果没有提供，来自<code>START</code>卡的<code>orb</code>。<code>record.file</code>可以在最后一个非零<code>ni</code>之后的任何位置指定。如果轨道初始猜测来自邻近的几何结构，它必须给出，接下来要定义在当前结构计算的SCF轨道。如果使用当前波函进行随后的梯度计算，那么record.file 是强制的，而且必须指定当前结构的闭壳层SCF轨道。注意，<code>record</code>必须大于2000。</li>
+<li>如果没有给定，默认来自最近的MCSCF计算。如果没有则不做轨道冻结。</li>
+<li>如果给定为<code>FROZEN,record.file</code>使用对应原子内壳层的轨道冻结，即Li-Ne是1s，Na-Ar是1s2s2p等</li>
+<li>没有任何说明的<code>FROZEN</code>卡把冻芯轨道数重新设置为0。</li>
+</ul>
+</li>
+<li><p><code>closed,n1,n2,……n8;</code>定义每个对称性中非活性的轨道，包含所有的<code>FROZEN</code>轨道，它们在所有的CSF中都是双占据的；但是与<code>FROZEN</code>轨道相反，这些轨道是完全优化的。</p>
+<ul>
+<li>如果忽略<code>CLOSED</code>卡，那么默认数据来自最近的MCSCF计算，如果没有则使用原子内壳层。</li>
+<li>m<sub>i</sub>≥n<sub>i</sub>，每一个不可约表示中的<strong>活性轨道数目为m<sub>i</sub>-n<sub>i</sub></strong></li>
+</ul>
+</li>
+<li><code>FREEZE,orb.sym;</code>指定的轨道将不被优化，仍保持和初始猜测相同<ul>
+<li><code>orb.sym</code> 应当是一个活性或闭壳层轨道，如果是<code>FROZEN</code>冻芯轨道，这个卡不起作用。</li>
+</ul>
+</li>
+</ul>
+<h2 id="定义被优化的态"><a href="#定义被优化的态" class="headerlink" title="定义被优化的态"></a>定义被优化的态</h2><p>每个需要优化的态的对称性用一个WF卡定义：</p>
+<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">WF,</span>elec,sym,spin</span><br></pre></td></tr></table></figure>
+<ul>
+<li>之后可以选择接<code>STATE</code>，<code>WEIGHT</code>，<code>RESTRICT</code>，<code>SELECT</code>，<code>CON</code>，和/或<code>PSPACE</code>卡来定义这个WF卡 ，这些卡总是指前一个WF卡定义的态对称性，但是各个卡之间的顺序是任意的。</li>
+</ul>
+<h2 id="态平均MCSCF"><a href="#态平均MCSCF" class="headerlink" title="态平均MCSCF"></a>态平均MCSCF</h2><p>为了计算激发态，通常最好对所考虑的所有状态的平均能量进行优化。这避免了优化过程中的根本问题，并为所有状态生成一组折衷轨道。</p>
+<ul>
+<li><p>通过<code>STATE,nstate;</code>定义当前对称性中态的数量，默认所有的态都用权重1来优化，它必须直接跟随在wf指令之后</p>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">wf,<span class="number">16</span>,<span class="number">1</span>,<span class="number">0</span>;<span class="section">state</span>,<span class="number">2</span> !optimize two states of symmetry <span class="number">1</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可以优化不同对称性的状态。在这种情况下，几个wf /state指令可以相互遵循：</p>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">wf,<span class="number">16</span>,<span class="number">1</span>,<span class="number">0</span>;<span class="section">state</span>,<span class="number">2</span> !optimize two states of symmetry <span class="number">1</span> </span><br><span class="line">wf,<span class="number">16</span>,<span class="number">2</span>,<span class="number">0</span>;<span class="section">state</span>,<span class="number">1</span> !optimize one states of symmetry <span class="number">2</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>WEIGHT,w(1),w(2),...,w(nstate);</code>定义态平均计算中的权重，<code>w(i)</code>是当前对称性第i个态的权重。所有的权重默认都是1.0。</p>
+<ul>
+<li><p>如果只想优化特定态对称性的第二个态，可以指定</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">STATE,<span class="number">2</span>;WEIGHT,<span class="number">0</span>,<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>但是注意，这可能会导致根的跳跃问题。</p>
+</li>
+<li><p>优化对称性1的两个态，第一个权重0.2，第二个0.8</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">wf</span>,<span class="number">16</span>,<span class="number">1</span>,<span class="number">0</span>;state,<span class="number">2</span>;weight,<span class="number">0</span>.<span class="number">2</span>,<span class="number">0</span>.<span class="number">8</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>对O<sub>2</sub>的状态平均计算，其中将价态$^3\Sigma_g^-$，$^1\Delta_g$放在一起处理：（在本例中，对具有不同自旋多重性的状态进行平均只对CASSCF可行，而对限制更严格的RASSCF或MCSCF波函数则不可行。）</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">***,O2</span></span><br><span class="line"><span class="string">print,basis,orbitals</span></span><br><span class="line"><span class="string">geometry=&#123;</span>                 </span><br><span class="line"><span class="string">o1</span></span><br><span class="line"><span class="string">o2,o1,r</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">r=2.2</span> <span class="string">bohr</span>                 </span><br><span class="line"><span class="string">basis=vtz</span></span><br><span class="line">&#123;<span class="string">hf</span></span><br><span class="line"><span class="string">wf</span>,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span></span><br><span class="line"><span class="string">occ</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">1</span>,,<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span></span><br><span class="line"><span class="string">open</span>,<span class="number">1.6</span>,<span class="number">1.7</span>&#125;</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">casscf</span>                    <span class="type">!invoke</span> <span class="string">CASSCF</span> <span class="string">program</span></span><br><span class="line"><span class="string">wf</span>,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span>                  <span class="type">!triplet</span> <span class="string">Sigma-</span></span><br><span class="line"><span class="string">wf</span>,<span class="number">16</span>,<span class="number">4</span>,<span class="number">0</span>                  <span class="type">!singlet</span> <span class="string">delta</span> <span class="string">(xy)</span></span><br><span class="line"><span class="string">wf</span>,<span class="number">16</span>,<span class="number">1</span>,<span class="number">0</span>&#125;                 <span class="type">!singlet</span> <span class="string">delta</span> <span class="string">(xx</span> <span class="bullet">-</span> <span class="string">yy)</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>如果全部选择默认，那么甲醛的CASSCF计算最简单的输入是：</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">***,formaldehyde</span></span><br><span class="line"><span class="meta">print,orbitals,civector</span>   <span class="string">! 打印轨道和CI矢量</span></span><br><span class="line">                          </span><br><span class="line"><span class="attr">angstrom</span></span><br><span class="line"><span class="attr">geometry</span>=<span class="string">&#123;   </span></span><br><span class="line"><span class="attr">C</span></span><br><span class="line"><span class="attr">O</span>  <span class="string">, C , rco</span></span><br><span class="line"><span class="attr">H1</span> <span class="string">, C , rch , O , hco</span></span><br><span class="line"><span class="attr">H2</span> <span class="string">, C , rch , O , hco , H1 , 180</span></span><br><span class="line"><span class="attr">&#125;</span></span><br><span class="line"><span class="attr">rco</span>=<span class="string">1.182 Ang</span></span><br><span class="line"><span class="attr">rch</span>=<span class="string">1.102 Ang</span></span><br><span class="line"><span class="attr">hco</span>=<span class="string">122.1789 Degree</span></span><br><span class="line"></span><br><span class="line"><span class="attr">basis</span>=<span class="string">vdz</span></span><br><span class="line"><span class="attr">hf</span>                     <span class="string">!执行HF计算</span></span><br><span class="line"><span class="attr">casscf</span>                 <span class="string">!实行CASSCF计算，用HF轨道作为初猜</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>默认下碳和氧的1s轨道是非活性的，而碳和氧的2s、2p和氢的1s轨道是活性的，因此和以下定义相同：</p>
+<figure class="highlight maxima"><table><tr><td class="code"><pre><span class="line">&#123;casscf</span><br><span class="line">closed,<span class="number">2</span>               !<span class="number">2</span> inactive orbitals <span class="keyword">in</span> Symmetry <span class="number">1</span> (a1)</span><br><span class="line">occ,<span class="number">7</span>,<span class="number">2</span>,<span class="number">3</span>              !7a1, <span class="number">2b1</span>, <span class="number">3b2</span> occupied orbitals</span><br><span class="line">wf,<span class="number">16</span>,<span class="number">1</span>,<span class="number">0</span>&#125;             !<span class="number">16</span> electrons, Symmetry <span class="number">1</span> (A1), singlet</span><br></pre></td></tr></table></figure>
+<ul>
+<li>有5个a<sub>1</sub>，2个b<sub>1</sub>，3个b<sub>2</sub>活性轨道。这产生了3644个CSFs或11148个Slater行列式。注意，wf指令必须在<code>occ</code>和<code>closed</code>指令之后给出。</li>
+</ul>
+</li>
+<li><p>如果使氧的2s轨道变成非活性，其膨胀时间就会缩短，只生成了1408个CSFs或4036个Slater行列式。</p>
+<figure class="highlight maxima"><table><tr><td class="code"><pre><span class="line">&#123;casscf</span><br><span class="line">closed,<span class="number">3</span>               !<span class="number">3</span> inactive orbitals <span class="keyword">in</span> Symmetry <span class="number">1</span> (a1)</span><br><span class="line">occ,<span class="number">7</span>,<span class="number">2</span>,<span class="number">3</span>              !7a1, <span class="number">2b1</span>, <span class="number">3b2</span> occupied orbitals</span><br><span class="line">wf,<span class="number">16</span>,<span class="number">1</span>,<span class="number">0</span>&#125;             !<span class="number">16</span> electrons, Symmetry <span class="number">1</span> (A1), singlet</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="受限活性空间自洽场RASSCF"><a href="#受限活性空间自洽场RASSCF" class="headerlink" title="受限活性空间自洽场RASSCF"></a>受限活性空间自洽场RASSCF</h1><h2 id="占据限制"><a href="#占据限制" class="headerlink" title="占据限制"></a>占据限制</h2><p>由于CSFs或Slater行列式的数量以及计算成本会随着活动轨道的数量而迅速增加，所以最好使用更小的CSFs集合。选择的一种方法是限制某些子空间中的电子数。例如，可以只允许某些活跃轨道的强占据部分的单激发态和双激发态，或者将另一个活跃轨道的电子数限制在最多2个。通常，可以使用<code>restrict</code>指令来定义这些限制：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">restrict</span>,nmin,nmax,orb<span class="number">1</span>，orb<span class="number">2</span>，....，orbn;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>只有在指定轨道orb1，orb2，….，orbn中包含电子数在<code>nmin</code>和<code>nmax</code> 之间的组态，才能包含在波函中。。轨道按照<code>number.sym</code>的形式定义。</li>
+<li>如果<code>nmin</code>和<code>nmax</code>为负，那么指定轨道中有<code>abs(nmin)</code>和<code>abs(nmax)</code>个电子的组态将被删除。比如用来忽略单激发组态。</li>
+<li>可以连续用几个<code>RESTRICT</code>卡</li>
+<li>在第一个<code>WF</code>卡之前给出的<code>RESTRICT</code>卡是全局的，用于所有的态对称性。</li>
+</ul>
+<h2 id="指定轨道组态"><a href="#指定轨道组态" class="headerlink" title="指定轨道组态"></a>指定轨道组态</h2><p>还可以使用任意选择的组态空间执行MCSCF。唯一的限制是包含同一个占据轨道中所有不同自旋耦合的csf。从<code>select</code>指令开始，有两种选择组态的方法：</p>
+<ul>
+<li><p>从先前带有阈值的计算中选择：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">SELECT,<span class="built_in">ref</span>1,<span class="built_in">ref</span>2,<span class="built_in">ref</span>thr,<span class="built_in">ref</span>stat,mxshrf;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在输入中明确定义，以关键字<code>con</code>开头的一行给出每个轨道组态：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">SELECT</span></span><br><span class="line"><span class="attribute">CON</span>,n<span class="number">1</span>,n<span class="number">2</span>,n<span class="number">3</span>,n<span class="number">4</span>,…</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>n1，n2等是活性轨道的占据数（0，1，或2），比如对于<code>OCC,5,2,2;CLOSED,2,1,1;</code>，n1是轨道3.1的占据数，n2是轨道4.1的占据数，n3，n4，n5是轨道5.1，2.2，2.3的占据数。</p>
+</li>
+<li><p>例：BH分子</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">OCC,<span class="number">4</span>,<span class="number">1</span>,<span class="number">1</span>;             ! 四个σ，一个π</span><br><span class="line">FROZEN,<span class="number">1</span>;              ! 第一个σ双占且冻结</span><br><span class="line">WF,<span class="number">6</span>,<span class="number">1</span>;                ! <span class="number">6</span>个电子，单重态</span><br><span class="line">SELECT                 ! 触发组态输入</span><br><span class="line">CON,<span class="number">2</span>,<span class="number">2</span>                ! <span class="number">2</span>sigma**<span class="number">2</span>, <span class="number">3</span>sigma**<span class="number">2</span></span><br><span class="line">CON,<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span>              ! <span class="number">2</span>sigma**<span class="number">2</span>, <span class="number">3</span>sigma, <span class="number">4</span>sigma</span><br><span class="line">CON,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>              ! <span class="number">2</span>sigma**<span class="number">2</span>, <span class="number">4</span>sigma**<span class="number">2</span></span><br><span class="line">CON,<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">2</span>            ! <span class="number">2</span>sigma**<span class="number">2</span>, <span class="number">1</span>pi_x**<span class="number">2</span></span><br><span class="line">CON,<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">2</span>          ! <span class="number">2</span>sigma**<span class="number">2</span>, <span class="number">1</span>pi_y**<span class="number">2</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>molpro</category>
+      </categories>
+      <tags>
+        <tag>多组态</tag>
+        <tag>CASSCF</tag>
       </tags>
   </entry>
 </search>
