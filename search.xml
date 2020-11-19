@@ -926,7 +926,7 @@
 <td style="text-align:center">—↑</td>
 <td style="text-align:center">—↑</td>
 <td style="text-align:center">$3-2-1=0=\Sigma$</td>
-<td style="text-align:center">$+<em>-</em>-=+$</td>
+<td style="text-align:center"><script type="math/tex">+*-*-=+</script></td>
 <td style="text-align:center">$^4\Sigma^+$</td>
 </tr>
 <tr>
@@ -935,7 +935,7 @@
 <td style="text-align:center">↑—</td>
 <td style="text-align:center">↑—</td>
 <td style="text-align:center">$-3+2+1=0=\Sigma$</td>
-<td style="text-align:center">$-<em>+</em>+=-$</td>
+<td style="text-align:center"><script type="math/tex">-*+*+=-</script></td>
 <td style="text-align:center">$^4\Sigma^-$</td>
 </tr>
 <tr>
@@ -953,7 +953,7 @@
 <td style="text-align:center">↑—</td>
 <td style="text-align:center">↓—</td>
 <td style="text-align:center">$-3+2+1=0=\Sigma$</td>
-<td style="text-align:center">$-<em>+</em>-=+$</td>
+<td style="text-align:center"><script type="math/tex">-*+*-=+</script></td>
 <td style="text-align:center">$^2\Sigma^+$</td>
 </tr>
 <tr>
@@ -962,7 +962,7 @@
 <td style="text-align:center">↓—</td>
 <td style="text-align:center">↓—</td>
 <td style="text-align:center">$-3+2+1=0=\Sigma$</td>
-<td style="text-align:center">$-<em>-</em>-=-$</td>
+<td style="text-align:center"><script type="math/tex">-*-*-=-</script></td>
 <td style="text-align:center">$^2\Sigma^-$</td>
 </tr>
 </tbody>
@@ -1467,7 +1467,7 @@
 </li>
 </ul>
 </li>
-<li><p>对O<sub>2</sub>的状态平均计算，其中将价态$^3\Sigma_g^-$，$^1\Delta_g$放在一起处理：（在本例中，对具有不同自旋多重性的状态进行平均只对CASSCF可行，而对限制更严格的RASSCF或MCSCF波函数则不可行。）</p>
+<li><p>对O<sub>2</sub>的状态平均计算，其中将价态$^1\Sigma^+_g$，$^3\Sigma_g^-$，$^1\Delta_g$放在一起处理：（在本例中，对具有不同自旋多重性的状态进行平均只对CASSCF可行，而对限制更严格的RASSCF或MCSCF波函数则不可行。）</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">***,O2</span></span><br><span class="line"><span class="string">print,basis,orbitals</span></span><br><span class="line"><span class="string">geometry=&#123;</span>                 </span><br><span class="line"><span class="string">o1</span></span><br><span class="line"><span class="string">o2,o1,r</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">r=2.2</span> <span class="string">bohr</span>                 </span><br><span class="line"><span class="string">basis=vtz</span></span><br><span class="line">&#123;<span class="string">hf</span></span><br><span class="line"><span class="string">wf</span>,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span></span><br><span class="line"><span class="string">occ</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">1</span>,,<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span></span><br><span class="line"><span class="string">open</span>,<span class="number">1.6</span>,<span class="number">1.7</span>&#125;</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">casscf</span>                    <span class="type">!invoke</span> <span class="string">CASSCF</span> <span class="string">program</span></span><br><span class="line"><span class="string">wf</span>,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span>                  <span class="type">!triplet</span> <span class="string">Sigma-</span></span><br><span class="line"><span class="string">wf</span>,<span class="number">16</span>,<span class="number">4</span>,<span class="number">0</span>                  <span class="type">!singlet</span> <span class="string">delta</span> <span class="string">(xy)</span></span><br><span class="line"><span class="string">wf</span>,<span class="number">16</span>,<span class="number">1</span>,<span class="number">0</span>&#125;                 <span class="type">!singlet</span> <span class="string">delta</span> <span class="string">(xx</span> <span class="bullet">-</span> <span class="string">yy)</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
