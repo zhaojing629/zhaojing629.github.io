@@ -881,10 +881,13 @@
 </div>
 <p>当电子态为$\Sigma$时：</p>
 <ul>
-<li>波函数关于键轴的平面（σ<sub>xz</sub>）为对称需要用$+$表示，反对称用$-$表示。<del>简单判断方法是看$\Lambda$的加合中有几个$-$，偶数个就为$+$，反之为$-$</del></li>
+<li>波函数关于键轴的平面$σ_{xz}$为对称需要用$+$表示，反对称用$-$表示。<ul>
+<li>简单判断方法是简并轨道中有一个轨道是关于σ<sub>xz</sub>对称（假设为+$\lambda$），一个是关于σ<sub>yz</sub>（即关于σ<sub>xz</sub>反对称，假设为-$\lambda$）。规定占据并且+$\lambda$↑为+，改变一个因素乘负号，则+$\lambda$↓、-$\lambda$↑为-，-$\lambda$↓为正，然后多个$\lambda$相乘，最后得到正负号。</li>
+</ul>
+</li>
 <li>对于同核双原子分子，如果关于对称中心$i$对称用$g$，反对称用$u$表示。</li>
 </ul>
-<p><strong>例子：$\phi^1\delta^1\pi^1$</strong></p>
+<p><strong>例子：$\phi^1\delta^1\pi^1$</strong>（用——依次分别代表+$\lambda$和-$\lambda$）</p>
 <div class="table-container">
 <table>
 <thead>
@@ -894,6 +897,7 @@
 <th style="text-align:center">$\delta^1$</th>
 <th style="text-align:center">$\pi^1$</th>
 <th style="text-align:center">$\Lambda$</th>
+<th style="text-align:center">$σ_{xz}$</th>
 <th style="text-align:center">分子光谱项</th>
 </tr>
 </thead>
@@ -904,6 +908,7 @@
 <td style="text-align:center">↑—</td>
 <td style="text-align:center">↑—</td>
 <td style="text-align:center">$3+2+1=6=I$</td>
+<td style="text-align:center"></td>
 <td style="text-align:center">$^4I$</td>
 </tr>
 <tr>
@@ -912,6 +917,7 @@
 <td style="text-align:center">↑—</td>
 <td style="text-align:center">—↑</td>
 <td style="text-align:center">$3+2-1=5=H$</td>
+<td style="text-align:center"></td>
 <td style="text-align:center">$^4H$</td>
 </tr>
 <tr>
@@ -920,6 +926,7 @@
 <td style="text-align:center">—↑</td>
 <td style="text-align:center">—↑</td>
 <td style="text-align:center">$3-2-1=0=\Sigma$</td>
+<td style="text-align:center">$+<em>-</em>-=+$</td>
 <td style="text-align:center">$^4\Sigma^+$</td>
 </tr>
 <tr>
@@ -928,6 +935,7 @@
 <td style="text-align:center">↑—</td>
 <td style="text-align:center">↑—</td>
 <td style="text-align:center">$-3+2+1=0=\Sigma$</td>
+<td style="text-align:center">$-<em>+</em>+=-$</td>
 <td style="text-align:center">$^4\Sigma^-$</td>
 </tr>
 <tr>
@@ -936,6 +944,7 @@
 <td style="text-align:center">—↑</td>
 <td style="text-align:center">↓—</td>
 <td style="text-align:center">$3-2+1=2=\Delta$</td>
+<td style="text-align:center"></td>
 <td style="text-align:center">$^2\Delta$</td>
 </tr>
 <tr>
@@ -944,12 +953,26 @@
 <td style="text-align:center">↑—</td>
 <td style="text-align:center">↓—</td>
 <td style="text-align:center">$-3+2+1=0=\Sigma$</td>
+<td style="text-align:center">$-<em>+</em>-=+$</td>
+<td style="text-align:center">$^2\Sigma^+$</td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:center">—↑</td>
+<td style="text-align:center">↓—</td>
+<td style="text-align:center">↓—</td>
+<td style="text-align:center">$-3+2+1=0=\Sigma$</td>
+<td style="text-align:center">$-<em>-</em>-=-$</td>
 <td style="text-align:center">$^2\Sigma^-$</td>
 </tr>
 </tbody>
 </table>
 </div>
 <p>例子：O<sub>2</sub></p>
+<ul>
+<li>$^3\Sigma^-_g$：$1-1=0=\Sigma$，$+*-=-$</li>
+<li>$^1\Sigma^+_g$：$1-1=0=\Sigma$，$+*+=+$</li>
+</ul>
 <p><img src="1.png" alt=""></p>
 <h1 id="2S-1-Lambda-Omega-中-Omega-的确定"><a href="#2S-1-Lambda-Omega-中-Omega-的确定" class="headerlink" title="$^{2S+1}\Lambda_\Omega$中$\Omega$的确定"></a>$^{2S+1}\Lambda_\Omega$中$\Omega$的确定</h1><p>$\Omega$为$\pm{(S+\Lambda)}$，$\pm{(S+\Lambda-1)}$……一共$2(S+\Lambda)+1$项</p>
 <p>例子：$^4H$中$S+\Lambda=\frac{3}{2}+5=\frac{13}{2}$，则$\Omega$为$\pm\frac{13}{2}$，$\pm\frac{11}{2}$，$\pm\frac{9}{2}$，$\pm\frac{7}{2}$，$\pm\frac{5}{2}$，$\pm\frac{3}{2}$，$\pm\frac{1}{2}$一共14项。</p>
