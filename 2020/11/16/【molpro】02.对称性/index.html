@@ -21,20 +21,28 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="ADF的SCF选项以及不收敛的处理方法">
+  <meta name="description" content="molpro分子的对称性，定义波函和通过波函的对称性来指定占据的基本方法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ADF的SCF相关">
-<meta property="og:url" content="http://example.com/2019/09/23/ADF_SCF%E7%9B%B8%E5%85%B3/index.html">
+<meta property="og:title" content="【molpro】02.对称性">
+<meta property="og:url" content="http://example.com/2020/11/16/%E3%80%90molpro%E3%80%9102.%E5%AF%B9%E7%A7%B0%E6%80%A7/index.html">
 <meta property="og:site_name" content="Jing&#39;s Notes">
-<meta property="og:description" content="ADF的SCF选项以及不收敛的处理方法">
+<meta property="og:description" content="molpro分子的对称性，定义波函和通过波函的对称性来指定占据的基本方法">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2019-09-22T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-11-13T02:46:57.653Z">
+<meta property="og:image" content="http://example.com/2020/11/16/%E3%80%90molpro%E3%80%9102.%E5%AF%B9%E7%A7%B0%E6%80%A7/1.png">
+<meta property="og:image" content="http://example.com/2020/11/16/%E3%80%90molpro%E3%80%9102.%E5%AF%B9%E7%A7%B0%E6%80%A7/2.png">
+<meta property="og:image" content="http://example.com/2020/11/16/%E3%80%90molpro%E3%80%9102.%E5%AF%B9%E7%A7%B0%E6%80%A7/3.png">
+<meta property="og:image" content="http://example.com/2020/11/16/%E3%80%90molpro%E3%80%9102.%E5%AF%B9%E7%A7%B0%E6%80%A7/4.png">
+<meta property="article:published_time" content="2020-11-16T14:19:52.000Z">
+<meta property="article:modified_time" content="2020-11-21T03:32:51.116Z">
 <meta property="article:author" content="Zhao Jing">
-<meta property="article:tag" content="SCF">
+<meta property="article:tag" content="点群">
+<meta property="article:tag" content="对称性">
+<meta property="article:tag" content="波函">
+<meta property="article:tag" content="占据">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2020/11/16/%E3%80%90molpro%E3%80%9102.%E5%AF%B9%E7%A7%B0%E6%80%A7/1.png">
 
-<link rel="canonical" href="http://example.com/2019/09/23/ADF_SCF%E7%9B%B8%E5%85%B3/">
+<link rel="canonical" href="http://example.com/2020/11/16/%E3%80%90molpro%E3%80%9102.%E5%AF%B9%E7%A7%B0%E6%80%A7/">
 
 
 <script id="page-configurations">
@@ -47,7 +55,7 @@
   };
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
-  <title>ADF的SCF相关 | Jing's Notes</title>
+  <title>【molpro】02.对称性 | Jing's Notes</title>
   
 
 
@@ -191,7 +199,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/09/23/ADF_SCF%E7%9B%B8%E5%85%B3/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/16/%E3%80%90molpro%E3%80%9102.%E5%AF%B9%E7%A7%B0%E6%80%A7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/touxiang.jpg">
@@ -204,7 +212,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          ADF的SCF相关
+          【molpro】02.对称性
         </h1>
 
         <div class="post-meta">
@@ -214,14 +222,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-09-23 00:00:00" itemprop="dateCreated datePublished" datetime="2019-09-23T00:00:00+08:00">2019-09-23</time>
+              <time title="创建时间：2020-11-16 22:19:52" itemprop="dateCreated datePublished" datetime="2020-11-16T22:19:52+08:00">2020-11-16</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-13 10:46:57" itemprop="dateModified" datetime="2020-11-13T10:46:57+08:00">2020-11-13</time>
+                <time title="修改时间：2020-11-21 11:32:51" itemprop="dateModified" datetime="2020-11-21T11:32:51+08:00">2020-11-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -233,7 +241,7 @@
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/ADF/" itemprop="url" rel="index"><span itemprop="name">ADF</span></a>
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/molpro/" itemprop="url" rel="index"><span itemprop="name">molpro</span></a>
                 </span>
             </span>
 
@@ -254,8 +262,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2019/09/23/ADF_SCF%E7%9B%B8%E5%85%B3/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2019/09/23/ADF_SCF%E7%9B%B8%E5%85%B3/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/11/16/%E3%80%90molpro%E3%80%9102.%E5%AF%B9%E7%A7%B0%E6%80%A7/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/16/%E3%80%90molpro%E3%80%9102.%E5%AF%B9%E7%A7%B0%E6%80%A7/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -266,16 +274,16 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.2k</span>
+              <span>1.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>1 分钟</span>
             </span>
-            <div class="post-description">ADF的SCF选项以及不收敛的处理方法</div>
+            <div class="post-description">molpro分子的对称性，定义波函和通过波函的对称性来指定占据的基本方法</div>
 
         </div>
       </header>
@@ -286,87 +294,88 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="SCF选项"><a href="#SCF选项" class="headerlink" title="SCF选项"></a>SCF选项</h1><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">SCF</span><br><span class="line"> Iterations Niter</span><br><span class="line"> Converge <span class="keyword">SCFcnv</span> &#123; sconv2 &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">AccelerationMethod</span> &#123; ADIIS | LISTi | LISTb | fDIIS | LISTf | MESA | SDIIS &#125;</span><br><span class="line"> <span class="keyword">MESA</span> [NoFDIIS] [NoLISTb] [NoLISTf] [NoLISTi] [NoSDIIS] [NoADIIS]</span><br><span class="line"> ADIIS</span><br><span class="line">   &#123;THRESH1 a1&#125;</span><br><span class="line">   &#123;THRESH2 a2&#125;</span><br><span class="line"> End</span><br><span class="line"> NoADIIS</span><br><span class="line"> DIIS</span><br><span class="line">   &#123;N n&#125;</span><br><span class="line">   &#123;OK ok&#125;</span><br><span class="line">   &#123;cyc cyc&#125;</span><br><span class="line"> End</span><br><span class="line"> Mixing mix</span><br><span class="line"> Mixing1 mix1</span><br><span class="line"></span><br><span class="line"> OldSCF</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
-<h2 id="Iterations"><a href="#Iterations" class="headerlink" title="Iterations"></a>Iterations</h2><p><code>Iterations</code>SCF迭代的最大次数，<code>Niter</code>默认是<code>300</code></p>
-<h2 id="Converge"><a href="#Converge" class="headerlink" title="Converge"></a>Converge</h2><p><code>Converge</code> ：</p>
+        <h1 id="对称性（点群）"><a href="#对称性（点群）" class="headerlink" title="对称性（点群）"></a>对称性（点群）</h1><ul>
+<li>MOLPRO只能使用阿贝尔点群对称性，对于有简并对称性的分子，必须使用阿贝尔子群，如下：</li>
+</ul>
+<p><img src="1.png" style="zoom:80%;" /></p>
 <ul>
-<li><code>SCFcnv</code>表示停止迭代的收敛限，默认是<code>1e-6</code>。</li>
-<li><code>sconv2</code>表示SCF过程难以收敛时起作用的第二个标准，默认是<code>1e-3</code>，如果达到了，仅发出警告，但是继续计算。仍无法达到的时候SCF不收敛，只能用<code>ALLOW</code>来继续</li>
+<li>对于每个点群的不可约表示，编号为1至8，顺序如下表，表中还给出了x，y，和z乘积的转换特性。s表示各向同性函数，例如s轨道，另外，它还给出了这些群的x<sup>2</sup>，y<sup>2</sup>，和z<sup>2</sup>的转换特性：</li>
 </ul>
-<h2 id="AccelerationMethod"><a href="#AccelerationMethod" class="headerlink" title="AccelerationMethod"></a>AccelerationMethod</h2><p><code>AccelerationMethod</code>调用的SCF加速方法，默认情况下为<code>ADIIS</code>，还可以用<code>LISTi</code> | <code>LISTb</code> | <code>fDIIS</code> | <code>LISTf</code> | <code>MESA</code> | <code>SDIIS</code></p>
-<h3 id="MESA"><a href="#MESA" class="headerlink" title="MESA"></a>MESA</h3><p><code>AccelerationMethod MESA</code>是ADIIS, fDIIS, LISTb, LISTf, LISTi和 SDIIS方法的组合<br><code>MESA NoSDIIS</code>代表从其中删掉某一种方法，也可以直接使用该关键词调用MESA，优先级大于<code>AccelerationMethod</code>指定的方法。</p>
-<h3 id="ADIIS"><a href="#ADIIS" class="headerlink" title="ADIIS"></a>ADIIS</h3><p>使用ADIIS + SDIIS方法，根据 [F,P] 交换子矩阵中的最大元素<code>ErrMax</code>来确定具体方法：</p>
+<p><img src="2.png" style="zoom:80%;" /></p>
+<p><img src="3.png" style="zoom:80%;" /></p>
+<p><img src="4.png" style="zoom:80%;" /></p>
 <ul>
-<li>当ErrMax≥<code>a1</code>，只使用A-DIIS系数</li>
-<li>当ErrMax≤ <code>a2</code>，只使用SDIIS系数</li>
-<li>当<code>a2</code>≤ ErrMax≤ <code>a1</code>，根据ErrMax的值按一定的权重来计算<br><code>a1</code>和<code>a2</code>的默认值是<code>0.01</code>和<code>0.0001</code>，收敛比较困难的时候，可以降低阈值，只使用A-DIIS系数</li>
+<li>轨道和基函数的引用格式一般是<code>序号.不可约表示编号</code>，比如C<sub>2v</sub>的3.2表示C<sub>2v</sub>的第二个不可约表示B<sub>2</sub>的第三个轨道。</li>
 </ul>
-<h3 id="SDIIS"><a href="#SDIIS" class="headerlink" title="SDIIS"></a>SDIIS</h3><p><code>AccelerationMethod SDIIS</code>与在没有指定<code>oldscf</code>的情况下使用<code>NoADIIS</code>意思相同，采用的是阻尼+SDIIS方法。从简单阻尼（Mixing）开始，持续到<code>ErrMax</code>降低到<code>DIIS OK</code>参数以下，但是不超过<code>DIIS Cyc</code>次迭代。之后使用纯的SDIIS方法。</p>
-<blockquote>
-<p>在指定<code>oldscf</code>的情况下使用<code>NoADIIS</code>会禁用在SCF收敛困难的时候自动切换到ADIIS + SDIIS方法</p>
-</blockquote>
+<h1 id="波函"><a href="#波函" class="headerlink" title="波函"></a>波函</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><ul>
+<li><p>波函数的总对称性通过<code>wf</code>卡定义：</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">WF,</span>nelec,irrep,spin</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WF,<span class="comment">[NELEC=nelec]</span>,<span class="comment">[SYM<span class="comment">[METRY]</span>=irrep]</span>,<span class="comment">[spin= spin]</span>,<span class="comment">[CHARGE=charge]</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>指定<code>NoADIIS</code>时才可以设置 <code>DIIS</code>模块：<ul>
-<li><code>N</code>用于加速SCF的扩展向量的数量，默认为<code>10</code>，小于2后会禁用DIIS。此数字不仅适用于Pulay DIIS方案，还适用于其他类似DIIS的方法，例如A-DIIS和LIST方法。<blockquote>
-<p>LIST家族的方法对使用的扩展向量的数量非常敏感，接近收敛时，LIST中的向量数量会增加，但始终受<code>DIIS N</code>的限制，当难以收敛时，可以将<code>DIIS N</code>设置为大于10的值，比如12~20。</p>
-</blockquote>
-</li>
-<li><code>OK</code>禁用A-DIIS时，SDIIS起始条件。默认为<code>0.5</code> a.u.。</li>
-<li><code>Cyc</code>禁用A-DIIS时，无论上面的<code>DIIS OK</code>值如何，SDIIS都会在此迭代下启动，默认值为<code>5</code></li>
+<li><code>nelec</code>是电子总数，也可以通过<code>charge</code>指定。默认是核电荷的总和。</li>
+<li><code>irrep</code>是波函数的对称性，用不可约表示的序号表示。默认是1全对称的（第一个不可约表示}<ul>
+<li>对于一个双重态来说，它等于一个已占据的分子轨道的对称性。</li>
+<li>如果是三重态，则是两个单占据轨道对称性的直积。（比如O<sub>2</sub>的最高单占据轨道分别为π<sub>g,x</sub>和π<sub>g,y</sub>，分别对应于B<sub>2g</sub>和B<sub>3g</sub>，直积为B<sub>1g</sub>，对称性为4。）</li>
 </ul>
 </li>
-<li><code>Mixing</code>中，指将下一个Fock矩阵确定为<script type="math/tex">F = mix F_{n} + (1-mix) F_{n-1}</script>，<code>mix</code>默认为<code>0.2</code></li>
-<li><code>Mixing1</code>中指第一个SCF循环的混合参数值不同，默认为<code>0.2</code></li>
+<li><code>spin</code>是单电子数。默认对偶数个电子是1（单重态），否则是2（双重态）。</li>
 </ul>
-<h2 id="oldSCF"><a href="#oldSCF" class="headerlink" title="oldSCF"></a>oldSCF</h2><p>在使用<code>Occupations Steep</code>、<code>Lshift</code>，<code>ARH</code>，<code>EDIIS</code>，<code>RESTOCC</code>时，会自动启用<code>oldSCF</code></p>
-<h3 id="Lshift"><a href="#Lshift" class="headerlink" title="Lshift"></a>Lshift</h3><p>能级移动方法，在前一次迭代的轨道表示中，Fock矩阵的对角元素提高虚轨道的<code>vshift</code>hartree。旋轨耦合不支持这种方法。</p>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Lshift</span> <span class="string">vshift</span></span><br><span class="line"><span class="attr">Lshift_err</span> <span class="string">Shift_err</span></span><br><span class="line"><span class="attr">Lshift_cyc</span> <span class="string">Shift_cyc</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>也可以通过变量来定义（系统变量需要用SET）：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SET,<span class="attribute">CHARGE</span>=charge</span><br><span class="line">SET,<span class="attribute">NELEC</span>=nelec</span><br><span class="line">SET,<span class="attribute">SPIN</span>=spin</span><br><span class="line">SER,<span class="attribute">SYMMETRY</span>=irrep</span><br></pre></td></tr></table></figure>
 <ul>
-<li><code>Lshift_err</code>指定一旦SCF error降至阈值以下，程序将关闭能级移动，<code>Shift_err</code>默认值为<code>0</code>。</li>
-<li><code>Lshift_cyc</code>指定在第几个SCF 迭代次数的时候再启动能级移动， <code>Shift_cyc</code>默认为<code>1</code>。</li>
+<li>还可以使用<code>SCFSPIN</code>和<code>SCFSYM[METRY]</code>、<code>MCSPIN</code>和<code>MCSYM[METRY]</code>、<code>CISPIN</code>和<code>CISYM[METRY]</code>来定义仅用于HF、MCSCF、MRCI的自旋和对称性。</li>
 </ul>
-<h3 id="ARH"><a href="#ARH" class="headerlink" title="ARH"></a>ARH</h3><figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">SCF</span></span><br><span class="line"><span class="xml">  ARH</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;CONV conv&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;ITER iter&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;NSAVED nsaved&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;START start&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;FINAL&#125;</span><span class="xml"> ...</span></span><br><span class="line"><span class="xml">  End</span></span><br><span class="line"><span class="xml">  ...</span></span><br><span class="line"><span class="xml">End</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>因为有默认值，在很多情况下，不需要指定WF卡。如果需要指定，一般是在SCF计算中指定WF信息，后面的MCSCF或CI计算可以不指定WF；这也适用于续算。如果在命令输入区外给出WF指令，那么它作为全局指令处理。根据顺序执行。</p>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><ul>
+<li><p>HCO<sup>+</sup>，<sup>2</sup>B<sub>2</sub>（一个电子从最高占据b<sub>2</sub>轨道失去）</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wf,<span class="number">15</span>,<span class="number">3</span>,<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wf,charge=<span class="number">1</span>,symmetry=<span class="number">3</span>,spin=<span class="number">1</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="轨道子空间"><a href="#轨道子空间" class="headerlink" title="轨道子空间"></a>轨道子空间</h1><h2 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h2><ul>
+<li><p>由<code>OCC</code>，<code>CORE</code>，<code>CLOSED</code>，<code>FROZEN</code>卡提供：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">OCC</span>,m<span class="number">1</span>,m<span class="number">2</span>,...m<span class="number">8</span>;</span><br><span class="line"><span class="attribute">CORE</span>,co<span class="number">1</span>,co<span class="number">2</span>,...co<span class="number">8</span>;</span><br><span class="line"><span class="attribute">CLOSED</span>,cl<span class="number">1</span>,cl<span class="number">2</span>,...cl<span class="number">8</span>;</span><br><span class="line"><span class="attribute">FROZEN</span>,fr<span class="number">1</span>,fr<span class="number">2</span>,...fr<span class="number">8</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>轨道空间也可以在命令区外定义，作为全局指令处理，即用于随后所有的程序。对某些波函类型特定的空间，可以使用以下两种方式定义：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OCC,<span class="number">4</span>,<span class="number">2</span>,<span class="number">1</span>,CONTEXT=MULTI</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OCC_MULTI,<span class="number">4</span>,<span class="number">2</span>,<span class="number">1</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><code>OCC</code>，<code>CORE</code>，和<code>CLOSED</code>命令一般在每个有关的程序模块中都是必须的；但是程序会记住最近一次使用的值，因此如果不改变前面的轨道空间值的话，这些命令可以忽略。这一信息也保存在续算中。</p>
+<h2 id="含义"><a href="#含义" class="headerlink" title="含义"></a>含义</h2><ul>
+<li><code>OCC</code>：<code>mi</code>是不可约表示i的占据轨道数（包括<code>CORE</code>/<code>FROZEN</code>轨道和<code>CLOSED</code>轨道）</li>
+<li><code>CORE</code>：芯轨道数</li>
+<li><code>CLOSED</code>：<code>cli</code>闭壳层轨道数（包括芯轨道）</li>
+<li><code>FROZEN</code>只能用于MCSCF程序，表示不做优化的冻芯轨道</li>
+</ul>
+<p>通常<code>OCC</code>≥<code>CLOSED</code>≥<code>CORE</code>，不同的计算中，<code>OCC</code>，<code>CORE</code>，<code>CLOSED</code>，<code>FROZEN的</code>含义略有不同，默认的值也会有所不同：</p>
 <ul>
-<li><code>CONV</code>：当RMS梯度及其最大分量均低于<code>conv</code>，ARH收敛，<code>conv</code>默认是1e-4</li>
-<li><code>ITER</code>：最大ARH迭代次数，<code>iter</code>默认为500</li>
-<li><code>FINAL</code>：确定ARH完成后是否继续SCF。如果设置了此选项，将执行一次Fock矩阵对角化以获得轨道，并且将停止SCF过程。默认选项为<code>OFF</code>。</li>
-<li><code>START</code>：开始调用ARH的SCF迭代次数，<code>start</code>默认为2。使用较大的值可以为ARH提供更好的初猜</li>
-<li><code>NSAVED</code>：保存密度和Fock矩阵的数量。 <code>nsaved</code>默认为8。在非常接近费米能级的轨道数很大的收敛困难时，应使用较大的<code>nsaved</code>值。</li>
-<li>默认的最小化方法是“Untransformed Pre-conditioned Conjugate Gradient”，可以使用以下两个关键词更改：<ul>
-<li><code>NOPRECOND</code>：禁用Untransformed Pre-conditioned CG最小化，不能在第二周期后的元素里使用</li>
-<li><code>TRANSPCG</code>：启用Transformed Pre-conditioned CG 方法，SCF可能会更好的收敛。</li>
+<li>SCF中：<ul>
+<li><code>OCC</code>是任何出现在CSF中的轨道</li>
 </ul>
 </li>
-<li>在每一步SCF中，先执行常规CG最小化，跟踪总步长，如果在某个微迭代中步长超过了信任半径，则过程将在缩小的空间中切换到信任半径优化，在能级移动参数mu收敛后立即中止。在CG最小化期间生成的所有试验矢量的缩小空间中，将最终步骤计算为牛顿步骤。可以通过以下关键词修改参数：<ul>
-<li><code>NOSWITCHING</code>：关闭从普通CG到缩小的空间中的信任半径最小化的切换。在某些情况下，使用此选项有助于减少SCF循环的总数。</li>
-<li><code>SHIFTED</code>：设置此选项将在第一次微迭代中打开信任半径优化。</li>
-<li><code>CGITER=cgiter</code>：设置微迭代的最大数量。</li>
-<li>确定置信半径：<ul>
-<li><code>TRUSTR=trustr</code>：信任半径的初始值。默认为<code>0.5</code></li>
-<li><code>MAXTRUSTR=maxtrustr</code>：最大信任半径值。默认为<code>0.5</code>，并且不会改变。</li>
+<li>MCSCF中：<ul>
+<li><code>OCC</code>是任何出现在CSF中的轨道</li>
+<li><code>FROZEN</code>轨道在所有CSF中都是双占据，并且冻结的（也就是不做优化）</li>
+<li><code>CLOSED</code>表示所有的双占据轨道（<code>FROZEN</code>中冻结的加上做优化的）</li>
 </ul>
 </li>
+<li>电子关联方法（CI，MPn，CCSD等）中：<ul>
+<li><code>OCC</code>表示在所有参考CSF中占据的轨道</li>
 </ul>
 </li>
-<li>缺点：<ul>
-<li>该方法仅适用于NOSYM计算</li>
-<li>在每一步都要计算总能量，计算非常昂贵，而且使用总能量，需要更高的积分精度才能获得稳定的SCF收敛，该方法可能不适用于所有情况，??使用<code>ADDDIFFUSEFIT</code>关键字或更高的<code>ZlmFit</code>质量设置来提高总能量的准确性，从而提高收敛性。??</li>
+<li>在CI和CCSD程序中：<ul>
+<li><code>CORE</code>是不做关联能处理的轨道</li>
+<li><code>CLOSED</code>在所有的参考CSF中保持双占据的轨道。</li>
 </ul>
 </li>
 </ul>
-<h1 id="SCF不收敛"><a href="#SCF不收敛" class="headerlink" title="SCF不收敛"></a>SCF不收敛</h1><ol>
-<li>更换SCF加速收敛的方法</li>
-<li>使用ARH方法</li>
-<li>修改DIIS算法的参数<ul>
-<li><code>Mixing</code>高于默认值<code>0.2</code>会有更高的加速度，更低会更稳定的迭代</li>
-<li><code>N</code>默认为<code>10</code>，越大用于加速SCF的扩展向量的数量越多，SCF迭代更稳定，最多到25</li>
-<li><code>Cyc</code>是SDIIS启动的初始SCF迭代步数，默认值为<code>5</code>，更高计算越稳定<br>比如使用如下参数：<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">SCF</span></span><br><span class="line">    <span class="attribute">DIIS</span></span><br><span class="line">      <span class="attribute">N</span> <span class="number">25</span></span><br><span class="line">      <span class="attribute">Cyc</span> <span class="number">30</span></span><br><span class="line">    <span class="attribute">End</span></span><br><span class="line">    <span class="attribute">Mixing</span> <span class="number">0</span>.<span class="number">015</span></span><br><span class="line">    <span class="attribute">Mixing1</span> <span class="number">0</span>.<span class="number">09</span></span><br><span class="line">  <span class="attribute">End</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li>HOMO-LUMO较为接近的情况（0.02Hatree以内），可能造成HOMO-LUMO的震荡。可以使用<code>Lshift vshift</code>方法，不适于激发态的计算、解析频率、旋轨耦合的计算。</li>
-<li>使用Electron smearing设定在允许的能量范围内分数占据。</li>
-<li>其他：<a target="_blank" rel="noopener" href="https://www.fermitech.com.cn/wiki/doku.php?id=adf:scfnonconvergence">费米维基</a>的2、3、5。</li>
-</ol>
 
     </div>
 
@@ -397,7 +406,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/2019/09/23/ADF_SCF%E7%9B%B8%E5%85%B3/" title="ADF的SCF相关">http://example.com/2019/09/23/ADF_SCF相关/</a>
+    <a href="http://example.com/2020/11/16/%E3%80%90molpro%E3%80%9102.%E5%AF%B9%E7%A7%B0%E6%80%A7/" title="【molpro】02.对称性">http://example.com/2020/11/16/【molpro】02.对称性/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -409,7 +418,10 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/SCF/" rel="tag"><i class="fa fa-tag"></i> SCF</a>
+              <a href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag"><i class="fa fa-tag"></i> 点群</a>
+              <a href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag"><i class="fa fa-tag"></i> 对称性</a>
+              <a href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag"><i class="fa fa-tag"></i> 波函</a>
+              <a href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag"><i class="fa fa-tag"></i> 占据</a>
           </div>
 
         
@@ -417,10 +429,13 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2019/09/25/Linux%E5%91%BD%E4%BB%A4/" rel="next" title="Linux命令">
-      Linux命令 <i class="fa fa-chevron-right"></i>
+    <a href="/2020/11/11/%E5%8F%8C%E5%8E%9F%E5%AD%90%E5%88%86%E5%AD%90%E7%9A%84%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="prev" title="双原子分子的光谱项">
+      <i class="fa fa-chevron-left"></i> 双原子分子的光谱项
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/20/%E5%A4%9A%E7%BB%84%E6%80%81MCSCF/" rel="next" title="多组态MCSCF">
+      多组态MCSCF <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -481,7 +496,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SCF%E9%80%89%E9%A1%B9"><span class="nav-number">1.</span> <span class="nav-text">SCF选项</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Iterations"><span class="nav-number">1.1.</span> <span class="nav-text">Iterations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Converge"><span class="nav-number">1.2.</span> <span class="nav-text">Converge</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AccelerationMethod"><span class="nav-number">1.3.</span> <span class="nav-text">AccelerationMethod</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MESA"><span class="nav-number">1.3.1.</span> <span class="nav-text">MESA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ADIIS"><span class="nav-number">1.3.2.</span> <span class="nav-text">ADIIS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SDIIS"><span class="nav-number">1.3.3.</span> <span class="nav-text">SDIIS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#oldSCF"><span class="nav-number">1.4.</span> <span class="nav-text">oldSCF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lshift"><span class="nav-number">1.4.1.</span> <span class="nav-text">Lshift</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ARH"><span class="nav-number">1.4.2.</span> <span class="nav-text">ARH</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SCF%E4%B8%8D%E6%94%B6%E6%95%9B"><span class="nav-number">2.</span> <span class="nav-text">SCF不收敛</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E7%A7%B0%E6%80%A7%EF%BC%88%E7%82%B9%E7%BE%A4%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">对称性（点群）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B3%A2%E5%87%BD"><span class="nav-number">2.</span> <span class="nav-text">波函</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">2.2.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BD%A8%E9%81%93%E5%AD%90%E7%A9%BA%E9%97%B4"><span class="nav-number">3.</span> <span class="nav-text">轨道子空间</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89-1"><span class="nav-number">3.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AB%E4%B9%89"><span class="nav-number">3.2.</span> <span class="nav-text">含义</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
