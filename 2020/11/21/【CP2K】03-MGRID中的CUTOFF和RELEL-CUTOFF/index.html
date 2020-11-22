@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=EB Garamond:300,300italic,400,400italic,700,700italic|Dancing Script:300,300italic,400,400italic,700,700italic|ZCOOL XiaoWei:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="CUTOFF和RELEL_CUTOFF的设置方法和测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【CP2K】03.&amp;MGRID中的CUTOFF和RELEL_CUTOFF">
+<meta property="og:url" content="http://example.com/2020/11/21/%E3%80%90CP2K%E3%80%9103-MGRID%E4%B8%AD%E7%9A%84CUTOFF%E5%92%8CRELEL-CUTOFF/index.html">
+<meta property="og:site_name" content="Jing&#39;s Notes">
+<meta property="og:description" content="CUTOFF和RELEL_CUTOFF的设置方法和测试">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/【CP2K】03-MGRID中的CUTOFF和RELEL-CUTOFF/1.png">
+<meta property="article:published_time" content="2020-11-21T13:26:52.000Z">
+<meta property="article:modified_time" content="2020-11-22T13:32:02.178Z">
+<meta property="article:author" content="Zhao Jing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/【CP2K】03-MGRID中的CUTOFF和RELEL-CUTOFF/1.png">
+
+<link rel="canonical" href="http://example.com/2020/11/21/%E3%80%90CP2K%E3%80%9103-MGRID%E4%B8%AD%E7%9A%84CUTOFF%E5%92%8CRELEL-CUTOFF/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+  <title>【CP2K】03.&MGRID中的CUTOFF和RELEL_CUTOFF | Jing's Notes</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d23c6dd5b34ecbaba18b829b9084946";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jing's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/21/%E3%80%90CP2K%E3%80%9103-MGRID%E4%B8%AD%E7%9A%84CUTOFF%E5%92%8CRELEL-CUTOFF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="Zhao Jing">
+      <meta itemprop="description" content="做一棵树，只为岁月而生长。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jing's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【CP2K】03.&MGRID中的CUTOFF和RELEL_CUTOFF
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-21 21:26:52" itemprop="dateCreated datePublished" datetime="2020-11-21T21:26:52+08:00">2020-11-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-22 21:32:02" itemprop="dateModified" datetime="2020-11-22T21:32:02+08:00">2020-11-22</time>
+              </span>
+
+          
+            <br>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/11/21/%E3%80%90CP2K%E3%80%9103-MGRID%E4%B8%AD%E7%9A%84CUTOFF%E5%92%8CRELEL-CUTOFF/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/21/%E3%80%90CP2K%E3%80%9103-MGRID%E4%B8%AD%E7%9A%84CUTOFF%E5%92%8CRELEL-CUTOFF/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+            <div class="post-description">CUTOFF和RELEL_CUTOFF的设置方法和测试</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><ul>
+<li><code>&amp;MGRID</code>属于<code>&amp;FORCE_EVAL</code>的<code>&amp;DFT</code>。</li>
+<li><p><code>QUICKSTEP</code>要求使用实空间（RS）积分网格来表示某些函数，例如电子密度和乘积高斯函数。 <code>QUICKSTEP</code>使用多网格系统将乘积高斯映射到RS网格上，因此宽而平滑的高斯函数比窄而锐利的高斯函数映射到更粗糙的网格上。（电子密度始终映射到最精细的网格上。）</p>
+</li>
+<li><p>在这种情况下，从粗糙到精细，需要设置多个级别（默认为4）的多重网格。</p>
+</li>
+<li><code>CUTOFF</code>：定义了多网格最高级的平面波截止（默认单位为Ry），即控制整体网格精度的最高值。平面波截止频率越高，网格越精细。</li>
+<li>后续网格级别（从更精细到更粗糙）的相应平面波截止由<script type="math/tex">E_{\mathrm{cut}}^{i}=\frac{E_{\mathrm{cut}}^{1}}{\alpha^{(i-1)}}</script>定义，α默认值为<code>3.0</code>。对于所有多网格级别，<code>CUTOFF</code>的值越高，网格越细。</li>
+<li>构建了多网格后，<code>QUICKSTEP</code>需要将高斯模型映射到网格上。<code>REL_CUTOFF</code>该关键词控制将哪个乘积高斯映射到多网格的哪个级别。 CP2K尝试将每个高斯映射到网格上，以使高斯覆盖的网格点数（无论宽或窄）都大致相同。<code>REL_CUTOFF</code>定义由高斯覆盖的参考网格的平面波截止，其单位标准偏差为<script type="math/tex">e^{|\vec{r}|^{2}}</script>。高斯映射到多网格最粗糙的级别，该函数将覆盖大于或等于由<code>REL_CUTOFF</code>定义的参考网格上<script type="math/tex">e^{|\vec{r}|^{2}}</script>覆盖的网格点数。</li>
+<li>因此，影响积分网格和计算准确性的两个最重要的关键字是<code>CUTOFF</code>和<code>REL_CUTOFF</code>。<ul>
+<li>如果<code>CUTOFF</code>太低，则所有网格将变得粗糙，计算可能会变得不准确；</li>
+<li>如果<code>REL_CUTOFF</code>太低，即使<code>CUTOFF</code>较高，所有高斯也将映射到多网格的最粗糙级别，因此用于计算的有效积分网格可能仍然太粗糙。</li>
+</ul>
+</li>
+</ul>
+<h1 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h1><ul>
+<li><p><code>NGRIDS</code>：定义要使用的多重网格数 ，默认为<code>4</code>。</p>
+</li>
+<li><p><code>CUTOFF</code>：默认值为280Ry。SE或DFTB计算的默认值为1.0Ry。</p>
+<ul>
+<li><p><code>CUTOFF</code>的设置取决于体系中元素的种类。CP2K论坛中建议给不同的原子使用不同的<code>CUTOFF</code>：</p>
+<p><img src="/../【CP2K】03-MGRID中的CUTOFF和RELEL-CUTOFF/1.png" alt=""></p>
+</li>
+<li><p>对包含Na\N\O\F\Ne\Ni\Ga等元素的计算，需要设置高达1000Ry的<code>CUTOFF</code>来确保计算精度。</p>
+</li>
+</ul>
+</li>
+<li><p><code>PROGRESSION_FACTOR</code>：通过该关键词可以修改α。</p>
+</li>
+<li><p><code>REL_CUTOFF</code>：默认为40Ry。一般设置为50±10Ry的值。</p>
+</li>
+</ul>
+<h1 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h1><h2 id="Si"><a href="#Si" class="headerlink" title="Si"></a>Si</h2><p>以面心立方晶胞中具有8个原子的硅为例，用脚本寻找合适<code>CUTOFF</code>和<code>REL_CUTOFF</code>。</p>
+<h3 id="建立模板文件"><a href="#建立模板文件" class="headerlink" title="建立模板文件"></a>建立模板文件</h3><ul>
+<li><code>RUN_TYPE</code>中设置为<code>ENERGY</code>，因为只对积分网格的收敛感兴趣，只需要查看能量。</li>
+<li><code>CUTOFF</code>和<code>REL_CUTOFF</code>设置为 <code>LT_cutoff</code> 和 <code>LT_rel_cutoff</code> 是标记，自动化脚本将搜索它们并将其替换为相关值。</li>
+<li>因为只检查积分网格，与自洽性无关，具有足够精细网格应该提供一致的能量。因此<code>MAX_SCF</code>设置为1。</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&amp;GLOBAL</span></span><br><span class="line">  <span class="string">PROJECT</span> <span class="string">Si_bulk8</span></span><br><span class="line">  <span class="string">RUN_TYPE</span> <span class="string">ENERGY</span></span><br><span class="line">  <span class="string">PRINT_LEVEL</span> <span class="string">MEDIUM</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">GLOBAL</span></span><br><span class="line"><span class="meta">&amp;FORCE_EVAL</span></span><br><span class="line">  <span class="string">METHOD</span> <span class="string">Quickstep</span></span><br><span class="line">  <span class="meta">&amp;DFT</span></span><br><span class="line">    <span class="string">BASIS_SET_FILE_NAME</span>  <span class="string">BASIS_SET</span></span><br><span class="line">    <span class="string">POTENTIAL_FILE_NAME</span>  <span class="string">GTH_POTENTIALS</span></span><br><span class="line">    <span class="meta">&amp;MGRID</span></span><br><span class="line">      <span class="string">NGRIDS</span> <span class="number">4</span></span><br><span class="line">      <span class="string">CUTOFF</span> <span class="string">LT_cutoff</span></span><br><span class="line">      <span class="string">REL_CUTOFF</span> <span class="string">LT_rel_cutoff</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">MGRID</span></span><br><span class="line">    <span class="meta">&amp;QS</span></span><br><span class="line">      <span class="string">EPS_DEFAULT</span> <span class="number">1.0E-10</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">QS</span></span><br><span class="line">    <span class="meta">&amp;SCF</span></span><br><span class="line">      <span class="string">SCF_GUESS</span> <span class="string">ATOMIC</span></span><br><span class="line">      <span class="string">EPS_SCF</span> <span class="number">1.0E-6</span></span><br><span class="line">      <span class="string">MAX_SCF</span> <span class="number">1</span></span><br><span class="line">      <span class="string">ADDED_MOS</span> <span class="number">10</span></span><br><span class="line">      <span class="string">CHOLESKY</span> <span class="string">INVERSE</span></span><br><span class="line">      <span class="string">&amp;SMEAR</span> <span class="string">ON</span></span><br><span class="line">        <span class="string">METHOD</span> <span class="string">FERMI_DIRAC</span></span><br><span class="line">        <span class="string">ELECTRONIC_TEMPERATURE</span> [<span class="string">K</span>] <span class="number">300</span></span><br><span class="line">      <span class="string">&amp;END</span> <span class="string">SMEAR</span></span><br><span class="line">      <span class="meta">&amp;DIAGONALIZATION</span></span><br><span class="line">        <span class="string">ALGORITHM</span> <span class="string">STANDARD</span></span><br><span class="line">      <span class="string">&amp;END</span> <span class="string">DIAGONALIZATION</span></span><br><span class="line">      <span class="meta">&amp;MIXING</span></span><br><span class="line">        <span class="string">METHOD</span> <span class="string">BROYDEN_MIXING</span></span><br><span class="line">        <span class="string">ALPHA</span> <span class="number">0.4</span></span><br><span class="line">        <span class="string">BETA</span> <span class="number">0.5</span></span><br><span class="line">        <span class="string">NBROYDEN</span> <span class="number">8</span></span><br><span class="line">      <span class="string">&amp;END</span> <span class="string">MIXING</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">SCF</span></span><br><span class="line">    <span class="meta">&amp;XC</span></span><br><span class="line">      <span class="string">&amp;XC_FUNCTIONAL</span> <span class="string">PADE</span></span><br><span class="line">      <span class="string">&amp;END</span> <span class="string">XC_FUNCTIONAL</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">XC</span></span><br><span class="line">  <span class="string">&amp;END</span> <span class="string">DFT</span></span><br><span class="line">  <span class="meta">&amp;SUBSYS</span></span><br><span class="line">    <span class="string">&amp;KIND</span> <span class="string">Si</span></span><br><span class="line">      <span class="string">ELEMENT</span>   <span class="string">Si</span></span><br><span class="line">      <span class="string">BASIS_SET</span> <span class="string">SZV-GTH-PADE</span></span><br><span class="line">      <span class="string">POTENTIAL</span> <span class="string">GTH-PADE-q4</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">KIND</span></span><br><span class="line">    <span class="meta">&amp;CELL</span></span><br><span class="line">      <span class="string">SYMMETRY</span> <span class="string">CUBIC</span></span><br><span class="line">      <span class="string">A</span>     <span class="number">5.430697500</span>    <span class="number">0.000000000</span>    <span class="number">0.000000000</span></span><br><span class="line">      <span class="string">B</span>     <span class="number">0.000000000</span>    <span class="number">5.430697500</span>    <span class="number">0.000000000</span></span><br><span class="line">      <span class="string">C</span>     <span class="number">0.000000000</span>    <span class="number">0.000000000</span>    <span class="number">5.430697500</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">CELL</span></span><br><span class="line">    <span class="meta">&amp;COORD</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">0.000000000</span>    <span class="number">0.000000000</span>    <span class="number">0.000000000</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">0.000000000</span>    <span class="number">2.715348700</span>    <span class="number">2.715348700</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">2.715348700</span>    <span class="number">2.715348700</span>    <span class="number">0.000000000</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">2.715348700</span>    <span class="number">0.000000000</span>    <span class="number">2.715348700</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">4.073023100</span>    <span class="number">1.357674400</span>    <span class="number">4.073023100</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">1.357674400</span>    <span class="number">1.357674400</span>    <span class="number">1.357674400</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">1.357674400</span>    <span class="number">4.073023100</span>    <span class="number">4.073023100</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">4.073023100</span>    <span class="number">4.073023100</span>    <span class="number">1.357674400</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">COORD</span></span><br><span class="line">  <span class="string">&amp;END</span> <span class="string">SUBSYS</span></span><br><span class="line">  <span class="meta">&amp;PRINT</span></span><br><span class="line">    <span class="string">&amp;TOTAL_NUMBERS</span>  <span class="string">ON</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">TOTAL_NUMBERS</span></span><br><span class="line">  <span class="string">&amp;END</span> <span class="string">PRINT</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">FORCE_EVAL</span></span><br></pre></td></tr></table></figure>
+<h3 id="CUTOFF"><a href="#CUTOFF" class="headerlink" title="CUTOFF"></a>CUTOFF</h3><p>通过cutoff_inputs.sh脚本生成输入文件:</p>
+<ul>
+<li><code>cutoff</code>的范围为50~500Ry，步长为50Ry。</li>
+<li>除了 <code>template.inp</code>，还需要确保基组和赝势文件 <code>BASIS_SET</code> 、 <code>GTH_POTENTIALS</code>在当前目录下</li>
+<li>将新脚本文件的权限设置为可执行，再输入命令行</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"> </span><br><span class="line">cutoffs=&quot;50 100 150 200 250 300 350 400 450 500&quot;</span><br><span class="line"> </span><br><span class="line">basis_file=BASIS_SET</span><br><span class="line">potential_file=GTH_POTENTIALS</span><br><span class="line">template_file=template.inp</span><br><span class="line">input_file=Si_bulk8.inp</span><br><span class="line"> </span><br><span class="line">rel_cutoff=60</span><br><span class="line"> </span><br><span class="line">for ii in $cutoffs ; do</span><br><span class="line">    work_dir=cutoff_$&#123;ii&#125;Ry</span><br><span class="line">    if [ ! -d $work_dir ] ; then</span><br><span class="line">        mkdir $work_dir</span><br><span class="line">    else</span><br><span class="line">        rm -r $work_dir/*</span><br><span class="line">    fi</span><br><span class="line">    sed -e &quot;s/LT_rel_cutoff/$&#123;rel_cutoff&#125;/g&quot; \</span><br><span class="line">        -e &quot;s/LT_cutoff/$&#123;ii&#125;/g&quot; \</span><br><span class="line">        $template_file &gt; $work_dir/$input_file</span><br><span class="line">    cp $basis_file $work_dir</span><br><span class="line">    cp $potential_file $work_dir</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>再通过cutoff_run.sh脚本运行一系列输入文件（根据自己服务器的情况重新编写）：</p>
+<ul>
+<li><code>cp2k_bin</code>定义CP2K二进制文件的路径</li>
+<li><code>no_proc_per_calc</code>设置每个作业并行使用的MPI进程数</li>
+<li><code>no_proc_to_use</code> 设置用于运行所有作业的处理器总数，比如该脚本的意思是，在24核本地工作站上运行，总共16个核用于执行整个测试计算，每个计算使用2个核，最多可以运行8个作业，直到计算完毕。</li>
+<li>增加权限后，通过<code>./cutoff_run.sh &amp;</code>运行。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"> </span><br><span class="line">cutoffs=&quot;50 100 150 200 250 300 350 400 450 500&quot;</span><br><span class="line"> </span><br><span class="line">cp2k_bin=cp2k.popt</span><br><span class="line">input_file=Si_bulk8.inp</span><br><span class="line">output_file=Si_bulk8.out</span><br><span class="line">no_proc_per_calc=2</span><br><span class="line">no_proc_to_use=16</span><br><span class="line"> </span><br><span class="line">counter=1</span><br><span class="line">max_parallel_calcs=$(expr $no_proc_to_use / $no_proc_per_calc)</span><br><span class="line">for ii in $cutoffs ; do</span><br><span class="line">    work_dir=cutoff_$&#123;ii&#125;Ry</span><br><span class="line">    cd $work_dir</span><br><span class="line">    if [ -f $output_file ] ; then</span><br><span class="line">        rm $output_file</span><br><span class="line">    fi</span><br><span class="line">    mpirun -np $no_proc_per_calc $cp2k_bin -o $output_file $input_file &amp;</span><br><span class="line">    cd ..</span><br><span class="line">    mod_test=$(echo &quot;$counter % $max_parallel_calcs&quot; | bc)</span><br><span class="line">    if [ $mod_test -eq 0 ] ; then</span><br><span class="line">        wait</span><br><span class="line">    fi</span><br><span class="line">    counter=$(expr $counter + 1)</span><br><span class="line">done</span><br><span class="line">wait</span><br></pre></td></tr></table></figure>
+<p>输出结果:</p>
+<ul>
+<li><p>能量：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">SCF</span> <span class="string">WAVEFUNCTION</span> <span class="string">OPTIMIZATION</span></span><br><span class="line"></span><br><span class="line"> <span class="string">Step</span>     <span class="string">Update</span> <span class="string">method</span>      <span class="string">Time</span>    <span class="string">Convergence</span>         <span class="string">Total</span> <span class="string">energy</span>    <span class="string">Change</span></span><br><span class="line"> <span class="string">------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"> <span class="string">Trace(PS):</span>                                   <span class="number">32.0000000000</span></span><br><span class="line"> <span class="attr">Electronic density on regular grids:</span>        <span class="number">-31.9999999980</span>        <span class="number">0.0000000020</span></span><br><span class="line"> <span class="attr">Core density on regular grids:</span>               <span class="number">31.9999999944</span>       <span class="number">-0.0000000056</span></span><br><span class="line"> <span class="attr">Total charge density on r-space grids:</span>       <span class="number">-0.0000000036</span></span><br><span class="line"> <span class="attr">Total charge density g-space grids:</span>          <span class="number">-0.0000000036</span></span><br><span class="line"></span><br><span class="line">    <span class="number">1</span> <span class="string">NoMix/Diag.</span> <span class="number">0.40E+00</span>    <span class="number">0.4</span>     <span class="number">1.10090760</span>       <span class="number">-32.3804557631</span> <span class="number">-3.24E+01</span></span><br><span class="line">    <span class="number">1</span> <span class="string">NoMix/Diag.</span> <span class="number">0.40E+00</span>    <span class="number">0.4</span>     <span class="number">1.10090760</span>       <span class="number">-32.3804557631</span> <span class="number">-3.24E+01</span></span><br><span class="line"></span><br><span class="line"> <span class="string">***</span> <span class="string">SCF</span> <span class="string">run</span> <span class="string">NOT</span> <span class="string">converged</span> <span class="string">***</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="attr">Electronic density on regular grids:</span>        <span class="number">-31.9999999980</span>        <span class="number">0.0000000020</span></span><br><span class="line"> <span class="attr">Core density on regular grids:</span>               <span class="number">31.9999999944</span>       <span class="number">-0.0000000056</span></span><br><span class="line"> <span class="attr">Total charge density on r-space grids:</span>       <span class="number">-0.0000000036</span></span><br><span class="line"> <span class="attr">Total charge density g-space grids:</span>          <span class="number">-0.0000000036</span></span><br><span class="line"></span><br><span class="line"> <span class="attr">Overlap energy of the core charge distribution:</span>               <span class="number">0.00000000005320</span></span><br><span class="line"> <span class="attr">Self energy of the core charge distribution:</span>                <span class="number">-82.06393942512820</span></span><br><span class="line"> <span class="attr">Core Hamiltonian energy:</span>                                     <span class="number">16.92855916540793</span></span><br><span class="line"> <span class="attr">Hartree energy:</span>                                              <span class="number">42.17635056223367</span></span><br><span class="line"> <span class="attr">Exchange-correlation energy:</span>                                 <span class="number">-9.42142606564066</span></span><br><span class="line"> <span class="attr">Electronic entropic energy:</span>                                   <span class="number">0.00000000000000</span></span><br><span class="line"> <span class="attr">Fermi energy:</span>                                                 <span class="number">0.00000000000000</span></span><br><span class="line"></span><br><span class="line"> <span class="attr">Total energy:</span>                                               <span class="number">-32.38045576307407</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>高斯分布在多网格上的信息</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">-------------------------------------------------------------------------------</span></span><br><span class="line"><span class="string">----</span>                             <span class="string">MULTIGRID</span> <span class="string">INFO</span>                            <span class="string">----</span></span><br><span class="line"><span class="string">-------------------------------------------------------------------------------</span></span><br><span class="line"><span class="attr">count for grid        1:</span>           <span class="number">2720          </span><span class="string">cutoff</span> [<span class="string">a.u.</span>]           <span class="number">50.00</span></span><br><span class="line"><span class="attr">count for grid        2:</span>           <span class="number">5000          </span><span class="string">cutoff</span> [<span class="string">a.u.</span>]           <span class="number">16.67</span></span><br><span class="line"><span class="attr">count for grid        3:</span>           <span class="number">2760          </span><span class="string">cutoff</span> [<span class="string">a.u.</span>]            <span class="number">5.56</span></span><br><span class="line"><span class="attr">count for grid        4:</span>             <span class="number">16</span>          <span class="string">cutoff</span> [<span class="string">a.u.</span>]            <span class="number">1.85</span></span><br><span class="line"><span class="attr">total gridlevel count  :</span>          <span class="number">10496</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>通过脚本分析输出比较容易：</p>
+<ul>
+<li>正则表达式搜索<code>&quot;^[ \t]*Total energy:&quot;</code>来得到能量</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"> </span><br><span class="line">cutoffs=&quot;50 100 150 200 250 300 350 400 450 500&quot;</span><br><span class="line"> </span><br><span class="line">input_file=Si_bulk8.inp</span><br><span class="line">output_file=Si_bulk8.out</span><br><span class="line">plot_file=cutoff_data.ssv</span><br><span class="line"> </span><br><span class="line">rel_cutoff=60</span><br><span class="line"> </span><br><span class="line">echo &quot;# Grid cutoff vs total energy&quot; &gt; $plot_file</span><br><span class="line">echo &quot;# Date: $(date)&quot; &gt;&gt; $plot_file</span><br><span class="line">echo &quot;# PWD: $PWD&quot; &gt;&gt; $plot_file</span><br><span class="line">echo &quot;# REL_CUTOFF = $rel_cutoff&quot; &gt;&gt; $plot_file</span><br><span class="line">echo -n &quot;# Cutoff (Ry) | Total Energy (Ha)&quot; &gt;&gt; $plot_file</span><br><span class="line">grid_header=true</span><br><span class="line">for ii in $cutoffs ; do</span><br><span class="line">    work_dir=cutoff_$&#123;ii&#125;Ry</span><br><span class="line">    total_energy=$(grep -e &#x27;^[ \t]*Total energy&#x27; $work_dir/$output_file | awk &#x27;&#123;print $3&#125;&#x27;)</span><br><span class="line">    ngrids=$(grep -e &#x27;^[ \t]*QS| Number of grid levels:&#x27; $work_dir/$output_file | \</span><br><span class="line">             awk &#x27;&#123;print $6&#125;&#x27;)</span><br><span class="line">    if $grid_header ; then</span><br><span class="line">        for ((igrid=1; igrid &lt;= ngrids; igrid++)) ; do</span><br><span class="line">            printf &quot; | NG on grid %d&quot; $igrid &gt;&gt; $plot_file</span><br><span class="line">        done</span><br><span class="line">        printf &quot;\n&quot; &gt;&gt; $plot_file</span><br><span class="line">        grid_header=false</span><br><span class="line">    fi</span><br><span class="line">    printf &quot;%10.2f  %15.10f&quot; $ii $total_energy &gt;&gt; $plot_file</span><br><span class="line">    for ((igrid=1; igrid &lt;= ngrids; igrid++)) ; do</span><br><span class="line">        grid=$(grep -e &#x27;^[ \t]*count for grid&#x27; $work_dir/$output_file | \</span><br><span class="line">               awk -v igrid=$igrid &#x27;(NR == igrid)&#123;print $5&#125;&#x27;)</span><br><span class="line">        printf &quot;  %6d&quot; $grid &gt;&gt; $plot_file</span><br><span class="line">    done</span><br><span class="line">    printf &quot;\n&quot; &gt;&gt; $plot_file</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>最后cutoff_data.ssv中得到</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Grid cutoff vs total energy</span></span><br><span class="line"><span class="comment"># Date: Mon Jan 20 21:20:34 GMT 2014</span></span><br><span class="line"><span class="comment"># PWD: /home/tong/tutorials/converging_grid/sample_output</span></span><br><span class="line"><span class="comment"># REL_CUTOFF = 60</span></span><br><span class="line"><span class="comment"># Cutoff (Ry) | Total Energy (Ha) | NG on grid 1 | NG on grid 2 | NG on grid 3 | NG on grid 4</span></span><br><span class="line">     <span class="attribute">50</span>.<span class="number">00</span>   -<span class="number">32</span>.<span class="number">3795329864</span>    <span class="number">5048</span>    <span class="number">5432</span>      <span class="number">16</span>       <span class="number">0</span></span><br><span class="line">    <span class="attribute">100</span>.<span class="number">00</span>   -<span class="number">32</span>.<span class="number">3804557631</span>    <span class="number">2720</span>    <span class="number">5000</span>    <span class="number">2760</span>      <span class="number">16</span></span><br><span class="line">    <span class="attribute">150</span>.<span class="number">00</span>   -<span class="number">32</span>.<span class="number">3804554850</span>    <span class="number">2032</span>    <span class="number">3016</span>    <span class="number">5432</span>      <span class="number">16</span></span><br><span class="line">    <span class="attribute">200</span>.<span class="number">00</span>   -<span class="number">32</span>.<span class="number">3804554982</span>    <span class="number">1880</span>    <span class="number">2472</span>    <span class="number">3384</span>    <span class="number">2760</span></span><br><span class="line">    <span class="attribute">250</span>.<span class="number">00</span>   -<span class="number">32</span>.<span class="number">3804554859</span>     <span class="number">264</span>    <span class="number">4088</span>    <span class="number">3384</span>    <span class="number">2760</span></span><br><span class="line">    <span class="attribute">300</span>.<span class="number">00</span>   -<span class="number">32</span>.<span class="number">3804554843</span>     <span class="number">264</span>    <span class="number">2456</span>    <span class="number">5000</span>    <span class="number">2776</span></span><br><span class="line">    <span class="attribute">350</span>.<span class="number">00</span>   -<span class="number">32</span>.<span class="number">3804554846</span>      <span class="number">56</span>    <span class="number">1976</span>    <span class="number">5688</span>    <span class="number">2776</span></span><br><span class="line">    <span class="attribute">400</span>.<span class="number">00</span>   -<span class="number">32</span>.<span class="number">3804554851</span>      <span class="number">56</span>    <span class="number">1976</span>    <span class="number">3016</span>    <span class="number">5448</span></span><br><span class="line">    <span class="attribute">450</span>.<span class="number">00</span>   -<span class="number">32</span>.<span class="number">3804554851</span>       <span class="number">0</span>    <span class="number">2032</span>    <span class="number">3016</span>    <span class="number">5448</span></span><br><span class="line">    <span class="attribute">500</span>.<span class="number">00</span>   -<span class="number">32</span>.<span class="number">3804554850</span>       <span class="number">0</span>    <span class="number">2032</span>    <span class="number">3016</span>    <span class="number">5448</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>数据显示，在<code>REL_CUTOFF</code>为60 Ry的情况下，<code>CUTOFF</code>设置 为250 Ry或更高将产生总能量误差小于<script type="math/tex">10^{-8}</script>Hatree。</li>
+<li>随着<code>CUTOFF</code>的增加，分配给最精细网格的高斯数减少。简单地增加<code>CUTOFF</code>而不增加<code>REL_CUTOFF</code>可能最终导致能量收敛缓慢，因为越来越多的高斯被推到更粗糙的网格级别，从而抵消了<code>CUTOFF</code>的增加。</li>
+</ul>
+<h3 id="REL-CUTOFF"><a href="#REL-CUTOFF" class="headerlink" title="REL_CUTOFF"></a>REL_CUTOFF</h3><p>同样的方法，将<code>CUTOFF</code>设置 为250 Ry来测试<code>REL_CUTOFF</code></p>
+<p>在已有的 <code>template.inp</code>模板基础上，脚本修改为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"> </span><br><span class="line">rel_cutoffs=&quot;10 20 30 40 50 60 70 80 90 100&quot;</span><br><span class="line"> </span><br><span class="line">basis_file=BASIS_SET</span><br><span class="line">potential_file=GTH_POTENTIALS</span><br><span class="line">template_file=template.inp</span><br><span class="line">input_file=Si_bulk8.inp</span><br><span class="line"> </span><br><span class="line">cutoff=250</span><br><span class="line"> </span><br><span class="line">for ii in $rel_cutoffs ; do</span><br><span class="line">    work_dir=rel_cutoff_$&#123;ii&#125;Ry</span><br><span class="line">    if [ ! -d $work_dir ] ; then</span><br><span class="line">        mkdir $work_dir</span><br><span class="line">    else</span><br><span class="line">        rm -r $work_dir/*</span><br><span class="line">    fi</span><br><span class="line">    sed -e &quot;s/LT_cutoff/$&#123;cutoff&#125;/g&quot; \</span><br><span class="line">        -e &quot;s/LT_rel_cutoff/$&#123;ii&#125;/g&quot; \</span><br><span class="line">        $template_file &gt; $work_dir/$input_file</span><br><span class="line">    cp $basis_file $work_dir</span><br><span class="line">    cp $potential_file $work_dir</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>运行计算：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"> </span><br><span class="line">rel_cutoffs=&quot;10 20 30 40 50 60 70 80 90 100&quot;</span><br><span class="line"> </span><br><span class="line">cp2k_bin=cp2k.popt</span><br><span class="line">input_file=Si_bulk8.inp</span><br><span class="line">output_file=Si_bulk8.out</span><br><span class="line">no_proc_per_calc=2</span><br><span class="line">no_proc_to_use=16</span><br><span class="line"> </span><br><span class="line">counter=1</span><br><span class="line">max_parallel_calcs=$(expr $no_proc_to_use / $no_proc_per_calc)</span><br><span class="line">for ii in $rel_cutoffs ; do</span><br><span class="line">    work_dir=rel_cutoff_$&#123;ii&#125;Ry</span><br><span class="line">    cd $work_dir</span><br><span class="line">    if [ -f $output_file ] ; then</span><br><span class="line">        rm $output_file</span><br><span class="line">    fi</span><br><span class="line">    mpirun -np $no_proc_per_calc $cp2k_bin -o $output_file $input_file &amp;</span><br><span class="line">    cd ..</span><br><span class="line">    mod_test=$(echo &quot;$counter % $max_parallel_calcs&quot; | bc)</span><br><span class="line">    if [ $mod_test -eq 0 ] ; then</span><br><span class="line">        wait</span><br><span class="line">    fi</span><br><span class="line">    counter=$(expr $counter + 1)</span><br><span class="line">done</span><br><span class="line">wait</span><br></pre></td></tr></table></figure>
+<p>分析结果</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"> #</span><span class="bash">!/bin/bash</span></span><br><span class="line"> </span><br><span class="line">rel_cutoffs=&quot;10 20 30 40 50 60 70 80 90 100&quot;</span><br><span class="line"> </span><br><span class="line">input_file=Si_bulk8.inp</span><br><span class="line">output_file=Si_bulk8.out</span><br><span class="line">plot_file=rel_cutoff_data.ssv</span><br><span class="line"> </span><br><span class="line">cutoff=250</span><br><span class="line"> </span><br><span class="line">echo &quot;# Rel Grid cutoff vs total energy&quot; &gt; $plot_file</span><br><span class="line">echo &quot;# Date: $(date)&quot; &gt;&gt; $plot_file</span><br><span class="line">echo &quot;# PWD: $PWD&quot; &gt;&gt; $plot_file</span><br><span class="line">echo &quot;# CUTOFF = $&#123;cutoff&#125;&quot; &gt;&gt; $plot_file</span><br><span class="line">echo -n &quot;# Rel Cutoff (Ry) | Total Energy (Ha)&quot; &gt;&gt; $plot_file</span><br><span class="line">grid_header=true</span><br><span class="line">for ii in $rel_cutoffs ; do</span><br><span class="line">    work_dir=rel_cutoff_$&#123;ii&#125;Ry</span><br><span class="line">    total_energy=$(grep -e &#x27;^[ \t]*Total energy&#x27; $work_dir/$output_file | awk &#x27;&#123;print $3&#125;&#x27;)</span><br><span class="line">    ngrids=$(grep -e &#x27;^[ \t]*QS| Number of grid levels:&#x27; $work_dir/$output_file | \</span><br><span class="line">             awk &#x27;&#123;print $6&#125;&#x27;)</span><br><span class="line">    if $grid_header ; then</span><br><span class="line">        for ((igrid=1; igrid &lt;= ngrids; igrid++)) ; do</span><br><span class="line">            printf &quot; | NG on grid %d&quot; $igrid &gt;&gt; $plot_file</span><br><span class="line">        done</span><br><span class="line">        printf &quot;\n&quot; &gt;&gt; $plot_file</span><br><span class="line">        grid_header=false</span><br><span class="line">    fi</span><br><span class="line">    printf &quot;%10.2f  %15.10f&quot; $ii $total_energy &gt;&gt; $plot_file</span><br><span class="line">    for ((igrid=1; igrid &lt;= ngrids; igrid++)) ; do</span><br><span class="line">        grid=$(grep -e &#x27;^[ \t]*count for grid&#x27; $work_dir/$output_file | \</span><br><span class="line">               awk -v igrid=$igrid &#x27;(NR == igrid)&#123;print $5&#125;&#x27;)</span><br><span class="line">        printf &quot;  %6d&quot; $grid &gt;&gt; $plot_file</span><br><span class="line">    done</span><br><span class="line">    printf &quot;\n&quot; &gt;&gt; $plot_file</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>得到rel_cutoff_data.ssv：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Rel Grid cutoff vs total energy</span></span><br><span class="line"><span class="comment"># Date: Mon Jan 20 00:45:14 GMT 2014</span></span><br><span class="line"><span class="comment"># PWD: /home/tong/tutorials/converging_grid/sample_output</span></span><br><span class="line"><span class="comment"># CUTOFF = 250</span></span><br><span class="line"><span class="comment"># Rel Cutoff (Ry) | Total Energy (Ha) | NG on grid 1 | NG on grid 2 | NG on grid 3 | NG on grid 4</span></span><br><span class="line">     <span class="attribute">10</span>.<span class="number">00</span>   -<span class="number">32</span>.<span class="number">3902980020</span>       <span class="number">0</span>       <span class="number">0</span>    <span class="number">2032</span>    <span class="number">8464</span></span><br><span class="line">     <span class="attribute">20</span>.<span class="number">00</span>   -<span class="number">32</span>.<span class="number">3816384686</span>       <span class="number">0</span>     <span class="number">264</span>    <span class="number">4088</span>    <span class="number">6144</span></span><br><span class="line">     <span class="attribute">30</span>.<span class="number">00</span>   -<span class="number">32</span>.<span class="number">3805115576</span>       <span class="number">0</span>    <span class="number">2032</span>    <span class="number">3016</span>    <span class="number">5448</span></span><br><span class="line">     <span class="attribute">40</span>.<span class="number">00</span>   -<span class="number">32</span>.<span class="number">3805116025</span>      <span class="number">56</span>    <span class="number">1976</span>    <span class="number">3016</span>    <span class="number">5448</span></span><br><span class="line">     <span class="attribute">50</span>.<span class="number">00</span>   -<span class="number">32</span>.<span class="number">3804555002</span>     <span class="number">264</span>    <span class="number">2456</span>    <span class="number">5000</span>    <span class="number">2776</span></span><br><span class="line">     <span class="attribute">60</span>.<span class="number">00</span>   -<span class="number">32</span>.<span class="number">3804554859</span>     <span class="number">264</span>    <span class="number">4088</span>    <span class="number">3384</span>    <span class="number">2760</span></span><br><span class="line">     <span class="attribute">70</span>.<span class="number">00</span>   -<span class="number">32</span>.<span class="number">3804554859</span>    <span class="number">1880</span>    <span class="number">2472</span>    <span class="number">3384</span>    <span class="number">2760</span></span><br><span class="line">     <span class="attribute">80</span>.<span class="number">00</span>   -<span class="number">32</span>.<span class="number">3804554859</span>    <span class="number">1880</span>    <span class="number">2472</span>    <span class="number">3384</span>    <span class="number">2760</span></span><br><span class="line">     <span class="attribute">90</span>.<span class="number">00</span>   -<span class="number">32</span>.<span class="number">3804554848</span>    <span class="number">2032</span>    <span class="number">3016</span>    <span class="number">5432</span>      <span class="number">16</span></span><br><span class="line">    <span class="attribute">100</span>.<span class="number">00</span>   -<span class="number">32</span>.<span class="number">3804554848</span>    <span class="number">2032</span>    <span class="number">3016</span>    <span class="number">5432</span>      <span class="number">16</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>随着<code>REL_CUTOFF</code>值的增加，更多的高斯映射到更精细的网格上。总能量误差减少到小于<script type="math/tex">10^{-8}</script></li>
+<li>当<code>REL_CUTOFF</code>大于或等于60 Ry 。结果因此表明60 Ry确实是<code>REL_CUTOFF</code>值的合适选择。</li>
+</ul>
+<p>综上，说明计算中 设置为如下是最合适的：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&amp;MGRID</span></span><br><span class="line">  <span class="string">CUTOFF</span> <span class="number">250</span></span><br><span class="line">  <span class="string">REL_CUTOFF</span> <span class="number">60</span> </span><br><span class="line"><span class="string">&amp;END</span> <span class="string">MGRID</span></span><br></pre></td></tr></table></figure>
+<h2 id="H2O"><a href="#H2O" class="headerlink" title="H2O"></a>H<sub>2</sub>O</h2>
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>有用可戳(●ˇ∀ˇ●)</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="Zhao Jing 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Zhao Jing
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2020/11/21/%E3%80%90CP2K%E3%80%9103-MGRID%E4%B8%AD%E7%9A%84CUTOFF%E5%92%8CRELEL-CUTOFF/" title="【CP2K】03.&amp;MGRID中的CUTOFF和RELEL_CUTOFF">http://example.com/2020/11/21/【CP2K】03-MGRID中的CUTOFF和RELEL-CUTOFF/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/21/%E3%80%90CP2K%E3%80%9102-%E8%AE%A1%E7%AE%97%E5%8A%9B%E5%92%8C%E8%83%BD%E9%87%8F/" rel="prev" title="【CP2K】02.计算力和能量">
+      <i class="fa fa-chevron-left"></i> 【CP2K】02.计算力和能量
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/22/%E3%80%90Linux%E3%80%91Shell%E8%84%9A%E6%9C%AC/" rel="next" title="【Linux】Shell脚本">
+      【Linux】Shell脚本 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">3.</span> <span class="nav-text">例子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Si"><span class="nav-number">3.1.</span> <span class="nav-text">Si</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E6%A8%A1%E6%9D%BF%E6%96%87%E4%BB%B6"><span class="nav-number">3.1.1.</span> <span class="nav-text">建立模板文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CUTOFF"><span class="nav-number">3.1.2.</span> <span class="nav-text">CUTOFF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#REL-CUTOFF"><span class="nav-number">3.1.3.</span> <span class="nav-text">REL_CUTOFF</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#H2O"><span class="nav-number">3.2.</span> <span class="nav-text">H2O</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhao Jing"
+      src="/images/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">Zhao Jing</p>
+  <div class="site-description" itemprop="description">做一棵树，只为岁月而生长。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaojing629" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaojing629" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:295483858@qq.com" title="E-Mail → mailto:295483858@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+<div class="sidebar-categories" p align="left">
+  <font size="2">
+  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F/">系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%AB%99/">网站</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/">计算化学</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/ADF/">ADF</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/CP2K/">CP2K</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/molpro/">molpro</a></li></ul></li></ul>
+  </font>
+  </p /div>
+
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title"></h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASSCF/" rel="tag">CASSCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CP2K/" rel="tag">CP2K</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECP/" rel="tag">ECP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HF/" rel="tag">HF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCSCF/" rel="tag">MCSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/basis/" rel="tag">basis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geometry/" rel="tag">geometry</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memory/" rel="tag">memory</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag">占据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BB%84%E6%80%81/" rel="tag">多组态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag">对称性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag">波函</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag">点群</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5/" rel="tag">输入</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%87%BA/" rel="tag">输出</a><span class="tag-list-count">1</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-flask"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhao Jing</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">77k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='0,0,0' opacity='0.3' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : '3L90wCaNUKa1MzSQcAhzkLtk-gzGzoHsz',
+      appKey     : 'fQ4t73jXnb71Y9zQWfXj5bIP',
+      placeholder: "可以输入您发现文中的错误或建议~(。・∀・)ノ",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
