@@ -29,7 +29,7 @@
 <meta property="og:description" content="以Si为例的DFT计算">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-11-21T08:09:32.000Z">
-<meta property="article:modified_time" content="2020-11-23T07:01:00.607Z">
+<meta property="article:modified_time" content="2020-11-23T08:17:46.444Z">
 <meta property="article:author" content="Zhao Jing">
 <meta property="article:tag" content="CP2K">
 <meta name="twitter:card" content="summary">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-23 15:01:00" itemprop="dateModified" datetime="2020-11-23T15:01:00+08:00">2020-11-23</time>
+                <time title="修改时间：2020-11-23 16:17:46" itemprop="dateModified" datetime="2020-11-23T16:17:46+08:00">2020-11-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -266,14 +266,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>8.9k</span>
+              <span>9.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>8 分钟</span>
+              <span>9 分钟</span>
             </span>
             <div class="post-description">以Si为例的DFT计算</div>
 
@@ -292,7 +292,7 @@
 <li>Si_bulk8.inp中主要包含<code>&amp;GLOBAL</code>和<code>&amp;FORCE_EVAL</code>两部分：·</li>
 </ul>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&amp;GLOBAL</span></span><br><span class="line">  <span class="string">PROJECT</span> <span class="string">Si_bulk8</span></span><br><span class="line">  <span class="string">RUN_TYPE</span> <span class="string">ENERGY_FORCE</span></span><br><span class="line">  <span class="string">PRINT_LEVEL</span> <span class="string">LOW</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">GLOBAL</span></span><br><span class="line"><span class="meta">&amp;FORCE_EVAL</span></span><br><span class="line">  <span class="string">METHOD</span> <span class="string">Quickstep</span></span><br><span class="line">  <span class="meta">&amp;SUBSYS</span></span><br><span class="line">    <span class="string">&amp;KIND</span> <span class="string">Si</span></span><br><span class="line">      <span class="string">ELEMENT</span> <span class="string">Si</span></span><br><span class="line">      <span class="string">BASIS_SET</span> <span class="string">DZVP-GTH-PADE</span></span><br><span class="line">      <span class="string">POTENTIAL</span> <span class="string">GTH-PADE-q4</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">KIND</span></span><br><span class="line">    <span class="meta">&amp;CELL</span></span><br><span class="line">      <span class="string">A</span>     <span class="number">5.430697500</span>    <span class="number">0.000000000</span>    <span class="number">0.000000000</span></span><br><span class="line">      <span class="string">B</span>     <span class="number">0.000000000</span>    <span class="number">5.430697500</span>    <span class="number">0.000000000</span></span><br><span class="line">      <span class="string">C</span>     <span class="number">0.000000000</span>    <span class="number">0.000000000</span>    <span class="number">5.430697500</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">CELL</span></span><br><span class="line">    <span class="meta">&amp;COORD</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">0.000000000</span>    <span class="number">0.000000000</span>    <span class="number">0.000000000</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">0.000000000</span>    <span class="number">2.715348700</span>    <span class="number">2.715348700</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">2.715348700</span>    <span class="number">2.715348700</span>    <span class="number">0.000000000</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">2.715348700</span>    <span class="number">0.000000000</span>    <span class="number">2.715348700</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">4.073023100</span>    <span class="number">1.357674400</span>    <span class="number">4.073023100</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">1.357674400</span>    <span class="number">1.357674400</span>    <span class="number">1.357674400</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">1.357674400</span>    <span class="number">4.073023100</span>    <span class="number">4.073023100</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">4.073023100</span>    <span class="number">4.073023100</span>    <span class="number">1.357674400</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">COORD</span></span><br><span class="line">  <span class="string">&amp;END</span> <span class="string">SUBSYS</span></span><br><span class="line">  <span class="meta">&amp;DFT</span></span><br><span class="line">    <span class="string">BASIS_SET_FILE_NAME</span>  <span class="string">BASIS_SET</span></span><br><span class="line">    <span class="string">POTENTIAL_FILE_NAME</span>  <span class="string">GTH_POTENTIALS</span></span><br><span class="line">    <span class="meta">&amp;QS</span></span><br><span class="line">      <span class="string">EPS_DEFAULT</span> <span class="number">1.0E-10</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">QS</span></span><br><span class="line">    <span class="meta">&amp;MGRID</span></span><br><span class="line">      <span class="string">NGRIDS</span> <span class="number">4</span></span><br><span class="line">      <span class="string">CUTOFF</span> <span class="number">300</span></span><br><span class="line">      <span class="string">REL_CUTOFF</span> <span class="number">60</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">MGRID</span></span><br><span class="line">    <span class="meta">&amp;XC</span></span><br><span class="line">      <span class="string">&amp;XC_FUNCTIONAL</span> <span class="string">PADE</span></span><br><span class="line">      <span class="string">&amp;END</span> <span class="string">XC_FUNCTIONAL</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">XC</span></span><br><span class="line">    <span class="meta">&amp;SCF</span></span><br><span class="line">      <span class="string">SCF_GUESS</span> <span class="string">ATOMIC</span></span><br><span class="line">      <span class="string">EPS_SCF</span> <span class="number">1.0E-7</span></span><br><span class="line">      <span class="string">MAX_SCF</span> <span class="number">300</span></span><br><span class="line">      <span class="string">&amp;DIAGONALIZATION</span>  <span class="string">ON</span></span><br><span class="line">        <span class="string">ALGORITHM</span> <span class="string">STANDARD</span></span><br><span class="line">      <span class="string">&amp;END</span> <span class="string">DIAGONALIZATION</span></span><br><span class="line">      <span class="string">&amp;MIXING</span>  <span class="string">T</span></span><br><span class="line">        <span class="string">METHOD</span> <span class="string">BROYDEN_MIXING</span></span><br><span class="line">        <span class="string">ALPHA</span> <span class="number">0.4</span></span><br><span class="line">        <span class="string">NBROYDEN</span> <span class="number">8</span></span><br><span class="line">      <span class="string">&amp;END</span> <span class="string">MIXING</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">SCF</span></span><br><span class="line">  <span class="string">&amp;END</span> <span class="string">DFT</span></span><br><span class="line">  <span class="meta">&amp;PRINT</span></span><br><span class="line">    <span class="string">&amp;FORCES</span> <span class="string">ON</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">FORCES</span></span><br><span class="line">  <span class="string">&amp;END</span> <span class="string">PRINT</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">FORCE_EVAL</span></span><br></pre></td></tr></table></figure>
-<h2 id="amp-GLOBAL"><a href="#amp-GLOBAL" class="headerlink" title="&amp;GLOBAL"></a>&amp;GLOBAL</h2><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&amp;<span class="meta">GLOBAL</span></span><br><span class="line">  PROJECT Si_bulk8</span><br><span class="line">  RUN_TYPE ENERGY_FORCE</span><br><span class="line">  PRINT_LEVEL LOW</span><br><span class="line">&amp;<span class="meta">END</span> <span class="meta">GLOBAL</span></span><br></pre></td></tr></table></figure>
+<h2 id="amp-GLOBAL-修改任务类型"><a href="#amp-GLOBAL-修改任务类型" class="headerlink" title="&amp;GLOBAL 修改任务类型"></a>&amp;GLOBAL 修改任务类型</h2><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&amp;<span class="meta">GLOBAL</span></span><br><span class="line">  PROJECT Si_bulk8</span><br><span class="line">  RUN_TYPE ENERGY_FORCE</span><br><span class="line">  PRINT_LEVEL LOW</span><br><span class="line">&amp;<span class="meta">END</span> <span class="meta">GLOBAL</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>PROJECT</code>：任务名称，等同于<code>PROJECT_NAME</code>，CP2K自动生成的所有输出文件都将以这个名称开头。</li>
 <li><code>RUN_TYPE</code>：任务类型，<code>ENERGY_FORCE</code>进行静态能量和力的计算</li>
@@ -306,7 +306,7 @@
 </ul>
 <h3 id="amp-SUBSYS"><a href="#amp-SUBSYS" class="headerlink" title="&amp;SUBSYS"></a>&amp;SUBSYS</h3><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&amp;SUBSYS</span></span><br><span class="line">……</span><br><span class="line"><span class="meta">&amp;END SUBSYS</span></span><br></pre></td></tr></table></figure>
 <p>定义模拟晶胞和计算中原子的初始坐标。</p>
-<h4 id="amp-KIND"><a href="#amp-KIND" class="headerlink" title="&amp;KIND"></a>&amp;KIND</h4><p>定义计算中的元素，每个元素必须有一个<code>&amp;KIND</code>。</p>
+<h4 id="amp-KIND-修改基组"><a href="#amp-KIND-修改基组" class="headerlink" title="&amp;KIND 修改基组"></a>&amp;KIND 修改基组</h4><p>定义计算中的元素，每个元素必须有一个<code>&amp;KIND</code>。</p>
 <figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&amp;<span class="keyword">KIND</span> Si</span><br><span class="line">  ELEMENT   Si</span><br><span class="line">  BASIS_SET DZVP-GTH-PADE</span><br><span class="line">  POTENTIAL GTH-PADE-q4</span><br><span class="line">&amp;<span class="keyword">END</span> <span class="keyword">KIND</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>BASIS_SET</code>：定义基组，如DZVP-GTH-PADE（双 ζ 带有极化基础的ζ，针对Geodecker-Teter-Hutter PADE LDA赝势进行了优化），同<code>BASIS_SET_FILE_NAME</code></li>
@@ -360,8 +360,14 @@
 <h4 id="amp-QS"><a href="#amp-QS" class="headerlink" title="&amp;QS"></a>&amp;QS</h4><p>包含QUICKSTEP使用的常规控制参数。</p>
 <figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&amp;QS</span></span><br><span class="line">  EPS_DEFAULT <span class="number">1.0</span>E-<span class="number">10</span></span><br><span class="line"><span class="meta">&amp;END QS</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li><code>EPS_DEFAULT</code>：QUICKSTEP中使用的所有公差设置默认值。默认为<script type="math/tex">10^{-10}</script></li>
-<li><code>EPS_ *</code>：设置各类公差，覆盖EPS_DEFAULT值。</li>
+<li><code>EPS_DEFAULT</code>：QUICKSTEP中使用的所有公差设置默认值。默认为<script type="math/tex">10^{-10}</script>。在进行比较高精度计算时，需要将EPS_DEFAULT 设为1.0E-14。</li>
+<li><code>EPS_ *</code>：设置各类公差，覆盖EPS_DEFAULT值。<ul>
+<li><code>EPS_CORE_CHARGE</code>：核电荷映射精度，默认为<code>EPS_DEFAULT</code>/100.0</li>
+<li><code>EPS_GVG_RSPACE</code>：实空间KS 矩阵元积分精度。默认为SQRT(EPS_DEFAULT)</li>
+<li><code>EPS_PGF_ORB</code>：重叠矩阵元精度，默认为SQRT(EPS_DEFAULT)</li>
+<li><code>EPS_KG_ORB</code>：使用Kim-Gordon 方法时的精度,默认为SQRT(EPS_DEFAULT)</li>
+</ul>
+</li>
 <li><code>METHOD</code>：指定应采用的电子结构方法<ul>
 <li><code>GBW</code>：默认。高斯和平面波方法。</li>
 </ul>
@@ -369,7 +375,7 @@
 </ul>
 <h4 id="amp-MGRID"><a href="#amp-MGRID" class="headerlink" title="&amp;MGRID"></a>&amp;MGRID</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&amp;MGRID</span></span><br><span class="line">  <span class="string">NGRIDS</span> <span class="number">4</span></span><br><span class="line">  <span class="string">CUTOFF</span> <span class="number">300</span></span><br><span class="line">  <span class="string">REL_CUTOFF</span> <span class="number">60</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">MGRID</span></span><br></pre></td></tr></table></figure>
 <p>定义了QUICKSTEP计算中使用的积分网格。设置4个级别的多重网格。</p>
-<h4 id="amp-XC"><a href="#amp-XC" class="headerlink" title="&amp;XC"></a>&amp;XC</h4><p>使用的交换相关密度泛函的参数</p>
+<h4 id="amp-XC-修改泛函"><a href="#amp-XC-修改泛函" class="headerlink" title="&amp;XC 修改泛函"></a>&amp;XC 修改泛函</h4><p>使用的交换相关密度泛函的参数</p>
 <figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&amp;XC</span></span><br><span class="line">……</span><br><span class="line"><span class="meta">&amp;END XC</span></span><br></pre></td></tr></table></figure>
 <h5 id="amp-XC-FUNCTIONAL"><a href="#amp-XC-FUNCTIONAL" class="headerlink" title="&amp;XC_FUNCTIONAL"></a>&amp;XC_FUNCTIONAL</h5><p>注意选择的泛函要与所选择的基组和赝势一致</p>
 <figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&amp;XC_FUNCTIONAL PADE</span></span><br><span class="line"><span class="meta">&amp;END XC_FUNCTIONAL</span></span><br></pre></td></tr></table></figure>
@@ -391,10 +397,11 @@
 <li><code>RESTART</code>：将RESTART文件用作初始猜测（如果不存在，则使用<code>ATOMIC</code>）</li>
 </ul>
 </li>
-<li><code>EPS_SCF</code>：设置电荷密度剩余量的公差。这将覆盖<code>&amp;QS</code>小节中设置的<code>EPS_DEFAULT</code>值。 默认为<script type="math/tex">10^{-5}</script></li>
+<li><code>EPS_SCF</code>：设置电荷密度剩余量的公差。这将覆盖<code>&amp;QS</code>小节中设置的<code>EPS_DEFAULT</code>值。 默认为<script type="math/tex">10^{-5}</script>。如果要<br>进行比较高精度的计算，可以将SCF 收敛精度设置为<code>1E-6</code>。对于频率计算等精度要求更高的计算，SCF 收敛精度可以设置为<code>1E-7</code>。</li>
 <li><code>MAX_SCF</code>：设置允许QUICKSTEP执行的每次基态能量计算的最大自洽循环数。</li>
+<li><code>ADDED_MOS</code>：每个自旋附加的MOS数量，默认为<code>0</code>，在使用对角化方法<code>&amp;DIAGONALIZATION</code>的时候必须使用。</li>
 </ul>
-<h5 id="amp-DIAGONALIZATION"><a href="#amp-DIAGONALIZATION" class="headerlink" title="&amp;DIAGONALIZATION"></a>&amp;DIAGONALIZATION</h5><p>告诉代码使用传统的对角化方法来查找基态Kohn-Sham能量和电子密度。如果该节中有参数，就应当设置为<code>ON</code>或<code>.TRUE.</code>或<code>T</code>。对角化的替代方法是使用轨道变换（OT）方法，在这种情况下，用户应删除<code>&amp;DIAGONALIZATION</code>块或改为<code>OFF</code>或<code>.FALSE.</code>，然后添加<code>&amp;OT</code>代替</p>
+<h5 id="amp-DIAGONALIZATION"><a href="#amp-DIAGONALIZATION" class="headerlink" title="&amp;DIAGONALIZATION"></a>&amp;DIAGONALIZATION</h5><p>告诉代码使用传统的对角化方法来查找基态Kohn-Sham能量和电子密度。如果该节中有参数，就应当设置为<code>ON</code>或<code>.TRUE.</code>或<code>T</code>。对角化的替代方法是使用轨道变换（OT）方法，在这种情况下，用户应删除<code>&amp;DIAGONALIZATION</code>块或改为<code>OFF</code>或<code>.FALSE.</code>，然后添加<code>&amp;OT</code>代替。</p>
 <figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">&amp;DIAGONALIZATION</span>  <span class="meta">ON</span></span><br><span class="line">  ALGORITHM STANDARD</span><br><span class="line"><span class="variable">&amp;END</span> DIAGONALIZATION</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>ALGORITHM</code>用于对角化的算法<ul>
@@ -405,14 +412,15 @@
 <h5 id="amp-MIXING"><a href="#amp-MIXING" class="headerlink" title="&amp;MIXING"></a>&amp;MIXING</h5><p>包含自一致性计算中与电荷混合相关的所有参数。可以通过<code>.TRUE.</code>（<code>T</code>）或者<code>.FALSE.</code>（<code>F</code>）来打开或者关闭，默认是打开。仅适用于传统的对角线化方法， OT方法使用不同的方法进行电荷混合。</p>
 <figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&amp;MIXING  T</span><br><span class="line">  <span class="function"><span class="keyword">METHOD</span> <span class="title">BROYDEN_MIXING</span></span></span><br><span class="line"><span class="function">  <span class="title">ALPHA</span> 0.4</span></span><br><span class="line"><span class="function">  <span class="title">NBROYDEN</span> 8</span></span><br><span class="line"><span class="function">&amp;<span class="title">END</span> <span class="title">MIXING</span></span></span><br></pre></td></tr></table></figure>
 <ul>
-<li><code>METHOD</code>：设置混合方法<ul>
+<li><p><code>METHOD</code>：设置混合方法</p>
+<ul>
 <li><code>BROYDEN_MIXING</code>：使用Broyden混合</li>
 </ul>
 </li>
-<li><code>ALPHA</code>：设置混合参数，比如<code>0.4</code>是将0.4的输出密度与0.6的输入密度混合，以在下一个SCF迭代中形成新的输入密度。</li>
+<li><code>ALPHA</code>：设置混合参数，默认是<code>0.4</code>。比如<code>0.4</code>是将0.4的输出密度与0.6的输入密度混合，以在下一个SCF迭代中形成新的输入密度。</li>
 <li><p><code>NBROYDEN</code>：等同于<code>NBUFFER</code>，设置在Broyden混合算法中使用的历史记录数。</p>
 </li>
-<li><p><code>&amp;SMEAR</code>：不使用Smearing，对于金属或间隙很小的系统，这可能会导致计算不稳定，并且由于电子占据函数的不连续性，自洽迭代可能永远不会收敛。因此可以添加</p>
+<li><p><code>&amp;SMEAR</code>：不使用Smearing对于金属或间隙很小的系统，这可能会导致计算不稳定，并且由于电子占据函数的不连续性，自洽迭代可能永远不会收敛。因此可以添加</p>
 <figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&amp;SMEAR <span class="keyword">ON</span></span><br><span class="line">  <span class="function"><span class="keyword">METHOD</span> <span class="title">FERMI_DIRAC</span></span></span><br><span class="line"><span class="function">  <span class="title">ELECTRONIC_TEMPERATURE</span> [<span class="title">K</span>] 300</span></span><br><span class="line"><span class="function">&amp;<span class="title">END</span> <span class="title">SMEA</span></span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>METHOD</code>：使用的Smearing方法，<code>FERMI_DIRAC</code>即Fermi-Dirac smearing function</li>
@@ -427,29 +435,30 @@
 </ul>
 </li>
 </ul>
-<h5 id="amp-OT"><a href="#amp-OT" class="headerlink" title="&amp;OT"></a>&amp;OT</h5><p>设置轨道变换（OT）方法的各种选项:</p>
+<h5 id="amp-OT"><a href="#amp-OT" class="headerlink" title="&amp;OT"></a>&amp;OT</h5><p>如果体系有较大带隙的，如为半导体或者绝缘体等，推荐使用OT 算法，收敛速度比较快。但是对预处理敏感。好的预处理器可能很昂贵。不能<code>smearing</code>或进行高级<code>SCF mixing</code> ，HOMO-LUMO 带隙很小或者几乎没有的系统，如金属系统，收敛性较差（此时应该使用<code>&amp;DIAGONALIZATION</code>和<code>&amp;Smear</code>）。设置轨道变换（OT）方法的各种选项：</p>
 <ul>
-<li>优点：速度快，因为不需要执行昂贵的对角化处理。如果预处理正确，方法保证找到最小值。</li>
-<li><p>缺点：对预处理敏感。好的预处理器可能很昂贵。不能<code>smearing</code>或进行高级<code>SCF mixing</code> ：金属系统的收敛性较差。</p>
-</li>
-<li><p><code>PRECONDITIONER</code>：</p>
-<ul>
+<li><code>PRECONDITIONER</code>：<ul>
 <li><code>FULL_KINETIC</code>：默认。S和T的Cholesky反转，快速构建，强大且相对较好，可用于超大型系统。</li>
 <li><code>FULL_ALL</code>：基于对角化的最有效的状态选择性预处理器，要求ENERGY_GAP参数低估HOMO-LUMO间隙。对于几乎所有系统，都建议使用此预处理器，但在大型系统中，make_preconditioner将主导总计算成本。</li>
 </ul>
 </li>
 <li><code>MINIMIZER</code>：<ul>
 <li><code>CG</code>：默认，共轭梯度：最可靠，适用于困难的系统。如果合适的话，总能量应该在每个OT CG步骤减少。</li>
-<li><code>DIIS</code>：迭代子空间中的直接反演：不如CG可靠，但有时快约50％</li>
+<li><code>DIIS</code>：迭代子空间中的直接反演：不如CG可靠，但有时快约50％。</li>
+<li><code>BROYDEN</code>：如果<code>CG</code>和<code>DIIS</code>都有问题，可以使用这个方法。</li>
 </ul>
 </li>
+<li><code>ENERGY_GAP</code>：默认是-1。应该是能隙[a.u.]（HOMO-LUMO）的估计值，并应在预处理中使用，尤其是对<code>FULL_ALL</code>预处理器有效，在这种情况下，它应该比能隙小。（可以为小数，例如0.002） 。 <code>FULL_SINGLE_INVERSE</code>将其作为下限（值小于0.05可能会导致稳定性问题）。通常，在初始猜测很差的情况下，heigher值会驯服预处理器。负值将取决于预调节器的类型，使选择留给CP2K。</li>
+<li></li>
 </ul>
-<h5 id="amp-OUTER-SCF"><a href="#amp-OUTER-SCF" class="headerlink" title="&amp;OUTER_SCF"></a>&amp;OUTER_SCF</h5><ul>
+<h5 id="amp-OUTER-SCF"><a href="#amp-OUTER-SCF" class="headerlink" title="&amp;OUTER_SCF"></a>&amp;OUTER_SCF</h5><p><code>OUTER_SCF</code> 为加速收敛的一种方法，如果SCF 经过100 次优化依然没有收敛，则进入OUTER_SCF 过程，对前一次计算的波函数进行调整，重新进行SCF 迭代。每次OUTER_SCF 中优化的次数依然是100 次，比如最多可以进行5次OUTER_SCF，那么最多可以进行500 次SCF 计算。</p>
+<ul>
 <li><code>EPS_SCF</code>： outer SCF变量的目标梯度。默认为<script type="math/tex">10^{-5}</script>。内部循环的<code>EPS_SCF</code>还确定了外部循环可以达到的值，通常，外部循环的<code>EPS_SCF</code>必须小于或等于内部循环的EPS_SCF。</li>
 <li><code>MAX_SCF</code>：最大循环数</li>
 </ul>
 <h3 id="amp-PRINT"><a href="#amp-PRINT" class="headerlink" title="&amp;PRINT"></a>&amp;PRINT</h3><ul>
-<li><code>&amp;FORCES</code>，在主要的输出中输出原子受力。</li>
+<li><code>&amp;FORCES</code>，在主要的输出中输出原子受力。<code>GLOBAL</code> 部分的<code>RUN_TYPE</code> 必须设置为<code>ENERGY_FORCE</code> 或者<code>GEO_OPT</code>。如果要将受力信息存储到文件中，则需要设定文件的名称；否则受力信息将会打印到out 文件中。</li>
+<li></li>
 </ul>
 <h1 id="输出文件"><a href="#输出文件" class="headerlink" title="输出文件"></a>输出文件</h1><h2 id="out"><a href="#out" class="headerlink" title=".out"></a>.out</h2><p>主要的输出文件</p>
 <ul>
@@ -605,7 +614,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">输入文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#amp-GLOBAL"><span class="nav-number">1.1.</span> <span class="nav-text">&amp;GLOBAL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#amp-FORCE-EVAL"><span class="nav-number">1.2.</span> <span class="nav-text">&amp;FORCE_EVAL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#amp-SUBSYS"><span class="nav-number">1.2.1.</span> <span class="nav-text">&amp;SUBSYS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-KIND"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">&amp;KIND</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-CELL"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">&amp;CELL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-COORD"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">&amp;COORD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-TOPOLOGY"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">&amp;TOPOLOGY</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#amp-DFT"><span class="nav-number">1.2.2.</span> <span class="nav-text">&amp;DFT</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-QS"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">&amp;QS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-MGRID"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">&amp;MGRID</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-XC"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">&amp;XC</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-XC-FUNCTIONAL"><span class="nav-number">1.2.2.3.1.</span> <span class="nav-text">&amp;XC_FUNCTIONAL</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-XC-GRID"><span class="nav-number">1.2.2.3.2.</span> <span class="nav-text">&amp;XC_GRID</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-SCF"><span class="nav-number">1.2.2.4.</span> <span class="nav-text">&amp;SCF</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-DIAGONALIZATION"><span class="nav-number">1.2.2.4.1.</span> <span class="nav-text">&amp;DIAGONALIZATION</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-MIXING"><span class="nav-number">1.2.2.4.2.</span> <span class="nav-text">&amp;MIXING</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-OT"><span class="nav-number">1.2.2.4.3.</span> <span class="nav-text">&amp;OT</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-OUTER-SCF"><span class="nav-number">1.2.2.4.4.</span> <span class="nav-text">&amp;OUTER_SCF</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#amp-PRINT"><span class="nav-number">1.2.3.</span> <span class="nav-text">&amp;PRINT</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">输出文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#out"><span class="nav-number">2.1.</span> <span class="nav-text">.out</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wfn"><span class="nav-number">2.2.</span> <span class="nav-text">.wfn</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">输入文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#amp-GLOBAL-%E4%BF%AE%E6%94%B9%E4%BB%BB%E5%8A%A1%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">&amp;GLOBAL 修改任务类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#amp-FORCE-EVAL"><span class="nav-number">1.2.</span> <span class="nav-text">&amp;FORCE_EVAL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#amp-SUBSYS"><span class="nav-number">1.2.1.</span> <span class="nav-text">&amp;SUBSYS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-KIND-%E4%BF%AE%E6%94%B9%E5%9F%BA%E7%BB%84"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">&amp;KIND 修改基组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-CELL"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">&amp;CELL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-COORD"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">&amp;COORD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-TOPOLOGY"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">&amp;TOPOLOGY</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#amp-DFT"><span class="nav-number">1.2.2.</span> <span class="nav-text">&amp;DFT</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-QS"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">&amp;QS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-MGRID"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">&amp;MGRID</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-XC-%E4%BF%AE%E6%94%B9%E6%B3%9B%E5%87%BD"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">&amp;XC 修改泛函</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-XC-FUNCTIONAL"><span class="nav-number">1.2.2.3.1.</span> <span class="nav-text">&amp;XC_FUNCTIONAL</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-XC-GRID"><span class="nav-number">1.2.2.3.2.</span> <span class="nav-text">&amp;XC_GRID</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-SCF"><span class="nav-number">1.2.2.4.</span> <span class="nav-text">&amp;SCF</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-DIAGONALIZATION"><span class="nav-number">1.2.2.4.1.</span> <span class="nav-text">&amp;DIAGONALIZATION</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-MIXING"><span class="nav-number">1.2.2.4.2.</span> <span class="nav-text">&amp;MIXING</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-OT"><span class="nav-number">1.2.2.4.3.</span> <span class="nav-text">&amp;OT</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-OUTER-SCF"><span class="nav-number">1.2.2.4.4.</span> <span class="nav-text">&amp;OUTER_SCF</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#amp-PRINT"><span class="nav-number">1.2.3.</span> <span class="nav-text">&amp;PRINT</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">输出文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#out"><span class="nav-number">2.1.</span> <span class="nav-text">.out</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wfn"><span class="nav-number">2.2.</span> <span class="nav-text">.wfn</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -701,7 +710,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">82k</span>
+    <span title="站点总字数">96k</span>
 </div>
 
         

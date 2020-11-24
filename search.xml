@@ -233,7 +233,8 @@
 <li><code>=G</code>正确缩进文件的整个部分</li>
 <li><code>=</code>正确缩进文件的某个部分（区域）</li>
 </ul>
-<h1 id="inp语法"><a href="#inp语法" class="headerlink" title="inp语法"></a>inp语法</h1><ul>
+<h1 id="inp语法"><a href="#inp语法" class="headerlink" title="inp语法"></a>inp语法</h1><p>可以在cp2k目录下，通过<code>grep -iR 关键词 ~/tests</code>来查询相关的输入文件。（tests目录中的输入文件主要是用来测试程序运行的正常与否，往往使用了不合理的参数）</p>
+<ul>
 <li><p>主要结构如下，可以在其中嵌套多个<code>&amp;SECTION</code>和<code>&amp;END SECTION</code></p>
 <figure class="highlight ruleslanguage"><table><tr><td class="code"><pre><span class="line">&amp;<span class="keyword">SECTION</span></span><br><span class="line">	KEYWORD PARAMETER</span><br><span class="line">&amp;<span class="keyword">END</span> <span class="keyword">SECTION</span></span><br></pre></td></tr></table></figure>
 </li>
@@ -254,8 +255,13 @@
 <ul>
 <li><code>PROJECT</code>：任务名称，等同于<code>PROJECT_NAME</code></li>
 <li><code>RUN_TYPE</code>：任务类型<ul>
-<li><code>MD</code>：Molecular Dynamics分子动力学</li>
-<li></li>
+<li><code>ENERGY</code>：计算当前结构的能量。对于DFT 来说，就是一个SCF 计算。</li>
+<li><code>ENERGY_FORCE</code>：计算当前结构的能量，同时计算出每个原子上的梯度（即受力）。</li>
+<li><code>BAND</code>：使用band方法来进行最低能量路径(MEP)以及反应过渡态的搜索，通常可以使用的方法有CI-NEB, IT-NEB等方法。</li>
+<li><code>MD</code>：Molecular Dynamics分子动力学模拟</li>
+<li><code>CELL_OPT</code>：晶胞参数的优化。</li>
+<li><code>GEO_OPT</code>：对当前结构进行几何结构的优化，以获得当前结构对应的局部极小点或者过渡态。GEO_OPT 有两种类型，一种是MINIMIZATION，即优化到极小点；一种是TRANSITION_STATE，即优化到过渡态。过渡态的优化采用Dimer方法来实现。</li>
+<li><code>VIBRATIONAL_ANALYSIS</code>：对当前结构进行振动分析。频率计算可以计算部分原子的频率（INVOLVED_ATOMS），也可以计算某一频率范围内的频率计算（MODE_SELECTIVE）。</li>
 </ul>
 </li>
 <li><code>PRINT_LEVEL</code>：输出内容级别，可以是<code>SILENT</code>、<code>MEDIUM</code>（默认）、<code>LOW</code>、<code>HIGH</code>等。</li>
@@ -302,7 +308,7 @@
 <li>Si_bulk8.inp中主要包含<code>&amp;GLOBAL</code>和<code>&amp;FORCE_EVAL</code>两部分：·</li>
 </ul>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;GLOBAL</span></span><br><span class="line">  <span class="string">PROJECT</span> <span class="string">Si_bulk8</span></span><br><span class="line">  <span class="string">RUN_TYPE</span> <span class="string">ENERGY_FORCE</span></span><br><span class="line">  <span class="string">PRINT_LEVEL</span> <span class="string">LOW</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">GLOBAL</span></span><br><span class="line"><span class="meta">&amp;FORCE_EVAL</span></span><br><span class="line">  <span class="string">METHOD</span> <span class="string">Quickstep</span></span><br><span class="line">  <span class="meta">&amp;SUBSYS</span></span><br><span class="line">    <span class="string">&amp;KIND</span> <span class="string">Si</span></span><br><span class="line">      <span class="string">ELEMENT</span> <span class="string">Si</span></span><br><span class="line">      <span class="string">BASIS_SET</span> <span class="string">DZVP-GTH-PADE</span></span><br><span class="line">      <span class="string">POTENTIAL</span> <span class="string">GTH-PADE-q4</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">KIND</span></span><br><span class="line">    <span class="meta">&amp;CELL</span></span><br><span class="line">      <span class="string">A</span>     <span class="number">5.430697500</span>    <span class="number">0.000000000</span>    <span class="number">0.000000000</span></span><br><span class="line">      <span class="string">B</span>     <span class="number">0.000000000</span>    <span class="number">5.430697500</span>    <span class="number">0.000000000</span></span><br><span class="line">      <span class="string">C</span>     <span class="number">0.000000000</span>    <span class="number">0.000000000</span>    <span class="number">5.430697500</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">CELL</span></span><br><span class="line">    <span class="meta">&amp;COORD</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">0.000000000</span>    <span class="number">0.000000000</span>    <span class="number">0.000000000</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">0.000000000</span>    <span class="number">2.715348700</span>    <span class="number">2.715348700</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">2.715348700</span>    <span class="number">2.715348700</span>    <span class="number">0.000000000</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">2.715348700</span>    <span class="number">0.000000000</span>    <span class="number">2.715348700</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">4.073023100</span>    <span class="number">1.357674400</span>    <span class="number">4.073023100</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">1.357674400</span>    <span class="number">1.357674400</span>    <span class="number">1.357674400</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">1.357674400</span>    <span class="number">4.073023100</span>    <span class="number">4.073023100</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">4.073023100</span>    <span class="number">4.073023100</span>    <span class="number">1.357674400</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">COORD</span></span><br><span class="line">  <span class="string">&amp;END</span> <span class="string">SUBSYS</span></span><br><span class="line">  <span class="meta">&amp;DFT</span></span><br><span class="line">    <span class="string">BASIS_SET_FILE_NAME</span>  <span class="string">BASIS_SET</span></span><br><span class="line">    <span class="string">POTENTIAL_FILE_NAME</span>  <span class="string">GTH_POTENTIALS</span></span><br><span class="line">    <span class="meta">&amp;QS</span></span><br><span class="line">      <span class="string">EPS_DEFAULT</span> <span class="number">1.0E-10</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">QS</span></span><br><span class="line">    <span class="meta">&amp;MGRID</span></span><br><span class="line">      <span class="string">NGRIDS</span> <span class="number">4</span></span><br><span class="line">      <span class="string">CUTOFF</span> <span class="number">300</span></span><br><span class="line">      <span class="string">REL_CUTOFF</span> <span class="number">60</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">MGRID</span></span><br><span class="line">    <span class="meta">&amp;XC</span></span><br><span class="line">      <span class="string">&amp;XC_FUNCTIONAL</span> <span class="string">PADE</span></span><br><span class="line">      <span class="string">&amp;END</span> <span class="string">XC_FUNCTIONAL</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">XC</span></span><br><span class="line">    <span class="meta">&amp;SCF</span></span><br><span class="line">      <span class="string">SCF_GUESS</span> <span class="string">ATOMIC</span></span><br><span class="line">      <span class="string">EPS_SCF</span> <span class="number">1.0E-7</span></span><br><span class="line">      <span class="string">MAX_SCF</span> <span class="number">300</span></span><br><span class="line">      <span class="string">&amp;DIAGONALIZATION</span>  <span class="string">ON</span></span><br><span class="line">        <span class="string">ALGORITHM</span> <span class="string">STANDARD</span></span><br><span class="line">      <span class="string">&amp;END</span> <span class="string">DIAGONALIZATION</span></span><br><span class="line">      <span class="string">&amp;MIXING</span>  <span class="string">T</span></span><br><span class="line">        <span class="string">METHOD</span> <span class="string">BROYDEN_MIXING</span></span><br><span class="line">        <span class="string">ALPHA</span> <span class="number">0.4</span></span><br><span class="line">        <span class="string">NBROYDEN</span> <span class="number">8</span></span><br><span class="line">      <span class="string">&amp;END</span> <span class="string">MIXING</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">SCF</span></span><br><span class="line">  <span class="string">&amp;END</span> <span class="string">DFT</span></span><br><span class="line">  <span class="meta">&amp;PRINT</span></span><br><span class="line">    <span class="string">&amp;FORCES</span> <span class="string">ON</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">FORCES</span></span><br><span class="line">  <span class="string">&amp;END</span> <span class="string">PRINT</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">FORCE_EVAL</span></span><br></pre></td></tr></table></figure>
-<h2 id="amp-GLOBAL"><a href="#amp-GLOBAL" class="headerlink" title="&amp;GLOBAL"></a>&amp;GLOBAL</h2><figure class="highlight armasm"><table><tr><td class="code"><pre><span class="line">&amp;<span class="meta">GLOBAL</span></span><br><span class="line">  PROJECT Si_bulk8</span><br><span class="line">  RUN_TYPE ENERGY_FORCE</span><br><span class="line">  PRINT_LEVEL LOW</span><br><span class="line">&amp;<span class="meta">END</span> <span class="meta">GLOBAL</span></span><br></pre></td></tr></table></figure>
+<h2 id="amp-GLOBAL-修改任务类型"><a href="#amp-GLOBAL-修改任务类型" class="headerlink" title="&amp;GLOBAL 修改任务类型"></a>&amp;GLOBAL 修改任务类型</h2><figure class="highlight armasm"><table><tr><td class="code"><pre><span class="line">&amp;<span class="meta">GLOBAL</span></span><br><span class="line">  PROJECT Si_bulk8</span><br><span class="line">  RUN_TYPE ENERGY_FORCE</span><br><span class="line">  PRINT_LEVEL LOW</span><br><span class="line">&amp;<span class="meta">END</span> <span class="meta">GLOBAL</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>PROJECT</code>：任务名称，等同于<code>PROJECT_NAME</code>，CP2K自动生成的所有输出文件都将以这个名称开头。</li>
 <li><code>RUN_TYPE</code>：任务类型，<code>ENERGY_FORCE</code>进行静态能量和力的计算</li>
@@ -316,7 +322,7 @@
 </ul>
 <h3 id="amp-SUBSYS"><a href="#amp-SUBSYS" class="headerlink" title="&amp;SUBSYS"></a>&amp;SUBSYS</h3><figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;SUBSYS</span></span><br><span class="line">……</span><br><span class="line"><span class="meta">&amp;END SUBSYS</span></span><br></pre></td></tr></table></figure>
 <p>定义模拟晶胞和计算中原子的初始坐标。</p>
-<h4 id="amp-KIND"><a href="#amp-KIND" class="headerlink" title="&amp;KIND"></a>&amp;KIND</h4><p>定义计算中的元素，每个元素必须有一个<code>&amp;KIND</code>。</p>
+<h4 id="amp-KIND-修改基组"><a href="#amp-KIND-修改基组" class="headerlink" title="&amp;KIND 修改基组"></a>&amp;KIND 修改基组</h4><p>定义计算中的元素，每个元素必须有一个<code>&amp;KIND</code>。</p>
 <figure class="highlight fortran"><table><tr><td class="code"><pre><span class="line">&amp;<span class="keyword">KIND</span> Si</span><br><span class="line">  ELEMENT   Si</span><br><span class="line">  BASIS_SET DZVP-GTH-PADE</span><br><span class="line">  POTENTIAL GTH-PADE-q4</span><br><span class="line">&amp;<span class="keyword">END</span> <span class="keyword">KIND</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>BASIS_SET</code>：定义基组，如DZVP-GTH-PADE（双 ζ 带有极化基础的ζ，针对Geodecker-Teter-Hutter PADE LDA赝势进行了优化），同<code>BASIS_SET_FILE_NAME</code></li>
@@ -370,8 +376,14 @@
 <h4 id="amp-QS"><a href="#amp-QS" class="headerlink" title="&amp;QS"></a>&amp;QS</h4><p>包含QUICKSTEP使用的常规控制参数。</p>
 <figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;QS</span></span><br><span class="line">  EPS_DEFAULT <span class="number">1.0</span>E-<span class="number">10</span></span><br><span class="line"><span class="meta">&amp;END QS</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li><code>EPS_DEFAULT</code>：QUICKSTEP中使用的所有公差设置默认值。默认为<script type="math/tex">10^{-10}</script></li>
-<li><code>EPS_ *</code>：设置各类公差，覆盖EPS_DEFAULT值。</li>
+<li><code>EPS_DEFAULT</code>：QUICKSTEP中使用的所有公差设置默认值。默认为<script type="math/tex">10^{-10}</script>。在进行比较高精度计算时，需要将EPS_DEFAULT 设为1.0E-14。</li>
+<li><code>EPS_ *</code>：设置各类公差，覆盖EPS_DEFAULT值。<ul>
+<li><code>EPS_CORE_CHARGE</code>：核电荷映射精度，默认为<code>EPS_DEFAULT</code>/100.0</li>
+<li><code>EPS_GVG_RSPACE</code>：实空间KS 矩阵元积分精度。默认为SQRT(EPS_DEFAULT)</li>
+<li><code>EPS_PGF_ORB</code>：重叠矩阵元精度，默认为SQRT(EPS_DEFAULT)</li>
+<li><code>EPS_KG_ORB</code>：使用Kim-Gordon 方法时的精度,默认为SQRT(EPS_DEFAULT)</li>
+</ul>
+</li>
 <li><code>METHOD</code>：指定应采用的电子结构方法<ul>
 <li><code>GBW</code>：默认。高斯和平面波方法。</li>
 </ul>
@@ -379,7 +391,7 @@
 </ul>
 <h4 id="amp-MGRID"><a href="#amp-MGRID" class="headerlink" title="&amp;MGRID"></a>&amp;MGRID</h4><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;MGRID</span></span><br><span class="line">  <span class="string">NGRIDS</span> <span class="number">4</span></span><br><span class="line">  <span class="string">CUTOFF</span> <span class="number">300</span></span><br><span class="line">  <span class="string">REL_CUTOFF</span> <span class="number">60</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">MGRID</span></span><br></pre></td></tr></table></figure>
 <p>定义了QUICKSTEP计算中使用的积分网格。设置4个级别的多重网格。</p>
-<h4 id="amp-XC"><a href="#amp-XC" class="headerlink" title="&amp;XC"></a>&amp;XC</h4><p>使用的交换相关密度泛函的参数</p>
+<h4 id="amp-XC-修改泛函"><a href="#amp-XC-修改泛函" class="headerlink" title="&amp;XC 修改泛函"></a>&amp;XC 修改泛函</h4><p>使用的交换相关密度泛函的参数</p>
 <figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;XC</span></span><br><span class="line">……</span><br><span class="line"><span class="meta">&amp;END XC</span></span><br></pre></td></tr></table></figure>
 <h5 id="amp-XC-FUNCTIONAL"><a href="#amp-XC-FUNCTIONAL" class="headerlink" title="&amp;XC_FUNCTIONAL"></a>&amp;XC_FUNCTIONAL</h5><p>注意选择的泛函要与所选择的基组和赝势一致</p>
 <figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;XC_FUNCTIONAL PADE</span></span><br><span class="line"><span class="meta">&amp;END XC_FUNCTIONAL</span></span><br></pre></td></tr></table></figure>
@@ -401,10 +413,11 @@
 <li><code>RESTART</code>：将RESTART文件用作初始猜测（如果不存在，则使用<code>ATOMIC</code>）</li>
 </ul>
 </li>
-<li><code>EPS_SCF</code>：设置电荷密度剩余量的公差。这将覆盖<code>&amp;QS</code>小节中设置的<code>EPS_DEFAULT</code>值。 默认为<script type="math/tex">10^{-5}</script></li>
+<li><code>EPS_SCF</code>：设置电荷密度剩余量的公差。这将覆盖<code>&amp;QS</code>小节中设置的<code>EPS_DEFAULT</code>值。 默认为<script type="math/tex">10^{-5}</script>。如果要<br>进行比较高精度的计算，可以将SCF 收敛精度设置为<code>1E-6</code>。对于频率计算等精度要求更高的计算，SCF 收敛精度可以设置为<code>1E-7</code>。</li>
 <li><code>MAX_SCF</code>：设置允许QUICKSTEP执行的每次基态能量计算的最大自洽循环数。</li>
+<li><code>ADDED_MOS</code>：每个自旋附加的MOS数量，默认为<code>0</code>，在使用对角化方法<code>&amp;DIAGONALIZATION</code>的时候必须使用。</li>
 </ul>
-<h5 id="amp-DIAGONALIZATION"><a href="#amp-DIAGONALIZATION" class="headerlink" title="&amp;DIAGONALIZATION"></a>&amp;DIAGONALIZATION</h5><p>告诉代码使用传统的对角化方法来查找基态Kohn-Sham能量和电子密度。如果该节中有参数，就应当设置为<code>ON</code>或<code>.TRUE.</code>或<code>T</code>。对角化的替代方法是使用轨道变换（OT）方法，在这种情况下，用户应删除<code>&amp;DIAGONALIZATION</code>块或改为<code>OFF</code>或<code>.FALSE.</code>，然后添加<code>&amp;OT</code>代替</p>
+<h5 id="amp-DIAGONALIZATION"><a href="#amp-DIAGONALIZATION" class="headerlink" title="&amp;DIAGONALIZATION"></a>&amp;DIAGONALIZATION</h5><p>告诉代码使用传统的对角化方法来查找基态Kohn-Sham能量和电子密度。如果该节中有参数，就应当设置为<code>ON</code>或<code>.TRUE.</code>或<code>T</code>。对角化的替代方法是使用轨道变换（OT）方法，在这种情况下，用户应删除<code>&amp;DIAGONALIZATION</code>块或改为<code>OFF</code>或<code>.FALSE.</code>，然后添加<code>&amp;OT</code>代替。</p>
 <figure class="highlight sas"><table><tr><td class="code"><pre><span class="line"><span class="variable">&amp;DIAGONALIZATION</span>  <span class="meta">ON</span></span><br><span class="line">  ALGORITHM STANDARD</span><br><span class="line"><span class="variable">&amp;END</span> DIAGONALIZATION</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>ALGORITHM</code>用于对角化的算法<ul>
@@ -415,14 +428,15 @@
 <h5 id="amp-MIXING"><a href="#amp-MIXING" class="headerlink" title="&amp;MIXING"></a>&amp;MIXING</h5><p>包含自一致性计算中与电荷混合相关的所有参数。可以通过<code>.TRUE.</code>（<code>T</code>）或者<code>.FALSE.</code>（<code>F</code>）来打开或者关闭，默认是打开。仅适用于传统的对角线化方法， OT方法使用不同的方法进行电荷混合。</p>
 <figure class="highlight oxygene"><table><tr><td class="code"><pre><span class="line">&amp;MIXING  T</span><br><span class="line">  <span class="function"><span class="keyword">METHOD</span> <span class="title">BROYDEN_MIXING</span></span></span><br><span class="line"><span class="function">  <span class="title">ALPHA</span> 0.4</span></span><br><span class="line"><span class="function">  <span class="title">NBROYDEN</span> 8</span></span><br><span class="line"><span class="function">&amp;<span class="title">END</span> <span class="title">MIXING</span></span></span><br></pre></td></tr></table></figure>
 <ul>
-<li><code>METHOD</code>：设置混合方法<ul>
+<li><p><code>METHOD</code>：设置混合方法</p>
+<ul>
 <li><code>BROYDEN_MIXING</code>：使用Broyden混合</li>
 </ul>
 </li>
-<li><code>ALPHA</code>：设置混合参数，比如<code>0.4</code>是将0.4的输出密度与0.6的输入密度混合，以在下一个SCF迭代中形成新的输入密度。</li>
+<li><code>ALPHA</code>：设置混合参数，默认是<code>0.4</code>。比如<code>0.4</code>是将0.4的输出密度与0.6的输入密度混合，以在下一个SCF迭代中形成新的输入密度。</li>
 <li><p><code>NBROYDEN</code>：等同于<code>NBUFFER</code>，设置在Broyden混合算法中使用的历史记录数。</p>
 </li>
-<li><p><code>&amp;SMEAR</code>：不使用Smearing，对于金属或间隙很小的系统，这可能会导致计算不稳定，并且由于电子占据函数的不连续性，自洽迭代可能永远不会收敛。因此可以添加</p>
+<li><p><code>&amp;SMEAR</code>：不使用Smearing对于金属或间隙很小的系统，这可能会导致计算不稳定，并且由于电子占据函数的不连续性，自洽迭代可能永远不会收敛。因此可以添加</p>
 <figure class="highlight oxygene"><table><tr><td class="code"><pre><span class="line">&amp;SMEAR <span class="keyword">ON</span></span><br><span class="line">  <span class="function"><span class="keyword">METHOD</span> <span class="title">FERMI_DIRAC</span></span></span><br><span class="line"><span class="function">  <span class="title">ELECTRONIC_TEMPERATURE</span> [<span class="title">K</span>] 300</span></span><br><span class="line"><span class="function">&amp;<span class="title">END</span> <span class="title">SMEA</span></span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>METHOD</code>：使用的Smearing方法，<code>FERMI_DIRAC</code>即Fermi-Dirac smearing function</li>
@@ -437,29 +451,30 @@
 </ul>
 </li>
 </ul>
-<h5 id="amp-OT"><a href="#amp-OT" class="headerlink" title="&amp;OT"></a>&amp;OT</h5><p>设置轨道变换（OT）方法的各种选项:</p>
+<h5 id="amp-OT"><a href="#amp-OT" class="headerlink" title="&amp;OT"></a>&amp;OT</h5><p>如果体系有较大带隙的，如为半导体或者绝缘体等，推荐使用OT 算法，收敛速度比较快。但是对预处理敏感。好的预处理器可能很昂贵。不能<code>smearing</code>或进行高级<code>SCF mixing</code> ，HOMO-LUMO 带隙很小或者几乎没有的系统，如金属系统，收敛性较差（此时应该使用<code>&amp;DIAGONALIZATION</code>和<code>&amp;Smear</code>）。设置轨道变换（OT）方法的各种选项：</p>
 <ul>
-<li>优点：速度快，因为不需要执行昂贵的对角化处理。如果预处理正确，方法保证找到最小值。</li>
-<li><p>缺点：对预处理敏感。好的预处理器可能很昂贵。不能<code>smearing</code>或进行高级<code>SCF mixing</code> ：金属系统的收敛性较差。</p>
-</li>
-<li><p><code>PRECONDITIONER</code>：</p>
-<ul>
+<li><code>PRECONDITIONER</code>：<ul>
 <li><code>FULL_KINETIC</code>：默认。S和T的Cholesky反转，快速构建，强大且相对较好，可用于超大型系统。</li>
 <li><code>FULL_ALL</code>：基于对角化的最有效的状态选择性预处理器，要求ENERGY_GAP参数低估HOMO-LUMO间隙。对于几乎所有系统，都建议使用此预处理器，但在大型系统中，make_preconditioner将主导总计算成本。</li>
 </ul>
 </li>
 <li><code>MINIMIZER</code>：<ul>
 <li><code>CG</code>：默认，共轭梯度：最可靠，适用于困难的系统。如果合适的话，总能量应该在每个OT CG步骤减少。</li>
-<li><code>DIIS</code>：迭代子空间中的直接反演：不如CG可靠，但有时快约50％</li>
+<li><code>DIIS</code>：迭代子空间中的直接反演：不如CG可靠，但有时快约50％。</li>
+<li><code>BROYDEN</code>：如果<code>CG</code>和<code>DIIS</code>都有问题，可以使用这个方法。</li>
 </ul>
 </li>
+<li><code>ENERGY_GAP</code>：默认是-1。应该是能隙[a.u.]（HOMO-LUMO）的估计值，并应在预处理中使用，尤其是对<code>FULL_ALL</code>预处理器有效，在这种情况下，它应该比能隙小。（可以为小数，例如0.002） 。 <code>FULL_SINGLE_INVERSE</code>将其作为下限（值小于0.05可能会导致稳定性问题）。通常，在初始猜测很差的情况下，heigher值会驯服预处理器。负值将取决于预调节器的类型，使选择留给CP2K。</li>
+<li></li>
 </ul>
-<h5 id="amp-OUTER-SCF"><a href="#amp-OUTER-SCF" class="headerlink" title="&amp;OUTER_SCF"></a>&amp;OUTER_SCF</h5><ul>
+<h5 id="amp-OUTER-SCF"><a href="#amp-OUTER-SCF" class="headerlink" title="&amp;OUTER_SCF"></a>&amp;OUTER_SCF</h5><p><code>OUTER_SCF</code> 为加速收敛的一种方法，如果SCF 经过100 次优化依然没有收敛，则进入OUTER_SCF 过程，对前一次计算的波函数进行调整，重新进行SCF 迭代。每次OUTER_SCF 中优化的次数依然是100 次，比如最多可以进行5次OUTER_SCF，那么最多可以进行500 次SCF 计算。</p>
+<ul>
 <li><code>EPS_SCF</code>： outer SCF变量的目标梯度。默认为<script type="math/tex">10^{-5}</script>。内部循环的<code>EPS_SCF</code>还确定了外部循环可以达到的值，通常，外部循环的<code>EPS_SCF</code>必须小于或等于内部循环的EPS_SCF。</li>
 <li><code>MAX_SCF</code>：最大循环数</li>
 </ul>
 <h3 id="amp-PRINT"><a href="#amp-PRINT" class="headerlink" title="&amp;PRINT"></a>&amp;PRINT</h3><ul>
-<li><code>&amp;FORCES</code>，在主要的输出中输出原子受力。</li>
+<li><code>&amp;FORCES</code>，在主要的输出中输出原子受力。<code>GLOBAL</code> 部分的<code>RUN_TYPE</code> 必须设置为<code>ENERGY_FORCE</code> 或者<code>GEO_OPT</code>。如果要将受力信息存储到文件中，则需要设定文件的名称；否则受力信息将会打印到out 文件中。</li>
+<li></li>
 </ul>
 <h1 id="输出文件"><a href="#输出文件" class="headerlink" title="输出文件"></a>输出文件</h1><h2 id="out"><a href="#out" class="headerlink" title=".out"></a>.out</h2><p>主要的输出文件</p>
 <ul>
@@ -623,7 +638,67 @@
   <entry>
     <title>【Linux】Shell脚本</title>
     <url>/2020/11/22/%E3%80%90Linux%E3%80%91Shell%E8%84%9A%E6%9C%AC/</url>
-    <content><![CDATA[<h1 id="printf-命令"><a href="#printf-命令" class="headerlink" title="printf 命令"></a>printf 命令</h1><h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">printf</span>  format-<span class="built_in">string</span>  [arguments...]</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h1 id="echo命令"><a href="#echo命令" class="headerlink" title="echo命令"></a>echo命令</h1><p>打印shell变量的值，或者直接输出指定的字符串。</p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">echo</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
+<p>选项：</p>
+<ul>
+<li><code>-e</code>：激活转义字符：<ul>
+<li><code>\a</code> 发出警告声；</li>
+<li><code>\b</code> 删除前一个字符；</li>
+<li><code>\c</code> 最后不加上换行符号；</li>
+<li><code>\f</code> 换行但光标仍旧停留在原来的位置；<code>\v</code> 与<code>\f</code>相同；</li>
+<li><code>\n</code> 换行且光标移至行首；</li>
+<li><code>\r</code> 光标移至行首，但不换行；</li>
+<li><code>\t</code> 插入tab；</li>
+<li><code>\\</code> 插入\字符；</li>
+<li><code>\nnn</code> 插入nnn（八进制）所代表的ASCII字符</li>
+</ul>
+</li>
+</ul>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><ul>
+<li><p>显示普通字符串，可以省略双引号</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;It is a test&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示转义字符，双引号也可以省略</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">&quot;\&quot;It is a test\&quot;&quot;</span></span></span><br><span class="line">&quot;It is a test&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示变量</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$name</span> It is a test&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$variable</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$PATH</span>  <span class="comment">#显示当前用户路径PATH的值</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示换行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;OK! \n&quot;</span> </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示不换行</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> -e <span class="string">&quot;OK! \c&quot;</span> </span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">&quot;It is a test&quot;</span></span></span><br><span class="line">OK! It is a test</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示结果定向至文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;It is a test&quot;</span> &gt; myfile</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>原样输出字符串，不进行转义或取变量(用单引号)</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">echo</span> <span class="string">&#x27;<span class="variable">$name</span>\&quot;&#x27;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示命令执行结果</p>
+<figure class="highlight dos"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> `<span class="built_in">date</span>`</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="用echo命令打印带有色彩的文字"><a href="#用echo命令打印带有色彩的文字" class="headerlink" title="用echo命令打印带有色彩的文字"></a>用echo命令打印带有色彩的文字</h2><p>文字色：</p>
+<ul>
+<li><code>\e[1;31m</code> 将颜色设置为红色</li>
+<li><code>\e[0m</code> 将颜色重新置回</li>
+<li>颜色码：重置=0，黑色=30，红色=31，绿色=32，黄色=33，蓝色=34，洋红=35，青色=36，白色=37</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> -e <span class="string">&quot;\e[1;31mThis is red text\e[0m&quot;</span></span></span><br></pre></td></tr></table></figure>
+<p>背景色：</p>
+<ul>
+<li>颜色码：重置=0，黑色=40，红色=41，绿色=42，黄色=43，蓝色=44，洋红=45，青色=46，白色=47</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;\e[1;42mGreed Background\e[0m&quot;</span></span><br></pre></td></tr></table></figure>
+<p>文字闪动：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;\033[37;31;5mMySQL Server Stop...\033[39;49;0m&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>红色数字处还有其他数字参数：0 关闭所有属性、1 设置高亮度（加粗）、4 下划线、5 闪烁、7 反显、8 消隐</li>
+</ul>
+<h1 id="printf-命令"><a href="#printf-命令" class="headerlink" title="printf 命令"></a>printf 命令</h1><h2 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">printf</span>  format-<span class="built_in">string</span>  [arguments...]</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>format-string</code>：格式控制字符串<ul>
 <li><code>%s</code>：字符串</li>
@@ -634,7 +709,7 @@
 </li>
 <li><code>arguments</code>：参数列表</li>
 </ul>
-<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><ul>
+<h2 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h2><ul>
 <li><code>%-10s</code>指一个宽度为10个字符（-表示左对齐，没有则表示右对齐），任何字符都会被显示在10个字符宽的字符内，如果不足则自动以空格填充，超过也会将内容全部显示出来。</li>
 <li><code>%-4.2f</code>格式为左对齐宽度为4，其中.2指保留2位小数</li>
 </ul>
@@ -747,8 +822,48 @@
 <li>交互式地将目录/usr/men中的以m*.c文件复制到目录/usr/zh中<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp -i /usr/men m*.c /usr/zh</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<h2 id="cut"><a href="#cut" class="headerlink" title="cut"></a>cut</h2><p>用于显示每行从开头算起 num1 到 num2 的文字。</p>
+<h3 id="语法-3"><a href="#语法-3" class="headerlink" title="语法"></a>语法</h3><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">cut</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
+<p>选项：</p>
+<ul>
+<li><code>-b</code> ：以字节为单位进行分割。这些字节位置将忽略多字节字符边界，除非也指定了 <code>-n</code> 标志。</li>
+<li><code>-c</code> ：以字符为单位进行分割。</li>
+<li><code>-d</code> ：自定义分隔符，默认为制表符。</li>
+<li><code>-f</code> ：与-d一起使用，指定显示哪个区域。</li>
+<li><code>-n</code> ：与-<code>b</code>选项连用，不分割多字节字符；</li>
+<li><code>--complement</code>：补足被选择的字节、字符或字段；</li>
+</ul>
+<p>配合-<code>b</code>，-<code>c</code>，-<code>f</code>指定字段的字符或者字节范围的方法：</p>
+<ul>
+<li><code>N-</code>：从第N个字节、字符、字段到结尾；</li>
+<li><code>N-M</code>：从第N个字节、字符、字段到第M个（包括M在内）字节、字符、字段；</li>
+<li><code>-M</code>：从第1个字节、字符、字段到第M个（包括M在内）字节、字符、字段。</li>
+<li><code>N</code>第N个</li>
+</ul>
+<h3 id="例子-2"><a href="#例子-2" class="headerlink" title="例子"></a>例子</h3><p>test.txt为：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="literal">No</span> <span class="string">Name</span> <span class="string">Mark</span> <span class="string">Percent</span></span><br><span class="line"><span class="number">01</span> <span class="string">tom</span> <span class="number">69</span> <span class="number">91</span></span><br><span class="line"><span class="number">02</span> <span class="string">jack</span> <span class="number">71</span> <span class="number">87</span></span><br><span class="line"><span class="number">03</span> <span class="string">alex</span> <span class="number">68</span> <span class="number">98</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>提取指定字段：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cut -f 1 test.txt </span></span><br><span class="line">No</span><br><span class="line">01</span><br><span class="line">02</span><br><span class="line">03</span><br><span class="line"><span class="meta">$</span><span class="bash"> cut -f2,3 test.txt </span></span><br><span class="line">Name Mark</span><br><span class="line">tom 69</span><br><span class="line">jack 71</span><br><span class="line">alex 68</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>提取指定字段之外的列（打印除了第二列之外的列）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cut -f2 --complement test.txt </span></span><br><span class="line">No Mark Percent</span><br><span class="line">01 69 91</span><br><span class="line">02 71 87</span><br><span class="line">03 68 98</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>指定字段分隔符，比如字段不是用空格分割，而是用的;分割，则可以用</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">cut</span> -f<span class="number">2</span> -d<span class="string">&quot;;&quot;</span> test<span class="number">2</span>.txt </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打印第1个到第3个字符：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">cut</span> -c<span class="number">1</span>-<span class="number">3</span> test.txt </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打印前2个字符：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">cut -c<span class="number">-2</span> test.txt </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打印从第5个字符开始到结尾：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">cut</span> -c<span class="number">5</span>- test.txt </span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 <h2 id="find"><a href="#find" class="headerlink" title="find"></a>find</h2><p>用来在指定目录下查找文件。</p>
-<h3 id="语法-3"><a href="#语法-3" class="headerlink" title="语法"></a>语法</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find   path   -option   [expression]   [-exec  -ok  command]   &#123;&#125; \;</span><br></pre></td></tr></table></figure>
+<h3 id="语法-4"><a href="#语法-4" class="headerlink" title="语法"></a>语法</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find   path   -option   [expression]   [-exec  -ok  command]   &#123;&#125; \;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>path：<ul>
 <li>任何位于参数之前的字符串都将被视为欲查找的目录名</li>
@@ -840,7 +955,26 @@
 <li>将目录下所有一般文件中某一句后面加上一句<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">for i in `find ./$path -type f`</span><br><span class="line">do</span><br><span class="line"> sed -i &#x27;/NUCLEARMODEL gaussian/arelativistic scalar zora&#x27; $i</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h2 id="rename"><a href="#rename" class="headerlink" title="rename"></a>rename</h2><h3 id="语法-4"><a href="#语法-4" class="headerlink" title="语法"></a>语法</h3><p>不同Liunx下的语法不同，CentOS下的是：</p>
+<h2 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h2><p>move file用来为文件或目录改名、或将文件或目录移入其它位置。</p>
+<h3 id="语法-5"><a href="#语法-5" class="headerlink" title="语法"></a>语法</h3><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">mv</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
+<p>三种模式</p>
+<ul>
+<li><p>将源文件名 source_file 改为目标文件名 dest_file</p>
+<figure class="highlight isbl"><table><tr><td class="code"><pre><span class="line"><span class="variable">mv</span> <span class="function"><span class="title">source_file</span>(文件) <span class="title">dest_file</span>(文件)</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将文件 source_file 移动到目标目录 dest_directory 中</p>
+<figure class="highlight gcode"><table><tr><td class="code"><pre><span class="line">mv source_file<span class="comment">(文件)</span> dest_directory<span class="comment">(目录)</span>	</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>目录名 dest_directory 已存在，将 source_directory 移动到目录名 dest_directory 中；目录名 dest_directory 不存在则 source_directory 改名为目录名 dest_directory</p>
+<figure class="highlight isbl"><table><tr><td class="code"><pre><span class="line"><span class="variable">mv</span> <span class="function"><span class="title">source_directory</span>(目录) <span class="title">dest_directory</span>(目录)</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>选项：</p>
+<ul>
+<li><code>-i</code>：交互式操作，覆盖前先行询问用户，如果源文件与目标文件或目标目录中的文件同名，则询问用户是否覆盖目标文件。</li>
+<li><code>-f</code>：若目标文件或目录与现有的文件或目录重复，则直接覆盖现有的文件或目录，不给任何指示</li>
+</ul>
+<h2 id="rename"><a href="#rename" class="headerlink" title="rename"></a>rename</h2><h3 id="语法-6"><a href="#语法-6" class="headerlink" title="语法"></a>语法</h3><p>不同Liunx下的语法不同，CentOS下的是：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rename [options] expression replacement file</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>-v</code>显示哪些文件被修改了</li>
@@ -851,17 +985,411 @@
 </ul>
 </li>
 </ul>
-<h3 id="例子-2"><a href="#例子-2" class="headerlink" title="例子"></a>例子</h3><ul>
+<h3 id="例子-3"><a href="#例子-3" class="headerlink" title="例子"></a>例子</h3><ul>
 <li>将所有htm文件改成html文件<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rename .htm .html *.htm</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h1 id="文档编辑"><a href="#文档编辑" class="headerlink" title="文档编辑"></a>文档编辑</h1><h1 id="文件传输"><a href="#文件传输" class="headerlink" title="文件传输"></a>文件传输</h1><h1 id="磁盘管理"><a href="#磁盘管理" class="headerlink" title="磁盘管理"></a>磁盘管理</h1><h1 id="磁盘维护"><a href="#磁盘维护" class="headerlink" title="磁盘维护"></a>磁盘维护</h1><h1 id="网络通讯"><a href="#网络通讯" class="headerlink" title="网络通讯"></a>网络通讯</h1><h1 id="系统管理"><a href="#系统管理" class="headerlink" title="系统管理"></a>系统管理</h1><h1 id="系统设置"><a href="#系统设置" class="headerlink" title="系统设置"></a>系统设置</h1><h1 id="备份压缩"><a href="#备份压缩" class="headerlink" title="备份压缩"></a>备份压缩</h1><h2 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h2><p>Tape archive （磁带档案）。tar是用来建立，还原备份文件的工具程序，它可以加入，解开备份文件内的文件。</p>
+<h2 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h2><p>Remove，用于删除一个文件或者目录。</p>
+<h3 id="语法-7"><a href="#语法-7" class="headerlink" title="语法"></a>语法</h3><figure class="highlight prolog"><table><tr><td class="code"><pre><span class="line">rm [options] name...</span><br></pre></td></tr></table></figure>
+<p>选项：</p>
+<ul>
+<li><code>-i</code> 删除前逐一询问确认。</li>
+<li><code>-f</code> 即使原档案属性设为唯读，亦直接删除，无需逐一确认。</li>
+<li><code>-r</code> 将目录及以下之档案亦逐一删除。</li>
+</ul>
+<h3 id="例子-4"><a href="#例子-4" class="headerlink" title="例子"></a>例子</h3><ul>
+<li><p>删除目录</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">rm  -r  homework</span>  </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除“路径”下名为“文件（夹）名”的文件（夹）。不需要确认</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">rm</span> -rf 路径/文件（夹）名</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>除了某个文件外的其他文件全部删除的命令：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">rm</span> -rf !(keep) #删除keep文件之外的所有文件</span><br><span class="line"><span class="attribute">rm</span> -rf !(keep<span class="number">1</span>| keep<span class="number">2</span>) #删除keep<span class="number">1</span>和keep<span class="number">2</span>文件之外的所有文件</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除前先询问，-i选项在使用文件扩展名字符删除多个文件时特别有用。使用这个选项，系统会要求你逐一确定是否要删除。这时，必须输入y并按Enter键，才能删除文件。如果仅按Enter键或其他字符，文件不会被删除。</p>
+<figure class="highlight stata"><table><tr><td class="code"><pre><span class="line"><span class="keyword">rm</span> -i <span class="keyword">test</span> example</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="scp"><a href="#scp" class="headerlink" title="scp"></a>scp</h2><p>用于 Linux 之间复制文件和目录。</p>
+<h3 id="语法-8"><a href="#语法-8" class="headerlink" title="语法"></a>语法</h3><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">scp</span> <span class="selector-attr">[可选参数]</span> <span class="selector-tag">file_source</span> <span class="selector-tag">file_target</span> </span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-P port</code>：注意是大写的P, port是指定数据传输用到的端口号</li>
+<li><code>-r</code>：以递归方式复制。</li>
+</ul>
+<h3 id="例子-5"><a href="#例子-5" class="headerlink" title="例子"></a>例子</h3><ul>
+<li><p>从远处复制文件到本地目录</p>
+<figure class="highlight elixir"><table><tr><td class="code"><pre><span class="line">scp root<span class="variable">@10</span>.<span class="number">10.10</span>.<span class="number">10</span><span class="symbol">:/opt/soft/nginx-</span>0.<span class="number">5.38</span>.tar.gz /opt/soft/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>上传本地文件到远程机器指定目录</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">scp -r（文件夹/）文件名 （用户名@）节点名:目录</span><br><span class="line">scp <span class="regexp">/opt/</span>soft<span class="regexp">/nginx-0.5.38.tar.gz root@10.10.10.10:/</span>opt<span class="regexp">/soft/</span>scptest</span><br><span class="line"></span><br><span class="line">#表示将<span class="regexp">/home/</span>Fermi/Test.xyz拷贝到Fermi2用户在node124节点的home目录下面</span><br><span class="line">scp -r <span class="regexp">/home/</span>Fermi/Test.xyz Fermi2@node124</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果远程服务器防火墙有为scp命令设置了指定的端口，我们需要使用 -P 参数来设置命令的端口号:</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">scp -P <span class="number">4588</span> remote@www.runoob.com:<span class="regexp">/usr/</span>local<span class="regexp">/sin.sh /</span>home/administrator</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="文档编辑"><a href="#文档编辑" class="headerlink" title="文档编辑"></a>文档编辑</h1><h2 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h2><p>用于查找文件里符合条件的字符串。</p>
+<h3 id="语法-9"><a href="#语法-9" class="headerlink" title="语法"></a>语法</h3><ul>
+<li><code>-A&lt;显示行数&gt;</code> 或 <code>--after-context=&lt;显示行数&gt;</code> : 除了显示符合范本样式的那一列之外，并显示该行之后的内容。 </li>
+<li><code>-B&lt;显示行数&gt;</code> 或 <code>--before-context=&lt;显示行数&gt;</code> : 除了显示符合样式的那一行之外，并显示该行之前的内容。 </li>
+<li><code>-C&lt;显示行数&gt;</code> 或 <code>--context=&lt;显示行数&gt;或-&lt;显示行数&gt;</code> : 除了显示符合样式的那一行之外，并显示该行之前后的内容。 </li>
+<li><code>-d &lt;动作&gt;</code> 或 <code>--directories=&lt;动作&gt;</code> : 当指定要查找的是目录而非文件时，必须使用这项参数，否则grep指令将回报信息并停止动作。</li>
+<li><code>-i</code> 或 <code>--ignore-case</code> : 忽略字符大小写的差别。 同<code>-y</code> 。</li>
+<li><code>-n</code> 或 <code>--line-number</code> : 在显示符合样式的那一行之前，标示出该行的列数编号。 </li>
+<li><code>-o</code> 或 <code>--only-matching</code> : 只显示匹配PATTERN 部分。 </li>
+<li><code>-r/R</code> 或 <code>--recursive</code> : 此参数的效果和指定”-d recurse”参数相同。 </li>
+<li><code>-v</code> 或 <code>--revert-match</code> : 显示不包含匹配文本的所有行。 </li>
+<li><code>-E</code> 或 <code>--extended-regexp</code> : 将样式为延伸的正则表达式来使用。 </li>
+<li><code>-c</code> 或 <code>--count</code> : 计算符合样式的列数。</li>
+<li><code>-b</code> 或 <code>--byte-offset</code> : 在显示符合样式的那一行之前，标示出该行第一个字符的编号。  </li>
+<li><code>-l</code> 或 <code>--file-with-matches</code> : 列出文件内容符合指定的样式的文件名称。 </li>
+<li><code>-L</code> 或 <code>--files-without-match</code> : 列出文件内容不符合指定的样式的文件名称。 </li>
+<li><code>-e&lt;范本样式&gt;</code> 或 <code>--regexp=&lt;范本样式&gt;</code> : 指定字符串做为查找文件内容的样式。 </li>
+</ul>
+<h3 id="例子-6"><a href="#例子-6" class="headerlink" title="例子"></a>例子</h3><ul>
+<li><p>在“路径”下，查找包含“xyz123”字段的文件，其中<code>-r</code>表示子文件夹也要搜索，<code>-i</code>表示不区分xyz的大小写</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">grep</span> -Ri xyz<span class="number">123</span> 路径</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>输出包含匹配字符串的行数 -n 选项</p>
+<figure class="highlight excel"><table><tr><td class="code"><pre><span class="line">grep <span class="string">&quot;text&quot;</span> -<span class="built_in">n</span> file_name</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示匹配某个结果之后、之前、前后的3行</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">grep</span> <span class="string">&quot;5&quot;</span> -A <span class="number">3</span></span><br><span class="line"><span class="attribute">grep</span> <span class="string">&quot;5&quot;</span> -B <span class="number">3</span></span><br><span class="line"><span class="attribute">grep</span> <span class="string">&quot;5&quot;</span> -C <span class="number">3</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>输出除之外的所有行 -v 选项：</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">grep</span> -v <span class="string">&quot;match_pattern&quot;</span> file_name</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用正则表达式：或者直接用<code>egrep</code></p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">grep</span> -E <span class="string">&quot;[1-9]+&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>只输出文件中匹配到的部分：</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">grep</span> -o -E <span class="string">&quot;[a-z]+\.&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>统计文件或者文本中包含匹配字符串的行数</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">grep</span> -c <span class="string">&quot;text&quot;</span> file_name</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打印样式匹配所位于的字符或字节偏移（一行中字符串的字符便宜是从该行的第一个字符开始计算，起始值为0。选项 <code>-b -o</code> 一般总是配合使用。）：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> gun is not unix | grep -b -o <span class="string">&quot;not&quot;</span></span></span><br><span class="line">7:not</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>搜索多个文件并查找匹配文本在哪些文件中：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">grep</span> -l <span class="string">&quot;text&quot;</span> file<span class="number">1</span> file<span class="number">2</span> file<span class="number">3</span>...</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>选项 -e 制动多个匹配样式：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> this is a text line | grep -e <span class="string">&quot;is&quot;</span> -e <span class="string">&quot;line&quot;</span> -o</span></span><br><span class="line">is</span><br><span class="line">line</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在grep搜索结果中包括或者排除指定文件：</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">grep</span> <span class="string">&quot;main()&quot;</span> . -r --<span class="keyword">include</span> *.&#123;php,html&#125;</span><br><span class="line"><span class="keyword">grep</span> <span class="string">&quot;main()&quot;</span> . -r --<span class="keyword">exclude</span> <span class="string">&quot;README&quot;</span></span><br><span class="line">#在搜索结果中排除filelist文件列表里的文件</span><br><span class="line"><span class="keyword">grep</span> <span class="string">&quot;main()&quot;</span> . -r --<span class="keyword">exclude</span>-<span class="keyword">from</span> filelist</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="sed"><a href="#sed" class="headerlink" title="sed"></a>sed</h2><p>Stream Editor利用脚本来处理文本文件。主要用来自动编辑一个或多个文件、简化对文件的反复操作、编写转换程序等。</p>
+<h3 id="语法-10"><a href="#语法-10" class="headerlink" title="语法"></a>语法</h3><figure class="highlight gams"><table><tr><td class="code"><pre><span class="line">sed [<span class="keyword">options</span>] <span class="string">&#x27;command&#x27;</span> <span class="keyword">file</span>(s)</span><br><span class="line">sed [<span class="keyword">options</span>] -f scriptfile <span class="keyword">file</span>(s)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>sed表达式可以使用单引号来引用，但是如果表达式内部包含变量字符串，就需要使用双引号。</p>
+</li>
+<li><p>/ 在sed中作为定界符使用，也可以使用任意的定界符：但是定界符出现在样式内部时，需要进行转义</p>
+<figure class="highlight sml"><table><tr><td class="code"><pre><span class="line">sed <span class="symbol">&#x27;s</span>:test:<span class="type">TEXT</span>:g&#x27;</span><br><span class="line">sed <span class="symbol">&#x27;s</span>|test|<span class="type">TEXT</span>|g&#x27;</span><br><span class="line">sed <span class="symbol">&#x27;s</span>/\/bin/\/usr\/<span class="keyword">local</span>\/bin/g&#x27;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h4><ul>
+<li><code>-e&lt;script&gt;</code>或<code>--expression=&lt;script&gt;</code> ：以选项中指定的script来处理输入的文本文件。允许在同一行里执行多条命令：</li>
+<li><code>-f&lt;script文件&gt;</code>或<code>--file=&lt;script文件&gt;</code> ：直接将 sed 的动作写在一个文件内， -f filename 则可以运行 filename 内的 sed 动作</li>
+<li><code>-h</code>或<code>--help</code> 显示帮助。</li>
+<li><code>-n</code>或<code>--quiet</code>或<code>--silent</code> 仅显示script处理后的结果。</li>
+<li><code>-V</code>或<code>--version</code> 显示版本信息。</li>
+<li><code>-i</code>：直接编辑文件选项</li>
+</ul>
+<h4 id="sed元字符集"><a href="#sed元字符集" class="headerlink" title="sed元字符集"></a>sed元字符集</h4><ul>
+<li><code>^</code> 匹配行开始。如：<code>/^sed/</code>匹配所有以sed开头的行。</li>
+<li><code>$</code> 匹配行结束。如：<code>/sed$/</code>匹配所有以sed结尾的行。</li>
+<li><code>.</code> 匹配一个非换行符的任意字符。如：<code>/s.d/</code>匹配s后接一个任意字符，最后是d。</li>
+<li><code>*</code> 前面的字符重复0到多次，如：<code>/*sed/</code>匹配所有模板是一个或多个空格后紧跟sed的行。</li>
+<li><code>[]</code> 匹配一个指定范围内的字符，如<code>/[ss]ed/</code>匹配sed和Sed。  </li>
+<li><code>[^]</code> 匹配一个不在指定范围内的字符，如：<code>/[^A-RT-Z]ed/</code>匹配不包含A-R和T-Z的一个字母开头，紧跟ed的行。</li>
+<li><code>\(..\)</code> 匹配子串，保存匹配的字符，如<code>s/\(love\)able/\1rs</code>，loveable被替换成lovers。</li>
+<li><code>&amp;</code> 保存搜索字符用来替换其他字符，如<code>s/love/**&amp;**/</code>，love这成<code>**love**</code>。</li>
+<li><code>\&lt;</code> 匹配单词的开始，如<code>/\&lt;love/</code>匹配包含以love开头的单词的行。</li>
+<li><code>\&gt;</code>  匹配单词的结束，如<code>/love\&gt;/</code>匹配包含以love结尾的单词的行。</li>
+<li><code>x\&#123;m\&#125;</code> 重复字符x，m次，如：<code>/0\&#123;5\&#125;/</code>匹配包含5个0的行。</li>
+<li><code>x\&#123;m,\&#125;</code> 重复字符x，至少m次，如：<code>/0\&#123;5,\&#125;/</code>匹配至少有5个0的行。</li>
+<li><code>x\&#123;m,n\&#125;</code> 重复字符x，至少m次，不多于n次，如：<code>/0\&#123;5,10\&#125;/</code>匹配5~10个0的行。</li>
+</ul>
+<h4 id="动作"><a href="#动作" class="headerlink" title="动作"></a>动作</h4><ul>
+<li><code>a</code> ：在当前行下面插入文本。后面可以直接接字符串。</li>
+<li><code>i</code>： 在当前行上面插入文本。</li>
+<li><code>c</code> ：把选定的行改为新的文本</li>
+<li><code>p</code>：打印模板块的行。通常会与参数 <code>sed -n</code> 一起</li>
+<li><code>s</code>：替换指定字符 ，标记有：<ul>
+<li><code>g</code> ：表示行内全面替换。 </li>
+<li><code>\1</code>：子串匹配标记</li>
+<li><code>&amp;</code> ：已匹配字符串标记</li>
+<li><code>y</code> ：表示把一个字符翻译为另外的字符（但是不用于正则表达式）</li>
+<li><code>i·</code>：查找不区分大小写的</li>
+</ul>
+</li>
+<li><code>d</code>：删除，删除选择的行</li>
+<li><code>r file</code>：从file中读行。</li>
+<li><code>w file</code>：写并追加模板块到file末尾。  </li>
+<li><code>n</code> ：读取下一个输入行，用下一个命令处理新的行而不是用第一个命令。</li>
+</ul>
+<h3 id="例子-7"><a href="#例子-7" class="headerlink" title="例子"></a>例子</h3><h4 id="替换操作"><a href="#替换操作" class="headerlink" title="替换操作"></a>替换操作</h4><ul>
+<li><p>替换：</p>
+<figure class="highlight delphi"><table><tr><td class="code"><pre><span class="line">sed <span class="string">&#x27;s/book/books/&#x27;</span> <span class="keyword">file</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打印那些发生替换的行：</p>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line">sed -n &#x27;s/<span class="keyword">test</span>/<span class="keyword">TEST</span>/p&#x27; <span class="keyword">file</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>直接编辑文件，当需要从第N处匹配开始替换时，可以使用 <code>/Ng</code>：</p>
+<figure class="highlight delphi"><table><tr><td class="code"><pre><span class="line">sed -i <span class="string">&#x27;s/book/books/g&#x27;</span> <span class="keyword">file</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将第2-5行的内容取代成为『No 2-5 number』</p>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">#将第<span class="number">2</span><span class="number">-5</span>行的内容取代成为『No <span class="number">2</span><span class="number">-5</span> number』</span><br><span class="line">sed &#x27;<span class="number">2</span>,<span class="number">5</span>c No <span class="number">2</span><span class="number">-5</span> number&#x27; file</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>所有以192.168.0.1开头的行都会被替换成它自已加localhost：</p>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">sed &#x27;s/^<span class="number">192.168</span><span class="number">.0</span><span class="number">.1</span>/&amp;localhost/&#x27; file</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>\n</code>表示匹配到的第几个</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> aaa BBB | sed <span class="string">&#x27;s/\([a-z]\+\) \([A-Z]\+\)/\2 \1/&#x27;</span></span></span><br><span class="line">BBB aaa</span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> this is digit 7 <span class="keyword">in</span> a number | sed <span class="string">&#x27;s/digit \([0-9]\)/\1/&#x27;</span></span></span><br><span class="line">this is 7 in a number</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>把1~10行内所有abcde转变为大写，注意，正则表达式元字符不能使用这个命令：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">sed</span> &#x27;<span class="number">1</span>,<span class="number">10</span>y/abcde/ABCDE/&#x27; file</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="删除操作"><a href="#删除操作" class="headerlink" title="删除操作"></a>删除操作</h4><ul>
+<li><p>删除空白行：</p>
+<figure class="highlight delphi"><table><tr><td class="code"><pre><span class="line">sed <span class="string">&#x27;/^$/d&#x27;</span> <span class="keyword">file</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除文件的第2行：</p>
+<figure class="highlight delphi"><table><tr><td class="code"><pre><span class="line">sed <span class="string">&#x27;2d&#x27;</span> <span class="keyword">file</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除文件的第2行到末尾所有行：</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">sed</span> <span class="string">&#x27;2,<span class="variable">$d</span>&#x27;</span> file</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除文件最后一行：</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">sed</span> <span class="string">&#x27;<span class="variable">$d</span>&#x27;</span> file</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除文件中所有开头是test的行：</p>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line">sed &#x27;/^<span class="keyword">test</span>/&#x27;d <span class="keyword">file</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除包含root的行：</p>
+<figure class="highlight delphi"><table><tr><td class="code"><pre><span class="line">sed  <span class="string">&#x27;/root/d&#x27;</span> <span class="keyword">file</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="行"><a href="#行" class="headerlink" title="行"></a>行</h4><ul>
+<li><p>所有在模板test和check所确定的范围内的行都被打印：</p>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line">sed -n &#x27;/<span class="keyword">test</span>/,/check/p&#x27; <span class="keyword">file</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打印从第5行开始到第一个包含以test开始的行之间的所有行：</p>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line">sed -n &#x27;<span class="number">5</span>,/^<span class="keyword">test</span>/p&#x27; <span class="keyword">file</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对于模板test和west之间的行，每行的末尾用字符串aaa bbb替换：</p>
+<figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line">sed &#x27;<span class="string">/test/</span>,<span class="string">/west/s/</span>$<span class="string">/aaa</span> bbb/&#x27; file</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除两个模式匹配行之间的内容</p>
+<figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line">sed -i  &#x27;<span class="string">/aaa/</span>,<span class="string">/bbb/</span>&#123;<span class="string">/aaa/</span>!&#123;<span class="string">/bbb/</span>!d&#125;&#125;&#x27;   file</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果test被匹配，则移动到匹配行的下一行，替换这一行的aa，变为bb，并打印该行，然后继续：</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">grep</span> -A <span class="number">1</span> SCC URFILE </span><br><span class="line">sed <span class="string">&#x27;/test/&#123; n; s/aa/bb/; &#125;&#x27;</span> <span class="keyword">file</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打印匹配字符串的下一行</p>
+<figure class="highlight excel"><table><tr><td class="code"><pre><span class="line">sed -<span class="built_in">n</span> &#x27;/SCC/&#123;<span class="built_in">n</span>;p&#125;&#x27; URFILE</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打印奇数行或偶数行</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">sed</span> -n <span class="string">&#x27;p;n&#x27;</span> test.txt  <span class="comment">#奇数行</span></span><br><span class="line">sed -n <span class="string">&#x27;n;p&#x27;</span> test.txt  <span class="comment">#偶数行</span></span><br><span class="line"></span><br><span class="line">sed -n <span class="string">&#x27;1~2p&#x27;</span> test.txt  <span class="comment">#奇数行</span></span><br><span class="line">sed -n <span class="string">&#x27;2~2p&#x27;</span> test.txt  <span class="comment">#偶数行</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="添加"><a href="#添加" class="headerlink" title="添加"></a>添加</h4><ul>
+<li><p>添加到行后或者行前：如果增加的内容有好几行，则在行末加转移符号\n。</p>
+<figure class="highlight stata"><table><tr><td class="code"><pre><span class="line">sed &#x27;/^<span class="keyword">test</span>/a\this is a <span class="keyword">test</span> <span class="keyword">line</span>&#x27; <span class="keyword">file</span></span><br><span class="line">sed &#x27;/^<span class="keyword">test</span>/i\this is a <span class="keyword">test</span> <span class="keyword">line</span>&#x27; <span class="keyword">file</span></span><br></pre></td></tr></table></figure>
+<p>匹配不区分大小写添加时，在最后直接加<code>i</code>不可行，可以使用</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">sed -<span class="built_in">i</span> <span class="string">&#x27;s/aaa/bbb\n&amp;/i&#x27;</span> filename</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 test.conf 文件第2行之后或第5行之前插入 this is a test line：</p>
+<figure class="highlight stata"><table><tr><td class="code"><pre><span class="line">sed -i &#x27;2a\this is a <span class="keyword">test</span> <span class="keyword">line</span>&#x27; <span class="keyword">test</span>.<span class="keyword">conf</span></span><br><span class="line">sed -i &#x27;5i\this is a <span class="keyword">test</span> <span class="keyword">line</span>&#x27; <span class="keyword">test</span>.<span class="keyword">conf</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在testfile文件的第四行后添加一行，并将结果输出到标准输出：</p>
+<figure class="highlight haxe"><table><tr><td class="code"><pre><span class="line">sed -e <span class="number">4</span>a\<span class="keyword">new</span><span class="type">Line</span> testfile </span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>r</code>命令会把其后面的任何字符判读为文件名，直到回车符或是单引号，因此在某行后面添加文件是</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">sed -i ‘<span class="regexp">/regex/</span>r b.txt’ <span class="keyword">file</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在a.txt的第88行插入文件b.txt</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">sed -<span class="selector-tag">i</span> <span class="string">&#x27;88 r b.txt&#x27;</span> <span class="selector-tag">a</span>.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在example中所有包含test的行都被写入file里：</p>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line">sed -n &#x27;/<span class="keyword">test</span>/w <span class="keyword">file</span>&#x27; example</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="打印，搜索显示"><a href="#打印，搜索显示" class="headerlink" title="打印，搜索显示"></a>打印，搜索显示</h4><ul>
+<li><p>列出文件内的第 5-7 行</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">sed</span> -n &#x27;<span class="number">5</span>,<span class="number">7</span>p&#x27; file</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>搜索有root关键字的行</p>
+<figure class="highlight delphi"><table><tr><td class="code"><pre><span class="line">sed <span class="string">&#x27;/root/p&#x27;</span> <span class="keyword">file</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="多点编辑：e命令"><a href="#多点编辑：e命令" class="headerlink" title="多点编辑：e命令"></a>多点编辑：e命令</h4><ul>
+<li><p>执行多条命令：</p>
+<figure class="highlight delphi"><table><tr><td class="code"><pre><span class="line">sed -e <span class="string">&#x27;1,5d&#x27;</span> -e <span class="string">&#x27;s/test/check/&#x27;</span> <span class="keyword">file</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>组合多个表达式</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">sed</span> <span class="string">&#x27;表达式&#x27;</span> | sed <span class="string">&#x27;表达式&#x27;</span></span><br><span class="line">或</span><br><span class="line">sed <span class="string">&#x27;表达式; 表达式&#x27;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="perl-i"><a href="#perl-i" class="headerlink" title="perl -i"></a>perl -i</h2><p>在命令行中修改文件内容</p>
+<ul>
+<li><code>-w</code>  ：打开警告。</li>
+<li><code>-i</code>  ：在原文件中编辑（就地编辑）。</li>
+<li><code>-i.bak</code> 就地编辑，但是会备份原文件，并且以.bak为后缀，这个.bak可以修改成自己想要的任何符号。</li>
+<li><code>-n</code>：使用&lt;&gt;将所有@ARGV参数当作文件来逐行运行,会将读入的内容隐式的逐一按行来遍历文件，每一行将缺省保存在 <code>$_</code>；意即会把输入的文件逐行的读取并保存在<code>$_</code>这个变量中，我们修改​<code>$_</code>相当于间接影响文件中的内容，这个工作其实是perl封装好了的，直接使用就好了；这个参数不会自动打印​<code>$_</code>。</li>
+<li><code>-p</code>：这个和-n类似，但是会打印<code>$_</code>。</li>
+<li><code>-e</code>：指定字符串用作脚本执行；通常后跟单引号，把需要执行的语句封装在其中。</li>
+</ul>
+<h3 id="例子-8"><a href="#例子-8" class="headerlink" title="例子"></a>例子</h3><ul>
+<li><p>替换A为B</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">perl</span>  -i  -<span class="keyword">pe</span> ‘s/old_str/new_str/g’  <span class="keyword">files</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>替换A为B并备份</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">perl</span>  -i.bak -<span class="keyword">pe</span>  ‘s/old_str/new_str/g’ <span class="keyword">files</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改并输出到屏幕 此处修改后输出到屏幕，但并不会改变原文件。</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">perl  -ne ‘s<span class="regexp">/old_str/</span>new_str/g;<span class="keyword">print</span>;’  files</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>搜索满足条件的行</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">perl  -i  -ne ‘<span class="keyword">print</span>  <span class="keyword">if</span> <span class="regexp">/condition/</span>’  files</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在文件中插入行号</p>
+<figure class="highlight gams"><table><tr><td class="code"><pre><span class="line">perl  -i  -pe ‘<span class="symbol">$</span>_ = sprintf “d %s”, <span class="symbol">$</span>. , <span class="symbol">$</span>_’  <span class="keyword">files</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在匹配的某行行首添加字串</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">perl</span>  -i  -<span class="keyword">pe</span> ‘<span class="keyword">print</span>  “<span class="built_in">string</span>” <span class="keyword">if</span>  /condition/’  <span class="keyword">files</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在匹配的某行行尾添加字串</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">perl  -i  -pe ‘chomp; <span class="variable">$_</span> = <span class="variable">$_</span> . “string\n”  <span class="keyword">if</span> <span class="regexp">/condition/</span>’  files</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在匹配的某行前增加一行</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">perl</span>  -i  -<span class="keyword">pe</span> ‘<span class="keyword">print</span>  “<span class="built_in">string</span>\n” <span class="keyword">if</span>  /condition/’  <span class="keyword">files</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在匹配的某行后增加一行</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">perl  -i  -pe ‘<span class="variable">$_</span> = <span class="variable">$_</span> . “string\n”  <span class="keyword">if</span> <span class="regexp">/condition/</span>’  files</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="文件传输"><a href="#文件传输" class="headerlink" title="文件传输"></a>文件传输</h1><h1 id="磁盘管理"><a href="#磁盘管理" class="headerlink" title="磁盘管理"></a>磁盘管理</h1><h2 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h2><p>Change directory，用于切换当前工作目录至</p>
+<h3 id="语法-11"><a href="#语法-11" class="headerlink" title="语法"></a>语法</h3><figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">cd</span><span class="meta"> [dirName]</span></span><br></pre></td></tr></table></figure>
+<p>dirName：</p>
+<ul>
+<li>可为绝对路径或相对路径。</li>
+<li>若目录名称省略，则变换至使用者的home directory。<code>~</code>也表示为home directory的意思</li>
+<li><code>.</code>则是表示目前所在的目录</li>
+<li><code>..</code>则表示目前目录位置的上一层目录。</li>
+</ul>
+<h2 id="ll"><a href="#ll" class="headerlink" title="ll"></a>ll</h2><p>用法与ls相同，但列出信息更详细，包括文件的创建时间、所属对象、权限等等信息</p>
+<h2 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h2><p>List files 于显示指定工作目录下之内容（列出目前工作目录所含之文件及子目录)。</p>
+<h3 id="语法-12"><a href="#语法-12" class="headerlink" title="语法"></a>语法</h3><figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ls</span>（选项）（参数）</span><br></pre></td></tr></table></figure>
+<p>选项：</p>
+<ul>
+<li><code>-l</code>：以长格式显示目录下的内容列表。输出的信息从左到右依次包括文件名，文件类型、权限模式、硬连接数、所有者、组、文件大小和文件的最后修改时间等；</li>
+<li><code>-t</code>：用文件和目录的更改时间排序；</li>
+<li><code>-r</code>：以文件名反序排列并输出目录内容列表；</li>
+<li><code>-R</code>：递归处理，将指定目录下的所有文件及子目录一并处理；</li>
+<li><code>-a</code>：显示所有档案及目录，包括隐藏文件；</li>
+<li><code>-A</code>：显示除影藏文件“.”和“..”以外的所有文件列表；</li>
+<li><code>-F</code>：在每个输出项后追加文件的类型标识符，具体含义：“*”表示具有可执行权限的普通文件，“/”表示目录，“@”表示符号链接，“|”表示命令管道FIFO，“=”表示sockets套接字。当文件为普通文件时，不输出任何标识符；</li>
+<li><code>-m</code>：用“,”号区隔每个文件和目录的名称；</li>
+</ul>
+<h3 id="例子-9"><a href="#例子-9" class="headerlink" title="例子"></a>例子</h3><ul>
+<li><p>列出目前工作目录下所有名称是 s 开头的文件，越新的排越后面 :</p>
+<figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ls</span> -ltr s*</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将 /bin 目录以下所有目录及文件详细资料列出 :</p>
+<figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ls</span> -lR <span class="string">/bin</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>列出目前工作目录下所有文件及目录；目录于名称后加 “/“, 可执行档于名称后加 “*” :</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">ls -AF</span>   </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>水平输出文件列表</p>
+<figure class="highlight crystal"><table><tr><td class="code"><pre><span class="line">$ ls -m</span><br><span class="line">bin, boot, data, dev, etc, home, <span class="class"><span class="keyword">lib</span>, <span class="title">lost</span>+<span class="title">found</span>, <span class="title">media</span>, <span class="title">misc</span>, <span class="title">mnt</span>, <span class="title">opt</span>, <span class="title">proc</span>, <span class="title">root</span>, <span class="title">sbin</span>, <span class="title">selinux</span>, <span class="title">srv</span>, <span class="title">sys</span>, <span class="title">tmp</span>, <span class="title">usr</span>, <span class="title">vark</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>只列出文件夹</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> <span class="operator">-F</span> | grep <span class="string">&#x27;/$&#x27;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h2><p>make directory用于创建目录。</p>
+<h3 id="语法-13"><a href="#语法-13" class="headerlink" title="语法"></a>语法</h3><figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">mkdir</span> <span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
+<p>选项：</p>
+<ul>
+<li><p><code>-p</code>：确保目录名称存在，不存在的就建一个。</p>
+</li>
+<li><p><code>-m&lt;目标属性&gt;</code>或<code>--mode&lt;目标属性&gt;</code>建立目录的同时设置目录的权限；</p>
+</li>
+</ul>
+<h3 id="例子-10"><a href="#例子-10" class="headerlink" title="例子"></a>例子</h3><p>在目录<code>/usr/meng</code>下建立子目录<a href="http://man.linuxde.net/test">test</a>，并且只有文件主有读、写和执行权限，其他人无权访问：</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">mkdir -m <span class="number">700</span> <span class="regexp">/usr/m</span>eng/test</span><br></pre></td></tr></table></figure>
+<h2 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h2><p>print work directory 显示出当前工作目录的绝对路径</p>
+<h3 id="语法-14"><a href="#语法-14" class="headerlink" title="语法"></a>语法</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">pwd [<span class="string">--help</span>][<span class="symbol">--version</span>]</span><br></pre></td></tr></table></figure>
+<p>选项：</p>
+<ul>
+<li><code>--help</code> 在线帮助。</li>
+<li><code>--version</code> 显示版本信息。</li>
+</ul>
+<h2 id="rmdir"><a href="#rmdir" class="headerlink" title="rmdir"></a>rmdir</h2><p>Remove Directory从一个目录中删除一个或多个空的子目录</p>
+<h3 id="语法-15"><a href="#语法-15" class="headerlink" title="语法"></a>语法</h3><figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rmdir</span> [-p] dirName</span><br></pre></td></tr></table></figure>
+<p>选项：</p>
+<ul>
+<li><code>-p</code> ：当子目录被删除后使它也成为空目录的话，则顺便一并删除。</li>
+<li><code>-rf</code> ：强制删除</li>
+</ul>
+<h3 id="例子-11"><a href="#例子-11" class="headerlink" title="例子"></a>例子</h3><p>在工作目录下的 BBB 目录中，删除名为 Test 的子目录。若 Test 删除后，BBB 目录成为空目录，则 BBB 亦予删除。</p>
+<figure class="highlight stata"><table><tr><td class="code"><pre><span class="line"><span class="keyword">rmdir</span> -p BBB/<span class="keyword">Test</span></span><br></pre></td></tr></table></figure>
+<h1 id="磁盘维护"><a href="#磁盘维护" class="headerlink" title="磁盘维护"></a>磁盘维护</h1><h1 id="网络通讯"><a href="#网络通讯" class="headerlink" title="网络通讯"></a>网络通讯</h1><h1 id="系统管理"><a href="#系统管理" class="headerlink" title="系统管理"></a>系统管理</h1><h2 id="top"><a href="#top" class="headerlink" title="top"></a>top</h2><p>用于实时显示 process 的动态。更强大的是htop命令。</p>
+<h3 id="语法-16"><a href="#语法-16" class="headerlink" title="语法"></a>语法</h3><figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="attribute">top</span> <span class="selector-attr">[-]</span> <span class="selector-attr">[d delay]</span> <span class="selector-attr">[q]</span> <span class="selector-attr">[c]</span> <span class="selector-attr">[S]</span> <span class="selector-attr">[s]</span> <span class="selector-attr">[i]</span> <span class="selector-attr">[n]</span> <span class="selector-attr">[b]</span></span><br></pre></td></tr></table></figure>
+<p>选项：</p>
+<ul>
+<li><code>-n</code> : 更新的次数，完成后将会退出 top</li>
+<li><code>-d</code>：改变显示的更新速度</li>
+<li><code>-p&lt;进程号&gt;</code>：指定进程；</li>
+<li><code>-u&lt;用户名&gt;</code>：指定用户名；</li>
+</ul>
+<p>交互命令：</p>
+<ul>
+<li><p><code>q</code> ：退出程序</p>
+</li>
+<li><p><code>1</code>：可监控每个逻辑CPU的状况</p>
+</li>
+<li><code>b</code>：高亮显示当前运行进程</li>
+</ul>
+<h3 id="例子-12"><a href="#例子-12" class="headerlink" title="例子"></a>例子</h3><ul>
+<li><p>显示进程信息，查看该服务器当前有哪些计算进程，CPU占用率多大等等，按ctrl c退出。</p>
+<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line"><span class="built_in">top</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>会显示：<ul>
+<li><code>top - 13:54:36</code>：当前时间；<code>363 days</code>：系统运行时间；<code>13 users</code>：登陆的用户数目；<code>load average:1.89, 2.12, 2.57</code>：系统负载，即任务队列的平均长度</li>
+<li><code>Tasks: 528 total</code>：总进程数；<code>1 running</code>：正在运行的进程数；<code>507 sleeping</code>：睡眠的进程数；<code>20 stopped</code>：停止的进程数；<code>0 zombie</code>：冻结进程数</li>
+<li><code>%Cpu(s):  0.5 us</code>：用户空间占用CPU百分比；<code>1.2 sy</code>  ：内核空间占用CPU百分比<code>0.0 ni</code>：用户进程空间内改变过优先级的进程占用CPU百分比；<code>94.4 id</code>：空闲CPU百分比；<code>3.9 wa</code>：等待输入输出的CPU时间百分比</li>
+<li><code>KiB Mem : 19649531+total</code>：物理内存总量；<code>2547788 free</code>：空闲内存总量；<code>9682144 used</code>：使用的物理内存总量；<code>18426537+buff/cache</code>：用作内核缓存的内存量；<code>KiB Swap: 32767996 total</code>：交换区总量<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">top</span> <span class="bullet">-</span> <span class="number">13</span><span class="string">:54:36</span> <span class="string">up</span> <span class="number">363</span> <span class="string">days,</span>  <span class="number">1</span><span class="string">:51,</span> <span class="number">13</span> <span class="string">users,</span>  <span class="attr">load average:</span> <span class="number">1.89</span><span class="string">,</span> <span class="number">2.12</span><span class="string">,</span> <span class="number">2.57</span></span><br><span class="line"><span class="attr">Tasks:</span> <span class="number">528</span> <span class="string">total,</span>   <span class="number">1</span> <span class="string">running,</span> <span class="number">507</span> <span class="string">sleeping,</span>  <span class="number">20</span> <span class="string">stopped,</span>   <span class="number">0</span> <span class="string">zombie</span></span><br><span class="line"><span class="string">%Cpu(s):</span>  <span class="number">0.5</span> <span class="string">us,</span>  <span class="number">1.2</span> <span class="string">sy,</span>  <span class="number">0.0</span> <span class="string">ni,</span> <span class="number">94.4</span> <span class="string">id,</span>  <span class="number">3.9</span> <span class="string">wa,</span>  <span class="number">0.0</span> <span class="string">hi,</span>  <span class="number">0.1</span> <span class="string">si,</span>  <span class="number">0.0</span> <span class="string">st</span></span><br><span class="line"><span class="attr">KiB Mem :</span> <span class="number">19649531</span><span class="string">+total,</span>  <span class="number">2547788</span> <span class="string">free,</span>  <span class="number">9682144</span> <span class="string">used,</span> <span class="number">18426537</span><span class="string">+buff/cache</span></span><br><span class="line"><span class="attr">KiB Swap:</span> <span class="number">32767996</span> <span class="string">total,</span> <span class="number">28063200</span> <span class="string">free,</span>  <span class="number">4704796</span> <span class="string">used.</span> <span class="number">18375868</span><span class="string">+avail</span> <span class="string">Mem</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>更新两次后终止更新显示</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">top -n <span class="number">2</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更新周期为3秒</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">top -d <span class="number">3</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示进程号为139的进程信息，CPU、内存占用率等</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">top -p <span class="number">139</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="系统设置"><a href="#系统设置" class="headerlink" title="系统设置"></a>系统设置</h1><h1 id="备份压缩"><a href="#备份压缩" class="headerlink" title="备份压缩"></a>备份压缩</h1><h2 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h2><p>Tape archive （磁带档案）。tar是用来建立，还原备份文件的工具程序，它可以加入，解开备份文件内的文件。</p>
 <ul>
 <li>打包是指将一大堆文件或目录变成一个总的文件；压缩则是将一个大的文件通过一些压缩算法变成一个小文件。</li>
 <li>利用tar命令，可以把一大堆的文件和目录全部打包成一个文件，这对于备份文件或将几个文件组合成为一个文件以便于网络传输是非常有用的。</li>
 <li>打包成一个包后，再用压缩程序进行压缩（gzip bzip2命令）等。</li>
 </ul>
-<h3 id="语法-5"><a href="#语法-5" class="headerlink" title="语法"></a>语法</h3><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">tar</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="语法-17"><a href="#语法-17" class="headerlink" title="语法"></a>语法</h3><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">tar</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
 <p>选项：</p>
 <ul>
 <li><code>-c</code>或<code>--create</code>：建立新的备份文件；</li>
@@ -875,7 +1403,7 @@
 <li><code>-z</code>或<code>--gzip</code>或<code>--ungzip</code> ：通过gzip指令处理备份文件。</li>
 <li><code>--exclude=&lt;范本样式&gt;</code>：排除符合范本样式的文件。</li>
 </ul>
-<h3 id="例子-3"><a href="#例子-3" class="headerlink" title="例子"></a>例子</h3><h4 id="将文件全部打包成tar包"><a href="#将文件全部打包成tar包" class="headerlink" title="将文件全部打包成tar包"></a>将文件全部打包成tar包</h4><ul>
+<h3 id="例子-13"><a href="#例子-13" class="headerlink" title="例子"></a>例子</h3><h4 id="将文件全部打包成tar包"><a href="#将文件全部打包成tar包" class="headerlink" title="将文件全部打包成tar包"></a>将文件全部打包成tar包</h4><ul>
 <li><p>仅打包，不压缩。在选项<code>f</code>之后的文件档名是自己取的，习惯上都用 .tar 来作为辨识。 </p>
 <figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line">tar -cvf <span class="built_in">log</span>.tar log2012.<span class="built_in">log</span></span><br></pre></td></tr></table></figure>
 </li>
@@ -910,9 +1438,9 @@
 </li>
 </ul>
 <h1 id="设备管理"><a href="#设备管理" class="headerlink" title="设备管理"></a>设备管理</h1><h1 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h1><h2 id="bc"><a href="#bc" class="headerlink" title="bc"></a>bc</h2><p>任意精度计算器语言。bash内置了对整数四则运算的支持，但是并不支持浮点运算，而bc可以。</p>
-<h3 id="语法-6"><a href="#语法-6" class="headerlink" title="语法"></a>语法</h3><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">bc</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="语法-18"><a href="#语法-18" class="headerlink" title="语法"></a>语法</h3><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">bc</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
 <p>通常和管道符一起使用</p>
-<h3 id="例子-4"><a href="#例子-4" class="headerlink" title="例子"></a>例子</h3><h4 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h4><p>常用的运算</p>
+<h3 id="例子-14"><a href="#例子-14" class="headerlink" title="例子"></a>例子</h3><h4 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h4><p>常用的运算</p>
 <ul>
 <li><code>+</code>加法</li>
 <li><code>-</code> 减法</li>
@@ -933,6 +1461,73 @@
 </li>
 <li><p>将二进制转换为十进制：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">abc=11000000</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;obase=10;ibase=2;<span class="variable">$abc</span>&quot;</span> | bc</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h2><p>用于查看输入文件中的尾部内容。tail命令默认在屏幕上显示指定文件的末尾10行。</p>
+<h3 id="语法-19"><a href="#语法-19" class="headerlink" title="语法"></a>语法</h3><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">tail</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<ul>
+<li><code>-f</code> ：循环读取</li>
+<li><code>-q</code> ：不显示处理信息</li>
+<li><code>-v</code> ：显示详细的处理信息，当有多个文件参数时，总是输出各个文件名。</li>
+<li><code>-q</code>或<code>--quiet</code>或<code>--silent</code>：当有多个文件参数时，不输出各个文件名；</li>
+<li><code>-c&lt;数目&gt;</code> ：显示的字节数</li>
+<li><code>-n&lt;行数&gt;</code> 或<code>——line=&lt;N&gt;</code>：显示文件的尾部 n 行内容</li>
+<li><code>-s&lt;秒数&gt;</code>, <code>——sleep-interal=&lt;秒数&gt;</code> 与<code>-f</code>合用，指定监视文件变化时间隔的秒数。</li>
+</ul>
+<h3 id="例子-15"><a href="#例子-15" class="headerlink" title="例子"></a>例子</h3><ul>
+<li><p>显示 notes.log 文件的最后 10 行：</p>
+<figure class="highlight stan"><table><tr><td class="code"><pre><span class="line"><span class="built_in">tail</span> notes.<span class="built_in">log</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>跟踪名为 notes.log 的文件的增长情况，直到按下Ctrl+C组合键停止显示：</p>
+<figure class="highlight stan"><table><tr><td class="code"><pre><span class="line"><span class="built_in">tail</span> -f notes.<span class="built_in">log</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示文件 notes.log 的内容，从第 20 行至文件末尾:</p>
+<figure class="highlight stan"><table><tr><td class="code"><pre><span class="line"><span class="built_in">tail</span> +<span class="number">20</span> notes.<span class="built_in">log</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示文件 notes.log 的最后 10 个字符:</p>
+<figure class="highlight llvm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">tail</span> -<span class="keyword">c</span> <span class="number">10</span> notes.log</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="xargs"><a href="#xargs" class="headerlink" title="xargs"></a>xargs</h2><ul>
+<li>eXtended ARGuments，是给命令传递参数的一个过滤器，也是组合多个命令的一个工具。</li>
+<li>它能够捕获一个命令的输出，然后传递给另外一个命令。</li>
+</ul>
+<h3 id="语法-20"><a href="#语法-20" class="headerlink" title="语法"></a>语法</h3><ul>
+<li>一般是和管道一起使用。</li>
+</ul>
+<figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line">somecommand |xargs -<span class="keyword">item</span>  <span class="keyword">command</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>xargs的默认命令是<code>echo</code>，空格是默认定界符。</li>
+</ul>
+<h3 id="例子-16"><a href="#例子-16" class="headerlink" title="例子"></a>例子</h3><h4 id="格式化输入"><a href="#格式化输入" class="headerlink" title="格式化输入"></a>格式化输入</h4><ul>
+<li><p>将test文件中的多行变成一行：</p>
+<figure class="highlight stata"><table><tr><td class="code"><pre><span class="line"><span class="keyword">cat</span> <span class="keyword">test</span>.txt | xargs</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>-n</code> 选项多行输出，将test文件中的三个一行输出多</p>
+<figure class="highlight stata"><table><tr><td class="code"><pre><span class="line"><span class="keyword">cat</span> <span class="keyword">test</span>.txt | xargs -n3</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>-d</code> 选项可以自定义一个定界符：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">&quot;nameXnameXnameXname&quot;</span> | xargs -dX</span></span><br><span class="line">name name name name</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash">  <span class="built_in">echo</span> <span class="string">&quot;nameXnameXnameXname&quot;</span> | xargs -dX -n2</span></span><br><span class="line">name name</span><br><span class="line">name name</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="替换字符串"><a href="#替换字符串" class="headerlink" title="替换字符串{}"></a>替换字符串{}</h4><ul>
+<li><p>复制所有图片文件到 /data/images 目录下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ls *.jpg | xargs -n1 -I cp &#123;&#125; /data/images</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="结合find使用"><a href="#结合find使用" class="headerlink" title="结合find使用"></a>结合find使用</h4><ul>
+<li><p>删除文件</p>
+<figure class="highlight sqf"><table><tr><td class="code"><pre><span class="line"><span class="built_in">find</span> . -<span class="built_in">type</span> f -<span class="built_in">name</span> <span class="string">&quot;*.log&quot;</span> -print0 | xargs -<span class="number">0</span> rm -f</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>统计一个源代码目录中所有 php 文件的行数：</p>
+<figure class="highlight sqf"><table><tr><td class="code"><pre><span class="line"><span class="built_in">find</span> . -<span class="built_in">type</span> f -<span class="built_in">name</span> <span class="string">&quot;*.php&quot;</span> -print0 | xargs -<span class="number">0</span> wc -l</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查找所有的 jpg 文件，并且压缩它们</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="builtin-name">find</span> . -type f -name <span class="string">&quot;*.jpg&quot;</span> -<span class="builtin-name">print</span> | xargs tar -czvf images.tar.gz</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>替换文件内容</p>
+<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">find . -type f | <span class="type">xargs</span> perl -pi -e &#x27;s|<span class="type">_NR</span>|<span class="type">_SR</span>|<span class="type">g</span>&#x27;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 ]]></content>
