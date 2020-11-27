@@ -1,6 +1,6 @@
 ---
-title: EDA-NOCV
-typora-root-url: EDA-NOCV
+title: 【ADF】02.EDA-NOCV
+typora-root-url: 【ADF】02.EDA-NOCV
 date: 2020-02-07
 updated:
 tags: 能量分解

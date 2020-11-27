@@ -1,5 +1,6 @@
 ---
-title: ADF的SCF相关
+title: 【ADF】01.SCF相关
+typora-root-url: 【ADF】01.SCF相关
 date: 2019-09-23 
 updated:
 description: ADF的SCF选项以及不收敛的处理方法
@@ -68,6 +69,7 @@ End
 
 - 指定`NoADIIS`时才可以设置 `DIIS`模块：
   - `N`用于加速SCF的扩展向量的数量，默认为`10`，小于2后会禁用DIIS。此数字不仅适用于Pulay DIIS方案，还适用于其他类似DIIS的方法，例如A-DIIS和LIST方法。
+    
     > LIST家族的方法对使用的扩展向量的数量非常敏感，接近收敛时，LIST中的向量数量会增加，但始终受`DIIS N`的限制，当难以收敛时，可以将`DIIS N`设置为大于10的值，比如12~20。
   - `OK`禁用A-DIIS时，SDIIS起始条件。默认为`0.5` a.u.。
   - `Cyc`禁用A-DIIS时，无论上面的`DIIS OK`值如何，SDIIS都会在此迭代下启动，默认值为`5`
