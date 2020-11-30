@@ -417,27 +417,20 @@
 <li><code>a</code>：为光标所在的下一个字符处开始插入</li>
 <li><code>A</code>：行尾插入</li>
 <li><code>o</code>：在目前光标所在的下一行处输入新的一行</li>
-<li><p><code>O</code>：在目前光标所在处的上一行输入新的一行</p>
-</li>
-<li><p><code>&gt;</code>：缩进</p>
-<ul>
+<li><code>O</code>：在目前光标所在处的上一行输入新的一行</li>
+<li><code>&gt;</code>：缩进<ul>
 <li><code>&gt;n</code>：缩进n行</li>
 </ul>
 </li>
-<li><p><code>&lt;</code>：反缩进</p>
-</li>
-<li><p><code>Esc</code>：退出编辑模式，回到一般模式中</p>
-</li>
+<li><code>&lt;</code>：反缩进</li>
+<li><code>Esc</code>：退出编辑模式，回到一般模式中</li>
 </ul>
 <h2 id="取代或删除输入"><a href="#取代或删除输入" class="headerlink" title="取代或删除输入"></a>取代或删除输入</h2><ul>
 <li><code>r</code>：只会取代光标所在的那一个字符一次</li>
 <li><code>R</code>：会一直取代光标所在的文字，直到按下 <code>ESC</code> 为止</li>
-<li><p><code>s</code>：删字符插入</p>
-</li>
-<li><p><code>S</code>：删行插入</p>
-</li>
-<li><p><code>c</code>：和d一样，但是进入编辑模式</p>
-</li>
+<li><code>s</code>：删字符插入</li>
+<li><code>S</code>：删行插入</li>
+<li><code>c</code>：和d一样，但是进入编辑模式</li>
 </ul>
 <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
 <li><code>crtl+a</code>：光标所在处数字+1</li>
@@ -470,24 +463,21 @@
 </ul>
 </li>
 <li><code>k</code>或<code>↑</code>：向上移动一个字符</li>
-<li><p><code>j</code>或<code>↓</code>：向下移动一个字符</p>
-<ul>
-<li><p><code>30↓</code>或<code>30j</code>：向下移动30行</p>
+<li><code>j</code>或<code>↓</code>：向下移动一个字符<ul>
+<li><code>30↓</code>或<code>30j</code>：向下移动30行</li>
+</ul>
 </li>
-<li><p><code>-</code>：上一行行首</p>
-</li>
-<li><code>enter</code>或<code>+</code>：向下移动至行首</li>
+<li><code>-</code>：上一行行首</li>
+<li><code>enter</code>或<code>+</code>：向下移动至行首<ul>
 <li><code>30enter</code>或<code>30+</code>，向下移动30行行首</li>
+</ul>
+</li>
 <li><code>H</code>：光标移动到该页首行行首</li>
 <li><code>M</code>：光标移动到该页中间行行首</li>
 <li><code>L</code>：光标移动到该页末行行首</li>
 <li><code>G</code>：移动到文件最后一行(常用)<ul>
-<li><code>20G</code>，移动到文件的第20行<ul>
+<li><code>20G</code>，移动到文件的第20行</li>
 <li><code>gg</code>，移动到第一行=<code>1G</code></li>
-</ul>
-</li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -576,6 +566,7 @@
 <li><code>:vs 路径/文件名</code>：同时再打开另外的一个文件，通过<code>ctrl ww</code>使得光标在两个文件间切换；两个文件是左右并排显示的。</li>
 <li><code>:sp 路径/文件名</code>：同时再打开另外的一个文件，通过<code>ctrl ww</code>使得光标在两个文件间切换；两个文件是上下并排显示的。</li>
 </ul>
+<p><img src="vi-vim-cheat-sheet-sch.gif" alt=""></p>
 ]]></content>
       <categories>
         <category>系统</category>
