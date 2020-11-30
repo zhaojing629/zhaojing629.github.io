@@ -101,99 +101,6 @@
       </tags>
   </entry>
   <entry>
-    <title>【CP2K】01.基础</title>
-    <url>/2020/11/20/%E3%80%90CP2K%E3%80%9101-%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<h1 id="安装vim插件规范-inp文件"><a href="#安装vim插件规范-inp文件" class="headerlink" title="安装vim插件规范.inp文件"></a>安装vim插件规范.inp文件</h1><ol>
-<li><p>如果下载失败，可以直接从<a href="http://manual.cp2k.org/trunk/cp2k.vim下载到">http://manual.cp2k.org/trunk/cp2k.vim下载到</a> ~/.vim/syntax中</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">mkdir -p ~<span class="regexp">/.vim/</span>syntax</span><br><span class="line">wget -O ~<span class="regexp">/.vim/</span>syntax<span class="regexp">/cp2k.vim http:/</span><span class="regexp">/manual.cp2k.org/</span>trunk/cp2k.vim</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>再在~/.vim/下新建<code>filetype.vim</code>，输入：</p>
-<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="built_in">exists</span>(<span class="string">&quot;did_load_filetypes&quot;</span>)</span><br><span class="line">   <span class="keyword">finish</span></span><br><span class="line"><span class="keyword">endif</span></span><br><span class="line"><span class="keyword">augroup</span> filetypedetect</span><br><span class="line">   au! BufNewFile,BufRead *.inp <span class="keyword">setf</span> cp2k</span><br><span class="line"><span class="keyword">augroup</span> END</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="语法折叠"><a href="#语法折叠" class="headerlink" title="语法折叠"></a>语法折叠</h2><p>在~/.vimrc中添加：</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">au FileType cp2k setlocal <span class="attribute">foldlevel</span>=99 <span class="attribute">foldmethod</span>=indent</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>za</code>：切换当前折叠级别的折叠</li>
-<li><code>zA</code>：递归切换所有折叠级别的折叠</li>
-<li><code>zM</code>：关闭当前缓冲区中的所有折叠</li>
-<li><code>zR</code>：打开当前缓冲区中的所有折叠</li>
-</ul>
-<h2 id="自动缩进"><a href="#自动缩进" class="headerlink" title="自动缩进"></a>自动缩进</h2><p>只更改指定文件类型cp2k的缩进，在~/.vimrc中添加：</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">au FileType cp2k setlocal <span class="attribute">shiftwidth</span>=1 <span class="attribute">tabstop</span>=1</span><br></pre></td></tr></table></figure>
-<p>更改所有文件类型和缓冲区的缩进：</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="builtin-name">set</span> <span class="attribute">shiftwidth</span>=1 <span class="attribute">tabstop</span>=1</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>=G</code>正确缩进文件的整个部分</li>
-<li><code>=</code>正确缩进文件的某个部分（区域）</li>
-</ul>
-<h1 id="inp语法"><a href="#inp语法" class="headerlink" title="inp语法"></a>inp语法</h1><p>可以在cp2k目录下，通过<code>grep -iR 关键词 ~/tests</code>来查询相关的输入文件。（tests目录中的输入文件主要是用来测试程序运行的正常与否，往往使用了不合理的参数）</p>
-<ul>
-<li><p>主要结构如下，可以在其中嵌套多个<code>&amp;SECTION</code>和<code>&amp;END SECTION</code></p>
-<figure class="highlight ruleslanguage"><table><tr><td class="code"><pre><span class="line">&amp;<span class="keyword">SECTION</span></span><br><span class="line">	KEYWORD PARAMETER</span><br><span class="line">&amp;<span class="keyword">END</span> <span class="keyword">SECTION</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>语法</p>
-<ul>
-<li><code>@INCLUDE ’filename’</code>：从文件中读取文本</li>
-<li><code>@SET VAR value</code>：定义变量</li>
-<li><code>@VAR</code>：变量</li>
-<li><code>@IF</code>/<code>@ENDIF</code>：简单的逻辑</li>
-<li><code>#</code>：注释</li>
-</ul>
-</li>
-<li><p>单位的设定：（可供的单位有：<a href="https://manual.cp2k.org/cp2k-7_1-branch/units.html）">https://manual.cp2k.org/cp2k-7_1-branch/units.html）</a></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#默认是angstrom，也可以设置bohr等等</span></span><br><span class="line"><span class="string">ABC</span> [<span class="string">nm</span>] <span class="number">100</span> <span class="number">100</span> <span class="number">100</span></span><br><span class="line"><span class="comment">#默认是hatree，设置Ry等等</span></span><br><span class="line"><span class="string">EMAX_SPLINE</span> [<span class="string">eV</span>] <span class="number">50</span></span><br><span class="line"><span class="comment">#也可以一起用</span></span><br><span class="line">[<span class="string">hatree*bohr^2</span>]</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="GLOBAL"><a href="#GLOBAL" class="headerlink" title="GLOBAL"></a>GLOBAL</h2><figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">&amp;GLOBAL</span></span><br><span class="line">	<span class="attr">PROJECT</span> <span class="string">H2O-32</span></span><br><span class="line">	<span class="attr">RUN_TYPE</span> <span class="string">MD</span></span><br><span class="line">	<span class="attr">PRINT_LEVEL</span> <span class="string">HIGH</span></span><br><span class="line">	<span class="attr">&amp;TIMINGS</span></span><br><span class="line">		<span class="attr">THRESHOLD</span> <span class="string">0.000001</span></span><br><span class="line">	<span class="attr">&amp;END</span></span><br><span class="line">	<span class="attr">WALLTIME</span> <span class="string">3600</span></span><br><span class="line"><span class="meta">&amp;END</span> <span class="string">GLOBAL</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>PROJECT</code>：任务名称，等同于<code>PROJECT_NAME</code></li>
-<li><code>RUN_TYPE</code>：任务类型<ul>
-<li><code>ENERGY</code>：计算当前结构的能量。对于DFT 来说，就是一个SCF 计算。</li>
-<li><code>ENERGY_FORCE</code>：计算当前结构的能量，同时计算出每个原子上的梯度（即受力）。</li>
-<li><code>BAND</code>：使用band方法来进行最低能量路径(MEP)以及反应过渡态的搜索，通常可以使用的方法有CI-NEB, IT-NEB等方法。</li>
-<li><code>MD</code>：Molecular Dynamics分子动力学模拟</li>
-<li><code>CELL_OPT</code>：晶胞参数的优化。</li>
-<li><code>GEO_OPT</code>：对当前结构进行几何结构的优化，以获得当前结构对应的局部极小点或者过渡态。GEO_OPT 有两种类型，一种是MINIMIZATION，即优化到极小点；一种是TRANSITION_STATE，即优化到过渡态。过渡态的优化采用Dimer方法来实现。</li>
-<li><code>VIBRATIONAL_ANALYSIS</code>：对当前结构进行振动分析。频率计算可以计算部分原子的频率（INVOLVED_ATOMS），也可以计算某一频率范围内的频率计算（MODE_SELECTIVE）。</li>
-</ul>
-</li>
-<li><code>PRINT_LEVEL</code>：输出内容级别，可以是<code>SILENT</code>、<code>MEDIUM</code>（默认）、<code>LOW</code>、<code>HIGH</code>等。</li>
-<li><code>&amp;TIMINGS</code>：在CP2K执行结束时控制时序报告的打印<ul>
-<li><code>THRESHOLD</code>：阈值</li>
-</ul>
-</li>
-<li><code>WALLTIME</code>：此运行的最大执行时间。时间以秒为单位或以HH：MM：SS为单位。</li>
-</ul>
-<h2 id="FORCE-EVAL"><a href="#FORCE-EVAL" class="headerlink" title="FORCE_EVAL"></a>FORCE_EVAL</h2><p>计算能量和力并描述您要分析的系统所需的参数。</p>
-<figure class="highlight oxygene"><table><tr><td class="code"><pre><span class="line">&amp;FORCE_EVAL</span><br><span class="line">	<span class="function"><span class="keyword">METHOD</span> <span class="title">QS</span></span></span><br><span class="line"><span class="function">	&amp;<span class="title">DFT</span></span></span><br><span class="line"><span class="function">		...</span></span><br><span class="line"><span class="function">	&amp;<span class="title">END</span> <span class="title">DFT</span></span></span><br><span class="line"><span class="function">	&amp;<span class="title">SUBSYS</span></span></span><br><span class="line"><span class="function">		...</span></span><br><span class="line"><span class="function">	&amp;<span class="title">END</span> <span class="title">SUBSYS</span></span></span><br><span class="line"><span class="function">&amp;<span class="title">END</span> <span class="title">FORCE_EVAL</span></span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>METHOD</code>：使用哪种方法来计算力<ul>
-<li><code>QS</code>：默认，同<code>QUICKSTEP</code></li>
-<li><code>FIST</code>：分子力学</li>
-<li><code>QMMM</code>：Hybrid quantum classical</li>
-</ul>
-</li>
-</ul>
-<h2 id="MOTION"><a href="#MOTION" class="headerlink" title="MOTION"></a>MOTION</h2><p>定义了一组与原子核运动有关的工具。</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;MOTION</span></span><br><span class="line">	<span class="meta">&amp;MD</span></span><br><span class="line">		<span class="string">ENSEMBLE</span> <span class="string">NVE</span></span><br><span class="line">		<span class="string">STEPS</span> <span class="number">10</span></span><br><span class="line">		<span class="string">TIMESTEP</span> <span class="number">0.5</span></span><br><span class="line">		<span class="string">TEMPERATURE</span> <span class="number">300.0</span></span><br><span class="line">	<span class="string">&amp;END</span> <span class="string">MD</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">MOTION</span></span><br></pre></td></tr></table></figure>
-<h1 id="输出文件"><a href="#输出文件" class="headerlink" title="输出文件"></a>输出文件</h1><ul>
-<li><code>PROGJECT-1.restart</code>：重启计算的输入文件</li>
-<li><code>PROGJECT-pos-1.xyz：</code>MD或结构优化的轨迹</li>
-<li><code>PROGJECT-1.ener</code>：MD能量、温度……</li>
-<li><code>PROGJECT-1.cell</code>：cell参数</li>
-<li><code>PROGJECT-RESTRAT.wfn</code>：重启计算的轨道</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>CP2K</category>
-      </categories>
-      <tags>
-        <tag>CP2K</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【ADF】02.EDA-NOCV</title>
     <url>/2020/02/07/%E3%80%90ADF%E3%80%9102.EDA-NOCV/</url>
     <content><![CDATA[<h1 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h1><h2 id="碎片"><a href="#碎片" class="headerlink" title="碎片"></a>碎片</h2><ul>
@@ -305,6 +212,99 @@
       </tags>
   </entry>
   <entry>
+    <title>【CP2K】01.基础</title>
+    <url>/2020/11/20/%E3%80%90CP2K%E3%80%9101-%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<h1 id="安装vim插件规范-inp文件"><a href="#安装vim插件规范-inp文件" class="headerlink" title="安装vim插件规范.inp文件"></a>安装vim插件规范.inp文件</h1><ol>
+<li><p>如果下载失败，可以直接从<a href="http://manual.cp2k.org/trunk/cp2k.vim下载到">http://manual.cp2k.org/trunk/cp2k.vim下载到</a> ~/.vim/syntax中</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">mkdir -p ~<span class="regexp">/.vim/</span>syntax</span><br><span class="line">wget -O ~<span class="regexp">/.vim/</span>syntax<span class="regexp">/cp2k.vim http:/</span><span class="regexp">/manual.cp2k.org/</span>trunk/cp2k.vim</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>再在~/.vim/下新建<code>filetype.vim</code>，输入：</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="built_in">exists</span>(<span class="string">&quot;did_load_filetypes&quot;</span>)</span><br><span class="line">   <span class="keyword">finish</span></span><br><span class="line"><span class="keyword">endif</span></span><br><span class="line"><span class="keyword">augroup</span> filetypedetect</span><br><span class="line">   au! BufNewFile,BufRead *.inp <span class="keyword">setf</span> cp2k</span><br><span class="line"><span class="keyword">augroup</span> END</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="语法折叠"><a href="#语法折叠" class="headerlink" title="语法折叠"></a>语法折叠</h2><p>在~/.vimrc中添加：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">au FileType cp2k setlocal <span class="attribute">foldlevel</span>=99 <span class="attribute">foldmethod</span>=indent</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>za</code>：切换当前折叠级别的折叠</li>
+<li><code>zA</code>：递归切换所有折叠级别的折叠</li>
+<li><code>zM</code>：关闭当前缓冲区中的所有折叠</li>
+<li><code>zR</code>：打开当前缓冲区中的所有折叠</li>
+</ul>
+<h2 id="自动缩进"><a href="#自动缩进" class="headerlink" title="自动缩进"></a>自动缩进</h2><p>只更改指定文件类型cp2k的缩进，在~/.vimrc中添加：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">au FileType cp2k setlocal <span class="attribute">shiftwidth</span>=1 <span class="attribute">tabstop</span>=1</span><br></pre></td></tr></table></figure>
+<p>更改所有文件类型和缓冲区的缩进：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="builtin-name">set</span> <span class="attribute">shiftwidth</span>=1 <span class="attribute">tabstop</span>=1</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>=G</code>正确缩进文件的整个部分</li>
+<li><code>=</code>正确缩进文件的某个部分（区域）</li>
+</ul>
+<h1 id="inp语法"><a href="#inp语法" class="headerlink" title="inp语法"></a>inp语法</h1><p>可以在cp2k目录下，通过<code>grep -iR 关键词 ~/tests</code>来查询相关的输入文件。（tests目录中的输入文件主要是用来测试程序运行的正常与否，往往使用了不合理的参数）</p>
+<ul>
+<li><p>主要结构如下，可以在其中嵌套多个<code>&amp;SECTION</code>和<code>&amp;END SECTION</code></p>
+<figure class="highlight ruleslanguage"><table><tr><td class="code"><pre><span class="line">&amp;<span class="keyword">SECTION</span></span><br><span class="line">	KEYWORD PARAMETER</span><br><span class="line">&amp;<span class="keyword">END</span> <span class="keyword">SECTION</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>语法</p>
+<ul>
+<li><code>@INCLUDE ’filename’</code>：从文件中读取文本</li>
+<li><code>@SET VAR value</code>：定义变量</li>
+<li><code>@VAR</code>：变量</li>
+<li><code>@IF</code>/<code>@ENDIF</code>：简单的逻辑</li>
+<li><code>#</code>：注释</li>
+</ul>
+</li>
+<li><p>单位的设定：（可供的单位有：<a href="https://manual.cp2k.org/cp2k-7_1-branch/units.html）">https://manual.cp2k.org/cp2k-7_1-branch/units.html）</a></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#默认是angstrom，也可以设置bohr等等</span></span><br><span class="line"><span class="string">ABC</span> [<span class="string">nm</span>] <span class="number">100</span> <span class="number">100</span> <span class="number">100</span></span><br><span class="line"><span class="comment">#默认是hatree，设置Ry等等</span></span><br><span class="line"><span class="string">EMAX_SPLINE</span> [<span class="string">eV</span>] <span class="number">50</span></span><br><span class="line"><span class="comment">#也可以一起用</span></span><br><span class="line">[<span class="string">hatree*bohr^2</span>]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="GLOBAL"><a href="#GLOBAL" class="headerlink" title="GLOBAL"></a>GLOBAL</h2><figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">&amp;GLOBAL</span></span><br><span class="line">	<span class="attr">PROJECT</span> <span class="string">H2O-32</span></span><br><span class="line">	<span class="attr">RUN_TYPE</span> <span class="string">MD</span></span><br><span class="line">	<span class="attr">PRINT_LEVEL</span> <span class="string">HIGH</span></span><br><span class="line">	<span class="attr">&amp;TIMINGS</span></span><br><span class="line">		<span class="attr">THRESHOLD</span> <span class="string">0.000001</span></span><br><span class="line">	<span class="attr">&amp;END</span></span><br><span class="line">	<span class="attr">WALLTIME</span> <span class="string">3600</span></span><br><span class="line"><span class="meta">&amp;END</span> <span class="string">GLOBAL</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>PROJECT</code>：任务名称，等同于<code>PROJECT_NAME</code></li>
+<li><code>RUN_TYPE</code>：任务类型<ul>
+<li><code>ENERGY</code>：计算当前结构的能量。对于DFT 来说，就是一个SCF 计算。</li>
+<li><code>ENERGY_FORCE</code>：计算当前结构的能量，同时计算出每个原子上的梯度（即受力）。</li>
+<li><code>BAND</code>：使用band方法来进行最低能量路径(MEP)以及反应过渡态的搜索，通常可以使用的方法有CI-NEB, IT-NEB等方法。</li>
+<li><code>MD</code>：Molecular Dynamics分子动力学模拟</li>
+<li><code>CELL_OPT</code>：晶胞参数的优化。</li>
+<li><code>GEO_OPT</code>：对当前结构进行几何结构的优化，以获得当前结构对应的局部极小点或者过渡态。GEO_OPT 有两种类型，一种是MINIMIZATION，即优化到极小点；一种是TRANSITION_STATE，即优化到过渡态。过渡态的优化采用Dimer方法来实现。</li>
+<li><code>VIBRATIONAL_ANALYSIS</code>：对当前结构进行振动分析。频率计算可以计算部分原子的频率（INVOLVED_ATOMS），也可以计算某一频率范围内的频率计算（MODE_SELECTIVE）。</li>
+</ul>
+</li>
+<li><code>PRINT_LEVEL</code>：输出内容级别，可以是<code>SILENT</code>、<code>MEDIUM</code>（默认）、<code>LOW</code>、<code>HIGH</code>等。</li>
+<li><code>&amp;TIMINGS</code>：在CP2K执行结束时控制时序报告的打印<ul>
+<li><code>THRESHOLD</code>：阈值</li>
+</ul>
+</li>
+<li><code>WALLTIME</code>：此运行的最大执行时间。时间以秒为单位或以HH：MM：SS为单位。</li>
+</ul>
+<h2 id="FORCE-EVAL"><a href="#FORCE-EVAL" class="headerlink" title="FORCE_EVAL"></a>FORCE_EVAL</h2><p>计算能量和力并描述您要分析的系统所需的参数。</p>
+<figure class="highlight oxygene"><table><tr><td class="code"><pre><span class="line">&amp;FORCE_EVAL</span><br><span class="line">	<span class="function"><span class="keyword">METHOD</span> <span class="title">QS</span></span></span><br><span class="line"><span class="function">	&amp;<span class="title">DFT</span></span></span><br><span class="line"><span class="function">		...</span></span><br><span class="line"><span class="function">	&amp;<span class="title">END</span> <span class="title">DFT</span></span></span><br><span class="line"><span class="function">	&amp;<span class="title">SUBSYS</span></span></span><br><span class="line"><span class="function">		...</span></span><br><span class="line"><span class="function">	&amp;<span class="title">END</span> <span class="title">SUBSYS</span></span></span><br><span class="line"><span class="function">&amp;<span class="title">END</span> <span class="title">FORCE_EVAL</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>METHOD</code>：使用哪种方法来计算力<ul>
+<li><code>QS</code>：默认，同<code>QUICKSTEP</code></li>
+<li><code>FIST</code>：分子力学</li>
+<li><code>QMMM</code>：Hybrid quantum classical</li>
+</ul>
+</li>
+</ul>
+<h2 id="MOTION"><a href="#MOTION" class="headerlink" title="MOTION"></a>MOTION</h2><p>定义了一组与原子核运动有关的工具。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;MOTION</span></span><br><span class="line">	<span class="meta">&amp;MD</span></span><br><span class="line">		<span class="string">ENSEMBLE</span> <span class="string">NVE</span></span><br><span class="line">		<span class="string">STEPS</span> <span class="number">10</span></span><br><span class="line">		<span class="string">TIMESTEP</span> <span class="number">0.5</span></span><br><span class="line">		<span class="string">TEMPERATURE</span> <span class="number">300.0</span></span><br><span class="line">	<span class="string">&amp;END</span> <span class="string">MD</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">MOTION</span></span><br></pre></td></tr></table></figure>
+<h1 id="输出文件"><a href="#输出文件" class="headerlink" title="输出文件"></a>输出文件</h1><ul>
+<li><code>PROGJECT-1.restart</code>：重启计算的输入文件</li>
+<li><code>PROGJECT-pos-1.xyz：</code>MD或结构优化的轨迹</li>
+<li><code>PROGJECT-1.ener</code>：MD能量、温度……</li>
+<li><code>PROGJECT-1.cell</code>：cell参数</li>
+<li><code>PROGJECT-RESTRAT.wfn</code>：重启计算的轨道</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>CP2K</category>
+      </categories>
+      <tags>
+        <tag>CP2K</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【Linux】Shell脚本</title>
     <url>/2020/11/22/%E3%80%90Linux%E3%80%91Shell%E8%84%9A%E6%9C%AC/</url>
     <content><![CDATA[<h1 id="echo命令"><a href="#echo命令" class="headerlink" title="echo命令"></a>echo命令</h1><p>打印shell变量的值，或者直接输出指定的字符串。</p>
@@ -406,6 +406,182 @@
       <tags>
         <tag>Linux</tag>
         <tag>Shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Linux】Vim编辑器</title>
+    <url>/2019/09/25/%E3%80%90Linux%E3%80%91Vim%E7%BC%96%E8%BE%91%E5%99%A8/</url>
+    <content><![CDATA[<h1 id="一般编辑"><a href="#一般编辑" class="headerlink" title="一般编辑"></a>一般编辑</h1><h2 id="输入或取代"><a href="#输入或取代" class="headerlink" title="输入或取代"></a>输入或取代</h2><ul>
+<li><code>i</code>：从目前光标所在处输入</li>
+<li><code>I</code>：在目前所在行的第一个非空格符处开始输入</li>
+<li><code>a</code>：为光标所在的下一个字符处开始插入</li>
+<li><code>A</code>：行尾插入</li>
+<li><code>o</code>：在目前光标所在的下一行处输入新的一行</li>
+<li><p><code>O</code>：在目前光标所在处的上一行输入新的一行</p>
+</li>
+<li><p><code>&gt;</code>：缩进</p>
+<ul>
+<li><code>&gt;n</code>：缩进n行</li>
+</ul>
+</li>
+<li><p><code>&lt;</code>：反缩进</p>
+</li>
+<li><p><code>Esc</code>：退出编辑模式，回到一般模式中</p>
+</li>
+</ul>
+<h2 id="取代或删除输入"><a href="#取代或删除输入" class="headerlink" title="取代或删除输入"></a>取代或删除输入</h2><ul>
+<li><code>r</code>：只会取代光标所在的那一个字符一次</li>
+<li><code>R</code>：会一直取代光标所在的文字，直到按下 <code>ESC</code> 为止</li>
+<li><p><code>s</code>：删字符插入</p>
+</li>
+<li><p><code>S</code>：删行插入</p>
+</li>
+<li><p><code>c</code>：和d一样，但是进入编辑模式</p>
+</li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li><code>crtl+a</code>：光标所在处数字+1</li>
+<li><code>~</code>：转换光标所在字符的大小写</li>
+<li><code>J</code>：将光标所在行与下一行的数据结合成同一行</li>
+</ul>
+<h1 id="光标移动"><a href="#光标移动" class="headerlink" title="光标移动"></a>光标移动</h1><h2 id="行内移动"><a href="#行内移动" class="headerlink" title="行内移动"></a>行内移动</h2><ul>
+<li><code>h</code>或<code>←</code>：向左移动一个字符<ul>
+<li><code>2←</code>：向左移动2个字符</li>
+</ul>
+</li>
+<li><code>l</code>或<code>→</code>：向右移动一个字符</li>
+<li><code>0</code>或<code>Home</code>或<code>|</code>或<code>^</code>：行首</li>
+<li><code>$</code>或<code>End</code>：行尾</li>
+</ul>
+<h2 id="词间移动"><a href="#词间移动" class="headerlink" title="词间移动"></a>词间移动</h2><ul>
+<li><code>w</code>：下一个符号分隔的单词词首<ul>
+<li>结合其他指令处理下一个词，比如<code>dw</code>，可以删除单词，<code>yw</code>可以复制单词</li>
+</ul>
+</li>
+<li><code>e</code>：下一个符号分隔的单词词尾</li>
+<li><code>b</code>：上一个符号分隔的单词词首</li>
+<li><code>W</code>：下一个空格分隔的单词词首</li>
+<li><code>E</code>：下一个空格分隔的单词词尾</li>
+<li><code>B</code>：上一个空格分隔的单词词首</li>
+</ul>
+<h2 id="行间移动"><a href="#行间移动" class="headerlink" title="行间移动"></a>行间移动</h2><ul>
+<li><code>space</code>：向右移动一个字符<ul>
+<li><code>n+space</code>，移动n个字符，不限于行内</li>
+</ul>
+</li>
+<li><code>k</code>或<code>↑</code>：向上移动一个字符</li>
+<li><p><code>j</code>或<code>↓</code>：向下移动一个字符</p>
+<ul>
+<li><p><code>30↓</code>或<code>30j</code>：向下移动30行</p>
+</li>
+<li><p><code>-</code>：上一行行首</p>
+</li>
+<li><code>enter</code>或<code>+</code>：向下移动至行首</li>
+<li><code>30enter</code>或<code>30+</code>，向下移动30行行首</li>
+<li><code>H</code>：光标移动到该页首行行首</li>
+<li><code>M</code>：光标移动到该页中间行行首</li>
+<li><code>L</code>：光标移动到该页末行行首</li>
+<li><code>G</code>：移动到文件最后一行(常用)<ul>
+<li><code>20G</code>，移动到文件的第20行<ul>
+<li><code>gg</code>，移动到第一行=<code>1G</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="段间移动"><a href="#段间移动" class="headerlink" title="段间移动"></a>段间移动</h2><ul>
+<li><code>(</code>：上一段首</li>
+<li><code>)</code>：下一段首</li>
+<li><code>&#123;</code>：上一段首空行</li>
+<li><code>&#125;</code>：下一段首空行</li>
+</ul>
+<h2 id="翻页"><a href="#翻页" class="headerlink" title="翻页"></a>翻页</h2><ul>
+<li><code>ctrl+f</code>或<code>pagedown</code>：屏幕向下移动一页</li>
+<li><code>ctrl+b</code>或<code>pageup</code>：屏幕向上移动一页</li>
+<li><code>ctrk+d</code>：屏幕向下移动半页</li>
+<li><code>ctrl+u</code>：屏幕向上移动半页</li>
+</ul>
+<h1 id="搜索替换"><a href="#搜索替换" class="headerlink" title="搜索替换"></a>搜索替换</h1><ul>
+<li><code>/word</code>：向下寻找word</li>
+<li><code>?word</code>：向上寻找</li>
+<li><code>n</code>：重复查找</li>
+<li><code>N</code>：反向查找</li>
+<li><code>:n1,n2s/word1/word2/g</code>：在第 n1 与 n2 行之间寻找 word1 这个字符串，并将该字符串取代为 word2 <ul>
+<li>n2用<code>$</code>代表结尾，则<code>:1,$s/word1/word2/g</code>代表全文中替换，也可以用<code>:1,%s/word1/word2/g</code></li>
+<li><code>g</code>用<code>gc</code>时可以确认是否取代</li>
+</ul>
+</li>
+</ul>
+<h1 id="删除d"><a href="#删除d" class="headerlink" title="删除d"></a>删除d</h1><ul>
+<li><code>x</code>或者<code>delete</code>：向后删除<ul>
+<li><code>2x</code>：向后删除2个字符</li>
+</ul>
+</li>
+<li><code>X</code>或<code>backspace</code>：向前删除</li>
+<li><code>d</code>：<ul>
+<li><code>dd</code>：删除一行。<code>20dd</code>：删除20行</li>
+<li><code>d$</code>：删除至行尾=<code>D</code></li>
+<li><code>d0</code>：删除至行首</li>
+<li><code>d1G</code>： 删除光标所在到第一行的所有数据</li>
+<li><code>dG</code>：删除光标所在到最后一行的所有数据</li>
+</ul>
+</li>
+</ul>
+<h1 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a>可视化</h1><ul>
+<li><code>v</code>：可视</li>
+<li><code>V</code>：行可视</li>
+<li><code>ctrl+v</code>：块可视</li>
+</ul>
+<h1 id="复制粘贴"><a href="#复制粘贴" class="headerlink" title="复制粘贴"></a>复制粘贴</h1><h2 id="复制y"><a href="#复制y" class="headerlink" title="复制y"></a>复制y</h2><ul>
+<li><code>yy</code>或<code>Y</code>：复制游标所在的那一行(常用) <ul>
+<li><code>20yy</code>：向下复制20行</li>
+</ul>
+</li>
+<li><code>y$</code>：复制光标所在的那个字符到该行行尾的所有数据</li>
+<li><code>y0</code>：复制光标所在的那个字符到该行行首的所有数据</li>
+<li><code>y1G</code>：复制游标所在行到第一行的所有数据</li>
+<li><code>yG</code>：复制游标所在行到最后一行的所有数据</li>
+</ul>
+<h2 id="粘贴p"><a href="#粘贴p" class="headerlink" title="粘贴p"></a>粘贴p</h2><ul>
+<li><code>p</code>：将已复制的数据贴在光标下一行</li>
+<li><code>P</code>：贴在游标上一行</li>
+</ul>
+<h1 id="其他动作"><a href="#其他动作" class="headerlink" title="其他动作"></a>其他动作</h1><ul>
+<li><code>u</code>：撤销命令</li>
+<li><code>U</code>：撤销行内命令</li>
+<li><code>ctrl+r</code> 重做上一个动作。【与撤销相反】</li>
+<li><code>.</code>：重复前一个动作的意思。 比如重复删除、重复贴上等等动作</li>
+</ul>
+<h1 id="退出Vim"><a href="#退出Vim" class="headerlink" title="退出Vim"></a>退出Vim</h1><ul>
+<li><code>:w</code> ：保存</li>
+<li><code>:w!</code> ：强制保存</li>
+<li><code>:q</code>：退出</li>
+<li><code>:q!</code>：强制退出</li>
+<li><code>:wq</code> 储存后离开</li>
+<li><code>:wq!</code> 为强制储存后离开</li>
+<li><code>ZQ</code>：不保存退出</li>
+<li><code>ZZ</code>：保存退出</li>
+<li><code>:w [filename]</code>：另存为</li>
+<li><code>:r [filename]</code>：读取另一个文档的内容，内容追加到光标所在行之后</li>
+<li><code>:n1,n2 w [filename]</code>：将 n1 到 n2 的内容储存成 filename 这个档案</li>
+<li><code>:! command</code>：暂时离开 vi 到指令行模式下执行 command 的显示结果</li>
+</ul>
+<h1 id="vim-环境的变更境的变更"><a href="#vim-环境的变更境的变更" class="headerlink" title="vim 环境的变更境的变更"></a>vim 环境的变更境的变更</h1><ul>
+<li><code>:set nu</code>：显示行号，设定之后，会在每一行的前缀显示该行的行号</li>
+<li><code>:set nonu</code>：与 set nu 相反，为取消行号</li>
+</ul>
+<h1 id="管理命令"><a href="#管理命令" class="headerlink" title="管理命令"></a>管理命令</h1><ul>
+<li><code>:vs 路径/文件名</code>：同时再打开另外的一个文件，通过<code>ctrl ww</code>使得光标在两个文件间切换；两个文件是左右并排显示的。</li>
+<li><code>:sp 路径/文件名</code>：同时再打开另外的一个文件，通过<code>ctrl ww</code>使得光标在两个文件间切换；两个文件是上下并排显示的。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>系统</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -2821,182 +2997,6 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
       <tags>
         <tag>hexo</tag>
         <tag>git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【Linux】Vim编辑器</title>
-    <url>/2019/09/25/%E3%80%90Linux%E3%80%91Vim%E7%BC%96%E8%BE%91%E5%99%A8/</url>
-    <content><![CDATA[<h1 id="一般编辑"><a href="#一般编辑" class="headerlink" title="一般编辑"></a>一般编辑</h1><h2 id="输入或取代"><a href="#输入或取代" class="headerlink" title="输入或取代"></a>输入或取代</h2><ul>
-<li><code>i</code>：从目前光标所在处输入</li>
-<li><code>I</code>：在目前所在行的第一个非空格符处开始输入</li>
-<li><code>a</code>：为光标所在的下一个字符处开始插入</li>
-<li><code>A</code>：行尾插入</li>
-<li><code>o</code>：在目前光标所在的下一行处输入新的一行</li>
-<li><p><code>O</code>：在目前光标所在处的上一行输入新的一行</p>
-</li>
-<li><p><code>&gt;</code>：缩进</p>
-<ul>
-<li><code>&gt;n</code>：缩进n行</li>
-</ul>
-</li>
-<li><p><code>&lt;</code>：反缩进</p>
-</li>
-<li><p><code>Esc</code>：退出编辑模式，回到一般模式中</p>
-</li>
-</ul>
-<h2 id="取代或删除输入"><a href="#取代或删除输入" class="headerlink" title="取代或删除输入"></a>取代或删除输入</h2><ul>
-<li><code>r</code>：只会取代光标所在的那一个字符一次</li>
-<li><code>R</code>：会一直取代光标所在的文字，直到按下 <code>ESC</code> 为止</li>
-<li><p><code>s</code>：删字符插入</p>
-</li>
-<li><p><code>S</code>：删行插入</p>
-</li>
-<li><p><code>c</code>：和d一样，但是进入编辑模式</p>
-</li>
-</ul>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
-<li><code>crtl+a</code>：光标所在处数字+1</li>
-<li><code>~</code>：转换光标所在字符的大小写</li>
-<li><code>J</code>：将光标所在行与下一行的数据结合成同一行</li>
-</ul>
-<h1 id="光标移动"><a href="#光标移动" class="headerlink" title="光标移动"></a>光标移动</h1><h2 id="行内移动"><a href="#行内移动" class="headerlink" title="行内移动"></a>行内移动</h2><ul>
-<li><code>h</code>或<code>←</code>：向左移动一个字符<ul>
-<li><code>2←</code>：向左移动2个字符</li>
-</ul>
-</li>
-<li><code>l</code>或<code>→</code>：向右移动一个字符</li>
-<li><code>0</code>或<code>Home</code>或<code>|</code>或<code>^</code>：行首</li>
-<li><code>$</code>或<code>End</code>：行尾</li>
-</ul>
-<h2 id="词间移动"><a href="#词间移动" class="headerlink" title="词间移动"></a>词间移动</h2><ul>
-<li><code>w</code>：下一个符号分隔的单词词首<ul>
-<li>结合其他指令处理下一个词，比如<code>dw</code>，可以删除单词，<code>yw</code>可以复制单词</li>
-</ul>
-</li>
-<li><code>e</code>：下一个符号分隔的单词词尾</li>
-<li><code>b</code>：上一个符号分隔的单词词首</li>
-<li><code>W</code>：下一个空格分隔的单词词首</li>
-<li><code>E</code>：下一个空格分隔的单词词尾</li>
-<li><code>B</code>：上一个空格分隔的单词词首</li>
-</ul>
-<h2 id="行间移动"><a href="#行间移动" class="headerlink" title="行间移动"></a>行间移动</h2><ul>
-<li><code>space</code>：向右移动一个字符<ul>
-<li><code>n+space</code>，移动n个字符，不限于行内</li>
-</ul>
-</li>
-<li><code>k</code>或<code>↑</code>：向上移动一个字符</li>
-<li><p><code>j</code>或<code>↓</code>：向下移动一个字符</p>
-<ul>
-<li><p><code>30↓</code>或<code>30j</code>：向下移动30行</p>
-</li>
-<li><p><code>-</code>：上一行行首</p>
-</li>
-<li><code>enter</code>或<code>+</code>：向下移动至行首</li>
-<li><code>30enter</code>或<code>30+</code>，向下移动30行行首</li>
-<li><code>H</code>：光标移动到该页首行行首</li>
-<li><code>M</code>：光标移动到该页中间行行首</li>
-<li><code>L</code>：光标移动到该页末行行首</li>
-<li><code>G</code>：移动到文件最后一行(常用)<ul>
-<li><code>20G</code>，移动到文件的第20行<ul>
-<li><code>gg</code>，移动到第一行=<code>1G</code></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="段间移动"><a href="#段间移动" class="headerlink" title="段间移动"></a>段间移动</h2><ul>
-<li><code>(</code>：上一段首</li>
-<li><code>)</code>：下一段首</li>
-<li><code>&#123;</code>：上一段首空行</li>
-<li><code>&#125;</code>：下一段首空行</li>
-</ul>
-<h2 id="翻页"><a href="#翻页" class="headerlink" title="翻页"></a>翻页</h2><ul>
-<li><code>ctrl+f</code>或<code>pagedown</code>：屏幕向下移动一页</li>
-<li><code>ctrl+b</code>或<code>pageup</code>：屏幕向上移动一页</li>
-<li><code>ctrk+d</code>：屏幕向下移动半页</li>
-<li><code>ctrl+u</code>：屏幕向上移动半页</li>
-</ul>
-<h1 id="搜索替换"><a href="#搜索替换" class="headerlink" title="搜索替换"></a>搜索替换</h1><ul>
-<li><code>/word</code>：向下寻找word</li>
-<li><code>?word</code>：向上寻找</li>
-<li><code>n</code>：重复查找</li>
-<li><code>N</code>：反向查找</li>
-<li><code>:n1,n2s/word1/word2/g</code>：在第 n1 与 n2 行之间寻找 word1 这个字符串，并将该字符串取代为 word2 <ul>
-<li>n2用<code>$</code>代表结尾，则<code>:1,$s/word1/word2/g</code>代表全文中替换，也可以用<code>:1,%s/word1/word2/g</code></li>
-<li><code>g</code>用<code>gc</code>时可以确认是否取代</li>
-</ul>
-</li>
-</ul>
-<h1 id="删除d"><a href="#删除d" class="headerlink" title="删除d"></a>删除d</h1><ul>
-<li><code>x</code>或者<code>delete</code>：向后删除<ul>
-<li><code>2x</code>：向后删除2个字符</li>
-</ul>
-</li>
-<li><code>X</code>或<code>backspace</code>：向前删除</li>
-<li><code>d</code>：<ul>
-<li><code>dd</code>：删除一行。<code>20dd</code>：删除20行</li>
-<li><code>d$</code>：删除至行尾=<code>D</code></li>
-<li><code>d0</code>：删除至行首</li>
-<li><code>d1G</code>： 删除光标所在到第一行的所有数据</li>
-<li><code>dG</code>：删除光标所在到最后一行的所有数据</li>
-</ul>
-</li>
-</ul>
-<h1 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a>可视化</h1><ul>
-<li><code>v</code>：可视</li>
-<li><code>V</code>：行可视</li>
-<li><code>ctrl+v</code>：块可视</li>
-</ul>
-<h1 id="复制粘贴"><a href="#复制粘贴" class="headerlink" title="复制粘贴"></a>复制粘贴</h1><h2 id="复制y"><a href="#复制y" class="headerlink" title="复制y"></a>复制y</h2><ul>
-<li><code>yy</code>或<code>Y</code>：复制游标所在的那一行(常用) <ul>
-<li><code>20yy</code>：向下复制20行</li>
-</ul>
-</li>
-<li><code>y$</code>：复制光标所在的那个字符到该行行尾的所有数据</li>
-<li><code>y0</code>：复制光标所在的那个字符到该行行首的所有数据</li>
-<li><code>y1G</code>：复制游标所在行到第一行的所有数据</li>
-<li><code>yG</code>：复制游标所在行到最后一行的所有数据</li>
-</ul>
-<h2 id="粘贴p"><a href="#粘贴p" class="headerlink" title="粘贴p"></a>粘贴p</h2><ul>
-<li><code>p</code>：将已复制的数据贴在光标下一行</li>
-<li><code>P</code>：贴在游标上一行</li>
-</ul>
-<h1 id="其他动作"><a href="#其他动作" class="headerlink" title="其他动作"></a>其他动作</h1><ul>
-<li><code>u</code>：撤销命令</li>
-<li><code>U</code>：撤销行内命令</li>
-<li><code>ctrl+r</code> 重做上一个动作。【与撤销相反】</li>
-<li><code>.</code>：重复前一个动作的意思。 比如重复删除、重复贴上等等动作</li>
-</ul>
-<h1 id="退出Vim"><a href="#退出Vim" class="headerlink" title="退出Vim"></a>退出Vim</h1><ul>
-<li><code>:w</code> ：保存</li>
-<li><code>:w!</code> ：强制保存</li>
-<li><code>:q</code>：退出</li>
-<li><code>:q!</code>：强制退出</li>
-<li><code>:wq</code> 储存后离开</li>
-<li><code>:wq!</code> 为强制储存后离开</li>
-<li><code>ZQ</code>：不保存退出</li>
-<li><code>ZZ</code>：保存退出</li>
-<li><code>:w [filename]</code>：另存为</li>
-<li><code>:r [filename]</code>：读取另一个文档的内容，内容追加到光标所在行之后</li>
-<li><code>:n1,n2 w [filename]</code>：将 n1 到 n2 的内容储存成 filename 这个档案</li>
-<li><code>:! command</code>：暂时离开 vi 到指令行模式下执行 command 的显示结果</li>
-</ul>
-<h1 id="vim-环境的变更境的变更"><a href="#vim-环境的变更境的变更" class="headerlink" title="vim 环境的变更境的变更"></a>vim 环境的变更境的变更</h1><ul>
-<li><code>:set nu</code>：显示行号，设定之后，会在每一行的前缀显示该行的行号</li>
-<li><code>:set nonu</code>：与 set nu 相反，为取消行号</li>
-</ul>
-<h1 id="管理命令"><a href="#管理命令" class="headerlink" title="管理命令"></a>管理命令</h1><ul>
-<li><code>:vs 路径/文件名</code>：同时再打开另外的一个文件，通过<code>ctrl ww</code>使得光标在两个文件间切换；两个文件是左右并排显示的。</li>
-<li><code>:sp 路径/文件名</code>：同时再打开另外的一个文件，通过<code>ctrl ww</code>使得光标在两个文件间切换；两个文件是上下并排显示的。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>系统</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
       </tags>
   </entry>
 </search>
