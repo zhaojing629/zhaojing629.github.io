@@ -3,7 +3,100 @@
   <entry>
     <title>NBO</title>
     <url>/2020/11/27/NBO/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="一般关键词"><a href="#一般关键词" class="headerlink" title="一般关键词"></a>一般关键词</h1><h2 id="MEMORY"><a href="#MEMORY" class="headerlink" title="MEMORY"></a>MEMORY</h2><p>按字、兆、兆字节或千兆字节分配动态内存，比如分配1G的内存可以用：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">MEMORY</span>=<span class="number">134217728</span></span><br><span class="line"><span class="attr">MEMORY</span>=<span class="number">134</span>mw</span><br><span class="line"><span class="attr">MEMORY</span>=<span class="number">1024</span>mb</span><br><span class="line"><span class="attr">MEMORY</span>=<span class="number">1</span>gb</span><br></pre></td></tr></table></figure>
+<h1 id="自然共振理论分析NRT"><a href="#自然共振理论分析NRT" class="headerlink" title="自然共振理论分析NRT"></a>自然共振理论分析NRT</h1><h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>两种关键词指定</p>
+<ul>
+<li>在.47文件中<code>$NBO</code>和<code>$END</code>之间写上<code>NRT</code>关键词即可</li>
+<li><code>NRTSML</code>或<code>NRTSML=n</code>：把所有贡献大于1%或n%的共振结构式一起输出到FIlename-nrt.cml中,可以直接用MarvinView观看。<ul>
+<li>注意，MarvinView中应选择View→Implicit→Hydrogens→Off，否则会自动显示一些不该存在的氢。</li>
+</ul>
+</li>
+</ul>
+<p>其他<code>$NBO</code>和<code>$END</code>之间的关键词：</p>
+<ul>
+<li><code>NRTLST=n</code>：将权重大于<code>n</code>的结构输出在<code>$NRTSTR</code>部分。默认情况下仅打印参考结果。</li>
+<li><code>NRT &lt;atom-1 atom-2 ... atom-n&gt;</code>：在NRT关键词后面的尖括号里写上共振分析要考虑的原子范围即可进行局部的NRT分析。</li>
+</ul>
+<p>其他模块：</p>
+<p>NBO轨道自动搜索结果随结构变化不是连续的，对于通过NRT考察化学过程电子结构的变化，为了满足分析数据的连贯性有意义，需要指定<code>NRTSTR</code>。</p>
+<p>比如化学反应可以视为体系的电子结构是从反应物的Lewis结构平滑过渡到产物Lewis结构的。对过渡态结构，以及IRC路径上一系列点做NRT分析，应当在输入文件里通过$<code>NRTSTR</code>字段直接给出反应物和产物的Lewis结构定义作为参考结构，而不能让NBO自动判断，否则IRC上一系列点的NRT分析结果会突变（比如参考Lewis结构权重的变化曲线）。</p>
+<ul>
+<li><p><code>$NRTSTR……$END</code>：在输入文件里指定了<code>$NRTSTR</code>字段，则NRT分析时会直接利用这些参考Lewis结构，而不会尝试自动搜索和判断。格式和<code>$CHOOSE</code>基本相同：</p>
+<ul>
+<li><p>第一行是<code>$NRTSTR</code>，最后一行是<code>$END</code>。注意开壳层要分别指定α和β电子，用<code>$NRTSTRA</code>和<code>$NRTSTRB</code>代替<code>$NRTSTR</code></p>
+</li>
+<li><p>中间是用<code>STRUCTURE</code>或者<code>STR</code>和<code>END</code>封装的，用<code>LONE</code>和<code>BOND</code>指定每个共振结构的所有价电子孤对和键的完整说明（注意忽略内层轨道），不像<code>$CHOOSE</code>支持<code>CBOND</code></p>
+</li>
+<li><p>最好放在<code>$NBO</code>、<code>$CORE</code>、<code>$CHOOSE</code>模块之后，<code>$DEL</code>模块之前NRTSTR，而且对于开壳层，不能同时存在<code>$CHOOSE</code>和<code>$NRTSTR</code></p>
+</li>
+<li><p>eg.</p>
+<p><img src="image-20201130224813391.png" alt=""></p>
+</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">$NRTSTR</span><br><span class="line">	STR1 ! C1 anion center</span><br><span class="line">		LONE <span class="number">1</span> <span class="number">1</span> END</span><br><span class="line">		BOND S <span class="number">1</span> <span class="number">2</span> S <span class="number">1</span> <span class="number">4</span> S <span class="number">1</span> <span class="number">5</span> D <span class="number">2</span> <span class="number">3</span> S <span class="number">2</span> <span class="number">6</span> S <span class="number">3</span> <span class="number">7</span> S <span class="number">3</span> <span class="number">8</span> END</span><br><span class="line">	END</span><br><span class="line">	STR2 ! C3 anion center</span><br><span class="line">		LONE <span class="number">3</span> <span class="number">1</span> END</span><br><span class="line">		BOND D <span class="number">1</span> <span class="number">2</span> S <span class="number">1</span> <span class="number">4</span> S <span class="number">1</span> <span class="number">5</span> S <span class="number">2</span> <span class="number">3</span> S <span class="number">2</span> <span class="number">6</span> S <span class="number">3</span> <span class="number">7</span> S <span class="number">3</span> <span class="number">8</span> END</span><br><span class="line">	END</span><br><span class="line">$END</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="输出例子"><a href="#输出例子" class="headerlink" title="输出例子"></a>输出例子</h2><h3 id="烯丙基自由基开壳层计算出的alpha电子"><a href="#烯丙基自由基开壳层计算出的alpha电子" class="headerlink" title="烯丙基自由基开壳层计算出的alpha电子"></a>烯丙基自由基开壳层计算出的alpha电子</h3><p><img src="image-20201130221142052.png" style="zoom:50%;" /></p>
+<ul>
+<li>第3行和第4行表示最多允许的参考Lewis结构和全部Lewis结构的数目</li>
+<li>第5行当前任务需要多少内存</li>
+<li>第10~12行表示当前体系共发现3个参考Lewis结构（有一定的多中心离域性，因此一种结构无法描述）</li>
+<li>第13~15行：<ul>
+<li><code>rho*</code>表示主导的参考Lewis结构的non-Lewis电子为0.04795</li>
+<li><code>f(w)</code>表示基于这个参考Lewis结构再考虑其它二级Lewis结构后对体系的描述比起只考虑当前一种Lewis结构时的改进。越接近1改进越大（共振效应越显著），越接近0改进越小。</li>
+</ul>
+</li>
+<li>第17行中：<ul>
+<li><code>D(W)</code>只考虑这三种参考Lewis结构并变分优化其系数后剩下的残值。越小说明靠这些参考Lewis结构就越已经足够描述实际电子结构了</li>
+<li><code>F(W)</code>：在参考Lewis结构基础上再考虑其它二级Lewis结构后对体系电子结构描述的改进程度</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">NATURAL</span> RESONANCE THEORY ANALYSIS, alpha spin:</span><br><span class="line"></span><br><span class="line"><span class="attribute">Maximum</span> reference structures : <span class="number">20</span></span><br><span class="line"><span class="attribute">Maximum</span> resonance structures : <span class="number">5000</span></span><br><span class="line"><span class="attribute">Memory</span> requirements : <span class="number">89064896</span> words of <span class="number">99790766</span> available</span><br><span class="line"></span><br><span class="line"><span class="attribute">7</span> candidate reference structure(s) calculated by SR LEWIS</span><br><span class="line"><span class="attribute">0</span> candidate reference structure(s) added by SR HBRES</span><br><span class="line"><span class="attribute">Initial</span> loops searched <span class="number">9</span> bonding pattern(s); <span class="number">3</span> were retained</span><br><span class="line"><span class="attribute">Delocalization</span> list threshold set to <span class="number">0</span>.<span class="number">50</span> kcal/mol for reference <span class="number">1</span></span><br><span class="line"><span class="attribute">Delocalization</span> list threshold set to <span class="number">0</span>.<span class="number">50</span> kcal/mol for reference <span class="number">2</span></span><br><span class="line"><span class="attribute">Delocalization</span> list threshold set to <span class="number">0</span>.<span class="number">50</span> kcal/mol for reference <span class="number">3</span></span><br><span class="line"><span class="attribute">Reference</span>   <span class="number">1</span>:  rho*=<span class="number">0</span>.<span class="number">17534</span>, f(w)=<span class="number">0</span>.<span class="number">96619</span> converged after  <span class="number">22</span> iterations</span><br><span class="line"><span class="attribute">Reference</span>   <span class="number">2</span>:  rho*=<span class="number">0</span>.<span class="number">17534</span>, f(w)=<span class="number">0</span>.<span class="number">96619</span> converged after  <span class="number">22</span> iterations</span><br><span class="line"><span class="attribute">Reference</span>   <span class="number">3</span>:  rho*=<span class="number">0</span>.<span class="number">31532</span>, f(w)=<span class="number">0</span>.<span class="number">98329</span> converged after  <span class="number">22</span> iterations</span><br><span class="line"><span class="attribute">Multi</span>-ref( <span class="number">3</span>):  D(W)=<span class="number">0</span>.<span class="number">10221</span>, F(W)=<span class="number">0</span>.<span class="number">00000</span> converged after <span class="number">117</span> iterations</span><br><span class="line"><span class="attribute">1</span> reference structure has low weight (&lt;<span class="number">35</span>.<span class="number">0</span>% of <span class="number">41</span>.<span class="number">1</span>%); discarded</span><br><span class="line"><span class="attribute">Multi</span>-ref( <span class="number">2</span>):  D(W)=<span class="number">0</span>.<span class="number">10221</span>, F(W)=<span class="number">0</span>.<span class="number">00000</span> converged after   <span class="number">1</span> iterations</span><br></pre></td></tr></table></figure>
+<ul>
+<li>对这三种参考Lewis式通过严格变分得到的权重</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">                                               fractional accuracy f(w)</span><br><span class="line">                 non-Lewis             -------------------------------------</span><br><span class="line"> Ref     Wgt      density      d(<span class="number">0</span>)      all NBOs     val+core     valence</span><br><span class="line">----------------------------------------------------------------------------</span><br><span class="line">  <span class="number">1</span>    <span class="number">0.50000</span>    <span class="number">0.17534</span>    <span class="number">0.02667</span>     <span class="number">0.96619</span>      <span class="number">0.97754</span>      <span class="number">0.97754</span></span><br><span class="line">  <span class="number">2</span>    <span class="number">0.50000</span>    <span class="number">0.17534</span>    <span class="number">0.02667</span>     <span class="number">0.96619</span>      <span class="number">0.97754</span>      <span class="number">0.97754</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>主导的参考Lewis结构对应的拓扑矩阵：<ul>
+<li>非对角元是原子间形式键级</li>
+<li>对角元是原子上的孤对电子数</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">TOPO matrix for the leading resonance structure:</span></span><br><span class="line"></span><br><span class="line">    <span class="string">Atom</span>  <span class="number">1</span>   <span class="number">2</span>   <span class="number">3</span>   <span class="number">4</span>   <span class="number">5</span>   <span class="number">6</span>   <span class="number">7</span>   <span class="number">8</span></span><br><span class="line">    <span class="string">----</span> <span class="string">---</span> <span class="string">---</span> <span class="string">---</span> <span class="string">---</span> <span class="string">---</span> <span class="string">---</span> <span class="string">---</span> <span class="string">---</span></span><br><span class="line">  <span class="number">1</span><span class="string">.</span>  <span class="string">C</span>   <span class="number">1</span>   <span class="number">1</span>   <span class="number">0</span>   <span class="number">1</span>   <span class="number">1</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span></span><br><span class="line">  <span class="number">2</span><span class="string">.</span>  <span class="string">C</span>   <span class="number">1</span>   <span class="number">0</span>   <span class="number">2</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">1</span>   <span class="number">0</span>   <span class="number">0</span></span><br><span class="line">  <span class="number">3</span><span class="string">.</span>  <span class="string">C</span>   <span class="number">0</span>   <span class="number">2</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">1</span>   <span class="number">1</span></span><br><span class="line">  <span class="number">4</span><span class="string">.</span>  <span class="string">H</span>   <span class="number">1</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span></span><br><span class="line">  <span class="number">5</span><span class="string">.</span>  <span class="string">H</span>   <span class="number">1</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span></span><br><span class="line">  <span class="number">6</span><span class="string">.</span>  <span class="string">H</span>   <span class="number">0</span>   <span class="number">1</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span></span><br><span class="line">  <span class="number">7</span><span class="string">.</span>  <span class="string">H</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">1</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span></span><br><span class="line">  <span class="number">8</span><span class="string">.</span>  <span class="string">H</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">1</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>第一列中有星号的是参考Lewis结构，权重非常小的Lewis结构直接合并显示其权重总和</li>
+<li>第二列是各个Lewis结构的最终的权重</li>
+<li>相对于主导的参考Lewis结构的拓扑关系的变化<ul>
+<li>没加括号的是增加的项</li>
+<li>有括号的是程除的项</li>
+<li>单个原于的项是指给其增加一个或去掉一个电子</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">        Resonance</span><br><span class="line">   RS   Weight(%)                  Added(Removed)</span><br><span class="line">---------------------------------------------------------------------------</span><br><span class="line">   <span class="number">1</span>*     <span class="number">48.55</span></span><br><span class="line">   <span class="number">2</span>*     <span class="number">48.55</span>    C  <span class="number">1</span>- C  <span class="number">2</span>, ( C  <span class="number">2</span>- C  <span class="number">3</span>), ( C  <span class="number">1</span>),  C  <span class="number">3</span></span><br><span class="line">   <span class="number">3</span>       <span class="number">0.19</span>    C  <span class="number">1</span>- C  <span class="number">2</span>, ( C  <span class="number">1</span>- H  <span class="number">4</span>), ( C  <span class="number">2</span>- C  <span class="number">3</span>),  C  <span class="number">3</span></span><br><span class="line">   <span class="number">4</span>       <span class="number">0.19</span>   ( C  <span class="number">1</span>- C  <span class="number">2</span>),  C  <span class="number">2</span>- C  <span class="number">3</span>, ( C  <span class="number">3</span>- H  <span class="number">8</span>),  C  <span class="number">1</span></span><br><span class="line">   <span class="number">5</span>       <span class="number">0.19</span>    C  <span class="number">1</span>- C  <span class="number">2</span>,  C  <span class="number">1</span>- C  <span class="number">2</span>, ( C  <span class="number">1</span>- H  <span class="number">4</span>), ( C  <span class="number">2</span>- C  <span class="number">3</span>),</span><br><span class="line">                  ( C  <span class="number">2</span>- C  <span class="number">3</span>), ( C  <span class="number">1</span>),  C  <span class="number">3</span>,  C  <span class="number">3</span></span><br><span class="line">   <span class="number">6</span>       <span class="number">0.19</span>   ( C  <span class="number">3</span>- H  <span class="number">8</span>),  C  <span class="number">3</span></span><br><span class="line">   <span class="number">7</span>       <span class="number">0.19</span>    C  <span class="number">1</span>- C  <span class="number">2</span>, ( C  <span class="number">1</span>- H  <span class="number">5</span>), ( C  <span class="number">2</span>- H  <span class="number">6</span>),  H  <span class="number">5</span></span><br><span class="line">   <span class="number">8</span>       <span class="number">0.19</span>    C  <span class="number">2</span>- C  <span class="number">3</span>, ( C  <span class="number">2</span>- H  <span class="number">6</span>), ( C  <span class="number">3</span>- H  <span class="number">7</span>),  H  <span class="number">7</span></span><br><span class="line">   <span class="number">9</span>       <span class="number">0.19</span>    C  <span class="number">1</span>- C  <span class="number">2</span>,  C  <span class="number">1</span>- C  <span class="number">2</span>, ( C  <span class="number">1</span>- H  <span class="number">5</span>), ( C  <span class="number">2</span>- C  <span class="number">3</span>),</span><br><span class="line">                  ( C  <span class="number">2</span>- H  <span class="number">6</span>), ( C  <span class="number">1</span>),  C  <span class="number">3</span>,  H  <span class="number">5</span></span><br><span class="line">  <span class="number">10</span>       <span class="number">0.19</span>    C  <span class="number">1</span>- C  <span class="number">2</span>, ( C  <span class="number">2</span>- H  <span class="number">6</span>), ( C  <span class="number">3</span>- H  <span class="number">7</span>), ( C  <span class="number">1</span>),</span><br><span class="line">                   C  <span class="number">3</span>,  H  <span class="number">7</span></span><br><span class="line">  <span class="number">11</span>       <span class="number">0.19</span>    C  <span class="number">1</span>- C  <span class="number">2</span>, ( C  <span class="number">1</span>- H  <span class="number">5</span>), ( C  <span class="number">2</span>- H  <span class="number">6</span>),  H  <span class="number">6</span></span><br><span class="line">  <span class="number">12</span>       <span class="number">0.19</span>    C  <span class="number">2</span>- C  <span class="number">3</span>, ( C  <span class="number">2</span>- H  <span class="number">6</span>), ( C  <span class="number">3</span>- H  <span class="number">7</span>),  H  <span class="number">6</span></span><br><span class="line">  <span class="number">13</span>       <span class="number">0.19</span>    C  <span class="number">1</span>- C  <span class="number">2</span>,  C  <span class="number">1</span>- C  <span class="number">2</span>, ( C  <span class="number">1</span>- H  <span class="number">5</span>), ( C  <span class="number">2</span>- C  <span class="number">3</span>),</span><br><span class="line">                  ( C  <span class="number">2</span>- H  <span class="number">6</span>), ( C  <span class="number">1</span>),  C  <span class="number">3</span>,  H  <span class="number">6</span></span><br><span class="line">  <span class="number">14</span>       <span class="number">0.19</span>    C  <span class="number">1</span>- C  <span class="number">2</span>, ( C  <span class="number">2</span>- H  <span class="number">6</span>), ( C  <span class="number">3</span>- H  <span class="number">7</span>), ( C  <span class="number">1</span>),</span><br><span class="line">                   C  <span class="number">3</span>,  H  <span class="number">6</span></span><br><span class="line">  <span class="number">15</span>       <span class="number">0.10</span>   ( C  <span class="number">1</span>- C  <span class="number">2</span>),  C  <span class="number">2</span>- C  <span class="number">3</span>, ( C  <span class="number">3</span>- H  <span class="number">8</span>),  H  <span class="number">8</span></span><br><span class="line">  <span class="number">16</span>       <span class="number">0.10</span>    C  <span class="number">1</span>- C  <span class="number">2</span>, ( C  <span class="number">1</span>- H  <span class="number">4</span>), ( C  <span class="number">2</span>- C  <span class="number">3</span>),  H  <span class="number">4</span></span><br><span class="line">  <span class="number">17</span>       <span class="number">0.10</span>   ( C  <span class="number">3</span>- H  <span class="number">8</span>), ( C  <span class="number">1</span>),  C  <span class="number">3</span>,  H  <span class="number">8</span></span><br><span class="line">  <span class="number">18</span>       <span class="number">0.10</span>    C  <span class="number">1</span>- C  <span class="number">2</span>,  C  <span class="number">1</span>- C  <span class="number">2</span>, ( C  <span class="number">1</span>- H  <span class="number">4</span>), ( C  <span class="number">2</span>- C  <span class="number">3</span>),</span><br><span class="line">                  ( C  <span class="number">2</span>- C  <span class="number">3</span>), ( C  <span class="number">1</span>),  C  <span class="number">3</span>,  H  <span class="number">4</span></span><br><span class="line">  <span class="number">19</span><span class="number">-26</span>    <span class="number">0.22</span></span><br><span class="line">---------------------------------------------------------------------------</span><br><span class="line">         <span class="number">100.00</span>   * Total *                [* = <span class="built_in">ref</span>erence structure]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>对角元代表平均携带的孤对电子数</li>
+<li>非对角元代表两个原子之间的NRT键级、共价和离子的贡献。（由于只有一个自旋的结果，大约是期望值的一半）</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">Natural Bond Order:</span>  <span class="string">(total/covalent/ionic)</span></span><br><span class="line"></span><br><span class="line">    <span class="string">Atom</span>       <span class="number">1</span>      <span class="number">2</span>      <span class="number">3</span>      <span class="number">4</span>      <span class="number">5</span>      <span class="number">6</span>      <span class="number">7</span>      <span class="number">8</span></span><br><span class="line">    <span class="string">----</span>   <span class="string">------</span> <span class="string">------</span> <span class="string">------</span> <span class="string">------</span> <span class="string">------</span> <span class="string">------</span> <span class="string">------</span> <span class="string">------</span></span><br><span class="line">  <span class="number">1</span><span class="string">.</span>  <span class="string">C</span>  <span class="string">t</span> <span class="number">0.2523</span> <span class="number">0.7529</span> <span class="number">0.0000</span> <span class="number">0.4970</span> <span class="number">0.4962</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span></span><br><span class="line">         <span class="string">c</span>   <span class="string">---</span>  <span class="number">0.5616</span> <span class="number">0.0000</span> <span class="number">0.3795</span> <span class="number">0.3817</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span></span><br><span class="line">         <span class="string">i</span>   <span class="string">---</span>  <span class="number">0.1912</span> <span class="number">0.0000</span> <span class="number">0.1176</span> <span class="number">0.1145</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span></span><br><span class="line"></span><br><span class="line">  <span class="number">2</span><span class="string">.</span>  <span class="string">C</span>  <span class="string">t</span> <span class="number">0.7529</span> <span class="number">0.0011</span> <span class="number">0.7529</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.4921</span> <span class="number">0.0000</span> <span class="number">0.0000</span></span><br><span class="line">         <span class="string">c</span> <span class="number">0.5616</span>   <span class="string">---</span>  <span class="number">0.5616</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.3986</span> <span class="number">0.0000</span> <span class="number">0.0000</span></span><br><span class="line">         <span class="string">i</span> <span class="number">0.1912</span>   <span class="string">---</span>  <span class="number">0.1912</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0935</span> <span class="number">0.0000</span> <span class="number">0.0000</span></span><br><span class="line"></span><br><span class="line">  <span class="number">3</span><span class="string">.</span>  <span class="string">C</span>  <span class="string">t</span> <span class="number">0.0000</span> <span class="number">0.7529</span> <span class="number">0.2523</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.4962</span> <span class="number">0.4970</span></span><br><span class="line">         <span class="string">c</span> <span class="number">0.0000</span> <span class="number">0.5616</span>   <span class="string">---</span>  <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.3817</span> <span class="number">0.3795</span></span><br><span class="line">         <span class="string">i</span> <span class="number">0.0000</span> <span class="number">0.1912</span>   <span class="string">---</span>  <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.1145</span> <span class="number">0.1176</span></span><br><span class="line"></span><br><span class="line">  <span class="number">4</span><span class="string">.</span>  <span class="string">H</span>  <span class="string">t</span> <span class="number">0.4970</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0010</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span></span><br><span class="line">         <span class="string">c</span> <span class="number">0.3795</span> <span class="number">0.0000</span> <span class="number">0.0000</span>   <span class="string">---</span>  <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span></span><br><span class="line">         <span class="string">i</span> <span class="number">0.1176</span> <span class="number">0.0000</span> <span class="number">0.0000</span>   <span class="string">---</span>  <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span></span><br><span class="line"></span><br><span class="line">  <span class="number">5</span><span class="string">.</span>  <span class="string">H</span>  <span class="string">t</span> <span class="number">0.4962</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0019</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span></span><br><span class="line">         <span class="string">c</span> <span class="number">0.3817</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span>   <span class="string">---</span>  <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span></span><br><span class="line">         <span class="string">i</span> <span class="number">0.1145</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span>   <span class="string">---</span>  <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span></span><br><span class="line"></span><br><span class="line">  <span class="number">6</span><span class="string">.</span>  <span class="string">H</span>  <span class="string">t</span> <span class="number">0.0000</span> <span class="number">0.4921</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0041</span> <span class="number">0.0000</span> <span class="number">0.0000</span></span><br><span class="line">         <span class="string">c</span> <span class="number">0.0000</span> <span class="number">0.3986</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span>   <span class="string">---</span>  <span class="number">0.0000</span> <span class="number">0.0000</span></span><br><span class="line">         <span class="string">i</span> <span class="number">0.0000</span> <span class="number">0.0935</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span>   <span class="string">---</span>  <span class="number">0.0000</span> <span class="number">0.0000</span></span><br><span class="line"></span><br><span class="line">  <span class="number">7</span><span class="string">.</span>  <span class="string">H</span>  <span class="string">t</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.4962</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0019</span> <span class="number">0.0000</span></span><br><span class="line">         <span class="string">c</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.3817</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span>   <span class="string">---</span>  <span class="number">0.0000</span></span><br><span class="line">         <span class="string">i</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.1145</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span>   <span class="string">---</span>  <span class="number">0.0000</span></span><br><span class="line"></span><br><span class="line">  <span class="number">8</span><span class="string">.</span>  <span class="string">H</span>  <span class="string">t</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.4970</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0010</span></span><br><span class="line">         <span class="string">c</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.3795</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span>   <span class="string">---</span></span><br><span class="line">         <span class="string">i</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.1176</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span> <span class="number">0.0000</span>   <span class="string">---</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>每个原子的自然原子价（体现成键的数目），以及共价和离子的贡献量</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">Natural Atomic Valencies:</span></span><br><span class="line"></span><br><span class="line">                     <span class="string">Co-</span>    <span class="string">Electro-</span></span><br><span class="line">    <span class="string">Atom</span>  <span class="string">Valency</span>  <span class="string">Valency</span>  <span class="string">Valency</span></span><br><span class="line">    <span class="string">----</span>  <span class="string">-------</span>  <span class="string">-------</span>  <span class="string">-------</span></span><br><span class="line">  <span class="number">1</span><span class="string">.</span>  <span class="string">C</span>    <span class="number">1.7461</span>   <span class="number">1.3228</span>   <span class="number">0.4233</span></span><br><span class="line">  <span class="number">2</span><span class="string">.</span>  <span class="string">C</span>    <span class="number">1.9978</span>   <span class="number">1.5218</span>   <span class="number">0.4760</span></span><br><span class="line">  <span class="number">3</span><span class="string">.</span>  <span class="string">C</span>    <span class="number">1.7461</span>   <span class="number">1.3228</span>   <span class="number">0.4233</span></span><br><span class="line">  <span class="number">4</span><span class="string">.</span>  <span class="string">H</span>    <span class="number">0.4970</span>   <span class="number">0.3795</span>   <span class="number">0.1176</span></span><br><span class="line">  <span class="number">5</span><span class="string">.</span>  <span class="string">H</span>    <span class="number">0.4962</span>   <span class="number">0.3817</span>   <span class="number">0.1145</span></span><br><span class="line">  <span class="number">6</span><span class="string">.</span>  <span class="string">H</span>    <span class="number">0.4921</span>   <span class="number">0.3986</span>   <span class="number">0.0935</span></span><br><span class="line">  <span class="number">7</span><span class="string">.</span>  <span class="string">H</span>    <span class="number">0.4962</span>   <span class="number">0.3817</span>   <span class="number">0.1145</span></span><br><span class="line">  <span class="number">8</span><span class="string">.</span>  <span class="string">H</span>    <span class="number">0.4970</span>   <span class="number">0.3795</span>   <span class="number">0.1176</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>最后以SNRTSTR字段的格式输出各个参考Lewis结构的表示。</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">$NRTSTRA</span><br><span class="line">  STR        ! Wgt = <span class="number">48.55</span>%</span><br><span class="line">    LONE <span class="number">1</span> <span class="number">1</span> END</span><br><span class="line">    BOND S <span class="number">1</span> <span class="number">2</span> S <span class="number">1</span> <span class="number">4</span> S <span class="number">1</span> <span class="number">5</span> D <span class="number">2</span> <span class="number">3</span> S <span class="number">2</span> <span class="number">6</span> S <span class="number">3</span> <span class="number">7</span> S <span class="number">3</span> <span class="number">8</span> END</span><br><span class="line">  END</span><br><span class="line">  STR        ! Wgt = <span class="number">48.55</span>%</span><br><span class="line">    LONE <span class="number">3</span> <span class="number">1</span> END</span><br><span class="line">    BOND D <span class="number">1</span> <span class="number">2</span> S <span class="number">1</span> <span class="number">4</span> S <span class="number">1</span> <span class="number">5</span> S <span class="number">2</span> <span class="number">3</span> S <span class="number">2</span> <span class="number">6</span> S <span class="number">3</span> <span class="number">7</span> S <span class="number">3</span> <span class="number">8</span> END</span><br><span class="line">  END</span><br><span class="line">$END</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+      </categories>
+      <tags>
+        <tag>NBO</tag>
+      </tags>
   </entry>
   <entry>
     <title>【ADF】01.SCF相关</title>
@@ -98,6 +191,99 @@
       </categories>
       <tags>
         <tag>SCF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【CP2K】01.基础</title>
+    <url>/2020/11/20/%E3%80%90CP2K%E3%80%9101-%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<h1 id="安装vim插件规范-inp文件"><a href="#安装vim插件规范-inp文件" class="headerlink" title="安装vim插件规范.inp文件"></a>安装vim插件规范.inp文件</h1><ol>
+<li><p>如果下载失败，可以直接从<a href="http://manual.cp2k.org/trunk/cp2k.vim下载到">http://manual.cp2k.org/trunk/cp2k.vim下载到</a> ~/.vim/syntax中</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">mkdir -p ~<span class="regexp">/.vim/</span>syntax</span><br><span class="line">wget -O ~<span class="regexp">/.vim/</span>syntax<span class="regexp">/cp2k.vim http:/</span><span class="regexp">/manual.cp2k.org/</span>trunk/cp2k.vim</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>再在~/.vim/下新建<code>filetype.vim</code>，输入：</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="built_in">exists</span>(<span class="string">&quot;did_load_filetypes&quot;</span>)</span><br><span class="line">   <span class="keyword">finish</span></span><br><span class="line"><span class="keyword">endif</span></span><br><span class="line"><span class="keyword">augroup</span> filetypedetect</span><br><span class="line">   au! BufNewFile,BufRead *.inp <span class="keyword">setf</span> cp2k</span><br><span class="line"><span class="keyword">augroup</span> END</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="语法折叠"><a href="#语法折叠" class="headerlink" title="语法折叠"></a>语法折叠</h2><p>在~/.vimrc中添加：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">au FileType cp2k setlocal <span class="attribute">foldlevel</span>=99 <span class="attribute">foldmethod</span>=indent</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>za</code>：切换当前折叠级别的折叠</li>
+<li><code>zA</code>：递归切换所有折叠级别的折叠</li>
+<li><code>zM</code>：关闭当前缓冲区中的所有折叠</li>
+<li><code>zR</code>：打开当前缓冲区中的所有折叠</li>
+</ul>
+<h2 id="自动缩进"><a href="#自动缩进" class="headerlink" title="自动缩进"></a>自动缩进</h2><p>只更改指定文件类型cp2k的缩进，在~/.vimrc中添加：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">au FileType cp2k setlocal <span class="attribute">shiftwidth</span>=1 <span class="attribute">tabstop</span>=1</span><br></pre></td></tr></table></figure>
+<p>更改所有文件类型和缓冲区的缩进：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="builtin-name">set</span> <span class="attribute">shiftwidth</span>=1 <span class="attribute">tabstop</span>=1</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>=G</code>正确缩进文件的整个部分</li>
+<li><code>=</code>正确缩进文件的某个部分（区域）</li>
+</ul>
+<h1 id="inp语法"><a href="#inp语法" class="headerlink" title="inp语法"></a>inp语法</h1><p>可以在cp2k目录下，通过<code>grep -iR 关键词 ~/tests</code>来查询相关的输入文件。（tests目录中的输入文件主要是用来测试程序运行的正常与否，往往使用了不合理的参数）</p>
+<ul>
+<li><p>主要结构如下，可以在其中嵌套多个<code>&amp;SECTION</code>和<code>&amp;END SECTION</code></p>
+<figure class="highlight ruleslanguage"><table><tr><td class="code"><pre><span class="line">&amp;<span class="keyword">SECTION</span></span><br><span class="line">	KEYWORD PARAMETER</span><br><span class="line">&amp;<span class="keyword">END</span> <span class="keyword">SECTION</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>语法</p>
+<ul>
+<li><code>@INCLUDE ’filename’</code>：从文件中读取文本</li>
+<li><code>@SET VAR value</code>：定义变量</li>
+<li><code>@VAR</code>：变量</li>
+<li><code>@IF</code>/<code>@ENDIF</code>：简单的逻辑</li>
+<li><code>#</code>：注释</li>
+</ul>
+</li>
+<li><p>单位的设定：（可供的单位有：<a href="https://manual.cp2k.org/cp2k-7_1-branch/units.html）">https://manual.cp2k.org/cp2k-7_1-branch/units.html）</a></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#默认是angstrom，也可以设置bohr等等</span></span><br><span class="line"><span class="string">ABC</span> [<span class="string">nm</span>] <span class="number">100</span> <span class="number">100</span> <span class="number">100</span></span><br><span class="line"><span class="comment">#默认是hatree，设置Ry等等</span></span><br><span class="line"><span class="string">EMAX_SPLINE</span> [<span class="string">eV</span>] <span class="number">50</span></span><br><span class="line"><span class="comment">#也可以一起用</span></span><br><span class="line">[<span class="string">hatree*bohr^2</span>]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="GLOBAL"><a href="#GLOBAL" class="headerlink" title="GLOBAL"></a>GLOBAL</h2><figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">&amp;GLOBAL</span></span><br><span class="line">	<span class="attr">PROJECT</span> <span class="string">H2O-32</span></span><br><span class="line">	<span class="attr">RUN_TYPE</span> <span class="string">MD</span></span><br><span class="line">	<span class="attr">PRINT_LEVEL</span> <span class="string">HIGH</span></span><br><span class="line">	<span class="attr">&amp;TIMINGS</span></span><br><span class="line">		<span class="attr">THRESHOLD</span> <span class="string">0.000001</span></span><br><span class="line">	<span class="attr">&amp;END</span></span><br><span class="line">	<span class="attr">WALLTIME</span> <span class="string">3600</span></span><br><span class="line"><span class="meta">&amp;END</span> <span class="string">GLOBAL</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>PROJECT</code>：任务名称，等同于<code>PROJECT_NAME</code></li>
+<li><code>RUN_TYPE</code>：任务类型<ul>
+<li><code>ENERGY</code>：计算当前结构的能量。对于DFT 来说，就是一个SCF 计算。</li>
+<li><code>ENERGY_FORCE</code>：计算当前结构的能量，同时计算出每个原子上的梯度（即受力）。</li>
+<li><code>BAND</code>：使用band方法来进行最低能量路径(MEP)以及反应过渡态的搜索，通常可以使用的方法有CI-NEB, IT-NEB等方法。</li>
+<li><code>MD</code>：Molecular Dynamics分子动力学模拟</li>
+<li><code>CELL_OPT</code>：晶胞参数的优化。</li>
+<li><code>GEO_OPT</code>：对当前结构进行几何结构的优化，以获得当前结构对应的局部极小点或者过渡态。GEO_OPT 有两种类型，一种是MINIMIZATION，即优化到极小点；一种是TRANSITION_STATE，即优化到过渡态。过渡态的优化采用Dimer方法来实现。</li>
+<li><code>VIBRATIONAL_ANALYSIS</code>：对当前结构进行振动分析。频率计算可以计算部分原子的频率（INVOLVED_ATOMS），也可以计算某一频率范围内的频率计算（MODE_SELECTIVE）。</li>
+</ul>
+</li>
+<li><code>PRINT_LEVEL</code>：输出内容级别，可以是<code>SILENT</code>、<code>MEDIUM</code>（默认）、<code>LOW</code>、<code>HIGH</code>等。</li>
+<li><code>&amp;TIMINGS</code>：在CP2K执行结束时控制时序报告的打印<ul>
+<li><code>THRESHOLD</code>：阈值</li>
+</ul>
+</li>
+<li><code>WALLTIME</code>：此运行的最大执行时间。时间以秒为单位或以HH：MM：SS为单位。</li>
+</ul>
+<h2 id="FORCE-EVAL"><a href="#FORCE-EVAL" class="headerlink" title="FORCE_EVAL"></a>FORCE_EVAL</h2><p>计算能量和力并描述您要分析的系统所需的参数。</p>
+<figure class="highlight oxygene"><table><tr><td class="code"><pre><span class="line">&amp;FORCE_EVAL</span><br><span class="line">	<span class="function"><span class="keyword">METHOD</span> <span class="title">QS</span></span></span><br><span class="line"><span class="function">	&amp;<span class="title">DFT</span></span></span><br><span class="line"><span class="function">		...</span></span><br><span class="line"><span class="function">	&amp;<span class="title">END</span> <span class="title">DFT</span></span></span><br><span class="line"><span class="function">	&amp;<span class="title">SUBSYS</span></span></span><br><span class="line"><span class="function">		...</span></span><br><span class="line"><span class="function">	&amp;<span class="title">END</span> <span class="title">SUBSYS</span></span></span><br><span class="line"><span class="function">&amp;<span class="title">END</span> <span class="title">FORCE_EVAL</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>METHOD</code>：使用哪种方法来计算力<ul>
+<li><code>QS</code>：默认，同<code>QUICKSTEP</code></li>
+<li><code>FIST</code>：分子力学</li>
+<li><code>QMMM</code>：Hybrid quantum classical</li>
+</ul>
+</li>
+</ul>
+<h2 id="MOTION"><a href="#MOTION" class="headerlink" title="MOTION"></a>MOTION</h2><p>定义了一组与原子核运动有关的工具。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;MOTION</span></span><br><span class="line">	<span class="meta">&amp;MD</span></span><br><span class="line">		<span class="string">ENSEMBLE</span> <span class="string">NVE</span></span><br><span class="line">		<span class="string">STEPS</span> <span class="number">10</span></span><br><span class="line">		<span class="string">TIMESTEP</span> <span class="number">0.5</span></span><br><span class="line">		<span class="string">TEMPERATURE</span> <span class="number">300.0</span></span><br><span class="line">	<span class="string">&amp;END</span> <span class="string">MD</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">MOTION</span></span><br></pre></td></tr></table></figure>
+<h1 id="输出文件"><a href="#输出文件" class="headerlink" title="输出文件"></a>输出文件</h1><ul>
+<li><code>PROGJECT-1.restart</code>：重启计算的输入文件</li>
+<li><code>PROGJECT-pos-1.xyz：</code>MD或结构优化的轨迹</li>
+<li><code>PROGJECT-1.ener</code>：MD能量、温度……</li>
+<li><code>PROGJECT-1.cell</code>：cell参数</li>
+<li><code>PROGJECT-RESTRAT.wfn</code>：重启计算的轨道</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>CP2K</category>
+      </categories>
+      <tags>
+        <tag>CP2K</tag>
       </tags>
   </entry>
   <entry>
@@ -209,203 +395,6 @@
       </categories>
       <tags>
         <tag>能量分解</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【CP2K】01.基础</title>
-    <url>/2020/11/20/%E3%80%90CP2K%E3%80%9101-%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<h1 id="安装vim插件规范-inp文件"><a href="#安装vim插件规范-inp文件" class="headerlink" title="安装vim插件规范.inp文件"></a>安装vim插件规范.inp文件</h1><ol>
-<li><p>如果下载失败，可以直接从<a href="http://manual.cp2k.org/trunk/cp2k.vim下载到">http://manual.cp2k.org/trunk/cp2k.vim下载到</a> ~/.vim/syntax中</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">mkdir -p ~<span class="regexp">/.vim/</span>syntax</span><br><span class="line">wget -O ~<span class="regexp">/.vim/</span>syntax<span class="regexp">/cp2k.vim http:/</span><span class="regexp">/manual.cp2k.org/</span>trunk/cp2k.vim</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>再在~/.vim/下新建<code>filetype.vim</code>，输入：</p>
-<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="built_in">exists</span>(<span class="string">&quot;did_load_filetypes&quot;</span>)</span><br><span class="line">   <span class="keyword">finish</span></span><br><span class="line"><span class="keyword">endif</span></span><br><span class="line"><span class="keyword">augroup</span> filetypedetect</span><br><span class="line">   au! BufNewFile,BufRead *.inp <span class="keyword">setf</span> cp2k</span><br><span class="line"><span class="keyword">augroup</span> END</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="语法折叠"><a href="#语法折叠" class="headerlink" title="语法折叠"></a>语法折叠</h2><p>在~/.vimrc中添加：</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">au FileType cp2k setlocal <span class="attribute">foldlevel</span>=99 <span class="attribute">foldmethod</span>=indent</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>za</code>：切换当前折叠级别的折叠</li>
-<li><code>zA</code>：递归切换所有折叠级别的折叠</li>
-<li><code>zM</code>：关闭当前缓冲区中的所有折叠</li>
-<li><code>zR</code>：打开当前缓冲区中的所有折叠</li>
-</ul>
-<h2 id="自动缩进"><a href="#自动缩进" class="headerlink" title="自动缩进"></a>自动缩进</h2><p>只更改指定文件类型cp2k的缩进，在~/.vimrc中添加：</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">au FileType cp2k setlocal <span class="attribute">shiftwidth</span>=1 <span class="attribute">tabstop</span>=1</span><br></pre></td></tr></table></figure>
-<p>更改所有文件类型和缓冲区的缩进：</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="builtin-name">set</span> <span class="attribute">shiftwidth</span>=1 <span class="attribute">tabstop</span>=1</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>=G</code>正确缩进文件的整个部分</li>
-<li><code>=</code>正确缩进文件的某个部分（区域）</li>
-</ul>
-<h1 id="inp语法"><a href="#inp语法" class="headerlink" title="inp语法"></a>inp语法</h1><p>可以在cp2k目录下，通过<code>grep -iR 关键词 ~/tests</code>来查询相关的输入文件。（tests目录中的输入文件主要是用来测试程序运行的正常与否，往往使用了不合理的参数）</p>
-<ul>
-<li><p>主要结构如下，可以在其中嵌套多个<code>&amp;SECTION</code>和<code>&amp;END SECTION</code></p>
-<figure class="highlight ruleslanguage"><table><tr><td class="code"><pre><span class="line">&amp;<span class="keyword">SECTION</span></span><br><span class="line">	KEYWORD PARAMETER</span><br><span class="line">&amp;<span class="keyword">END</span> <span class="keyword">SECTION</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>语法</p>
-<ul>
-<li><code>@INCLUDE ’filename’</code>：从文件中读取文本</li>
-<li><code>@SET VAR value</code>：定义变量</li>
-<li><code>@VAR</code>：变量</li>
-<li><code>@IF</code>/<code>@ENDIF</code>：简单的逻辑</li>
-<li><code>#</code>：注释</li>
-</ul>
-</li>
-<li><p>单位的设定：（可供的单位有：<a href="https://manual.cp2k.org/cp2k-7_1-branch/units.html）">https://manual.cp2k.org/cp2k-7_1-branch/units.html）</a></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#默认是angstrom，也可以设置bohr等等</span></span><br><span class="line"><span class="string">ABC</span> [<span class="string">nm</span>] <span class="number">100</span> <span class="number">100</span> <span class="number">100</span></span><br><span class="line"><span class="comment">#默认是hatree，设置Ry等等</span></span><br><span class="line"><span class="string">EMAX_SPLINE</span> [<span class="string">eV</span>] <span class="number">50</span></span><br><span class="line"><span class="comment">#也可以一起用</span></span><br><span class="line">[<span class="string">hatree*bohr^2</span>]</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="GLOBAL"><a href="#GLOBAL" class="headerlink" title="GLOBAL"></a>GLOBAL</h2><figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">&amp;GLOBAL</span></span><br><span class="line">	<span class="attr">PROJECT</span> <span class="string">H2O-32</span></span><br><span class="line">	<span class="attr">RUN_TYPE</span> <span class="string">MD</span></span><br><span class="line">	<span class="attr">PRINT_LEVEL</span> <span class="string">HIGH</span></span><br><span class="line">	<span class="attr">&amp;TIMINGS</span></span><br><span class="line">		<span class="attr">THRESHOLD</span> <span class="string">0.000001</span></span><br><span class="line">	<span class="attr">&amp;END</span></span><br><span class="line">	<span class="attr">WALLTIME</span> <span class="string">3600</span></span><br><span class="line"><span class="meta">&amp;END</span> <span class="string">GLOBAL</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>PROJECT</code>：任务名称，等同于<code>PROJECT_NAME</code></li>
-<li><code>RUN_TYPE</code>：任务类型<ul>
-<li><code>ENERGY</code>：计算当前结构的能量。对于DFT 来说，就是一个SCF 计算。</li>
-<li><code>ENERGY_FORCE</code>：计算当前结构的能量，同时计算出每个原子上的梯度（即受力）。</li>
-<li><code>BAND</code>：使用band方法来进行最低能量路径(MEP)以及反应过渡态的搜索，通常可以使用的方法有CI-NEB, IT-NEB等方法。</li>
-<li><code>MD</code>：Molecular Dynamics分子动力学模拟</li>
-<li><code>CELL_OPT</code>：晶胞参数的优化。</li>
-<li><code>GEO_OPT</code>：对当前结构进行几何结构的优化，以获得当前结构对应的局部极小点或者过渡态。GEO_OPT 有两种类型，一种是MINIMIZATION，即优化到极小点；一种是TRANSITION_STATE，即优化到过渡态。过渡态的优化采用Dimer方法来实现。</li>
-<li><code>VIBRATIONAL_ANALYSIS</code>：对当前结构进行振动分析。频率计算可以计算部分原子的频率（INVOLVED_ATOMS），也可以计算某一频率范围内的频率计算（MODE_SELECTIVE）。</li>
-</ul>
-</li>
-<li><code>PRINT_LEVEL</code>：输出内容级别，可以是<code>SILENT</code>、<code>MEDIUM</code>（默认）、<code>LOW</code>、<code>HIGH</code>等。</li>
-<li><code>&amp;TIMINGS</code>：在CP2K执行结束时控制时序报告的打印<ul>
-<li><code>THRESHOLD</code>：阈值</li>
-</ul>
-</li>
-<li><code>WALLTIME</code>：此运行的最大执行时间。时间以秒为单位或以HH：MM：SS为单位。</li>
-</ul>
-<h2 id="FORCE-EVAL"><a href="#FORCE-EVAL" class="headerlink" title="FORCE_EVAL"></a>FORCE_EVAL</h2><p>计算能量和力并描述您要分析的系统所需的参数。</p>
-<figure class="highlight oxygene"><table><tr><td class="code"><pre><span class="line">&amp;FORCE_EVAL</span><br><span class="line">	<span class="function"><span class="keyword">METHOD</span> <span class="title">QS</span></span></span><br><span class="line"><span class="function">	&amp;<span class="title">DFT</span></span></span><br><span class="line"><span class="function">		...</span></span><br><span class="line"><span class="function">	&amp;<span class="title">END</span> <span class="title">DFT</span></span></span><br><span class="line"><span class="function">	&amp;<span class="title">SUBSYS</span></span></span><br><span class="line"><span class="function">		...</span></span><br><span class="line"><span class="function">	&amp;<span class="title">END</span> <span class="title">SUBSYS</span></span></span><br><span class="line"><span class="function">&amp;<span class="title">END</span> <span class="title">FORCE_EVAL</span></span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>METHOD</code>：使用哪种方法来计算力<ul>
-<li><code>QS</code>：默认，同<code>QUICKSTEP</code></li>
-<li><code>FIST</code>：分子力学</li>
-<li><code>QMMM</code>：Hybrid quantum classical</li>
-</ul>
-</li>
-</ul>
-<h2 id="MOTION"><a href="#MOTION" class="headerlink" title="MOTION"></a>MOTION</h2><p>定义了一组与原子核运动有关的工具。</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;MOTION</span></span><br><span class="line">	<span class="meta">&amp;MD</span></span><br><span class="line">		<span class="string">ENSEMBLE</span> <span class="string">NVE</span></span><br><span class="line">		<span class="string">STEPS</span> <span class="number">10</span></span><br><span class="line">		<span class="string">TIMESTEP</span> <span class="number">0.5</span></span><br><span class="line">		<span class="string">TEMPERATURE</span> <span class="number">300.0</span></span><br><span class="line">	<span class="string">&amp;END</span> <span class="string">MD</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">MOTION</span></span><br></pre></td></tr></table></figure>
-<h1 id="输出文件"><a href="#输出文件" class="headerlink" title="输出文件"></a>输出文件</h1><ul>
-<li><code>PROGJECT-1.restart</code>：重启计算的输入文件</li>
-<li><code>PROGJECT-pos-1.xyz：</code>MD或结构优化的轨迹</li>
-<li><code>PROGJECT-1.ener</code>：MD能量、温度……</li>
-<li><code>PROGJECT-1.cell</code>：cell参数</li>
-<li><code>PROGJECT-RESTRAT.wfn</code>：重启计算的轨道</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>CP2K</category>
-      </categories>
-      <tags>
-        <tag>CP2K</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【Linux】Shell脚本</title>
-    <url>/2020/11/22/%E3%80%90Linux%E3%80%91Shell%E8%84%9A%E6%9C%AC/</url>
-    <content><![CDATA[<h1 id="echo命令"><a href="#echo命令" class="headerlink" title="echo命令"></a>echo命令</h1><p>打印shell变量的值，或者直接输出指定的字符串。</p>
-<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">echo</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
-<p>选项：</p>
-<ul>
-<li><code>-e</code>：激活转义字符：<ul>
-<li><code>\a</code> 发出警告声；</li>
-<li><code>\b</code> 删除前一个字符；</li>
-<li><code>\c</code> 最后不加上换行符号；</li>
-<li><code>\f</code> 换行但光标仍旧停留在原来的位置；<code>\v</code> 与<code>\f</code>相同；</li>
-<li><code>\n</code> 换行且光标移至行首；</li>
-<li><code>\r</code> 光标移至行首，但不换行；</li>
-<li><code>\t</code> 插入tab；</li>
-<li><code>\\</code> 插入\字符；</li>
-<li><code>\nnn</code> 插入nnn（八进制）所代表的ASCII字符</li>
-</ul>
-</li>
-</ul>
-<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><ul>
-<li><p>显示普通字符串，可以省略双引号</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;It is a test&quot;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>显示转义字符，双引号也可以省略</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">&quot;\&quot;It is a test\&quot;&quot;</span></span></span><br><span class="line">&quot;It is a test&quot;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>显示变量</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$name</span> It is a test&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$variable</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$PATH</span>  <span class="comment">#显示当前用户路径PATH的值</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>显示换行</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;OK! \n&quot;</span> </span><br></pre></td></tr></table></figure>
-</li>
-<li><p>显示不换行</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> -e <span class="string">&quot;OK! \c&quot;</span> </span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">&quot;It is a test&quot;</span></span></span><br><span class="line">OK! It is a test</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>显示结果定向至文件</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;It is a test&quot;</span> &gt; myfile</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>原样输出字符串，不进行转义或取变量(用单引号)</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">echo</span> <span class="string">&#x27;<span class="variable">$name</span>\&quot;&#x27;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>显示命令执行结果</p>
-<figure class="highlight dos"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> `<span class="built_in">date</span>`</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="用echo命令打印带有色彩的文字"><a href="#用echo命令打印带有色彩的文字" class="headerlink" title="用echo命令打印带有色彩的文字"></a>用echo命令打印带有色彩的文字</h2><p>文字色：</p>
-<ul>
-<li><code>\e[1;31m</code> 将颜色设置为红色</li>
-<li><code>\e[0m</code> 将颜色重新置回</li>
-<li>颜色码：重置=0，黑色=30，红色=31，绿色=32，黄色=33，蓝色=34，洋红=35，青色=36，白色=37</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> -e <span class="string">&quot;\e[1;31mThis is red text\e[0m&quot;</span></span></span><br></pre></td></tr></table></figure>
-<p>背景色：</p>
-<ul>
-<li>颜色码：重置=0，黑色=40，红色=41，绿色=42，黄色=43，蓝色=44，洋红=45，青色=46，白色=47</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;\e[1;42mGreed Background\e[0m&quot;</span></span><br></pre></td></tr></table></figure>
-<p>文字闪动：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;\033[37;31;5mMySQL Server Stop...\033[39;49;0m&quot;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>红色数字处还有其他数字参数：0 关闭所有属性、1 设置高亮度（加粗）、4 下划线、5 闪烁、7 反显、8 消隐</li>
-</ul>
-<h1 id="printf-命令"><a href="#printf-命令" class="headerlink" title="printf 命令"></a>printf 命令</h1><h2 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">printf</span>  format-<span class="built_in">string</span>  [arguments...]</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>format-string</code>：格式控制字符串<ul>
-<li><code>%s</code>：字符串</li>
-<li><code>%c</code>：ASCII字符。显示相对应参数的第一个字符</li>
-<li><code>%d</code>，<code>%i</code>：十进制整数</li>
-<li><code>%e</code>，<code>%E</code>，<code>%f</code>：浮点格式</li>
-</ul>
-</li>
-<li><code>arguments</code>：参数列表</li>
-</ul>
-<h2 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h2><ul>
-<li><code>%-10s</code>指一个宽度为10个字符（-表示左对齐，没有则表示右对齐），任何字符都会被显示在10个字符宽的字符内，如果不足则自动以空格填充，超过也会将内容全部显示出来。</li>
-<li><code>%-4.2f</code>格式为左对齐宽度为4，其中.2指保留2位小数</li>
-</ul>
-<h1 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h1><h2 id="if-分支结构"><a href="#if-分支结构" class="headerlink" title="if 分支结构"></a>if 分支结构</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">if commands; then</span><br><span class="line">     commands</span><br><span class="line">[elif commands; then</span><br><span class="line">     commands...]</span><br><span class="line">[else</span><br><span class="line">     commands]</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-<h3 id="test"><a href="#test" class="headerlink" title="test"></a>test</h3><p>commands可以是一个表达式：</p>
-<figure class="highlight subunit"><table><tr><td class="code"><pre><span class="line"><span class="keyword">test </span>expression</span><br></pre></td></tr></table></figure>
-<p>或</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">[ expression ]</span><br></pre></td></tr></table></figure>
-<ul>
-<li>expression返回True，可以是：<ul>
-<li><code>-d file</code>：file 存在并且是一个目录</li>
-<li><code>-e file</code>：file 存在</li>
-<li><code>-f file</code>：file 存在并且是一个普通文件</li>
-<li></li>
-</ul>
-</li>
-</ul>
-<h1 id="amp"><a href="#amp" class="headerlink" title="&amp;"></a>&amp;</h1><ul>
-<li><code>&amp;</code> 放在启动参数后面表示设置此进程为后台进程。默认情况下，进程是前台进程，这时就把Shell给占据了，我们无法进行其他操作，对于那些没有交互的进程，很多时候，我们希望将其在后台启动，可以在启动参数的时候加一个’&amp;’实现这个目的。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>系统</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>Shell</tag>
       </tags>
   </entry>
   <entry>
@@ -576,46 +565,6 @@
       </tags>
   </entry>
   <entry>
-    <title>【molpro】03.HF计算</title>
-    <url>/2019/11/16/%E3%80%90molpro%E3%80%9103.HF%E8%AE%A1%E7%AE%97/</url>
-    <content><![CDATA[<h1 id="调用方法"><a href="#调用方法" class="headerlink" title="调用方法"></a>调用方法</h1><ul>
-<li><code>HF</code>或<code>RHF</code>，自旋限制Hartree-Fock程序，开壳层和比可曾都可以，或者用<code>HF-SCF</code>、<code>RHF-SCF</code>也可以。</li>
-<li><code>UHF</code>或<code>UHF-SCF</code>，自旋非限制Hartree-Fock程序</li>
-</ul>
-<h1 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h1><h2 id="定义波函数"><a href="#定义波函数" class="headerlink" title="定义波函数"></a>定义波函数</h2><figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">WF,</span>elec,sym,spin</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p><code>OCC</code>定义每个对称性的占据轨道数，轨道的总数必须等于(总电子数+spin)/2</p>
-</li>
-<li><p><code>CLOSED</code>定义闭壳层轨道，可用于开壳层计算，指定每个对称性中闭壳层轨道的数量。</p>
-</li>
-<li><p><code>OPEN</code>指定开壳层轨道，即指定单占据轨道，单占据轨道的数量必须等于spin，其对称性乘<br>积必须等于sym，如果<code>orbi.sym</code>为负，这个轨道将用负自旋占据（仅允许在UHF中）。</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">OPEN</span>,<span class="selector-tag">orb1</span><span class="selector-class">.sym1</span>,<span class="selector-tag">orb</span><span class="selector-class">.sym2</span>,..<span class="selector-class">.orbn</span><span class="selector-class">.symn</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>O<sub>2</sub></p>
-<ul>
-<li><p>轨道占据为$1\sigma<em>g^21\sigma_u^22\sigma_g^22\sigma_u^23\sigma_g^21\pi</em>{u,x}^21\pi<em>{u,y}^21\pi</em>{g,x}^11\pi_{g,y}^1$</p>
-</li>
-<li><p>$\sigma<em>g$，$\pi</em>{u,x}$，$\pi<em>{u,y}，$$\sigma_u$，$\pi</em>{g,x}$，$\pi<em>{g,y}$的对称性分别对应于$D</em>{2h}$的1，2，3，5，6，7，则<code>OCC</code>中为<code>3,1,1,,2,1,1</code></p>
-</li>
-<li><p>$\pi<em>{g,x}$，$\pi</em>{g,y}$相乘为4（$B<em>{2g}\times B</em>{3g}=B_{1g}$），<code>wf</code>的对称性是4</p>
-</li>
-<li><p>$\pi<em>{u,x}$，$\pi</em>{u,y}$相乘也为4，所以需要用<code>OPEN</code>进一步明确开壳层的轨道</p>
-</li>
-<li><p>输入文件为：</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">&#123;hf</span><br><span class="line">wf,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span></span><br><span class="line">occ,<span class="number">3</span>,<span class="number">1</span>,<span class="number">1</span>,,<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span></span><br><span class="line">open,<span class="number">1.6</span>,<span class="number">1.7</span>&#125; </span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>molpro</category>
-      </categories>
-      <tags>
-        <tag>HF</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【molpro】02.对称性</title>
     <url>/2020/11/16/%E3%80%90molpro%E3%80%9102.%E5%AF%B9%E7%A7%B0%E6%80%A7/</url>
     <content><![CDATA[<h1 id="对称性（点群）"><a href="#对称性（点群）" class="headerlink" title="对称性（点群）"></a>对称性（点群）</h1><ul>
@@ -710,6 +659,46 @@
         <tag>对称性</tag>
         <tag>波函</tag>
         <tag>占据</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【molpro】03.HF计算</title>
+    <url>/2019/11/16/%E3%80%90molpro%E3%80%9103.HF%E8%AE%A1%E7%AE%97/</url>
+    <content><![CDATA[<h1 id="调用方法"><a href="#调用方法" class="headerlink" title="调用方法"></a>调用方法</h1><ul>
+<li><code>HF</code>或<code>RHF</code>，自旋限制Hartree-Fock程序，开壳层和比可曾都可以，或者用<code>HF-SCF</code>、<code>RHF-SCF</code>也可以。</li>
+<li><code>UHF</code>或<code>UHF-SCF</code>，自旋非限制Hartree-Fock程序</li>
+</ul>
+<h1 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h1><h2 id="定义波函数"><a href="#定义波函数" class="headerlink" title="定义波函数"></a>定义波函数</h2><figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">WF,</span>elec,sym,spin</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>OCC</code>定义每个对称性的占据轨道数，轨道的总数必须等于(总电子数+spin)/2</p>
+</li>
+<li><p><code>CLOSED</code>定义闭壳层轨道，可用于开壳层计算，指定每个对称性中闭壳层轨道的数量。</p>
+</li>
+<li><p><code>OPEN</code>指定开壳层轨道，即指定单占据轨道，单占据轨道的数量必须等于spin，其对称性乘<br>积必须等于sym，如果<code>orbi.sym</code>为负，这个轨道将用负自旋占据（仅允许在UHF中）。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">OPEN</span>,<span class="selector-tag">orb1</span><span class="selector-class">.sym1</span>,<span class="selector-tag">orb</span><span class="selector-class">.sym2</span>,..<span class="selector-class">.orbn</span><span class="selector-class">.symn</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>O<sub>2</sub></p>
+<ul>
+<li><p>轨道占据为$1\sigma<em>g^21\sigma_u^22\sigma_g^22\sigma_u^23\sigma_g^21\pi</em>{u,x}^21\pi<em>{u,y}^21\pi</em>{g,x}^11\pi_{g,y}^1$</p>
+</li>
+<li><p>$\sigma<em>g$，$\pi</em>{u,x}$，$\pi<em>{u,y}，$$\sigma_u$，$\pi</em>{g,x}$，$\pi<em>{g,y}$的对称性分别对应于$D</em>{2h}$的1，2，3，5，6，7，则<code>OCC</code>中为<code>3,1,1,,2,1,1</code></p>
+</li>
+<li><p>$\pi<em>{g,x}$，$\pi</em>{g,y}$相乘为4（$B<em>{2g}\times B</em>{3g}=B_{1g}$），<code>wf</code>的对称性是4</p>
+</li>
+<li><p>$\pi<em>{u,x}$，$\pi</em>{u,y}$相乘也为4，所以需要用<code>OPEN</code>进一步明确开壳层的轨道</p>
+</li>
+<li><p>输入文件为：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">&#123;hf</span><br><span class="line">wf,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span></span><br><span class="line">occ,<span class="number">3</span>,<span class="number">1</span>,<span class="number">1</span>,,<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span></span><br><span class="line">open,<span class="number">1.6</span>,<span class="number">1.7</span>&#125; </span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>molpro</category>
+      </categories>
+      <tags>
+        <tag>HF</tag>
       </tags>
   </entry>
   <entry>
@@ -1114,6 +1103,110 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
       </categories>
       <tags>
         <tag>CI</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Linux】Shell脚本</title>
+    <url>/2020/11/22/%E3%80%90Linux%E3%80%91Shell%E8%84%9A%E6%9C%AC/</url>
+    <content><![CDATA[<h1 id="echo命令"><a href="#echo命令" class="headerlink" title="echo命令"></a>echo命令</h1><p>打印shell变量的值，或者直接输出指定的字符串。</p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">echo</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
+<p>选项：</p>
+<ul>
+<li><code>-e</code>：激活转义字符：<ul>
+<li><code>\a</code> 发出警告声；</li>
+<li><code>\b</code> 删除前一个字符；</li>
+<li><code>\c</code> 最后不加上换行符号；</li>
+<li><code>\f</code> 换行但光标仍旧停留在原来的位置；<code>\v</code> 与<code>\f</code>相同；</li>
+<li><code>\n</code> 换行且光标移至行首；</li>
+<li><code>\r</code> 光标移至行首，但不换行；</li>
+<li><code>\t</code> 插入tab；</li>
+<li><code>\\</code> 插入\字符；</li>
+<li><code>\nnn</code> 插入nnn（八进制）所代表的ASCII字符</li>
+</ul>
+</li>
+</ul>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><ul>
+<li><p>显示普通字符串，可以省略双引号</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;It is a test&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示转义字符，双引号也可以省略</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">&quot;\&quot;It is a test\&quot;&quot;</span></span></span><br><span class="line">&quot;It is a test&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示变量</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$name</span> It is a test&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$variable</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$PATH</span>  <span class="comment">#显示当前用户路径PATH的值</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示换行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;OK! \n&quot;</span> </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示不换行</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> -e <span class="string">&quot;OK! \c&quot;</span> </span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">&quot;It is a test&quot;</span></span></span><br><span class="line">OK! It is a test</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示结果定向至文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;It is a test&quot;</span> &gt; myfile</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>原样输出字符串，不进行转义或取变量(用单引号)</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">echo</span> <span class="string">&#x27;<span class="variable">$name</span>\&quot;&#x27;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示命令执行结果</p>
+<figure class="highlight dos"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> `<span class="built_in">date</span>`</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="用echo命令打印带有色彩的文字"><a href="#用echo命令打印带有色彩的文字" class="headerlink" title="用echo命令打印带有色彩的文字"></a>用echo命令打印带有色彩的文字</h2><p>文字色：</p>
+<ul>
+<li><code>\e[1;31m</code> 将颜色设置为红色</li>
+<li><code>\e[0m</code> 将颜色重新置回</li>
+<li>颜色码：重置=0，黑色=30，红色=31，绿色=32，黄色=33，蓝色=34，洋红=35，青色=36，白色=37</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> -e <span class="string">&quot;\e[1;31mThis is red text\e[0m&quot;</span></span></span><br></pre></td></tr></table></figure>
+<p>背景色：</p>
+<ul>
+<li>颜色码：重置=0，黑色=40，红色=41，绿色=42，黄色=43，蓝色=44，洋红=45，青色=46，白色=47</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;\e[1;42mGreed Background\e[0m&quot;</span></span><br></pre></td></tr></table></figure>
+<p>文字闪动：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;\033[37;31;5mMySQL Server Stop...\033[39;49;0m&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>红色数字处还有其他数字参数：0 关闭所有属性、1 设置高亮度（加粗）、4 下划线、5 闪烁、7 反显、8 消隐</li>
+</ul>
+<h1 id="printf-命令"><a href="#printf-命令" class="headerlink" title="printf 命令"></a>printf 命令</h1><h2 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">printf</span>  format-<span class="built_in">string</span>  [arguments...]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>format-string</code>：格式控制字符串<ul>
+<li><code>%s</code>：字符串</li>
+<li><code>%c</code>：ASCII字符。显示相对应参数的第一个字符</li>
+<li><code>%d</code>，<code>%i</code>：十进制整数</li>
+<li><code>%e</code>，<code>%E</code>，<code>%f</code>：浮点格式</li>
+</ul>
+</li>
+<li><code>arguments</code>：参数列表</li>
+</ul>
+<h2 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h2><ul>
+<li><code>%-10s</code>指一个宽度为10个字符（-表示左对齐，没有则表示右对齐），任何字符都会被显示在10个字符宽的字符内，如果不足则自动以空格填充，超过也会将内容全部显示出来。</li>
+<li><code>%-4.2f</code>格式为左对齐宽度为4，其中.2指保留2位小数</li>
+</ul>
+<h1 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h1><h2 id="if-分支结构"><a href="#if-分支结构" class="headerlink" title="if 分支结构"></a>if 分支结构</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">if commands; then</span><br><span class="line">     commands</span><br><span class="line">[elif commands; then</span><br><span class="line">     commands...]</span><br><span class="line">[else</span><br><span class="line">     commands]</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<h3 id="test"><a href="#test" class="headerlink" title="test"></a>test</h3><p>commands可以是一个表达式：</p>
+<figure class="highlight subunit"><table><tr><td class="code"><pre><span class="line"><span class="keyword">test </span>expression</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">[ expression ]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>expression返回True，可以是：<ul>
+<li><code>-d file</code>：file 存在并且是一个目录</li>
+<li><code>-e file</code>：file 存在</li>
+<li><code>-f file</code>：file 存在并且是一个普通文件</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<h1 id="amp"><a href="#amp" class="headerlink" title="&amp;"></a>&amp;</h1><ul>
+<li><code>&amp;</code> 放在启动参数后面表示设置此进程为后台进程。默认情况下，进程是前台进程，这时就把Shell给占据了，我们无法进行其他操作，对于那些没有交互的进程，很多时候，我们希望将其在后台启动，可以在启动参数的时候加一个’&amp;’实现这个目的。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>系统</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Shell</tag>
       </tags>
   </entry>
   <entry>
