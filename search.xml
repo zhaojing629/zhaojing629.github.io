@@ -2713,7 +2713,7 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 也可以不预览，直接<code>hexo g -d</code>来更新网站。再打开网站就可以了。如果修改了内容，<code>hexo g -d</code>后原网页没有反应，可以用<code>ctrl+F5</code>强制刷新</li>
 </ol>
 <h2 id="在多台电脑上操作"><a href="#在多台电脑上操作" class="headerlink" title="在多台电脑上操作"></a>在多台电脑上操作</h2><p>原理：<br><code>hexo g -d</code>完成的是将在~/public文件夹下生成静态的网页文件，然后将其复制到~/.deploy_git文件夹里，再通过Github push到创建的网页分支<code>master</code>上。<br>其他文件夹hexo的模块<code>node_modules</code>，文章文件<code>source</code>，主题文件<code>themes</code>等等都没有上传到<code>master</code>上，因此可以通过再创建一个分支来进行同步。</p>
-<ol>
+<h3 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h3><ol>
 <li><p>首先在Github的 <code>username.github.io</code> Repository中点击<code>master</code>按钮，输入<code>source</code>并回车，新建一个同步所有文件的分支<code>source</code></p>
 </li>
 <li><p>再通过<code>branches</code>→<code>All branches</code>→<code>change default branch</code>，切换为source后<code>updata</code>，回到 <code>username.github.io</code> Repository中，在<code>code</code>中复制<code>SSH</code></p>
@@ -2749,7 +2749,17 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 </ol>
 </li>
 </ol>
-<p>也可以直接将.git文件移动到username.github.io下，修改<code>.gitignore</code>文件，比如取消node_modules文件夹，这样在其他电脑上就不需要重新下载组件了。然后将该目录下的其他.git文件修改成.git1，完成上传后，再将.git1修改回来，这样可以把所有的上传上去。</p>
+<h3 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h3><ol>
+<li><p>方法1中第四步中，直接将<code>git clone</code>后其中的.git文件移动到username.github.io下</p>
+</li>
+<li><p>修改<code>.gitignore</code>文件，比如取消node_modules文件夹，这样在其他电脑上就不需要重新下载组件了。</p>
+</li>
+<li><p>将该目录下的所有.git文件修改成.git1，上传</p>
+<figure class="highlight armasm"><table><tr><td class="code"><pre><span class="line"><span class="symbol">git</span> <span class="keyword">add</span> .</span><br><span class="line"><span class="symbol">git</span> commit –m <span class="string">&quot;add branch&quot;</span></span><br><span class="line"><span class="symbol">git</span> <span class="keyword">push</span> origin source</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>完成上传后，再将.deploy中的.git1修改回来成.git，就可以对网站进行<code>hexo g -d</code>等操作，操作完成后，重复3~4。</p>
+</li>
+</ol>
 <h1 id="文章相关"><a href="#文章相关" class="headerlink" title="文章相关"></a>文章相关</h1><h2 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h2><ol>
 <li>在根目录下右键并GIt Bash here，然后输入<code>hexo new post &quot;article title&quot;</code>，新建一篇文章，此时在~/source_posts下就出现了<code>article title.md</code>文件，进行编辑即可。</li>
 <li>为了新建文章方便，可以将~/scaffolds/post.md的Front-matter部分修改为自己默认需要的：<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> &#123;&#123; <span class="string">title</span> &#125;&#125; </span><br><span class="line"><span class="attr">date:</span> &#123;&#123; <span class="string">date</span> &#125;&#125; </span><br><span class="line"><span class="attr">updated:</span> </span><br><span class="line"><span class="attr">tags:</span> </span><br><span class="line"><span class="attr">categories:</span> </span><br><span class="line"><span class="attr">typora-root-url:</span> &#123;&#123; <span class="string">title</span> &#125;&#125; </span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
