@@ -194,104 +194,17 @@
       </tags>
   </entry>
   <entry>
-    <title>【CP2K】01.基础</title>
-    <url>/2020/11/20/%E3%80%90CP2K%E3%80%9101-%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<h1 id="安装vim插件规范-inp文件"><a href="#安装vim插件规范-inp文件" class="headerlink" title="安装vim插件规范.inp文件"></a>安装vim插件规范.inp文件</h1><ol>
-<li><p>如果下载失败，可以直接从<a href="http://manual.cp2k.org/trunk/cp2k.vim下载到">http://manual.cp2k.org/trunk/cp2k.vim下载到</a> ~/.vim/syntax中</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">mkdir -p ~<span class="regexp">/.vim/</span>syntax</span><br><span class="line">wget -O ~<span class="regexp">/.vim/</span>syntax<span class="regexp">/cp2k.vim http:/</span><span class="regexp">/manual.cp2k.org/</span>trunk/cp2k.vim</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>再在~/.vim/下新建<code>filetype.vim</code>，输入：</p>
-<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="built_in">exists</span>(<span class="string">&quot;did_load_filetypes&quot;</span>)</span><br><span class="line">   <span class="keyword">finish</span></span><br><span class="line"><span class="keyword">endif</span></span><br><span class="line"><span class="keyword">augroup</span> filetypedetect</span><br><span class="line">   au! BufNewFile,BufRead *.inp <span class="keyword">setf</span> cp2k</span><br><span class="line"><span class="keyword">augroup</span> END</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="语法折叠"><a href="#语法折叠" class="headerlink" title="语法折叠"></a>语法折叠</h2><p>在~/.vimrc中添加：</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">au FileType cp2k setlocal <span class="attribute">foldlevel</span>=99 <span class="attribute">foldmethod</span>=indent</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>za</code>：切换当前折叠级别的折叠</li>
-<li><code>zA</code>：递归切换所有折叠级别的折叠</li>
-<li><code>zM</code>：关闭当前缓冲区中的所有折叠</li>
-<li><code>zR</code>：打开当前缓冲区中的所有折叠</li>
-</ul>
-<h2 id="自动缩进"><a href="#自动缩进" class="headerlink" title="自动缩进"></a>自动缩进</h2><p>只更改指定文件类型cp2k的缩进，在~/.vimrc中添加：</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">au FileType cp2k setlocal <span class="attribute">shiftwidth</span>=1 <span class="attribute">tabstop</span>=1</span><br></pre></td></tr></table></figure>
-<p>更改所有文件类型和缓冲区的缩进：</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="builtin-name">set</span> <span class="attribute">shiftwidth</span>=1 <span class="attribute">tabstop</span>=1</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>=G</code>正确缩进文件的整个部分</li>
-<li><code>=</code>正确缩进文件的某个部分（区域）</li>
-</ul>
-<h1 id="inp语法"><a href="#inp语法" class="headerlink" title="inp语法"></a>inp语法</h1><p>可以在cp2k目录下，通过<code>grep -iR 关键词 ~/tests</code>来查询相关的输入文件。（tests目录中的输入文件主要是用来测试程序运行的正常与否，往往使用了不合理的参数）</p>
-<ul>
-<li><p>主要结构如下，可以在其中嵌套多个<code>&amp;SECTION</code>和<code>&amp;END SECTION</code></p>
-<figure class="highlight ruleslanguage"><table><tr><td class="code"><pre><span class="line">&amp;<span class="keyword">SECTION</span></span><br><span class="line">	KEYWORD PARAMETER</span><br><span class="line">&amp;<span class="keyword">END</span> <span class="keyword">SECTION</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>语法</p>
-<ul>
-<li><code>@INCLUDE ’filename’</code>：从文件中读取文本</li>
-<li><code>@SET VAR value</code>：定义变量</li>
-<li><code>@VAR</code>：变量</li>
-<li><code>@IF</code>/<code>@ENDIF</code>：简单的逻辑</li>
-<li><code>#</code>：注释</li>
-</ul>
-</li>
-<li><p>单位的设定：（可供的单位有：<a href="https://manual.cp2k.org/cp2k-7_1-branch/units.html）">https://manual.cp2k.org/cp2k-7_1-branch/units.html）</a></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#默认是angstrom，也可以设置bohr等等</span></span><br><span class="line"><span class="string">ABC</span> [<span class="string">nm</span>] <span class="number">100</span> <span class="number">100</span> <span class="number">100</span></span><br><span class="line"><span class="comment">#默认是hatree，设置Ry等等</span></span><br><span class="line"><span class="string">EMAX_SPLINE</span> [<span class="string">eV</span>] <span class="number">50</span></span><br><span class="line"><span class="comment">#也可以一起用</span></span><br><span class="line">[<span class="string">hatree*bohr^2</span>]</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="GLOBAL"><a href="#GLOBAL" class="headerlink" title="GLOBAL"></a>GLOBAL</h2><figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">&amp;GLOBAL</span></span><br><span class="line">	<span class="attr">PROJECT</span> <span class="string">H2O-32</span></span><br><span class="line">	<span class="attr">RUN_TYPE</span> <span class="string">MD</span></span><br><span class="line">	<span class="attr">PRINT_LEVEL</span> <span class="string">HIGH</span></span><br><span class="line">	<span class="attr">&amp;TIMINGS</span></span><br><span class="line">		<span class="attr">THRESHOLD</span> <span class="string">0.000001</span></span><br><span class="line">	<span class="attr">&amp;END</span></span><br><span class="line">	<span class="attr">WALLTIME</span> <span class="string">3600</span></span><br><span class="line"><span class="meta">&amp;END</span> <span class="string">GLOBAL</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>PROJECT</code>：任务名称，等同于<code>PROJECT_NAME</code></li>
-<li><code>RUN_TYPE</code>：任务类型<ul>
-<li><code>ENERGY</code>：计算当前结构的能量。对于DFT 来说，就是一个SCF 计算。</li>
-<li><code>ENERGY_FORCE</code>：计算当前结构的能量，同时计算出每个原子上的梯度（即受力）。</li>
-<li><code>BAND</code>：使用band方法来进行最低能量路径(MEP)以及反应过渡态的搜索，通常可以使用的方法有CI-NEB, IT-NEB等方法。</li>
-<li><code>MD</code>：Molecular Dynamics分子动力学模拟</li>
-<li><code>CELL_OPT</code>：晶胞参数的优化。</li>
-<li><code>GEO_OPT</code>：对当前结构进行几何结构的优化，以获得当前结构对应的局部极小点或者过渡态。GEO_OPT 有两种类型，一种是MINIMIZATION，即优化到极小点；一种是TRANSITION_STATE，即优化到过渡态。过渡态的优化采用Dimer方法来实现。</li>
-<li><code>VIBRATIONAL_ANALYSIS</code>：对当前结构进行振动分析。频率计算可以计算部分原子的频率（INVOLVED_ATOMS），也可以计算某一频率范围内的频率计算（MODE_SELECTIVE）。</li>
-</ul>
-</li>
-<li><code>PRINT_LEVEL</code>：输出内容级别，可以是<code>SILENT</code>、<code>MEDIUM</code>（默认）、<code>LOW</code>、<code>HIGH</code>等。</li>
-<li><code>&amp;TIMINGS</code>：在CP2K执行结束时控制时序报告的打印<ul>
-<li><code>THRESHOLD</code>：阈值</li>
-</ul>
-</li>
-<li><code>WALLTIME</code>：此运行的最大执行时间。时间以秒为单位或以HH：MM：SS为单位。</li>
-</ul>
-<h2 id="FORCE-EVAL"><a href="#FORCE-EVAL" class="headerlink" title="FORCE_EVAL"></a>FORCE_EVAL</h2><p>计算能量和力并描述您要分析的系统所需的参数。</p>
-<figure class="highlight oxygene"><table><tr><td class="code"><pre><span class="line">&amp;FORCE_EVAL</span><br><span class="line">	<span class="function"><span class="keyword">METHOD</span> <span class="title">QS</span></span></span><br><span class="line"><span class="function">	&amp;<span class="title">DFT</span></span></span><br><span class="line"><span class="function">		...</span></span><br><span class="line"><span class="function">	&amp;<span class="title">END</span> <span class="title">DFT</span></span></span><br><span class="line"><span class="function">	&amp;<span class="title">SUBSYS</span></span></span><br><span class="line"><span class="function">		...</span></span><br><span class="line"><span class="function">	&amp;<span class="title">END</span> <span class="title">SUBSYS</span></span></span><br><span class="line"><span class="function">&amp;<span class="title">END</span> <span class="title">FORCE_EVAL</span></span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>METHOD</code>：使用哪种方法来计算力<ul>
-<li><code>QS</code>：默认，同<code>QUICKSTEP</code></li>
-<li><code>FIST</code>：分子力学</li>
-<li><code>QMMM</code>：Hybrid quantum classical</li>
-</ul>
-</li>
-</ul>
-<h2 id="MOTION"><a href="#MOTION" class="headerlink" title="MOTION"></a>MOTION</h2><p>定义了一组与原子核运动有关的工具。</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;MOTION</span></span><br><span class="line">	<span class="meta">&amp;MD</span></span><br><span class="line">		<span class="string">ENSEMBLE</span> <span class="string">NVE</span></span><br><span class="line">		<span class="string">STEPS</span> <span class="number">10</span></span><br><span class="line">		<span class="string">TIMESTEP</span> <span class="number">0.5</span></span><br><span class="line">		<span class="string">TEMPERATURE</span> <span class="number">300.0</span></span><br><span class="line">	<span class="string">&amp;END</span> <span class="string">MD</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">MOTION</span></span><br></pre></td></tr></table></figure>
-<h1 id="输出文件"><a href="#输出文件" class="headerlink" title="输出文件"></a>输出文件</h1><ul>
-<li><code>PROGJECT-1.restart</code>：重启计算的输入文件</li>
-<li><code>PROGJECT-pos-1.xyz：</code>MD或结构优化的轨迹</li>
-<li><code>PROGJECT-1.ener</code>：MD能量、温度……</li>
-<li><code>PROGJECT-1.cell</code>：cell参数</li>
-<li><code>PROGJECT-RESTRAT.wfn</code>：重启计算的轨道</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>CP2K</category>
-      </categories>
-      <tags>
-        <tag>CP2K</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【ADF】02.EDA-NOCV</title>
     <url>/2020/02/07/%E3%80%90ADF%E3%80%9102.EDA-NOCV/</url>
     <content><![CDATA[<h1 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h1><h2 id="碎片"><a href="#碎片" class="headerlink" title="碎片"></a>碎片</h2><ul>
-<li>根据体系，指定电荷和自选多重度，确定碎片是闭壳层还是开壳层<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">charge <span class="number">0</span> <span class="number">-3</span></span><br><span class="line">unrestricted</span><br></pre></td></tr></table></figure></li>
-<li>可以根据整体分子的对称性指定碎片的对称性<ul>
+<li><p>根据体系，指定电荷和自选多重度，确定碎片是闭壳层还是开壳层</p>
+<ul>
+<li>要根据整体分子的CMO中，相应轨道的成分，来指定碎片的占据方式</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">charge <span class="number">0</span> <span class="number">-3</span></span><br><span class="line">unrestricted</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可以根据整体分子的对称性指定碎片的对称性</p>
+<ul>
 <li>过渡金属配合物设置对称性的注意事项：<ul>
 <li>金属原子设置为原点，如果是金属团簇，则原点设置在金属团簇的中心，高对称轴设置为z轴（例如金属原子参与成键的是d、f轨道，但是分子却具有C<sub>3</sub>、C<sub>5</sub>、C<sub>7</sub>……这样的奇数的转动对称，这样设置是必须的)。设置方法是在图形界面中Edit→Align→（设置xy平面或者设置z轴），再通过Edit→Set Origin设置原点，最后可以通过View→Axes观看坐标轴来确认。</li>
 <li>近似对称结构，金属碎片需要设置与对称结构相同的点群，例如Oh群八羰基配合物，其中一个羰基被替换为其他结构，金属原子仍然需要设置为Oh群</li>
@@ -300,7 +213,8 @@
 </li>
 </ul>
 </li>
-<li>有时候默认计算得到的结果可能导致分数占据、占据的轨道不正确、碎片的自旋不匹配等，尤其是金属原子作为一个碎片，需要注意其电子占据方式、自旋多重度，此时需要根据碎片的闭壳层/开壳层、对称性和占据，通过<code>IRREPOCCUPATIONS</code>来指定其占据方式，也可以在整体分子中通过<code>FRAGOCCUPATIONS</code>指定。<br>eg. 开壳层的β电子指定：    <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">IRREPOCCUPATIONS</span></span><br><span class="line"><span class="attribute">sigma</span> <span class="number">1</span> <span class="number">0</span> <span class="number">0</span>//<span class="number">1</span> <span class="number">1</span> <span class="number">0</span></span><br><span class="line"><span class="attribute">pi</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>//<span class="number">2</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line"><span class="attribute">end</span></span><br></pre></td></tr></table></figure>
+<li><p>有时候默认计算得到的结果可能导致分数占据、占据的轨道不正确、碎片的自旋不匹配等，尤其是金属原子作为一个碎片，需要注意其电子占据方式、自旋多重度，此时需要根据碎片的闭壳层/开壳层、对称性和占据，通过<code>IRREPOCCUPATIONS</code>来指定其占据方式，也可以在整体分子中通过<code>FRAGOCCUPATIONS</code>指定。<br>eg. 开壳层的β电子指定：    </p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">IRREPOCCUPATIONS</span></span><br><span class="line"><span class="attribute">sigma</span> <span class="number">1</span> <span class="number">0</span> <span class="number">0</span>//<span class="number">1</span> <span class="number">1</span> <span class="number">0</span></span><br><span class="line"><span class="attribute">pi</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>//<span class="number">2</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line"><span class="attribute">end</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h2 id="整体分子"><a href="#整体分子" class="headerlink" title="整体分子"></a>整体分子</h2><ol>
@@ -395,6 +309,203 @@
       </categories>
       <tags>
         <tag>能量分解</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【CP2K】01.基础</title>
+    <url>/2020/11/20/%E3%80%90CP2K%E3%80%9101-%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<h1 id="安装vim插件规范-inp文件"><a href="#安装vim插件规范-inp文件" class="headerlink" title="安装vim插件规范.inp文件"></a>安装vim插件规范.inp文件</h1><ol>
+<li><p>如果下载失败，可以直接从<a href="http://manual.cp2k.org/trunk/cp2k.vim下载到">http://manual.cp2k.org/trunk/cp2k.vim下载到</a> ~/.vim/syntax中</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">mkdir -p ~<span class="regexp">/.vim/</span>syntax</span><br><span class="line">wget -O ~<span class="regexp">/.vim/</span>syntax<span class="regexp">/cp2k.vim http:/</span><span class="regexp">/manual.cp2k.org/</span>trunk/cp2k.vim</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>再在~/.vim/下新建<code>filetype.vim</code>，输入：</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="built_in">exists</span>(<span class="string">&quot;did_load_filetypes&quot;</span>)</span><br><span class="line">   <span class="keyword">finish</span></span><br><span class="line"><span class="keyword">endif</span></span><br><span class="line"><span class="keyword">augroup</span> filetypedetect</span><br><span class="line">   au! BufNewFile,BufRead *.inp <span class="keyword">setf</span> cp2k</span><br><span class="line"><span class="keyword">augroup</span> END</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="语法折叠"><a href="#语法折叠" class="headerlink" title="语法折叠"></a>语法折叠</h2><p>在~/.vimrc中添加：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">au FileType cp2k setlocal <span class="attribute">foldlevel</span>=99 <span class="attribute">foldmethod</span>=indent</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>za</code>：切换当前折叠级别的折叠</li>
+<li><code>zA</code>：递归切换所有折叠级别的折叠</li>
+<li><code>zM</code>：关闭当前缓冲区中的所有折叠</li>
+<li><code>zR</code>：打开当前缓冲区中的所有折叠</li>
+</ul>
+<h2 id="自动缩进"><a href="#自动缩进" class="headerlink" title="自动缩进"></a>自动缩进</h2><p>只更改指定文件类型cp2k的缩进，在~/.vimrc中添加：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">au FileType cp2k setlocal <span class="attribute">shiftwidth</span>=1 <span class="attribute">tabstop</span>=1</span><br></pre></td></tr></table></figure>
+<p>更改所有文件类型和缓冲区的缩进：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="builtin-name">set</span> <span class="attribute">shiftwidth</span>=1 <span class="attribute">tabstop</span>=1</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>=G</code>正确缩进文件的整个部分</li>
+<li><code>=</code>正确缩进文件的某个部分（区域）</li>
+</ul>
+<h1 id="inp语法"><a href="#inp语法" class="headerlink" title="inp语法"></a>inp语法</h1><p>可以在cp2k目录下，通过<code>grep -iR 关键词 ~/tests</code>来查询相关的输入文件。（tests目录中的输入文件主要是用来测试程序运行的正常与否，往往使用了不合理的参数）</p>
+<ul>
+<li><p>主要结构如下，可以在其中嵌套多个<code>&amp;SECTION</code>和<code>&amp;END SECTION</code></p>
+<figure class="highlight ruleslanguage"><table><tr><td class="code"><pre><span class="line">&amp;<span class="keyword">SECTION</span></span><br><span class="line">	KEYWORD PARAMETER</span><br><span class="line">&amp;<span class="keyword">END</span> <span class="keyword">SECTION</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>语法</p>
+<ul>
+<li><code>@INCLUDE ’filename’</code>：从文件中读取文本</li>
+<li><code>@SET VAR value</code>：定义变量</li>
+<li><code>@VAR</code>：变量</li>
+<li><code>@IF</code>/<code>@ENDIF</code>：简单的逻辑</li>
+<li><code>#</code>：注释</li>
+</ul>
+</li>
+<li><p>单位的设定：（可供的单位有：<a href="https://manual.cp2k.org/cp2k-7_1-branch/units.html）">https://manual.cp2k.org/cp2k-7_1-branch/units.html）</a></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#默认是angstrom，也可以设置bohr等等</span></span><br><span class="line"><span class="string">ABC</span> [<span class="string">nm</span>] <span class="number">100</span> <span class="number">100</span> <span class="number">100</span></span><br><span class="line"><span class="comment">#默认是hatree，设置Ry等等</span></span><br><span class="line"><span class="string">EMAX_SPLINE</span> [<span class="string">eV</span>] <span class="number">50</span></span><br><span class="line"><span class="comment">#也可以一起用</span></span><br><span class="line">[<span class="string">hatree*bohr^2</span>]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="GLOBAL"><a href="#GLOBAL" class="headerlink" title="GLOBAL"></a>GLOBAL</h2><figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">&amp;GLOBAL</span></span><br><span class="line">	<span class="attr">PROJECT</span> <span class="string">H2O-32</span></span><br><span class="line">	<span class="attr">RUN_TYPE</span> <span class="string">MD</span></span><br><span class="line">	<span class="attr">PRINT_LEVEL</span> <span class="string">HIGH</span></span><br><span class="line">	<span class="attr">&amp;TIMINGS</span></span><br><span class="line">		<span class="attr">THRESHOLD</span> <span class="string">0.000001</span></span><br><span class="line">	<span class="attr">&amp;END</span></span><br><span class="line">	<span class="attr">WALLTIME</span> <span class="string">3600</span></span><br><span class="line"><span class="meta">&amp;END</span> <span class="string">GLOBAL</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>PROJECT</code>：任务名称，等同于<code>PROJECT_NAME</code></li>
+<li><code>RUN_TYPE</code>：任务类型<ul>
+<li><code>ENERGY</code>：计算当前结构的能量。对于DFT 来说，就是一个SCF 计算。</li>
+<li><code>ENERGY_FORCE</code>：计算当前结构的能量，同时计算出每个原子上的梯度（即受力）。</li>
+<li><code>BAND</code>：使用band方法来进行最低能量路径(MEP)以及反应过渡态的搜索，通常可以使用的方法有CI-NEB, IT-NEB等方法。</li>
+<li><code>MD</code>：Molecular Dynamics分子动力学模拟</li>
+<li><code>CELL_OPT</code>：晶胞参数的优化。</li>
+<li><code>GEO_OPT</code>：对当前结构进行几何结构的优化，以获得当前结构对应的局部极小点或者过渡态。GEO_OPT 有两种类型，一种是MINIMIZATION，即优化到极小点；一种是TRANSITION_STATE，即优化到过渡态。过渡态的优化采用Dimer方法来实现。</li>
+<li><code>VIBRATIONAL_ANALYSIS</code>：对当前结构进行振动分析。频率计算可以计算部分原子的频率（INVOLVED_ATOMS），也可以计算某一频率范围内的频率计算（MODE_SELECTIVE）。</li>
+</ul>
+</li>
+<li><code>PRINT_LEVEL</code>：输出内容级别，可以是<code>SILENT</code>、<code>MEDIUM</code>（默认）、<code>LOW</code>、<code>HIGH</code>等。</li>
+<li><code>&amp;TIMINGS</code>：在CP2K执行结束时控制时序报告的打印<ul>
+<li><code>THRESHOLD</code>：阈值</li>
+</ul>
+</li>
+<li><code>WALLTIME</code>：此运行的最大执行时间。时间以秒为单位或以HH：MM：SS为单位。</li>
+</ul>
+<h2 id="FORCE-EVAL"><a href="#FORCE-EVAL" class="headerlink" title="FORCE_EVAL"></a>FORCE_EVAL</h2><p>计算能量和力并描述您要分析的系统所需的参数。</p>
+<figure class="highlight oxygene"><table><tr><td class="code"><pre><span class="line">&amp;FORCE_EVAL</span><br><span class="line">	<span class="function"><span class="keyword">METHOD</span> <span class="title">QS</span></span></span><br><span class="line"><span class="function">	&amp;<span class="title">DFT</span></span></span><br><span class="line"><span class="function">		...</span></span><br><span class="line"><span class="function">	&amp;<span class="title">END</span> <span class="title">DFT</span></span></span><br><span class="line"><span class="function">	&amp;<span class="title">SUBSYS</span></span></span><br><span class="line"><span class="function">		...</span></span><br><span class="line"><span class="function">	&amp;<span class="title">END</span> <span class="title">SUBSYS</span></span></span><br><span class="line"><span class="function">&amp;<span class="title">END</span> <span class="title">FORCE_EVAL</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>METHOD</code>：使用哪种方法来计算力<ul>
+<li><code>QS</code>：默认，同<code>QUICKSTEP</code></li>
+<li><code>FIST</code>：分子力学</li>
+<li><code>QMMM</code>：Hybrid quantum classical</li>
+</ul>
+</li>
+</ul>
+<h2 id="MOTION"><a href="#MOTION" class="headerlink" title="MOTION"></a>MOTION</h2><p>定义了一组与原子核运动有关的工具。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;MOTION</span></span><br><span class="line">	<span class="meta">&amp;MD</span></span><br><span class="line">		<span class="string">ENSEMBLE</span> <span class="string">NVE</span></span><br><span class="line">		<span class="string">STEPS</span> <span class="number">10</span></span><br><span class="line">		<span class="string">TIMESTEP</span> <span class="number">0.5</span></span><br><span class="line">		<span class="string">TEMPERATURE</span> <span class="number">300.0</span></span><br><span class="line">	<span class="string">&amp;END</span> <span class="string">MD</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">MOTION</span></span><br></pre></td></tr></table></figure>
+<h1 id="输出文件"><a href="#输出文件" class="headerlink" title="输出文件"></a>输出文件</h1><ul>
+<li><code>PROGJECT-1.restart</code>：重启计算的输入文件</li>
+<li><code>PROGJECT-pos-1.xyz：</code>MD或结构优化的轨迹</li>
+<li><code>PROGJECT-1.ener</code>：MD能量、温度……</li>
+<li><code>PROGJECT-1.cell</code>：cell参数</li>
+<li><code>PROGJECT-RESTRAT.wfn</code>：重启计算的轨道</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>CP2K</category>
+      </categories>
+      <tags>
+        <tag>CP2K</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Linux】Shell脚本</title>
+    <url>/2020/11/22/%E3%80%90Linux%E3%80%91Shell%E8%84%9A%E6%9C%AC/</url>
+    <content><![CDATA[<h1 id="echo命令"><a href="#echo命令" class="headerlink" title="echo命令"></a>echo命令</h1><p>打印shell变量的值，或者直接输出指定的字符串。</p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">echo</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
+<p>选项：</p>
+<ul>
+<li><code>-e</code>：激活转义字符：<ul>
+<li><code>\a</code> 发出警告声；</li>
+<li><code>\b</code> 删除前一个字符；</li>
+<li><code>\c</code> 最后不加上换行符号；</li>
+<li><code>\f</code> 换行但光标仍旧停留在原来的位置；<code>\v</code> 与<code>\f</code>相同；</li>
+<li><code>\n</code> 换行且光标移至行首；</li>
+<li><code>\r</code> 光标移至行首，但不换行；</li>
+<li><code>\t</code> 插入tab；</li>
+<li><code>\\</code> 插入\字符；</li>
+<li><code>\nnn</code> 插入nnn（八进制）所代表的ASCII字符</li>
+</ul>
+</li>
+</ul>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><ul>
+<li><p>显示普通字符串，可以省略双引号</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;It is a test&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示转义字符，双引号也可以省略</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">&quot;\&quot;It is a test\&quot;&quot;</span></span></span><br><span class="line">&quot;It is a test&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示变量</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$name</span> It is a test&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$variable</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$PATH</span>  <span class="comment">#显示当前用户路径PATH的值</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示换行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;OK! \n&quot;</span> </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示不换行</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> -e <span class="string">&quot;OK! \c&quot;</span> </span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">&quot;It is a test&quot;</span></span></span><br><span class="line">OK! It is a test</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示结果定向至文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;It is a test&quot;</span> &gt; myfile</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>原样输出字符串，不进行转义或取变量(用单引号)</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">echo</span> <span class="string">&#x27;<span class="variable">$name</span>\&quot;&#x27;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示命令执行结果</p>
+<figure class="highlight dos"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> `<span class="built_in">date</span>`</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="用echo命令打印带有色彩的文字"><a href="#用echo命令打印带有色彩的文字" class="headerlink" title="用echo命令打印带有色彩的文字"></a>用echo命令打印带有色彩的文字</h2><p>文字色：</p>
+<ul>
+<li><code>\e[1;31m</code> 将颜色设置为红色</li>
+<li><code>\e[0m</code> 将颜色重新置回</li>
+<li>颜色码：重置=0，黑色=30，红色=31，绿色=32，黄色=33，蓝色=34，洋红=35，青色=36，白色=37</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> -e <span class="string">&quot;\e[1;31mThis is red text\e[0m&quot;</span></span></span><br></pre></td></tr></table></figure>
+<p>背景色：</p>
+<ul>
+<li>颜色码：重置=0，黑色=40，红色=41，绿色=42，黄色=43，蓝色=44，洋红=45，青色=46，白色=47</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;\e[1;42mGreed Background\e[0m&quot;</span></span><br></pre></td></tr></table></figure>
+<p>文字闪动：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;\033[37;31;5mMySQL Server Stop...\033[39;49;0m&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>红色数字处还有其他数字参数：0 关闭所有属性、1 设置高亮度（加粗）、4 下划线、5 闪烁、7 反显、8 消隐</li>
+</ul>
+<h1 id="printf-命令"><a href="#printf-命令" class="headerlink" title="printf 命令"></a>printf 命令</h1><h2 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">printf</span>  format-<span class="built_in">string</span>  [arguments...]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>format-string</code>：格式控制字符串<ul>
+<li><code>%s</code>：字符串</li>
+<li><code>%c</code>：ASCII字符。显示相对应参数的第一个字符</li>
+<li><code>%d</code>，<code>%i</code>：十进制整数</li>
+<li><code>%e</code>，<code>%E</code>，<code>%f</code>：浮点格式</li>
+</ul>
+</li>
+<li><code>arguments</code>：参数列表</li>
+</ul>
+<h2 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h2><ul>
+<li><code>%-10s</code>指一个宽度为10个字符（-表示左对齐，没有则表示右对齐），任何字符都会被显示在10个字符宽的字符内，如果不足则自动以空格填充，超过也会将内容全部显示出来。</li>
+<li><code>%-4.2f</code>格式为左对齐宽度为4，其中.2指保留2位小数</li>
+</ul>
+<h1 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h1><h2 id="if-分支结构"><a href="#if-分支结构" class="headerlink" title="if 分支结构"></a>if 分支结构</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">if commands; then</span><br><span class="line">     commands</span><br><span class="line">[elif commands; then</span><br><span class="line">     commands...]</span><br><span class="line">[else</span><br><span class="line">     commands]</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<h3 id="test"><a href="#test" class="headerlink" title="test"></a>test</h3><p>commands可以是一个表达式：</p>
+<figure class="highlight subunit"><table><tr><td class="code"><pre><span class="line"><span class="keyword">test </span>expression</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">[ expression ]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>expression返回True，可以是：<ul>
+<li><code>-d file</code>：file 存在并且是一个目录</li>
+<li><code>-e file</code>：file 存在</li>
+<li><code>-f file</code>：file 存在并且是一个普通文件</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<h1 id="amp"><a href="#amp" class="headerlink" title="&amp;"></a>&amp;</h1><ul>
+<li><code>&amp;</code> 放在启动参数后面表示设置此进程为后台进程。默认情况下，进程是前台进程，这时就把Shell给占据了，我们无法进行其他操作，对于那些没有交互的进程，很多时候，我们希望将其在后台启动，可以在启动参数的时候加一个’&amp;’实现这个目的。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>系统</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Shell</tag>
       </tags>
   </entry>
   <entry>
@@ -1103,110 +1214,6 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
       </categories>
       <tags>
         <tag>CI</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【Linux】Shell脚本</title>
-    <url>/2020/11/22/%E3%80%90Linux%E3%80%91Shell%E8%84%9A%E6%9C%AC/</url>
-    <content><![CDATA[<h1 id="echo命令"><a href="#echo命令" class="headerlink" title="echo命令"></a>echo命令</h1><p>打印shell变量的值，或者直接输出指定的字符串。</p>
-<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">echo</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
-<p>选项：</p>
-<ul>
-<li><code>-e</code>：激活转义字符：<ul>
-<li><code>\a</code> 发出警告声；</li>
-<li><code>\b</code> 删除前一个字符；</li>
-<li><code>\c</code> 最后不加上换行符号；</li>
-<li><code>\f</code> 换行但光标仍旧停留在原来的位置；<code>\v</code> 与<code>\f</code>相同；</li>
-<li><code>\n</code> 换行且光标移至行首；</li>
-<li><code>\r</code> 光标移至行首，但不换行；</li>
-<li><code>\t</code> 插入tab；</li>
-<li><code>\\</code> 插入\字符；</li>
-<li><code>\nnn</code> 插入nnn（八进制）所代表的ASCII字符</li>
-</ul>
-</li>
-</ul>
-<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><ul>
-<li><p>显示普通字符串，可以省略双引号</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;It is a test&quot;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>显示转义字符，双引号也可以省略</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">&quot;\&quot;It is a test\&quot;&quot;</span></span></span><br><span class="line">&quot;It is a test&quot;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>显示变量</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$name</span> It is a test&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$variable</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$PATH</span>  <span class="comment">#显示当前用户路径PATH的值</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>显示换行</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;OK! \n&quot;</span> </span><br></pre></td></tr></table></figure>
-</li>
-<li><p>显示不换行</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> -e <span class="string">&quot;OK! \c&quot;</span> </span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">&quot;It is a test&quot;</span></span></span><br><span class="line">OK! It is a test</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>显示结果定向至文件</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;It is a test&quot;</span> &gt; myfile</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>原样输出字符串，不进行转义或取变量(用单引号)</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">echo</span> <span class="string">&#x27;<span class="variable">$name</span>\&quot;&#x27;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>显示命令执行结果</p>
-<figure class="highlight dos"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> `<span class="built_in">date</span>`</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="用echo命令打印带有色彩的文字"><a href="#用echo命令打印带有色彩的文字" class="headerlink" title="用echo命令打印带有色彩的文字"></a>用echo命令打印带有色彩的文字</h2><p>文字色：</p>
-<ul>
-<li><code>\e[1;31m</code> 将颜色设置为红色</li>
-<li><code>\e[0m</code> 将颜色重新置回</li>
-<li>颜色码：重置=0，黑色=30，红色=31，绿色=32，黄色=33，蓝色=34，洋红=35，青色=36，白色=37</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> -e <span class="string">&quot;\e[1;31mThis is red text\e[0m&quot;</span></span></span><br></pre></td></tr></table></figure>
-<p>背景色：</p>
-<ul>
-<li>颜色码：重置=0，黑色=40，红色=41，绿色=42，黄色=43，蓝色=44，洋红=45，青色=46，白色=47</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;\e[1;42mGreed Background\e[0m&quot;</span></span><br></pre></td></tr></table></figure>
-<p>文字闪动：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;\033[37;31;5mMySQL Server Stop...\033[39;49;0m&quot;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>红色数字处还有其他数字参数：0 关闭所有属性、1 设置高亮度（加粗）、4 下划线、5 闪烁、7 反显、8 消隐</li>
-</ul>
-<h1 id="printf-命令"><a href="#printf-命令" class="headerlink" title="printf 命令"></a>printf 命令</h1><h2 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">printf</span>  format-<span class="built_in">string</span>  [arguments...]</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>format-string</code>：格式控制字符串<ul>
-<li><code>%s</code>：字符串</li>
-<li><code>%c</code>：ASCII字符。显示相对应参数的第一个字符</li>
-<li><code>%d</code>，<code>%i</code>：十进制整数</li>
-<li><code>%e</code>，<code>%E</code>，<code>%f</code>：浮点格式</li>
-</ul>
-</li>
-<li><code>arguments</code>：参数列表</li>
-</ul>
-<h2 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h2><ul>
-<li><code>%-10s</code>指一个宽度为10个字符（-表示左对齐，没有则表示右对齐），任何字符都会被显示在10个字符宽的字符内，如果不足则自动以空格填充，超过也会将内容全部显示出来。</li>
-<li><code>%-4.2f</code>格式为左对齐宽度为4，其中.2指保留2位小数</li>
-</ul>
-<h1 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h1><h2 id="if-分支结构"><a href="#if-分支结构" class="headerlink" title="if 分支结构"></a>if 分支结构</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">if commands; then</span><br><span class="line">     commands</span><br><span class="line">[elif commands; then</span><br><span class="line">     commands...]</span><br><span class="line">[else</span><br><span class="line">     commands]</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-<h3 id="test"><a href="#test" class="headerlink" title="test"></a>test</h3><p>commands可以是一个表达式：</p>
-<figure class="highlight subunit"><table><tr><td class="code"><pre><span class="line"><span class="keyword">test </span>expression</span><br></pre></td></tr></table></figure>
-<p>或</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">[ expression ]</span><br></pre></td></tr></table></figure>
-<ul>
-<li>expression返回True，可以是：<ul>
-<li><code>-d file</code>：file 存在并且是一个目录</li>
-<li><code>-e file</code>：file 存在</li>
-<li><code>-f file</code>：file 存在并且是一个普通文件</li>
-<li></li>
-</ul>
-</li>
-</ul>
-<h1 id="amp"><a href="#amp" class="headerlink" title="&amp;"></a>&amp;</h1><ul>
-<li><code>&amp;</code> 放在启动参数后面表示设置此进程为后台进程。默认情况下，进程是前台进程，这时就把Shell给占据了，我们无法进行其他操作，对于那些没有交互的进程，很多时候，我们希望将其在后台启动，可以在启动参数的时候加一个’&amp;’实现这个目的。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>系统</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>Shell</tag>
       </tags>
   </entry>
   <entry>
