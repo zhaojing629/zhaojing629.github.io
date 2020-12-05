@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=EB Garamond:300,300italic,400,400italic,700,700italic|Dancing Script:300,300italic,400,400italic,700,700italic|ZCOOL XiaoWei:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="以H2O（不更改单元尺寸）为例的几何优化，以及&amp;MM模块">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【CP2K】04.几何优化">
+<meta property="og:url" content="http://example.com/2020/12/02/%E3%80%90CP2K%E3%80%9104.%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/index.html">
+<meta property="og:site_name" content="Jing&#39;s Notes">
+<meta property="og:description" content="以H2O（不更改单元尺寸）为例的几何优化，以及&amp;MM模块">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-12-02T12:37:01.000Z">
+<meta property="article:modified_time" content="2020-12-04T09:40:15.734Z">
+<meta property="article:author" content="Zhao Jing">
+<meta property="article:tag" content="CP2K,几何优化">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2020/12/02/%E3%80%90CP2K%E3%80%9104.%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+  <title>【CP2K】04.几何优化 | Jing's Notes</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d23c6dd5b34ecbaba18b829b9084946";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jing's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/02/%E3%80%90CP2K%E3%80%9104.%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="Zhao Jing">
+      <meta itemprop="description" content="做一棵树，只为岁月而生长。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jing's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【CP2K】04.几何优化
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-12-02 20:37:01" itemprop="dateCreated datePublished" datetime="2020-12-02T20:37:01+08:00">2020-12-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-04 17:40:15" itemprop="dateModified" datetime="2020-12-04T17:40:15+08:00">2020-12-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">计算化学</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/CP2K/" itemprop="url" rel="index"><span itemprop="name">CP2K</span></a>
+                </span>
+            </span>
+
+          
+            <br>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/12/02/%E3%80%90CP2K%E3%80%9104.%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/12/02/%E3%80%90CP2K%E3%80%9104.%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+            <div class="post-description">以H<sub>2</sub>O（不更改单元尺寸）为例的几何优化，以及&MM模块</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h1><figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">&amp;GLOBAL</span></span><br><span class="line">  PROJECT H2O</span><br><span class="line">  RUN_TYPE GEO_OPT</span><br><span class="line">  PRINT_LEVEL LOW</span><br><span class="line"><span class="variable">&amp;END</span> GLOBAL</span><br><span class="line"><span class="variable">&amp;FORCE_EVAL</span></span><br><span class="line">  METHOD QS</span><br><span class="line">  <span class="variable">&amp;SUBSYS</span></span><br><span class="line">    <span class="variable">&amp;CELL</span></span><br><span class="line">      ABC 12.4138 12.4138 12.4138</span><br><span class="line">    <span class="variable">&amp;END</span> CELL</span><br><span class="line">    <span class="variable">&amp;COORD</span></span><br><span class="line">      O      12.235322       1.376642      10.869880</span><br><span class="line">      H      12.415139       2.233125      11.257611</span><br><span class="line">      H      11.922476       1.573799       9.986994</span><br><span class="line">    <span class="variable">&amp;END</span> COORD</span><br><span class="line">    <span class="variable">&amp;KIND</span> H</span><br><span class="line">      BASIS_SET DZVP-GTH-PADE</span><br><span class="line">      POTENTIAL GTH-PADE-q1</span><br><span class="line">    <span class="variable">&amp;END</span> KIND</span><br><span class="line">    <span class="variable">&amp;KIND</span> O</span><br><span class="line">      BASIS_SET DZVP-GTH-PADE</span><br><span class="line">      POTENTIAL GTH-PADE-q6</span><br><span class="line">    <span class="variable">&amp;END</span> KIND</span><br><span class="line">  <span class="variable">&amp;END</span> SUBSYS</span><br><span class="line">  <span class="variable">&amp;DFT</span></span><br><span class="line">    BASIS_SET_FILE_NAME ./BASIS_SET</span><br><span class="line">    POTENTIAL_FILE_NAME ./POTENTIAL</span><br><span class="line">    <span class="variable">&amp;QS</span></span><br><span class="line">      EPS_DEFAULT 1.0E-7</span><br><span class="line">    <span class="variable">&amp;END</span> QS</span><br><span class="line">    <span class="variable">&amp;MGRID</span></span><br><span class="line">      CUTOFF 200</span><br><span class="line">      NGRIDS 4</span><br><span class="line">      REL_CUTOFF 30</span><br><span class="line">    <span class="variable">&amp;END</span> MGRID</span><br><span class="line">    <span class="variable">&amp;SCF</span></span><br><span class="line">      SCF_GUESS ATOMIC</span><br><span class="line">      EPS_SCF 1.0E-05</span><br><span class="line">      MAX_SCF 200</span><br><span class="line">      <span class="variable">&amp;DIAGONALIZATION</span> T</span><br><span class="line">        ALGORITHM STANDARD</span><br><span class="line">      <span class="variable">&amp;END</span> DIAGONALIZATION</span><br><span class="line">      <span class="variable">&amp;MIXING</span> T</span><br><span class="line">        ALPHA 0.5</span><br><span class="line">        METHOD PULAY_MIXING</span><br><span class="line">        NPULAY 5</span><br><span class="line">      <span class="variable">&amp;END</span> MIXING</span><br><span class="line">      <span class="variable">&amp;PRINT</span></span><br><span class="line">        <span class="variable">&amp;RESTART</span> OFF</span><br><span class="line">        <span class="variable">&amp;END</span> RESTART</span><br><span class="line">      <span class="variable">&amp;END</span> PRINT</span><br><span class="line">    <span class="variable">&amp;END</span> SCF</span><br><span class="line">    <span class="variable">&amp;XC</span></span><br><span class="line">      <span class="variable">&amp;XC_FUNCTIONAL</span> PADE</span><br><span class="line">      <span class="variable">&amp;END</span> XC_FUNCTIONAL</span><br><span class="line">    <span class="variable">&amp;END</span> XC</span><br><span class="line">  <span class="variable">&amp;END</span> DFT</span><br><span class="line"><span class="variable">&amp;END</span> FORCE_EVAL</span><br><span class="line"><span class="variable">&amp;MOTION</span></span><br><span class="line">  <span class="variable">&amp;GEO_OPT</span></span><br><span class="line">    TYPE MINIMIZATION</span><br><span class="line">    MAX_DR    1.0E-03</span><br><span class="line">    MAX_FORCE 1.0E-03</span><br><span class="line">    RMS_DR    1.0E-03</span><br><span class="line">    RMS_FORCE 1.0E-03</span><br><span class="line">    MAX_ITER 200</span><br><span class="line">    OPTIMIZER CG</span><br><span class="line">    <span class="variable">&amp;CG</span></span><br><span class="line">      MAX_STEEP_STEPS  0</span><br><span class="line">      RESTART_LIMIT 9.0E-01</span><br><span class="line">    <span class="variable">&amp;END</span> CG</span><br><span class="line">  <span class="variable">&amp;END</span> GEO_OPT</span><br><span class="line">  <span class="variable">&amp;CONSTRAINT</span></span><br><span class="line">    <span class="variable">&amp;FIXED_ATOMS</span></span><br><span class="line">      COMPONENTS_TO_FIX XYZ</span><br><span class="line">      <span class="meta">LIST</span> 1</span><br><span class="line">    <span class="variable">&amp;END</span> FIXED_ATOMS</span><br><span class="line">  <span class="variable">&amp;END</span> CONSTRAINT</span><br><span class="line"><span class="variable">&amp;END</span> MOTION</span><br></pre></td></tr></table></figure>
+<h2 id="amp-GLOBAL-修改任务类型"><a href="#amp-GLOBAL-修改任务类型" class="headerlink" title="&amp;GLOBAL 修改任务类型"></a>&amp;GLOBAL 修改任务类型</h2><ul>
+<li>将<code>RUN_TYPE</code>修改为<code>GEO_OPT</code></li>
+</ul>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&amp;<span class="meta">GLOBAL</span></span><br><span class="line">  PROJECT H2O</span><br><span class="line">  RUN_TYPE GEO_OPT</span><br><span class="line">  PRINT_LEVEL LOW</span><br><span class="line">&amp;<span class="meta">END</span> <span class="meta">GLOBAL</span></span><br></pre></td></tr></table></figure>
+<h2 id="其他改动"><a href="#其他改动" class="headerlink" title="其他改动"></a>其他改动</h2><p>相比于计算能量和力的Si例子中的改动：</p>
+<ul>
+<li><code>&amp;SUBSYS</code>：<ul>
+<li><code>&amp;KIND</code>设定H和O的基组</li>
+<li><code>&amp;CELL</code>修改晶格向量单位</li>
+<li><code>&amp;COORD</code>修改坐标</li>
+</ul>
+</li>
+<li><code>&amp;FORCE_EVAL</code>：<ul>
+<li><code>&amp;DFT</code>：<ul>
+<li><code>&amp;QS</code>中的<code>EPS_DEFAULT</code>增大为<code>1.0E-7</code></li>
+<li><code>&amp;MGRID</code>中修改为<code>CUTOFF 200</code>和<code>REL_CUTOFF 30</code></li>
+<li><code>&amp;SCF</code>中：<ul>
+<li><code>EPS_SCF</code>增大为<code>1.0E-05</code>，<code>MAX_SCF</code>修改为<code>200</code></li>
+<li><code>&amp;MIXING</code>使用Pulay混合法<code>PULAY_MIXING</code>和相应的<code>ALPHA</code>、<code>NBUFFER</code></li>
+<li><code>&amp;PRINT</code>中关闭<code>&amp;RESTART</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="amp-MOTION"><a href="#amp-MOTION" class="headerlink" title="&amp;MOTION"></a>&amp;MOTION</h2><p>定义了一组与原子核运动有关的工具</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&amp;MOTION</span></span><br><span class="line">  <span class="meta">&amp;GEO_OPT</span></span><br><span class="line">    <span class="string">TYPE</span> <span class="string">MINIMIZATION</span></span><br><span class="line">    <span class="string">MAX_DR</span>    <span class="number">1.0E-03</span></span><br><span class="line">    <span class="string">MAX_FORCE</span> <span class="number">1.0E-03</span></span><br><span class="line">    <span class="string">RMS_DR</span>    <span class="number">1.0E-03</span></span><br><span class="line">    <span class="string">RMS_FORCE</span> <span class="number">1.0E-03</span></span><br><span class="line">    <span class="string">MAX_ITER</span> <span class="number">200</span></span><br><span class="line">    <span class="string">OPTIMIZER</span> <span class="string">CG</span></span><br><span class="line">    <span class="meta">&amp;CG</span></span><br><span class="line">      <span class="string">MAX_STEEP_STEPS</span>  <span class="number">0</span></span><br><span class="line">      <span class="string">RESTART_LIMIT</span> <span class="number">9.0E-01</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">CG</span></span><br><span class="line">  <span class="string">&amp;END</span> <span class="string">GEO_OPT</span></span><br><span class="line">  <span class="meta">&amp;CONSTRAINT</span></span><br><span class="line">    <span class="meta">&amp;FIXED_ATOMS</span></span><br><span class="line">      <span class="string">COMPONENTS_TO_FIX</span> <span class="string">XYZ</span></span><br><span class="line">      <span class="string">LIST</span> <span class="number">1</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">FIXED_ATOMS</span></span><br><span class="line">  <span class="string">&amp;END</span> <span class="string">CONSTRAINT</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">MOTION</span></span><br></pre></td></tr></table></figure>
+<h3 id="amp-GEO-OPT"><a href="#amp-GEO-OPT" class="headerlink" title="&amp;GEO_OPT"></a>&amp;GEO_OPT</h3><p> <code>GEO_OPT</code>小节仅适用于晶格尺寸不变的计算：</p>
+<ul>
+<li><code>TYPE</code>：指定要执行的几何优化类型<ul>
+<li><code>MINIMIZATION</code>：执行几何最小化。默认。</li>
+<li><code>TRANSITION_STATE</code>：执行过渡状态优化。</li>
+</ul>
+</li>
+<li>设置是否达到优化几何形状的标准：<ul>
+<li><code>MAX_DR</code>：先前几何优化迭代中原子位移的最大公差。默认为<script type="math/tex">3\times10^{-3}</script>Bohr</li>
+<li><code>MAX_FORCE</code>：对原子力的最大公差，默认为<script type="math/tex">4.5\times10^{-4}</script>Bohr / Hartree</li>
+<li><code>RMS_DR</code>：先前几何优化迭代中原子位移的均方根的公差，默认为<script type="math/tex">1.5\times10^{-3}</script>Bohr</li>
+<li><code>RMS_FORCE</code>：对原子力的均方根公差，默认为<script type="math/tex">3\times10^{-4}</script>Bohr / Hartree</li>
+</ul>
+</li>
+<li><code>MAX_ITER</code>：置最大几何优化迭代次数</li>
+<li><code>OPTIMIZER</code>：设置查找固定点的算法，同<code>MINIMIZER</code><ul>
+<li><code>CG</code>：共轭梯度，robust minimizer（取决于线搜索），也适用于大型系统</li>
+<li><code>BFGS</code>：默认。最有效的最小化器，但仅适用于“小型”系统，因为它依赖于完整的Hessian矩阵的对角化</li>
+<li><code>LBFGS</code>：BFGS的内存有限变体，适用于大型系统。微调效果不佳，但功能更强大。</li>
+</ul>
+</li>
+</ul>
+<h4 id="amp-CG"><a href="#amp-CG" class="headerlink" title="&amp;CG"></a>&amp;CG</h4><p>设置共轭梯度算法的选项：</p>
+<ul>
+<li><code>MAX_STEEP_STEPS</code>：开始共轭梯度优化之前，最陡下降步骤的最大数量。默认是<code>0</code>，即不会执行最陡峭的下降步骤。</li>
+<li><code>RESTART_LIMIT</code>：两个连续搜索方向之间的角度的余弦值。如果CG优化过程中的角度小于对应于<code>RESTART_LIMIT</code>的角度，则会重置CG并执行最陡下降步骤。默认为<code>0.9</code>。</li>
+</ul>
+<h3 id="amp-CONSTRAINT"><a href="#amp-CONSTRAINT" class="headerlink" title="&amp;CONSTRAINT"></a>&amp;CONSTRAINT</h3><p>为原子运动添加约束</p>
+<h4 id="amp-FIXED-ATOMS"><a href="#amp-FIXED-ATOMS" class="headerlink" title="&amp;FIXED_ATOMS"></a>&amp;FIXED_ATOMS</h4><p>此部分用于约束整体原子位置（X，Y，Z）。如果指定了约束，则<code>TARGET</code>的值将被视为运行开始时的坐标值，或者是<code>&amp;FIX_ATOM_RESTART</code>节中的相应值。</p>
+<ul>
+<li><code>COMPONENTS_TO_FIX</code>：指定将在本节中指定的原子的哪些成分（X，Y，Z或组合）受到约束/约束。默认是<code>XYZ</code></li>
+<li><code>LIST</code>：指定要冻结的原子列表，对应于<code>&amp;FORCE_EVAL</code>中的<code>&amp;SUBSYS</code>的<code>&amp;COORD</code>中的顺序</li>
+</ul>
+<h3 id="amp-CELL-OPT"><a href="#amp-CELL-OPT" class="headerlink" title="&amp;CELL_OPT"></a>&amp;CELL_OPT</h3><p>设置用于优化模拟晶胞的环境。有两种可能的方案：（1）零温度优化； （2）有限温度优化。</p>
+<ul>
+<li><code>KEEP_SYMMETRY</code>：保持要求的初始细胞对称性（例如在细胞优化过程中）。初始对称性必须在<code>＆CELL</code>部分中指定。默认是<code>.FALSE.</code></li>
+</ul>
+<h1 id="输出文件"><a href="#输出文件" class="headerlink" title="输出文件"></a>输出文件</h1><p>会输出以下文件：</p>
+<ul>
+<li>H2O.out：包含主要输出</li>
+<li>H2O-pos-1.xyz：包含<code>xyz</code>文件格式中每个几何优化步骤的原子坐标轨迹。</li>
+<li>H2O-1.restart：类似于输入文件，包含水分子的最新原子坐标。可以直接用于重启任务，也可以直接用其作为模板，使用其中的原子结构进一步计算</li>
+<li>H2O-1.restart.bak-1、H2O-1.restart.bak-2、H2O-1.restart.bak-3：H2O-1.restart.bak-*是具有从先前的1、2和3几何优化迭代获得的原子坐标的备份重新启动文件。H2O-1.restart.bak-1应该与 H2O-1.restart相同。</li>
+</ul>
+<h2 id="out文件"><a href="#out文件" class="headerlink" title=".out文件"></a>.out文件</h2><ul>
+<li><p>每一步几何优化都会有如下信息：</p>
+<ul>
+<li>在几何优化步骤1结束时，系统的总能量为-17.1643447508（Ha），并且未达到优化几何的标准。因此，迭代将继续进行，直到所有条件变为“ YES”为止。</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">--------</span>  <span class="string">Informations</span> <span class="string">at</span> <span class="string">step</span> <span class="string">=</span>     <span class="number">1</span> <span class="string">------------</span></span><br><span class="line"> <span class="string">Optimization</span> <span class="string">Method</span>        <span class="string">=</span>                   <span class="string">SD</span></span><br><span class="line"> <span class="string">Total</span> <span class="string">Energy</span>               <span class="string">=</span>       <span class="number">-17.1643447508</span></span><br><span class="line"> <span class="string">Real</span> <span class="string">energy</span> <span class="string">change</span>         <span class="string">=</span>        <span class="number">-0.0006776683</span></span><br><span class="line"> <span class="string">Decrease</span> <span class="string">in</span> <span class="string">energy</span>         <span class="string">=</span>                  <span class="literal">YES</span></span><br><span class="line"> <span class="string">Used</span> <span class="string">time</span>                  <span class="string">=</span>               <span class="number">90.837</span></span><br><span class="line"></span><br><span class="line"> <span class="attr">Convergence check :</span></span><br><span class="line"> <span class="string">Max.</span> <span class="string">step</span> <span class="string">size</span>             <span class="string">=</span>         <span class="number">0.0336570168</span></span><br><span class="line"> <span class="string">Conv.</span> <span class="string">limit</span> <span class="string">for</span> <span class="string">step</span> <span class="string">size</span>  <span class="string">=</span>         <span class="number">0.0010000000</span></span><br><span class="line"> <span class="string">Convergence</span> <span class="string">in</span> <span class="string">step</span> <span class="string">size</span>   <span class="string">=</span>                   <span class="literal">NO</span></span><br><span class="line"> <span class="string">RMS</span> <span class="string">step</span> <span class="string">size</span>              <span class="string">=</span>         <span class="number">0.0168136889</span></span><br><span class="line"> <span class="string">Conv.</span> <span class="string">limit</span> <span class="string">for</span> <span class="string">RMS</span> <span class="string">step</span>   <span class="string">=</span>         <span class="number">0.0010000000</span></span><br><span class="line"> <span class="string">Convergence</span> <span class="string">in</span> <span class="string">RMS</span> <span class="string">step</span>    <span class="string">=</span>                   <span class="literal">NO</span></span><br><span class="line"> <span class="string">Max.</span> <span class="string">gradient</span>              <span class="string">=</span>         <span class="number">0.0182785685</span></span><br><span class="line"> <span class="string">Conv.</span> <span class="string">limit</span> <span class="string">for</span> <span class="string">gradients</span>  <span class="string">=</span>         <span class="number">0.0010000000</span></span><br><span class="line"> <span class="string">Conv.</span> <span class="string">for</span> <span class="string">gradients</span>        <span class="string">=</span>                   <span class="literal">NO</span></span><br><span class="line"> <span class="string">RMS</span> <span class="string">gradient</span>               <span class="string">=</span>         <span class="number">0.0091312361</span></span><br><span class="line"> <span class="string">Conv.</span> <span class="string">limit</span> <span class="string">for</span> <span class="string">RMS</span> <span class="string">grad.</span>  <span class="string">=</span>         <span class="number">0.0010000000</span></span><br><span class="line"> <span class="string">Conv.</span> <span class="string">for</span> <span class="string">gradients</span>        <span class="string">=</span>                   <span class="literal">NO</span></span><br><span class="line"><span class="string">---------------------------------------------------</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>结束时所有标准都已满足:</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">--------</span>  <span class="string">Informations</span> <span class="string">at</span> <span class="string">step</span> <span class="string">=</span>    <span class="number">11</span> <span class="string">------------</span></span><br><span class="line"> <span class="string">Optimization</span> <span class="string">Method</span>        <span class="string">=</span>                   <span class="string">SD</span></span><br><span class="line"> <span class="string">Total</span> <span class="string">Energy</span>               <span class="string">=</span>       <span class="number">-17.1646204766</span></span><br><span class="line"> <span class="string">Real</span> <span class="string">energy</span> <span class="string">change</span>         <span class="string">=</span>        <span class="number">-0.0000000529</span></span><br><span class="line"> <span class="string">Decrease</span> <span class="string">in</span> <span class="string">energy</span>         <span class="string">=</span>                  <span class="literal">YES</span></span><br><span class="line"> <span class="string">Used</span> <span class="string">time</span>                  <span class="string">=</span>               <span class="number">49.893</span></span><br><span class="line"></span><br><span class="line"> <span class="attr">Convergence check :</span></span><br><span class="line"> <span class="string">Max.</span> <span class="string">step</span> <span class="string">size</span>             <span class="string">=</span>         <span class="number">0.0003393150</span></span><br><span class="line"> <span class="string">Conv.</span> <span class="string">limit</span> <span class="string">for</span> <span class="string">step</span> <span class="string">size</span>  <span class="string">=</span>         <span class="number">0.0010000000</span></span><br><span class="line"> <span class="string">Convergence</span> <span class="string">in</span> <span class="string">step</span> <span class="string">size</span>   <span class="string">=</span>                  <span class="literal">YES</span></span><br><span class="line"> <span class="string">RMS</span> <span class="string">step</span> <span class="string">size</span>              <span class="string">=</span>         <span class="number">0.0001493298</span></span><br><span class="line"> <span class="string">Conv.</span> <span class="string">limit</span> <span class="string">for</span> <span class="string">RMS</span> <span class="string">step</span>   <span class="string">=</span>         <span class="number">0.0010000000</span></span><br><span class="line"> <span class="string">Convergence</span> <span class="string">in</span> <span class="string">RMS</span> <span class="string">step</span>    <span class="string">=</span>                  <span class="literal">YES</span></span><br><span class="line"> <span class="string">Max.</span> <span class="string">gradient</span>              <span class="string">=</span>         <span class="number">0.0001787448</span></span><br><span class="line"> <span class="string">Conv.</span> <span class="string">limit</span> <span class="string">for</span> <span class="string">gradients</span>  <span class="string">=</span>         <span class="number">0.0010000000</span></span><br><span class="line"> <span class="string">Conv.</span> <span class="string">in</span> <span class="string">gradients</span>         <span class="string">=</span>                  <span class="literal">YES</span></span><br><span class="line"> <span class="string">RMS</span> <span class="string">gradient</span>               <span class="string">=</span>         <span class="number">0.0000786642</span></span><br><span class="line"> <span class="string">Conv.</span> <span class="string">limit</span> <span class="string">for</span> <span class="string">RMS</span> <span class="string">grad.</span>  <span class="string">=</span>         <span class="number">0.0010000000</span></span><br><span class="line"> <span class="string">Conv.</span> <span class="string">in</span> <span class="string">RMS</span> <span class="string">gradients</span>     <span class="string">=</span>                  <span class="literal">YES</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>最终的Kohn-Sham能量可以在输出的末尾获得：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">*******************************************************************************</span></span><br><span class="line"><span class="string">***</span>                    <span class="string">GEOMETRY</span> <span class="string">OPTIMIZATION</span> <span class="string">COMPLETED</span>                      <span class="string">***</span></span><br><span class="line"><span class="string">*******************************************************************************</span></span><br><span class="line"></span><br><span class="line">                   <span class="string">Reevaluating</span> <span class="string">energy</span> <span class="string">at</span> <span class="string">the</span> <span class="string">minimum</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Number of electrons:</span>                                                          <span class="number">8</span></span><br><span class="line"><span class="attr">Number of occupied orbitals:</span>                                                  <span class="number">4</span></span><br><span class="line"><span class="attr">Number of molecular orbitals:</span>                                                 <span class="number">4</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Number of orbital functions:</span>                                                 <span class="number">23</span></span><br><span class="line"><span class="attr">Number of independent orbital functions:</span>                                     <span class="number">23</span></span><br><span class="line"></span><br><span class="line"> <span class="string">Parameters</span> <span class="string">for</span> <span class="string">the</span> <span class="string">always</span> <span class="string">stable</span> <span class="string">predictor-corrector</span> <span class="string">(ASPC)</span> <span class="attr">method:</span></span><br><span class="line"></span><br><span class="line"> <span class="attr">ASPC order:</span> <span class="number">3</span></span><br><span class="line"></span><br><span class="line"> <span class="string">B(1)</span> <span class="string">=</span>   <span class="number">3.000000</span></span><br><span class="line"> <span class="string">B(2)</span> <span class="string">=</span>  <span class="number">-3.428571</span></span><br><span class="line"> <span class="string">B(3)</span> <span class="string">=</span>   <span class="number">1.928571</span></span><br><span class="line"> <span class="string">B(4)</span> <span class="string">=</span>  <span class="number">-0.571429</span></span><br><span class="line"> <span class="string">B(5)</span> <span class="string">=</span>   <span class="number">0.071429</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Extrapolation method:</span> <span class="string">ASPC</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="string">SCF</span> <span class="string">WAVEFUNCTION</span> <span class="string">OPTIMIZATION</span></span><br><span class="line"></span><br><span class="line"> <span class="string">Step</span>     <span class="string">Update</span> <span class="string">method</span>      <span class="string">Time</span>    <span class="string">Convergence</span>         <span class="string">Total</span> <span class="string">energy</span>    <span class="string">Change</span></span><br><span class="line"> <span class="string">------------------------------------------------------------------------------</span></span><br><span class="line">    <span class="number">1</span> <span class="string">Pulay/Diag.</span> <span class="number">0.50E+00</span>    <span class="number">0.5</span>     <span class="number">0.00005615</span>       <span class="number">-17.1646204762</span> <span class="number">-1.72E+01</span></span><br><span class="line">    <span class="number">2</span> <span class="string">Pulay/Diag.</span> <span class="number">0.50E+00</span>    <span class="number">1.0</span>     <span class="number">0.00000563</span>       <span class="number">-17.1646347711</span> <span class="number">-1.43E-05</span></span><br><span class="line"></span><br><span class="line"> <span class="string">***</span> <span class="string">SCF</span> <span class="string">run</span> <span class="string">converged</span> <span class="string">in</span>     <span class="number">2</span> <span class="string">steps</span> <span class="string">***</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="attr">Electronic density on regular grids:</span>         <span class="number">-8.0000016293</span>       <span class="number">-0.0000016293</span></span><br><span class="line"> <span class="attr">Core density on regular grids:</span>                <span class="number">7.9999992554</span>       <span class="number">-0.0000007446</span></span><br><span class="line"> <span class="attr">Total charge density on r-space grids:</span>       <span class="number">-0.0000023739</span></span><br><span class="line"> <span class="attr">Total charge density g-space grids:</span>          <span class="number">-0.0000023739</span></span><br><span class="line"></span><br><span class="line"> <span class="attr">Overlap energy of the core charge distribution:</span>               <span class="number">0.00000004555422</span></span><br><span class="line"> <span class="attr">Self energy of the core charge distribution:</span>                <span class="number">-43.83289054591484</span></span><br><span class="line"> <span class="attr">Core Hamiltonian energy:</span>                                     <span class="number">12.82175605770555</span></span><br><span class="line"> <span class="attr">Hartree energy:</span>                                              <span class="number">17.97395116120845</span></span><br><span class="line"> <span class="attr">Exchange-correlation energy:</span>                                 <span class="number">-4.12745148966141</span></span><br><span class="line"></span><br><span class="line"> <span class="attr">Total energy:</span>                                               <span class="number">-17.16463477110803</span></span><br><span class="line"></span><br><span class="line"><span class="string">ENERGY|</span> <span class="string">Total</span> <span class="string">FORCE_EVAL</span> <span class="string">(</span> <span class="string">QS</span> <span class="string">)</span> <span class="string">energy</span> <span class="string">(a.u.):</span>              <span class="number">-17.164634771108034</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h1><h2 id="NaCl团簇的几何优化"><a href="#NaCl团簇的几何优化" class="headerlink" title="NaCl团簇的几何优化"></a>NaCl团簇的几何优化</h2><h3 id="输入文件模板template-inp"><a href="#输入文件模板template-inp" class="headerlink" title="输入文件模板template.inp"></a>输入文件模板template.inp</h3><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">SET</span> NREP <span class="comment">MY_SUPERCELL</span></span><br><span class="line">@<span class="keyword">SET</span> <span class="comment">OPTIMIZER LBFGS # BFGS</span></span><br><span class="line"></span><br><span class="line">&amp;FORCE_EVAL</span><br><span class="line">  METHOD <span class="comment">Fist</span></span><br><span class="line">  &amp;MM</span><br><span class="line">    &amp;FORCEFIELD</span><br><span class="line">      &amp;CHARGE</span><br><span class="line">        ATOM <span class="comment">Na</span></span><br><span class="line">        CHARGE <span class="comment">+1.000</span></span><br><span class="line">      &amp;END <span class="comment">CHARGE</span></span><br><span class="line">      &amp;CHARGE</span><br><span class="line">        ATOM <span class="comment">Cl</span></span><br><span class="line">        CHARGE <span class="comment">-1.000</span></span><br><span class="line">      &amp;END <span class="comment">CHARGE</span></span><br><span class="line">      &amp;NONBONDED</span><br><span class="line">        &amp;BMHFT</span><br><span class="line">          map_atoms <span class="comment">NA NA</span></span><br><span class="line">          atoms <span class="comment">NA NA</span></span><br><span class="line">          RCUT <span class="comment">10.0</span></span><br><span class="line">        &amp;END <span class="comment">BMHFT</span></span><br><span class="line">        &amp;BMHFT</span><br><span class="line">          map_atoms <span class="comment">NA CL</span></span><br><span class="line">          atoms <span class="comment">NA CL</span></span><br><span class="line">          RCUT <span class="comment">10.0</span></span><br><span class="line">        &amp;END <span class="comment">BMHFT</span></span><br><span class="line">        &amp;BMHFT</span><br><span class="line">          map_atoms <span class="comment">CL CL</span></span><br><span class="line">          atoms <span class="comment">CL CL</span></span><br><span class="line">          RCUT <span class="comment">10.0</span></span><br><span class="line">        &amp;END <span class="comment">BMHFT</span></span><br><span class="line">      &amp;END <span class="comment">NONBONDED</span></span><br><span class="line">    &amp;END <span class="comment">FORCEFIELD</span></span><br><span class="line">    &amp;POISSON</span><br><span class="line">      &amp;EWALD</span><br><span class="line">        EWALD_TYPE <span class="comment">spme</span></span><br><span class="line">        ALPHA <span class="comment">.35</span></span><br><span class="line">        GMAX <span class="comment">12*$&#123;NREP&#125;</span></span><br><span class="line">        O_SPLINE <span class="comment">6</span></span><br><span class="line">      &amp;END <span class="comment">EWALD</span></span><br><span class="line">    &amp;END <span class="comment">POISSON</span></span><br><span class="line">  &amp;END <span class="comment">MM</span></span><br><span class="line">  &amp;SUBSYS</span><br><span class="line">    &amp;CELL</span><br><span class="line">      #ABC <span class="comment">5.620 5.620 5.620</span></span><br><span class="line">      ABC <span class="comment">2*5.620 2*5.620 2*5.620</span></span><br><span class="line">      MULTIPLE_UNIT_CELL <span class="comment">$&#123;NREP&#125; $&#123;NREP&#125; $&#123;NREP&#125;</span></span><br><span class="line">    &amp;END <span class="comment">CELL</span></span><br><span class="line">    &amp;TOPOLOGY</span><br><span class="line">      COORD_FILE_NAME <span class="comment">NaCl.pdb</span></span><br><span class="line">      COORDINATE <span class="comment">PDB</span></span><br><span class="line">      CONN_FILE_FORMAT <span class="comment">OFF</span></span><br><span class="line">      MULTIPLE_UNIT_CELL <span class="comment">$&#123;NREP&#125; $&#123;NREP&#125; $&#123;NREP&#125;</span></span><br><span class="line">    &amp;END <span class="comment">TOPOLOGY</span></span><br><span class="line">  &amp;END <span class="comment">SUBSYS</span></span><br><span class="line">&amp;END <span class="comment">FORCE_EVAL</span></span><br><span class="line"></span><br><span class="line">&amp;GLOBAL</span><br><span class="line">  PROJECT <span class="comment">NaCl</span></span><br><span class="line">  RUN_TYPE <span class="comment">GEO_OPT</span></span><br><span class="line">&amp;END <span class="comment">GLOBAL</span></span><br><span class="line"></span><br><span class="line">&amp;MOTION</span><br><span class="line">  &amp;GEO_OPT</span><br><span class="line">    OPTIMIZER <span class="comment">$&#123;OPTIMIZER&#125;</span></span><br><span class="line">  &amp;END</span><br><span class="line">&amp;END <span class="comment">MOTION</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>可以通过<code>@SET key XX</code>来设定变量</p>
+</li>
+<li><p>通过脚本来取代<code>MY_SUPERCELL</code>设定一系列不同值的<code>NREP</code>的任务，并通过脚本提交任务</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> <span class="built_in">ii</span> <span class="keyword">in</span> <span class="number">2</span> <span class="number">4</span> <span class="number">6</span> <span class="number">8</span> <span class="number">10</span> <span class="number">12</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">   mkdir <span class="variable">$</span>&#123;<span class="built_in">ii</span>&#125;</span><br><span class="line">   sed <span class="literal">-e</span> <span class="string">&quot;s/MY_SUPERCELL/<span class="variable">$</span>&#123;ii&#125;/g&quot;</span> template.inp &gt; <span class="variable">$</span>&#123;<span class="built_in">ii</span>&#125;/NaCl_supercell_<span class="variable">$</span>&#123;<span class="built_in">ii</span>&#125;.inp</span><br><span class="line">   sed <span class="literal">-e</span> <span class="string">&quot;s/filename/NaCl_supercell_<span class="variable">$</span>&#123;ii&#125;/g&quot;</span> cp2k.sub &gt; <span class="variable">$</span>&#123;<span class="built_in">ii</span>&#125;/cp2k.sub</span><br><span class="line">   <span class="built_in">cp</span> NaCl.pdb <span class="variable">$</span>&#123;<span class="built_in">ii</span>&#125;/NaCl.pdb</span><br><span class="line">   <span class="built_in">cd</span> <span class="variable">$</span>&#123;<span class="built_in">ii</span>&#125;</span><br><span class="line">   qsub cp2k.sub</span><br><span class="line">   <span class="built_in">cd</span> ..</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>.pdb文件</p>
+</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">REMARK</span>   <span class="number">4</span> NaCl COMPLIES WITH FORMAT V. <span class="number">2</span>.<span class="number">0</span> </span><br><span class="line"><span class="attribute">CRYST1</span>    <span class="number">5</span>.<span class="number">620</span>    <span class="number">5</span>.<span class="number">620</span>    <span class="number">5</span>.<span class="number">620</span>  <span class="number">90</span>.<span class="number">00</span>  <span class="number">90</span>.<span class="number">00</span>  <span class="number">90</span>.<span class="number">00</span> P <span class="number">1</span>         </span><br><span class="line"><span class="attribute">HETATM</span>    <span class="number">1</span> Na   NMO     <span class="number">0</span>       <span class="number">0</span>.<span class="number">000</span>   <span class="number">0</span>.<span class="number">000</span>   <span class="number">0</span>.<span class="number">000</span>  <span class="number">1</span>.<span class="number">00</span>  <span class="number">0</span>.<span class="number">00</span>      NMO Na</span><br><span class="line"><span class="attribute">HETATM</span>    <span class="number">2</span> Cl   CMO     <span class="number">0</span>       <span class="number">2</span>.<span class="number">810</span>   <span class="number">2</span>.<span class="number">810</span>   <span class="number">2</span>.<span class="number">810</span>  <span class="number">1</span>.<span class="number">00</span>  <span class="number">0</span>.<span class="number">00</span>      CMO Cl</span><br><span class="line"><span class="attribute">HETATM</span>    <span class="number">3</span> Na   NMO     <span class="number">0</span>       <span class="number">0</span>.<span class="number">000</span>   <span class="number">2</span>.<span class="number">810</span>   <span class="number">2</span>.<span class="number">810</span>  <span class="number">1</span>.<span class="number">00</span>  <span class="number">0</span>.<span class="number">00</span>      NMO Na</span><br><span class="line"><span class="attribute">HETATM</span>    <span class="number">4</span> Cl   CMO     <span class="number">0</span>       <span class="number">2</span>.<span class="number">810</span>   <span class="number">0</span>.<span class="number">000</span>   <span class="number">0</span>.<span class="number">000</span>  <span class="number">1</span>.<span class="number">00</span>  <span class="number">0</span>.<span class="number">00</span>      CMO Cl</span><br><span class="line"><span class="attribute">HETATM</span>    <span class="number">5</span> Na   NMO     <span class="number">0</span>       <span class="number">2</span>.<span class="number">810</span>   <span class="number">0</span>.<span class="number">000</span>   <span class="number">2</span>.<span class="number">810</span>  <span class="number">1</span>.<span class="number">00</span>  <span class="number">0</span>.<span class="number">00</span>      NMO Na</span><br><span class="line"><span class="attribute">HETATM</span>    <span class="number">6</span> Cl   CMO     <span class="number">0</span>       <span class="number">0</span>.<span class="number">000</span>   <span class="number">2</span>.<span class="number">810</span>   <span class="number">0</span>.<span class="number">000</span>  <span class="number">1</span>.<span class="number">00</span>  <span class="number">0</span>.<span class="number">00</span>      CMO Cl</span><br><span class="line"><span class="attribute">HETATM</span>    <span class="number">7</span> Na   NMO     <span class="number">0</span>       <span class="number">2</span>.<span class="number">810</span>   <span class="number">2</span>.<span class="number">810</span>   <span class="number">0</span>.<span class="number">000</span>  <span class="number">1</span>.<span class="number">00</span>  <span class="number">0</span>.<span class="number">00</span>      NMO Na</span><br><span class="line"><span class="attribute">HETATM</span>    <span class="number">8</span> Cl   CMO     <span class="number">0</span>       <span class="number">0</span>.<span class="number">000</span>   <span class="number">0</span>.<span class="number">000</span>   <span class="number">2</span>.<span class="number">810</span>  <span class="number">1</span>.<span class="number">00</span>  <span class="number">0</span>.<span class="number">00</span>      CMO Cl</span><br><span class="line"><span class="attribute">TER</span>       <span class="number">9</span>      UNK     <span class="number">0</span> </span><br><span class="line"><span class="attribute">END</span></span><br></pre></td></tr></table></figure>
+<h2 id="amp-FORCE-EVAL"><a href="#amp-FORCE-EVAL" class="headerlink" title="&amp;FORCE_EVAL"></a>&amp;FORCE_EVAL</h2><ul>
+<li><code>METHOD</code>中使用<code>FIST</code>，使用分子动力学（MM）方法</li>
+</ul>
+<h3 id="amp-MM"><a href="#amp-MM" class="headerlink" title="&amp;MM"></a>&amp;MM</h3><ul>
+<li>使用分子动力学的相关设定</li>
+</ul>
+<h4 id="amp-FORCEFIELD"><a href="#amp-FORCEFIELD" class="headerlink" title="&amp;FORCEFIELD"></a>&amp;FORCEFIELD</h4><p>指定有关如何为经典计算正确设置force_field的信息的部分。</p>
+<h5 id="amp-CHARGE"><a href="#amp-CHARGE" class="headerlink" title="&amp;CHARGE"></a>&amp;CHARGE</h5><p>指定MM原子的电荷</p>
+<ul>
+<li><code>ATOM</code>：定义电荷的原子种类。</li>
+<li><code>CHARGE</code>：以电子电荷单位定义MM原子的电荷。</li>
+</ul>
+<h5 id="amp-NONBONDED"><a href="#amp-NONBONDED" class="headerlink" title="&amp;NONBONDED"></a>&amp;NONBONDED</h5><p>指定非键的输入参数</p>
+<h6 id="amp-BMHFT"><a href="#amp-BMHFT" class="headerlink" title="&amp;BMHFT"></a>&amp;BMHFT</h6><p>指定BMHFT势能类型的输入参数。只适用于Na / Cl对。函数形式为<script type="math/tex">V(r)=Ae^{-Br}-\frac{C}{r^6}-\frac{D}{r^8}</script></p>
+<ul>
+<li><code>MAP_ATOMS</code>：定义仅在Na和Cl时内部定义BMHFT非键势的种类。</li>
+<li><code>ATOMS</code>：定义BMHFT非键势涉及的原子种类</li>
+<li><code>RCUT</code>：定义BMHFT电位的截止参数，默认是4.12758223 angstrom。</li>
+</ul>
+<h4 id="amp-POISSON"><a href="#amp-POISSON" class="headerlink" title="&amp;POISSON"></a>&amp;POISSON</h4><p>设置泊松解析器。</p>
+<h5 id="amp-EWALD"><a href="#amp-EWALD" class="headerlink" title="&amp;EWALD"></a>&amp;EWALD</h5><p>控制CLASSICAL MM静电。</p>
+<ul>
+<li><code>EWALD_TYPE</code>：要执行的ewald类型<ul>
+<li><code>EWALD</code>：默认，标准的基于非fft的ewald</li>
+<li><code>NONE</code>：无标准实空间库仑电势与非键合贡献一起计算</li>
+<li><code>PME</code>：使用fft插值的粒子网格</li>
+<li><code>SPME</code>：使用beta-Euler样条曲线的平滑粒子网格（推荐）</li>
+</ul>
+</li>
+<li><p><code>ALPHA</code>：与Ewald相关的alpha参数（<code>EWALD</code> | <code>PME</code> | <code>SPME</code>）。默认为<code>0.35 angstrom^-1</code>。</p>
+<ul>
+<li>对于小型系统，建议为<code>3.5</code>/<code>rcut</code>。</li>
+<li>对于紧密键合，建议值为<code>1.0</code>。</li>
+<li>需要调整<code>alpha</code>，<code>rcut</code>和<code>gmax</code>以获得ewald的O（<script type="math/tex">N^{1.5}</script>）缩放比例。</li>
+</ul>
+</li>
+<li><p><code>GMAX</code>：网格点数（SPME和EWALD）。如果指定一个数字，则网格上所有三个方向都使用相同的点数。如果给出三个数字，则每个方向可以具有不同的点数。点数需要可FFTable（取决于使用的库），对于EWALD，使用奇数。最佳数量取决于Alpha和晶胞的大小。通常每埃1点。</p>
+</li>
+<li><code>O_SPLINE</code>：beta-Euler样条的顺序（仅<code>SPME</code>）。默认为<code>6</code>。</li>
+</ul>
+<h2 id="NaCl的晶胞优化"><a href="#NaCl的晶胞优化" class="headerlink" title="NaCl的晶胞优化"></a>NaCl的晶胞优化</h2><h3 id="输入文件模板template-inp-1"><a href="#输入文件模板template-inp-1" class="headerlink" title="输入文件模板template.inp"></a>输入文件模板template.inp</h3><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">SET</span> SCALE_FACTOR <span class="comment">MY_SCALING</span></span><br><span class="line">@<span class="keyword">SET</span> <span class="comment">NREP 1</span></span><br><span class="line">@<span class="keyword">SET</span> <span class="comment">OPTIMIZER BFGS # LBFGS</span></span><br><span class="line">@<span class="keyword">SET</span> <span class="comment">CUTOFF MY_CUTOFF</span></span><br><span class="line">@<span class="keyword">SET</span> <span class="comment">SAFTEY_CUTOFF 1.1</span></span><br><span class="line"></span><br><span class="line">&amp;FORCE_EVAL</span><br><span class="line">  METHOD <span class="comment">QS</span></span><br><span class="line">  &amp;DFT</span><br><span class="line">    BASIS_SET_FILE_NAME <span class="comment">BASIS_MOLOPT</span></span><br><span class="line">    POTENTIAL_FILE_NAME <span class="comment">GTH_POTENTIALS</span></span><br><span class="line">    &amp;MGRID</span><br><span class="line">      CUTOFF <span class="comment">$&#123;CUTOFF&#125;</span></span><br><span class="line">      REL_CUTOFF <span class="comment">60</span></span><br><span class="line">    &amp;END <span class="comment">MGRID</span></span><br><span class="line">    &amp;QS</span><br><span class="line">      EPS_DEFAULT <span class="comment">1.0E-12</span></span><br><span class="line">    &amp;END <span class="comment">QS</span></span><br><span class="line">    &amp;SCF</span><br><span class="line">      SCF_GUESS <span class="comment">RESTART</span></span><br><span class="line">      &amp;OT <span class="comment">ON</span></span><br><span class="line">        MINIMIZER <span class="comment">DIIS</span></span><br><span class="line">      &amp;END <span class="comment">OT</span></span><br><span class="line">    &amp;END <span class="comment">SCF</span></span><br><span class="line">    &amp;XC</span><br><span class="line">      &amp;XC_FUNCTIONAL <span class="comment">Pade</span></span><br><span class="line">      &amp;END <span class="comment">XC_FUNCTIONAL</span></span><br><span class="line">    &amp;END <span class="comment">XC</span></span><br><span class="line">  &amp;END <span class="comment">DFT</span></span><br><span class="line">  &amp;SUBSYS</span><br><span class="line">    &amp;CELL</span><br><span class="line">      ABC <span class="comment">5.620*$&#123;SCALE_FACTOR&#125; 5.620*$&#123;SCALE_FACTOR&#125; 5.620*$&#123;SCALE_FACTOR&#125;</span></span><br><span class="line">      MULTIPLE_UNIT_CELL <span class="comment">$&#123;NREP&#125; $&#123;NREP&#125; $&#123;NREP&#125;</span></span><br><span class="line">      #&amp;CELL_REF</span><br><span class="line">      #  ABC <span class="comment">5.620*$&#123;SAFETY_FACTOR&#125; 5.620*$&#123;SAFETY_FACTOR&#125; 5.620*$&#123;SAFETY_FACTOR&#125;</span></span><br><span class="line">      #  MULTIPLE_UNIT_CELL <span class="comment">$&#123;NREP&#125; $&#123;NREP&#125; $&#123;NREP&#125;</span></span><br><span class="line">      #&amp;END</span><br><span class="line">    &amp;END <span class="comment">CELL</span></span><br><span class="line">    &amp;COORD</span><br><span class="line">		scaled</span><br><span class="line">		Na <span class="comment">0.000   0.000   0.000</span></span><br><span class="line">		Cl <span class="comment">0.500   0.500   0.500</span></span><br><span class="line">		Na <span class="comment">0.000   0.500   0.500</span></span><br><span class="line">		Cl <span class="comment">0.500   0.000   0.000</span></span><br><span class="line">		Na <span class="comment">0.500   0.000   0.500</span></span><br><span class="line">		Cl <span class="comment">0.000   0.500   0.000</span></span><br><span class="line">		Na <span class="comment">0.500   0.500   0.000</span></span><br><span class="line">		Cl <span class="comment">0.000   0.000   0.500</span></span><br><span class="line">    &amp;END</span><br><span class="line">    &amp;TOPOLOGY</span><br><span class="line">      MULTIPLE_UNIT_CELL <span class="comment">$&#123;NREP&#125; $&#123;NREP&#125; $&#123;NREP&#125;</span></span><br><span class="line">    &amp;END <span class="comment">TOPOLOGY</span></span><br><span class="line">    &amp;KIND <span class="comment">Na</span></span><br><span class="line">      BASIS_SET <span class="comment">DZVP-MOLOPT-SR-GTH</span></span><br><span class="line">      POTENTIAL <span class="comment">GTH-PADE-q9</span></span><br><span class="line">    &amp;END <span class="comment">KIND</span></span><br><span class="line">    &amp;KIND <span class="comment">Cl</span></span><br><span class="line">      BASIS_SET <span class="comment">DZVP-MOLOPT-SR-GTH</span></span><br><span class="line">      POTENTIAL <span class="comment">GTH-PADE-q7</span></span><br><span class="line">    &amp;END <span class="comment">KIND</span></span><br><span class="line">  &amp;END <span class="comment">SUBSYS</span></span><br><span class="line">&amp;END <span class="comment">FORCE_EVAL</span></span><br><span class="line"></span><br><span class="line">&amp;GLOBAL</span><br><span class="line">  PROJECT <span class="comment">NaCl</span></span><br><span class="line">  RUN_TYPE <span class="comment">ENERGY</span></span><br><span class="line">&amp;END <span class="comment">GLOBAL</span></span><br><span class="line"></span><br><span class="line">&amp;MOTION</span><br><span class="line">  &amp;GEO_OPT</span><br><span class="line">    OPTIMIZER <span class="comment">$&#123;OPTIMIZER&#125;</span></span><br><span class="line">  &amp;END</span><br><span class="line">  &amp;CELL_OPT</span><br><span class="line">    KEEP_SYMMETRY</span><br><span class="line">  &amp;END</span><br><span class="line">&amp;END <span class="comment">MOTION</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">CUTOFF</span>=<span class="string">&quot;280&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">for</span> ii in <span class="number">0</span>.<span class="number">800</span> <span class="number">0</span>.<span class="number">825</span> <span class="number">0</span>.<span class="number">850</span> <span class="number">0</span>.<span class="number">875</span> <span class="number">0</span>.<span class="number">900</span> <span class="number">0</span>.<span class="number">925</span> <span class="number">0</span>.<span class="number">950</span> <span class="number">0</span>.<span class="number">975</span> <span class="number">1</span>.<span class="number">000</span> <span class="number">1</span>.<span class="number">025</span> <span class="number">1</span>.<span class="number">050</span> <span class="number">1</span>.<span class="number">075</span> <span class="number">1</span>.<span class="number">100</span></span><br><span class="line"><span class="attribute">do</span></span><br><span class="line">   <span class="attribute">sed</span> -e <span class="string">&quot;s/MY_SCALING/$&#123;ii&#125;/g&quot;</span> NaCl_QS.inp &gt; temp.inp</span><br><span class="line">   <span class="attribute">sed</span> -e <span class="string">&quot;s/MY_CUTOFF/$&#123;CUTOFF&#125;/g&quot;</span> temp.inp &gt; input_<span class="variable">$&#123;ii&#125;</span>.inp</span><br><span class="line"><span class="attribute">done</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>有用可戳(●ˇ∀ˇ●)</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="Zhao Jing 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Zhao Jing
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2020/12/02/%E3%80%90CP2K%E3%80%9104.%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" title="【CP2K】04.几何优化">http://example.com/2020/12/02/【CP2K】04.几何优化/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/CP2K-%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="tag"><i class="fa fa-tag"></i> CP2K,几何优化</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/27/NBO/" rel="prev" title="NBO">
+      <i class="fa fa-chevron-left"></i> NBO
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">输入文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#amp-GLOBAL-%E4%BF%AE%E6%94%B9%E4%BB%BB%E5%8A%A1%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">&amp;GLOBAL 修改任务类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%94%B9%E5%8A%A8"><span class="nav-number">1.2.</span> <span class="nav-text">其他改动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#amp-MOTION"><span class="nav-number">1.3.</span> <span class="nav-text">&amp;MOTION</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#amp-GEO-OPT"><span class="nav-number">1.3.1.</span> <span class="nav-text">&amp;GEO_OPT</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-CG"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">&amp;CG</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#amp-CONSTRAINT"><span class="nav-number">1.3.2.</span> <span class="nav-text">&amp;CONSTRAINT</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-FIXED-ATOMS"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">&amp;FIXED_ATOMS</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#amp-CELL-OPT"><span class="nav-number">1.3.3.</span> <span class="nav-text">&amp;CELL_OPT</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">输出文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#out%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">.out文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">3.</span> <span class="nav-text">例子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#NaCl%E5%9B%A2%E7%B0%87%E7%9A%84%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96"><span class="nav-number">3.1.</span> <span class="nav-text">NaCl团簇的几何优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6%E6%A8%A1%E6%9D%BFtemplate-inp"><span class="nav-number">3.1.1.</span> <span class="nav-text">输入文件模板template.inp</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#amp-FORCE-EVAL"><span class="nav-number">3.2.</span> <span class="nav-text">&amp;FORCE_EVAL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#amp-MM"><span class="nav-number">3.2.1.</span> <span class="nav-text">&amp;MM</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-FORCEFIELD"><span class="nav-number">3.2.1.1.</span> <span class="nav-text">&amp;FORCEFIELD</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-CHARGE"><span class="nav-number">3.2.1.1.1.</span> <span class="nav-text">&amp;CHARGE</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-NONBONDED"><span class="nav-number">3.2.1.1.2.</span> <span class="nav-text">&amp;NONBONDED</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#amp-BMHFT"><span class="nav-number">3.2.1.1.2.1.</span> <span class="nav-text">&amp;BMHFT</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-POISSON"><span class="nav-number">3.2.1.2.</span> <span class="nav-text">&amp;POISSON</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-EWALD"><span class="nav-number">3.2.1.2.1.</span> <span class="nav-text">&amp;EWALD</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NaCl%E7%9A%84%E6%99%B6%E8%83%9E%E4%BC%98%E5%8C%96"><span class="nav-number">3.3.</span> <span class="nav-text">NaCl的晶胞优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6%E6%A8%A1%E6%9D%BFtemplate-inp-1"><span class="nav-number">3.3.1.</span> <span class="nav-text">输入文件模板template.inp</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhao Jing"
+      src="/images/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">Zhao Jing</p>
+  <div class="site-description" itemprop="description">做一棵树，只为岁月而生长。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaojing629" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaojing629" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:295483858@qq.com" title="E-Mail → mailto:295483858@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+<div class="sidebar-categories" p align="left">
+  <font size="2">
+  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F/">系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%AB%99/">网站</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/">计算化学</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/ADF/">ADF</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/CP2K/">CP2K</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/molpro/">molpro</a></li></ul></li></ul>
+  </font>
+  </p /div>
+
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title"></h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASSCF/" rel="tag">CASSCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CP2K/" rel="tag">CP2K</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CP2K-%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="tag">CP2K,几何优化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECP/" rel="tag">ECP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HF/" rel="tag">HF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCSCF/" rel="tag">MCSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NBO/" rel="tag">NBO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/basis/" rel="tag">basis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geometry/" rel="tag">geometry</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memory/" rel="tag">memory</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag">占据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BB%84%E6%80%81/" rel="tag">多组态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag">对称性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag">波函</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag">点群</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5/" rel="tag">输入</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%87%BA/" rel="tag">输出</a><span class="tag-list-count">1</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-flask"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhao Jing</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">114k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='0,0,0' opacity='0.3' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : '3L90wCaNUKa1MzSQcAhzkLtk-gzGzoHsz',
+      appKey     : 'fQ4t73jXnb71Y9zQWfXj5bIP',
+      placeholder: "可以输入您发现文中的错误或建议~(。・∀・)ノ",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

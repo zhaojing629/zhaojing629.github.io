@@ -24,17 +24,17 @@
   <meta name="description" content="以Si为例的DFT计算">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【CP2K】02.计算力和能量">
-<meta property="og:url" content="http://example.com/2020/11/21/%E3%80%90CP2K%E3%80%9102-%E8%AE%A1%E7%AE%97%E5%8A%9B%E5%92%8C%E8%83%BD%E9%87%8F/index.html">
+<meta property="og:url" content="http://example.com/2020/11/21/%E3%80%90CP2K%E3%80%9102.%E8%AE%A1%E7%AE%97%E5%8A%9B%E5%92%8C%E8%83%BD%E9%87%8F/index.html">
 <meta property="og:site_name" content="Jing&#39;s Notes">
 <meta property="og:description" content="以Si为例的DFT计算">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-11-21T08:09:32.000Z">
-<meta property="article:modified_time" content="2020-11-23T08:17:46.444Z">
+<meta property="article:modified_time" content="2020-12-04T09:29:44.917Z">
 <meta property="article:author" content="Zhao Jing">
 <meta property="article:tag" content="CP2K">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2020/11/21/%E3%80%90CP2K%E3%80%9102-%E8%AE%A1%E7%AE%97%E5%8A%9B%E5%92%8C%E8%83%BD%E9%87%8F/">
+<link rel="canonical" href="http://example.com/2020/11/21/%E3%80%90CP2K%E3%80%9102.%E8%AE%A1%E7%AE%97%E5%8A%9B%E5%92%8C%E8%83%BD%E9%87%8F/">
 
 
 <script id="page-configurations">
@@ -191,7 +191,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/21/%E3%80%90CP2K%E3%80%9102-%E8%AE%A1%E7%AE%97%E5%8A%9B%E5%92%8C%E8%83%BD%E9%87%8F/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/21/%E3%80%90CP2K%E3%80%9102.%E8%AE%A1%E7%AE%97%E5%8A%9B%E5%92%8C%E8%83%BD%E9%87%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/touxiang.jpg">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-23 16:17:46" itemprop="dateModified" datetime="2020-11-23T16:17:46+08:00">2020-11-23</time>
+                <time title="修改时间：2020-12-04 17:29:44" itemprop="dateModified" datetime="2020-12-04T17:29:44+08:00">2020-12-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -254,8 +254,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/11/21/%E3%80%90CP2K%E3%80%9102-%E8%AE%A1%E7%AE%97%E5%8A%9B%E5%92%8C%E8%83%BD%E9%87%8F/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/21/%E3%80%90CP2K%E3%80%9102-%E8%AE%A1%E7%AE%97%E5%8A%9B%E5%92%8C%E8%83%BD%E9%87%8F/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/11/21/%E3%80%90CP2K%E3%80%9102.%E8%AE%A1%E7%AE%97%E5%8A%9B%E5%92%8C%E8%83%BD%E9%87%8F/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/21/%E3%80%90CP2K%E3%80%9102.%E8%AE%A1%E7%AE%97%E5%8A%9B%E5%92%8C%E8%83%BD%E9%87%8F/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -266,7 +266,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>9.8k</span>
+              <span>10k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -300,7 +300,7 @@
 </ul>
 <h2 id="amp-FORCE-EVAL"><a href="#amp-FORCE-EVAL" class="headerlink" title="&amp;FORCE_EVAL"></a>&amp;FORCE_EVAL</h2><ul>
 <li><code>METHOD</code>：使用哪种方法来计算力<ul>
-<li><code>QS</code>：默认，同<code>QUICKSTEP</code>，即使用高斯和平面波（GPW）方法的密度泛函理论。</li>
+<li><code>QS</code>：默认，同<code>QUICKSTEP</code>，即使用高斯和平面波（GPW）方法的密度泛函理论。与<code>&amp;DFT</code>一起使用。</li>
 </ul>
 </li>
 </ul>
@@ -318,6 +318,7 @@
 <ul>
 <li><code>ABC</code>：指定晶格向量A，B和C的长度，它们定义正交晶胞的h矩阵的对角元素。对于非斜方细胞，可以通过<code>ALPHA_BETA_GAMMA</code>关键字指定角度ALPHA，BETA，GAMMA，也可以使用关键字<code>A</code>，<code>B</code>和<code>C</code>。约定是<code>A</code>沿X轴放置，<code>B</code>在XY平面上。</li>
 <li><code>PERIODIC</code>：指定将应用周期性边界条件（PBC）的方向。默认是<code>XYZ</code>。</li>
+<li><code>MULTIPLE_UNIT_CELL</code>：指定已定义单元格在空间（X，Y，Z）中的重复次数（假设其为单位单元格）。此关键字仅影响晶胞。默认为<code>1 1 1</code></li>
 </ul>
 <h4 id="amp-COORD"><a href="#amp-COORD" class="headerlink" title="&amp;COORD"></a>&amp;COORD</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&amp;COORD</span></span><br><span class="line">  <span class="string">Si</span>    <span class="number">0.000000000</span>    <span class="number">0.000000000</span>    <span class="number">0.000000000</span></span><br><span class="line">  <span class="string">Si</span>    <span class="number">0.000000000</span>    <span class="number">2.715348700</span>    <span class="number">2.715348700</span></span><br><span class="line">  <span class="string">Si</span>    <span class="number">2.715348700</span>    <span class="number">2.715348700</span>    <span class="number">0.000000000</span></span><br><span class="line">  <span class="string">Si</span>    <span class="number">2.715348700</span>    <span class="number">0.000000000</span>    <span class="number">2.715348700</span></span><br><span class="line">  <span class="string">Si</span>    <span class="number">4.073023100</span>    <span class="number">1.357674400</span>    <span class="number">4.073023100</span></span><br><span class="line">  <span class="string">Si</span>    <span class="number">1.357674400</span>    <span class="number">1.357674400</span>    <span class="number">1.357674400</span></span><br><span class="line">  <span class="string">Si</span>    <span class="number">1.357674400</span>    <span class="number">4.073023100</span>    <span class="number">4.073023100</span></span><br><span class="line">  <span class="string">Si</span>    <span class="number">4.073023100</span>    <span class="number">4.073023100</span>    <span class="number">1.357674400</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">COORD</span></span><br></pre></td></tr></table></figure>
 <ul>
@@ -334,9 +335,13 @@
 </li>
 </ul>
 <h4 id="amp-TOPOLOGY"><a href="#amp-TOPOLOGY" class="headerlink" title="&amp;TOPOLOGY"></a>&amp;TOPOLOGY</h4><ul>
-<li><code>COORDINATE</code>：等同于<code>COORD_FILE_FORMAT</code>，设置读取坐标的方式:<ul>
+<li><p><code>COORD_FILE_NAME</code>：指定包含坐标的文件名。</p>
+</li>
+<li><p><code>COORDINATE</code>：等同于<code>COORD_FILE_FORMAT</code>，设置读取坐标的方式:</p>
+<ul>
 <li><code>off</code>：在输入文件的＆COORD部分中读取的坐标</li>
 <li><code>XYZ</code>：通过XYZ文件格式提供的坐标</li>
+<li><code>PDB</code>：通过PDB文件格式提供的坐标</li>
 </ul>
 </li>
 <li><code>CONN_FILE_NAME</code>：指定包含分子连接性的文件名。</li>
@@ -345,6 +350,7 @@
 <li><code>OFF</code>：不产生分子。用于QS或定义不明确的系统。</li>
 </ul>
 </li>
+<li><code>MULTIPLE_UNIT_CELL</code>：指定已定义单元格在空间（X，Y，Z）中的重复次数（假设其为单位晶胞）。此关键字仅影响坐标规范。默认为<code>1 1 1</code></li>
 </ul>
 <h3 id="amp-DFT"><a href="#amp-DFT" class="headerlink" title="&amp;DFT"></a>&amp;DFT</h3><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&amp;DFT</span></span><br><span class="line">  BASIS_SET_FILE_NAME  BASIS_SET</span><br><span class="line">  POTENTIAL_FILE_NAME  GTH_POTENTIALS</span><br><span class="line">  ……</span><br><span class="line"><span class="meta">&amp;END DFT</span></span><br></pre></td></tr></table></figure>
 <p>该部分控制自洽的Kohn-Sham密度泛函理论计算的所有方面。仅当且仅当<code>FORCE_EVAL</code>中的<code>METHOD</code>关键字设置为<code>QUICKSTEP</code>时，<code>&amp;DFT</code>才有意义。</p>
@@ -415,10 +421,12 @@
 <li><p><code>METHOD</code>：设置混合方法</p>
 <ul>
 <li><code>BROYDEN_MIXING</code>：使用Broyden混合</li>
+<li><code>PULAY_MIXING</code>：使用Pulay混合法</li>
 </ul>
 </li>
-<li><code>ALPHA</code>：设置混合参数，默认是<code>0.4</code>。比如<code>0.4</code>是将0.4的输出密度与0.6的输入密度混合，以在下一个SCF迭代中形成新的输入密度。</li>
-<li><p><code>NBROYDEN</code>：等同于<code>NBUFFER</code>，设置在Broyden混合算法中使用的历史记录数。</p>
+<li><p><code>ALPHA</code>：设置混合参数，默认是<code>0.4</code>。比如<code>0.4</code>是将0.4的输出密度与0.6的输入密度混合，以在下一个SCF迭代中形成新的输入密度。</p>
+</li>
+<li><p><code>NBUFFER</code>：实际混合方案存储的先前步骤数，等同于<code>NBROYDEN</code>、<code>NPULAY</code>、<code>NMULTISECANT</code>，设置在Broyden混合算法、Pulay混合法中使用的历史记录数。</p>
 </li>
 <li><p><code>&amp;SMEAR</code>：不使用Smearing对于金属或间隙很小的系统，这可能会导致计算不稳定，并且由于电子占据函数的不连续性，自洽迭代可能永远不会收敛。因此可以添加</p>
 <figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&amp;SMEAR <span class="keyword">ON</span></span><br><span class="line">  <span class="function"><span class="keyword">METHOD</span> <span class="title">FERMI_DIRAC</span></span></span><br><span class="line"><span class="function">  <span class="title">ELECTRONIC_TEMPERATURE</span> [<span class="title">K</span>] 300</span></span><br><span class="line"><span class="function">&amp;<span class="title">END</span> <span class="title">SMEA</span></span></span><br></pre></td></tr></table></figure>
@@ -435,6 +443,10 @@
 </ul>
 </li>
 </ul>
+<h5 id="amp-PRINT"><a href="#amp-PRINT" class="headerlink" title="&amp;PRINT"></a>&amp;PRINT</h5><p>在SCF期间打印信息：</p>
+<ul>
+<li><code>&amp;RESTART</code>在SCF期间控制MO重新启动文件的转储。默认情况下，保留简短的三次重新启动的历史记录。</li>
+</ul>
 <h5 id="amp-OT"><a href="#amp-OT" class="headerlink" title="&amp;OT"></a>&amp;OT</h5><p>如果体系有较大带隙的，如为半导体或者绝缘体等，推荐使用OT 算法，收敛速度比较快。但是对预处理敏感。好的预处理器可能很昂贵。不能<code>smearing</code>或进行高级<code>SCF mixing</code> ，HOMO-LUMO 带隙很小或者几乎没有的系统，如金属系统，收敛性较差（此时应该使用<code>&amp;DIAGONALIZATION</code>和<code>&amp;Smear</code>）。设置轨道变换（OT）方法的各种选项：</p>
 <ul>
 <li><code>PRECONDITIONER</code>：<ul>
@@ -444,7 +456,7 @@
 </li>
 <li><code>MINIMIZER</code>：<ul>
 <li><code>CG</code>：默认，共轭梯度：最可靠，适用于困难的系统。如果合适的话，总能量应该在每个OT CG步骤减少。</li>
-<li><code>DIIS</code>：迭代子空间中的直接反演：不如CG可靠，但有时快约50％。</li>
+<li><code>DIIS</code>：迭代子空间中的直接反演，也称为Pulay混合，是一种外推技术。由Peter Pulay在计算量子化学领域开发，旨在加速和稳定Hartree-Fock自洽场方法的收敛。不如CG可靠，但有时快约50％。</li>
 <li><code>BROYDEN</code>：如果<code>CG</code>和<code>DIIS</code>都有问题，可以使用这个方法。</li>
 </ul>
 </li>
@@ -456,7 +468,7 @@
 <li><code>EPS_SCF</code>： outer SCF变量的目标梯度。默认为<script type="math/tex">10^{-5}</script>。内部循环的<code>EPS_SCF</code>还确定了外部循环可以达到的值，通常，外部循环的<code>EPS_SCF</code>必须小于或等于内部循环的EPS_SCF。</li>
 <li><code>MAX_SCF</code>：最大循环数</li>
 </ul>
-<h3 id="amp-PRINT"><a href="#amp-PRINT" class="headerlink" title="&amp;PRINT"></a>&amp;PRINT</h3><ul>
+<h3 id="amp-PRINT-1"><a href="#amp-PRINT-1" class="headerlink" title="&amp;PRINT"></a>&amp;PRINT</h3><ul>
 <li><code>&amp;FORCES</code>，在主要的输出中输出原子受力。<code>GLOBAL</code> 部分的<code>RUN_TYPE</code> 必须设置为<code>ENERGY_FORCE</code> 或者<code>GEO_OPT</code>。如果要将受力信息存储到文件中，则需要设定文件的名称；否则受力信息将会打印到out 文件中。</li>
 <li></li>
 </ul>
@@ -527,7 +539,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/2020/11/21/%E3%80%90CP2K%E3%80%9102-%E8%AE%A1%E7%AE%97%E5%8A%9B%E5%92%8C%E8%83%BD%E9%87%8F/" title="【CP2K】02.计算力和能量">http://example.com/2020/11/21/【CP2K】02-计算力和能量/</a>
+    <a href="http://example.com/2020/11/21/%E3%80%90CP2K%E3%80%9102.%E8%AE%A1%E7%AE%97%E5%8A%9B%E5%92%8C%E8%83%BD%E9%87%8F/" title="【CP2K】02.计算力和能量">http://example.com/2020/11/21/【CP2K】02.计算力和能量/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -548,11 +560,11 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/11/20/%E3%80%90CP2K%E3%80%9101-%E5%9F%BA%E7%A1%80/" rel="prev" title="【CP2K】01.基础">
+    <a href="/2020/11/20/%E3%80%90CP2K%E3%80%9101.%E5%9F%BA%E7%A1%80/" rel="prev" title="【CP2K】01.基础">
       <i class="fa fa-chevron-left"></i> 【CP2K】01.基础
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/11/21/%E3%80%90CP2K%E3%80%9103-MGRID%E4%B8%AD%E7%9A%84CUTOFF%E5%92%8CRELEL-CUTOFF/" rel="next" title="【CP2K】03.&MGRID中的CUTOFF和RELEL_CUTOFF">
+    <a href="/2020/11/21/%E3%80%90CP2K%E3%80%9103.MGRID%E4%B8%AD%E7%9A%84CUTOFF%E5%92%8CRELEL-CUTOFF/" rel="next" title="【CP2K】03.&MGRID中的CUTOFF和RELEL_CUTOFF">
       【CP2K】03.&MGRID中的CUTOFF和RELEL_CUTOFF <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -614,7 +626,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">输入文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#amp-GLOBAL-%E4%BF%AE%E6%94%B9%E4%BB%BB%E5%8A%A1%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">&amp;GLOBAL 修改任务类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#amp-FORCE-EVAL"><span class="nav-number">1.2.</span> <span class="nav-text">&amp;FORCE_EVAL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#amp-SUBSYS"><span class="nav-number">1.2.1.</span> <span class="nav-text">&amp;SUBSYS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-KIND-%E4%BF%AE%E6%94%B9%E5%9F%BA%E7%BB%84"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">&amp;KIND 修改基组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-CELL"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">&amp;CELL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-COORD"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">&amp;COORD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-TOPOLOGY"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">&amp;TOPOLOGY</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#amp-DFT"><span class="nav-number">1.2.2.</span> <span class="nav-text">&amp;DFT</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-QS"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">&amp;QS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-MGRID"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">&amp;MGRID</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-XC-%E4%BF%AE%E6%94%B9%E6%B3%9B%E5%87%BD"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">&amp;XC 修改泛函</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-XC-FUNCTIONAL"><span class="nav-number">1.2.2.3.1.</span> <span class="nav-text">&amp;XC_FUNCTIONAL</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-XC-GRID"><span class="nav-number">1.2.2.3.2.</span> <span class="nav-text">&amp;XC_GRID</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-SCF"><span class="nav-number">1.2.2.4.</span> <span class="nav-text">&amp;SCF</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-DIAGONALIZATION"><span class="nav-number">1.2.2.4.1.</span> <span class="nav-text">&amp;DIAGONALIZATION</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-MIXING"><span class="nav-number">1.2.2.4.2.</span> <span class="nav-text">&amp;MIXING</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-OT"><span class="nav-number">1.2.2.4.3.</span> <span class="nav-text">&amp;OT</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-OUTER-SCF"><span class="nav-number">1.2.2.4.4.</span> <span class="nav-text">&amp;OUTER_SCF</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#amp-PRINT"><span class="nav-number">1.2.3.</span> <span class="nav-text">&amp;PRINT</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">输出文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#out"><span class="nav-number">2.1.</span> <span class="nav-text">.out</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wfn"><span class="nav-number">2.2.</span> <span class="nav-text">.wfn</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">输入文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#amp-GLOBAL-%E4%BF%AE%E6%94%B9%E4%BB%BB%E5%8A%A1%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">&amp;GLOBAL 修改任务类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#amp-FORCE-EVAL"><span class="nav-number">1.2.</span> <span class="nav-text">&amp;FORCE_EVAL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#amp-SUBSYS"><span class="nav-number">1.2.1.</span> <span class="nav-text">&amp;SUBSYS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-KIND-%E4%BF%AE%E6%94%B9%E5%9F%BA%E7%BB%84"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">&amp;KIND 修改基组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-CELL"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">&amp;CELL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-COORD"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">&amp;COORD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-TOPOLOGY"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">&amp;TOPOLOGY</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#amp-DFT"><span class="nav-number">1.2.2.</span> <span class="nav-text">&amp;DFT</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-QS"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">&amp;QS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-MGRID"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">&amp;MGRID</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-XC-%E4%BF%AE%E6%94%B9%E6%B3%9B%E5%87%BD"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">&amp;XC 修改泛函</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-XC-FUNCTIONAL"><span class="nav-number">1.2.2.3.1.</span> <span class="nav-text">&amp;XC_FUNCTIONAL</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-XC-GRID"><span class="nav-number">1.2.2.3.2.</span> <span class="nav-text">&amp;XC_GRID</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-SCF"><span class="nav-number">1.2.2.4.</span> <span class="nav-text">&amp;SCF</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-DIAGONALIZATION"><span class="nav-number">1.2.2.4.1.</span> <span class="nav-text">&amp;DIAGONALIZATION</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-MIXING"><span class="nav-number">1.2.2.4.2.</span> <span class="nav-text">&amp;MIXING</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-PRINT"><span class="nav-number">1.2.2.4.3.</span> <span class="nav-text">&amp;PRINT</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-OT"><span class="nav-number">1.2.2.4.4.</span> <span class="nav-text">&amp;OT</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#amp-OUTER-SCF"><span class="nav-number">1.2.2.4.5.</span> <span class="nav-text">&amp;OUTER_SCF</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#amp-PRINT-1"><span class="nav-number">1.2.3.</span> <span class="nav-text">&amp;PRINT</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">输出文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#out"><span class="nav-number">2.1.</span> <span class="nav-text">.out</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wfn"><span class="nav-number">2.2.</span> <span class="nav-text">.wfn</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -630,7 +642,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -641,7 +653,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">25</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -670,7 +682,7 @@
     <h3 class="widget-title"></h3>
     <div id="myCanvasContainer" class="widget tagcloud">
         <canvas width="250" height="250" id="resCanvas" style="width=100%">
-            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASSCF/" rel="tag">CASSCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CP2K/" rel="tag">CP2K</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECP/" rel="tag">ECP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HF/" rel="tag">HF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCSCF/" rel="tag">MCSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NBO/" rel="tag">NBO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/basis/" rel="tag">basis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geometry/" rel="tag">geometry</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memory/" rel="tag">memory</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag">占据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BB%84%E6%80%81/" rel="tag">多组态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag">对称性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag">波函</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag">点群</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5/" rel="tag">输入</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%87%BA/" rel="tag">输出</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASSCF/" rel="tag">CASSCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CP2K/" rel="tag">CP2K</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CP2K-%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="tag">CP2K,几何优化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECP/" rel="tag">ECP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HF/" rel="tag">HF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCSCF/" rel="tag">MCSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NBO/" rel="tag">NBO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/basis/" rel="tag">basis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geometry/" rel="tag">geometry</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memory/" rel="tag">memory</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag">占据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BB%84%E6%80%81/" rel="tag">多组态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag">对称性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag">波函</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag">点群</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5/" rel="tag">输入</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%87%BA/" rel="tag">输出</a><span class="tag-list-count">1</span></li></ul>
         </canvas>
     </div>
 </div>
@@ -710,7 +722,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">103k</span>
+    <span title="站点总字数">114k</span>
 </div>
 
         
