@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2020/11/06/%E6%90%AD%E5%BB%BA%E7%BD%91%E7%AB%99%E6%95%99%E7%A8%8B/1.png">
 <meta property="article:published_time" content="2020-11-06T04:15:00.000Z">
-<meta property="article:modified_time" content="2020-12-02T07:24:37.985Z">
+<meta property="article:modified_time" content="2020-12-16T13:33:22.437Z">
 <meta property="article:author" content="Zhao Jing">
 <meta property="article:tag" content="hexo">
 <meta property="article:tag" content="git">
@@ -224,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-02 15:24:37" itemprop="dateModified" datetime="2020-12-02T15:24:37+08:00">2020-12-02</time>
+                <time title="修改时间：2020-12-16 21:33:22" itemprop="dateModified" datetime="2020-12-16T21:33:22+08:00">2020-12-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -305,7 +305,7 @@
 <h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><ol>
 <li>在命令行里利用npm命令安装hexo，最后通过 <code>hexo -v</code>验证是否安装成功。<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm <span class="keyword">install</span> -g hexo</span><br></pre></td></tr></table></figure></li>
 <li>在Github上创建Repository，Repository  name 中填入<code>username.github.io</code>，点击Create repository<blockquote>
-<p>有很多教程中，在此处可以接着：<br>在Repository的<code>Setting</code>中的<code>GitHub Pages</code>部分，<code>Choose a theme</code>先选择一个主题，直接可以生成Github主题的网站，再进行后续操作。<br>但在<a target="_blank" rel="noopener" href="https://www.jiqizhixin.com/articles/2020-09-21-10">2020-10-01后，github新建的默认的库位main而不是master</a>，会导致在<code>hexo g -d</code>后，网页一直不更新，此时就需要在<code>GitHub Pages</code>部分的<code>Source</code>中把分支切换为<code>master</code>。<br>为了避免这个问题，可以跳过这一步；也可以在<code>deploy:</code>中把<code>branch: master</code>改成<code>branch: main</code>。<br><img src="1.png" style="zoom: 50%;" /></p>
+<p>有很多教程中，在此处可以接着：<br>在Repository的<code>Setting</code>中的<code>GitHub Pages</code>部分，<code>Choose a theme</code>先选择一个主题，直接可以生成Github主题的网站，再进行后续操作。<br>但在<a target="_blank" rel="noopener" href="https://www.jiqizhixin.com/articles/2020-09-21-10">2020-10-01后，github新建的默认的库是main而不是master</a>，会导致在<code>hexo g -d</code>后，网页一直不更新，此时就需要在<code>GitHub Pages</code>部分的<code>Source</code>中把分支切换为<code>master</code>。<br>为了避免这个问题，可以跳过这一步；也可以在<code>deploy:</code>中把<code>branch: master</code>改成<code>branch: main</code>。<br><img src="1.png" style="zoom: 50%;" /></p>
 </blockquote>
 </li>
 <li>在本地创建一个与 Repository 中博客项目同名的文件夹<code>username.github.io</code>后，进入文件夹，右键 <code>Git bash here</code>，输入<code>hexo init</code>初始化文件夹，接着输入<code>npm install</code>安装必备的组件</li>
