@@ -56,8 +56,34 @@ description: ADF的EDA-NOCV方法的使用
        f2 CN.t21 
    end
    ```
-2. 整体分子的计算不能使用对称性，需要用`symmetry nosym`
-3. 需要使用`ETSNOCV`和`PRINT {ETSLOWDIN | ETSLOWDIN-Unrestricted}`关键词：
+   
+2. 占据方式的指定：
+
+   1. 如果碎片已经指定了占据，则不需要再指定；
+
+   2. 如果碎片已经指定且是开壳层，需要加上`UnrestrictedFragments`关键词；
+
+   3. 如果碎片没有指定，又需要指定，则使用`FRAGOCCUPATIONS`按如下指定：
+
+      ```
+      FRAGOCCUPATIONS
+      f1
+      sigma 1 0 0//1 1 0
+      pi 0 0 0//2 0 0
+      SUBEND
+      f2
+      sigma 7 1 0//7 0 0
+      pi 8 2 0//8 0 0
+      delta 2 0//2 0
+      SUBEND
+      END
+      ```
+
+      
+
+3. 整体分子的计算不能使用对称性，需要用`symmetry nosym`
+
+4. 需要使用`ETSNOCV`和`PRINT {ETSLOWDIN | ETSLOWDIN-Unrestricted}`关键词：
    - `ETSNOCV`指定打印NOCV相关信息的阈值：
      - `RHOKMIN`各个SFO对每个变形密度贡献进行总体分析的阈值
      - `EKMIN`轨道相互作用能量贡献的阈值
@@ -74,7 +100,8 @@ description: ADF的EDA-NOCV方法的使用
    End
    PRINT {ETSLOWDIN | ETSLOWDIN-Unrestricted}
    ```
-4. 还可以根据需要使用`PRINT NOCVHirshfeld`来区分片段间还是片段内的NOCV，输出文件会打印每个NOCV的$\int{\Delta \rho} = -\Delta Q$值到ETS-NOCV末尾的“Hirshfeld partitioning” ：
+
+5. 还可以根据需要使用`PRINT NOCVHirshfeld`来区分片段间还是片段内的NOCV，输出文件会打印每个NOCV的$\int{\Delta \rho} = -\Delta Q$值到ETS-NOCV末尾的“Hirshfeld partitioning” ：
    - 片段间NOCV具有非零积分Hirshfeld$\Delta Q$值，并且对应于片段之间的电荷转移
    - 片段内NOCV具有小的$\Delta Q$值，并且对应于片段的极化。
 
