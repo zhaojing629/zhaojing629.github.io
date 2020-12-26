@@ -3293,4 +3293,246 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
         <tag>git</tag>
       </tags>
   </entry>
+  <entry>
+    <title>html基础</title>
+    <url>/2020/12/25/html%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<h1 id="HTML简介"><a href="#HTML简介" class="headerlink" title="HTML简介"></a>HTML简介</h1><ul>
+<li>HTML 不是一种编程语言，指的是超文本标记语言 (<strong>H</strong>yper <strong>T</strong>ext <strong>M</strong>arkup <strong>L</strong>anguage)。标记语言是一套标记标签 (markup tag)，即使用标记标签来描述网页</li>
+<li>保存 HTML 文件时，既可以使用 <code>.htm</code> 也可以使用 <code>.html</code> 扩展名。两者没有区别’</li>
+<li>HTML文档也叫做 web 页面</li>
+</ul>
+<h1 id="HTML基本结构"><a href="#HTML基本结构" class="headerlink" title="HTML基本结构"></a>HTML基本结构</h1><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">title</span>&gt;</span>网页的标题<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"> 		<span class="tag">&lt;<span class="name">h1</span>&gt;</span>我的第一个标题<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"> 		<span class="tag">&lt;<span class="name">p</span>&gt;</span>我的第一个段落。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"> 	<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="lt-DOCTYPE-gt"><a href="#lt-DOCTYPE-gt" class="headerlink" title="&lt;!DOCTYPE&gt;"></a><code>&lt;!DOCTYPE&gt;</code></h2><ul>
+<li>用于声明网页版本，不区分大小写</li>
+<li><p><code>&lt;!DOCTYPE&gt;</code> 声明位于文档中的最前面的位置，处于<code>&lt;html&gt;</code>标签之前。</p>
+</li>
+<li><p>HTML5（2012年发布）</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>HTML 4.01（1999年发布）</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">HTML</span> <span class="meta-keyword">PUBLIC</span> <span class="meta-string">&quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;</span></span></span><br><span class="line"><span class="meta"><span class="meta-string">&quot;http://www.w3.org/TR/html4/loose.dtd&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>XHTML 1.0（2020年发布）</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span> <span class="meta-keyword">PUBLIC</span> <span class="meta-string">&quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span></span></span><br><span class="line"><span class="meta"><span class="meta-string">&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="lt-html-gt"><a href="#lt-html-gt" class="headerlink" title="&lt;html&gt;"></a><code>&lt;html&gt;</code></h2><ul>
+<li>HTML页面的根元素，<code>&lt;html&gt;</code> 标签告知浏览器这是一个 HTML 文档。</li>
+<li>是 HTML 文档中最外层的元素。</li>
+<li>是所有其他 HTML 元素（除了 &lt;!DOCTYPE&gt; 标签）的容器。</li>
+</ul>
+<h3 id="lt-head-gt"><a href="#lt-head-gt" class="headerlink" title="&lt;head&gt;"></a><code>&lt;head&gt;</code></h3><ul>
+<li><code>&lt;head&gt;</code> 元素包含了所有的头部标签元素。在 <code>&lt;head&gt;</code>元素中你可以插入脚本（scripts）, 样式文件（CSS），及各种meta信息。</li>
+<li>可以添加在头部区域的元素标签为: <code>&lt;title&gt;</code>, <code>&lt;style&gt;</code>, <code>&lt;meta&gt;</code>, <code>&lt;link&gt;</code>, <code>&lt;script&gt;</code>, <code>&lt;noscript&gt;</code> 和 <code>&lt;base&gt;</code>。</li>
+</ul>
+<h4 id="lt-meta-gt"><a href="#lt-meta-gt" class="headerlink" title="&lt;meta&gt;"></a><code>&lt;meta&gt;</code></h4><ul>
+<li>描述了一些基本的元数据。元数据也不显示在页面上，但会被浏览器解析。</li>
+<li>通常用于指定网页的描述，关键词，文件的最后修改时间，作者，和其他元数据。</li>
+<li><p>元数据可以使用于浏览器（如何显示内容或重新加载页面），搜索引擎（关键词），或其他Web服务。</p>
+</li>
+<li><p>对于中文网页需要使用 <code>&lt;meta charset=&quot;utf-8&quot;&gt;</code> 定义网页编码格式为 utf-8，否则会出现乱码。</p>
+</li>
+<li><p>有些浏览器会设置 GBK 为默认编码，则需要设置为 <code>&lt;meta charset=&quot;gbk&quot;&gt;</code></p>
+</li>
+<li><p>为搜索引擎定义关键词:</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;keywords&quot;</span> <span class="attr">content</span>=<span class="string">&quot;HTML, CSS, XML, XHTML, JavaScript&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>为网页定义描述内容：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;description&quot;</span> <span class="attr">content</span>=<span class="string">&quot;免费 Web &amp; 编程 教程&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>定义网页作者：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;author&quot;</span> <span class="attr">content</span>=<span class="string">&quot;Runoob&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>每30秒钟刷新当前页面:</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;refresh&quot;</span> <span class="attr">content</span>=<span class="string">&quot;30&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="lt-title-gt"><a href="#lt-title-gt" class="headerlink" title="&lt;title&gt;"></a><code>&lt;title&gt;</code></h4><ul>
+<li>描述了文档的标题，是不可少的</li>
+<li>当网页添加到收藏夹时，显示在收藏夹中的标题</li>
+<li>显示在搜索引擎结果页面的标题</li>
+</ul>
+<h4 id="lt-base-gt"><a href="#lt-base-gt" class="headerlink" title="&lt;base&gt;"></a><code>&lt;base&gt;</code></h4><ul>
+<li><p>描述了基本的链接地址/链接目标，该标签作为HTML文档中所有的链接标签的默认链接</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">base</span> <span class="attr">href</span>=<span class="string">&quot;http://www.runoob.com/images/&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="lt-link-gt"><a href="#lt-link-gt" class="headerlink" title="&lt;link&gt;"></a><code>&lt;link&gt;</code></h4><ul>
+<li><p>定义了文档与外部资源之间的关系，通常用于链接到样式表</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span> <span class="attr">href</span>=<span class="string">&quot;mystyle.css&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="lt-style-gt"><a href="#lt-style-gt" class="headerlink" title="&lt;style&gt;"></a><code>&lt;style&gt;</code></h4><ul>
+<li><p>定义了HTML文档的样式文件引用地址</p>
+</li>
+<li><p>也可以直接添加样式来渲染 HTML 文档</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span>&gt;</span></span><br><span class="line"><span class="css"><span class="selector-tag">body</span> &#123;<span class="attribute">background-color</span>:yellow&#125;</span></span><br><span class="line"><span class="css"><span class="selector-tag">p</span> &#123;<span class="attribute">color</span>:blue&#125;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="lt-script-gt"><a href="#lt-script-gt" class="headerlink" title="&lt;script&gt;"></a><code>&lt;script&gt;</code></h4><ul>
+<li>用于加载脚本文件，如： JavaScript。</li>
+</ul>
+<h3 id="lt-body-gt"><a href="#lt-body-gt" class="headerlink" title="&lt;body&gt;"></a><code>&lt;body&gt;</code></h3><p>包含可见的页面内容，只有<code>&lt;body&gt;</code>部分才会在浏览器中显示。</p>
+<h1 id="HTML标签"><a href="#HTML标签" class="headerlink" title="HTML标签"></a>HTML标签</h1><h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><ul>
+<li><p>HTML标签是由尖括号包围的关键词，通常是成对出现的。标签对中的第一个标签是开始标签，第二个标签是结束标签。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">标签</span>&gt;</span>内容<span class="tag">&lt;/<span class="name">标签</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>开始标签常被称为起始标签（opening tag）</li>
+<li>结束标签常称为闭合标签（closing tag）</li>
+</ul>
+</li>
+<li><p>HTML 标签=HTML 元素，但是严格来讲, 一个HTML元素包含了开始标签、内容和结束标签。</p>
+</li>
+</ul>
+<ul>
+<li>没有内容的 HTML 元素被称为空元素，不需要闭合标签，但是最好在开始标签中关闭空元素，用<code>&lt; /&gt;</code>封装。</li>
+<li>HTML标签对大小写不敏感，但是最好用小写。</li>
+<li>大多数HTML元素可以嵌套（HTML元素可以包含其他 HTML 元素）。</li>
+</ul>
+<h2 id="基本标签"><a href="#基本标签" class="headerlink" title="基本标签"></a>基本标签</h2><h3 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h3><ul>
+<li><p>通过 <code>&lt;h1&gt;</code> - <code>&lt;h6&gt;</code> 标签进行定义，由大到小，字体会加粗，大小也会由大到小。但是不要为了生成粗体或大号的文本而使用标题，因为搜索引擎会使用标题为网页的结构和内容编制索引。</p>
+</li>
+<li><p>浏览器会自动地在标题的前后添加空行。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>这是一个标题<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>这是一个标题<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h3</span>&gt;</span>这是一个标题<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="段落"><a href="#段落" class="headerlink" title="段落"></a>段落</h3><ul>
+<li><p>通过<code>&lt;p&gt;</code>定义HTML 文档中的一个段落。</p>
+</li>
+<li><p>浏览器会自动地在段落的前后添加空行。（<code>&lt;/p&gt;</code> 是块级元素）</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>这是一个段落。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>这是另外一个段落。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>无法通过在HTML元素的内容中添加额外的空格或换行来改变输出的效果。</p>
+<ul>
+<li><p>当显示页面时，浏览器会移除源代码中多余的空格和空行。所有连续的空格或空行都会被算作一个空格。</p>
+</li>
+<li><p>所有连续的空行（换行）也被显示为一个空格。如果需要换行，需要用<code>&lt;br&gt;</code>。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>这个<span class="tag">&lt;<span class="name">br</span>&gt;</span>段落<span class="tag">&lt;<span class="name">br</span>&gt;</span>演示了分行的效果<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果需要控制空行和空格，也可以使用定义预格式文本的标签<code>&lt;pre&gt;</code></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">pre</span>&gt;</span></span><br><span class="line">使用 pre 标签</span><br><span class="line">对空行和    空格</span><br><span class="line">进行控制</span><br><span class="line"><span class="tag">&lt;/<span class="name">pre</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="换行"><a href="#换行" class="headerlink" title="换行"></a>换行</h4><ul>
+<li><p>可以在不产生一个新段落的情况下进行换行，即和上一行之间不会有空行。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 没有关闭标签的空元素 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 关闭空元素 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h4><ul>
+<li><p>可用于分隔内容</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>这是一个段落。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>这是一个段落。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>这是一个段落。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><ul>
+<li><p>通过<code>a</code>来定义HTML链接，超链接可以是一个字，一个词，或者一组词，也可以是一幅图像，您可以点击这些内容来跳转到新的文档或者当前文档中的某个部分。</p>
+</li>
+<li><p>链接的地址在<code>href</code>属性中指定：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://www.runoob.com&quot;</span>&gt;</span>这是一个链接<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果希望链接在新窗口打开，则可以将 target 属性设置为 “_blank”：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://www.runoob.com/&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;noopener noreferrer&quot;</span>&gt;</span>访问菜鸟教程!<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果在当前页面链接到指定位置，则可以使用<code>id</code>属性</p>
+<ul>
+<li><p>首先给要访问的地方加一个属性</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">id</span>=<span class="string">&quot;tips&quot;</span>&gt;</span>有用的提示部分<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在HTML文档中创建一个链接到此处</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#tips&quot;</span>&gt;</span>访问有用的提示部分<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>也可以访问另一个网页中的部分</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://www.runoob.com/html/html-links.html#tips&quot;</span>&gt;</span></span><br><span class="line">访问有用的提示部分<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>发送邮件</p>
+<ul>
+<li><p><code>Subject</code>后面跟的是邮件的主题</p>
+</li>
+<li><p>单词之间的空格使用<code>%20</code>代替，以确保浏览器可以正常显示文本。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">这是一个电子邮件链接：</span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;mailto:someone@example.com?Subject=Hello%20again&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_top&quot;</span>&gt;</span></span><br><span class="line">发送邮件<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>cc</code>后面跟的是抄送地址</p>
+</li>
+<li><p><code>bcc</code>后面跟的是密件抄送</p>
+</li>
+<li><p><code>body</code>后面跟的是邮件内容</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">这是另一个电子邮件链接：</span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;mailto:someone@example.com?cc=someoneelse@example.com&amp;bcc=andsomeoneelse@example.com&amp;subject=Summer%20Party&amp;body=You%20are%20invited%20to%20a%20big%20summer%20party!&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_top&quot;</span>&gt;</span>发送邮件!<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">b</span>&gt;</span>注意:<span class="tag">&lt;/<span class="name">b</span>&gt;</span> 单词之间的空格使用 %20 代替，以确保浏览器可以正常显示文本。</span><br><span class="line"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="图像"><a href="#图像" class="headerlink" title="图像"></a>图像</h3><ul>
+<li><p>通过标签<code>img</code>来定义</p>
+</li>
+<li><p>图像的名称和尺寸是以属性的形式提供的</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">loading</span>=<span class="string">&quot;lazy&quot;</span> <span class="attr">src</span>=<span class="string">&quot;/images/logo.png&quot;</span> <span class="attr">width</span>=<span class="string">&quot;258&quot;</span> <span class="attr">height</span>=<span class="string">&quot;39&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><ul>
+<li><p>浏览器会忽略注释，也不会显示它们。开始括号之后（左边的括号）需要紧跟一个叹号，结束括号之前（右边的括号）不需要。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 这是一个注释 --&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="HTML属性"><a href="#HTML属性" class="headerlink" title="HTML属性"></a>HTML属性</h1><h2 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h2><ul>
+<li><p>属性值应该始终被包括在引号内，一般放在开始标签中，形式一般是<code>name=“value”</code>，</p>
+</li>
+<li><p>单引号也可以，如果属性值本身就含有双引号，必须使用单引号：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">name=&#x27;John &quot;ShotGun&quot; Nelson&#x27;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>属性和属性值对大小写不敏感，最好小写。</p>
+</li>
+</ul>
+<h2 id="基本属性"><a href="#基本属性" class="headerlink" title="基本属性"></a>基本属性</h2><ul>
+<li>class：为html元素定义一个或多个类名（classname）(类名从样式文件引入)</li>
+<li>id：定义元素的唯一id</li>
+<li>style：规定元素的行内样式（inline style）</li>
+<li>title：描述了元素的额外信息 (作为工具条使用)</li>
+</ul>
+<h1 id="HTML文本格式化"><a href="#HTML文本格式化" class="headerlink" title="HTML文本格式化"></a>HTML文本格式化</h1><h2 id="粗体和斜体"><a href="#粗体和斜体" class="headerlink" title="粗体和斜体"></a>粗体和斜体</h2><ul>
+<li>HTML使用标签 <code>&lt;b&gt;</code>(bold) 与 <code>&lt;i&gt;</code>(italic) 对文本加粗和斜体</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">b</span>&gt;</span>加粗文本<span class="tag">&lt;/<span class="name">b</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">i</span>&gt;</span>斜体文本<span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>也可以用标签 <code>&lt;strong&gt;</code> , <code>&lt;em&gt;</code> 来加粗和斜体，这两个标签除了对文本格式化，还表示文本是重要的，所以要突出显示。</li>
+</ul>
+<h2 id="上下标"><a href="#上下标" class="headerlink" title="上下标"></a>上下标</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">sub</span>&gt;</span> 下标<span class="tag">&lt;/<span class="name">sub</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">sup</span>&gt;</span> 上标<span class="tag">&lt;/<span class="name">sup</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="大小"><a href="#大小" class="headerlink" title="大小"></a>大小</h2><ul>
+<li><code>&lt;small&gt;</code>定义小号字</li>
+<li><code>&lt;big&gt;</code>定义大号字</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">big</span>&gt;</span>这个文本字体放大<span class="tag">&lt;/<span class="name">big</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">small</span>&gt;</span>这个文本是缩小的<span class="tag">&lt;/<span class="name">small</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="计算机-编程代码"><a href="#计算机-编程代码" class="headerlink" title="计算机/编程代码"></a>计算机/编程代码</h2><ul>
+<li><code>&lt;code&gt;</code>定义计算机代码</li>
+<li><code>&lt;kbd&gt;</code>定义键盘码</li>
+<li><code>&lt;samp&gt;</code>定义计算机代码样本</li>
+<li><code>&lt;var&gt;</code>定义变量</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">code</span>&gt;</span>计算机输出<span class="tag">&lt;/<span class="name">code</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">kbd</span>&gt;</span>键盘输入<span class="tag">&lt;/<span class="name">kbd</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">tt</span>&gt;</span>打字机文本<span class="tag">&lt;/<span class="name">tt</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">samp</span>&gt;</span>计算机代码样本<span class="tag">&lt;/<span class="name">samp</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">var</span>&gt;</span>计算机变量<span class="tag">&lt;/<span class="name">var</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="地址"><a href="#地址" class="headerlink" title="地址"></a>地址</h2><ul>
+<li><code>&lt;address&gt;</code>定义地址</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">address</span>&gt;</span></span><br><span class="line">Written by <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;mailto:webmaster@example.com&quot;</span>&gt;</span>Jon Doe<span class="tag">&lt;/<span class="name">a</span>&gt;</span>.<span class="tag">&lt;<span class="name">br</span>&gt;</span> </span><br><span class="line">Visit us at:<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">Example.com<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">Box 564, Disneyland<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">USA</span><br><span class="line"><span class="tag">&lt;/<span class="name">address</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="文字方向"><a href="#文字方向" class="headerlink" title="文字方向"></a>文字方向</h2><ul>
+<li><code>&lt;bdo&gt;</code>定义文字方向</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">bdo</span> <span class="attr">dir</span>=<span class="string">&quot;rtl&quot;</span>&gt;</span>该段落文字从右到左显示。<span class="tag">&lt;/<span class="name">bdo</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span> </span><br></pre></td></tr></table></figure>
+<h2 id="块引用"><a href="#块引用" class="headerlink" title="块引用"></a>块引用</h2><ul>
+<li><code>&lt;blockquote&gt;</code>定义长的引用</li>
+<li><code>&lt;q&gt;</code>定义短的引用</li>
+<li><code>&lt;cite&gt;</code>定义引用、引证</li>
+<li><code>&lt;dfn&gt;</code>定义一个定义项目。</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>WWF&#x27;s goal is to: </span><br><span class="line"><span class="tag">&lt;<span class="name">q</span>&gt;</span>Build a future where people live in harmony with nature.<span class="tag">&lt;/<span class="name">q</span>&gt;</span></span><br><span class="line">We hope they succeed.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="删除和插入"><a href="#删除和插入" class="headerlink" title="删除和插入"></a>删除和插入</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>My favorite color is <span class="tag">&lt;<span class="name">del</span>&gt;</span>blue<span class="tag">&lt;/<span class="name">del</span>&gt;</span> <span class="tag">&lt;<span class="name">ins</span>&gt;</span>red<span class="tag">&lt;/<span class="name">ins</span>&gt;</span>!<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="HTML-CSS"><a href="#HTML-CSS" class="headerlink" title="HTML CSS"></a>HTML CSS</h1>]]></content>
+      <categories>
+        <category>网站</category>
+      </categories>
+      <tags>
+        <tag>html</tag>
+      </tags>
+  </entry>
 </search>
