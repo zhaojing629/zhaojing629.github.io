@@ -1,5 +1,4 @@
 ---
-layout: psot
 title: html基础
 date: 2020-12-25 16:40:53
 updated: 
@@ -150,7 +149,7 @@ typora-root-url: html基础
 
 包含可见的页面内容，只有` <body> `部分才会在浏览器中显示。
 
-# HTML标签
+# HTML标签/元素
 
 ## 语法
 
@@ -169,6 +168,28 @@ typora-root-url: html基础
 - 没有内容的 HTML 元素被称为空元素，不需要闭合标签，但是最好在开始标签中关闭空元素，用`< />`封装。
 - HTML标签对大小写不敏感，但是最好用小写。
 - 大多数HTML元素可以嵌套（HTML元素可以包含其他 HTML 元素）。
+
+## 元素分类
+
+### 块状元素
+
+- `<div>`、`<p>`、`<h1>`、`<ol>`、`<ul>`、`<dl>`、`<table>`、`<address>`、`<blockquote>`, `<form>`
+  - 每个块级元素都从新的一行开始，并且其后的元素也另起一行。
+  - 元素的高度、宽度、行高以及顶和底边距都可设置。
+  - 元素宽度在不设置的情况下，是它本身父容器的100%(和父元素的宽度一致），除非设定一个宽度。
+
+### 内联元素(行内元素)
+
+- `<a>`、`<span>`、`<br>`、`<i>`、`<em>`、`<strong>`、`<label>`、`<q>`、`<Var>`、`<cite>`、`<code>`
+  - 和其他元素都在一行上。
+  - 元素的高度、宽度及顶部和底部边距不可设置。
+  - 元素的宽度就是它包含的文字或图片的宽度，不可改变。
+
+### 内联块状元素
+
+- `<img>`、`<input>`
+  - 和其他元素都在一行上。
+  - 元素的高度、宽度、行高以及顶和底边距都可设置。
 
 ## 基本标签
 
@@ -254,7 +275,13 @@ typora-root-url: html基础
   <a href="https://www.runoob.com/" target="_blank" rel="noopener noreferrer">访问菜鸟教程!</a>
   ```
 
-- 如果在当前页面链接到指定位置，则可以使用`id`属性
+- 空链接，点击空链接会返回顶部，实际上等于刷新了该页面
+
+  ```html
+  <a href="#">空链接</a>
+  ```
+
+- 如果在当前页面链接到指定位置，则可以使用`id`或者`name`属性
 
   - 首先给要访问的地方加一个属性
 
@@ -305,16 +332,71 @@ typora-root-url: html基础
     </p>
     ```
 
-    
-
 ### 图像
 
-- 通过标签`img`来定义
+- 通过标签`img`来定义，`<img>` 是空标签，意思是说，它只包含属性，并且没有闭合标签。
 
--  图像的名称和尺寸是以属性的形式提供的
+- 要在页面上显示图像，你需要使用源属性（src）。src 指 "source"。源属性的值是图像的 URL 地址。语法：
+
+  - URL 指存储图像的位置。加载页面时，要注意插入页面图像的路径，如果不能正确设置图像的位置，浏览器无法加载图片，图像标签就会显示一个破碎的图片。
+  - alt 属性用来为图像定义一串预备的可替换的文本
+
+  ```html
+  <img src="url" alt="some_text">
+  ```
+
+- height（高度） 与 width（宽度）属性用于设置图像的高度与宽度。 指定图像的高度和宽度是一个很好的习惯。如果图像指定了高度宽度，页面加载时就会保留指定的尺寸。如果没有指定图片的大小，加载页面时有可能会破坏HTML页面的整体布局。
+
+  - 为了防止更改图片的比例，可以只设定高度或者宽度
+
+  ```html
+  <img src="pulpit.jpg" alt="Pulpit rock" width="304" height="228">
+  ```
+
+- 图像的名称使用`tltle`定义
 
   ```html
   <img loading="lazy" src="/images/logo.png" width="258" height="39" />
+  ```
+
+- 排列图片，用`align`。在HTML 4中 align 属性已废弃，HTML5 已不支持该属性，可以使用 CSS 代替。
+
+  ```html
+  <h4>默认对齐的图像 (align="bottom"):</h4>
+  <p>这是一些文本。 <img src="smiley.gif" alt="Smiley face" width="32" height="32"> 这是一些文本。</p>
+  
+  <h4>图片使用 align="middle":</h4>
+  <p>这是一些文本。 <img src="smiley.gif" alt="Smiley face" align="middle" width="32" height="32">这是一些文本。</p>
+  
+  <h4>图片使用 align="top":</h4>
+  <p>这是一些文本。 <img src="smiley.gif" alt="Smiley face" align="top" width="32" height="32">这是一些文本。</p>
+  ```
+
+- `border`设置图片边框
+
+  ```html
+  <p>创建图片链接:
+  <a href="//www.runoob.com/html/html-tutorial.html">
+  <img  border="10" src="smiley.gif" alt="HTML 教程" width="32" height="32"></a></p>
+  ```
+
+- 用`usemap`和`<map>`（定义图像地图）创建带有可供点击区域的图像地图。其中的每个区域都是一个超级链接。`<area>` 定义图像地图中的可点击区域。
+
+  - `shape`指的是点击区域的形状，`coords`指链接区域在图片中的坐标（像素为单位）
+    - `rect`：矩形，(左上角顶点坐标为(x1,y1)，右下角顶点坐标为(x2,y2))
+    - `circle`：圆形：(圆心坐标为(X1,y1)，半径为r)
+    - `poly`：多边形：(各顶点坐标依次为(x1,y1)、(x2,y2)、(x3,y3) ......)
+
+  ```html
+  <p>点击太阳或其他行星，注意变化：</p>
+  
+  <img src="planets.gif" width="145" height="126" alt="Planets" usemap="#planetmap">
+  
+  <map name="planetmap">
+    <area shape="rect" coords="0,0,82,126" alt="Sun" href="sun.htm">
+    <area shape="circle" coords="90,58,3" alt="Mercury" href="mercur.htm">
+    <area shape="circle" coords="124,58,8" alt="Venus" href="venus.htm">
+  </map>
   ```
 
 ### 注释
@@ -437,5 +519,267 @@ We hope they succeed.</p>
 <p>My favorite color is <del>blue</del> <ins>red</ins>!</p>
 ```
 
-# HTML CSS
+# HTML表格
 
+- 表格由 `<table>` 标签来定义。
+- 每个表格均有若干行（由 `<tr>` 标签定义）
+- 每行被分割为若干单元格（由 `<td>` 标签定义）。字母 td 指表格数据（table data），即数据单元格的内容。数据单元格可以包含文本、图片、列表、段落、表单、水平线、表格等等。
+
+```html
+<table border="1">
+  <caption>Monthly savings</caption>
+  <tr>
+    <th>Month</th>
+    <th>Savings</th>
+  </tr>
+  <tr>
+    <td>January</td>
+    <td>$100</td>
+  </tr>
+  <tr>
+    <td>February</td>
+    <td>$50</td>
+  </tr>
+</table>
+```
+
+- 表格和边框属性：如果不定义边框属性，表格将不显示边框，可以直接去掉`border`，也可以设置为`border="0"`
+
+- 表格表头：使用 `<th>` 标签进行定义，大多数浏览器会把表头显示为粗体居中的文本。
+
+  ```html
+  <h4>水平标题:</h4>
+  <table border="1">
+  <tr>
+    <th>Name</th>
+    <th>Telephone</th>
+    <th>Telephone</th>
+  </tr>
+  <tr>
+    <td>Bill Gates</td>
+    <td>555 77 854</td>
+    <td>555 77 855</td>
+  </tr>
+  </table>
+  
+  <h4>垂直标题:</h4>
+  <table border="1">
+  <tr>
+    <th>First Name:</th>
+    <td>Bill Gates</td>
+  </tr>
+  <tr>
+    <th>Telephone:</th>
+    <td>555 77 854</td>
+  </tr>
+  <tr>
+    <th>Telephone:</th>
+    <td>555 77 855</td>
+  </tr>
+  </table>
+  ```
+
+- 表格标题用`<caption>`定义
+
+- 定义跨行或跨列的表格单元格：
+
+  ```html
+  <h4>单元格跨两列:</h4>
+  <table border="1">
+  <tr>
+    <th>Name</th>
+    <th colspan="2">Telephone</th>
+  </tr>
+  <tr>
+    <td>Bill Gates</td>
+    <td>555 77 854</td>
+    <td>555 77 855</td>
+  </tr>
+  </table>
+  
+  <h4>单元格跨两行:</h4>
+  <table border="1">
+  <tr>
+    <th>First Name:</th>
+    <td>Bill Gates</td>
+  </tr>
+  <tr>
+    <th rowspan="2">Telephone:</th>
+    <td>555 77 854</td>
+  </tr>
+  <tr>
+    <td>555 77 855</td>
+  </tr>
+  </table>
+  ```
+
+- 在不同的表格元素内显示其他元素，比如：
+
+  ```html
+  <table border="1">
+  <tr>
+    <td>
+     <p>这是一个段落</p>
+     <p>这是另一个段落</p>
+    </td>
+    <td>这个单元格包含一个表格:
+     <table border="1">
+     <tr>
+       <td>A</td>
+       <td>B</td>
+     </tr>
+     <tr>
+       <td>C</td>
+       <td>D</td>
+     </tr>
+     </table>
+    </td>
+  </tr>
+  <tr>
+    <td>这个单元格包含一个列表
+     <ul>
+      <li>apples</li>
+      <li>bananas</li>
+      <li>pineapples</li>
+     </ul>
+    </td>
+    <td>HELLO</td>
+  </tr>
+  </table>
+  ```
+
+- 设置单元格边距：
+
+  ```html
+  <table border="1" 
+  cellpadding="10">
+  <tr>
+    <td>First</td>
+    <td>Row</td>
+  </tr>   
+  <tr>
+    <td>Second</td>
+    <td>Row</td>
+  </tr>
+  </table>
+  ```
+
+- 设置单元格之间的间距，即边框的宽度
+
+  ```html
+  <table border="1" cellspacing="0">
+  <tr>
+    <td>First</td>
+    <td>Row</td>
+  </tr>
+  <tr>
+    <td>Second</td>
+    <td>Row</td>
+  </tr>
+  </table>
+  ```
+
+- `<colgroup>`定义表格列的组，以便对其进行格式化。可以向整个列应用样式，而不需要重复为每个单元格或每一行设置样式。只能在 `<table>` 元素之内，在任何一个 `<caption>` 元素之后，在任何一个 `<thead>`、`<tbody>`、`<tfoot>`、`<tr>` 元素之前使用 。
+
+  - `<col>`用于表格列的属性
+
+  ```html
+  <table border="1">
+    <colgroup>
+      <col span="2" style="background-color:red">
+      <col style="background-color:yellow">
+    </colgroup>
+    <tr>
+      <th>ISBN</th>
+      <th>Title</th>
+      <th>Price</th>
+    </tr>
+    <tr>
+      <td>3476896</td>
+      <td>My first HTML</td>
+      <td>$53</td>
+    </tr>
+  </table>
+  ```
+
+-  thead, tbody, 和 tfoot 元素定义表格的页眉、主体、页脚。这些元素默认不会影响表格的布局。可以使用 CSS 来为这些元素定义样式，从而改变表格的外观。
+
+# HTML列表
+
+- 无序列表是一个项目的列表，此列项目使用粗体圆点（典型的小黑圆圈）进行标记。使用 `<ul>` 标签。
+
+  - 可以通过`style`属性定义标记，但是在 HTML 4中 `ul` 属性已废弃，HTML5 已不支持该属性，可以使用 CSS 代替来定义：
+    - "list-style-type:disc"是圆点列表
+    - "list-style-type:circle"是圆圈列表
+    - style="list-style-type:square"是正方形列表
+
+  ```html
+  <ul>
+  <li>Coffee</li>
+  <li>Milk</li>
+  </ul>
+  ```
+
+- 有序列表使用数字进行标记。 有序列表始于 `<ol>` 标签。每个列表项始于 `<li>` 标签。
+
+  - ol标签中可以增加`start`属性，表明数字从多少开始
+  - `type`属性定义列表属性
+    - "A"是大写字母列表
+    - "a"是小写字母列表
+    - "I"是罗马数字列表
+    - "i"是小写罗马数字列表
+
+  ```html
+  <ol>
+  <li>Coffee</li>
+  <li>Milk</li>
+  </ol>
+  ```
+
+- 自定义列表不仅仅是一列项目，而是项目及其注释的组合。自定义列表以 `<dl>` 标签开始。每个自定义列表项以 `<dt>` 开始。每个自定义列表项的定义以 `<dd>` 开始。
+
+  ```html
+  <dl>
+  <dt>Coffee</dt>
+  <dd>- black hot drink</dd>
+  <dt>Milk</dt>
+  <dd>- white cold drink</dd>
+  </dl>
+  ```
+
+- 列表项内部可以使用段落、换行符、图片、链接以及其他列表等
+
+  - 嵌套列表
+
+    ```html
+    <ul>
+      <li>Coffee</li>
+      <li>Tea
+        <ul>
+          <li>Black tea</li>
+          <li>Green tea</li>
+        </ul>
+      </li>
+      <li>Milk</li>
+    </ul>
+    ```
+
+- 如果不想要列表前面的项目号，可以通过css在`li`的里面添加`list-style: none;`
+
+# HTML` <div> `和`<span>`
+
+## 块级元素和内联元素
+
+- 块级元素在浏览器显示时，通常会以新行来开始（和结束）。比如`<h1>`, <p>, `<ul>`, `<table>`
+- 内联元素在显示时通常不会以新行开始。比如`<b>`, `<td>`, `<a>`, `<img>`
+
+## ` <div> `
+
+- `<div> `元素没有特定的含义，可用于组合其他 HTML 元素的容器，成为块级元素。浏览器会在其前后显示折行。
+- 如果与 CSS 一同使用，`<div>` 元素可用于对大的内容块设置样式属性。
+- `<div> `元素的另一个常见的用途是文档布局。它取代了使用表格定义布局的老式方法。使用 `<table>` 元素进行文档布局不是表格的正确用法。`<table>` 元素的作用是显示表格化的数据。
+
+## `<span>`
+
+- ` <span> `没有特定的含义，是内联元素，可用作文本的容器。
+- 当与 CSS 一同使用时，`<span>` 元素可用于为部分文本设置样式属性。
