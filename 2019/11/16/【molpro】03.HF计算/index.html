@@ -29,7 +29,7 @@
 <meta property="og:description" content="molpro的HF计算">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-11-16T14:10:02.000Z">
-<meta property="article:modified_time" content="2020-12-28T09:41:21.860Z">
+<meta property="article:modified_time" content="2020-12-28T09:45:00.273Z">
 <meta property="article:author" content="Zhao Jing">
 <meta property="article:tag" content="HF">
 <meta name="twitter:card" content="summary">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-28 17:41:21" itemprop="dateModified" datetime="2020-12-28T17:41:21+08:00">2020-12-28</time>
+                <time title="修改时间：2020-12-28 17:45:00" itemprop="dateModified" datetime="2020-12-28T17:45:00+08:00">2020-12-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -266,7 +266,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>712</span>
+              <span>700</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -292,26 +292,18 @@
 </ul>
 <h1 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h1><h2 id="定义波函数"><a href="#定义波函数" class="headerlink" title="定义波函数"></a>定义波函数</h2><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">WF,</span>elec,sym,spin</span><br></pre></td></tr></table></figure>
 <ul>
-<li><p><code>OCC</code>定义每个对称性的占据轨道数，轨道的总数必须等于(总电子数+spin)/2</p>
-</li>
-<li><p><code>CLOSED</code>定义闭壳层轨道，可用于开壳层计算，指定每个对称性中闭壳层轨道的数量。</p>
-</li>
-<li><p><code>OPEN</code>指定开壳层轨道，即指定单占据轨道，单占据轨道的数量必须等于spin，其对称性乘<br>积必须等于sym，如果<code>orbi.sym</code>为负，这个轨道将用负自旋占据（仅允许在UHF中）。</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">OPEN</span>,<span class="selector-tag">orb1</span><span class="selector-class">.sym1</span>,<span class="selector-tag">orb</span><span class="selector-class">.sym2</span>,..<span class="selector-class">.orbn</span><span class="selector-class">.symn</span></span><br></pre></td></tr></table></figure>
+<li><code>OCC</code>定义每个对称性的占据轨道数，轨道的总数必须等于(总电子数+spin)/2</li>
+<li><code>CLOSED</code>定义闭壳层轨道，可用于开壳层计算，指定每个对称性中闭壳层轨道的数量。</li>
+<li><code>OPEN</code>指定开壳层轨道，即指定单占据轨道，单占据轨道的数量必须等于spin，其对称性乘<br>积必须等于sym，如果<code>orbi.sym</code>为负，这个轨道将用负自旋占据（仅允许在UHF中）。<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">OPEN</span>,<span class="selector-tag">orb1</span><span class="selector-class">.sym1</span>,<span class="selector-tag">orb</span><span class="selector-class">.sym2</span>,..<span class="selector-class">.orbn</span><span class="selector-class">.symn</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>O<sub>2</sub></p>
 <ul>
-<li><p>轨道占据为<script type="math/tex">1\sigma_g^21\sigma_u^22\sigma_g^22\sigma_u^23\sigma_g^21\pi_{u,x}^21\pi_{u,y}^21\pi_{g,x}^11\pi_{g,y}^1</script></p>
-</li>
-<li><p>$\sigma<em>g$，$\pi</em>{u,x}$，$\pi<em>{u,y}，$$\sigma_u$，$\pi</em>{g,x}$，$\pi<em>{g,y}$的对称性分别对应于$D</em>{2h}$的1，2，3，5，6，7，则<code>OCC</code>中为<code>3,1,1,,2,1,1</code></p>
-</li>
-<li><p>$\pi<em>{g,x}$，$\pi</em>{g,y}$相乘为4（$B<em>{2g}\times B</em>{3g}=B_{1g}$），<code>wf</code>的对称性是4</p>
-</li>
-<li><p>$\pi<em>{u,x}$，$\pi</em>{u,y}$相乘也为4，所以需要用<code>OPEN</code>进一步明确开壳层的轨道</p>
-</li>
-<li><p>输入文件为：</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;hf</span><br><span class="line">wf,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span></span><br><span class="line">occ,<span class="number">3</span>,<span class="number">1</span>,<span class="number">1</span>,,<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span></span><br><span class="line">open,<span class="number">1.6</span>,<span class="number">1.7</span>&#125; </span><br></pre></td></tr></table></figure>
+<li>轨道占据为<script type="math/tex">1\sigma_g^21\sigma_u^22\sigma_g^22\sigma_u^23\sigma_g^21\pi_{u,x}^21\pi_{u,y}^21\pi_{g,x}^11\pi_{g,y}^1</script></li>
+<li><script type="math/tex">\sigma_g</script>，<script type="math/tex">\pi_{u,x}</script>，<script type="math/tex">\pi_{u,y}</script>，<script type="math/tex">\sigma_u</script>，<script type="math/tex">\pi_{g,x}</script>，<script type="math/tex">\pi_{g,y}</script>的对称性分别对应于<script type="math/tex">D_{2h}</script>的1，2，3，5，6，7，则<code>OCC</code>中为<code>3,1,1,,2,1,1</code></li>
+<li><script type="math/tex">\pi_{g,x}</script>，<script type="math/tex">\pi_{g,y}</script>相乘为4（<script type="math/tex">B_{2g}\times B_{3g}=B_{1g}</script>），<code>wf</code>的对称性是4</li>
+<li><script type="math/tex">\pi_{u,x}</script>，<script type="math/tex">\pi_{u,y}</script>相乘也为4，所以需要用<code>OPEN</code>进一步明确开壳层的轨道</li>
+<li>输入文件为：<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;hf</span><br><span class="line">wf,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span></span><br><span class="line">occ,<span class="number">3</span>,<span class="number">1</span>,<span class="number">1</span>,,<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span></span><br><span class="line">open,<span class="number">1.6</span>,<span class="number">1.7</span>&#125; </span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 
