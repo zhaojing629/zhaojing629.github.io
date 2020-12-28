@@ -810,7 +810,7 @@
 </ul>
 <h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>O<sub>2</sub></p>
 <ul>
-<li><p>轨道占据为$1\sigma<em>g^21\sigma_u^22\sigma_g^22\sigma_u^23\sigma_g^21\pi</em>{u,x}^21\pi<em>{u,y}^21\pi</em>{g,x}^11\pi_{g,y}^1$</p>
+<li><p>轨道占据为<script type="math/tex">1\sigma_g^21\sigma_u^22\sigma_g^22\sigma_u^23\sigma_g^21\pi_{u,x}^21\pi_{u,y}^21\pi_{g,x}^11\pi_{g,y}^1</script></p>
 </li>
 <li><p>$\sigma<em>g$，$\pi</em>{u,x}$，$\pi<em>{u,y}，$$\sigma_u$，$\pi</em>{g,x}$，$\pi<em>{g,y}$的对称性分别对应于$D</em>{2h}$的1，2，3，5，6，7，则<code>OCC</code>中为<code>3,1,1,,2,1,1</code></p>
 </li>
@@ -3886,14 +3886,13 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <h1 id="CSS-浮动-float"><a href="#CSS-浮动-float" class="headerlink" title="CSS 浮动 float"></a>CSS 浮动 float</h1><p>一个浮动元素会尽量向左或向右移动，直到它的外边缘碰到包含框或另一个浮动框的边框为止。</p>
 <h1 id="CSS边距-填充"><a href="#CSS边距-填充" class="headerlink" title="CSS边距/填充"></a>CSS边距/填充</h1><h2 id="边距"><a href="#边距" class="headerlink" title="边距"></a>边距</h2><p>定义元素周围的空间</p>
 <figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="attribute">margin-top</span>:<span class="number">100px</span>;</span><br><span class="line"><span class="attribute">margin-bottom</span>:<span class="number">100px</span>;</span><br><span class="line"><span class="attribute">margin-right</span>:<span class="number">50px</span>;</span><br><span class="line"><span class="attribute">margin-left</span>:<span class="number">50px</span>;</span><br></pre></td></tr></table></figure>
-<p>简写：</p>
-<ul>
+<h2 id="简写-1"><a href="#简写-1" class="headerlink" title="简写"></a>简写</h2><ul>
 <li><code>margin:25px 50px 75px 100px;</code>分别是上，右，下，左</li>
 <li><code>margin:25px 50px 75px;</code>分别是上，左右，下</li>
 <li><code>margin:25px 50px;</code>分别是上下、左右</li>
 <li><code>margin:25px;</code>所有边距</li>
 </ul>
-<p>可以利用<code>margin:0 auto;</code>将元素局中</p>
+<p>可以利用<code>margin:0 auto;</code>将元素居中。</p>
 <h2 id="填充"><a href="#填充" class="headerlink" title="填充"></a>填充</h2><p>上下左右的内边距，同<code>margin</code>一样：</p>
 <figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="attribute">padding-top</span>:<span class="number">25px</span>;</span><br><span class="line"><span class="attribute">padding-bottom</span>:<span class="number">25px</span>;</span><br><span class="line"><span class="attribute">padding-right</span>:<span class="number">50px</span>;</span><br><span class="line"><span class="attribute">padding-left</span>:<span class="number">50px</span>;</span><br></pre></td></tr></table></figure>
 <ul>
