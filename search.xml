@@ -814,6 +814,62 @@
 <li>输入文件为：<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">&#123;hf</span><br><span class="line">wf,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span></span><br><span class="line">occ,<span class="number">3</span>,<span class="number">1</span>,<span class="number">1</span>,,<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span></span><br><span class="line">open,<span class="number">1.6</span>,<span class="number">1.7</span>&#125; </span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<h2 id="初始轨道"><a href="#初始轨道" class="headerlink" title="初始轨道"></a>初始轨道</h2><p>程序既可以产生初始轨道猜测，也可以从以前优化的轨道开始。还可以使用以前的密度矩阵构造第一个Fock算符。如果不指定START卡，程序会按照以下方式试着寻找合适的初始轨道：</p>
+<ol>
+<li>试着从<code>ORBITAL</code>或<code>SAVE</code>卡指定的record或它们相应的默认值（参见ORBITAL）中读取轨道。所有的文件都被搜索。</li>
+<li>试着从以前的SCF或MCSCF计算寻找轨道。所有的文件都被搜索。</li>
+<li>如果没有发现轨道，则初始轨道用近似原子密度或ℎ的本征矢产生（见下）。</li>
+</ol>
+<p>由于这些默认值通常都是合适的，因此在大多数情况下不需要<code>START</code>卡。</p>
+<p>定义方法：</p>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">START</span>,[<span class="keyword">TYPE</span>=]<span class="keyword">option</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>option关键词可以是：<ul>
+<li><code>H0</code>：用ℎ的本征矢作为初始猜测。</li>
+<li><code>ATDEN</code>：使用从原子占据数构造的对角密度矩阵的自然轨道。</li>
+</ul>
+</li>
+</ul>
+<h1 id="其他指令"><a href="#其他指令" class="headerlink" title="其他指令"></a>其他指令</h1><h2 id="能级移动"><a href="#能级移动" class="headerlink" title="能级移动"></a>能级移动</h2><ul>
+<li>对α和β电子分别使用<code>shifta</code>和<code>shiftb</code>的能级移动，可以改善收敛，对求解没有影响。<ul>
+<li>闭壳层的默认值是shifta=<code>0</code></li>
+<li>开壳层的默认值是<code>-0.3 0</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">SHIFT,</span>shifta,shiftb</span><br></pre></td></tr></table></figure>
+<h2 id="迭代的最大数量"><a href="#迭代的最大数量" class="headerlink" title="迭代的最大数量"></a>迭代的最大数量</h2><ul>
+<li>设置迭代的最大数量为maxit。默认为maxit= 60。</li>
+</ul>
+<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">MAXIT,</span>maxit</span><br></pre></td></tr></table></figure>
+<h2 id="收敛阈值"><a href="#收敛阈值" class="headerlink" title="收敛阈值"></a>收敛阈值</h2><ul>
+<li>收敛阈值设置为<script type="math/tex">10^{-accu}</script>。这用于密度矩阵元变化量的平方和。</li>
+<li>默认值取决于全局能量阈值，并且阈值会在几何优化或频率计算中自动更小，除非给出了一个阈值。</li>
+</ul>
+<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ACCU,</span>accu</span><br></pre></td></tr></table></figure>
+<h2 id="能量的合理性检查"><a href="#能量的合理性检查" class="headerlink" title="能量的合理性检查"></a>能量的合理性检查</h2><ul>
+<li>禁止能量的合理性检查，即使是能量值不合理时。否则，默认自动检查能<br>量。</li>
+</ul>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">NOENEST</span></span><br></pre></td></tr></table></figure>
+<h2 id="打印"><a href="#打印" class="headerlink" title="打印"></a>打印</h2><ul>
+<li>打印虚轨道的数量，默认为print= 0。</li>
+<li>print= −1完全禁止打印轨道。test=1在每次迭代后打印轨道。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ORBPRINT,<span class="built_in">print</span>,<span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<h1 id="SCF不收敛"><a href="#SCF不收敛" class="headerlink" title="SCF不收敛"></a>SCF不收敛</h1><ul>
+<li><p>通过能级移动，导致更平滑但更慢的收敛</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">&#123;rhf; shift,<span class="number">-1.0</span>,<span class="number">-0.5</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>冻结占据，在迭代第N次的时候，冻结轨道占据。<code>rhf，nitord = 1&#125;</code>会冻结最初的占据。</p>
+<figure class="highlight clojure"><table><tr><td class="code"><pre><span class="line">&#123;rhf，nitord = N&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>极小基SCF猜：</p>
+</li>
+<li><p>增加DIIS：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">&#123;rhf,maxdis=<span class="number">30</span>,iptyp=<span class="string">&#x27;DIIS&#x27;</span>,nitord=<span class="number">20</span>; shift,<span class="number">-1.0</span>,<span class="number">-0.5</span>&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">&#123;rhf,maxdis=<span class="number">10</span>,iptyp=<span class="string">&#x27;KAIN&#x27;</span>,nitord=<span class="number">10</span>; shift,<span class="number">-1.0</span>,<span class="number">-0.5</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>计算化学</category>
