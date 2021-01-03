@@ -783,3 +783,26 @@ We hope they succeed.</p>
 
 - ` <span> `没有特定的含义，是内联元素，可用作文本的容器。
 - 当与 CSS 一同使用时，`<span>` 元素可用于为部分文本设置样式属性。
+
+
+
+
+
+# HTML滚动
+
+ 使用`<marquee>`标签可以将文字设置为动态滚动的效果。
+
+- 方向：`direction`属性设定：`up`、`down`、`left`（默认）和`right`
+
+- 滚动方式`behavior`：
+  - `scroll`：循环滚动，默认
+  - `slide`：只滚动一次就停止
+  - `alternate：来回交替进行滚动
+
+- 速度：`scrollamount="滚动速度"`：滚动文字的速度实际上是设置滚动文字每次移动的长度，以像素为单位。
+
+- 延迟：`scrolldelay="时间间隔"`，时间间隔单位是毫秒（千分之一秒）
+- 次数： `loop="循环次数"`
+- 范围：`width=""  height=""`
+- 滚动背景颜色属性：`bgcolor="颜色代码"`
+- 滚动空间属性：`hspace="水平范围"  vspace="垂直范围"`

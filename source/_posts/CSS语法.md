@@ -361,14 +361,14 @@ margin-right:50px;
 margin-left:50px;
 ```
 
-简写：
+## 简写
 
 - `margin:25px 50px 75px 100px;`分别是上，右，下，左
 - `margin:25px 50px 75px;`分别是上，左右，下
 - `margin:25px 50px;`分别是上下、左右
 - `margin:25px;`所有边距
 
-可以利用`margin:0 auto;`将元素局中
+可以利用`margin:0 auto;`将元素居中。
 
 ## 填充
 
