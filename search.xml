@@ -1183,7 +1183,7 @@
 <h1 id="单原子"><a href="#单原子" class="headerlink" title="单原子"></a>单原子</h1><h2 id="等价电子原子光谱"><a href="#等价电子原子光谱" class="headerlink" title="等价电子原子光谱"></a>等价电子原子光谱</h2><script type="math/tex; mode=display">
 ^{2S+1}L_J</script><ol>
 <li>首先根据<script type="math/tex">S=\frac {|α_{电子数}-β_{电子数}|}{2}</script>确定$2S+1$（即单电子数+1）</li>
-<li>轨道角动量量子数L等于每个电子的轨道角量子数矢量和（电子从最高的轨道角量子数的轨道开始占据），根据和确定符号：</li>
+<li>轨道角动量量子数L等于每个电子的轨道角量子数矢量和（电子从最高的轨道角量子数的轨道开始占据），根据<script type="math/tex">l</script>和确定符号，再确定J=L-S</li>
 </ol>
 <div class="table-container">
 <table>
@@ -1223,9 +1223,6 @@
 </tbody>
 </table>
 </div>
-<ol>
-<li>J=L-S</li>
-</ol>
 <p><strong>例子：</strong></p>
 <div class="table-container">
 <table>
@@ -4060,6 +4057,78 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
       <tags>
         <tag>html</tag>
         <tag>CSS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Linux】MobaXterm快捷方式</title>
+    <url>/2021/01/07/MobaXterm%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F/</url>
+    <content><![CDATA[<blockquote>
+<p>标记：</p>
+<p><del>已经熟练掌握的</del></p>
+<p><strong>经常用到的</strong></p>
+</blockquote>
+<h1 id="文本处理"><a href="#文本处理" class="headerlink" title="文本处理"></a>文本处理</h1><ul>
+<li>Ctrl+U   删除光标到行首</li>
+<li>Ctrl+K   删除光标到行尾</li>
+<li>Ctrl+W  剪切到当前单词开头</li>
+<li><strong>Alt+D   剪切到当前单词词尾</strong></li>
+<li><del>Ctrl+D   删除光标所在字符=Delete</del></li>
+<li><del>Ctrl+H   删除光标前的字符=Backspace</del></li>
+<li>Ctrl+Y   粘贴最后一次被删除的单词</li>
+<li>Ctrl+7   恢复刚刚的内容</li>
+<li>Ctrl+(X U)    撤销刚才的操作 </li>
+<li>Ctrl+V   插入特殊字符,如Ctrl+(V Tab)加入Tab字符键</li>
+<li><del>Shift+Insert 粘贴</del></li>
+<li>鼠标中间滑轮 粘贴</li>
+</ul>
+<h1 id="交换"><a href="#交换" class="headerlink" title="交换"></a>交换</h1><ul>
+<li>Ctrl+T   交换光标位置前的两个字符</li>
+<li>Alt+T   颠倒光标相邻单词的位置=Esc+T</li>
+</ul>
+<h1 id="大小写"><a href="#大小写" class="headerlink" title="大小写"></a>大小写</h1><ul>
+<li>Alt+C   将光标所在字符到词尾改为首字母大写</li>
+<li>Alt+U   将光标所在字符到词尾转化为大写</li>
+<li>Alt+L    将光标所在字符到词尾转化为小写</li>
+</ul>
+<h1 id="光标移动"><a href="#光标移动" class="headerlink" title="光标移动"></a>光标移动</h1><ul>
+<li><del>Ctrl+A   光标移动到行首=home</del></li>
+<li><del>Ctrl+E   光标移动到行尾=end</del></li>
+<li>Alt+B   移到前一个单词首=ctrl+←</li>
+<li>Alt+F    移到后一个单词尾=ctrl+→</li>
+<li><del>Ctrl+F   向前一格=←</del></li>
+<li><del>Ctrl+B   向后一格=→</del></li>
+<li>Esc+B   移动到当前单词的开头</li>
+<li>Esc+F   移动到当前单词的结尾</li>
+<li>Ctrl+X X 在光标和行首切换</li>
+</ul>
+<h1 id="翻页"><a href="#翻页" class="headerlink" title="翻页"></a>翻页</h1><ul>
+<li>Shift+UpArrow    向上滚屏</li>
+<li>Shift+DownArrow  向下滚屏</li>
+<li>Shift+PageUp 向上翻页</li>
+<li>Shift+PageDown  向下翻页</li>
+<li>Ctrl+L   清屏</li>
+</ul>
+<h1 id="命令相关"><a href="#命令相关" class="headerlink" title="命令相关"></a>命令相关</h1><ul>
+<li>!!       执行上一条命令</li>
+<li>!?String?     执行含有String字符串的最新命令</li>
+<li>!$      以上一条命令的参数做为其参数\</li>
+<li><del>Ctrl+C   取消当前行命令</del></li>
+<li>Ctrl+P   显示上一条命令=↑</li>
+<li>Ctrl+N   显示下一条命令=↓</li>
+<li><del><strong>Ctrl+R   查找历史命令/继续向上检索</strong></del></li>
+<li><del>Ctrl+O   =Enter</del></li>
+<li><del>tab tab=esc esc esc=ctrl+I I  显示所有支持的命令</del></li>
+<li>Alt+Shift+,   历史命令第一项</li>
+</ul>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><ul>
+<li><del>Ctrl+M  最小化窗口</del></li>
+</ul>
+]]></content>
+      <categories>
+        <category>系统</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
 </search>
