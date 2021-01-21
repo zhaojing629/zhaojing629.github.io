@@ -131,6 +131,8 @@ PUT,style,file,status,info
   
   - `MOLDEN`：将创建用于MOLDEN可视化程序的接口文件
   
+    - 注意：<font color=red>molden文件不支持含h以上角动量的基组，如果仅需要可视化轨道查看，那么可以将基组中的h删去，输出molden文件，结果差别很小。</font>
+  
     ```
     put,molden,h2o.molden;
     ```
@@ -360,28 +362,106 @@ MOLPRO默认使用球谐基函数(5d，7f等)，即使是对Pople基组，如6-3
 
 ## 基组库
 
+基组库由一组无格式文本文件以及相应的索引构成，组成了通用的基组（原高斯函数和相应的收缩）和有效芯势数据库。这些文件可以在源文件的目录树中找到，分别为lib/*.libmol和lib/libmol.index，但更方便的方法是从数据库里查找：
+
 - [美国太平洋西北国家实验室（Pacic Northwest NationalLaboratory）的基组数据库](https://www.basissetexchange.org/)
 - [Stuttgart 有效芯势和基组](http://www.tc.uni-koeln.de/PP/clickpse.en.html)
 - [molpro网页的basisi.php脚本](https://www.molpro.net/info/basis.php?portal=user&choice=Basis+library)，可以本地安装也可以直接在网页中获取
 
 ## 默认基组及其调用
 
-```
-BASIS,basis
-```
-
-或
-
-```
-BASIS=basis
-```
+### 指定
 
 - 对任何对称唯一的原子组都没有定义基组，那么程序假定使用全局默认值（VDZ）
 
+- 通过一下方法指定基组。
+
+  ```
+  BASIS,basis
+  ```
+
+  或
+
+  ```
+  BASIS=basis
+  ```
+
+- 默认基组可以在输入文件能量计算前的任何位置定义，并且只能使用一个BASIS卡。默认基组应用于所有类型的原子，但是可以对特定的原子替换成不同的基组。
+
+- `BASIS`不能作为变量，比如`$BASIS=[AVDZ, AVTZ, AVQZ]`，使用遍历的方法为：
+
+  ```
+  $aobases=[AVDZ, AVTZ, AVQZ]
+  do i=1,#aobases
+  basis=aobases(i)
+  ...
+  enddo
+  ```
+
+### 可调用的基组
+
+- `basis`可以在文件lib/defbas中查找，包含的通用基组有：
+  - 所有的Dunning关联一致基组，用基组的标准名称（cc-pVXZ，aug-cc-pVXZ）或缩写（VXZ，AVXZ）调用。对于Al-Ar，用标准名称cc-pV(X+d)Z，aug-cc-pV(X+d)Z，或VXZ+d，AVXZ+d，可以得到紧凑的d扩充集。X=D,T,Q,5的基组适用于H-Kr，X=6适用于B-Ne和Al-Ar。
+  - 用于芯关联的关联一致基组cc-pCVXZ，aug-cc-pCVXZ，或CVXZ，ACVXZ（X=D,T,Q,5），以及更新的“加权集”cc-pwCVXZ，aug-cc-pwCVXZ，或WCVXZ，AWCVXZ（X=D,T,Q,5）。这些基组适用于Li-Kr（CVXZ不包括Sc-Zn）。
+  - Douglas-Kroll-Hess相对论版本的关联一致基组，可以使用加上-DK后缀的标准名称或简称，例如，cc-pVXZ-DK或VXZ-DK。X=D-5适用于H-Kr，X=T适用于YCd和Hf-Hg。三阶DKH收缩集适用于Hf-Hg，需要加上后缀-DK3。
+  - Peterson等人用于用于显关联计算的F12基组：cc-pVXZ-F12，cc-pCVXZ-F12，或VXZ-F12，CVXZ-F12，其中X=D,T,Q。它们适用于H-Ar。
+  - Turbomole def2系列基组：SV(P)，SVP，TZVP，TZVPP，QZVP，QZVPP。它们可用于除了f区元素之外的整个周期表。
+  - 对于第一行原子（不是H和He），有旧一些的Dunning/Hay分块收缩双zeta基（DZ和DZP）。
+  - Roos的ANO基组用于H-Ar（ROOS）。
+  - Stuttgart ECP和相应基组（例如ECP10MDF），以及Peterson等人基于ECP的关联一致基组：cc-pVXZ-PP，aug-cc-pVXZ-PP，cc-pwCVXZ-PP，aug-cc-pwCVXZ-PP，或VXZ-PP，AVXZ-PP，WCVXZ-PP，AWCVXZ-PP。后者适用于Cu-Kr，Y-Xe，和Hf-
+    Rn（芯关联集目前仅用于过渡金属）。
+  - Hay ECP和相应基组（ECP1和ECP2）。
+  - 其它一些Karslruhe基组（SV，TZV，以及用于某些元素的TZVPPP）。
+  - 用于Ga-Kr的Binning/Curtiss集（BINNING-SV，BINNING-SVP，BINNING-VTZ和BINNINGVTZP）
+  - 大多数Pople基组使用其标准名称（例如6-31G*，6-311++G(D,P)，等）。在这种情况下需要特别注意，不能使用下面描述的用于限定基组的括弧修饰机制，必须使用被指定的整个标准基组。
+- 此外，还可以使用很多密度拟合和单位分解（resolution of the identity，RI）基组。在密度拟合计算中，对Dunning的关联一致基组自动选择合适的Weigend VXZ/JKFIT，XZ/MP2FIT，或AVXZ/MP2FIT集（还可以用扩充版本的AVXZ/JKFIT 用于拟合Fock矩阵，但默认不使用）。对于def2系列的轨道基组，使用合适的辅助集（例如，TZVPP/JFIT，TZVPP/JKFIT，TZVPP/MP2FIT）。原则上说，这些JKFIT集是通用的，可以与AVXZ基组一起使用。初步结果表明它们也可用于cc-pVXZ-PP和aug-cc-pVXZ-PP系列的基组。
+- 对于使用cc-pVXZ-F12轨道基组的显关联F12计算，默认用相应的VXZ-F12/OPTRI基组构造附加的辅助轨道基（complementary auxiliary orbital basis；CABS）。对于其它轨道基组，默认使用合适的JKFIT集。
+
+### 对于角动量的限制
+
+- 可以使用一些关于最大角动量函数的限制，或是收缩函数的数量限制，比如减少基组的最大角动量：
+
+  - 忽略正常情况下出现在VQZ基组中的𝑓和𝑔函数：
+
+  ```
+  BASIS,VQZ(D)
+  ```
+
+  - 指定氢的最大角动量是1，也就是忽略氢的𝑑轨道：
+
+  ```
+  BASIS,VQZ(D/P)
+  ```
+
+- 对于一般收缩基组，可以用扩充的语法直接给出每个角动量收缩函数的数量
+
+  - 从Roos的ANO数据集产生6-31G*大小的基组：
+
+  ```
+  BASIS,ROOS(3s2p1d/2s)
+  ```
+
 ## 单个原子的默认基组
 
-- 只需要在默认基组后加上`atom1=name1,atom2=name2,...,`，`atom`即元素符号，`name`为相应的基组名。默认基组必须在原子特定基组之前指定
-- 比如使用cc-pVTZ作为默认的基组，但是对氢原子使用cc-pVDZ：`basis=vtz,h=vdz`、`basis,vtz,h=vdz`或`basis,default=vtz,h=vdz`
+- 只需要在默认基组后加上`atom1=name1,atom2=name2,...,`，`atom`即元素符号，`name`为相应的基组名。**默认基组必须在原子特定基组之前指定**。
+
+  - 比如使用cc-pVTZ作为默认的基组，但是对氢原子使用cc-pVDZ：
+
+    ```
+    basis=vtz,h=vdz
+    ```
+
+    或
+
+    ```
+    basis,vtz,h=vdz
+    ```
+
+    或
+
+    ```
+    basis,default=vtz,h=vdz
+    ```
 
 ## 基组区
 
@@ -389,19 +469,38 @@ BASIS=basis
 
 ```
 BASIS
-SET,setname1,[options]
-DEFAULT=name
-atom1=name1
-atom2=name2
-原始基组说明
-SET,setname2,[options]
-...
+	SET,setname1,[options]
+		DEFAULT=name
+		atom1=name1
+		atom2=name2
+		原始基组说明
+	SET,setname2,[options]
+		...
 END
 ```
 
-## 赝势
+- 可以在基组区给出任何数量的基组。每个基组的定义由SET指令开始，其中可以指定基组名和更多选项。
 
-指定方式：
+- 基组区的第一个基组默认是轨道基组，这种情况下可以忽略指令`SET,ORBITAL`
+
+- `DEFAULT`指定默认基组，与单行基组输入完全相同。之后可以接各个原子的基组说明。默认基组和原子特定基组也可以合并到一行，之间用逗号隔开。
+
+  ```
+  !对氧和氢分别用AVTZ和VDZ覆盖默认基组VTZ
+  DEFAULT=VTZ,O=AVTZ,H=VDZ
+  ```
+
+- SET，DEFAULT，atom=name这些说明都是可选的。如果没有给出DEFAULT，将使用前面最后一个BASIS卡定义的默认基组。
+
+- 可以先后连续出现几个BASIS卡/区。对给定的原子总是使用最后指定的说明和类型（默认类型为`ORBITAL`）。
+
+- 如果对任何唯一原子组都没有指定基组，程序假定为VDZ。
+
+- 如果`setname`是`JKFIT`，这个基在DF- hf或DF- ks中自动使用，除非使用BASIS或DF_BASIS选项进行不同的指定。但是请注意，如果使用了不同的名称(例如`JK`)，情况就不是这样了。在这种情况下需要给出`DF-HF,BASIS=JK`以便使用DF-HF中的辅助基。
+
+# 赝势
+
+指定方式（<font color=red>最好在`basis`中首先指定ECP，再指定基组）</font>：
 
 ```
 ECP,atom,[ECP specification]
@@ -417,7 +516,7 @@ ECP,atom,[ECP specification]
 - Los Alamos小组：
   - 校正到一个合适原子参考态的轨道能量和密度
   - 关键词是`ECP1`和`ECP2`；当对给定的原子有一个以上的赝势时，ECP2用于表示小芯ECP的定义。（例如对Cu，`ECP1`表示类Ar的18电子芯， 而`ECP2`模拟类Ne的10电子芯，把3s和3p电子放入到价层）对于包含电子关联的精确计算，推荐把主量子数等于价轨道的所有芯轨道放入到价轨道中。 
-- Stuttgart/Ko¨ln小组：
+- Stuttgart/Köln小组：
   - 用多个原子态的总价电子能量产生。 
   - 关键词的形式为：`ECPnXY`：
     - n是用赝势代替的芯电子数量
@@ -470,6 +569,7 @@ de=(e3-e2-e1)*toev            ! binding energy = 3.11 eV
   $$V_{ps}= -\frac{Z-n_{core}}{r} + V_{l_{max}}
             +\sum_{l=0}^{l_{max}-1} (V_l-V_{l_{max}}){\cal P}_{l}
             +\sum_{l=1}^{l'{max}} \Delta V_l {\cal P}_{l} \vec{l}\cdot\vec{s} {\cal P}_{l} ;$$
+
   - `ncore`是用赝势$V_{ps}$代替的芯电子数量
   - `lmax`是$V_{ps}$标量相对论部分的半局域项数量
   - `l′max`是相应的SO部分的项个数
