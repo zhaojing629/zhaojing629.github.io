@@ -29,7 +29,7 @@
 <meta property="og:description" content="输入文件简单学习">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-11-12T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-11-21T03:33:29.893Z">
+<meta property="article:modified_time" content="2021-01-21T08:53:22.000Z">
 <meta property="article:author" content="Zhao Jing">
 <meta property="article:tag" content="输入">
 <meta property="article:tag" content="输出">
@@ -226,7 +226,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-21 11:33:29" itemprop="dateModified" datetime="2020-11-21T11:33:29+08:00">2020-11-21</time>
+                <time title="修改时间：2021-01-21 16:53:22" itemprop="dateModified" datetime="2021-01-21T16:53:22+08:00">2021-01-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -271,14 +271,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>9.8k</span>
+              <span>13k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>9 分钟</span>
+              <span>11 分钟</span>
             </span>
             <div class="post-description">输入文件简单学习</div>
 
@@ -387,6 +387,9 @@
 <li><p><code>CRD</code>：坐标将用CHARMm CRD格式书写</p>
 </li>
 <li><p><code>MOLDEN</code>：将创建用于MOLDEN可视化程序的接口文件</p>
+<ul>
+<li>注意：<font color=red>molden文件不支持含h以上角动量的基组，如果仅需要可视化轨道查看，那么可以将基组中的h删去，输出molden文件，结果差别很小。</font></li>
+</ul>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">put</span>,molden,h<span class="number">2</span>o.molden;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p><code>IRSPEC</code>：gnuplot输入文件，该文件可用于绘制IR光谱</p>
@@ -513,24 +516,96 @@
 <p>也可以使用变量</p>
 <figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">geometry=&#123;</span><br><span class="line"><span class="keyword">C</span></span><br><span class="line"><span class="keyword">O</span>  , <span class="keyword">C</span> , rco</span><br><span class="line">H1 , <span class="keyword">C</span> , rch , <span class="keyword">O</span> , hco</span><br><span class="line">H2 , <span class="keyword">C</span> , rch , <span class="keyword">O</span> , hco , H1 , <span class="number">180</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">rco=<span class="number">1.182</span> Ang</span><br><span class="line">rch=<span class="number">1.102</span> Ang</span><br><span class="line">hco=<span class="number">122.1789</span> <span class="keyword">Degree</span></span><br></pre></td></tr></table></figure>
 <h1 id="基组"><a href="#基组" class="headerlink" title="基组"></a>基组</h1><h2 id="笛卡尔和球谐基函数"><a href="#笛卡尔和球谐基函数" class="headerlink" title="笛卡尔和球谐基函数"></a>笛卡尔和球谐基函数</h2><p>MOLPRO默认使用球谐基函数(5d，7f等)，即使是对Pople基组，如6-31G**，也是如此。可以用<code>CARTESIAN</code>命令使用笛卡尔函数，随后所有的计算都使用笛卡尔基函数，在续算中也是如此，可以通过<code>SPHERICAL</code>换成球谐基函数，但是要在给基组之前给出相应的命令。</p>
-<h2 id="基组库"><a href="#基组库" class="headerlink" title="基组库"></a>基组库</h2><ul>
+<h2 id="基组库"><a href="#基组库" class="headerlink" title="基组库"></a>基组库</h2><p>基组库由一组无格式文本文件以及相应的索引构成，组成了通用的基组（原高斯函数和相应的收缩）和有效芯势数据库。这些文件可以在源文件的目录树中找到，分别为lib/*.libmol和lib/libmol.index，但更方便的方法是从数据库里查找：</p>
+<ul>
 <li><a target="_blank" rel="noopener" href="https://www.basissetexchange.org/">美国太平洋西北国家实验室（Pacic Northwest NationalLaboratory）的基组数据库</a></li>
 <li><a target="_blank" rel="noopener" href="http://www.tc.uni-koeln.de/PP/clickpse.en.html">Stuttgart 有效芯势和基组</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.molpro.net/info/basis.php?portal=user&amp;choice=Basis+library">molpro网页的basisi.php脚本</a>，可以本地安装也可以直接在网页中获取</li>
 </ul>
-<h2 id="默认基组及其调用"><a href="#默认基组及其调用" class="headerlink" title="默认基组及其调用"></a>默认基组及其调用</h2><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">BASIS,</span>basis</span><br></pre></td></tr></table></figure>
+<h2 id="默认基组及其调用"><a href="#默认基组及其调用" class="headerlink" title="默认基组及其调用"></a>默认基组及其调用</h2><h3 id="指定"><a href="#指定" class="headerlink" title="指定"></a>指定</h3><ul>
+<li><p>对任何对称唯一的原子组都没有定义基组，那么程序假定使用全局默认值（VDZ）</p>
+</li>
+<li><p>通过一下方法指定基组。</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">BASIS,</span>basis</span><br></pre></td></tr></table></figure>
 <p>或</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">BASIS</span>=basis</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>默认基组可以在输入文件能量计算前的任何位置定义，并且只能使用一个BASIS卡。默认基组应用于所有类型的原子，但是可以对特定的原子替换成不同的基组。</p>
+</li>
+<li><p><code>BASIS</code>不能作为变量，比如<code>$BASIS=[AVDZ, AVTZ, AVQZ]</code>，使用遍历的方法为：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$aobases</span>=[AVDZ, AVTZ, AVQZ]</span><br><span class="line"><span class="keyword">do</span> <span class="attribute">i</span>=1,#aobases</span><br><span class="line"><span class="attribute">basis</span>=aobases(i)</span><br><span class="line"><span class="built_in">..</span>.</span><br><span class="line">enddo</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="可调用的基组"><a href="#可调用的基组" class="headerlink" title="可调用的基组"></a>可调用的基组</h3><ul>
+<li><code>basis</code>可以在文件lib/defbas中查找，包含的通用基组有：<ul>
+<li>所有的Dunning关联一致基组，用基组的标准名称（cc-pVXZ，aug-cc-pVXZ）或缩写（VXZ，AVXZ）调用。对于Al-Ar，用标准名称cc-pV(X+d)Z，aug-cc-pV(X+d)Z，或VXZ+d，AVXZ+d，可以得到紧凑的d扩充集。X=D,T,Q,5的基组适用于H-Kr，X=6适用于B-Ne和Al-Ar。</li>
+<li>用于芯关联的关联一致基组cc-pCVXZ，aug-cc-pCVXZ，或CVXZ，ACVXZ（X=D,T,Q,5），以及更新的“加权集”cc-pwCVXZ，aug-cc-pwCVXZ，或WCVXZ，AWCVXZ（X=D,T,Q,5）。这些基组适用于Li-Kr（CVXZ不包括Sc-Zn）。</li>
+<li>Douglas-Kroll-Hess相对论版本的关联一致基组，可以使用加上-DK后缀的标准名称或简称，例如，cc-pVXZ-DK或VXZ-DK。X=D-5适用于H-Kr，X=T适用于YCd和Hf-Hg。三阶DKH收缩集适用于Hf-Hg，需要加上后缀-DK3。</li>
+<li>Peterson等人用于用于显关联计算的F12基组：cc-pVXZ-F12，cc-pCVXZ-F12，或VXZ-F12，CVXZ-F12，其中X=D,T,Q。它们适用于H-Ar。</li>
+<li>Turbomole def2系列基组：SV(P)，SVP，TZVP，TZVPP，QZVP，QZVPP。它们可用于除了f区元素之外的整个周期表。</li>
+<li>对于第一行原子（不是H和He），有旧一些的Dunning/Hay分块收缩双zeta基（DZ和DZP）。</li>
+<li>Roos的ANO基组用于H-Ar（ROOS）。</li>
+<li>Stuttgart ECP和相应基组（例如ECP10MDF），以及Peterson等人基于ECP的关联一致基组：cc-pVXZ-PP，aug-cc-pVXZ-PP，cc-pwCVXZ-PP，aug-cc-pwCVXZ-PP，或VXZ-PP，AVXZ-PP，WCVXZ-PP，AWCVXZ-PP。后者适用于Cu-Kr，Y-Xe，和Hf-<br>Rn（芯关联集目前仅用于过渡金属）。</li>
+<li>Hay ECP和相应基组（ECP1和ECP2）。</li>
+<li>其它一些Karslruhe基组（SV，TZV，以及用于某些元素的TZVPPP）。</li>
+<li>用于Ga-Kr的Binning/Curtiss集（BINNING-SV，BINNING-SVP，BINNING-VTZ和BINNINGVTZP）</li>
+<li>大多数Pople基组使用其标准名称（例如6-31G*，6-311++G(D,P)，等）。在这种情况下需要特别注意，不能使用下面描述的用于限定基组的括弧修饰机制，必须使用被指定的整个标准基组。</li>
+</ul>
+</li>
+<li>此外，还可以使用很多密度拟合和单位分解（resolution of the identity，RI）基组。在密度拟合计算中，对Dunning的关联一致基组自动选择合适的Weigend VXZ/JKFIT，XZ/MP2FIT，或AVXZ/MP2FIT集（还可以用扩充版本的AVXZ/JKFIT 用于拟合Fock矩阵，但默认不使用）。对于def2系列的轨道基组，使用合适的辅助集（例如，TZVPP/JFIT，TZVPP/JKFIT，TZVPP/MP2FIT）。原则上说，这些JKFIT集是通用的，可以与AVXZ基组一起使用。初步结果表明它们也可用于cc-pVXZ-PP和aug-cc-pVXZ-PP系列的基组。</li>
+<li>对于使用cc-pVXZ-F12轨道基组的显关联F12计算，默认用相应的VXZ-F12/OPTRI基组构造附加的辅助轨道基（complementary auxiliary orbital basis；CABS）。对于其它轨道基组，默认使用合适的JKFIT集。</li>
+</ul>
+<h3 id="对于角动量的限制"><a href="#对于角动量的限制" class="headerlink" title="对于角动量的限制"></a>对于角动量的限制</h3><ul>
+<li><p>可以使用一些关于最大角动量函数的限制，或是收缩函数的数量限制，比如减少基组的最大角动量：</p>
 <ul>
-<li>对任何对称唯一的原子组都没有定义基组，那么程序假定使用全局默认值（VDZ）</li>
+<li>忽略正常情况下出现在VQZ基组中的𝑓和𝑔函数：</li>
+</ul>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">BASIS,</span>VQZ(D)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>指定氢的最大角动量是1，也就是忽略氢的𝑑轨道：</li>
+</ul>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">BASIS,</span>VQZ(D/P)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对于一般收缩基组，可以用扩充的语法直接给出每个角动量收缩函数的数量</p>
+<ul>
+<li>从Roos的ANO数据集产生6-31G*大小的基组：</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">BASIS</span>,ROOS(<span class="number">3</span>s<span class="number">2</span>p<span class="number">1</span>d/<span class="number">2</span>s)</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 <h2 id="单个原子的默认基组"><a href="#单个原子的默认基组" class="headerlink" title="单个原子的默认基组"></a>单个原子的默认基组</h2><ul>
-<li>只需要在默认基组后加上<code>atom1=name1,atom2=name2,...,</code>，<code>atom</code>即元素符号，<code>name</code>为相应的基组名。默认基组必须在原子特定基组之前指定</li>
-<li>比如使用cc-pVTZ作为默认的基组，但是对氢原子使用cc-pVDZ：<code>basis=vtz,h=vdz</code>、<code>basis,vtz,h=vdz</code>或<code>basis,default=vtz,h=vdz</code></li>
+<li><p>只需要在默认基组后加上<code>atom1=name1,atom2=name2,...,</code>，<code>atom</code>即元素符号，<code>name</code>为相应的基组名。<strong>默认基组必须在原子特定基组之前指定</strong>。</p>
+<ul>
+<li><p>比如使用cc-pVTZ作为默认的基组，但是对氢原子使用cc-pVDZ：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">basis</span>=vtz,h=vdz</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">basis,vtz,<span class="attribute">h</span>=vdz</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">basis</span>,<span class="keyword">default</span>=vtz,h=vdz</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
 </ul>
 <h2 id="基组区"><a href="#基组区" class="headerlink" title="基组区"></a>基组区</h2><p>通过<code>BASIS ... END</code>块或者<code>BASIS=&#123;...&#125;</code>指定，一般形式如下：</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">BASIS</span><br><span class="line">SET,setname1,[options]</span><br><span class="line"><span class="attribute">DEFAULT</span>=name</span><br><span class="line"><span class="attribute">atom1</span>=name1</span><br><span class="line"><span class="attribute">atom2</span>=name2</span><br><span class="line">原始基组说明</span><br><span class="line">SET,setname2,[options]</span><br><span class="line"><span class="built_in">..</span>.</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
-<h2 id="赝势"><a href="#赝势" class="headerlink" title="赝势"></a>赝势</h2><p>指定方式：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">BASIS</span><br><span class="line">	SET,setname1,[options]</span><br><span class="line">		<span class="attribute">DEFAULT</span>=name</span><br><span class="line">		<span class="attribute">atom1</span>=name1</span><br><span class="line">		<span class="attribute">atom2</span>=name2</span><br><span class="line">		原始基组说明</span><br><span class="line">	SET,setname2,[options]</span><br><span class="line">		<span class="built_in">..</span>.</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>可以在基组区给出任何数量的基组。每个基组的定义由SET指令开始，其中可以指定基组名和更多选项。</p>
+</li>
+<li><p>基组区的第一个基组默认是轨道基组，这种情况下可以忽略指令<code>SET,ORBITAL</code></p>
+</li>
+<li><p><code>DEFAULT</code>指定默认基组，与单行基组输入完全相同。之后可以接各个原子的基组说明。默认基组和原子特定基组也可以合并到一行，之间用逗号隔开。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">!对氧和氢分别用<span class="built_in">AVTZ</span>和VDZ覆盖默认基组VTZ</span><br><span class="line">DEFAULT=VTZ,O=<span class="built_in">AVTZ</span>,H=VDZ</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>SET，DEFAULT，atom=name这些说明都是可选的。如果没有给出DEFAULT，将使用前面最后一个BASIS卡定义的默认基组。</p>
+</li>
+<li><p>可以先后连续出现几个BASIS卡/区。对给定的原子总是使用最后指定的说明和类型（默认类型为<code>ORBITAL</code>）。</p>
+</li>
+<li><p>如果对任何唯一原子组都没有指定基组，程序假定为VDZ。</p>
+</li>
+<li><p>如果<code>setname</code>是<code>JKFIT</code>，这个基在DF- hf或DF- ks中自动使用，除非使用BASIS或DF_BASIS选项进行不同的指定。但是请注意，如果使用了不同的名称(例如<code>JK</code>)，情况就不是这样了。在这种情况下需要给出<code>DF-HF,BASIS=JK</code>以便使用DF-HF中的辅助基。</p>
+</li>
+</ul>
+<h1 id="赝势"><a href="#赝势" class="headerlink" title="赝势"></a>赝势</h1><p>指定方式（<font color=red>最好在<code>basis</code>中首先指定ECP，再指定基组）</font>：</p>
 <figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ECP,</span>atom,[ECP specification]</span><br></pre></td></tr></table></figure>
 <ul>
 <li>ECP specification说明部分可以包含一个关键词，用于引用基组库中存储的赝势，也可以（连续在几个输入卡中）直接定义。</li>
@@ -543,7 +618,7 @@
 <li>关键词是<code>ECP1</code>和<code>ECP2</code>；当对给定的原子有一个以上的赝势时，ECP2用于表示小芯ECP的定义。（例如对Cu，<code>ECP1</code>表示类Ar的18电子芯， 而<code>ECP2</code>模拟类Ne的10电子芯，把3s和3p电子放入到价层）对于包含电子关联的精确计算，推荐把主量子数等于价轨道的所有芯轨道放入到价轨道中。 </li>
 </ul>
 </li>
-<li>Stuttgart/Ko¨ln小组：<ul>
+<li>Stuttgart/Köln小组：<ul>
 <li>用多个原子态的总价电子能量产生。 </li>
 <li>关键词的形式为：<code>ECPnXY</code>：<ul>
 <li>n是用赝势代替的芯电子数量</li>
@@ -711,7 +786,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E8%A1%8Cmolpro"><span class="nav-number">1.</span> <span class="nav-text">运行molpro</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%85%A5"><span class="nav-number">1.1.</span> <span class="nav-text">输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">输出文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#out%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.1.</span> <span class="nav-text">out文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#punch%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">punch文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xml%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.3.</span> <span class="nav-text">xml文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9%E4%B8%AA%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.4.</span> <span class="nav-text">9个二进制文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.5.</span> <span class="nav-text">记录文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#put%E8%BE%93%E5%87%BA%E5%85%B6%E4%BB%96%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.2.6.</span> <span class="nav-text">put输出其他格式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6%E4%B8%80%E8%88%AC%E7%BB%93%E6%9E%84%E5%92%8C%E8%A7%84%E5%88%99"><span class="nav-number">2.</span> <span class="nav-text">输入文件一般结构和规则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#memory%E5%8D%A1"><span class="nav-number">3.</span> <span class="nav-text">memory卡</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#file%E5%8D%A1"><span class="nav-number">4.</span> <span class="nav-text">file卡</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#print-gprint-%E5%85%A8%E5%B1%80%E6%89%93%E5%8D%B0%E9%80%89%E9%A1%B9"><span class="nav-number">5.</span> <span class="nav-text">print&#x2F;gprint 全局打印选项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#geometry%E5%8D%A1"><span class="nav-number">6.</span> <span class="nav-text">geometry卡</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#xyz%E8%BE%93%E5%85%A5"><span class="nav-number">6.1.</span> <span class="nav-text">xyz输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Z%E7%9F%A9%E9%98%B5%E8%BE%93%E5%85%A5"><span class="nav-number">6.2.</span> <span class="nav-text">Z矩阵输入</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%BB%84"><span class="nav-number">7.</span> <span class="nav-text">基组</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%9B%E5%8D%A1%E5%B0%94%E5%92%8C%E7%90%83%E8%B0%90%E5%9F%BA%E5%87%BD%E6%95%B0"><span class="nav-number">7.1.</span> <span class="nav-text">笛卡尔和球谐基函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%BB%84%E5%BA%93"><span class="nav-number">7.2.</span> <span class="nav-text">基组库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E5%9F%BA%E7%BB%84%E5%8F%8A%E5%85%B6%E8%B0%83%E7%94%A8"><span class="nav-number">7.3.</span> <span class="nav-text">默认基组及其调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E4%B8%AA%E5%8E%9F%E5%AD%90%E7%9A%84%E9%BB%98%E8%AE%A4%E5%9F%BA%E7%BB%84"><span class="nav-number">7.4.</span> <span class="nav-text">单个原子的默认基组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%BB%84%E5%8C%BA"><span class="nav-number">7.5.</span> <span class="nav-text">基组区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%9D%E5%8A%BF"><span class="nav-number">7.6.</span> <span class="nav-text">赝势</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87ECP%E5%BA%93%E7%9A%84%E8%BE%93%E5%85%A5"><span class="nav-number">7.6.1.</span> <span class="nav-text">通过ECP库的输入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E8%BE%93%E5%85%A5ECP"><span class="nav-number">7.6.2.</span> <span class="nav-text">直接输入ECP</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E8%A1%8Cmolpro"><span class="nav-number">1.</span> <span class="nav-text">运行molpro</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%85%A5"><span class="nav-number">1.1.</span> <span class="nav-text">输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">输出文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#out%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.1.</span> <span class="nav-text">out文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#punch%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">punch文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xml%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.3.</span> <span class="nav-text">xml文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9%E4%B8%AA%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.4.</span> <span class="nav-text">9个二进制文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.5.</span> <span class="nav-text">记录文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#put%E8%BE%93%E5%87%BA%E5%85%B6%E4%BB%96%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.2.6.</span> <span class="nav-text">put输出其他格式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6%E4%B8%80%E8%88%AC%E7%BB%93%E6%9E%84%E5%92%8C%E8%A7%84%E5%88%99"><span class="nav-number">2.</span> <span class="nav-text">输入文件一般结构和规则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#memory%E5%8D%A1"><span class="nav-number">3.</span> <span class="nav-text">memory卡</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#file%E5%8D%A1"><span class="nav-number">4.</span> <span class="nav-text">file卡</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#print-gprint-%E5%85%A8%E5%B1%80%E6%89%93%E5%8D%B0%E9%80%89%E9%A1%B9"><span class="nav-number">5.</span> <span class="nav-text">print&#x2F;gprint 全局打印选项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#geometry%E5%8D%A1"><span class="nav-number">6.</span> <span class="nav-text">geometry卡</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#xyz%E8%BE%93%E5%85%A5"><span class="nav-number">6.1.</span> <span class="nav-text">xyz输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Z%E7%9F%A9%E9%98%B5%E8%BE%93%E5%85%A5"><span class="nav-number">6.2.</span> <span class="nav-text">Z矩阵输入</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%BB%84"><span class="nav-number">7.</span> <span class="nav-text">基组</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%9B%E5%8D%A1%E5%B0%94%E5%92%8C%E7%90%83%E8%B0%90%E5%9F%BA%E5%87%BD%E6%95%B0"><span class="nav-number">7.1.</span> <span class="nav-text">笛卡尔和球谐基函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%BB%84%E5%BA%93"><span class="nav-number">7.2.</span> <span class="nav-text">基组库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E5%9F%BA%E7%BB%84%E5%8F%8A%E5%85%B6%E8%B0%83%E7%94%A8"><span class="nav-number">7.3.</span> <span class="nav-text">默认基组及其调用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A"><span class="nav-number">7.3.1.</span> <span class="nav-text">指定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E8%B0%83%E7%94%A8%E7%9A%84%E5%9F%BA%E7%BB%84"><span class="nav-number">7.3.2.</span> <span class="nav-text">可调用的基组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8E%E8%A7%92%E5%8A%A8%E9%87%8F%E7%9A%84%E9%99%90%E5%88%B6"><span class="nav-number">7.3.3.</span> <span class="nav-text">对于角动量的限制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E4%B8%AA%E5%8E%9F%E5%AD%90%E7%9A%84%E9%BB%98%E8%AE%A4%E5%9F%BA%E7%BB%84"><span class="nav-number">7.4.</span> <span class="nav-text">单个原子的默认基组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%BB%84%E5%8C%BA"><span class="nav-number">7.5.</span> <span class="nav-text">基组区</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B5%9D%E5%8A%BF"><span class="nav-number">8.</span> <span class="nav-text">赝势</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87ECP%E5%BA%93%E7%9A%84%E8%BE%93%E5%85%A5"><span class="nav-number">8.0.1.</span> <span class="nav-text">通过ECP库的输入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E8%BE%93%E5%85%A5ECP"><span class="nav-number">8.0.2.</span> <span class="nav-text">直接输入ECP</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -807,7 +882,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">135k</span>
+    <span title="站点总字数">138k</span>
 </div>
 
         
