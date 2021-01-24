@@ -2162,7 +2162,7 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 </li>
 </ul>
 <h2 id="单个原子的默认基组"><a href="#单个原子的默认基组" class="headerlink" title="单个原子的默认基组"></a>单个原子的默认基组</h2><ul>
-<li><p>只需要在默认基组后加上<code>atom1=name1,atom2=name2,...,</code>，<code>atom</code>即元素符号，<code>name</code>为相应的基组名。<strong>默认基组必须在原子特定基组之前指定</strong>。</p>
+<li><p>只需要在默认基组后加上<code>atom1=name1,atom2=name2,...,</code>，<code>atom</code>即元素符号，<code>name</code>为相应的基组名。<strong>默认基组必须在原子特定基组之前指定</strong>。（<font color=red>此外，基组中有的不是名字定义，而是用的原始集和收缩集文本来定义的，应当先写名字定义的，否则可能出错</font>，当计算中出现了比较奇怪的错误，在检查其他地方没有问题之后，可以尝试更换基组区的ECP、单个原子基组、价电子基组的顺序，或者更换文本定义的基组尝试。）</p>
 <ul>
 <li><p>比如使用cc-pVTZ作为默认的基组，但是对氢原子使用cc-pVDZ：</p>
 <figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">basis</span>=vtz,h=vdz</span><br></pre></td></tr></table></figure>
