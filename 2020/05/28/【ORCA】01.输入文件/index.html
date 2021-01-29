@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=EB Garamond:300,300italic,400,400italic,700,700italic|Dancing Script:300,300italic,400,400italic,700,700italic|ZCOOL XiaoWei:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="ORCA输入文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【ORCA】01.输入文件">
+<meta property="og:url" content="http://example.com/2020/05/28/%E3%80%90ORCA%E3%80%9101.%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:site_name" content="Jing&#39;s Notes">
+<meta property="og:description" content="ORCA输入文件">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2020/05/28/%E3%80%90ORCA%E3%80%9101.%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/orca-inputfile.png">
+<meta property="og:image" content="http://example.com/clipboard.png">
+<meta property="article:published_time" content="2020-05-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-01-29T10:44:52.000Z">
+<meta property="article:author" content="Zhao Jing">
+<meta property="article:tag" content="输入">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2020/05/28/%E3%80%90ORCA%E3%80%9101.%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/orca-inputfile.png">
+
+<link rel="canonical" href="http://example.com/2020/05/28/%E3%80%90ORCA%E3%80%9101.%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+  <title>【ORCA】01.输入文件 | Jing's Notes</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d23c6dd5b34ecbaba18b829b9084946";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jing's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/05/28/%E3%80%90ORCA%E3%80%9101.%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="Zhao Jing">
+      <meta itemprop="description" content="做一棵树，只为岁月而生长。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jing's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【ORCA】01.输入文件
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-28 00:00:00" itemprop="dateCreated datePublished" datetime="2020-05-28T00:00:00+08:00">2020-05-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-29 18:44:52" itemprop="dateModified" datetime="2021-01-29T18:44:52+08:00">2021-01-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">计算化学</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/ORCA/" itemprop="url" rel="index"><span itemprop="name">ORCA</span></a>
+                </span>
+            </span>
+
+          
+            <br>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/05/28/%E3%80%90ORCA%E3%80%9101.%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/28/%E3%80%90ORCA%E3%80%9101.%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+            <div class="post-description">ORCA输入文件</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h1><p><img src="orca-inputfile.png" alt=""></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># comments </span></span><br><span class="line">! Keywords (control methods, basis sets, job type,…)</span><br><span class="line"></span><br><span class="line">%maxcore <span class="number">4096</span> (optional: scratch <span class="built_in">array</span> size in MB)</span><br><span class="line"></span><br><span class="line">%base “MyBaseName” (optional: name of the generated scratch files)</span><br><span class="line"></span><br><span class="line">* xyz Charge Mult</span><br><span class="line">C <span class="number">1.23</span> <span class="number">16.481</span> <span class="number">-9.87</span> </span><br><span class="line">*</span><br><span class="line"></span><br><span class="line">$new_job</span><br></pre></td></tr></table></figure>
+<h1 id="注释部分"><a href="#注释部分" class="headerlink" title="注释部分"></a>注释部分</h1><ul>
+<li><p>以#开头，若单独成行，则该行均为注释，</p>
+</li>
+<li><p>也可用两个#在行内封装注释部分，如</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TolE=<span class="number">1e-5</span>; #Energy conv.# TolMaxP=<span class="number">1e-6</span>; #Density conv.#</span><br></pre></td></tr></table></figure>
+<p>其中TolE和TolMaxP为正常的参数输入，而另外两处#内的内容为注释。</p>
+</li>
+</ul>
+<h1 id="控制部分"><a href="#控制部分" class="headerlink" title="控制部分"></a>控制部分</h1><ul>
+<li>所有block在手册<strong>6.1 Input Blocks</strong>中列出</li>
+</ul>
+<ul>
+<li>以<code>%</code>开头，<code>end</code>结尾。一个<code>%</code>和<code>end</code>的组合称为一个block，一个输入文件中可以包含多个blocks。</li>
+<li>block的内容比简单输入<code>！</code>优先</li>
+<li><p>ORCA中变量和数值的输入格式为</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">VariableName Value</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>也可以数组的形式输入变量，例如</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Array[<span class="number">1</span>]  Value1</span><br><span class="line">Array[<span class="number">1</span>]  Value1,Value2,Value3</span><br><span class="line">Array  Value1,Value2</span><br></pre></td></tr></table></figure>
+<ul>
+<li>由于ORCA是用C++写的，因此数组从0开始。上面第一行表示A[1]的值为V1，实际为该数组的第二个数；第二行表示A[1]的值为V1，A[2]的值为V2，A[3]的值为V3；第三行表示A[0]的值为V1，A[1]的值为V2。</li>
+<li><p>字符型的数值（例如文件名）用双引号封装，如</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MOInp <span class="string">&quot;Myfile.gbw&quot;</span></span><br></pre></td></tr></table></figure>
+<p>注意，在Unix系统中，引号中的内容是区分大小写的，MYFILE.GBW和MyFile.gbw是不同的文件，而在Windows系统中是不区分大小写的。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="关键词部分"><a href="#关键词部分" class="headerlink" title="关键词部分"></a>关键词部分</h1><p>以<code>!</code>开头，主要用于指定作业的类型和相关参数。</p>
+<ul>
+<li>主要方法和选项在<strong>6.2.1 Main Methods and Options的Table6.1</strong> 中列出</li>
+<li><p>密度泛函方法在<strong>6.2.2 Density Functional Methods</strong>中的<strong>Table 6.2</strong>中列出</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">! Functional GridN NoFinalGrid VDW</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>泛函可以选择：</p>
+<ul>
+<li>LDA : LSD, HFS, …</li>
+<li>GGA : BP=BP86, PBE, PW91, OLYP, OPBE, BLYP, PWP, …</li>
+<li><ul>
+<li>LDAs/GGAs in RI mode require an auxiliary basis set (‘/J’)</li>
+</ul>
+</li>
+<li>Meta-GGA : TPSS, revTPSS, M06L, …</li>
+<li>Hybrid : B3LYP, PBE0, X3LYP, BHandHLYP, B3P, B3PW, …</li>
+<li>Range-Sep. Hyb. : wB97, wB97X, CAM-B3LYP, LC-BLYP</li>
+<li>Hybrid Meta-GGA : TPSSh, TPSS0, M06, M062X, …</li>
+<li>Double-Hybrid : RI-B2PLYP, RI-MPW2PLYP, RI-B2T-PYLP, RI-B2K-PYLP, RI-B2GP-PLYP</li>
+<li>没有RI近似也可以使用这些泛函。RI模式下的双杂化需要一个辅助基集(‘ /C ‘)</li>
+</ul>
+<h2 id="全局内存"><a href="#全局内存" class="headerlink" title="全局内存"></a>全局内存</h2><ul>
+<li><p>This limit applies per processing core.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%MaxCore <span class="number">3000</span> <span class="meta">#sets 3000 MB (= 3 GB)</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>这里，每个内核3000 MB的内存分配给ORCA。如果请求使用6个CPU内核，这意味着ORCA的总内存需求为6x3000 = 18000 MB = 18 GB。为了确保计算节点具有可用的物理内存总量。 通常，您不应要求超过75％的可用物理内存（因为ORCA偶尔会使用比maxcore设置更多的内存）。因此，在这种情况下，如果计算机具有24 GB或更多的物理内存可用就可以</li>
+</ul>
+</li>
+<li><p>如果正在使用的计算节点也被其他用户使用，请确保请求的内存不要超过有权使用的内存。例如，如果一个12核节点具有120 GB的内存，而你提交了一个6核作业，则你有权使用该内存的一半（例如，请注意，有时排队系统要求您指定所需的内存量）。因此，仅应允许您的6核作业使用60 GB的内存或10,000 MB（10GB）的maxcore（每个核的内存）。由于ORCA中的内存使用率通常会超出maxcore，因此将maxcore降低至可用物理内存的〜75％：建议将maxcore设置为％maxcore 7500。</p>
+</li>
+<li><p>如果ORCA以一般消息终止：“ ORCA finished by error termination in [ORCA module]”，并且上面没有其他有用的消息， 原因取决于运行哪个ORCA模块。如果运行的模块是占用大量内存的模块，例如：orca_mp2，orca_scfhess，orca_mdci，orca_mrci等，则作业可能会耗尽内存或磁盘空间，或者访问内存或磁盘时出现问题。这也可能是运行一个具有过多内核的小型系统的计算的问题（运行一个仅包含几个原子的系统的60内核计算是没有意义的，并且会导致不可预测的结果）。</p>
+</li>
+</ul>
+<h1 id="多步作业"><a href="#多步作业" class="headerlink" title="多步作业"></a>多步作业</h1><p>ORCA支持在一个输入文件中设置多步作业，使用$new_job关键词来标记下一个作业的开始。多步作业常在以下类型的计算中会用到：</p>
+<ul>
+<li>用不同的方法或基组计算同一个分子的性质。</li>
+<li>用相同的参数计算一系列分子。</li>
+<li>在结构优化之后用更高级的方法计算单点能或其他性质。</li>
+<li>用小基组计算提供轨道的初始猜测，做大基组的计算。</li>
+</ul>
+<p>eg：表示先在LDA水平下计算BO分子的g张量，再使用BP86泛函计算。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># -----------------------------------------------------</span><br><span class="line">! UKS LSD SVP grid5 NoFinalGrid TightSCF KeepInts</span><br><span class="line"># -----------------------------------------------------</span><br><span class="line">%eprnmr gtensor <span class="number">1</span> end</span><br><span class="line">* <span class="keyword">int</span> <span class="number">0</span> <span class="number">2</span></span><br><span class="line">B <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line">O <span class="number">1</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1.2049</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line">*</span><br><span class="line"># *************************************************</span><br><span class="line"># ****** This starts the input <span class="keyword">for</span> the next job *</span><br><span class="line"># *************************************************</span><br><span class="line">$new_job</span><br><span class="line"># --------------------------------------------------</span><br><span class="line">! BP86 SVP SmallPrint ReadInts NoKeepInts</span><br><span class="line"># --------------------------------------------------</span><br><span class="line">%eprnmr gtensor <span class="number">1</span> end</span><br><span class="line">* <span class="keyword">int</span> <span class="number">0</span> <span class="number">2</span></span><br><span class="line">B <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line">O <span class="number">1</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1.2049</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line">*</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>在使用$new_job来设置多步作业时，下一步任务会默认使用前一步任务的所有参数设置。如果需要使用不同的参数，可以在下一步任务中修改相关参数。例如，在前一步计算中使用了RI近似，在后一步的计算中会默认使用，如果不想使用，则需要用关键词将其关闭。此外，下一步任务会默认使用上一步任务的轨道做初始猜测，如果在下一步任务中要使用其他的初始猜测，也要指定相关的关键词。</p>
+</li>
+<li><p>在ORCA的计算中，假设输入文件名为MyJob.inp，那么程序产生的所有的文件都名为MyJob.xxx。有时候在多步计算中，不同的步骤需要不同的文件名，可以通过%base这个变量来修改名称，例如:</p>
+<p><img src="/clipboard.png" alt="img"></p>
+<ul>
+<li>第一步任务中产生的所有文件以FirstJob开头，第二步任务中产生的文件以SecondJob开头。</li>
+</ul>
+</li>
+</ul>
+<h1 id="输入优先级别"><a href="#输入优先级别" class="headerlink" title="输入优先级别"></a>输入优先级别</h1><ul>
+<li><p>不区分大小写</p>
+</li>
+<li><p>先读取所有！关键词，不分顺序</p>
+<ul>
+<li><p>除非基组指定两个，那么后面那个优先，辅助基组也是如此</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">! def2-SVP def2-TZVP</span><br><span class="line">! def2/J SARC/J</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>然后按输入文件中的block顺序读取，比！优先</p>
+</li>
+</ul>
+<p>eg.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">! def2-TZVP UKS</span><br><span class="line">%method</span><br><span class="line">functional BP86</span><br><span class="line">correlation C_LYP</span><br><span class="line">SpecialGridAtoms[<span class="number">1</span>] <span class="number">26</span>, <span class="number">27</span></span><br><span class="line">SpecialGridIntacc <span class="number">8</span>, <span class="number">8</span>, <span class="number">8</span></span><br><span class="line">SpecialGridAtoms <span class="number">28</span>, <span class="number">29</span></span><br><span class="line">end</span><br><span class="line">! PBE def2-SVP RKS</span><br></pre></td></tr></table></figure>
+<p>等同于</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">! UKS BLYP def2-SVP</span><br><span class="line">%method</span><br><span class="line">SpecialGridAtoms <span class="number">28</span>, <span class="number">29</span>, <span class="number">27</span></span><br><span class="line">SpecialGridIntacc <span class="number">8</span>, <span class="number">8</span>, <span class="number">8</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>有用可戳(●ˇ∀ˇ●)</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="Zhao Jing 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Zhao Jing
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2020/05/28/%E3%80%90ORCA%E3%80%9101.%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/" title="【ORCA】01.输入文件">http://example.com/2020/05/28/【ORCA】01.输入文件/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E8%BE%93%E5%85%A5/" rel="tag"><i class="fa fa-tag"></i> 输入</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/07/%E3%80%90ADF%E3%80%9102.EDA-NOCV/" rel="prev" title="【ADF】02.EDA-NOCV">
+      <i class="fa fa-chevron-left"></i> 【ADF】02.EDA-NOCV
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/05/%E3%80%90ORCA%E3%80%9102.%E5%9F%BA%E7%BB%84/" rel="next" title="【ORCA】02.基组">
+      【ORCA】02.基组 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">概要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B3%A8%E9%87%8A%E9%83%A8%E5%88%86"><span class="nav-number">2.</span> <span class="nav-text">注释部分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E9%83%A8%E5%88%86"><span class="nav-number">3.</span> <span class="nav-text">控制部分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E8%AF%8D%E9%83%A8%E5%88%86"><span class="nav-number">4.</span> <span class="nav-text">关键词部分</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E5%86%85%E5%AD%98"><span class="nav-number">4.1.</span> <span class="nav-text">全局内存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E6%AD%A5%E4%BD%9C%E4%B8%9A"><span class="nav-number">5.</span> <span class="nav-text">多步作业</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E4%BC%98%E5%85%88%E7%BA%A7%E5%88%AB"><span class="nav-number">6.</span> <span class="nav-text">输入优先级别</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhao Jing"
+      src="/images/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">Zhao Jing</p>
+  <div class="site-description" itemprop="description">做一棵树，只为岁月而生长。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaojing629" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaojing629" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:295483858@qq.com" title="E-Mail → mailto:295483858@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+<div class="sidebar-categories" p align="left">
+  <font size="2">
+  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F/">系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%AB%99/">网站</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/">计算化学</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/ADF/">ADF</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/CP2K/">CP2K</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/ORCA/">ORCA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/molpro/">molpro</a></li></ul></li></ul>
+  </font>
+  </p /div>
+
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title"></h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASSCF/" rel="tag">CASSCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CP2K/" rel="tag">CP2K</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CP2K-%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="tag">CP2K,几何优化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECP/" rel="tag">ECP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HF/" rel="tag">HF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCSCF/" rel="tag">MCSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NBO/" rel="tag">NBO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/basis/" rel="tag">basis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geometry/" rel="tag">geometry</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/memory/" rel="tag">memory</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag">占据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%BB%84/" rel="tag">基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BB%84%E6%80%81/" rel="tag">多组态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag">对称性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag">波函</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag">点群</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5/" rel="tag">输入</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%87%BA/" rel="tag">输出</a><span class="tag-list-count">1</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-flask"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhao Jing</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">142k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='0,0,0' opacity='0.3' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : '3L90wCaNUKa1MzSQcAhzkLtk-gzGzoHsz',
+      appKey     : 'fQ4t73jXnb71Y9zQWfXj5bIP',
+      placeholder: "可以输入您发现文中的错误或建议~(。・∀・)ノ",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
