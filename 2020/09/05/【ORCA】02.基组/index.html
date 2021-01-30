@@ -29,7 +29,7 @@
 <meta property="og:description" content="ORCA基组相关">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-09-04T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-01-29T10:55:02.000Z">
+<meta property="article:modified_time" content="2021-01-30T09:41:24.000Z">
 <meta property="article:author" content="Zhao Jing">
 <meta property="article:tag" content="输入">
 <meta property="article:tag" content="基组">
@@ -222,7 +222,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-29 18:55:02" itemprop="dateModified" datetime="2021-01-29T18:55:02+08:00">2021-01-29</time>
+                <time title="修改时间：2021-01-30 17:41:24" itemprop="dateModified" datetime="2021-01-30T17:41:24+08:00">2021-01-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -267,14 +267,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>216</span>
+              <span>9.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>8 分钟</span>
             </span>
             <div class="post-description">ORCA基组相关</div>
 
@@ -287,10 +287,211 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <ul>
+        <h1 id="基组概述"><a href="#基组概述" class="headerlink" title="基组概述"></a>基组概述</h1><ul>
 <li>orca中的标准基组列于<strong>6.3.1 Standard basis set library</strong>中的<strong>Table 6.3</strong>，可以直接作为关键词输入，没有的也可以在输入中用多种方法指定。</li>
 <li>辅助基组用于RI-J RI-MP2的列于<strong>6.3.1 Standard basis set library</strong>中的<strong>Table 6.4</strong>，也可以直接作为关键词输入。</li>
 <li>在<strong>9.4.1 Built-in Basis Sets</strong>的<strong>Table 9.8: Basis sets availability</strong>中也列出了所有的基组</li>
+</ul>
+<ul>
+<li>大多数HF/DFT计算推荐 Karlsruhe group的def2系列。能量和几何通常在DFT水平上用a balanced polarized triple-zeta basis set (such as def2-TZVP) 相当收敛，但是MP2和其他post-HF波函数理论方法收敛速度较慢。</li>
+<li>对于某些分子性质，可能需要特殊的基组和/或uncontracted basis sets ：化学位移，自旋-自旋耦合，电场梯度，超精细耦合等。</li>
+<li><p>坚持使用一个族中并适用于系统中所有元素的基组。来自不同族的混合和匹配基组可能会导致问题。推荐涵盖大部分元素周期表的 <a target="_blank" rel="noopener" href="http://dx.doi.org/10.1039/B508541A">Ahlrichs def2 basis set family</a> 进行DFT计算。该基组在DFT计算中比旧的Ahlrichs系列（文献中称为XVP或def-XVP，其中X可以是S，TZ，QZ）或分裂价Pople基集（6-31G，6-311G）更可靠。优点还在于，可以容易地获得针对该基础集系列（与RI-J，RI-JK和RIJCOSX近似值一起使用）进行适当设计和测试的辅助基础集。</p>
+</li>
+<li><p>ORCA始终<strong>使用纯d和f函数（5d函数和7f函数</strong>，而不是6d函数和10r函数）。与与其他程序（默认值为6d函数和10f函数）的结果进行比较时很重要。</p>
+</li>
+<li>ORCA总是使用球谐高斯函数。L壳层(不要与角动量等于9混淆)是具有相同指数的s壳层和p壳层</li>
+</ul>
+<p>通常建议：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Description</strong></th>
+<th><strong>RI-J, RIJCOSX and RIJONX auxiliary basis sets</strong></th>
+<th><strong>RIJK auxiliary basis sets</strong></th>
+<th><strong>RI-C auxiliary basis sets (used for RI-MP2 and RI integral transforms)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ahlrichs def2 family:*</strong><br/>def2-SV(P)def2-SVPdef2-TZVP(-f)def2-TZVPdef2-TZVPPdef2-QZVPdef2-QZVPP(include ECPs for heavy elements)</td>
+<td>推荐用于轻型主族元素和第一行TM元素（H-Kr）的DFT计算。 当存在较重的元素时，通常建议使用这些基组的标量相对论版本*</td>
+<td>The general <a target="_blank" rel="noopener" href="http://dx.doi.org/10.1039/B515623H">Weigend J auxiliary basis set</a> given by the general  keyword: def2/J in ORCA4 is recommended.</td>
+<td>The general <a target="_blank" rel="noopener" href="http://dx.doi.org/10.1002/jcc.20702">Weigend JK auxiliary basis set</a> given by by the general keyword def2/JK in ORCA4.</td>
+<td>The  <a target="_blank" rel="noopener" href="http://dx.doi.org/10.1007/s00214-007-0250-5">Hellweg RI-MP2 (C) auxiliary basis set</a> (given by keywords such as def2-SVP/C, def2-TZVP/C and def2-QZVPP/C etc.) is recommended.  Note that def2-<em>SVP/C ≠ def2-TZVP/C ≠ def2-QZVPP/C etc.</em></td>
+</tr>
+<tr>
+<td>ma-def2-SVPma-def2-TZVPma-def2-TZVPPma-def2-QZVPP</td>
+<td>最小扩充的弥散def2基组 推荐用于阴离子。</td>
+<td>Use AutoAux or maybe aug-cc-pVnZ/JK.</td>
+<td>Use AutoAux or maybe aug-cc-pVnZ/JK.</td>
+<td>Use AutoAux¥ or maybe aug-cc-pVnZ/C.</td>
+</tr>
+<tr>
+<td><strong>cc-pVnZ family:</strong> cc-pVDZcc-pVTZcc-pVQZcc-pV5Z</td>
+<td>建议用于WFT计算</td>
+<td>The general Weigend J auxiliary basis set (def2/J keyword) above should work fine.</td>
+<td>Use the cc-pVnZ/JK auxiliary basis set (n=T,Q,5)</td>
+<td>Use the cc-pVnZ/C auxiliary basis set (n=T,Q,5)</td>
+</tr>
+<tr>
+<td><strong>aug-cc-pVnZ family:</strong> aug-cc-pVDZaug-cc-pVTZaug-cc-pVQZaug-cc-pV5Z</td>
+<td>弥散的cc-pVnZ基集。建议用于阴离子的WFT计算和弱相互作用。</td>
+<td>Use AutoAux or maybe aug-cc-pVnZ/JK.</td>
+<td>Use the aug-cc-pVnZ/JK auxiliary basis set (n=T,Q,5). Or possibly AutoAux.</td>
+<td>Use the aug-cc-pVnZ/C auxiliary basis set (n=D,T,Q,5). Or possibly AutoAux.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="ECP"><a href="#ECP" class="headerlink" title="ECP"></a>ECP</h1><ul>
+<li>如果涉及重元素，是标量相对论全电子计算的一个很好的替代方法。但是ECP并不是计算重元素的最准确方法，更精确的是标量相对论全电子方法。如果想要对重元素进行全电子描述，则建议使用标量相对论近似（ZORA或DKH）。对ECP进行参数化以隐式地考虑相对论效应不一定很准确，只有小核ECP较准。</li>
+<li>化学上不相关的核电子不是电子问题的明确组成部分，可以由ECP代替。主要用于几何优化和能量计算，在性质计算中可能会出错。</li>
+</ul>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><ul>
+<li>为了减少计算量，通常高度收缩和化学惰性的核基组可以使用ECP，ECP计算只包含价层，因此符合冻核近似。核轨道的贡献被一个单电子算符<script type="math/tex">U^{core}</script>所解释，它取代了核和价电子之间的相互作用，并解释了电子的不可区分性。其径向部分<script type="math/tex">U_l(r)</script>一般表示为高斯函数的线性组合，而角动量算符<script type="math/tex">\left|S_{m}^{l}\right\rangle</script>则包含了角依赖关系。</li>
+</ul>
+<script type="math/tex; mode=display">
+\begin{array}{c}
+U^{\text {core }}=U_{L}(r)+\sum_{l=0}^{L-1} \sum_{m=-l}^{l}\left|S_{m}^{l}\right\rangle\left[U_{l}(r)-U_{L}(r)\right]\left\langle S_{m}^{l}\right| \\
+U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
+\end{array}</script><ul>
+<li>最大角动量<script type="math/tex">L</script>通常被定义为<script type="math/tex">l^{atom}_{max}+1</script>，评估ECP积分所必需的参数<script type="math/tex">n_{kl}</script>、<script type="math/tex">\alpha_{kl}</script>和<script type="math/tex">d_{kl}</script>参数有许多作者发表，其中著名的Los Alamos (LANL)和Stuttgart-Dresden (SD)参数集。依赖于ECP的具体参数化，相对论效应可以包括在半经验的方式，否则是非相对论计算。将<script type="math/tex">U^{core}</script>引入电子哈密顿量可以得到两种类型的ECP积分，一种是由最大角动量势<script type="math/tex">U_L</script>产生的局部积分，另一种是由投影势项产生的半局部积分。</li>
+</ul>
+<h2 id="适用范围"><a href="#适用范围" class="headerlink" title="适用范围"></a>适用范围</h2><ul>
+<li>如果分子不包含重于Kr的元素，那么通常不应该使用ECP，应该使用全电子方法。对元素H-Kr使用def2-XVP或cc-pVnZ基本集，不会自动分配任何ECP。</li>
+<li><p>不建议对第一个TM行原子使用LANL2DZ和SDD基集ECP组合，因为它们的准确性较差，非相对论/相对论全电子计算要好得多。</p>
+</li>
+<li><p>如果分子中含有一种重元素(比Kr重)，例如在典型的过渡金属配合物中，使用ECP可能没有太大的优势。使用全电子相对论近似可以获得更准确的结果，并且几乎一样快。</p>
+</li>
+<li>如果分子中含有很多重元素(比Kr重)，那么ECPs就有最大的优势(尽管梯度会变得昂贵)。使用全电子标量相对论方法的单点计算对于更精确的能量或性质计算更好。</li>
+<li>在某些情况下要处理很重的元素以至于在使用全电子标量相对论方法（ZORA，DKH）时会遇到数值问题。使用ECP更好，特别是对于几何优化步骤。</li>
+<li>对不同ECP的评估发现，一些流行的ECP不太准确。通常推荐the Stuttgart ECPs (e.g. the ones called ECPXXMWB in the <a target="_blank" rel="noopener" href="http://www.theochem.uni-stuttgart.de/pseudopotentials/clickpse.en.html">Stuttgart library</a>, also called SDD or def2-SD)以及def2基组一起使用。另外，应该始终使用推荐的基组ECP组合，不要混合使用。</li>
+<li>注意:Ahlrichs等人在def2基组论文中描述的def2-ECPs是Stuttgart ECPXXMWB potentials，只是跳过了ECPs的g-和更高的投影(因为此类投影在Turbomole中不可用)。而orca没有这个限制，所以全部的Stuttgart ECPs都被实现了。在比较相对能量时，这应该不会产生明显的差异，但是不同代码之间的绝对能量可能会不同。</li>
+</ul>
+<h2 id="指定方式"><a href="#指定方式" class="headerlink" title="指定方式"></a>指定方式</h2><ul>
+<li><strong>各种指定方式 只包含了核，不包含价层，价层基组不要漏</strong></li>
+</ul>
+<h3 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h3><ul>
+<li><p>用关键词指定ECP，orca中可用的ECP关键词列于<strong>6.3.3 Eective Core Potentials</strong>的<strong>Table 6.5</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">! def2-TZVP def2-SD</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对于<code>def2-X</code>基组，<code>def2-ECP</code>会自动用于重于Kr的元素，自动用的是Stuttgart-Dresden effective core potentials for elements Rb-Rn。上例中如果没有<code>def2-SD</code>，会自动分配<code>Def2-ECP</code></p>
+</li>
+<li><p>cc-pvnz-pp中也会自动分配ECP</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">! B3LYP def2-SVP printbasis</span><br><span class="line">* xyz <span class="number">0</span> <span class="number">1</span></span><br><span class="line">Mo <span class="number">0</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line">F  <span class="number">0</span> <span class="number">0</span> <span class="number">1</span></span><br><span class="line">C  <span class="number">0</span> <span class="number">0</span> <span class="number">2</span></span><br><span class="line">H <span class="number">0</span> <span class="number">0</span> <span class="number">3</span></span><br><span class="line">*</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>printbasis</code>关键字对于检查是否向每个元素添加了正确的基组和ECP非常有用。ORCA输出显示ECP被分配是：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Your calculation utilizes the basis: def2-SVP</span><br><span class="line">   F. Weigend <span class="keyword">and</span> R. Ahlrichs, Phys. Chem. Chem. Phys. <span class="number">7</span>, <span class="number">3297</span> (<span class="number">2005</span>).</span><br><span class="line"></span><br><span class="line">cite the ECPs <span class="keyword">for</span> Mo [Def2-ECP] as follows:</span><br><span class="line">Ce-Yb(ecp<span class="number">-28</span>): M. Dolg, H. Stoll, H.Preuss, J. Chem. Phys., <span class="number">1989</span>, <span class="number">90</span>, <span class="number">1730</span><span class="number">-1734.</span></span><br><span class="line">Y-Cd(ecp<span class="number">-28</span>), Hf-Hg(ecp<span class="number">-46</span>): D. Andrae,U. Haeussermann, M. Dolg, H. Stoll, H. Preuss, Theor. Chim. Acta, <span class="number">1990</span>, <span class="number">77</span>, <span class="number">123</span><span class="number">-141.</span></span><br><span class="line">In-Sb(ecp<span class="number">-28</span>), Tl-Bi(ecp<span class="number">-46</span>): B. Metz, H. Stoll, M. Dolg, J. Chem. Phys., <span class="number">2000</span>, <span class="number">113</span>, <span class="number">2563</span><span class="number">-2569.</span></span><br><span class="line">Te-Xe(ecp<span class="number">-28</span>), Po-Rn(ecp<span class="number">-46</span>): K. A. Peterson, D. Figgen, E. Goll, H. Stoll, M. Dolg, J. Chem. Phys., <span class="number">2003</span>, <span class="number">119</span>, <span class="number">11113</span><span class="number">-11123.</span></span><br><span class="line">Rb(ecp<span class="number">-28</span>), Cs(ecp<span class="number">-46</span>): T. Leininger, A. Nicklass, W. Kuechle, H. Stoll, M. Dolg, A. Bergner, Chem. Phys. Lett., <span class="number">1996</span>, <span class="number">255</span>, <span class="number">274</span><span class="number">-280.</span></span><br><span class="line">Sr(ecp<span class="number">-28</span>), Ba(ecp<span class="number">-46</span>): M. Kaupp, P. V. Schleyer, H. Stoll <span class="keyword">and</span> H. Preuss, J. Chem. Phys., <span class="number">1991</span>, <span class="number">94</span>, <span class="number">1360</span><span class="number">-1366.</span></span><br><span class="line">La(ecp<span class="number">-46</span>): M. Dolg, H. Stoll, A. Savin, H. Preuss, Theor. Chim. Acta, <span class="number">1989</span>, <span class="number">75</span>, <span class="number">173</span><span class="number">-194.</span></span><br><span class="line">Lu(ecp<span class="number">-28</span>): X. Cao, M. Dolg, J. Chem. Phys., <span class="number">2001</span>, <span class="number">115</span>, <span class="number">7348</span><span class="number">-7355.</span></span><br><span class="line"></span><br><span class="line">ECP parameters <span class="keyword">for</span> Mo [Def2-ECP] have been obtained from:</span><br><span class="line">TURBOMOLE (<span class="number">7.0</span><span class="number">.2</span>)</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">-------------------------</span><br><span class="line">ECP PARAMETER INFORMATION</span><br><span class="line">-------------------------</span><br><span class="line"></span><br><span class="line"> Group <span class="number">1</span>, Type Mo ECP Def2-ECP (replacing <span class="number">28</span> core electrons, lmax=<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">Atom   <span class="number">0</span>Mo   ECP group =&gt;   <span class="number">1</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="basis"><a href="#basis" class="headerlink" title="%basis"></a>%basis</h3><ul>
+<li><p>如果要在轻原子上指定较小的def2-SVP，在重元素上指定更大的基组和ECP，则</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">! BP def2-SVP def2/J  printbasis</span><br><span class="line"></span><br><span class="line">%basis</span><br><span class="line">newgto Mo <span class="string">&quot;def2-TZVP&quot;</span> end</span><br><span class="line">end</span><br><span class="line">    </span><br><span class="line">* xyz <span class="number">0</span> <span class="number">1</span></span><br><span class="line">Mo <span class="number">0</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line">F  <span class="number">0</span> <span class="number">0</span> <span class="number">1</span></span><br><span class="line">C  <span class="number">0</span> <span class="number">0</span> <span class="number">2</span></span><br><span class="line">H <span class="number">0</span> <span class="number">0</span> <span class="number">3</span></span><br><span class="line">*</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ECP也可以通过在%basis中通过ECP和newECP指定</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">%basis</span><br><span class="line">    ECP <span class="string">&quot;def2-ECP&quot;</span> # <span class="function">All <span class="title">elements</span> <span class="params">(<span class="keyword">for</span> which the ECP is defined)</span></span></span><br><span class="line">    NewECP Pt &quot;def2-SD&quot; end # Different ECP for Pt</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>也可以为单个原子指定</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">* xyz ...</span><br><span class="line">    ...</span><br><span class="line">    S <span class="number">0.0</span> <span class="number">0.0</span> <span class="number">0.0</span> NewECP <span class="string">&quot;SDD&quot;</span> end</span><br><span class="line">    ...</span><br><span class="line">*</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>为单个原子用NEwGTO的时候，可能需要用DelECP移除ECP再添加新的：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">! LANL2DZ # Uses HayWadt ECPs by <span class="keyword">default</span>, starting from Na</span><br><span class="line">%basis</span><br><span class="line">    NewGTO S <span class="string">&quot;Def2-TZVP&quot;</span> end # All-electron up to Kr</span><br><span class="line">    DelECP S # Remove HayWadt ECP</span><br><span class="line">end</span><br><span class="line">* xyz ...</span><br><span class="line">    ...</span><br><span class="line">    Cu <span class="number">0.0</span> <span class="number">0.0</span> <span class="number">0.0</span></span><br><span class="line">    DelECP # Remove HayWadt ECP</span><br><span class="line">    NewGTO <span class="string">&quot;Def2-QZVPP&quot;</span> end # All-electron up to Kr</span><br><span class="line">...</span><br><span class="line">*</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="手动输入ECP参数"><a href="#手动输入ECP参数" class="headerlink" title="手动输入ECP参数"></a>手动输入ECP参数</h3><ul>
+<li><p>首先用NewECP，然后再跟上要指定的元素，核电子数，最大的角动量</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">%basis</span><br><span class="line">    NewECP element</span><br><span class="line">        N_core (number of core electrons)</span><br><span class="line">        lmax (max. angular momentum)</span><br><span class="line">        [shells]</span><br><span class="line">    end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ECP的指定通过给出构成依赖于角度的电势U1的各个壳的定义来完成。</p>
+<ul>
+<li>首先要给出角动量，然后跟着原始基函数的数目</li>
+<li>原始基函数通过一个序号和指数akl、扩展系数dkl和径向指数nkl来指定</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># ECP shell</span><br><span class="line">    l (number of primitives)</span><br><span class="line">    <span class="number">1</span> a1l d1l n1l</span><br><span class="line">    <span class="number">2</span> a2l d2l n3l</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>例子：v的SD(10,MDF)</p>
+</li>
+<li><ul>
+<li>名称表明一个Stuttgart-Dresden型ECP，取代10核心电子和派生自中性原子的相对论计算</li>
+<li>它由角动量s p d f的4个壳层组成。注意f壳层的扩展系数为0.0，因此对有效核势没有任何贡献。</li>
+<li>作为一个例子。考虑一下钒的SD(10 mdf)。该名称表明一个斯图加特-德累斯顿型ECP取代10核心电子，是由中性原子的相对论计算而得。它由角动量s、p、d和f的4个壳层组成。注意f壳层的膨胀系数为0.0，因此对有效核心势没有任何贡献。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># <span class="function">ECP <span class="title">SD</span><span class="params">(<span class="number">10</span>,MDF)</span> <span class="keyword">for</span> V</span></span><br><span class="line"># M. Dolg, U. Wedig, H. Stoll, H. Preuss,</span><br><span class="line"># J. Chem. Phys. <span class="number">86</span>, <span class="number">866</span> (<span class="number">1987</span>).</span><br><span class="line">NewECP V</span><br><span class="line">    N_core <span class="number">10</span></span><br><span class="line">    lmax f</span><br><span class="line">    s <span class="number">2</span></span><br><span class="line">        <span class="number">1</span> <span class="number">14.4900000000</span> <span class="number">178.4479710000</span> <span class="number">2</span></span><br><span class="line">        <span class="number">2</span> <span class="number">6.5240000000</span> <span class="number">19.8313750000</span> <span class="number">2</span></span><br><span class="line">    p <span class="number">2</span></span><br><span class="line">        <span class="number">1</span> <span class="number">14.3000000000</span> <span class="number">109.5297630000</span> <span class="number">2</span></span><br><span class="line">        <span class="number">2</span> <span class="number">6.0210000000</span> <span class="number">12.5703100000</span> <span class="number">2</span></span><br><span class="line">    d <span class="number">2</span></span><br><span class="line">        <span class="number">1</span> <span class="number">17.4800000000</span> <span class="number">-19.2196570000</span> <span class="number">2</span></span><br><span class="line">        <span class="number">2</span> <span class="number">5.7090000000</span> <span class="number">-0.6427750000</span> <span class="number">2</span></span><br><span class="line">    f <span class="number">1</span></span><br><span class="line">        <span class="number">1</span> <span class="number">1.0000000000</span> <span class="number">0.0000000000</span> <span class="number">2</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h1 id="相对论基组"><a href="#相对论基组" class="headerlink" title="相对论基组"></a>相对论基组</h1><ul>
+<li><p>使用Ahlrichs def2基集时，ORCA默认会为定义了def2-ECP（元素&gt; Kr）的重元素查找ECP。但是，如果要求进行全电子相对论计算（ZORA或DKH），则需要选择正确的相对论基础集。</p>
+</li>
+<li><p>如果使用推荐的基组，在ORCA的DFT计算中使用标量相对论方法很容易</p>
+</li>
+<li>Ahlrichs def2基组系列已重新收缩来用于ZORA或DKH2计算，应选择def2-XVP基的相对论性收缩。</li>
+<li>对于相对论WFT计算，可以使用相对论Douglas-Kroll相关一致基集cc-pVnZ-DK基组。</li>
+<li><p>对于仅使用ECP（第三行过渡金属行等）才能使用标准def2-XVP基集的元素，应该使用分段的全电子相对论收缩（SARC）基组</p>
+</li>
+<li><p>随着元素变得越来越重，对于DFT中的交换相关项，ZORA或DKH2方法需要甚至更密的格点。</p>
+<ul>
+<li>对于非常重的元素（第三行及以下）的计算，有时需要指定最大的角度格点（Grid7），然后大幅增加径向格点（甚至是IntAcc 10-20）。因此可能需要对新分子系统的格点依赖性进行手动探索</li>
+</ul>
+</li>
+</ul>
+<h2 id="DFT中的单点ZORA-DKH2计算和Ahlrichs-amp-SARC基组"><a href="#DFT中的单点ZORA-DKH2计算和Ahlrichs-amp-SARC基组" class="headerlink" title="DFT中的单点ZORA/DKH2计算和Ahlrichs &amp; SARC基组"></a>DFT中的单点ZORA/DKH2计算和Ahlrichs &amp; SARC基组</h2><h3 id="H-Kr"><a href="#H-Kr" class="headerlink" title="H-Kr"></a>H-Kr</h3><ul>
+<li>使用<strong>ZORA或DKH2方法</strong>：<ul>
+<li>基组ZORA-def2-TZVP是全电子def2-TZVP Ahlrichs基组的相对论版，直接在前面加入<code>DKH-</code>或者<code>ZORA-</code></li>
+<li>注意，对于其他非相对论基础集(例如Pople-style基础)没有执行重缩，因此计算会不一致</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">! B3LYP ZORA ZORA-TZVP ...</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果需要使用辅助基组，建议使用解压缩的def2/J辅基组，通过<code>! SARC/J</code>定义，对于相对论ZORA / DKH计算更准确</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">! BP86 ZORA ZORA-def2-SVP SARC/J</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">! BP86 DKH2 DKH-def2-SVP SARC/J</span><br><span class="line"></span><br><span class="line">*xyz <span class="number">0</span> <span class="number">1</span></span><br><span class="line">H <span class="number">0</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line">F <span class="number">0</span> <span class="number">0</span> <span class="number">1</span></span><br><span class="line">*</span><br></pre></td></tr></table></figure>
+<h3 id="Rb-I"><a href="#Rb-I" class="headerlink" title="Rb-I"></a>Rb-I</h3><ul>
+<li>周期表中的这一行def2-XVP仅仅是价基组+core的def2-ECP</li>
+<li>在ORCA 4.0中没有有效的<code>ZORA-def2-TZVP</code>或  <code>DKH-def2-TZVP</code>关键字。为了大致再现旧的ORCA行为，可以使用关键字 <code>old-ZORA-TZVP</code>和<code>old-DKH-TZVP</code>。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">! BP86 ZORA ZORA-def2-TZVP SARC/J  </span><br><span class="line">%basis </span><br><span class="line">NewGTO Mo <span class="string">&quot;old-ZORA-TZVP&quot;</span> end</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">*xyz <span class="number">0</span> <span class="number">1</span></span><br><span class="line">H <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> </span><br><span class="line">F <span class="number">0</span> <span class="number">0</span> <span class="number">1</span></span><br><span class="line">Mo <span class="number">0</span> <span class="number">0</span> <span class="number">2</span></span><br><span class="line">*</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">! BP86 DKH DKH-def2-TZVP SARC/J  </span><br><span class="line">%basis </span><br><span class="line">NewGTO Mo <span class="string">&quot;old-DKH-TZVP&quot;</span> end</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">*xyz <span class="number">0</span> <span class="number">1</span></span><br><span class="line">H <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> </span><br><span class="line">F <span class="number">0</span> <span class="number">0</span> <span class="number">1</span></span><br><span class="line">Mo <span class="number">0</span> <span class="number">0</span> <span class="number">2</span></span><br><span class="line">*</span><br></pre></td></tr></table></figure>
+<h3 id="Xe-Rn、Ac-Lr"><a href="#Xe-Rn、Ac-Lr" class="headerlink" title="Xe-Rn、Ac-Lr"></a>Xe-Rn、Ac-Lr</h3><ul>
+<li>如果包含重元素，例如第三过渡金属行原子、镧系、锕系和6p元素，必须明确定义<strong>SARC基组</strong>和<code>SARC/J</code></li>
+<li>例子：为所有内容定义<code>ZORA-def2-TZVP</code>（对于H和F，由于Pt没有可用的<code>ZORA-def2-TZVP</code>，因此将忽略Pt）；然后使用<code>％basis</code>块定义Pt的<code>SARC-ZORA-TZVP</code>基组</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">! BP86 ZORA ZORA-def2-TZVP SARC/J  </span><br><span class="line">%basis </span><br><span class="line">NewGTO Pt <span class="string">&quot;SARC-ZORA-TZVP&quot;</span> end</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">*xyz <span class="number">0</span> <span class="number">1</span></span><br><span class="line">H <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> </span><br><span class="line">F <span class="number">0</span> <span class="number">0</span> <span class="number">1</span></span><br><span class="line">Pt <span class="number">0</span> <span class="number">0</span> <span class="number">2</span></span><br><span class="line">*</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">! BP86 DKH DKH-def2-TZVP SARC/J  </span><br><span class="line">%basis </span><br><span class="line">NewGTO Pt <span class="string">&quot;SARC-DKH-TZVP&quot;</span> end</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">*xyz <span class="number">0</span> <span class="number">1</span></span><br><span class="line">H <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> </span><br><span class="line">F <span class="number">0</span> <span class="number">0</span> <span class="number">1</span></span><br><span class="line">Pt <span class="number">0</span> <span class="number">0</span> <span class="number">2</span></span><br><span class="line">*</span><br></pre></td></tr></table></figure>
+<h2 id="用弥散函数和ZORA、DKH"><a href="#用弥散函数和ZORA、DKH" class="headerlink" title="用弥散函数和ZORA、DKH"></a>用弥散函数和ZORA、DKH</h2><p>如果ZORA / DKH2 DFT计算中需要弥散函数，则建议使用最小扩展的def2 ZORA / DKH基集：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ma<span class="literal">-ZORA</span><span class="literal">-def2</span><span class="literal">-SV</span>（P）（<span class="built_in">H</span><span class="literal">-Rn</span>）</span><br><span class="line">ma<span class="literal">-ZORA</span><span class="literal">-def2</span><span class="literal">-SVP</span> （<span class="built_in">H</span><span class="literal">-Rn</span>）</span><br><span class="line">ma<span class="literal">-ZORA</span><span class="literal">-def2</span><span class="literal">-TZVP</span> （<span class="built_in">H</span><span class="literal">-Rn</span>）</span><br><span class="line">ma<span class="literal">-ZORA</span><span class="literal">-def2</span><span class="literal">-TZVP</span>（<span class="operator">-f</span>） （<span class="built_in">H</span><span class="literal">-Rn</span>）</span><br><span class="line">ma<span class="literal">-ZORA</span><span class="literal">-def2</span><span class="literal">-TZVPP</span> （<span class="built_in">H</span><span class="literal">-Rn</span>）</span><br><span class="line">ma<span class="literal">-ZORA</span><span class="literal">-def2</span><span class="literal">-QZVP</span> （<span class="built_in">H</span><span class="literal">-Rn</span>）</span><br><span class="line">ma<span class="literal">-ZORA</span><span class="literal">-def2</span><span class="literal">-QZVPP</span> （<span class="built_in">H</span><span class="literal">-Rn</span>）</span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ma<span class="literal">-DKH</span><span class="literal">-def2</span><span class="literal">-SV</span>（P） （<span class="built_in">H</span><span class="literal">-Rn</span>）</span><br><span class="line">ma- DKH <span class="literal">-def2</span><span class="literal">-SVP</span> （<span class="built_in">H</span><span class="literal">-Rn</span>）</span><br><span class="line">ma- DKH <span class="literal">-def2</span><span class="literal">-TZVP</span> （<span class="built_in">H</span><span class="literal">-Rn</span>）</span><br><span class="line">ma- DKH <span class="literal">-def2</span><span class="literal">-TZVP</span>（<span class="operator">-f</span>） （<span class="built_in">H</span><span class="literal">-Rn</span>）</span><br><span class="line">ma- DKH <span class="literal">-def2</span><span class="literal">-TZVPP</span> （<span class="built_in">H</span><span class="literal">-Rn</span>）</span><br><span class="line">ma- DKH <span class="literal">-def2</span><span class="literal">-QZVP</span> （<span class="built_in">H</span><span class="literal">-Rn</span>）</span><br><span class="line">ma- DKH <span class="literal">-def2</span><span class="literal">-QZVPP</span> （<span class="built_in">H</span><span class="literal">-Rn</span>）</span><br></pre></td></tr></table></figure>
+<p><strong>对于WFT计算</strong>，aug-cc-VnZ-DK系列更好：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">aug<span class="literal">-cc</span><span class="literal">-pVDZ</span><span class="literal">-DK</span>（<span class="built_in">H</span><span class="literal">-Ar</span>，<span class="built_in">Sc</span><span class="literal">-Kr</span>）</span><br><span class="line">aug<span class="literal">-cc</span><span class="literal">-pVTZ</span><span class="literal">-DK</span> （<span class="built_in">H</span><span class="literal">-Ar</span>，<span class="built_in">Sc</span><span class="literal">-Kr</span>，Y<span class="literal">-Xe</span>，Hf<span class="literal">-Rn</span>） </span><br><span class="line">aug<span class="literal">-cc</span><span class="literal">-pVQZ</span><span class="literal">-DK</span> （<span class="built_in">H</span><span class="literal">-Ar</span>，<span class="built_in">Sc</span><span class="literal">-Kr</span>，<span class="keyword">In</span><span class="literal">-Xe</span>，Tl<span class="literal">-Rn</span>） </span><br><span class="line">aug<span class="literal">-cc</span><span class="literal">-pV5Z</span><span class="literal">-DK</span> （<span class="built_in">H</span><span class="literal">-Ar</span>，<span class="built_in">Sc</span><span class="literal">-Kr</span>）</span><br></pre></td></tr></table></figure>
+<h2 id="几何优化with-ZORA-DKH"><a href="#几何优化with-ZORA-DKH" class="headerlink" title="几何优化with ZORA/DKH"></a>几何优化with ZORA/DKH</h2><ul>
+<li><p>由于在几何优化中使用了单中心近似，因此ZORA / DKH2几何优化产生的能量与单点计算产生的能量不同。注意不要混淆优化和单点相对论工作的能量。</p>
+</li>
+<li><p>请注意，重元素分子的几何优化通常使用ZORA比使用DKH更稳定。这似乎是由于ZORA的格点灵敏度降低所致。因此通常建议使用ZORA。</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">! BP86 def2-TZVP SARC/J ZORA <span class="meta">Opt</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">! BP86 def2-TZVP SARC/J DKH2 <span class="meta">Opt</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="相对论分子性质"><a href="#相对论分子性质" class="headerlink" title="相对论分子性质"></a>相对论分子性质</h2><ul>
+<li><p>由于所谓的 picturechange效应，使用标量相对论哈密顿量计算的分子特性可能会变得复杂</p>
+</li>
+<li><ul>
+<li><p>ZORA中， 磁性不需要picture change</p>
+</li>
+<li><p>ZORA中，电性质原则上需要picture change，但是由于ZORA缺乏gauge invariance，结果不好。一种解决方法是使用van Lenthe定义的所谓的ZORA-4密度。这是在ORCA中将<strong>picturechange</strong>设置为<strong>true</strong>时得到的。但是，这似乎并没有通过完全相对论的四分量计算来改善一致性。</p>
+</li>
+<li><p>DKH中，电性质的picture change相对容易，应该包括</p>
+</li>
+<li><p>DKH中，变换依赖于矢量电视，因此picture change对磁的影响很复杂，orca也实现了picture change的效果</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%<span class="built_in">rel</span> picturechange  <span class="literal">true</span> <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>如果基集接近完整，则所有相对论计算都将变为奇异，因为相对论轨道会随着点原子核发散。解决方法是使用有限核。有限核模型：</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%<span class="built_in">rel</span> FiniteNuc <span class="literal">true</span>/<span class="literal">false</span> <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 
     </div>
@@ -410,6 +611,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%BB%84%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">基组概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ECP"><span class="nav-number">2.</span> <span class="nav-text">ECP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">2.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E8%8C%83%E5%9B%B4"><span class="nav-number">2.2.</span> <span class="nav-text">适用范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E6%96%B9%E5%BC%8F"><span class="nav-number">2.3.</span> <span class="nav-text">指定方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E8%AF%8D"><span class="nav-number">2.3.1.</span> <span class="nav-text">关键词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#basis"><span class="nav-number">2.3.2.</span> <span class="nav-text">%basis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E8%BE%93%E5%85%A5ECP%E5%8F%82%E6%95%B0"><span class="nav-number">2.3.3.</span> <span class="nav-text">手动输入ECP参数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%9F%BA%E7%BB%84"><span class="nav-number">3.</span> <span class="nav-text">相对论基组</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DFT%E4%B8%AD%E7%9A%84%E5%8D%95%E7%82%B9ZORA-DKH2%E8%AE%A1%E7%AE%97%E5%92%8CAhlrichs-amp-SARC%E5%9F%BA%E7%BB%84"><span class="nav-number">3.1.</span> <span class="nav-text">DFT中的单点ZORA&#x2F;DKH2计算和Ahlrichs &amp; SARC基组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#H-Kr"><span class="nav-number">3.1.1.</span> <span class="nav-text">H-Kr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rb-I"><span class="nav-number">3.1.2.</span> <span class="nav-text">Rb-I</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Xe-Rn%E3%80%81Ac-Lr"><span class="nav-number">3.1.3.</span> <span class="nav-text">Xe-Rn、Ac-Lr</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E5%BC%A5%E6%95%A3%E5%87%BD%E6%95%B0%E5%92%8CZORA%E3%80%81DKH"><span class="nav-number">3.2.</span> <span class="nav-text">用弥散函数和ZORA、DKH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96with-ZORA-DKH"><span class="nav-number">3.3.</span> <span class="nav-text">几何优化with ZORA&#x2F;DKH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%88%86%E5%AD%90%E6%80%A7%E8%B4%A8"><span class="nav-number">3.4.</span> <span class="nav-text">相对论分子性质</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -505,7 +707,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">142k</span>
+    <span title="站点总字数">151k</span>
 </div>
 
         
