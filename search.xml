@@ -1638,7 +1638,8 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
         <category>CP2K</category>
       </categories>
       <tags>
-        <tag>CP2K,几何优化</tag>
+        <tag>CP2K</tag>
+        <tag>几何优化</tag>
       </tags>
   </entry>
   <entry>
@@ -2029,6 +2030,12 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
         <tag>geometry</tag>
         <tag>basis</tag>
         <tag>ECP</tag>
+        <tag>基组</tag>
+        <tag>input</tag>
+        <tag>坐标</tag>
+        <tag>内存</tag>
+        <tag>赝势</tag>
+        <tag>output</tag>
       </tags>
   </entry>
   <entry>
@@ -4034,7 +4041,7 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <li><p>如果ORCA以一般消息终止：“ ORCA finished by error termination in [ORCA module]”，并且上面没有其他有用的消息， 原因取决于运行哪个ORCA模块。如果运行的模块是占用大量内存的模块，例如：orca_mp2，orca_scfhess，orca_mdci，orca_mrci等，则作业可能会耗尽内存或磁盘空间，或者访问内存或磁盘时出现问题。这也可能是运行一个具有过多内核的小型系统的计算的问题（运行一个仅包含几个原子的系统的60内核计算是没有意义的，并且会导致不可预测的结果）。</p>
 </li>
 </ul>
-<h1 id="多步作业"><a href="#多步作业" class="headerlink" title="多步作业"></a>多步作业</h1><p>ORCA支持在一个输入文件中设置多步作业，使用$new_job关键词来标记下一个作业的开始。多步作业常在以下类型的计算中会用到：</p>
+<h1 id="多步作业"><a href="#多步作业" class="headerlink" title="多步作业"></a>多步作业</h1><p>ORCA支持在一个输入文件中设置多步作业，使用<code>$new_job</code>关键词来标记下一个作业的开始。多步作业常在以下类型的计算中会用到：</p>
 <ul>
 <li>用不同的方法或基组计算同一个分子的性质。</li>
 <li>用相同的参数计算一系列分子。</li>
@@ -4071,13 +4078,18 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">! def2-TZVP UKS</span><br><span class="line">%method</span><br><span class="line">functional BP86</span><br><span class="line">correlation C_LYP</span><br><span class="line">SpecialGridAtoms[<span class="number">1</span>] <span class="number">26</span>, <span class="number">27</span></span><br><span class="line">SpecialGridIntacc <span class="number">8</span>, <span class="number">8</span>, <span class="number">8</span></span><br><span class="line">SpecialGridAtoms <span class="number">28</span>, <span class="number">29</span></span><br><span class="line">end</span><br><span class="line">! PBE def2-SVP RKS</span><br></pre></td></tr></table></figure>
 <p>等同于</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">! UKS BLYP def2-SVP</span><br><span class="line">%method</span><br><span class="line">SpecialGridAtoms <span class="number">28</span>, <span class="number">29</span>, <span class="number">27</span></span><br><span class="line">SpecialGridIntacc <span class="number">8</span>, <span class="number">8</span>, <span class="number">8</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-]]></content>
+<h1 id="几何坐标输入"><a href="#几何坐标输入" class="headerlink" title="几何坐标输入"></a>几何坐标输入</h1>]]></content>
       <categories>
         <category>计算化学</category>
         <category>ORCA</category>
       </categories>
       <tags>
         <tag>输入</tag>
+        <tag>memory</tag>
+        <tag>geometry</tag>
+        <tag>input</tag>
+        <tag>坐标</tag>
+        <tag>内存</tag>
       </tags>
   </entry>
   <entry>
@@ -4095,12 +4107,11 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 </li>
 <li><p>ORCA始终<strong>使用纯d和f函数（5d函数和7f函数</strong>，而不是6d函数和10r函数）。与与其他程序（默认值为6d函数和10f函数）的结果进行比较时很重要。</p>
 </li>
-<li>ORCA总是使用球谐高斯函数。L壳层(不要与角动量等于9混淆)是具有相同指数的s壳层和p壳层</li>
 </ul>
 <p>通常建议：</p>
 <p><img src="image-20210130180255629.png" alt=""></p>
 <ul>
-<li><p>自己指定的时候应使用<code>Printbasis</code>关键字来确检查分子的最终基组是否正确。orca接受不规范的基组格式并规范，可以用!printbasis来输出，也可以用</p>
+<li><p>自己指定的时候应使用<code>Printbasis</code>关键字来确检查分子的最终基组是否正确。orca接受不规范的基组格式并规范，可以用<code>!printbasis</code>来输出，也可以用</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">%output print[p basis] <span class="number">2</span> end</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
@@ -4122,64 +4133,49 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <h3 id="为不同元素指定不同基组"><a href="#为不同元素指定不同基组" class="headerlink" title="为不同元素指定不同基组"></a>为不同元素指定不同基组</h3><ul>
 <li><p><code>newgto</code>和<code>addgto</code>关键字需要单独的<code>end</code>语句</p>
 </li>
-<li><p><code>newgto</code>中的元素符号也可以用元素序号，比如C用6</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"> BP86 def2-SVP def2/J TIGHTSCF printbasis</span><br><span class="line">%basis</span><br><span class="line">newgto C <span class="string">&quot;def2-TZVP&quot;</span> end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">  </span><br><span class="line">- 如果要在`％basis`块中手动指定基组，基组输入文件的格式基本上是来自Gamess-US的EMSL库的格式</span><br><span class="line">  - 第一行是第一角动量和原始基函数的数目，接着的第一列（<span class="number">1</span>，<span class="number">2</span>……）是原始基函数的序号，第二列是原始基函数的指数，第三列是没有归一化的收缩系数</span><br><span class="line">  - 还有可能在第一行的原始基函数的数目之后包含一个<span class="literal">SCALE</span> X语句，以指示基函数指数应该被收缩</span><br><span class="line">  </span><br><span class="line">  ```c++</span><br><span class="line">  ! BP86 def2-SVP def2/J TIGHTSCF printbasis</span><br><span class="line">  %basis</span><br><span class="line">  newgto C</span><br><span class="line">  S   <span class="number">6</span></span><br><span class="line">    <span class="number">1</span>  <span class="number">13575.3496820</span>              <span class="number">0.22245814352E-03</span>      </span><br><span class="line">    <span class="number">2</span>   <span class="number">2035.2333680</span>              <span class="number">0.17232738252E-02</span>      </span><br><span class="line">    <span class="number">3</span>    <span class="number">463.22562359</span>             <span class="number">0.89255715314E-02</span>      </span><br><span class="line">    <span class="number">4</span>    <span class="number">131.20019598</span>             <span class="number">0.35727984502E-01</span>      </span><br><span class="line">    <span class="number">5</span>     <span class="number">42.853015891</span>            <span class="number">0.11076259931</span>    </span><br><span class="line">    <span class="number">6</span>     <span class="number">15.584185766</span>            <span class="number">0.24295627626</span>    </span><br><span class="line">  S   <span class="number">2</span></span><br><span class="line">    <span class="number">1</span>      <span class="number">6.2067138508</span>           <span class="number">0.41440263448</span>    </span><br><span class="line">    <span class="number">2</span>      <span class="number">2.5764896527</span>           <span class="number">0.23744968655</span>    </span><br><span class="line">  S   <span class="number">1</span></span><br><span class="line">    <span class="number">1</span>      <span class="number">0.57696339419</span>          <span class="number">1.0000000</span></span><br><span class="line">  ...etc...</span><br><span class="line">  end</span><br><span class="line">  end #Don&#x27;t forget the two <span class="string">&quot;end&quot;</span> keywords!</span><br></pre></td></tr></table></figure>
+<li><p><code>newgto</code>中的元素符号也可以用元素序号，比如<code>C</code>用<code>6</code> </p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">! BP86 def2-SVP def2/J TIGHTSCF printbasis</span><br><span class="line">%basis</span><br><span class="line">	newgto C <span class="string">&quot;def2-TZVP&quot;</span> end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">  </span><br><span class="line">- 如果要在`％basis`块中手动指定基组，基组输入文件的格式基本上是来自Gamess-US的EMSL库的格式</span><br><span class="line">  - 第一行是第一角动量（s、p、d、f、g、h、i、j）和原始基函数的数目，接着每个原始基函数为一行</span><br><span class="line">    - 第一列（<span class="number">1</span>，<span class="number">2</span>……）是原始基函数的序号，第二列是原始基函数的指数，第三列是没有归一化的收缩系数</span><br><span class="line">    - ORCA总是使用球谐高斯函数。&lt;a href=<span class="string">&quot;#LShell&quot;</span>&gt;L壳层(不要与角动量等于<span class="number">9</span>混淆)是具有相同指数的s壳层和p壳层&lt;/a&gt;</span><br><span class="line">  - 还有可能在第一行的原始基函数的数目之后包含一个`<span class="literal">SCALE</span> X`语句，以指示基函数指数应该被收缩  </span><br><span class="line">  ```c++</span><br><span class="line">  ! BP86 def2-SVP def2/J TIGHTSCF printbasis</span><br><span class="line">  %basis</span><br><span class="line">  newgto C</span><br><span class="line">  S   <span class="number">6</span></span><br><span class="line">    <span class="number">1</span>  <span class="number">13575.3496820</span>              <span class="number">0.22245814352E-03</span>      </span><br><span class="line">    <span class="number">2</span>   <span class="number">2035.2333680</span>              <span class="number">0.17232738252E-02</span>      </span><br><span class="line">    <span class="number">3</span>    <span class="number">463.22562359</span>             <span class="number">0.89255715314E-02</span>      </span><br><span class="line">    <span class="number">4</span>    <span class="number">131.20019598</span>             <span class="number">0.35727984502E-01</span>      </span><br><span class="line">    <span class="number">5</span>     <span class="number">42.853015891</span>            <span class="number">0.11076259931</span>    </span><br><span class="line">    <span class="number">6</span>     <span class="number">15.584185766</span>            <span class="number">0.24295627626</span>    </span><br><span class="line">  S   <span class="number">2</span></span><br><span class="line">    <span class="number">1</span>      <span class="number">6.2067138508</span>           <span class="number">0.41440263448</span>    </span><br><span class="line">    <span class="number">2</span>      <span class="number">2.5764896527</span>           <span class="number">0.23744968655</span>    </span><br><span class="line">  S   <span class="number">1</span></span><br><span class="line">    <span class="number">1</span>      <span class="number">0.57696339419</span>          <span class="number">1.0000000</span></span><br><span class="line">  ...etc...</span><br><span class="line">  end</span><br><span class="line">  end #Don&#x27;t forget the two <span class="string">&quot;end&quot;</span> keywords!</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>还可以使用<code>AddGTO</code>关键字添加基函数，比如不想使用标准极化函数</p>
 <ul>
-<li><p>例子：向所有碳原子添加指数为0.101的d极化函数</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">! BP86 def2-SVP def2/J TIGHTSCF printbasis</span><br><span class="line">%basis</span><br><span class="line">addgto C </span><br><span class="line">D   <span class="number">1</span></span><br><span class="line">  <span class="number">1</span>      <span class="number">0.1010000</span>              <span class="number">1.0000000</span></span><br><span class="line">end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>也可以用基组的名称，比如给O指定6-31G，然后再加入一个指数为0.4的极化函数</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">%basis</span><br><span class="line">    NewGTO <span class="number">8</span> <span class="meta"># new basis for oxygen</span></span><br><span class="line">    <span class="string">&quot;6-31G&quot;</span></span><br><span class="line">    D <span class="number">1</span></span><br><span class="line">    <span class="number">1</span> <span class="number">0.4</span> <span class="number">1.0</span></span><br><span class="line">end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<li>例子：向所有碳原子添加指数为0.101的d极化函数<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">! BP86 def2-SVP def2/J TIGHTSCF printbasis</span><br><span class="line">%basis</span><br><span class="line">	addgto C </span><br><span class="line">		D   <span class="number">1</span></span><br><span class="line">  		<span class="number">1</span>      <span class="number">0.1010000</span>              <span class="number">1.0000000</span></span><br><span class="line">	end</span><br><span class="line">end</span><br></pre></td></tr></table></figure></li>
+<li>也可以用基组的名称：<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">#给O指定<span class="number">6</span><span class="number">-31</span>G，然后再加入一个指数为<span class="number">0.4</span>的极化函数</span><br><span class="line">%basis</span><br><span class="line">    NewGTO <span class="number">8</span> <span class="meta"># new basis for oxygen</span></span><br><span class="line">    	<span class="string">&quot;6-31G&quot;</span></span><br><span class="line">    	D <span class="number">1</span></span><br><span class="line">    	<span class="number">1</span> <span class="number">0.4</span> <span class="number">1.0</span></span><br><span class="line">	end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
-<li><p>使用<code>NewGTO</code>不会改变元素的<code>ECP</code>，需要使用<code>NewECP</code>或者<code>DelECP</code>，类似的辅助基组<code>NewAuxJGTO</code>也是如此；</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">%basis</span><br><span class="line">    NewAuxJGTO <span class="number">8</span> <span class="meta"># new auxiliary basis for oxygen</span></span><br><span class="line">        s <span class="number">1</span></span><br><span class="line">        <span class="number">1</span> <span class="number">350</span> <span class="number">1.0</span></span><br><span class="line">        ... etc</span><br><span class="line">    end</span><br><span class="line">    AddAuxJGTO <span class="number">8</span> <span class="meta"># add a shell to the auxiliary basis for oxygen</span></span><br><span class="line">        D <span class="number">1</span></span><br><span class="line">        <span class="number">1</span> <span class="number">0.8</span> <span class="number">1.0</span></span><br><span class="line">    end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<li><p>使用<code>NewGTO</code>不会改变元素的<code>ECP</code>，需要使用<code>NewECP</code>或者<code>DelECP</code>，</p>
+</li>
+<li><p>辅助基组<code>NewAuxJGTO</code>的用法类似，关键词还有：<code>NewAuxCGTO</code><strong>, </strong><code>AddAuxCGTO</code>, <code>NewAuxJKGTO</code><strong>, </strong><code>AddAuxJKGTO</code>, <code>NewCABSGTO</code><strong>, </strong><code>AddCABSGTO</code></p>
 <ul>
-<li><strong>NewAuxCGTO</strong>, <strong>AddAuxCGTO</strong>, </li>
-<li><strong>NewAuxJKGTO</strong>, <strong>AddAuxJKGTO</strong>, </li>
-<li><strong>NewCABSGTO</strong>, <strong>AddCABSGTO</strong>的用法都一样</li>
+<li><code>NewAuxGTO</code>和<code>AddAuxGTO</code>与<code>NewAuxJGTO</code>和<code>AddAuxJGTO</code>一样，只影响库伦辅助基组（/J）</li>
 </ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">%basis</span><br><span class="line">    NewAuxJGTO <span class="number">8</span> <span class="meta"># new auxiliary basis for oxygen</span></span><br><span class="line">        s <span class="number">1</span></span><br><span class="line">        <span class="number">1</span> <span class="number">350</span> <span class="number">1.0</span></span><br><span class="line">        ... etc</span><br><span class="line">    end</span><br><span class="line">    AddAuxJGTO <span class="number">8</span> <span class="meta"># add a shell to the auxiliary basis for oxygen</span></span><br><span class="line">        D <span class="number">1</span></span><br><span class="line">        <span class="number">1</span> <span class="number">0.8</span> <span class="number">1.0</span></span><br><span class="line">    end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h2 id="通过坐标部分为不同原子指定"><a href="#通过坐标部分为不同原子指定" class="headerlink" title="通过坐标部分为不同原子指定"></a>通过坐标部分为不同原子指定</h2><ul>
-<li><p>如果要在特定原子（而不是元素）上放置不同的基组，则可以通过将<code>newgto</code>关键字添加到坐标部分来做到这一点</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">! BP86 ZORA ZORA-def2-SVP SARC/J TIGHTSCF printbasis</span><br><span class="line">*xyz <span class="number">0</span> <span class="number">1</span></span><br><span class="line">H <span class="number">0.0</span> <span class="number">0.0</span> <span class="number">0.0</span></span><br><span class="line">H <span class="number">0.0</span> <span class="number">0.0</span> <span class="number">1.0</span> newgto <span class="string">&quot;ZORA-def2-TZVP&quot;</span> end </span><br><span class="line">*</span><br></pre></td></tr></table></figure>
-</li>
+<li>如果要在特定原子（而不是元素）上放置不同的基组，则可以通过将<code>newgto</code>关键字添加到坐标部分来做到这一点<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">! BP86 ZORA ZORA-def2-SVP SARC/J TIGHTSCF printbasis</span><br><span class="line">*xyz <span class="number">0</span> <span class="number">1</span></span><br><span class="line">H <span class="number">0.0</span> <span class="number">0.0</span> <span class="number">0.0</span></span><br><span class="line">H <span class="number">0.0</span> <span class="number">0.0</span> <span class="number">1.0</span> newgto <span class="string">&quot;ZORA-def2-TZVP&quot;</span> end </span><br><span class="line">*</span><br></pre></td></tr></table></figure></li>
 <li><p>类似的方式使用<code>AddGTO</code>关键字，向特定原子添加额外的基函数</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">! BP86 ZORA def2-SVP SARC/J TIGHTSCF printbasis</span><br><span class="line">*xyz <span class="number">0</span> <span class="number">1</span></span><br><span class="line">H <span class="number">0.0</span> <span class="number">0.0</span> <span class="number">0.0</span></span><br><span class="line">H <span class="number">0.0</span> <span class="number">0.0</span> <span class="number">1.0</span> </span><br><span class="line">addgto</span><br><span class="line">P   <span class="number">1</span></span><br><span class="line">  <span class="number">1</span>      <span class="number">0.0356900</span>              <span class="number">1.0000000</span></span><br><span class="line">end</span><br><span class="line">*</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>也可以在<code>%coords</code>中指定：为C增加指数为1的d层，为O新指定6-311G基组并增加指数为1.2的d层</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">%coords</span><br><span class="line">    CTyp = Internal; </span><br><span class="line">    Units = Angs;</span><br><span class="line">    Charge = <span class="number">0</span>; </span><br><span class="line">    Mult = <span class="number">1</span>;</span><br><span class="line">    Coords <span class="meta"># start coordinate assignments</span></span><br><span class="line">        C(<span class="number">1</span>) <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0.00</span> <span class="number">0.0</span> <span class="number">0.00</span></span><br><span class="line">            AddGTO</span><br><span class="line">            D <span class="number">1</span></span><br><span class="line">            <span class="number">1</span> <span class="number">1.0</span> <span class="number">1.0</span></span><br><span class="line">       end;</span><br><span class="line">        O(<span class="number">2</span>) <span class="number">1</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1.13</span> <span class="number">0.0</span> <span class="number">0.00</span></span><br><span class="line">            NewGTO</span><br><span class="line">               <span class="string">&quot;6-311G&quot;</span></span><br><span class="line">               D <span class="number">1</span></span><br><span class="line">                <span class="number">1</span> <span class="number">1.2</span> <span class="number">1.0</span></span><br><span class="line">         end;</span><br><span class="line">     end;</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>类似的辅助基组也是相同用法：</p>
-<ul>
-<li>NewAuxJGTO,AddAuxJGTO,</li>
-<li>NewAuxCGTO, AddAuxCGTO, </li>
-<li>NewAuxJKGTO, AddAuxJKGTO, </li>
-<li>NewCABSGTO, AddCABSGTO.</li>
-</ul>
-</li>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">! BP86 ZORA def2-SVP SARC/J TIGHTSCF printbasis</span><br><span class="line">*xyz <span class="number">0</span> <span class="number">1</span></span><br><span class="line">H <span class="number">0.0</span> <span class="number">0.0</span> <span class="number">0.0</span></span><br><span class="line">H <span class="number">0.0</span> <span class="number">0.0</span> <span class="number">1.0</span> </span><br><span class="line">addgto</span><br><span class="line">P   <span class="number">1</span></span><br><span class="line">  <span class="number">1</span>      <span class="number">0.0356900</span>              <span class="number">1.0000000</span></span><br><span class="line">end</span><br><span class="line">*</span><br></pre></td></tr></table></figure></li>
+<li>也可以在<code>%coords</code>中指定：<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">#为C增加指数为<span class="number">1</span>的d层，为O新指定<span class="number">6</span><span class="number">-311</span>G基组并增加指数为<span class="number">1.2</span>的d层</span><br><span class="line">%coords</span><br><span class="line">    CTyp = Internal; </span><br><span class="line">    Units = Angs;</span><br><span class="line">    Charge = <span class="number">0</span>; </span><br><span class="line">    Mult = <span class="number">1</span>;</span><br><span class="line">    Coords <span class="meta"># start coordinate assignments</span></span><br><span class="line">        C(<span class="number">1</span>) <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0.00</span> <span class="number">0.0</span> <span class="number">0.00</span></span><br><span class="line">            AddGTO</span><br><span class="line">            D <span class="number">1</span></span><br><span class="line">            <span class="number">1</span> <span class="number">1.0</span> <span class="number">1.0</span></span><br><span class="line">       end;</span><br><span class="line">        O(<span class="number">2</span>) <span class="number">1</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1.13</span> <span class="number">0.0</span> <span class="number">0.00</span></span><br><span class="line">            NewGTO</span><br><span class="line">               <span class="string">&quot;6-311G&quot;</span></span><br><span class="line">               D <span class="number">1</span></span><br><span class="line">                <span class="number">1</span> <span class="number">1.2</span> <span class="number">1.0</span></span><br><span class="line">             end;</span><br><span class="line">     end;</span><br><span class="line">end</span><br></pre></td></tr></table></figure></li>
+<li>类似的辅助基组<code>NewAuxJGTO</code>,<code>AddAuxJGTO</code>,<code>NewAuxCGTO</code>, <code>AddAuxCGTO</code>, <code>NewAuxJKGTO</code>, <code>AddAuxJKGTO</code>, <code>NewCABSGTO</code>, <code>AddCABSGTO</code>也是相同用法：</li>
 <li><p>如果给一个指定原子改变了基组，并且想自动AutoAux，即使AutoAux已经在<code>%basis</code>中指定了，也必须重新在<code>%coords</code>部分重新指定。</p>
-</li>
-<li><p>eg，O指定了Def2-SVP和Def2/JK，第一个H指定了Def2-SVP和自动的”AutoAux”，第二个H指定了Def2-SVP和两个增加的极化函数，和一个更大的对所有这些函数自动辅助基组。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">! Def2-SVP Def2/JK</span><br><span class="line">%basis</span><br><span class="line">    NewAuxJKGTO H <span class="string">&quot;AutoAux&quot;</span> end</span><br><span class="line">end</span><br><span class="line">%coords</span><br><span class="line">    Coords</span><br><span class="line">    O <span class="number">0.00</span> <span class="number">0.00</span> <span class="number">0.00</span></span><br><span class="line">    H <span class="number">-0.25</span> <span class="number">0.93</span> <span class="number">0.00</span></span><br><span class="line">    H <span class="number">0.96</span> <span class="number">0.00</span> <span class="number">0.00</span></span><br><span class="line">    AddGTO</span><br><span class="line">        P <span class="number">1</span></span><br><span class="line">        <span class="number">1</span> <span class="number">1.6</span> <span class="number">1.0</span></span><br><span class="line">        D <span class="number">1</span></span><br><span class="line">        <span class="number">1</span> <span class="number">1.0</span> <span class="number">1.0</span></span><br><span class="line">        end</span><br><span class="line">    NewAuxJKGTO <span class="string">&quot;AutoAux&quot;</span> end</span><br><span class="line">    end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-</li>
+<ul>
+<li>eg，O指定了Def2-SVP和Def2/JK，第一个H指定了Def2-SVP和自动的”AutoAux”，第二个H指定了Def2-SVP和两个增加的极化函数，和一个更大的对所有这些函数自动辅助基组。</li>
 </ul>
-<h2 id="从文件中读取基组"><a href="#从文件中读取基组" class="headerlink" title="从文件中读取基组"></a>从文件中读取基组</h2><ul>
-<li>缺点是不能给同一元素的不同原子分配不同的基组</li>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">! Def2-SVP Def2/JK</span><br><span class="line">%basis</span><br><span class="line">    NewAuxJKGTO H <span class="string">&quot;AutoAux&quot;</span> end</span><br><span class="line">end</span><br><span class="line">%coords</span><br><span class="line">    Coords</span><br><span class="line">    	O <span class="number">0.00</span> <span class="number">0.00</span> <span class="number">0.00</span></span><br><span class="line">    	H <span class="number">-0.25</span> <span class="number">0.93</span> <span class="number">0.00</span></span><br><span class="line">    	H <span class="number">0.96</span> <span class="number">0.00</span> <span class="number">0.00</span></span><br><span class="line">    	AddGTO</span><br><span class="line">        	P <span class="number">1</span></span><br><span class="line">        	<span class="number">1</span> <span class="number">1.6</span> <span class="number">1.0</span></span><br><span class="line">        	D <span class="number">1</span></span><br><span class="line">        	<span class="number">1</span> <span class="number">1.0</span> <span class="number">1.0</span></span><br><span class="line">        end</span><br><span class="line">   		NewAuxJKGTO </span><br><span class="line">    		<span class="string">&quot;AutoAux&quot;</span> </span><br><span class="line">    	end</span><br><span class="line">    end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h2 id="从文件中读取基组"><a href="#从文件中读取基组" class="headerlink" title="从文件中读取基组"></a>从文件中读取基组</h2></li>
+<li><p>缺点是不能给同一元素的不同原子分配不同的基组</p>
+</li>
 <li><p>通过复制和粘贴使用<code>printbasis</code>关键字打印的基组输出，可以方便地创建基组文件。</p>
 </li>
-<li><p>可以用<strong>GTOName, GTOAuxJName（</strong>=<strong>GTOAuxName）, GTOAuxJKName,GTOAuxCName，</strong></p>
+<li><p>可以用<code>GTOName</code>, <code>GTOAuxJName</code>（=<code>GTOAuxName</code>）, <code>GTOAuxJKName</code>，<code>GTOAuxCName</code>：</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">%basis</span><br><span class="line">    GTOName = <span class="string">&quot;MyBasis.bas&quot;</span></span><br><span class="line">    GTOAuxJName = <span class="string">&quot;MyAuxJBasis.bas&quot;</span></span><br><span class="line">    GTOAuxJKName = <span class="string">&quot;MyAuxJKBasis.bas&quot;</span></span><br><span class="line">    GTOAuxCName = <span class="string">&quot;MyAuxCBasis.bas&quot;</span></span><br><span class="line">    STOName = <span class="string">&quot;MySTOBasis.bas&quot;</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>文件格式是GAMESS-US” in the EMSL library，也可以自己编辑基组，辅助基组等</p>
+<li><p>文件格式是”GAMESS-US“ in the EMSL library，也可以自己编辑基组，辅助基组的格式也相同。</p>
 <ul>
-<li><p>比如Buenker的3-21GSP</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="number">3</span><span class="number">-21</span>GSP</span><br><span class="line">! !开头的都是注释</span><br><span class="line">! BASIS=<span class="string">&quot;3-21GSP&quot;</span></span><br><span class="line">!Elements References</span><br><span class="line">!-------- ----------</span><br><span class="line">! H - Ne: A.V. Mitin, G. Hirsch, R. J. Buenker, Chem. Phys. Lett. <span class="number">259</span>, <span class="number">151</span> (<span class="number">1996</span>)</span><br><span class="line">! Na - Ar: A.V. Mitin, G. Hirsch, R. J. Buenker, J. Comp. Chem. <span class="number">18</span>, <span class="number">1200</span> (<span class="number">1997</span>).</span><br><span class="line">!</span><br><span class="line">HYDROGEN ! (<span class="number">3</span>s) -&gt; [<span class="number">2</span>s]</span><br><span class="line">S <span class="number">2</span></span><br><span class="line"><span class="number">1</span> <span class="number">4.50036231</span> <span class="number">0.15631167</span></span><br><span class="line"><span class="number">2</span> <span class="number">0.68128924</span> <span class="number">0.90466909</span></span><br><span class="line">S <span class="number">1</span></span><br><span class="line"><span class="number">1</span> <span class="number">0.15137639</span> <span class="number">1.00000000</span></span><br><span class="line">CARBON ! (<span class="number">6</span>s,<span class="number">3</span>p) -&gt; [<span class="number">3</span>s,<span class="number">2</span>p]</span><br><span class="line">S <span class="number">3</span></span><br><span class="line"><span class="number">1</span> <span class="number">499.24042249</span> <span class="number">0.03330322</span></span><br><span class="line"><span class="number">2</span> <span class="number">75.25419194</span> <span class="number">0.23617745</span></span><br><span class="line"><span class="number">3</span> <span class="number">16.86538669</span> <span class="number">0.81336259</span></span><br><span class="line">L <span class="number">2</span> （L是一个具有相同指数的s和p壳层）</span><br><span class="line"><span class="number">1</span> <span class="number">0.89739483</span> <span class="number">0.24008573</span> <span class="number">0.46214684</span></span><br><span class="line"><span class="number">2</span> <span class="number">0.21746772</span> <span class="number">0.81603757</span> <span class="number">0.66529098</span></span><br><span class="line">L <span class="number">1</span></span><br><span class="line"><span class="number">1</span> <span class="number">4.52660451</span> <span class="number">1.00000000</span> <span class="number">1.00000000</span></span><br><span class="line">STOP</span><br></pre></td></tr></table></figure>
+<li><p>比如Buenker的3-21GSP：<a id="LShell"></a></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="number">3</span><span class="number">-21</span>GSP</span><br><span class="line">! !开头的都是注释</span><br><span class="line">! BASIS=<span class="string">&quot;3-21GSP&quot;</span></span><br><span class="line">!Elements References</span><br><span class="line">!-------- ----------</span><br><span class="line">! H - Ne: A.V. Mitin, G. Hirsch, R. J. Buenker, Chem. Phys. Lett. <span class="number">259</span>, <span class="number">151</span> (<span class="number">1996</span>)</span><br><span class="line">! Na - Ar: A.V. Mitin, G. Hirsch, R. J. Buenker, J. Comp. Chem. <span class="number">18</span>, <span class="number">1200</span> (<span class="number">1997</span>).</span><br><span class="line">!</span><br><span class="line">HYDROGEN ! (<span class="number">3</span>s) -&gt; [<span class="number">2</span>s]</span><br><span class="line">	S <span class="number">2</span></span><br><span class="line">		<span class="number">1</span> <span class="number">4.50036231</span> <span class="number">0.15631167</span></span><br><span class="line">		<span class="number">2</span> <span class="number">0.68128924</span> <span class="number">0.90466909</span></span><br><span class="line">	S <span class="number">1</span></span><br><span class="line">		<span class="number">1</span> <span class="number">0.15137639</span> <span class="number">1.00000000</span></span><br><span class="line">CARBON ! (<span class="number">6</span>s,<span class="number">3</span>p) -&gt; [<span class="number">3</span>s,<span class="number">2</span>p]</span><br><span class="line">	S <span class="number">3</span></span><br><span class="line">		<span class="number">1</span> <span class="number">499.24042249</span> <span class="number">0.03330322</span></span><br><span class="line">		<span class="number">2</span> <span class="number">75.25419194</span> <span class="number">0.23617745</span></span><br><span class="line">		<span class="number">3</span> <span class="number">16.86538669</span> <span class="number">0.81336259</span></span><br><span class="line">	L <span class="number">2</span> （L是一个具有相同指数的s和p壳层）</span><br><span class="line">		<span class="number">1</span> <span class="number">0.89739483</span> <span class="number">0.24008573</span> <span class="number">0.46214684</span></span><br><span class="line">		<span class="number">2</span> <span class="number">0.21746772</span> <span class="number">0.81603757</span> <span class="number">0.66529098</span></span><br><span class="line">	L <span class="number">1</span></span><br><span class="line">		<span class="number">1</span> <span class="number">4.52660451</span> <span class="number">1.00000000</span> <span class="number">1.00000000</span></span><br><span class="line">STOP</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -4272,20 +4268,16 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <h2 id="自动生成辅助基组"><a href="#自动生成辅助基组" class="headerlink" title="自动生成辅助基组"></a>自动生成辅助基组</h2><ul>
 <li><p>AutoAux会根据您选择的轨道基组创建一个大型辅助基组，它旨在为没有优化辅助基组的情况提供准确的辅助基组。不确定或非标准轨道基的安全选择。</p>
 </li>
-<li><ul>
-<li>自动构造一种通用辅助基组，可同时进行库仑拟合、交换和相关计算，和优化后的辅助基组精度相同，但是花费会是优化后的两倍。</li>
-<li>AutoAux的辅助基组通常比优化后的基组大，所以AutoAux最好是在优化后的辅助基组不可用的情况下使用(例如，一个特殊的外来元素)，或者可能用于检查辅助基组的依赖性。</li>
-</ul>
+<li><p>自动构造一种通用辅助基组，可同时进行库仑拟合、交换和相关计算，和优化后的辅助基组精度相同，但是花费会是优化后的两倍。</p>
+</li>
+<li><p>AutoAux的辅助基组通常比优化后的基组大，所以AutoAux最好是在优化后的辅助基组不可用的情况下使用(例如，一个特殊的外来元素)，或者可能用于检查辅助基组的依赖性。</p>
 </li>
 <li><p>可以直接使用关键词，也可以在<code>%basis</code>中指定</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">! AutoAux</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>AutoAux的一些附加设置及其默认值。</p>
-</li>
-<li><ul>
-<li><p>AutoAuxSize中：</p>
-</li>
-<li><ul>
+<li><p>AutoAux的一些附加设置及其默认值：</p>
+<ul>
+<li><code>AutoAuxSize</code>中：<ul>
 <li>1：默认，增加低角动量壳层的最大指数</li>
 <li>2：增加所有壳层的最大指数</li>
 <li>3：直接使用原始产生最大的拟合基组</li>
@@ -4294,7 +4286,7 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 </ul>
 </li>
 </ul>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">%basis</span><br><span class="line">    Aux <span class="string">&quot;AutoAux&quot;</span> #使用自动生成辅助基组</span><br><span class="line">    AutoAuxSize <span class="number">1</span> </span><br><span class="line">    AutoAuxLmax <span class="literal">false</span> #True则将拟合基组的最大角动量增加到ORCA和轨道基组允许的最大值。</span><br><span class="line">    OldAutoAux <span class="literal">false</span>  #Ture则选择orca3<span class="number">.1</span>的生成过程</span><br><span class="line"># Only change the defaults below <span class="keyword">if</span> you know what you are doing</span><br><span class="line">    AutoAuxF[<span class="number">0</span>] <span class="number">20.0</span>  # 增加最大s指数的因子</span><br><span class="line">    AutoAuxF[<span class="number">1</span>] <span class="number">7.0</span>   # Same <span class="keyword">for</span> the p-shell</span><br><span class="line">    AutoAuxF[<span class="number">2</span>] <span class="number">4.0</span>   <span class="meta"># d-shell</span></span><br><span class="line">    AutoAuxF[<span class="number">3</span>] <span class="number">4.0</span>  <span class="meta"># f-shell</span></span><br><span class="line">    AutoAuxF[<span class="number">4</span>] <span class="number">3.5</span>  <span class="meta"># g-shell</span></span><br><span class="line">    AutoAuxF[<span class="number">5</span>] <span class="number">2.5</span>  <span class="meta"># h-shell</span></span><br><span class="line">    AutoAuxF[<span class="number">6</span>] <span class="number">2.0</span>  <span class="meta"># i-shell</span></span><br><span class="line">    AutoAuxF[<span class="number">7</span>] <span class="number">2.0</span>  <span class="meta"># j-shell</span></span><br><span class="line">    </span><br><span class="line">    AutoAuxB[<span class="number">0</span>] <span class="number">1.8</span> <span class="meta"># s壳层的均匀膨胀系数</span></span><br><span class="line">    AutoAuxB[<span class="number">1</span>] <span class="number">2.0</span> # Same <span class="keyword">for</span> the p-shell</span><br><span class="line">    AutoAuxB[<span class="number">2</span>] <span class="number">2.2</span> <span class="meta"># d-shell</span></span><br><span class="line">    AutoAuxB[<span class="number">3</span>] <span class="number">2.2</span> <span class="meta"># f-shell</span></span><br><span class="line">    AutoAuxB[<span class="number">4</span>] <span class="number">2.2</span> <span class="meta"># g-shell</span></span><br><span class="line">    AutoAuxB[<span class="number">5</span>] <span class="number">2.3</span> <span class="meta"># h-shell</span></span><br><span class="line">    AutoAuxB[<span class="number">6</span>] <span class="number">3.0</span> <span class="meta"># i-shell</span></span><br><span class="line">    AutoAuxB[<span class="number">7</span>] <span class="number">3.0</span> <span class="meta"># j-shell</span></span><br><span class="line">    </span><br><span class="line">    AutoAuxTightB <span class="literal">true</span> # 对于高l的壳只使用B[l]，对于其余壳只使用B[<span class="number">0</span>]</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">%basis</span><br><span class="line">    Aux <span class="string">&quot;AutoAux&quot;</span> #使用自动生成辅助基组</span><br><span class="line">    AutoAuxSize <span class="number">1</span> </span><br><span class="line">    AutoAuxLmax <span class="literal">false</span> #True则将拟合基组的最大角动量增加到ORCA和轨道基组允许的最大值。</span><br><span class="line">    OldAutoAux <span class="literal">false</span>  #Ture则选择orca3<span class="number">.1</span>的生成过程</span><br><span class="line">	</span><br><span class="line">    # Only change the defaults below <span class="keyword">if</span> you know what you are doing</span><br><span class="line">    </span><br><span class="line">    AutoAuxF[<span class="number">0</span>] <span class="number">20.0</span>  # 增加最大s指数的因子</span><br><span class="line">    AutoAuxF[<span class="number">1</span>] <span class="number">7.0</span>   # Same <span class="keyword">for</span> the p-shell</span><br><span class="line">    AutoAuxF[<span class="number">2</span>] <span class="number">4.0</span>   <span class="meta"># d-shell</span></span><br><span class="line">    AutoAuxF[<span class="number">3</span>] <span class="number">4.0</span>  <span class="meta"># f-shell</span></span><br><span class="line">    AutoAuxF[<span class="number">4</span>] <span class="number">3.5</span>  <span class="meta"># g-shell</span></span><br><span class="line">    AutoAuxF[<span class="number">5</span>] <span class="number">2.5</span>  <span class="meta"># h-shell</span></span><br><span class="line">    AutoAuxF[<span class="number">6</span>] <span class="number">2.0</span>  <span class="meta"># i-shell</span></span><br><span class="line">    AutoAuxF[<span class="number">7</span>] <span class="number">2.0</span>  <span class="meta"># j-shell</span></span><br><span class="line">    </span><br><span class="line">    AutoAuxB[<span class="number">0</span>] <span class="number">1.8</span> <span class="meta"># s壳层的均匀膨胀系数</span></span><br><span class="line">    AutoAuxB[<span class="number">1</span>] <span class="number">2.0</span> # Same <span class="keyword">for</span> the p-shell</span><br><span class="line">    AutoAuxB[<span class="number">2</span>] <span class="number">2.2</span> <span class="meta"># d-shell</span></span><br><span class="line">    AutoAuxB[<span class="number">3</span>] <span class="number">2.2</span> <span class="meta"># f-shell</span></span><br><span class="line">    AutoAuxB[<span class="number">4</span>] <span class="number">2.2</span> <span class="meta"># g-shell</span></span><br><span class="line">    AutoAuxB[<span class="number">5</span>] <span class="number">2.3</span> <span class="meta"># h-shell</span></span><br><span class="line">    AutoAuxB[<span class="number">6</span>] <span class="number">3.0</span> <span class="meta"># i-shell</span></span><br><span class="line">    AutoAuxB[<span class="number">7</span>] <span class="number">3.0</span> <span class="meta"># j-shell</span></span><br><span class="line">    </span><br><span class="line">    AutoAuxTightB <span class="literal">true</span> # 对于高l的壳只使用B[l]，对于其余壳只使用B[<span class="number">0</span>]</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 <h2 id="弥散轨道基组的基组"><a href="#弥散轨道基组的基组" class="headerlink" title="弥散轨道基组的基组"></a>弥散轨道基组的基组</h2><ul>
 <li>如果要结合RI-J，RI-JK或RIJCOSX近似使用弥散基组，诸如def2 / J或def2 / JK之类的非增强辅助基组将不再适用。这将取决于系统（阴离子最有可能出现问题）。为了安全起见，前面提到的<code>!AutoAux</code>通常会提供准确但昂贵的辅助基基组。或者可以向辅助基组添加弥散功能，但AutoAux应该是一种更安全，更轻松的选择。</li>
 <li><p>但是有时AutoAux过程会生成一个与线性相关的辅助基组，这将导致ORCA崩溃（’Error in Cholesky Decomposition of V Matrix’）。在这种情况下，可以尝试使用可能足够大的常规辅助基组def2 / J或def2 / JK（可以通过与NORI计算进行比较来进行检查），将弥散手动添加到def2 / J或def2 / JK或修改辅助基组的AutoAux创建，例如像下面这样可以减少线性依赖性：</p>
@@ -4346,36 +4338,33 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 </li>
 </ul>
 <h3 id="basis"><a href="#basis" class="headerlink" title="%basis"></a>%basis</h3><ul>
-<li><p>如果要在轻原子上指定较小的def2-SVP，在重元素上指定更大的基组和ECP，则</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">! BP def2-SVP def2/J  printbasis</span><br><span class="line"></span><br><span class="line">%basis</span><br><span class="line">newgto Mo <span class="string">&quot;def2-TZVP&quot;</span> end</span><br><span class="line">end</span><br><span class="line">    </span><br><span class="line">* xyz <span class="number">0</span> <span class="number">1</span></span><br><span class="line">Mo <span class="number">0</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line">F  <span class="number">0</span> <span class="number">0</span> <span class="number">1</span></span><br><span class="line">C  <span class="number">0</span> <span class="number">0</span> <span class="number">2</span></span><br><span class="line">H <span class="number">0</span> <span class="number">0</span> <span class="number">3</span></span><br><span class="line">*</span><br></pre></td></tr></table></figure>
+<li><p>例子：在轻原子上指定较小的def2-SVP，在重元素上指定更大的基组和ECP：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">! BP def2-SVP def2/J  printbasis</span><br><span class="line"></span><br><span class="line">%basis</span><br><span class="line">	newgto Mo <span class="string">&quot;def2-TZVP&quot;</span> end</span><br><span class="line">end</span><br><span class="line">    </span><br><span class="line">* xyz <span class="number">0</span> <span class="number">1</span></span><br><span class="line">Mo <span class="number">0</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line">F  <span class="number">0</span> <span class="number">0</span> <span class="number">1</span></span><br><span class="line">C  <span class="number">0</span> <span class="number">0</span> <span class="number">2</span></span><br><span class="line">H <span class="number">0</span> <span class="number">0</span> <span class="number">3</span></span><br><span class="line">*</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>ECP也可以通过在%basis中通过ECP和newECP指定</p>
+<li><p>通过在<code>%basis</code>中通过<code>ECP</code>和<code>newECP</code>指定，只作用于ECP而不作用于价层上。</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">%basis</span><br><span class="line">    ECP <span class="string">&quot;def2-ECP&quot;</span> # <span class="function">All <span class="title">elements</span> <span class="params">(<span class="keyword">for</span> which the ECP is defined)</span></span></span><br><span class="line">    NewECP Pt &quot;def2-SD&quot; end # Different ECP for Pt</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>也可以为单个原子指定</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">* xyz ...</span><br><span class="line">    ...</span><br><span class="line">    S <span class="number">0.0</span> <span class="number">0.0</span> <span class="number">0.0</span> NewECP <span class="string">&quot;SDD&quot;</span> end</span><br><span class="line">    ...</span><br><span class="line">*</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>为单个原子用NEwGTO的时候，可能需要用DelECP移除ECP再添加新的：</p>
+<li><p>为单个原子用<code>NewGTO</code>的时候，可能需要用<code>DelECP</code>移除ECP再添加新的：</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">! LANL2DZ # Uses HayWadt ECPs by <span class="keyword">default</span>, starting from Na</span><br><span class="line">%basis</span><br><span class="line">    NewGTO S <span class="string">&quot;Def2-TZVP&quot;</span> end # All-electron up to Kr</span><br><span class="line">    DelECP S # Remove HayWadt ECP</span><br><span class="line">end</span><br><span class="line">* xyz ...</span><br><span class="line">    ...</span><br><span class="line">    Cu <span class="number">0.0</span> <span class="number">0.0</span> <span class="number">0.0</span></span><br><span class="line">    DelECP # Remove HayWadt ECP</span><br><span class="line">    NewGTO <span class="string">&quot;Def2-QZVPP&quot;</span> end # All-electron up to Kr</span><br><span class="line">...</span><br><span class="line">*</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="手动输入ECP参数"><a href="#手动输入ECP参数" class="headerlink" title="手动输入ECP参数"></a>手动输入ECP参数</h3><ul>
-<li><p>首先用NewECP，然后再跟上要指定的元素，核电子数，最大的角动量</p>
+<li><p>首先用<code>NewECP</code>，然后再跟上要指定的元素，核电子数，最大的角动量</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">%basis</span><br><span class="line">    NewECP element</span><br><span class="line">        N_core (number of core electrons)</span><br><span class="line">        lmax (max. angular momentum)</span><br><span class="line">        [shells]</span><br><span class="line">    end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>ECP的指定通过给出构成依赖于角度的电势U1的各个壳的定义来完成。</p>
+<li><p>ECP的指定通过给出构成依赖于角度的电势<script type="math/tex">U_l</script>的各个壳的定义来完成。</p>
 <ul>
 <li>首先要给出角动量，然后跟着原始基函数的数目</li>
-<li>原始基函数通过一个序号和指数akl、扩展系数dkl和径向指数nkl来指定</li>
+<li>原始基函数通过一个序号和指数<script type="math/tex">a_{kl}</script>l、扩展系数dkl<script type="math/tex">d_{kl}</script>和径向指数<script type="math/tex">n_{kl}</script>来指定</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"># ECP shell</span><br><span class="line">    l (number of primitives)</span><br><span class="line">    <span class="number">1</span> a1l d1l n1l</span><br><span class="line">    <span class="number">2</span> a2l d2l n3l</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>例子：v的SD(10,MDF)</p>
-</li>
-<li><ul>
-<li>名称表明一个Stuttgart-Dresden型ECP，取代10核心电子和派生自中性原子的相对论计算</li>
-<li>它由角动量s p d f的4个壳层组成。注意f壳层的扩展系数为0.0，因此对有效核势没有任何贡献。</li>
-<li>作为一个例子。考虑一下钒的SD(10 mdf)。该名称表明一个斯图加特-德累斯顿型ECP取代10核心电子，是由中性原子的相对论计算而得。它由角动量s、p、d和f的4个壳层组成。注意f壳层的膨胀系数为0.0，因此对有效核心势没有任何贡献。</li>
+<li><p>例子：V的SD(10,MDF)</p>
+<ul>
+<li>名称表明一个Stuttgart-Dresden型ECP，取代10核心电子和派生自中性原子的相对论计算.它由角动量s p d f的4个壳层组成。注意f壳层的扩展系数为0.0，因此对有效核势没有任何贡献。</li>
 </ul>
 </li>
 </ul>
@@ -4459,7 +4448,14 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
       </categories>
       <tags>
         <tag>输入</tag>
+        <tag>basis</tag>
+        <tag>ECP</tag>
         <tag>基组</tag>
+        <tag>input</tag>
+        <tag>辅助基组</tag>
+        <tag>RI近似</tag>
+        <tag>赝势</tag>
+        <tag>相对论基组</tag>
       </tags>
   </entry>
   <entry>
