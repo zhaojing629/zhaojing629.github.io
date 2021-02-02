@@ -2026,16 +2026,10 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
       <tags>
         <tag>输入</tag>
         <tag>输出</tag>
-        <tag>memory</tag>
-        <tag>geometry</tag>
-        <tag>basis</tag>
-        <tag>ECP</tag>
         <tag>基组</tag>
-        <tag>input</tag>
         <tag>坐标</tag>
         <tag>内存</tag>
         <tag>赝势</tag>
-        <tag>output</tag>
       </tags>
   </entry>
   <entry>
@@ -4085,9 +4079,6 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
       </categories>
       <tags>
         <tag>输入</tag>
-        <tag>memory</tag>
-        <tag>geometry</tag>
-        <tag>input</tag>
         <tag>坐标</tag>
         <tag>内存</tag>
       </tags>
@@ -4448,10 +4439,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
       </categories>
       <tags>
         <tag>输入</tag>
-        <tag>basis</tag>
-        <tag>ECP</tag>
         <tag>基组</tag>
-        <tag>input</tag>
         <tag>辅助基组</tag>
         <tag>RI近似</tag>
         <tag>赝势</tag>
