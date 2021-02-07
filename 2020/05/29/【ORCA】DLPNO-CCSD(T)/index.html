@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=EB Garamond:300,300italic,400,400italic,700,700italic|Dancing Script:300,300italic,400,400italic,700,700italic|ZCOOL XiaoWei:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="ORCA DLPNO-CCSD(T)计算">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【ORCA】DLPNO-CCSD(T)">
+<meta property="og:url" content="http://example.com/2020/05/29/%E3%80%90ORCA%E3%80%91DLPNO-CCSD(T)/index.html">
+<meta property="og:site_name" content="Jing&#39;s Notes">
+<meta property="og:description" content="ORCA DLPNO-CCSD(T)计算">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/image-20210205164601861.png">
+<meta property="og:image" content="http://example.com/clipboard.png">
+<meta property="article:published_time" content="2020-05-29T08:20:02.000Z">
+<meta property="article:modified_time" content="2021-02-05T08:47:26.000Z">
+<meta property="article:author" content="Zhao Jing">
+<meta property="article:tag" content="DLPNO">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/image-20210205164601861.png">
+
+<link rel="canonical" href="http://example.com/2020/05/29/%E3%80%90ORCA%E3%80%91DLPNO-CCSD(T)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+  <title>【ORCA】DLPNO-CCSD(T) | Jing's Notes</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d23c6dd5b34ecbaba18b829b9084946";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jing's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/05/29/%E3%80%90ORCA%E3%80%91DLPNO-CCSD(T)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="Zhao Jing">
+      <meta itemprop="description" content="做一棵树，只为岁月而生长。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jing's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【ORCA】DLPNO-CCSD(T)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-29 16:20:02" itemprop="dateCreated datePublished" datetime="2020-05-29T16:20:02+08:00">2020-05-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-02-05 16:47:26" itemprop="dateModified" datetime="2021-02-05T16:47:26+08:00">2021-02-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">计算化学</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/ORCA/" itemprop="url" rel="index"><span itemprop="name">ORCA</span></a>
+                </span>
+            </span>
+
+          
+            <br>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/05/29/%E3%80%90ORCA%E3%80%91DLPNO-CCSD(T)/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/29/%E3%80%90ORCA%E3%80%91DLPNO-CCSD(T)/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+            <div class="post-description">ORCA DLPNO-CCSD(T)计算</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ul>
+<li>DLPNO-CCSD(T)是一种基于局域轨道的近似CCSD(T)方法，其所得相关能与标准CCSD(T)的相关能比值可达99.9%以上，误差可控制在1 kcal/mol。在平时的计算中，需要用高精度方法的电子能量时，如果体系较大，无法做标准CCSD(T)计算，可以考虑使用ORCA的DLPNO-CCSD(T)方法。</li>
+</ul>
+<p>输入文件例子：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">%pal nprocs <span class="number">16</span> end</span><br><span class="line">%maxcore <span class="number">28000</span></span><br><span class="line">! def2-TZVP def2-TZVP/C DLPNO-CCSD(T) TightSCF tightPNO</span><br><span class="line">* xyz <span class="number">0</span> <span class="number">1</span></span><br><span class="line">体系xyz坐标</span><br><span class="line">*</span><br></pre></td></tr></table></figure>
+<h1 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h1><ul>
+<li>一般使用的核数比较小，因为DLPNO-CCSD(T)比较消耗内存</li>
+<li><code>%maxcore</code>×<code>%pal</code>要小于总内存（大约是orca.sub中指定的节点数*4）</li>
+<li>对硬盘的空间大小要求不是很高，但是对硬盘的读写性能要求很高，如果用SSD就会提升很多计算速度</li>
+</ul>
+<h1 id="基组"><a href="#基组" class="headerlink" title="基组"></a>基组</h1><ul>
+<li><p>LPNO必须使用RI近似，因此必须提供<strong>相关拟合</strong>的基组。比如：def2-SVP/C, def2-TZVP/C, def2-TZVPP/C, def2-QZVPP/C, cc-pVnZ/C, aug-cc-pVnZ/C (n=D,T,Q,5,6) </p>
+</li>
+<li><p>DLPNO-CCSD(T)的HF计算部分可以用RIJK或者RIJCOSX方法来加速，并指定辅助基组</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RIJK def2/JK</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RIJCOSX def2/J</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="精度控制选项"><a href="#精度控制选项" class="headerlink" title="精度控制选项"></a>精度控制选项</h1><h2 id="tightpno"><a href="#tightpno" class="headerlink" title="tightpno"></a>tightpno</h2><p><code>tightPNO</code>为控制CCSD(T)精度的参数，对应的可选值有<code>LoosePNO</code>、<code>NormalPNO</code>（默认）、<code>TightPNO</code>，一般来说LoosePNO精度不高，尽量选择后两个：</p>
+<ul>
+<li>用NormalPNO的时候精度就已经显著超过PWPB95-D3(BJ)了，相对于CCSD(T)的误差通常在1kcal/mol以内。</li>
+<li>DLPNO-CCSD(T)结合tightPNO的时候，根据J. Chem. Theory Comput., 11, 4054 (2015)的测试（注意此文里有很多在耗时方面的严重误导性说法），与CCSD(T)的误差在1 kJ/mol的程度，几乎可认为没有差别。tightPNO的耗时比NormalPNO通常高几倍。在笔者的Intel 36核机子上，用当前级别计算66个原子的有机体系耗时约8小时，耗硬盘最多时候为120GB。如果你还想要更好的精度，建议将基组提升至cc-pVQZ，但也会贵非常多。如果不用RIJK，即去掉RIJK cc-pVTZ/JK关键词，精度会有所改进，但对较大的体系，SCF部分的耗时会增加许多。</li>
+</ul>
+<h2 id="ccsd-t1"><a href="#ccsd-t1" class="headerlink" title="ccsd(t1)"></a>ccsd(t1)</h2><ul>
+<li>在ORCA 4.2版中，需要注意直接在关键词中写DLPNO-CCSD(T)实际做的是<code>DLPNO-CCSD(T0)</code>计算。所谓T0是指在进行(T)计算时使用semi-canonical (SC) 近似。在局域轨道表象下，分子轨道基的Fock矩阵的非对角元不为0，此时(T)的计算需要迭代求解。<strong>在SC近似下，忽略Fock矩阵的非对角元，不进行迭代求解。</strong></li>
+<li><strong>而不使用SC近似，对(T)部分进行迭代求解</strong>，这部分功能在ORCA中应该写为<code>DLPNO-CCSD(T1)</code>，这样结果与标准CCSD(T)更为接近。在J. Chem. Phys. 148, 011101 (2018)一文中，作者提到，一般在研究相对能量的问题时，使用T0便可以得到很好的结果，而对gap比较小的体系，可能需要T1才能得到准确的结果。</li>
+</ul>
+<h2 id="tcutpno"><a href="#tcutpno" class="headerlink" title="tcutpno"></a>tcutpno</h2><ul>
+<li><p>如果还需要更准，可以修改<code>TCutPNO</code>的具体值。(<code>TCutPNO 3.33e-7</code> 默认)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">%mdci</span><br><span class="line">	TCutPNO <span class="number">0.0</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更高精度的话，比如追求CCSD(T)的精度，可以把cutoff都设置为0：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">%mdci</span><br><span class="line">	TCutPNO <span class="number">0.0</span></span><br><span class="line">	TCutDo <span class="number">0.0</span></span><br><span class="line">	TCutTNO <span class="number">0.0</span></span><br><span class="line">	TCutPairs <span class="number">0.0</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在此基础上还需要用比较大的辅助基组，否则RI对 四个virtual的积分会有比较大的误差。比如用DLPNO-CCSD（T1）/cc-pvdz 希望得到和标准CCSD(T) 一模一样的结果（小数点后第六位一样，单位hartree），除了把cutoff设置为0，还要用cc-pv5z/c作为cc-pvdz的辅助基组</li>
+</ul>
+</li>
+</ul>
+<p>20210130 8核 cc-pvtz 测试B<sub>9</sub><sup>-</sup>结果</p>
+<p><img src="/image-20210205164601861.png" alt=""></p>
+<h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><ul>
+<li>通常只拿来算单点</li>
+<li>ccsd(t)没有解析梯度，因此要加上</li>
+</ul>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!<span class="meta">opt</span> numgrad</span><br></pre></td></tr></table></figure>
+<p><img src="/clipboard.png" alt=""></p>
+<ul>
+<li><p>计算开壳层时，最好使用UCO</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">! UCO</span><br><span class="line">#是用于绘制UHF波函数的自然轨道，同UNO。</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>有用可戳(●ˇ∀ˇ●)</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="Zhao Jing 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Zhao Jing
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2020/05/29/%E3%80%90ORCA%E3%80%91DLPNO-CCSD(T)/" title="【ORCA】DLPNO-CCSD(T)">http://example.com/2020/05/29/【ORCA】DLPNO-CCSD(T)/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/DLPNO/" rel="tag"><i class="fa fa-tag"></i> DLPNO</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/28/%E3%80%90ORCA%E3%80%9101.%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/" rel="prev" title="【ORCA】01.输入文件">
+      <i class="fa fa-chevron-left"></i> 【ORCA】01.输入文件
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/04/%E3%80%90ORCA%E3%80%9104.%E9%87%8D%E5%90%AF%E8%AE%A1%E7%AE%97&%E5%88%9D%E7%8C%9C/" rel="next" title="【ORCA】04.重启计算&初猜">
+      【ORCA】04.重启计算&初猜 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E5%AD%98"><span class="nav-number">1.</span> <span class="nav-text">内存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%BB%84"><span class="nav-number">2.</span> <span class="nav-text">基组</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B2%BE%E5%BA%A6%E6%8E%A7%E5%88%B6%E9%80%89%E9%A1%B9"><span class="nav-number">3.</span> <span class="nav-text">精度控制选项</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#tightpno"><span class="nav-number">3.1.</span> <span class="nav-text">tightpno</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ccsd-t1"><span class="nav-number">3.2.</span> <span class="nav-text">ccsd(t1)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tcutpno"><span class="nav-number">3.3.</span> <span class="nav-text">tcutpno</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%98%E5%8C%96"><span class="nav-number">4.</span> <span class="nav-text">优化</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhao Jing"
+      src="/images/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">Zhao Jing</p>
+  <div class="site-description" itemprop="description">做一棵树，只为岁月而生长。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaojing629" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaojing629" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:295483858@qq.com" title="E-Mail → mailto:295483858@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+<div class="sidebar-categories" p align="left">
+  <font size="2">
+  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F/">系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%AB%99/">网站</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/">计算化学</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/ADF/">ADF</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/CP2K/">CP2K</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/ORCA/">ORCA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/molpro/">molpro</a></li></ul></li></ul>
+  </font>
+  </p /div>
+
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title"></h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASSCF/" rel="tag">CASSCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CP2K/" rel="tag">CP2K</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DLPNO/" rel="tag">DLPNO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HF/" rel="tag">HF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCSCF/" rel="tag">MCSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NBO/" rel="tag">NBO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RI%E8%BF%91%E4%BC%BC/" rel="tag">RI近似</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98/" rel="tag">内存</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="tag">几何优化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%9D%E7%8C%9C/" rel="tag">初猜</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag">占据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%90%E6%A0%87/" rel="tag">坐标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%BB%84/" rel="tag">基组</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BB%84%E6%80%81/" rel="tag">多组态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag">对称性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag">波函</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag">点群</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%9F%BA%E7%BB%84/" rel="tag">相对论基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%9D%E5%8A%BF/" rel="tag">赝势</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%85%E5%8A%A9%E5%9F%BA%E7%BB%84/" rel="tag">辅助基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5/" rel="tag">输入</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%87%BA/" rel="tag">输出</a><span class="tag-list-count">1</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-flask"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhao Jing</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">169k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='0,0,0' opacity='0.3' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : '3L90wCaNUKa1MzSQcAhzkLtk-gzGzoHsz',
+      appKey     : 'fQ4t73jXnb71Y9zQWfXj5bIP',
+      placeholder: "可以输入您发现文中的错误或建议~(。・∀・)ノ",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

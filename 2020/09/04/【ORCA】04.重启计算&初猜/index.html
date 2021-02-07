@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=EB Garamond:300,300italic,400,400italic,700,700italic|Dancing Script:300,300italic,400,400italic,700,700italic|ZCOOL XiaoWei:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="ORCA的SCF计算比较糟糕，因此通常最好使用初猜，能加快计算速度">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【ORCA】04.重启计算&amp;初猜">
+<meta property="og:url" content="http://example.com/2020/09/04/%E3%80%90ORCA%E3%80%9104.%E9%87%8D%E5%90%AF%E8%AE%A1%E7%AE%97&%E5%88%9D%E7%8C%9C/index.html">
+<meta property="og:site_name" content="Jing&#39;s Notes">
+<meta property="og:description" content="ORCA的SCF计算比较糟糕，因此通常最好使用初猜，能加快计算速度">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-02-07T14:18:48.000Z">
+<meta property="article:author" content="Zhao Jing">
+<meta property="article:tag" content="初猜">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2020/09/04/%E3%80%90ORCA%E3%80%9104.%E9%87%8D%E5%90%AF%E8%AE%A1%E7%AE%97&%E5%88%9D%E7%8C%9C/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+  <title>【ORCA】04.重启计算&初猜 | Jing's Notes</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d23c6dd5b34ecbaba18b829b9084946";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jing's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/04/%E3%80%90ORCA%E3%80%9104.%E9%87%8D%E5%90%AF%E8%AE%A1%E7%AE%97&%E5%88%9D%E7%8C%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="Zhao Jing">
+      <meta itemprop="description" content="做一棵树，只为岁月而生长。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jing's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【ORCA】04.重启计算&初猜
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-04 00:00:00" itemprop="dateCreated datePublished" datetime="2020-09-04T00:00:00+08:00">2020-09-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-02-07 22:18:48" itemprop="dateModified" datetime="2021-02-07T22:18:48+08:00">2021-02-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">计算化学</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/ORCA/" itemprop="url" rel="index"><span itemprop="name">ORCA</span></a>
+                </span>
+            </span>
+
+          
+            <br>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/09/04/%E3%80%90ORCA%E3%80%9104.%E9%87%8D%E5%90%AF%E8%AE%A1%E7%AE%97&%E5%88%9D%E7%8C%9C/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/04/%E3%80%90ORCA%E3%80%9104.%E9%87%8D%E5%90%AF%E8%AE%A1%E7%AE%97&%E5%88%9D%E7%8C%9C/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+            <div class="post-description">ORCA的SCF计算比较糟糕，因此通常最好使用初猜，能加快计算速度</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="初猜"><a href="#初猜" class="headerlink" title="初猜"></a>初猜</h1><p><code>%scf</code>中有<code>Guess</code>、<code>MOInp</code>和<code>GuessMode</code>三个变量：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">%scf </span><br><span class="line">    Guess HCore </span><br><span class="line">    MOInp <span class="string">&quot;Name.gbw&quot;</span></span><br><span class="line">    GuessMode FMatrix </span><br><span class="line">    AutoStart <span class="literal">true</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h2 id="Guess"><a href="#Guess" class="headerlink" title="Guess"></a>Guess</h2><p>Guess可以用<code>HCore</code>、<code>Hueckel</code>、<code>PAtom</code>、<code>PModel</code> 【默认】、<code>MORead</code>：</p>
+<ul>
+<li><code>HCore</code>：单电子矩阵<ul>
+<li>非常简单但是几乎不用，因为产生的轨道太compact</li>
+</ul>
+</li>
+<li><p><code>MORead</code>：读取之前计算的轨道，与<code>moinp</code>一起使用</p>
+</li>
+<li><p><code>Hueckel</code>：扩展休克尔方法。</p>
+<ul>
+<li>执行最小基扩展的uckel计算和使用GuessMode两种方法之一将MOs从这个计算投影到实际的基组上进行。最小基是STO-3G，比较差，因此休克尔初猜可能不太好。</li>
+</ul>
+</li>
+<li><code>PAtom</code>：极化原子密度。<ul>
+<li>原子密度的叠加是以一种很好的初步猜测，但是分子的实际形状没有被考虑进去，更难可靠地定义单个占据轨道的ROHF计算或合理的自旋密度的UHF计算。因此，ORCA在PAtom猜测时选择了不同的方法。在所有的电子在最小的原子SCF轨道进行Huckel计算，这些都是一次性确定的，并存储在程序中，这意味着原子周围的密度非常接近原子，一个中心上的所有轨道都是正交的，最初的电子分布已经反应了分子形状，对于ROHF的计算，有明确的单已占据轨道。</li>
+</ul>
+</li>
+<li><code>PModel</code> ：Model potential，或者直接用<code>!PModel</code>。<ul>
+<li>它包括建立和对角化一个带有电子密度的Kohn-Sham矩阵，电子密度由球形中性原子密度的叠加构成，而这些密度是相对论和非相对论方法预先确定的。这一猜测对Hartree-Fock和DFT方法都有效，但对半经验模型无效。由于猜测的复杂性稍微耗时。对于元素周期表中的大多数原子来说，PModel 是可用的，因此PModel猜测通常是选择的方法(特别是对于含有重元素的分子)，除非有更精确的起始轨道可用。</li>
+</ul>
+</li>
+</ul>
+<h2 id="MOInp-amp-AutoStart-重启SCF计算"><a href="#MOInp-amp-AutoStart-重启SCF计算" class="headerlink" title="MOInp&amp;AutoStart 重启SCF计算"></a>MOInp&amp;AutoStart 重启SCF计算</h2><p>每一圈SCF都会自动储存当前的轨道，覆盖前面的gbw文件（因此要注意初猜是否需要重命名以免被覆盖），因此可以通过当前gbw文件重启计算。只有HF和数值频率可以重启（不包括post HF、分子性质、光谱等）。</p>
+<ul>
+<li><p><code>Autostart</code>默认是<code>true</code> ：从找是否存在存在的的同名.gbw文件，然后读取轨道和重启所需的所有其他信息，<code>Guess</code>也会被设置为<code>MORead</code>，并且该gbw文件会被重名为BaseName.ges，<code>Moinp</code>就会指向这个文件。如果不需要，则使用用<code>false</code>或者使用<code>!NoAutoStart</code>则关闭。</p>
+</li>
+<li><p>如果需要另外读取轨道，可以：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">! moread</span><br><span class="line">% moinp <span class="string">&quot;name.gbw&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>注意，另外读取的轨道名字不能和输入文件名字相同。否则该gbw会新计算的结果被覆盖。</p>
+</li>
+<li><p>不同的gbw可以互相兼容，如果gbw文件比较旧，可以用以下方法来产生一个比较新版本的gbw：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">! rescue moread noiter</span><br><span class="line">% moinp <span class="string">&quot;name.gbw&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>当调用rescue关键字时，只从.gbw文件中读取轨道coeficients，从输入文件中读取其他所有内容。因此要确保旧gbw中的几何和基组和新的输入文件匹配。</li>
+<li>如果冗余成分从该基组上去除了，则<code>! moread noiter</code>一定不能用来从之前的计算中读取SCF轨道，因为这会导致错误的结果。如果不能一次性完成整个计算，可以尝试通过<code>! rescue moread</code>来重启。</li>
+<li>如果 在计算后ORCA在重叠矩阵中遗漏了非常低的特征值（默认为&lt;1e-8），则在计算后重新启动SCF时， <code>Rescue</code>关键字也是必需的 。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>在同一个ORCA版本中，几何图形和基组都没有存储在需要匹配当前的几何或基组的name.gbw中。程序只检查当前计算中发现的分子和name.gbw是相互一致的，然后执行一个可能的轨道投影。如果这两组基是相同的，程序默认只对输入轨道进行重新正交化和重整。但是可以通过在<code>% scf</code>块中指定<code>GuessMode</code>为<code>CMatrix</code>或<code>FMatrix</code>来改变。</p>
+</li>
+<li><p>如果使用了<code>SCFMode = Conventional</code>和<code>SCFMode = SemiDirect</code>需要重启时：</p>
+<ul>
+<li><p>该程序存储了大量的积分，这些积分在磁盘上计算可能很耗时。通常程序会在计算结束时删除这些积分。但是，如果要做一个紧密相关的计算需要相同的积分（比如几何结构，基组，threshold等都相同），使用之前生成的积分会更快，则需要设置：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">%scf</span><br><span class="line">	KeepInts <span class="literal">true</span> # Keep integrals on disk</span><br><span class="line">	ReadInts <span class="literal">true</span> # Read integrals from disk</span><br><span class="line">	IntName <span class="string">&quot;MyInts&quot;</span> # 如果第二次与第一次计算的名称不同，则需要输入第一次程序积分文件的名称（不包含拓展名，去掉了输入文件的.inp）</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果重新使用积分用于<code>SCFMode = SemiDirect</code>，它禁止改变<code>%scf</code>中的<code>Tcost</code>和<code>Tsize</code>。程序不会检查这些，但是结果可能完全没有意义。一般来说，用旧的积分文件重新开始计算需要用户的意识和责任，如果使用得当，该特性可以节省大量时间。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="改变初猜MO的轨道顺序或打破初猜的对称性"><a href="#改变初猜MO的轨道顺序或打破初猜的对称性" class="headerlink" title="改变初猜MO的轨道顺序或打破初猜的对称性"></a>改变初猜MO的轨道顺序或打破初猜的对称性</h3><ul>
+<li>初猜可能会产生错误的占据，或者需要使用之前计算的轨道收敛到其他的电子态，则可以使用<code>ROTATE</code>重排MOs等。但是仅在通过<code>MOread</code>在先前收敛的解决方案中交换轨道时，此方法才适用（如果在开始时使用常规的默认猜测轨道交换了轨道，则不适用）。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">%scf</span><br><span class="line">    Rotate</span><br><span class="line">        &#123;MO1, MO2, Angle&#125; </span><br><span class="line">        &#123;MO1, MO2, Angle, Operator1, Operator2&#125;</span><br><span class="line">        &#123;MO1, MO2&#125;</span><br><span class="line">    end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<ul>
+<li>MO1和MO2是两个轨道的序号。<strong>注意ORCA的轨道序号是从0开始的。</strong></li>
+<li>Angle是旋转的角度。<code>90</code>度是翻转两个轨道，<code>45</code>是1:1混合两个轨道，180度导致相变。</li>
+<li><code>Operator1</code> and <code>Operator2</code>是轨道设置。对于UHF来说，alpha是<code>0</code>，beta是<code>1</code>。但是RHF和ROHF只有一个轨道设置。</li>
+</ul>
+<p><code>Rotate</code>可以用来在过渡金属二聚体中产生对称性破缺的解。首先做一个高自旋的计算，然后找到相互对称和反对称组合的MOs对，让这些轨道作为初猜，然后对每一对用45的旋转。</p>
+<h2 id="GuessMode"><a href="#GuessMode" class="headerlink" title="GuessMode"></a>GuessMode</h2><p>其余的猜测(可能)需要将最初的猜测轨道投影到实际的基组上，有两种方法：</p>
+<ul>
+<li><code>FMatrix</code> ：FMatrix projection</li>
+<li><code>CMatrix</code> ：Corresponding orbital projection</li>
+</ul>
+<p>结果一般很相似，某些情况<code>CMatrix</code>更好，<code>FMatrix</code>会更简单更快：</p>
+<ul>
+<li><p>FMatrix projection定义了一个有效的单电子算符，<script type="math/tex">f=\sum_{i} \varepsilon_{i} a_{i}^{\dagger} a_{i}</script></p>
+<ul>
+<li>这个和是初猜轨道集中的所有轨道，<script type="math/tex">a_{i}^{\dagger}</script>是一个猜测MO<em>i的电子生成算符，$$a</em>{i}<script type="math/tex">是相应的湮灭算符，</script>ε_i$$是轨道能量。这个有效的单电子算符在实际基组中被对角化，特征向量是在目标基础上的初始猜测轨道。对于大多数波函数，这产生了一个相当合理的猜测。</li>
+</ul>
+</li>
+<li><p>CMatrix更加复杂，它用了Corresponding orbital去分别拟合每个MO的子空间（占据、部分占据、alpha、beta占据）。拟合已占据轨道后，在已占据轨道的正交补中选择虚起始轨道。在某些情况下，特别是重新启动ROHF计算时，这可能是一个优势。</p>
+</li>
+</ul>
+<h1 id="用Gaussian的输出转换为初猜文件gbw"><a href="#用Gaussian的输出转换为初猜文件gbw" class="headerlink" title="用Gaussian的输出转换为初猜文件gbw"></a>用Gaussian的输出转换为初猜文件gbw</h1><ul>
+<li>先用高斯进行计算：<ul>
+<li>确保Gaussian里用的基组和ORCA里精确一致。</li>
+<li>Gaussian计算时候加上<code>nosymm</code>关键词避免摆到标准朝向下</li>
+<li><code>int=NoBasisTransform</code>关键词避免去掉任何primitive GTF，即基组原始怎么定义的就怎么用。</li>
+</ul>
+</li>
+<li>用formchk将chk转换为fch，载入Multiwfn后依次输入</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">100  //其它功能 Part 1</span><br><span class="line">2   //导出文件</span><br><span class="line">9   //导出mkl文件</span><br><span class="line">y   //表明产生的mkl文件是给ORCA当初猜用，程序会做特殊处理</span><br><span class="line">XXX.mkl</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>将mkl转换成gbw作为orca的初猜</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">orc<span class="built_in">a_2mkl</span> xxx -gbw</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="几何优化的重启"><a href="#几何优化的重启" class="headerlink" title="几何优化的重启"></a>几何优化的重启</h1><ul>
+<li>迭代圈数耗尽或者意外崩溃，最简单的办法是最后一组坐标并从那里开始新的计算</li>
+<li>从底部搜“<code>CARTESIAN COORDINATES</code>”或者直接从 jobname.xyz中读取</li>
+<li>几何优化不会自动读取gbw文件。因此如果需要读取old orbitals（几何优化中通常没有必要），可以用MOREAD 和 %moinp 指定。</li>
+</ul>
+<h1 id="频率"><a href="#频率" class="headerlink" title="频率"></a>频率</h1><ul>
+<li>解析频率不能重启</li>
+<li>数值频率计算确保.hess文件存在，如果在集群上使用作业提交脚本，确保将.hess文件复制到执行计算的节点上的本地scratch目录中。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">!</span><br><span class="line">%freq </span><br><span class="line">restart truec</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>有用可戳(●ˇ∀ˇ●)</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="Zhao Jing 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Zhao Jing
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2020/09/04/%E3%80%90ORCA%E3%80%9104.%E9%87%8D%E5%90%AF%E8%AE%A1%E7%AE%97&%E5%88%9D%E7%8C%9C/" title="【ORCA】04.重启计算&amp;初猜">http://example.com/2020/09/04/【ORCA】04.重启计算&初猜/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E5%88%9D%E7%8C%9C/" rel="tag"><i class="fa fa-tag"></i> 初猜</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/29/%E3%80%90ORCA%E3%80%91DLPNO-CCSD(T)/" rel="prev" title="【ORCA】DLPNO-CCSD(T)">
+      <i class="fa fa-chevron-left"></i> 【ORCA】DLPNO-CCSD(T)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/05/%E3%80%90ORCA%E3%80%9103.%E5%9F%BA%E7%BB%84/" rel="next" title="【ORCA】03.基组">
+      【ORCA】03.基组 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9D%E7%8C%9C"><span class="nav-number">1.</span> <span class="nav-text">初猜</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Guess"><span class="nav-number">1.1.</span> <span class="nav-text">Guess</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MOInp-amp-AutoStart-%E9%87%8D%E5%90%AFSCF%E8%AE%A1%E7%AE%97"><span class="nav-number">1.2.</span> <span class="nav-text">MOInp&amp;AutoStart 重启SCF计算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B9%E5%8F%98%E5%88%9D%E7%8C%9CMO%E7%9A%84%E8%BD%A8%E9%81%93%E9%A1%BA%E5%BA%8F%E6%88%96%E6%89%93%E7%A0%B4%E5%88%9D%E7%8C%9C%E7%9A%84%E5%AF%B9%E7%A7%B0%E6%80%A7"><span class="nav-number">1.2.1.</span> <span class="nav-text">改变初猜MO的轨道顺序或打破初猜的对称性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GuessMode"><span class="nav-number">1.3.</span> <span class="nav-text">GuessMode</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%A8Gaussian%E7%9A%84%E8%BE%93%E5%87%BA%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%88%9D%E7%8C%9C%E6%96%87%E4%BB%B6gbw"><span class="nav-number">2.</span> <span class="nav-text">用Gaussian的输出转换为初猜文件gbw</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96%E7%9A%84%E9%87%8D%E5%90%AF"><span class="nav-number">3.</span> <span class="nav-text">几何优化的重启</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%91%E7%8E%87"><span class="nav-number">4.</span> <span class="nav-text">频率</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhao Jing"
+      src="/images/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">Zhao Jing</p>
+  <div class="site-description" itemprop="description">做一棵树，只为岁月而生长。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaojing629" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaojing629" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:295483858@qq.com" title="E-Mail → mailto:295483858@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+<div class="sidebar-categories" p align="left">
+  <font size="2">
+  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F/">系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%AB%99/">网站</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/">计算化学</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/ADF/">ADF</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/CP2K/">CP2K</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/ORCA/">ORCA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/molpro/">molpro</a></li></ul></li></ul>
+  </font>
+  </p /div>
+
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title"></h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASSCF/" rel="tag">CASSCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CP2K/" rel="tag">CP2K</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DLPNO/" rel="tag">DLPNO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HF/" rel="tag">HF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCSCF/" rel="tag">MCSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NBO/" rel="tag">NBO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RI%E8%BF%91%E4%BC%BC/" rel="tag">RI近似</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98/" rel="tag">内存</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="tag">几何优化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%9D%E7%8C%9C/" rel="tag">初猜</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag">占据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%90%E6%A0%87/" rel="tag">坐标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%BB%84/" rel="tag">基组</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BB%84%E6%80%81/" rel="tag">多组态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag">对称性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag">波函</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag">点群</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%9F%BA%E7%BB%84/" rel="tag">相对论基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%9D%E5%8A%BF/" rel="tag">赝势</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%85%E5%8A%A9%E5%9F%BA%E7%BB%84/" rel="tag">辅助基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5/" rel="tag">输入</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%87%BA/" rel="tag">输出</a><span class="tag-list-count">1</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-flask"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhao Jing</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">169k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='0,0,0' opacity='0.3' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : '3L90wCaNUKa1MzSQcAhzkLtk-gzGzoHsz',
+      appKey     : 'fQ4t73jXnb71Y9zQWfXj5bIP',
+      placeholder: "可以输入您发现文中的错误或建议~(。・∀・)ノ",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
