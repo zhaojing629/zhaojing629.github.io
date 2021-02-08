@@ -282,9 +282,6 @@
         <category>计算化学</category>
         <category>CP2K</category>
       </categories>
-      <tags>
-        <tag>CP2K</tag>
-      </tags>
   </entry>
   <entry>
     <title>【ADF】02.EDA-NOCV</title>
@@ -1363,9 +1360,6 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
         <category>计算化学</category>
         <category>CP2K</category>
       </categories>
-      <tags>
-        <tag>CP2K</tag>
-      </tags>
   </entry>
   <entry>
     <title>【CP2K】03.&amp;MGRID中的CUTOFF和RELEL_CUTOFF</title>
@@ -1483,9 +1477,6 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
         <category>计算化学</category>
         <category>CP2K</category>
       </categories>
-      <tags>
-        <tag>CP2K</tag>
-      </tags>
   </entry>
   <entry>
     <title>【CP2K】04.几何优化</title>
@@ -1638,7 +1629,6 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
         <category>CP2K</category>
       </categories>
       <tags>
-        <tag>CP2K</tag>
         <tag>几何优化</tag>
       </tags>
   </entry>
