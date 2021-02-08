@@ -1428,13 +1428,13 @@
 </li>
 </ul>
 <p>20210130 8核 cc-pvtz 测试B<sub>9</sub><sup>-</sup>结果</p>
-<p><img src="/image-20210205164601861.png" alt=""></p>
+<p><img src="image-20210205164601861.png" alt=""></p>
 <h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><ul>
 <li>通常只拿来算单点</li>
 <li>ccsd(t)没有解析梯度，因此要加上</li>
 </ul>
 <figure class="highlight armasm"><table><tr><td class="code"><pre><span class="line">!<span class="meta">opt</span> numgrad</span><br></pre></td></tr></table></figure>
-<p><img src="/clipboard.png" alt=""></p>
+<p><img src="clipboard.png" alt=""></p>
 <ul>
 <li><p>计算开壳层时，最好使用UCO</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">! UCO</span><br><span class="line">#是用于绘制UHF波函数的自然轨道，同UNO。</span><br></pre></td></tr></table></figure>
