@@ -5074,6 +5074,13 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 </li>
 </ul>
 ]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>ADF</category>
+      </categories>
+      <tags>
+        <tag>键级</tag>
+      </tags>
   </entry>
   <entry>
     <title>【ORCA】05.HF&amp;SCF部分</title>
