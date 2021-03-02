@@ -5519,4 +5519,139 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
         <tag>几何优化。对称性</tag>
       </tags>
   </entry>
+  <entry>
+    <title>【Multiwfn】AIM分析</title>
+    <url>/2021/03/02/%E3%80%90Multiwfn%E3%80%91AIM%E5%88%86%E6%9E%90/</url>
+    <content><![CDATA[<h1 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h1><p>加载.fch文件后的总体步骤：</p>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">17 </span>//盆分析</span><br><span class="line"><span class="symbol">1 </span> //生成盆并寻找吸引子</span><br><span class="line"><span class="symbol">1 </span> //用电子密度划分盆</span><br><span class="line"><span class="symbol">2 </span> //中等质量格点</span><br><span class="line"><span class="symbol">7 </span> //用混合格点积分AIM盆</span><br><span class="line"><span class="symbol">2 </span> //对边界进行精确修正</span><br><span class="line"><span class="symbol">1 </span> //积分电子密度，得到AIM电荷</span><br><span class="line"><span class="symbol">4 </span>//计算DI和LI</span><br></pre></td></tr></table></figure>
+<h2 id="生成盆"><a href="#生成盆" class="headerlink" title="生成盆"></a>生成盆</h2><p>以HCN为例：</p>
+<ol>
+<li><p><code>17</code>：盆分析</p>
+</li>
+<li><p><code>1</code>：生成盆并寻找吸引子</p>
+<ul>
+<li>如果内存中已经有格点数据可以直接用，如果没有按下一步选择一个是空间函数</li>
+</ul>
+</li>
+<li><p><code>1</code>：让Multiwfn计算电子密度格点数据，用来得到它的盆和吸引子</p>
+</li>
+<li><p><code>2</code>：中等质量格点，也就是格点间距为0.1Bohr<a id="生成"></a></p>
+<ul>
+<li>计算结束后有可能会出现：在某些情况下，在系统之外的区域，一些人为的或物理上无意义的吸引物被放置。这些吸引子具有非常低的功能值，因此被称为”无关紧要“的吸引子，相比之下，其他吸引子可以被称为“重要”吸引子。不重要吸引子的存在是因为在相应的区域内函数值很小，因此函数的行为不是很确定，即使是很小的函数值波动或微不足道的数值扰动都足以产生新的吸引子。当检测到的时候，会提示你处理它们：<ul>
+<li><code>1</code>：什么都不做，不删除这些吸引子</li>
+<li><code>2</code>：删除这些吸引子，并且相应的格点设置为未赋值的格点</li>
+<li><code>3</code>：删除这些吸引子，同时分配相应的格点到最近的重要的吸引子（推荐）</li>
+</ul>
+</li>
+<li>吸引子的坐标以及吸引子位置上的函数值：<ul>
+<li>吸引子编号=盆编号，但是不等同于原子编号</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Attractor</span>       X,Y,Z coordinate (Angstrom)                Value</span><br><span class="line">     <span class="attribute">1</span>   -<span class="number">0</span>.<span class="number">02645886</span>   -<span class="number">0</span>.<span class="number">02645886</span>   -<span class="number">1</span>.<span class="number">52058663</span>          <span class="number">0</span>.<span class="number">33959944</span></span><br><span class="line">     <span class="attribute">2</span>    <span class="number">0</span>.<span class="number">02645886</span>    <span class="number">0</span>.<span class="number">02645886</span>   -<span class="number">0</span>.<span class="number">51514986</span>         <span class="number">49</span>.<span class="number">48609717</span></span><br><span class="line">     <span class="attribute">3</span>   -<span class="number">0</span>.<span class="number">02645886</span>   -<span class="number">0</span>.<span class="number">02645886</span>    <span class="number">0</span>.<span class="number">64904009</span>         <span class="number">76</span>.<span class="number">55832377</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="观看盆和吸引子"><a href="#观看盆和吸引子" class="headerlink" title="观看盆和吸引子"></a>观看盆和吸引子</h2><p>选<code>0</code>来可视化刚找出来的吸引子和生成的盆。</p>
+<ul>
+<li>紫色的文字对应吸引子的标号。</li>
+<li>每个吸引子用绿色小球表示（位于原子核处的吸引子得取消选择show molecule选项才能看到）</li>
+<li>界面右下角是盆列表，一个盆对应一个吸引子，盆的编号和吸引子编号是一致的，选择哪个盆就会显示出哪个盆。位于盆边界的格点通过绿球显示，使得盆的轮廓被勾勒出来。</li>
+<li>选show basin interior让盆内部也显示</li>
+<li>盆只显示处于电子密度0.001 a.u.等值面内部区域的部分：在图形界面上方选择Set basin drawing method→rho&gt;0.001 region only</li>
+</ul>
+<p>盆列表中的Unas和Boun：</p>
+<ul>
+<li>这两类格点一般没有什么物理意义，对分析结果影响甚微，通常出现在离体系较远的地方，在上一步计算结束的时候也会有输出这些点的数量，如果是0，可视化的时候什么也不会出现</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">The number of unassigned grids:</span>           <span class="number">0</span></span><br><span class="line"><span class="attr">The number of grids travelled to box boundary:</span>           <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>“Unas”（意指Unassigned）是产生盆过程中由于某些数值算法原因没有成功被指认所属吸引子的格点</li>
+<li>“Boun”（意指travelled to box boundary）是指产生盆的过程中按照梯度最大方向移动但是最终移动到格点数据范围边界的点。</li>
+<li>如果为了节省计算时间，没有让格点数据范围囊括整个分子而是只囊括了局部区域，那么可以得到只位于局部区域的盆，与此同时”Boun”类型的点会大量出现，依然无视它即可。</li>
+</ul>
+<h2 id="积分盆"><a href="#积分盆" class="headerlink" title="积分盆"></a>积分盆</h2><h3 id="使用均匀格点"><a href="#使用均匀格点" class="headerlink" title="使用均匀格点"></a>使用均匀格点</h3><p>这种积分方式可以用于任何函数：</p>
+<ol>
+<li><p>在生成盆之后，选择<code>2 Integrate real space functions in the basins</code>做盆积分</p>
+</li>
+<li><p><code>1</code>：积电子密度：</p>
+<ul>
+<li>前面已经生成过电子密度格点数据，可以选择<code>0 The values of the grid data stored in memory</code></li>
+</ul>
+</li>
+<li><p>输出的每个盆的积分值还有盆的体积：</p>
+<ul>
+<li>盆体积对于当前体系没什么意义，因为三个盆的总和就是整个格点数据空间范围，故格点数据空间范围取得越大盆的体积就越大。</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Basin        Integral(a.u.)      Volume(a.u.^3)</span></span><br><span class="line">      <span class="attribute">1</span>          <span class="number">0</span>.<span class="number">7356142812</span>        <span class="number">441</span>.<span class="number">70000000</span></span><br><span class="line">      <span class="attribute">2</span>          <span class="number">5</span>.<span class="number">3511710147</span>        <span class="number">566</span>.<span class="number">31900000</span></span><br><span class="line">      <span class="attribute">3</span>          <span class="number">7</span>.<span class="number">9020060745</span>        <span class="number">830</span>.<span class="number">25600000</span></span><br><span class="line"><span class="attribute">Sum</span> of above values:         <span class="number">13</span>.<span class="number">98879137</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>可以通过<code>Sum of above values</code>看积分精度，一般这样不会很理想，因为电子密度在重原子的原子核附近衰减速度较快，用均匀格点对这部分没法积分得很准。</li>
+</ul>
+</li>
+</ol>
+<h3 id="使用混合格点积分（更精确）"><a href="#使用混合格点积分（更精确）" class="headerlink" title="使用混合格点积分（更精确）"></a>使用混合格点积分（更精确）</h3><p>只能积分AIM盆：</p>
+<ol>
+<li><p>在生成盆之后，选择<code>7</code>：混合格点进行积分</p>
+</li>
+<li><p><code>1</code>：原子中心+均匀格点，忽略边界修正（<a href="#精度">并不精确</a>）。</p>
+</li>
+<li><p><code>1</code>：电子密度</p>
+</li>
+<li><p>输出盆中的电子布居数、盆体积、密度＞0.001的体积、分子的范德华体积</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Total</span> result:</span><br><span class="line">  <span class="comment">#Basin        Integral(a.u.)      Vol(Bohr^3)    Vol(rho&gt;0.001)</span></span><br><span class="line">      <span class="attribute">1</span>          <span class="number">0</span>.<span class="number">7356461193</span>         <span class="number">441</span>.<span class="number">700</span>          <span class="number">34</span>.<span class="number">884</span></span><br><span class="line">      <span class="attribute">2</span>          <span class="number">5</span>.<span class="number">3552270393</span>         <span class="number">566</span>.<span class="number">319</span>         <span class="number">102</span>.<span class="number">832</span></span><br><span class="line">      <span class="attribute">3</span>          <span class="number">7</span>.<span class="number">9086504198</span>         <span class="number">830</span>.<span class="number">256</span>         <span class="number">134</span>.<span class="number">228</span></span><br><span class="line"><span class="attribute">Sum</span> of above integrals:         <span class="number">13</span>.<span class="number">99952358</span></span><br><span class="line"><span class="attribute">Sum</span> of basin volumes (rho&gt;<span class="number">0</span>.<span class="number">001</span>):     <span class="number">271</span>.<span class="number">944</span> Bohr^<span class="number">3</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>还输出了归一化因子、每个原子的AIM电荷，以及原子体积<ul>
+<li>因为数值积分有误差，根据总电子数重新校正盆布居数（乘以归一化因子）得到AIM电荷</li>
+<li>Volume等同于上面的Vol(rho&gt;0.001)，代表的是盆中电子密度大于0.001的体积，按照Bader对范德华表面的定义，这相当于分子范德华表面内原子所占的体积，是有确切物理意义的，可认为是原子的尺寸。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Normalization</span> factor of the integral of electron density is    <span class="number">0</span>.<span class="number">999966</span></span><br><span class="line"><span class="attribute">The</span> atomic charges after normalization and atomic volumes:</span><br><span class="line">     <span class="attribute">1</span> (C )    Charge:    <span class="number">0</span>.<span class="number">644591</span>     Volume:   <span class="number">102</span>.<span class="number">832</span> Bohr^<span class="number">3</span></span><br><span class="line">     <span class="attribute">2</span> (N )    Charge:   -<span class="number">0</span>.<span class="number">908920</span>     Volume:   <span class="number">134</span>.<span class="number">228</span> Bohr^<span class="number">3</span></span><br><span class="line">     <span class="attribute">3</span> (H )    Charge:    <span class="number">0</span>.<span class="number">264329</span>     Volume:    <span class="number">34</span>.<span class="number">884</span> Bohr^<span class="number">3</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="提升精度"><a href="#提升精度" class="headerlink" title="提升精度"></a>提升精度</h3><p><a id="精度"></a>实际上这样原子盆的积分值并非很精确，对应的AIM电荷也不是非常精确。为了得到更准确的积分结果，还得对盆边界进一步修正，因此第二部中可以选择（精度有所提升，但会更耗时得多）：</p>
+<ul>
+<li><code>2</code>：原子中心+均匀格点，精确优化边界</li>
+<li><p><code>3</code>：</p>
+</li>
+<li><p>这三种模式的精度、耗时、内存消耗量：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">Accuracy: <span class="number">2</span>&gt;=<span class="number">3</span>&gt;&gt;<span class="number">1</span>     Time spent: <span class="number">2</span>&gt;<span class="number">3</span>&gt;&gt;<span class="number">1</span>     Memory requirement: <span class="number">3</span>&gt;<span class="number">2</span>=<span class="number">1</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>果想进一步提升精度，可以在生成盆的时候<a href="#生成">用更好的格点</a>，比如High quality grid，乃至Lunatic quality grid。然而，对于大体系，High quality grid已经很耗时、很占内存了。</p>
+<h2 id="分析定域化指数-LI-和离域化指数-DI"><a href="#分析定域化指数-LI-和离域化指数-DI" class="headerlink" title="分析定域化指数(LI)和离域化指数(DI)"></a>分析定域化指数(LI)和离域化指数(DI)</h2><ul>
+<li><p>选择功能<code>4</code>，Multiwfn就会输出盆之间的DI矩阵和盆内的LI值：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">************ Total delocalization index matrix ************</span><br><span class="line">            <span class="number">1</span>             <span class="number">2</span>             <span class="number">3</span></span><br><span class="line">    <span class="number">1</span>    <span class="number">0.97290584</span>    <span class="number">0.90037924</span>    <span class="number">0.07252660</span></span><br><span class="line">    <span class="number">2</span>    <span class="number">0.90037924</span>    <span class="number">3.49303265</span>    <span class="number">2.59265341</span></span><br><span class="line">    <span class="number">3</span>    <span class="number">0.07252660</span>    <span class="number">2.59265341</span>    <span class="number">2.66518001</span></span><br><span class="line"></span><br><span class="line">Total localization index:</span><br><span class="line">    <span class="number">1</span>:  <span class="number">0.259</span>     <span class="number">2</span>:  <span class="number">3.496</span>     <span class="number">3</span>:  <span class="number">6.658</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>还同时输出了行和列序号对应于原子序号的DI矩阵和LI值。</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="strong">****</span><span class="strong">****</span><span class="strong">****</span><span class="strong">** Total delocalization index matrix (atom index) **</span><span class="strong">****</span><span class="strong">****</span><span class="strong">****</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>各个含义：</p>
+<ul>
+<li><p>键级：DI就是一种共价键级的衡量标准，随着键的极性的增强DI值一般会降低。</p>
+<ul>
+<li>比如DI(2,3)=2.593，表明2号盆（C的AIM原子空间）和3号盆（N的AIM原子空间）之间平均来说共享了2.593个电子，这和HCN中C与N的形式键级3.0挺接近。</li>
+</ul>
+</li>
+<li><p>DI矩阵的对角元是相应的列（或行）的矩阵元的加和，对于闭壳层体系，DI矩阵的对角元便是原子价。</p>
+<ul>
+<li>此体系N原子的原子价是2.66。</li>
+</ul>
+</li>
+<li>LI与原子布居数的差值就是从原子盆中离域到别处去的电子数<ul>
+<li>1号盆（H的AIM原子空间）的定域化指数为0.259，说明平均有0.259个电子定域在这个盆内，这个数值远小于此盆内电子布居数，表明在HCN体系内，电子很容易从H的AIM空间中离域出去，外界的电子也容易离域进来，换句话说，盆内外的电子容易相互交换。</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>Multiwfn</category>
+      </categories>
+      <tags>
+        <tag>键级</tag>
+        <tag>AIM</tag>
+        <tag>电荷</tag>
+      </tags>
+  </entry>
 </search>

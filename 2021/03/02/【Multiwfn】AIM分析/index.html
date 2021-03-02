@@ -21,20 +21,22 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="ADF的SCF选项以及不收敛的处理方法">
+  <meta name="description" content="AIM分析">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【ADF】01.SCF相关">
-<meta property="og:url" content="http://example.com/2019/09/23/%E3%80%90ADF%E3%80%9101.SCF%E7%9B%B8%E5%85%B3/index.html">
+<meta property="og:title" content="【Multiwfn】AIM分析">
+<meta property="og:url" content="http://example.com/2021/03/02/%E3%80%90Multiwfn%E3%80%91AIM%E5%88%86%E6%9E%90/index.html">
 <meta property="og:site_name" content="Jing&#39;s Notes">
-<meta property="og:description" content="ADF的SCF选项以及不收敛的处理方法">
+<meta property="og:description" content="AIM分析">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2019-09-22T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-11-21T03:36:16.000Z">
+<meta property="article:published_time" content="2021-03-02T07:28:44.000Z">
+<meta property="article:modified_time" content="2021-03-02T09:25:54.000Z">
 <meta property="article:author" content="Zhao Jing">
-<meta property="article:tag" content="SCF">
+<meta property="article:tag" content="键级">
+<meta property="article:tag" content="AIM">
+<meta property="article:tag" content="电荷">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2019/09/23/%E3%80%90ADF%E3%80%9101.SCF%E7%9B%B8%E5%85%B3/">
+<link rel="canonical" href="http://example.com/2021/03/02/%E3%80%90Multiwfn%E3%80%91AIM%E5%88%86%E6%9E%90/">
 
 
 <script id="page-configurations">
@@ -47,7 +49,7 @@
   };
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
-  <title>【ADF】01.SCF相关 | Jing's Notes</title>
+  <title>【Multiwfn】AIM分析 | Jing's Notes</title>
   
 
 
@@ -191,7 +193,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/09/23/%E3%80%90ADF%E3%80%9101.SCF%E7%9B%B8%E5%85%B3/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/02/%E3%80%90Multiwfn%E3%80%91AIM%E5%88%86%E6%9E%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/touxiang.jpg">
@@ -204,7 +206,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          【ADF】01.SCF相关
+          【Multiwfn】AIM分析
         </h1>
 
         <div class="post-meta">
@@ -213,16 +215,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2019-09-23 00:00:00" itemprop="dateCreated datePublished" datetime="2019-09-23T00:00:00+08:00">2019-09-23</time>
+              <time title="创建时间：2021-03-02 15:28:44 / 修改时间：17:25:54" itemprop="dateCreated datePublished" datetime="2021-03-02T15:28:44+08:00">2021-03-02</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-21 11:36:16" itemprop="dateModified" datetime="2020-11-21T11:36:16+08:00">2020-11-21</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -233,7 +229,7 @@
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/ADF/" itemprop="url" rel="index"><span itemprop="name">ADF</span></a>
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/Multiwfn/" itemprop="url" rel="index"><span itemprop="name">Multiwfn</span></a>
                 </span>
             </span>
 
@@ -254,8 +250,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2019/09/23/%E3%80%90ADF%E3%80%9101.SCF%E7%9B%B8%E5%85%B3/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2019/09/23/%E3%80%90ADF%E3%80%9101.SCF%E7%9B%B8%E5%85%B3/" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/03/02/%E3%80%90Multiwfn%E3%80%91AIM%E5%88%86%E6%9E%90/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/02/%E3%80%90Multiwfn%E3%80%91AIM%E5%88%86%E6%9E%90/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -266,7 +262,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.2k</span>
+              <span>3.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -275,7 +271,7 @@
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
               <span>3 分钟</span>
             </span>
-            <div class="post-description">ADF的SCF选项以及不收敛的处理方法</div>
+            <div class="post-description">AIM分析</div>
 
         </div>
       </header>
@@ -286,89 +282,127 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="SCF选项"><a href="#SCF选项" class="headerlink" title="SCF选项"></a>SCF选项</h1><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">SCF</span><br><span class="line"> Iterations Niter</span><br><span class="line"> Converge <span class="keyword">SCFcnv</span> &#123; sconv2 &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">AccelerationMethod</span> &#123; ADIIS | LISTi | LISTb | fDIIS | LISTf | MESA | SDIIS &#125;</span><br><span class="line"> <span class="keyword">MESA</span> [NoFDIIS] [NoLISTb] [NoLISTf] [NoLISTi] [NoSDIIS] [NoADIIS]</span><br><span class="line"> ADIIS</span><br><span class="line">   &#123;THRESH1 a1&#125;</span><br><span class="line">   &#123;THRESH2 a2&#125;</span><br><span class="line"> End</span><br><span class="line"> NoADIIS</span><br><span class="line"> DIIS</span><br><span class="line">   &#123;N n&#125;</span><br><span class="line">   &#123;OK ok&#125;</span><br><span class="line">   &#123;cyc cyc&#125;</span><br><span class="line"> End</span><br><span class="line"> Mixing mix</span><br><span class="line"> Mixing1 mix1</span><br><span class="line"></span><br><span class="line"> OldSCF</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
-<h2 id="Iterations"><a href="#Iterations" class="headerlink" title="Iterations"></a>Iterations</h2><p><code>Iterations</code>SCF迭代的最大次数，<code>Niter</code>默认是<code>300</code></p>
-<h2 id="Converge"><a href="#Converge" class="headerlink" title="Converge"></a>Converge</h2><p><code>Converge</code> ：</p>
+        <h1 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h1><p>加载.fch文件后的总体步骤：</p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">17 </span>//盆分析</span><br><span class="line"><span class="symbol">1 </span> //生成盆并寻找吸引子</span><br><span class="line"><span class="symbol">1 </span> //用电子密度划分盆</span><br><span class="line"><span class="symbol">2 </span> //中等质量格点</span><br><span class="line"><span class="symbol">7 </span> //用混合格点积分AIM盆</span><br><span class="line"><span class="symbol">2 </span> //对边界进行精确修正</span><br><span class="line"><span class="symbol">1 </span> //积分电子密度，得到AIM电荷</span><br><span class="line"><span class="symbol">4 </span>//计算DI和LI</span><br></pre></td></tr></table></figure>
+<h2 id="生成盆"><a href="#生成盆" class="headerlink" title="生成盆"></a>生成盆</h2><p>以HCN为例：</p>
+<ol>
+<li><p><code>17</code>：盆分析</p>
+</li>
+<li><p><code>1</code>：生成盆并寻找吸引子</p>
 <ul>
-<li><code>SCFcnv</code>表示停止迭代的收敛限，默认是<code>1e-6</code>。</li>
-<li><code>sconv2</code>表示SCF过程难以收敛时起作用的第二个标准，默认是<code>1e-3</code>，如果达到了，仅发出警告，但是继续计算。仍无法达到的时候SCF不收敛，只能用<code>ALLOW</code>来继续</li>
+<li>如果内存中已经有格点数据可以直接用，如果没有按下一步选择一个是空间函数</li>
 </ul>
-<h2 id="AccelerationMethod"><a href="#AccelerationMethod" class="headerlink" title="AccelerationMethod"></a>AccelerationMethod</h2><p><code>AccelerationMethod</code>调用的SCF加速方法，默认情况下为<code>ADIIS</code>，还可以用<code>LISTi</code> | <code>LISTb</code> | <code>fDIIS</code> | <code>LISTf</code> | <code>MESA</code> | <code>SDIIS</code></p>
-<h3 id="MESA"><a href="#MESA" class="headerlink" title="MESA"></a>MESA</h3><p><code>AccelerationMethod MESA</code>是ADIIS, fDIIS, LISTb, LISTf, LISTi和 SDIIS方法的组合<br><code>MESA NoSDIIS</code>代表从其中删掉某一种方法，也可以直接使用该关键词调用MESA，优先级大于<code>AccelerationMethod</code>指定的方法。</p>
-<h3 id="ADIIS"><a href="#ADIIS" class="headerlink" title="ADIIS"></a>ADIIS</h3><p>使用ADIIS + SDIIS方法，根据 [F,P] 交换子矩阵中的最大元素<code>ErrMax</code>来确定具体方法：</p>
+</li>
+<li><p><code>1</code>：让Multiwfn计算电子密度格点数据，用来得到它的盆和吸引子</p>
+</li>
+<li><p><code>2</code>：中等质量格点，也就是格点间距为0.1Bohr<a id="生成"></a></p>
 <ul>
-<li>当ErrMax≥<code>a1</code>，只使用A-DIIS系数</li>
-<li>当ErrMax≤ <code>a2</code>，只使用SDIIS系数</li>
-<li>当<code>a2</code>≤ ErrMax≤ <code>a1</code>，根据ErrMax的值按一定的权重来计算<br><code>a1</code>和<code>a2</code>的默认值是<code>0.01</code>和<code>0.0001</code>，收敛比较困难的时候，可以降低阈值，只使用A-DIIS系数</li>
-</ul>
-<h3 id="SDIIS"><a href="#SDIIS" class="headerlink" title="SDIIS"></a>SDIIS</h3><p><code>AccelerationMethod SDIIS</code>与在没有指定<code>oldscf</code>的情况下使用<code>NoADIIS</code>意思相同，采用的是阻尼+SDIIS方法。从简单阻尼（Mixing）开始，持续到<code>ErrMax</code>降低到<code>DIIS OK</code>参数以下，但是不超过<code>DIIS Cyc</code>次迭代。之后使用纯的SDIIS方法。</p>
-<blockquote>
-<p>在指定<code>oldscf</code>的情况下使用<code>NoADIIS</code>会禁用在SCF收敛困难的时候自动切换到ADIIS + SDIIS方法</p>
-</blockquote>
-<ul>
-<li><p>指定<code>NoADIIS</code>时才可以设置 <code>DIIS</code>模块：</p>
-<ul>
-<li><p><code>N</code>用于加速SCF的扩展向量的数量，默认为<code>10</code>，小于2后会禁用DIIS。此数字不仅适用于Pulay DIIS方案，还适用于其他类似DIIS的方法，例如A-DIIS和LIST方法。</p>
-<blockquote>
-<p>LIST家族的方法对使用的扩展向量的数量非常敏感，接近收敛时，LIST中的向量数量会增加，但始终受<code>DIIS N</code>的限制，当难以收敛时，可以将<code>DIIS N</code>设置为大于10的值，比如12~20。</p>
-</blockquote>
-</li>
-<li><code>OK</code>禁用A-DIIS时，SDIIS起始条件。默认为<code>0.5</code> a.u.。</li>
-<li><code>Cyc</code>禁用A-DIIS时，无论上面的<code>DIIS OK</code>值如何，SDIIS都会在此迭代下启动，默认值为<code>5</code></li>
+<li>计算结束后有可能会出现：在某些情况下，在系统之外的区域，一些人为的或物理上无意义的吸引物被放置。这些吸引子具有非常低的功能值，因此被称为”无关紧要“的吸引子，相比之下，其他吸引子可以被称为“重要”吸引子。不重要吸引子的存在是因为在相应的区域内函数值很小，因此函数的行为不是很确定，即使是很小的函数值波动或微不足道的数值扰动都足以产生新的吸引子。当检测到的时候，会提示你处理它们：<ul>
+<li><code>1</code>：什么都不做，不删除这些吸引子</li>
+<li><code>2</code>：删除这些吸引子，并且相应的格点设置为未赋值的格点</li>
+<li><code>3</code>：删除这些吸引子，同时分配相应的格点到最近的重要的吸引子（推荐）</li>
 </ul>
 </li>
-<li><code>Mixing</code>中，指将下一个Fock矩阵确定为<script type="math/tex">F = mix F_{n} + (1-mix) F_{n-1}</script>，<code>mix</code>默认为<code>0.2</code></li>
-<li><code>Mixing1</code>中指第一个SCF循环的混合参数值不同，默认为<code>0.2</code></li>
-</ul>
-<h2 id="oldSCF"><a href="#oldSCF" class="headerlink" title="oldSCF"></a>oldSCF</h2><p>在使用<code>Occupations Steep</code>、<code>Lshift</code>，<code>ARH</code>，<code>EDIIS</code>，<code>RESTOCC</code>时，会自动启用<code>oldSCF</code></p>
-<h3 id="Lshift"><a href="#Lshift" class="headerlink" title="Lshift"></a>Lshift</h3><p>能级移动方法，在前一次迭代的轨道表示中，Fock矩阵的对角元素提高虚轨道的<code>vshift</code>hartree。旋轨耦合不支持这种方法。</p>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Lshift</span> <span class="string">vshift</span></span><br><span class="line"><span class="attr">Lshift_err</span> <span class="string">Shift_err</span></span><br><span class="line"><span class="attr">Lshift_cyc</span> <span class="string">Shift_cyc</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>Lshift_err</code>指定一旦SCF error降至阈值以下，程序将关闭能级移动，<code>Shift_err</code>默认值为<code>0</code>。</li>
-<li><code>Lshift_cyc</code>指定在第几个SCF 迭代次数的时候再启动能级移动， <code>Shift_cyc</code>默认为<code>1</code>。</li>
-</ul>
-<h3 id="ARH"><a href="#ARH" class="headerlink" title="ARH"></a>ARH</h3><figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">SCF</span></span><br><span class="line"><span class="xml">  ARH</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;CONV conv&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;ITER iter&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;NSAVED nsaved&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;START start&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;FINAL&#125;</span><span class="xml"> ...</span></span><br><span class="line"><span class="xml">  End</span></span><br><span class="line"><span class="xml">  ...</span></span><br><span class="line"><span class="xml">End</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>CONV</code>：当RMS梯度及其最大分量均低于<code>conv</code>，ARH收敛，<code>conv</code>默认是1e-4</li>
-<li><code>ITER</code>：最大ARH迭代次数，<code>iter</code>默认为500</li>
-<li><code>FINAL</code>：确定ARH完成后是否继续SCF。如果设置了此选项，将执行一次Fock矩阵对角化以获得轨道，并且将停止SCF过程。默认选项为<code>OFF</code>。</li>
-<li><code>START</code>：开始调用ARH的SCF迭代次数，<code>start</code>默认为2。使用较大的值可以为ARH提供更好的初猜</li>
-<li><code>NSAVED</code>：保存密度和Fock矩阵的数量。 <code>nsaved</code>默认为8。在非常接近费米能级的轨道数很大的收敛困难时，应使用较大的<code>nsaved</code>值。</li>
-<li>默认的最小化方法是“Untransformed Pre-conditioned Conjugate Gradient”，可以使用以下两个关键词更改：<ul>
-<li><code>NOPRECOND</code>：禁用Untransformed Pre-conditioned CG最小化，不能在第二周期后的元素里使用</li>
-<li><code>TRANSPCG</code>：启用Transformed Pre-conditioned CG 方法，SCF可能会更好的收敛。</li>
-</ul>
-</li>
-<li>在每一步SCF中，先执行常规CG最小化，跟踪总步长，如果在某个微迭代中步长超过了信任半径，则过程将在缩小的空间中切换到信任半径优化，在能级移动参数mu收敛后立即中止。在CG最小化期间生成的所有试验矢量的缩小空间中，将最终步骤计算为牛顿步骤。可以通过以下关键词修改参数：<ul>
-<li><code>NOSWITCHING</code>：关闭从普通CG到缩小的空间中的信任半径最小化的切换。在某些情况下，使用此选项有助于减少SCF循环的总数。</li>
-<li><code>SHIFTED</code>：设置此选项将在第一次微迭代中打开信任半径优化。</li>
-<li><code>CGITER=cgiter</code>：设置微迭代的最大数量。</li>
-<li>确定置信半径：<ul>
-<li><code>TRUSTR=trustr</code>：信任半径的初始值。默认为<code>0.5</code></li>
-<li><code>MAXTRUSTR=maxtrustr</code>：最大信任半径值。默认为<code>0.5</code>，并且不会改变。</li>
+<li>吸引子的坐标以及吸引子位置上的函数值：<ul>
+<li>吸引子编号=盆编号，但是不等同于原子编号</li>
 </ul>
 </li>
 </ul>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Attractor</span>       X,Y,Z coordinate (Angstrom)                Value</span><br><span class="line">     <span class="attribute">1</span>   -<span class="number">0</span>.<span class="number">02645886</span>   -<span class="number">0</span>.<span class="number">02645886</span>   -<span class="number">1</span>.<span class="number">52058663</span>          <span class="number">0</span>.<span class="number">33959944</span></span><br><span class="line">     <span class="attribute">2</span>    <span class="number">0</span>.<span class="number">02645886</span>    <span class="number">0</span>.<span class="number">02645886</span>   -<span class="number">0</span>.<span class="number">51514986</span>         <span class="number">49</span>.<span class="number">48609717</span></span><br><span class="line">     <span class="attribute">3</span>   -<span class="number">0</span>.<span class="number">02645886</span>   -<span class="number">0</span>.<span class="number">02645886</span>    <span class="number">0</span>.<span class="number">64904009</span>         <span class="number">76</span>.<span class="number">55832377</span></span><br></pre></td></tr></table></figure>
 </li>
-<li>缺点：<ul>
-<li>该方法仅适用于NOSYM计算</li>
-<li>在每一步都要计算总能量，计算非常昂贵，而且使用总能量，需要更高的积分精度才能获得稳定的SCF收敛，该方法可能不适用于所有情况，??使用<code>ADDDIFFUSEFIT</code>关键字或更高的<code>ZlmFit</code>质量设置来提高总能量的准确性，从而提高收敛性。??</li>
-</ul>
-</li>
-</ul>
-<h1 id="SCF不收敛"><a href="#SCF不收敛" class="headerlink" title="SCF不收敛"></a>SCF不收敛</h1><ol>
-<li>更换SCF加速收敛的方法</li>
-<li>使用ARH方法</li>
-<li>修改DIIS算法的参数<ul>
-<li><code>Mixing</code>高于默认值<code>0.2</code>会有更高的加速度，更低会更稳定的迭代</li>
-<li><code>N</code>默认为<code>10</code>，越大用于加速SCF的扩展向量的数量越多，SCF迭代更稳定，最多到25</li>
-<li><code>Cyc</code>是SDIIS启动的初始SCF迭代步数，默认值为<code>5</code>，更高计算越稳定<br>比如使用如下参数：<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">SCF</span></span><br><span class="line">    <span class="attribute">DIIS</span></span><br><span class="line">      <span class="attribute">N</span> <span class="number">25</span></span><br><span class="line">      <span class="attribute">Cyc</span> <span class="number">30</span></span><br><span class="line">    <span class="attribute">End</span></span><br><span class="line">    <span class="attribute">Mixing</span> <span class="number">0</span>.<span class="number">015</span></span><br><span class="line">    <span class="attribute">Mixing1</span> <span class="number">0</span>.<span class="number">09</span></span><br><span class="line">  <span class="attribute">End</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li>HOMO-LUMO较为接近的情况（0.02Hatree以内），可能造成HOMO-LUMO的震荡。可以使用<code>Lshift vshift</code>方法，不适于激发态的计算、解析频率、旋轨耦合的计算。</li>
-<li>使用Electron smearing设定在允许的能量范围内分数占据。</li>
-<li>其他：<a target="_blank" rel="noopener" href="https://www.fermitech.com.cn/wiki/doku.php?id=adf:scfnonconvergence">费米维基</a>的2、3、5。</li>
 </ol>
+<h2 id="观看盆和吸引子"><a href="#观看盆和吸引子" class="headerlink" title="观看盆和吸引子"></a>观看盆和吸引子</h2><p>选<code>0</code>来可视化刚找出来的吸引子和生成的盆。</p>
+<ul>
+<li>紫色的文字对应吸引子的标号。</li>
+<li>每个吸引子用绿色小球表示（位于原子核处的吸引子得取消选择show molecule选项才能看到）</li>
+<li>界面右下角是盆列表，一个盆对应一个吸引子，盆的编号和吸引子编号是一致的，选择哪个盆就会显示出哪个盆。位于盆边界的格点通过绿球显示，使得盆的轮廓被勾勒出来。</li>
+<li>选show basin interior让盆内部也显示</li>
+<li>盆只显示处于电子密度0.001 a.u.等值面内部区域的部分：在图形界面上方选择Set basin drawing method→rho&gt;0.001 region only</li>
+</ul>
+<p>盆列表中的Unas和Boun：</p>
+<ul>
+<li>这两类格点一般没有什么物理意义，对分析结果影响甚微，通常出现在离体系较远的地方，在上一步计算结束的时候也会有输出这些点的数量，如果是0，可视化的时候什么也不会出现</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">The number of unassigned grids:</span>           <span class="number">0</span></span><br><span class="line"><span class="attr">The number of grids travelled to box boundary:</span>           <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>“Unas”（意指Unassigned）是产生盆过程中由于某些数值算法原因没有成功被指认所属吸引子的格点</li>
+<li>“Boun”（意指travelled to box boundary）是指产生盆的过程中按照梯度最大方向移动但是最终移动到格点数据范围边界的点。</li>
+<li>如果为了节省计算时间，没有让格点数据范围囊括整个分子而是只囊括了局部区域，那么可以得到只位于局部区域的盆，与此同时”Boun”类型的点会大量出现，依然无视它即可。</li>
+</ul>
+<h2 id="积分盆"><a href="#积分盆" class="headerlink" title="积分盆"></a>积分盆</h2><h3 id="使用均匀格点"><a href="#使用均匀格点" class="headerlink" title="使用均匀格点"></a>使用均匀格点</h3><p>这种积分方式可以用于任何函数：</p>
+<ol>
+<li><p>在生成盆之后，选择<code>2 Integrate real space functions in the basins</code>做盆积分</p>
+</li>
+<li><p><code>1</code>：积电子密度：</p>
+<ul>
+<li>前面已经生成过电子密度格点数据，可以选择<code>0 The values of the grid data stored in memory</code></li>
+</ul>
+</li>
+<li><p>输出的每个盆的积分值还有盆的体积：</p>
+<ul>
+<li>盆体积对于当前体系没什么意义，因为三个盆的总和就是整个格点数据空间范围，故格点数据空间范围取得越大盆的体积就越大。</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Basin        Integral(a.u.)      Volume(a.u.^3)</span></span><br><span class="line">      <span class="attribute">1</span>          <span class="number">0</span>.<span class="number">7356142812</span>        <span class="number">441</span>.<span class="number">70000000</span></span><br><span class="line">      <span class="attribute">2</span>          <span class="number">5</span>.<span class="number">3511710147</span>        <span class="number">566</span>.<span class="number">31900000</span></span><br><span class="line">      <span class="attribute">3</span>          <span class="number">7</span>.<span class="number">9020060745</span>        <span class="number">830</span>.<span class="number">25600000</span></span><br><span class="line"><span class="attribute">Sum</span> of above values:         <span class="number">13</span>.<span class="number">98879137</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>可以通过<code>Sum of above values</code>看积分精度，一般这样不会很理想，因为电子密度在重原子的原子核附近衰减速度较快，用均匀格点对这部分没法积分得很准。</li>
+</ul>
+</li>
+</ol>
+<h3 id="使用混合格点积分（更精确）"><a href="#使用混合格点积分（更精确）" class="headerlink" title="使用混合格点积分（更精确）"></a>使用混合格点积分（更精确）</h3><p>只能积分AIM盆：</p>
+<ol>
+<li><p>在生成盆之后，选择<code>7</code>：混合格点进行积分</p>
+</li>
+<li><p><code>1</code>：原子中心+均匀格点，忽略边界修正（<a href="#精度">并不精确</a>）。</p>
+</li>
+<li><p><code>1</code>：电子密度</p>
+</li>
+<li><p>输出盆中的电子布居数、盆体积、密度＞0.001的体积、分子的范德华体积</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Total</span> result:</span><br><span class="line">  <span class="comment">#Basin        Integral(a.u.)      Vol(Bohr^3)    Vol(rho&gt;0.001)</span></span><br><span class="line">      <span class="attribute">1</span>          <span class="number">0</span>.<span class="number">7356461193</span>         <span class="number">441</span>.<span class="number">700</span>          <span class="number">34</span>.<span class="number">884</span></span><br><span class="line">      <span class="attribute">2</span>          <span class="number">5</span>.<span class="number">3552270393</span>         <span class="number">566</span>.<span class="number">319</span>         <span class="number">102</span>.<span class="number">832</span></span><br><span class="line">      <span class="attribute">3</span>          <span class="number">7</span>.<span class="number">9086504198</span>         <span class="number">830</span>.<span class="number">256</span>         <span class="number">134</span>.<span class="number">228</span></span><br><span class="line"><span class="attribute">Sum</span> of above integrals:         <span class="number">13</span>.<span class="number">99952358</span></span><br><span class="line"><span class="attribute">Sum</span> of basin volumes (rho&gt;<span class="number">0</span>.<span class="number">001</span>):     <span class="number">271</span>.<span class="number">944</span> Bohr^<span class="number">3</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>还输出了归一化因子、每个原子的AIM电荷，以及原子体积<ul>
+<li>因为数值积分有误差，根据总电子数重新校正盆布居数（乘以归一化因子）得到AIM电荷</li>
+<li>Volume等同于上面的Vol(rho&gt;0.001)，代表的是盆中电子密度大于0.001的体积，按照Bader对范德华表面的定义，这相当于分子范德华表面内原子所占的体积，是有确切物理意义的，可认为是原子的尺寸。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Normalization</span> factor of the integral of electron density is    <span class="number">0</span>.<span class="number">999966</span></span><br><span class="line"><span class="attribute">The</span> atomic charges after normalization and atomic volumes:</span><br><span class="line">     <span class="attribute">1</span> (C )    Charge:    <span class="number">0</span>.<span class="number">644591</span>     Volume:   <span class="number">102</span>.<span class="number">832</span> Bohr^<span class="number">3</span></span><br><span class="line">     <span class="attribute">2</span> (N )    Charge:   -<span class="number">0</span>.<span class="number">908920</span>     Volume:   <span class="number">134</span>.<span class="number">228</span> Bohr^<span class="number">3</span></span><br><span class="line">     <span class="attribute">3</span> (H )    Charge:    <span class="number">0</span>.<span class="number">264329</span>     Volume:    <span class="number">34</span>.<span class="number">884</span> Bohr^<span class="number">3</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="提升精度"><a href="#提升精度" class="headerlink" title="提升精度"></a>提升精度</h3><p><a id="精度"></a>实际上这样原子盆的积分值并非很精确，对应的AIM电荷也不是非常精确。为了得到更准确的积分结果，还得对盆边界进一步修正，因此第二部中可以选择（精度有所提升，但会更耗时得多）：</p>
+<ul>
+<li><code>2</code>：原子中心+均匀格点，精确优化边界</li>
+<li><p><code>3</code>：</p>
+</li>
+<li><p>这三种模式的精度、耗时、内存消耗量：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Accuracy: <span class="number">2</span>&gt;=<span class="number">3</span>&gt;&gt;<span class="number">1</span>     Time spent: <span class="number">2</span>&gt;<span class="number">3</span>&gt;&gt;<span class="number">1</span>     Memory requirement: <span class="number">3</span>&gt;<span class="number">2</span>=<span class="number">1</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>果想进一步提升精度，可以在生成盆的时候<a href="#生成">用更好的格点</a>，比如High quality grid，乃至Lunatic quality grid。然而，对于大体系，High quality grid已经很耗时、很占内存了。</p>
+<h2 id="分析定域化指数-LI-和离域化指数-DI"><a href="#分析定域化指数-LI-和离域化指数-DI" class="headerlink" title="分析定域化指数(LI)和离域化指数(DI)"></a>分析定域化指数(LI)和离域化指数(DI)</h2><ul>
+<li><p>选择功能<code>4</code>，Multiwfn就会输出盆之间的DI矩阵和盆内的LI值：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">************ Total delocalization index matrix ************</span><br><span class="line">            <span class="number">1</span>             <span class="number">2</span>             <span class="number">3</span></span><br><span class="line">    <span class="number">1</span>    <span class="number">0.97290584</span>    <span class="number">0.90037924</span>    <span class="number">0.07252660</span></span><br><span class="line">    <span class="number">2</span>    <span class="number">0.90037924</span>    <span class="number">3.49303265</span>    <span class="number">2.59265341</span></span><br><span class="line">    <span class="number">3</span>    <span class="number">0.07252660</span>    <span class="number">2.59265341</span>    <span class="number">2.66518001</span></span><br><span class="line"></span><br><span class="line">Total localization index:</span><br><span class="line">    <span class="number">1</span>:  <span class="number">0.259</span>     <span class="number">2</span>:  <span class="number">3.496</span>     <span class="number">3</span>:  <span class="number">6.658</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>还同时输出了行和列序号对应于原子序号的DI矩阵和LI值。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="strong">****</span><span class="strong">****</span><span class="strong">****</span><span class="strong">** Total delocalization index matrix (atom index) **</span><span class="strong">****</span><span class="strong">****</span><span class="strong">****</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>各个含义：</p>
+<ul>
+<li><p>键级：DI就是一种共价键级的衡量标准，随着键的极性的增强DI值一般会降低。</p>
+<ul>
+<li>比如DI(2,3)=2.593，表明2号盆（C的AIM原子空间）和3号盆（N的AIM原子空间）之间平均来说共享了2.593个电子，这和HCN中C与N的形式键级3.0挺接近。</li>
+</ul>
+</li>
+<li><p>DI矩阵的对角元是相应的列（或行）的矩阵元的加和，对于闭壳层体系，DI矩阵的对角元便是原子价。</p>
+<ul>
+<li>此体系N原子的原子价是2.66。</li>
+</ul>
+</li>
+<li>LI与原子布居数的差值就是从原子盆中离域到别处去的电子数<ul>
+<li>1号盆（H的AIM原子空间）的定域化指数为0.259，说明平均有0.259个电子定域在这个盆内，这个数值远小于此盆内电子布居数，表明在HCN体系内，电子很容易从H的AIM空间中离域出去，外界的电子也容易离域进来，换句话说，盆内外的电子容易相互交换。</li>
+</ul>
+</li>
+</ul>
 
     </div>
 
@@ -399,7 +433,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/2019/09/23/%E3%80%90ADF%E3%80%9101.SCF%E7%9B%B8%E5%85%B3/" title="【ADF】01.SCF相关">http://example.com/2019/09/23/【ADF】01.SCF相关/</a>
+    <a href="http://example.com/2021/03/02/%E3%80%90Multiwfn%E3%80%91AIM%E5%88%86%E6%9E%90/" title="【Multiwfn】AIM分析">http://example.com/2021/03/02/【Multiwfn】AIM分析/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -411,7 +445,9 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/SCF/" rel="tag"><i class="fa fa-tag"></i> SCF</a>
+              <a href="/tags/%E9%94%AE%E7%BA%A7/" rel="tag"><i class="fa fa-tag"></i> 键级</a>
+              <a href="/tags/AIM/" rel="tag"><i class="fa fa-tag"></i> AIM</a>
+              <a href="/tags/%E7%94%B5%E8%8D%B7/" rel="tag"><i class="fa fa-tag"></i> 电荷</a>
           </div>
 
         
@@ -419,11 +455,11 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2019/09/25/%E3%80%90Linux%E3%80%91%E5%91%BD%E4%BB%A4/" rel="next" title="【Linux】命令">
-      【Linux】命令 <i class="fa fa-chevron-right"></i>
+    <a href="/2021/03/02/%E3%80%90Gaussian%E3%80%91%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="prev" title="【Gaussian】对称性">
+      <i class="fa fa-chevron-left"></i> 【Gaussian】对称性
     </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -483,7 +519,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SCF%E9%80%89%E9%A1%B9"><span class="nav-number">1.</span> <span class="nav-text">SCF选项</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Iterations"><span class="nav-number">1.1.</span> <span class="nav-text">Iterations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Converge"><span class="nav-number">1.2.</span> <span class="nav-text">Converge</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AccelerationMethod"><span class="nav-number">1.3.</span> <span class="nav-text">AccelerationMethod</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MESA"><span class="nav-number">1.3.1.</span> <span class="nav-text">MESA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ADIIS"><span class="nav-number">1.3.2.</span> <span class="nav-text">ADIIS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SDIIS"><span class="nav-number">1.3.3.</span> <span class="nav-text">SDIIS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#oldSCF"><span class="nav-number">1.4.</span> <span class="nav-text">oldSCF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lshift"><span class="nav-number">1.4.1.</span> <span class="nav-text">Lshift</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ARH"><span class="nav-number">1.4.2.</span> <span class="nav-text">ARH</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SCF%E4%B8%8D%E6%94%B6%E6%95%9B"><span class="nav-number">2.</span> <span class="nav-text">SCF不收敛</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.</span> <span class="nav-text">操作步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E7%9B%86"><span class="nav-number">1.1.</span> <span class="nav-text">生成盆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%82%E7%9C%8B%E7%9B%86%E5%92%8C%E5%90%B8%E5%BC%95%E5%AD%90"><span class="nav-number">1.2.</span> <span class="nav-text">观看盆和吸引子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%AF%E5%88%86%E7%9B%86"><span class="nav-number">1.3.</span> <span class="nav-text">积分盆</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9D%87%E5%8C%80%E6%A0%BC%E7%82%B9"><span class="nav-number">1.3.1.</span> <span class="nav-text">使用均匀格点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%B7%B7%E5%90%88%E6%A0%BC%E7%82%B9%E7%A7%AF%E5%88%86%EF%BC%88%E6%9B%B4%E7%B2%BE%E7%A1%AE%EF%BC%89"><span class="nav-number">1.3.2.</span> <span class="nav-text">使用混合格点积分（更精确）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E5%8D%87%E7%B2%BE%E5%BA%A6"><span class="nav-number">1.3.3.</span> <span class="nav-text">提升精度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E5%AE%9A%E5%9F%9F%E5%8C%96%E6%8C%87%E6%95%B0-LI-%E5%92%8C%E7%A6%BB%E5%9F%9F%E5%8C%96%E6%8C%87%E6%95%B0-DI"><span class="nav-number">1.4.</span> <span class="nav-text">分析定域化指数(LI)和离域化指数(DI)</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
