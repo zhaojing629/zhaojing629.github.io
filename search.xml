@@ -5472,4 +5472,51 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
         <tag>SCF</tag>
       </tags>
   </entry>
+  <entry>
+    <title>【Gaussian】对称性</title>
+    <url>/2021/03/02/%E3%80%90Gaussian%E3%80%91%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/</url>
+    <content><![CDATA[<p>Gaussian默认启动对称性，有对称性的体系，让Gaussian正确判断出实际的点群，有以下好处：</p>
+<ul>
+<li>通常可以显示出轨道以及体系电子态的不可约表示【对绘制光谱等有作用】</li>
+<li>可以大大降低计算耗时，尤其是对称性很高的体系</li>
+<li>SCF收敛往往更容易</li>
+</ul>
+<h1 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h1><h2 id="nosymm的使用"><a href="#nosymm的使用" class="headerlink" title="nosymm的使用"></a><code>nosymm</code>的使用</h2><ul>
+<li>输入文件里的坐标称为输入朝向（Input orientation）。Gaussian为了判断和利用对称性，会先把输入文件里的坐标调整到标准朝向(Standard orientation)下，然后再进行点群的判断及后续的各种计算。这个调整过程会把体系进行平移，使原子核电荷中心处于笛卡尔坐标原点，并且根据一定规则对体系进行旋转。</li>
+<li>使用<code>nosymm</code>关键词，让Gaussian在计算中完全不利用对称性，以避免Gaussian将体系摆到标准朝向的：<ul>
+<li>加外场矢量时、绘制密度差图过程、CDA分析等</li>
+<li>做几何优化的时候，Gaussian会把每一步的坐标都调整到标准朝向，这往往导致坐标不连续，在观看优化轨迹过程中体系朝向会发生剧烈跳变，从而难以考察优化过程。</li>
+</ul>
+</li>
+</ul>
+<h2 id="其他关键词"><a href="#其他关键词" class="headerlink" title="其他关键词"></a>其他关键词</h2><ul>
+<li><code>symm=loose</code>：如果在gview里做过对称化后还不奏效才应当用此处理。因为输入文件里的笛卡尔坐标数值精度有限，用稍微宽松一点的判断标准来识别点群。也可以用<code>veryloose</code>。</li>
+<li><code>symm(PG=C3v)</code>：设置对称点群，使判断出来的对称性为C3v的一个<strong>子群</strong>。即由PG来限制最高对称性。</li>
+</ul>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h3 id="对称性在优化时改变"><a href="#对称性在优化时改变" class="headerlink" title="对称性在优化时改变"></a>对称性在优化时改变</h3><p>原因可能是因为：</p>
+<ul>
+<li>因为当前计算级别下低对称性的能量更低</li>
+<li>由于一些数值问题破坏了对称性（比如用弥散函数时容易出现此问题。DFT格点积分精度不够高时可能也会出现此问题）。</li>
+</ul>
+<p>解决方案：</p>
+<ol>
+<li>使用内坐标书写坐标</li>
+<li>在优化的时候使用<code>opt=z-matrix</code></li>
+<li>让初始结构在gview里对称化，然后用Gaussian优化，确保任务最开始时判断对了实际点群（如果没判断对，用<code>symm=loose</code>）。</li>
+</ol>
+<p>如果优化过程中点群还是发生了不希望的降低：</p>
+<ul>
+<li>如果有弥散函数，先把弥散函数去掉</li>
+<li>对于DFT加上<code>int=ultrafine</code>，如果对称性还是出现下降，换成其它泛函</li>
+<li>尝试MP2，如果对称性也都下降了，那么很有可能高对称性结构不是最稳定的，最后收敛到的低对称性的结构才是真正极小点，因此若非要保持高对称性则无物理意义。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>Gaussian</category>
+      </categories>
+      <tags>
+        <tag>几何优化。对称性</tag>
+      </tags>
+  </entry>
 </search>
