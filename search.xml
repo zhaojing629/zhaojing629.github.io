@@ -554,7 +554,7 @@
 <li><code>Cyc</code>是SDIIS启动的初始SCF迭代步数，默认值为<code>5</code>，更高计算越稳定<br>比如使用如下参数：<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">SCF</span></span><br><span class="line">    <span class="attribute">DIIS</span></span><br><span class="line">      <span class="attribute">N</span> <span class="number">25</span></span><br><span class="line">      <span class="attribute">Cyc</span> <span class="number">30</span></span><br><span class="line">    <span class="attribute">End</span></span><br><span class="line">    <span class="attribute">Mixing</span> <span class="number">0</span>.<span class="number">015</span></span><br><span class="line">    <span class="attribute">Mixing1</span> <span class="number">0</span>.<span class="number">09</span></span><br><span class="line">  <span class="attribute">End</span></span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
-<li>HOMO-LUMO较为接近的情况（0.02Hatree以内），可能造成HOMO-LUMO的震荡。可以使用<code>Lshift vshift</code>方法，不适于激发态的计算、解析频率、旋轨耦合的计算。</li>
+<li>HOMO-LUMO较为接近的情况（0.02Hatree以内），可能造成HOMO-LUMO的震荡。可以使用<code>Lshift vshift</code>方法，比如0.01，不能太大，不适于激发态的计算、<strong>解析频率</strong>、旋轨耦合的计算。</li>
 <li>使用Electron smearing设定在允许的能量范围内分数占据。</li>
 <li>其他：<a href="https://www.fermitech.com.cn/wiki/doku.php?id=adf:scfnonconvergence">费米维基</a>的2、3、5。</li>
 </ol>
