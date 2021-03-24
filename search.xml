@@ -5516,7 +5516,8 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
         <category>Gaussian</category>
       </categories>
       <tags>
-        <tag>几何优化。对称性</tag>
+        <tag>对称性</tag>
+        <tag>几何优化</tag>
       </tags>
   </entry>
   <entry>
@@ -5652,6 +5653,88 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
         <tag>键级</tag>
         <tag>AIM</tag>
         <tag>电荷</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Linux】Windows下安装虚拟机</title>
+    <url>/2020/09/24/%E3%80%90Linux%E3%80%91Windows%E4%B8%8B%E5%AE%89%E8%A3%85%E8%99%9A%E6%8B%9F%E6%9C%BA/</url>
+    <content><![CDATA[<h1 id="安装虚拟机"><a href="#安装虚拟机" class="headerlink" title="安装虚拟机"></a>安装虚拟机</h1><p>安装VMware虚拟机（或者上北邮人上下载），步骤见<a href="https://mp.weixin.qq.com/s/7K3IOzZ6XFVDm5-OjY5otw">https://mp.weixin.qq.com/s/7K3IOzZ6XFVDm5-OjY5otw</a></p>
+<h1 id="安装Ubuntu系统"><a href="#安装Ubuntu系统" class="headerlink" title="安装Ubuntu系统"></a>安装Ubuntu系统</h1><p>下载ubuntu镜像，安装ubuntu，步骤见<a href="https://mp.weixin.qq.com/s/piZJUGii2s-aUDoh8utxUA">https://mp.weixin.qq.com/s/piZJUGii2s-aUDoh8utxUA</a></p>
+<p>注意事项：</p>
+<ul>
+<li>使用完毕要点击shut down关机，而不要直接关闭VMware。</li>
+<li>可以通过右键Open in Terminal 打开命令行</li>
+</ul>
+<h1 id="与windows共享文件夹"><a href="#与windows共享文件夹" class="headerlink" title="与windows共享文件夹"></a>与windows共享文件夹</h1><ul>
+<li><p>进入虚拟机中，然后，右击虚拟机的标签，选择设置→选项→共享文件夹→勾选总是启用→添加</p>
+</li>
+<li><p>再在Linux系统中打开文件夹即可</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">cd <span class="regexp">/mnt/</span>hgfs/&lt;你的共享名&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>系统</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>虚拟机</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Gaussian】柔性力常数</title>
+    <url>/2020/09/21/%E3%80%90Gaussian%E3%80%91%E6%9F%94%E6%80%A7%E5%8A%9B%E5%B8%B8%E6%95%B0/</url>
+    <content><![CDATA[<p>力常数有力常数、柔性力常数</p>
+<h1 id="力常数"><a href="#力常数" class="headerlink" title="力常数"></a>力常数</h1><ul>
+<li>力常数是从高斯计算完频率的地方读取的，或者<ul>
+<li>直接取Hessian矩阵的对应的对角元</li>
+<li>用Gaussian，使用内坐标方式书写gjf里的坐标，然后在使用<code>#P</code>的情况下做<code>freq</code>任务，这时候在输出文件中会看到<code>Force constants in internal coordinates</code>字段，这即是内坐标下的Hessian矩阵。假设输入文件里4-1键对应第5个内坐标，那么在Hessian矩阵中找第5个对角元，就得到了4-1键的力常数。</li>
+</ul>
+</li>
+</ul>
+<p>直接使用Hessian对角元作为键的力常数等于忽略了变量间耦合的影响，这会导致其没法定量准确反映键强（会高估力常数），甚至结论定性错误。</p>
+<h1 id="柔性力常数"><a href="#柔性力常数" class="headerlink" title="柔性力常数"></a>柔性力常数</h1><h2 id="compliance程序的安装"><a href="#compliance程序的安装" class="headerlink" title="compliance程序的安装"></a>compliance程序的安装</h2><ol>
+<li><p>在Ubuntu系统下安装compliance程序源代码：<a href="http://www.oc.tu-bs.de/Grunenberg/compliance.html上免费下载。">http://www.oc.tu-bs.de/Grunenberg/compliance.html上免费下载。</a></p>
+</li>
+<li><p>在控制台下运行</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">sudo apt-<span class="builtin-name">get</span> install gcc</span><br><span class="line">sudo apt-<span class="builtin-name">get</span> install g++</span><br><span class="line">sudo apt-<span class="builtin-name">get</span> install gtkmm-2.4</span><br><span class="line">sudo apt-<span class="builtin-name">get</span> install libgtkglextmm-x11-1.2-0</span><br><span class="line">sudo apt-<span class="builtin-name">get</span> install libgtkglextmm-x11-1.2-dev</span><br><span class="line">sudo apt-<span class="builtin-name">get</span> install liblapack-dev</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在software center里搜gmm，把libgmm++-dev装上。</p>
+</li>
+<li><p>把Compliance压缩包解压，进入其中，运行</p>
+<figure class="highlight gauss"><table><tr><td class="code"><pre><span class="line">tar compliance</span><br><span class="line"></span><br><span class="line">./configure</span><br><span class="line"><span class="built_in">make</span></span><br><span class="line">sudo <span class="built_in">make</span> install</span><br></pre></td></tr></table></figure>
+<p>程序会被安装到/usr/local/bin/compliance。运行compliance即可启动。</p>
+</li>
+</ol>
+<h2 id="compliance程序的使用"><a href="#compliance程序的使用" class="headerlink" title="compliance程序的使用"></a>compliance程序的使用</h2><ol>
+<li><p>在左上角选File→Open，在新窗口的右下角格式选.fchk，载入Gaussian做freq产生的.fchk文件</p>
+</li>
+<li><p>调整视角：右键上下拖动体系以缩放，用左键拖动来旋转。</p>
+</li>
+<li><p>添加感兴趣的坐标，程序会把这些坐标对应的compliance matrix（C矩阵）显示出来。compliance程序是主要用来考察键：</p>
+<ul>
+<li><p>在图上点击右键，可以看到有Stretching（添加键长）、Bending（添加键角）、Torsion三种模式，选择对应的模式</p>
+</li>
+<li><p>在图上点击两个（三个）原子成为粉色，再点右键选Add/Remove coordinate，则这个键长（键角）项就会被添加。</p>
+</li>
+<li><p>所有已添加的变量所构成的C矩阵会显示在另一个窗口里。矩阵的单位是 Å/mdyn，要得到柔性力常数就把C矩阵对角元求倒数即可。</p>
+<p>1 mdyn/Å=1 N/cm=100 N/m=100 J/m<sup>2</sup></p>
+</li>
+<li><p>点击某一行或者某一列的开头，对应原子也会被高亮，再次点击可以播放动画，再次点击可以停止。也可以通过右键→Toggle animation可以播放动画，Save animation as png可以存一系列图片做成动图</p>
+</li>
+<li>S</li>
+</ul>
+</li>
+<li><p>若要清空，通过File→Close关闭当前文件，再次打开。</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>Gaussian</category>
+      </categories>
+      <tags>
+        <tag>力常数</tag>
       </tags>
   </entry>
 </search>
