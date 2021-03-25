@@ -2,7 +2,7 @@
 title: 【Linux】MobaXterm快捷方式
 typora-root-url: 【Linux】MobaXterm快捷方式
 mathjax: true
-date: 2021-01-07 19:50:46
+date: 2020-02-10 
 updated:
 tags: Linux
 categories: 系统

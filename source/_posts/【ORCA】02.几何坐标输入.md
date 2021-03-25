@@ -323,6 +323,163 @@ end
   %method SymThresh 5.0e-2 end
   ```
 
+- 有时候希望得到基态，但是初猜比较糟糕，计算会收敛到激发态，此时可以用：
+
+  - 当且仅当空轨道的能量低于已占据轨道时，每一个不可约表示中的占据数就会发生变化。
+
+  ```
+  %method SymRelax True
+  end
+  ```
+
+例子：计算水分子阳离子
+
+- 输入：
+
+  ```
+  !SVP UseSym
+  
+  * xyz 1 2
+  O 0.000000 0.000000 0.068897
+  H 0.000000 0.788011 -0.546765
+  H 0.000000 -0.788011 -0.546765
+  *
+  ```
+
+- 程序将识别出C<sub>2v</sub>：
+
+  ```
+  ------------------------------------------------------------------------------
+                              SYMMETRY HANDLING SETUP
+  ------------------------------------------------------------------------------
+  
+  ------------------
+  SYMMETRY DETECTION
+  ------------------
+  Preparing Data                    ... done
+  Detection Threshold:    SymThresh ... 1.0000e-04
+  
+  Point Group will now be determined:
+  Moving molecule to center of mass ... done
+  
+  POINT GROUP                       ... C2v
+  
+  The coordinates will now be cleaned:
+  Moving to standard coord frame    ... done
+  (Changed main axis to z and one of the symmetry planes to xz plane)
+  Structure cleanup requested       ... yes
+  Selected point group              ... C2v
+  Cleaning Tolerance      SymThresh ... 1.0000e-04
+  
+  Some missing point group data is constructed:
+  Constructing symmetry operations  ... done
+  Creating atom transfer table      ... done
+  Creating asymmetric unit          ... done
+  
+  Cleaning coordinates              ... done
+  
+  -----------------------------------------------
+  SYMMETRY-PERFECTED CARTESIAN COORDINATES (A.U.)
+  -----------------------------------------------
+     0 O     0.00000000   0.00000000   0.13019595 
+     1 H     0.00000000   1.48912498  -1.03323662 
+     2 H     0.00000000  -1.48912498  -1.03323662 
+  
+  ------------------
+  SYMMETRY REDUCTION
+  ------------------
+  ORCA supports only abelian point groups.
+  It is now checked, if the determined point group is supported:
+  Point Group ( C2v   ) is          ... supported
+  
+  (Re)building abelian point group:
+  Creating Character Table          ... done
+  Making direct product table       ... done
+  
+  ----------------------
+  ASYMMETRIC UNIT IN C2v
+  ----------------------
+    #  AT     MASS              COORDS (A.U.)             BAS
+     0 O   15.9990   0.00000000   0.00000000   0.13019595   0
+     1 H    1.0080   0.00000000   1.48912498  -1.03323662   0
+  
+  ----------------------
+  SYMMETRY ADAPTED BASIS
+  ----------------------
+  The coefficients for the symmetry adapted linear combinations (SALCS)
+  of basis functions will now be computed:
+  Number of basis functions         ...    24
+  Preparing memory                  ... done
+  Constructing Gamma(red)           ... done
+  Reducing Gamma(red)               ... done
+  Constructing SALCs                ... done
+  Checking SALC integrity           ... nothing suspicious
+  Normalizing SALCs                 ... done
+  
+  Storing the symmetry object:
+  Symmetry file                     ... /tmp/tmp.Hph6rKnPOv/test-sym-h2o+.sym.tmp
+  Writing symmetry information      ... done
+  ```
+
+- SCF程序中的初猜将识别并冻结C2v点群的每个不可约表示中的占据数：
+
+  ```
+  The symmetry of the initial guess is 2-B1
+  Irrep occupations for operator 0
+      A1 -    3
+      A2 -    0
+      B1 -    1
+      B2 -    1
+  Irrep occupations for operator 1
+      A1 -    3
+      A2 -    0
+      B1 -    0
+      B2 -    1
+  ```
+
+- 计算收敛得到：
+
+  ```
+  Total Energy       :          -75.56349635 Eh           -2056.18727 eV
+  ```
+
+- 轨道：
+
+  ```
+  ----------------
+  ORBITAL ENERGIES
+  ----------------
+                   SPIN UP ORBITALS
+    NO   OCC          E(Eh)            E(eV)    Irrep
+     0   1.0000     -21.127828      -574.9174    1-A1
+     1   1.0000      -1.867577       -50.8194    2-A1
+     2   1.0000      -1.192140       -32.4398    1-B2
+     3   1.0000      -1.124658       -30.6035    1-B1
+     4   1.0000      -1.085063       -29.5261    3-A1
+     5   0.0000      -0.153303        -4.1716    4-A1
+     6   0.0000      -0.071325        -1.9408    2-B2
+  ...
+                   SPIN DOWN ORBITALS
+    NO   OCC          E(Eh)            E(eV)    Irrep
+     0   1.0000     -21.081197      -573.6485    1-A1
+     1   1.0000      -1.710192       -46.5367    2-A1
+     2   1.0000      -1.152853       -31.3707    1-B2
+     3   1.0000      -1.032555       -28.0972    3-A1
+     4   0.0000      -0.306683        -8.3453    1-B1
+     5   0.0000      -0.139418        -3.7937    4-A1
+     6   0.0000      -0.062261        -1.6942    2-B2
+     7   0.0000       0.374726        10.1968    3-B2
+  ...
+  ```
+
+  
+
+
+
+
+
+
+
 # 定义几何参数和扫描势能面
 
 - 可以将坐标定义为参数或者一系列的值（此时会做势能面扫描）。在这种情况下，变量`RunTyp`被自动更改为`Scan`。格式如下：

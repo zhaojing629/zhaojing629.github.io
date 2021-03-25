@@ -4,14 +4,101 @@ typora-root-url: NBO
 mathjax: true
 date: 2020-11-27 22:13:28
 updated:
-tags: NBO
+tags: [NBO, 键级]
 categories: 计算化学
 description: NBO的一些使用方法
 ---
 
 
 
-# 一般关键词
+# 运行方式
+
+## 在Gaussian软件中运行
+
+### Gaussian内置的NBO3.1
+
+在高斯关键词部分写入：
+
+- `pop=NPA`：做Natural Population Analysis （NPA）分析
+- `pop=NBO`：做NPA和NBO分析
+- `pop=saveNBOs`：在`pop=NBO`的基础上保存NBO轨道到chk文件中观看
+- `pop=saveNLMOs`：在`pop=NBO`的基础上做NLMO分析，并且将NLMO轨道保存到chk文件中
+- `pop=NCS`：结合`NMR`关键词，输出各个NLMO对磁屏蔽的贡献
+- `pop=NBODel`：做NBO deletion分析
+- `pop=NBOread`：代表从输出文件末尾倒数第二行（倒数第一行是空行）的`$NBO`与`$END`之间读取NBO的关键词：
+  - 空的：默认做NBO和NPA分析
+  - `bndidx`：做键级分析
+  - `archive`：产生.47文件，包含坐标、基函数定义、轨道系数、密度矩阵、一些单电子积分。.47可以做作为NBO的输入文件。
+  - `plot file=AAA`：产生NBO plot文件，输出的文件前缀是AAA
+
+### Gaussian结合更高版本的NBO
+
+- Linux下：
+  1. 将Linux版NBO6压缩包解压到某目录XXX下
+  2. 在~/.bashrc文件中加入`export PATH=$PATH:XXX/bin`
+  3. 将XXX/bin/gaunbo6中的setenv GAUNBO后面的内容改成g09nbo或g16nbo；将setenv BINDIR后面的内容改为XXX/bin目录
+  4. 重新进入终端即可。
+- 然后直接在Gaussian输入文件中使用诸如`Pop=NPA6`, `Pop=NBO6`, `Pop=NBO6Read`和`Pop=NBO6Delete`等关键词调用（如果是NBO7，将6改成7即可）
+
+## orca中的NBO
+
+- 修改环境变量，即在~/.bashrc中加入
+
+  ```
+  export GENEXE XXX/bin/gennbo.i4.exe
+  export NBOEXE XXX/bin/nbo6.i4.exe
+  ```
+
+- 在ORCA的输入文件中写入`NBO`关键词，ORCA会调用BO6做NPA和NBO分析
+
+  - 可以通过`%nbo`进一步控制
+
+    ```
+    %nbo
+    NBOKEYLIST="$NBO... $END"
+    DELKEYLIST="$DEL... $END"
+    COREKEYLIST="$CORE... $END"
+    NRTSTRKEYLIST="$NRTSTR... $END"
+    end
+    ```
+
+- 会产生.47文件，产生的.nbo文件实际上是.gbw文件，可以转换成molden文件观看轨道。
+
+## ADF中的NBO
+
+直接在windows下：
+
+- 优化好的结构，再算single point，注意此时`Fronzen Core`要设置为`none`
+- Properties→Localized Orbitals,NBO中勾选Perform NBO analysis，Locailized orbitals中选择Boys-Foseter
+- Deltals →Accuracy中勾选Full Fock matrics的Always，提交计算即可
+- 如果需要可视化轨道，则在输出中Select Field 选择NBOs即可查看各个NBO轨道的空间分布
+
+## 通过gennbo直接调用程序
+
+- 将gennbo所在的目录XXX/nbo6/添加到环境变量
+- 通过在Gaussian产生的.47文件第二行的`$NBO`与`$END`之间插入关键词，通过`gennbo AAAA.47`即可进行计算，输出结果会输出AAAA.nbo中。
+
+## 注意事项
+
+### 密度矩阵
+
+NBO程序做的各种分析主要都是基于密度矩阵。在Gaussian中使用后HF方法或者使用CIS、TDDFT计算激发态时，计算时一定要`density`关键词
+
+- 后HF方法传递给NBO模块当前级别的密度矩阵。如果不写`density`关键词，则传递给NBO模块的是HF级别的密度矩阵，分析结果也因此是HF级别的。
+- 计算激发态传递给NBO模块的才是用root指定的激发态的密度矩阵，从而分析的是激发态特征。如果不写`density`，则CIS、TDDFT任务会把参考态（即基态的HF、DFT波函数）的密度矩阵传递给NBO模块，因此分析结果也是基态的。
+
+### 计算级别
+
+- 用弥散函数对NBO的分析没有不良影响，也没有改进。
+
+### 几何优化时
+
+- 在Gaussian中，如果opt和NBO分析的关键词同时存在，会先对初始结构进行一次NBO分析，再对最终结构进行一次NBO分析
+- 如果希望在几何优化，势能面扫描和IRC等多步任务中每一步都调用NBO，需要使用关键词`pop(always,nbo6)`
+
+
+
+# 其他关键词
 
 ## MEMORY
 
@@ -26,16 +113,25 @@ MEMORY=1gb
 
 
 
+## 键级分析
+
+- 用了bndidx关键词后，NBO程序会进行键级分析，输出三种键级矩阵，包括：
+  - `Wiberg bond index matrix in the NAO basis`，这是三种键级中唯一推荐的键级。
+  - `Atom-atom overlap-weighted NAO bond order`，缺乏依据，实际结果又差，所以不要使用。
+  - MO bond order毫无意义
 
 
-# 自然共振理论分析NRT
 
-## 输入
+
+
+## 自然共振理论分析NRT
+
+### 输入
 
 两种关键词指定
 
 - 在.47文件中`$NBO`和`$END`之间写上`NRT`关键词即可
-- `NRTSML`或`NRTSML=n`：把所有贡献大于1%或n%的共振结构式一起输出到FIlename-nrt.cml中,可以直接用MarvinView观看。
+- `NRTCML`或`NRTCML=n`：把所有贡献大于1%或n%的共振结构式一起输出到FIlename-nrt.cml中,可以直接用MarvinView观看。
   - 注意，MarvinView中应选择View→Implicit→Hydrogens→Off，否则会自动显示一些不该存在的氢。
 
 其他`$NBO`和`$END`之间的关键词：
@@ -76,9 +172,9 @@ NBO轨道自动搜索结果随结构变化不是连续的，对于通过NRT考�
 
   
 
-## 输出例子
+### 输出例子
 
-### 烯丙基自由基开壳层计算出的alpha电子
+#### 烯丙基自由基开壳层计算出的alpha电子
 
 <img src="image-20201130221142052.png" style="zoom:50%;" />
 

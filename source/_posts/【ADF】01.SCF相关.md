@@ -146,7 +146,7 @@ End
         Mixing1 0.09
       End
    ```
-4. HOMO-LUMO较为接近的情况（0.02Hatree以内），可能造成HOMO-LUMO的震荡。可以使用`Lshift vshift`方法，不适于激发态的计算、解析频率、旋轨耦合的计算。
+4. HOMO-LUMO较为接近的情况（0.02Hatree以内），可能造成HOMO-LUMO的震荡。可以使用`Lshift vshift`方法，比如0.01，不能太大，不适于激发态的计算、**解析频率**、旋轨耦合的计算。
 5. 使用Electron smearing设定在允许的能量范围内分数占据。
 6. 其他：[费米维基](https://www.fermitech.com.cn/wiki/doku.php?id=adf:scfnonconvergence)的2、3、5。
 

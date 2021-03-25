@@ -99,7 +99,7 @@ end
 
 - MO1和MO2是两个轨道的序号。**注意ORCA的轨道序号是从0开始的。**
 - Angle是旋转的角度。`90`度是翻转两个轨道，`45`是1:1混合两个轨道，180度导致相变。
-- `Operator1` and `Operator2`是轨道设置。对于UHF来说，alpha是`0`，beta是`1`。但是RHF和ROHF只有一个轨道设置。
+- `Operator1` and `Operator2`是轨道设置。对于UHF来说，alpha是`0`，beta是`1`。但是RHF和ROHF只有一个轨道设置，即`0`
 
 `Rotate`可以用来在过渡金属二聚体中产生对称性破缺的解。首先做一个高自旋的计算，然后找到相互对称和反对称组合的MOs对，让这些轨道作为初猜，然后对每一对用45的旋转。
 
@@ -145,7 +145,7 @@ XXX.mkl
 - 从底部搜“`CARTESIAN COORDINATES`”或者直接从 jobname.xyz中读取
 - 几何优化不会自动读取gbw文件。因此如果需要读取old orbitals（几何优化中通常没有必要），可以用MOREAD 和 %moinp 指定。
 
-# 频率
+# 频率的重启
 
 - 解析频率不能重启
 - 数值频率计算确保.hess文件存在，如果在集群上使用作业提交脚本，确保将.hess文件复制到执行计算的节点上的本地scratch目录中。

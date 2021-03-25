@@ -84,7 +84,7 @@ description: ORCA DLPNO-CCSD(T)计算
 
 20210130 8核 cc-pvtz 测试B<sub>9</sub><sup>-</sup>结果
 
-![](/image-20210205164601861.png)
+![](image-20210205164601861.png)
 
 
 
@@ -109,7 +109,7 @@ description: ORCA DLPNO-CCSD(T)计算
 
 
 
-![](/clipboard.png)
+![](clipboard.png)
 
 - 计算开壳层时，最好使用UCO
 
