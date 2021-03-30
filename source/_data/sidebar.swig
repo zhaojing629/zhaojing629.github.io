@@ -1,7 +1,7 @@
 {%- if site.categories.length > 0 %}
 <div class="sidebar-categories" p align="left">
   <font size="2">
-  {{ list_categories({show_count:false}) }}
+  {{ list_categories({show_count:false, order: -1, style: list, depth:0}) }}
   </font>
   </p /div>
 {%- endif %}
