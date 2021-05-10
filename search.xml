@@ -1464,6 +1464,8 @@
 <li><p>将mkl转换成gbw作为orca的初猜</p>
 <figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line">orc<span class="built_in">a_2mkl</span> xxx -gbw</span><br></pre></td></tr></table></figure>
 </li>
+<li><p>如果传递给orca后，没有1圈就结束迭代，需要仔细对比二者的基函数是否有区别，高斯中可以使用<code>GFPrint</code>打印基函数，orca用<code>printbasis</code>打印基函数。</p>
+</li>
 </ul>
 <h1 id="几何优化的重启"><a href="#几何优化的重启" class="headerlink" title="几何优化的重启"></a>几何优化的重启</h1><ul>
 <li>迭代圈数耗尽或者意外崩溃，最简单的办法是最后一组坐标并从那里开始新的计算</li>
