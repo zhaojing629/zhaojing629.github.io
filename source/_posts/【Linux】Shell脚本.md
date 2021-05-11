@@ -6,8 +6,41 @@ date: 2020-11-22 14:13:54
 updated:
 tags: [Linux,Shell]
 categories: 系统
-description: 脚本的一些笔记
+description: 使用脚本、命令的一些笔记
 ---
+
+
+
+
+
+# 添加环境变量
+
+linux命令行下面执行某个命令的时候，首先保证该命令是否存在，若存在，但输入命令的时候若仍提示：command not found，这个时候就需要使用`echo $PATH`查看PATH环境变量的设置了，当前命令是否存在于PATH环境变量中，如果不存在，设置方法如下：
+
+## 方法一
+
+```
+export PATH=/usr/local/bin:$PATH
+```
+
+- 生效方法：立即生效
+- 有效期限：临时改变，只能在当前的终端窗口中有效，当前窗口关闭后就会恢复原有的path配置
+- 用户局限：仅对当前用户
+
+## 方法二
+
+1. `vim ~/.bashrc `后，在最后一行添加：
+
+   ```
+   export PATH=/usr/local/bin:$PATH
+   ```
+
+2. 生效：
+   1. 关闭当前终端窗口，重新打开一个新终端窗口就能生效
+   2. 输入`source ~/.bashrc`命令，立即生效
+
+- 有效期限：永久有效
+- 用户局限：仅对当前用户
 
 # echo命令
 

@@ -382,7 +382,7 @@ find . -type f -name "*.txt" -delete
 - 将目录下所有一般文件中的\_NR换成\_SR，也可以用for循环
   ```shell
   find . -type f | xargs perl -pi -e 's|_NR|_SR|g'
-
+  
   for i in `find . -type f`
   do
     sed -i 's/_NR/_SR/g' $i
@@ -1001,6 +1001,56 @@ dirName：
 - 若目录名称省略，则变换至使用者的home directory。`~`也表示为home directory的意思
 - `.`则是表示目前所在的目录
 - `..`则表示目前目录位置的上一层目录。
+
+## df
+
+检查磁盘空间占用情况(并不能查看某个目录占用的磁盘大小)。
+
+```
+df [option]
+```
+
+- `-h`：以容易理解的格式(给人看的格式)输出文件系统分区使用情况，例如 10kB、10MB、10GB 等。
+- `-k`，`-m`： 以 kB、 mB 为单位输出文件系统分区使用情况。
+- `-a`：列出所有的文件系统分区，包含大小为 0 的文件系统分区。
+- `-i`：列出文件系统分区的 inodes 信息。
+- `-T`：显示磁盘分区的文件系统类型。
+
+## du
+
+用于显示目录或文件的大小。
+
+### 语法
+
+```
+du [-abcDhHklmsSx][-L <符号连接>][-X <文件>][--block-size][--exclude=<目录或文件>][--max-depth=<目录层数>][--help][--version][目录或文件]
+```
+
+- `--max-depth=<目录层数>`： 超过指定层数的目录后，予以忽略。
+- `-h`或`--human-readable`：以K，M，G为单位，提高信息的可读性。
+- `-s`或`--summarize `：显示文件或整个目录的大小，默认单位为 kB。
+- `--block-size=k`：以K，M或者G为单位
+
+### 例子
+
+- 显示当前目录的大小：
+
+  ```
+  du -hs
+  ```
+
+- 显示某个目录或文件的大小：
+
+  ```
+  du -hs nodedemo/
+  du -hs ./*
+  ```
+
+
+
+
+
+
 
 ## ll
 
