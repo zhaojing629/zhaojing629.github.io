@@ -797,7 +797,29 @@
   <entry>
     <title>【Linux】Shell脚本</title>
     <url>/2020/11/22/%E3%80%90Linux%E3%80%91Shell%E8%84%9A%E6%9C%AC/</url>
-    <content><![CDATA[<h1 id="echo命令"><a href="#echo命令" class="headerlink" title="echo命令"></a>echo命令</h1><p>打印shell变量的值，或者直接输出指定的字符串。</p>
+    <content><![CDATA[<h1 id="添加环境变量"><a href="#添加环境变量" class="headerlink" title="添加环境变量"></a>添加环境变量</h1><p>linux命令行下面执行某个命令的时候，首先保证该命令是否存在，若存在，但输入命令的时候若仍提示：command not found，这个时候就需要使用<code>echo $PATH</code>查看PATH环境变量的设置了，当前命令是否存在于PATH环境变量中，如果不存在，设置方法如下：</p>
+<h2 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h2><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">PATH</span>=/usr/local/bin:$PATH</span><br></pre></td></tr></table></figure>
+<ul>
+<li>生效方法：立即生效</li>
+<li>有效期限：临时改变，只能在当前的终端窗口中有效，当前窗口关闭后就会恢复原有的path配置</li>
+<li>用户局限：仅对当前用户</li>
+</ul>
+<h2 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h2><ol>
+<li><p><code>vim ~/.bashrc</code>后，在最后一行添加：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">PATH</span>=/usr/local/bin:$PATH</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>生效：</p>
+<ol>
+<li>关闭当前终端窗口，重新打开一个新终端窗口就能生效</li>
+<li>输入<code>source ~/.bashrc</code>命令，立即生效</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li>有效期限：永久有效</li>
+<li>用户局限：仅对当前用户</li>
+</ul>
+<h1 id="echo命令"><a href="#echo命令" class="headerlink" title="echo命令"></a>echo命令</h1><p>打印shell变量的值，或者直接输出指定的字符串。</p>
 <h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">echo</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
 <p>选项：</p>
 <ul>
@@ -4437,9 +4459,34 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li><code>.</code>则是表示目前所在的目录</li>
 <li><code>..</code>则表示目前目录位置的上一层目录。</li>
 </ul>
+<h2 id="df"><a href="#df" class="headerlink" title="df"></a>df</h2><p>检查磁盘空间占用情况(并不能查看某个目录占用的磁盘大小)。</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">df</span><span class="meta"> [option]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-h</code>：以容易理解的格式(给人看的格式)输出文件系统分区使用情况，例如 10kB、10MB、10GB 等。</li>
+<li><code>-k</code>，<code>-m</code>： 以 kB、 mB 为单位输出文件系统分区使用情况。</li>
+<li><code>-a</code>：列出所有的文件系统分区，包含大小为 0 的文件系统分区。</li>
+<li><code>-i</code>：列出文件系统分区的 inodes 信息。</li>
+<li><code>-T</code>：显示磁盘分区的文件系统类型。</li>
+</ul>
+<h2 id="du"><a href="#du" class="headerlink" title="du"></a>du</h2><p>用于显示目录或文件的大小。</p>
+<h3 id="语法-12"><a href="#语法-12" class="headerlink" title="语法"></a>语法</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">du [<span class="string">-abcDhHklmsSx</span>][<span class="symbol">-L &lt;符号连接&gt;</span>][<span class="string">-X &lt;文件&gt;</span>][<span class="symbol">--block-size</span>][<span class="string">--exclude=&lt;目录或文件&gt;</span>][<span class="symbol">--max-depth=&lt;目录层数&gt;</span>][<span class="string">--help</span>][<span class="symbol">--version</span>][<span class="string">目录或文件</span>]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>--max-depth=&lt;目录层数&gt;</code>： 超过指定层数的目录后，予以忽略。</li>
+<li><code>-h</code>或<code>--human-readable</code>：以K，M，G为单位，提高信息的可读性。</li>
+<li><code>-s</code>或<code>--summarize</code>：显示文件或整个目录的大小，默认单位为 kB。</li>
+<li><code>--block-size=k</code>：以K，M或者G为单位</li>
+</ul>
+<h3 id="例子-9"><a href="#例子-9" class="headerlink" title="例子"></a>例子</h3><ul>
+<li><p>显示当前目录的大小：</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">du -hs</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示某个目录或文件的大小：</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">du</span> <span class="string">-hs nodedemo/</span></span><br><span class="line"><span class="attr">du</span> <span class="string">-hs ./*</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 <h2 id="ll"><a href="#ll" class="headerlink" title="ll"></a>ll</h2><p>用法与ls相同，但列出信息更详细，包括文件的创建时间、所属对象、权限等等信息</p>
 <h2 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h2><p>List files 于显示指定工作目录下之内容（列出目前工作目录所含之文件及子目录)。</p>
-<h3 id="语法-12"><a href="#语法-12" class="headerlink" title="语法"></a>语法</h3><figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ls</span>（选项）（参数）</span><br></pre></td></tr></table></figure>
+<h3 id="语法-13"><a href="#语法-13" class="headerlink" title="语法"></a>语法</h3><figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ls</span>（选项）（参数）</span><br></pre></td></tr></table></figure>
 <p>选项：</p>
 <ul>
 <li><code>-l</code>：以长格式显示目录下的内容列表。输出的信息从左到右依次包括文件名，文件类型、权限模式、硬连接数、所有者、组、文件大小和文件的最后修改时间等；</li>
@@ -4451,7 +4498,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li><code>-F</code>：在每个输出项后追加文件的类型标识符，具体含义：“*”表示具有可执行权限的普通文件，“/”表示目录，“@”表示符号链接，“|”表示命令管道FIFO，“=”表示sockets套接字。当文件为普通文件时，不输出任何标识符；</li>
 <li><code>-m</code>：用“,”号区隔每个文件和目录的名称；</li>
 </ul>
-<h3 id="例子-9"><a href="#例子-9" class="headerlink" title="例子"></a>例子</h3><ul>
+<h3 id="例子-10"><a href="#例子-10" class="headerlink" title="例子"></a>例子</h3><ul>
 <li><p>列出目前工作目录下所有名称是 s 开头的文件，越新的排越后面 :</p>
 <figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ls</span> -ltr s*</span><br></pre></td></tr></table></figure>
 </li>
@@ -4469,7 +4516,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 </li>
 </ul>
 <h2 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h2><p>make directory用于创建目录。</p>
-<h3 id="语法-13"><a href="#语法-13" class="headerlink" title="语法"></a>语法</h3><figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">mkdir</span> <span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="语法-14"><a href="#语法-14" class="headerlink" title="语法"></a>语法</h3><figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">mkdir</span> <span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
 <p>选项：</p>
 <ul>
 <li><p><code>-p</code>：确保目录名称存在，不存在的就建一个。</p>
@@ -4477,26 +4524,26 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li><p><code>-m&lt;目标属性&gt;</code>或<code>--mode&lt;目标属性&gt;</code>建立目录的同时设置目录的权限；</p>
 </li>
 </ul>
-<h3 id="例子-10"><a href="#例子-10" class="headerlink" title="例子"></a>例子</h3><p>在目录<code>/usr/meng</code>下建立子目录<a href="http://man.linuxde.net/test">test</a>，并且只有文件主有读、写和执行权限，其他人无权访问：</p>
+<h3 id="例子-11"><a href="#例子-11" class="headerlink" title="例子"></a>例子</h3><p>在目录<code>/usr/meng</code>下建立子目录<a href="http://man.linuxde.net/test">test</a>，并且只有文件主有读、写和执行权限，其他人无权访问：</p>
 <figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">mkdir -m <span class="number">700</span> <span class="regexp">/usr/m</span>eng/test</span><br></pre></td></tr></table></figure>
 <h2 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h2><p>print work directory 显示出当前工作目录的绝对路径</p>
-<h3 id="语法-14"><a href="#语法-14" class="headerlink" title="语法"></a>语法</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">pwd [<span class="string">--help</span>][<span class="symbol">--version</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="语法-15"><a href="#语法-15" class="headerlink" title="语法"></a>语法</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">pwd [<span class="string">--help</span>][<span class="symbol">--version</span>]</span><br></pre></td></tr></table></figure>
 <p>选项：</p>
 <ul>
 <li><code>--help</code> 在线帮助。</li>
 <li><code>--version</code> 显示版本信息。</li>
 </ul>
 <h2 id="rmdir"><a href="#rmdir" class="headerlink" title="rmdir"></a>rmdir</h2><p>Remove Directory从一个目录中删除一个或多个空的子目录</p>
-<h3 id="语法-15"><a href="#语法-15" class="headerlink" title="语法"></a>语法</h3><figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rmdir</span> [-p] dirName</span><br></pre></td></tr></table></figure>
+<h3 id="语法-16"><a href="#语法-16" class="headerlink" title="语法"></a>语法</h3><figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rmdir</span> [-p] dirName</span><br></pre></td></tr></table></figure>
 <p>选项：</p>
 <ul>
 <li><code>-p</code> ：当子目录被删除后使它也成为空目录的话，则顺便一并删除。</li>
 <li><code>-rf</code> ：强制删除</li>
 </ul>
-<h3 id="例子-11"><a href="#例子-11" class="headerlink" title="例子"></a>例子</h3><p>在工作目录下的 BBB 目录中，删除名为 Test 的子目录。若 Test 删除后，BBB 目录成为空目录，则 BBB 亦予删除。</p>
+<h3 id="例子-12"><a href="#例子-12" class="headerlink" title="例子"></a>例子</h3><p>在工作目录下的 BBB 目录中，删除名为 Test 的子目录。若 Test 删除后，BBB 目录成为空目录，则 BBB 亦予删除。</p>
 <figure class="highlight stata"><table><tr><td class="code"><pre><span class="line"><span class="keyword">rmdir</span> -p BBB/<span class="keyword">Test</span></span><br></pre></td></tr></table></figure>
 <h1 id="磁盘维护"><a href="#磁盘维护" class="headerlink" title="磁盘维护"></a>磁盘维护</h1><h1 id="网络通讯"><a href="#网络通讯" class="headerlink" title="网络通讯"></a>网络通讯</h1><h1 id="系统管理"><a href="#系统管理" class="headerlink" title="系统管理"></a>系统管理</h1><h2 id="top"><a href="#top" class="headerlink" title="top"></a>top</h2><p>用于实时显示 process 的动态。更强大的是htop命令。</p>
-<h3 id="语法-16"><a href="#语法-16" class="headerlink" title="语法"></a>语法</h3><figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="attribute">top</span> <span class="selector-attr">[-]</span> <span class="selector-attr">[d delay]</span> <span class="selector-attr">[q]</span> <span class="selector-attr">[c]</span> <span class="selector-attr">[S]</span> <span class="selector-attr">[s]</span> <span class="selector-attr">[i]</span> <span class="selector-attr">[n]</span> <span class="selector-attr">[b]</span></span><br></pre></td></tr></table></figure>
+<h3 id="语法-17"><a href="#语法-17" class="headerlink" title="语法"></a>语法</h3><figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="attribute">top</span> <span class="selector-attr">[-]</span> <span class="selector-attr">[d delay]</span> <span class="selector-attr">[q]</span> <span class="selector-attr">[c]</span> <span class="selector-attr">[S]</span> <span class="selector-attr">[s]</span> <span class="selector-attr">[i]</span> <span class="selector-attr">[n]</span> <span class="selector-attr">[b]</span></span><br></pre></td></tr></table></figure>
 <p>选项：</p>
 <ul>
 <li><code>-n</code> : 更新的次数，完成后将会退出 top</li>
@@ -4512,7 +4559,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 </li>
 <li><code>b</code>：高亮显示当前运行进程</li>
 </ul>
-<h3 id="例子-12"><a href="#例子-12" class="headerlink" title="例子"></a>例子</h3><ul>
+<h3 id="例子-13"><a href="#例子-13" class="headerlink" title="例子"></a>例子</h3><ul>
 <li><p>显示进程信息，查看该服务器当前有哪些计算进程，CPU占用率多大等等，按ctrl c退出。</p>
 <figure class="highlight coq"><table><tr><td class="code"><pre><span class="line"><span class="built_in">top</span></span><br></pre></td></tr></table></figure>
 <ul>
@@ -4544,7 +4591,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li>利用tar命令，可以把一大堆的文件和目录全部打包成一个文件，这对于备份文件或将几个文件组合成为一个文件以便于网络传输是非常有用的。</li>
 <li>打包成一个包后，再用压缩程序进行压缩（gzip bzip2命令）等。</li>
 </ul>
-<h3 id="语法-17"><a href="#语法-17" class="headerlink" title="语法"></a>语法</h3><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">tar</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="语法-18"><a href="#语法-18" class="headerlink" title="语法"></a>语法</h3><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">tar</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
 <p>选项：</p>
 <ul>
 <li><code>-c</code>或<code>--create</code>：建立新的备份文件；</li>
@@ -4558,7 +4605,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li><code>-z</code>或<code>--gzip</code>或<code>--ungzip</code> ：通过gzip指令处理备份文件。</li>
 <li><code>--exclude=&lt;范本样式&gt;</code>：排除符合范本样式的文件。</li>
 </ul>
-<h3 id="例子-13"><a href="#例子-13" class="headerlink" title="例子"></a>例子</h3><h4 id="将文件全部打包成tar包"><a href="#将文件全部打包成tar包" class="headerlink" title="将文件全部打包成tar包"></a>将文件全部打包成tar包</h4><ul>
+<h3 id="例子-14"><a href="#例子-14" class="headerlink" title="例子"></a>例子</h3><h4 id="将文件全部打包成tar包"><a href="#将文件全部打包成tar包" class="headerlink" title="将文件全部打包成tar包"></a>将文件全部打包成tar包</h4><ul>
 <li><p>仅打包，不压缩。在选项<code>f</code>之后的文件档名是自己取的，习惯上都用 .tar 来作为辨识。 </p>
 <figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line">tar -cvf <span class="built_in">log</span>.tar log2012.<span class="built_in">log</span></span><br></pre></td></tr></table></figure>
 </li>
@@ -4593,9 +4640,9 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 </li>
 </ul>
 <h1 id="设备管理"><a href="#设备管理" class="headerlink" title="设备管理"></a>设备管理</h1><h1 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h1><h2 id="bc"><a href="#bc" class="headerlink" title="bc"></a>bc</h2><p>任意精度计算器语言。bash内置了对整数四则运算的支持，但是并不支持浮点运算，而bc可以。</p>
-<h3 id="语法-18"><a href="#语法-18" class="headerlink" title="语法"></a>语法</h3><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">bc</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="语法-19"><a href="#语法-19" class="headerlink" title="语法"></a>语法</h3><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">bc</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
 <p>通常和管道符一起使用</p>
-<h3 id="例子-14"><a href="#例子-14" class="headerlink" title="例子"></a>例子</h3><h4 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h4><p>常用的运算</p>
+<h3 id="例子-15"><a href="#例子-15" class="headerlink" title="例子"></a>例子</h3><h4 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h4><p>常用的运算</p>
 <ul>
 <li><code>+</code>加法</li>
 <li><code>-</code> 减法</li>
@@ -4619,7 +4666,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 </li>
 </ul>
 <h2 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h2><p>用于查看输入文件中的尾部内容。tail命令默认在屏幕上显示指定文件的末尾10行。</p>
-<h3 id="语法-19"><a href="#语法-19" class="headerlink" title="语法"></a>语法</h3><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">tail</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="语法-20"><a href="#语法-20" class="headerlink" title="语法"></a>语法</h3><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">tail</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
 <p>参数：</p>
 <ul>
 <li><code>-f</code> ：循环读取</li>
@@ -4630,7 +4677,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li><code>-n&lt;行数&gt;</code> 或<code>——line=&lt;N&gt;</code>：显示文件的尾部 n 行内容</li>
 <li><code>-s&lt;秒数&gt;</code>, <code>——sleep-interal=&lt;秒数&gt;</code> 与<code>-f</code>合用，指定监视文件变化时间隔的秒数。</li>
 </ul>
-<h3 id="例子-15"><a href="#例子-15" class="headerlink" title="例子"></a>例子</h3><ul>
+<h3 id="例子-16"><a href="#例子-16" class="headerlink" title="例子"></a>例子</h3><ul>
 <li><p>显示 notes.log 文件的最后 10 行：</p>
 <figure class="highlight stan"><table><tr><td class="code"><pre><span class="line"><span class="built_in">tail</span> notes.<span class="built_in">log</span></span><br></pre></td></tr></table></figure>
 </li>
@@ -4648,14 +4695,14 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li>eXtended ARGuments，是给命令传递参数的一个过滤器，也是组合多个命令的一个工具。</li>
 <li>它能够捕获一个命令的输出，然后传递给另外一个命令。</li>
 </ul>
-<h3 id="语法-20"><a href="#语法-20" class="headerlink" title="语法"></a>语法</h3><ul>
+<h3 id="语法-21"><a href="#语法-21" class="headerlink" title="语法"></a>语法</h3><ul>
 <li>一般是和管道一起使用。</li>
 </ul>
 <figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line">somecommand |xargs -<span class="keyword">item</span>  <span class="keyword">command</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>xargs的默认命令是<code>echo</code>，空格是默认定界符。</li>
 </ul>
-<h3 id="例子-16"><a href="#例子-16" class="headerlink" title="例子"></a>例子</h3><h4 id="格式化输入"><a href="#格式化输入" class="headerlink" title="格式化输入"></a>格式化输入</h4><ul>
+<h3 id="例子-17"><a href="#例子-17" class="headerlink" title="例子"></a>例子</h3><h4 id="格式化输入"><a href="#格式化输入" class="headerlink" title="格式化输入"></a>格式化输入</h4><ul>
 <li><p>将test文件中的多行变成一行：</p>
 <figure class="highlight stata"><table><tr><td class="code"><pre><span class="line"><span class="keyword">cat</span> <span class="keyword">test</span>.txt | xargs</span><br></pre></td></tr></table></figure>
 </li>
