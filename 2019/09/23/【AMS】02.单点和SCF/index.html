@@ -21,24 +21,21 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="ORCA输入文件">
+  <meta name="description" content="ADF的SCF选项以及不收敛的处理方法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【ORCA】01.输入文件">
-<meta property="og:url" content="http://example.com/2020/05/28/%E3%80%90ORCA%E3%80%9101.%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:title" content="【AMS】02.单点和SCF">
+<meta property="og:url" content="http://example.com/2019/09/23/%E3%80%90AMS%E3%80%9102.%E5%8D%95%E7%82%B9%E5%92%8CSCF/index.html">
 <meta property="og:site_name" content="Jing&#39;s Notes">
-<meta property="og:description" content="ORCA输入文件">
+<meta property="og:description" content="ADF的SCF选项以及不收敛的处理方法">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2020/05/28/%E3%80%90ORCA%E3%80%9101.%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/orca-inputfile.png">
-<meta property="og:image" content="http://example.com/clipboard.png">
-<meta property="article:published_time" content="2020-05-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-02-07T14:16:28.000Z">
+<meta property="article:published_time" content="2019-09-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-05-12T08:21:08.002Z">
 <meta property="article:author" content="Zhao Jing">
-<meta property="article:tag" content="输入">
-<meta property="article:tag" content="内存">
+<meta property="article:tag" content="SCF">
+<meta property="article:tag" content="单点">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2020/05/28/%E3%80%90ORCA%E3%80%9101.%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/orca-inputfile.png">
 
-<link rel="canonical" href="http://example.com/2020/05/28/%E3%80%90ORCA%E3%80%9101.%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/">
+<link rel="canonical" href="http://example.com/2019/09/23/%E3%80%90AMS%E3%80%9102.%E5%8D%95%E7%82%B9%E5%92%8CSCF/">
 
 
 <script id="page-configurations">
@@ -51,7 +48,7 @@
   };
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
-  <title>【ORCA】01.输入文件 | Jing's Notes</title>
+  <title>【AMS】02.单点和SCF | Jing's Notes</title>
   
 
 
@@ -195,7 +192,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/05/28/%E3%80%90ORCA%E3%80%9101.%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/09/23/%E3%80%90AMS%E3%80%9102.%E5%8D%95%E7%82%B9%E5%92%8CSCF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/touxiang.jpg">
@@ -208,7 +205,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          【ORCA】01.输入文件
+          【AMS】02.单点和SCF
         </h1>
 
         <div class="post-meta">
@@ -218,14 +215,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-05-28 00:00:00" itemprop="dateCreated datePublished" datetime="2020-05-28T00:00:00+08:00">2020-05-28</time>
+              <time title="创建时间：2019-09-23 00:00:00" itemprop="dateCreated datePublished" datetime="2019-09-23T00:00:00+08:00">2019-09-23</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-02-07 22:16:28" itemprop="dateModified" datetime="2021-02-07T22:16:28+08:00">2021-02-07</time>
+                <time title="修改时间：2021-05-12 16:21:08" itemprop="dateModified" datetime="2021-05-12T16:21:08+08:00">2021-05-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -237,7 +234,7 @@
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/ORCA/" itemprop="url" rel="index"><span itemprop="name">ORCA</span></a>
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/AMS/" itemprop="url" rel="index"><span itemprop="name">AMS</span></a>
                 </span>
             </span>
 
@@ -258,8 +255,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/05/28/%E3%80%90ORCA%E3%80%9101.%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/28/%E3%80%90ORCA%E3%80%9101.%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/" itemprop="commentCount"></span>
+    <a title="valine" href="/2019/09/23/%E3%80%90AMS%E3%80%9102.%E5%8D%95%E7%82%B9%E5%92%8CSCF/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/09/23/%E3%80%90AMS%E3%80%9102.%E5%8D%95%E7%82%B9%E5%92%8CSCF/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -270,16 +267,16 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.5k</span>
+              <span>4.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>4 分钟</span>
             </span>
-            <div class="post-description">ORCA输入文件</div>
+            <div class="post-description">ADF的SCF选项以及不收敛的处理方法</div>
 
         </div>
       </header>
@@ -290,103 +287,123 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h1><p><img src="orca-inputfile.png" alt=""></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># comments </span></span><br><span class="line">! Keywords (control methods, basis sets, job type,…)</span><br><span class="line"></span><br><span class="line">%maxcore <span class="number">4096</span> (optional: scratch <span class="built_in">array</span> size in MB)</span><br><span class="line"></span><br><span class="line">%base “MyBaseName” (optional: name of the generated scratch files)</span><br><span class="line"></span><br><span class="line">* xyz Charge Mult</span><br><span class="line">C <span class="number">1.23</span> <span class="number">16.481</span> <span class="number">-9.87</span> </span><br><span class="line">*</span><br><span class="line"></span><br><span class="line">$new_job</span><br></pre></td></tr></table></figure>
-<h1 id="注释部分"><a href="#注释部分" class="headerlink" title="注释部分"></a>注释部分</h1><ul>
-<li>以#开头，若单独成行，则该行均为注释</li>
-<li><p>也可用两个#在行内封装注释部分，如</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TolE=<span class="number">1e-5</span>; #Energy conv.# TolMaxP=<span class="number">1e-6</span>; #Density conv.#</span><br></pre></td></tr></table></figure>
-<p>其中TolE和TolMaxP为正常的参数输入，而另外两处#内的内容为注释。</p>
-</li>
-</ul>
-<h1 id="控制部分"><a href="#控制部分" class="headerlink" title="控制部分"></a>控制部分</h1><ul>
-<li>所有block在手册<strong>6.1 Input Blocks</strong>中列出</li>
-<li>以<code>%</code>开头，<code>end</code>结尾。一个<code>%</code>和<code>end</code>的组合称为一个block，一个输入文件中可以包含多个blocks。</li>
-<li>block的内容比简单输入<code>！</code>优先</li>
-<li><p>ORCA中变量和数值的输入格式为</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">VariableName Value</span><br></pre></td></tr></table></figure>
+        <h1 id="单点计算"><a href="#单点计算" class="headerlink" title="单点计算"></a>单点计算</h1><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Task</span> SinglePoint</span><br></pre></td></tr></table></figure>
+<h1 id="SCF选项"><a href="#SCF选项" class="headerlink" title="SCF选项"></a>SCF选项</h1><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">SCF</span><br><span class="line"> Iterations Niter</span><br><span class="line"> Converge <span class="keyword">SCFcnv</span> &#123; sconv2 &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">AccelerationMethod</span> &#123; ADIIS | LISTi | LISTb | fDIIS | LISTf | MESA | SDIIS &#125;</span><br><span class="line"> <span class="keyword">MESA</span> [NoFDIIS] [NoLISTb] [NoLISTf] [NoLISTi] [NoSDIIS] [NoADIIS]</span><br><span class="line"> ADIIS</span><br><span class="line">   &#123;THRESH1 a1&#125;</span><br><span class="line">   &#123;THRESH2 a2&#125;</span><br><span class="line"> End</span><br><span class="line"> NoADIIS</span><br><span class="line"> DIIS</span><br><span class="line">   &#123;N n&#125;</span><br><span class="line">   &#123;OK ok&#125;</span><br><span class="line">   &#123;cyc cyc&#125;</span><br><span class="line"> End</span><br><span class="line"> Mixing mix</span><br><span class="line"> Mixing1 mix1</span><br><span class="line"></span><br><span class="line"> OldSCF</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<h2 id="Iterations"><a href="#Iterations" class="headerlink" title="Iterations"></a>Iterations</h2><p><code>Iterations</code>SCF迭代的最大次数，<code>Niter</code>默认是<code>300</code></p>
+<h2 id="Converge"><a href="#Converge" class="headerlink" title="Converge"></a>Converge</h2><p><code>Converge</code> ：</p>
 <ul>
-<li><p>也可以数组的形式输入变量，例如</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Array[<span class="number">1</span>]  Value1</span><br><span class="line">Array[<span class="number">1</span>]  Value1,Value2,Value3</span><br><span class="line">Array  Value1,Value2</span><br></pre></td></tr></table></figure>
+<li><code>SCFcnv</code>表示停止迭代的收敛限，默认是<code>1e-6</code>。</li>
+<li><code>sconv2</code>表示SCF过程难以收敛时起作用的第二个标准，默认是<code>1e-3</code>，如果达到了，仅发出警告，但是继续计算。仍无法达到的时候SCF不收敛，只能用<code>ALLOW</code>来继续</li>
+</ul>
+<h2 id="AccelerationMethod"><a href="#AccelerationMethod" class="headerlink" title="AccelerationMethod"></a>AccelerationMethod</h2><p><code>AccelerationMethod</code>调用的SCF加速方法，默认情况下为<code>ADIIS</code>，还可以用<code>LISTi</code> | <code>LISTb</code> | <code>fDIIS</code> | <code>LISTf</code> | <code>MESA</code> | <code>SDIIS</code></p>
+<h3 id="MESA"><a href="#MESA" class="headerlink" title="MESA"></a>MESA</h3><p><code>AccelerationMethod MESA</code>是ADIIS, fDIIS, LISTb, LISTf, LISTi和 SDIIS方法的组合<br><code>MESA NoSDIIS</code>代表从其中删掉某一种方法，也可以直接使用该关键词调用MESA，优先级大于<code>AccelerationMethod</code>指定的方法。</p>
+<h3 id="ADIIS"><a href="#ADIIS" class="headerlink" title="ADIIS"></a>ADIIS</h3><p>使用ADIIS + SDIIS方法，根据 [F,P] 交换子矩阵中的最大元素<code>ErrMax</code>来确定具体方法：</p>
 <ul>
-<li>由于ORCA是用C++写的，因此数组从0开始。上面第一行表示A[1]的值为V1，实际为该数组的第二个数；第二行表示A[1]的值为V1，A[2]的值为V2，A[3]的值为V3；第三行表示A[0]的值为V1，A[1]的值为V2。</li>
-<li><p>字符型的数值（例如文件名）用双引号封装，如</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MOInp <span class="string">&quot;Myfile.gbw&quot;</span></span><br></pre></td></tr></table></figure>
-<p>注意，在Unix系统中，引号中的内容是区分大小写的，MYFILE.GBW和MyFile.gbw是不同的文件，而在Windows系统中是不区分大小写的。</p>
-</li>
+<li>当ErrMax≥<code>a1</code>，只使用A-DIIS系数</li>
+<li>当ErrMax≤ <code>a2</code>，只使用SDIIS系数</li>
+<li>当<code>a2</code>≤ ErrMax≤ <code>a1</code>，根据ErrMax的值按一定的权重来计算<br><code>a1</code>和<code>a2</code>的默认值是<code>0.01</code>和<code>0.0001</code>，收敛比较困难的时候，可以降低阈值，只使用A-DIIS系数</li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="关键词部分"><a href="#关键词部分" class="headerlink" title="关键词部分"></a>关键词部分</h1><p>以<code>!</code>开头，主要用于指定作业的类型和相关参数。</p>
+<h3 id="SDIIS"><a href="#SDIIS" class="headerlink" title="SDIIS"></a>SDIIS</h3><p><code>AccelerationMethod SDIIS</code>与在没有指定<code>oldscf</code>的情况下使用<code>NoADIIS</code>意思相同，采用的是阻尼+SDIIS方法。从简单阻尼（Mixing）开始，持续到<code>ErrMax</code>降低到<code>DIIS OK</code>参数以下，但是不超过<code>DIIS Cyc</code>次迭代。之后使用纯的SDIIS方法。</p>
+<blockquote>
+<p>在指定<code>oldscf</code>的情况下使用<code>NoADIIS</code>会禁用在SCF收敛困难的时候自动切换到ADIIS + SDIIS方法</p>
+</blockquote>
 <ul>
-<li>主要方法和选项在<strong>6.2.1 Main Methods and Options的Table6.1</strong> 中列出</li>
-<li><p>密度泛函方法在<strong>6.2.2 Density Functional Methods</strong>中的<strong>Table 6.2</strong>中列出</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">! Functional GridN NoFinalGrid VDW</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>泛函可以选择：</p>
+<li><p>指定<code>NoADIIS</code>时才可以设置 <code>DIIS</code>模块：</p>
 <ul>
-<li>LDA : LSD, HFS, …</li>
-<li>GGA : BP=BP86, PBE, PW91, OLYP, OPBE, BLYP, PWP, …</li>
-<li>LDAs/GGAs in RI mode require an auxiliary basis set (‘/J’)</li>
-<li>Meta-GGA : TPSS, revTPSS, M06L, …</li>
-<li>Hybrid : B3LYP, PBE0, X3LYP, BHandHLYP, B3P, B3PW, …</li>
-<li>Range-Sep. Hyb. : wB97, wB97X, CAM-B3LYP, LC-BLYP</li>
-<li>Hybrid Meta-GGA : TPSSh, TPSS0, M06, M062X, …</li>
-<li>Double-Hybrid : RI-B2PLYP, RI-MPW2PLYP, RI-B2T-PYLP, RI-B2K-PYLP, RI-B2GP-PLYP</li>
-<li>没有RI近似也可以使用这些泛函。RI模式下的双杂化需要一个辅助基集(‘ /C ‘)</li>
+<li><p><code>N</code>用于加速SCF的扩展向量的数量，默认为<code>10</code>，小于2后会禁用DIIS。此数字不仅适用于Pulay DIIS方案，还适用于其他类似DIIS的方法，例如A-DIIS和LIST方法。</p>
+<blockquote>
+<p>LIST家族的方法对使用的扩展向量的数量非常敏感，接近收敛时，LIST中的向量数量会增加，但始终受<code>DIIS N</code>的限制，当难以收敛时，可以将<code>DIIS N</code>设置为大于10的值，比如12~20。</p>
+</blockquote>
+</li>
+<li><code>OK</code>禁用A-DIIS时，SDIIS起始条件。默认为<code>0.5</code> a.u.。</li>
+<li><code>Cyc</code>禁用A-DIIS时，无论上面的<code>DIIS OK</code>值如何，SDIIS都会在此迭代下启动，默认值为<code>5</code></li>
 </ul>
-<h2 id="全局内存"><a href="#全局内存" class="headerlink" title="全局内存"></a>全局内存</h2><ul>
-<li><p>This limit applies per processing core.</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%MaxCore <span class="number">3000</span> <span class="meta">#sets 3000 MB (= 3 GB)</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><code>Mixing</code>中，指将下一个Fock矩阵确定为<script type="math/tex">F = mix F_{n} + (1-mix) F_{n-1}</script>，<code>mix</code>默认为<code>0.2</code></li>
+<li><code>Mixing1</code>中指第一个SCF循环的混合参数值不同，默认为<code>0.2</code></li>
+</ul>
+<h2 id="oldSCF"><a href="#oldSCF" class="headerlink" title="oldSCF"></a>oldSCF</h2><p>在使用<code>Occupations Steep</code>、<code>Lshift</code>，<code>ARH</code>，<code>EDIIS</code>，<code>RESTOCC</code>时，会自动启用<code>oldSCF</code></p>
+<h3 id="Lshift"><a href="#Lshift" class="headerlink" title="Lshift"></a>Lshift</h3><p>能级移动方法，在前一次迭代的轨道表示中，Fock矩阵的对角元素提高虚轨道的<code>vshift</code>hartree。旋轨耦合不支持这种方法。</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Lshift</span> <span class="string">vshift</span></span><br><span class="line"><span class="attr">Lshift_err</span> <span class="string">Shift_err</span></span><br><span class="line"><span class="attr">Lshift_cyc</span> <span class="string">Shift_cyc</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>这里，每个内核3000 MB的内存分配给ORCA。如果请求使用6个CPU内核，这意味着ORCA的总内存需求为6x3000 = 18000 MB = 18 GB。为了确保计算节点具有可用的物理内存总量。 通常，您不应要求超过75％的可用物理内存（因为ORCA偶尔会使用比maxcore设置更多的内存）。因此，在这种情况下，如果计算机具有24 GB或更多的物理内存可用就可以</li>
+<li><code>Lshift_err</code>指定一旦SCF error降至阈值以下，程序将关闭能级移动，<code>Shift_err</code>默认值为<code>0</code>。</li>
+<li><code>Lshift_cyc</code>指定在第几个SCF 迭代次数的时候再启动能级移动， <code>Shift_cyc</code>默认为<code>1</code>。</li>
 </ul>
-</li>
-<li><p>如果正在使用的计算节点也被其他用户使用，请确保请求的内存不要超过有权使用的内存。例如，如果一个12核节点具有120 GB的内存，而你提交了一个6核作业，则你有权使用该内存的一半（例如，请注意，有时排队系统要求您指定所需的内存量）。因此，仅应允许您的6核作业使用60 GB的内存或10,000 MB（10GB）的maxcore（每个核的内存）。由于ORCA中的内存使用率通常会超出maxcore，因此将maxcore降低至可用物理内存的〜75％：建议将maxcore设置为％maxcore 7500。</p>
-</li>
-<li><p>如果ORCA以一般消息终止：“ ORCA finished by error termination in [ORCA module]”，并且上面没有其他有用的消息， 原因取决于运行哪个ORCA模块。如果运行的模块是占用大量内存的模块，例如：orca_mp2，orca_scfhess，orca_mdci，orca_mrci等，则作业可能会耗尽内存或磁盘空间，或者访问内存或磁盘时出现问题。这也可能是运行一个具有过多内核的小型系统的计算的问题（运行一个仅包含几个原子的系统的60内核计算是没有意义的，并且会导致不可预测的结果）。</p>
-</li>
-</ul>
-<h1 id="多步作业"><a href="#多步作业" class="headerlink" title="多步作业"></a>多步作业</h1><p>ORCA支持在一个输入文件中设置多步作业，使用<code>$new_job</code>关键词来标记下一个作业的开始。多步作业常在以下类型的计算中会用到：</p>
+<h3 id="ARH"><a href="#ARH" class="headerlink" title="ARH"></a>ARH</h3><figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">SCF</span></span><br><span class="line"><span class="xml">  ARH</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;CONV conv&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;ITER iter&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;NSAVED nsaved&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;START start&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;FINAL&#125;</span><span class="xml"> ...</span></span><br><span class="line"><span class="xml">  End</span></span><br><span class="line"><span class="xml">  ...</span></span><br><span class="line"><span class="xml">End</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>用不同的方法或基组计算同一个分子的性质。</li>
-<li>用相同的参数计算一系列分子。</li>
-<li>在结构优化之后用更高级的方法计算单点能或其他性质。</li>
-<li>用小基组计算提供轨道的初始猜测，做大基组的计算。</li>
+<li><code>CONV</code>：当RMS梯度及其最大分量均低于<code>conv</code>，ARH收敛，<code>conv</code>默认是1e-4</li>
+<li><code>ITER</code>：最大ARH迭代次数，<code>iter</code>默认为500</li>
+<li><code>FINAL</code>：确定ARH完成后是否继续SCF。如果设置了此选项，将执行一次Fock矩阵对角化以获得轨道，并且将停止SCF过程。默认选项为<code>OFF</code>。</li>
+<li><code>START</code>：开始调用ARH的SCF迭代次数，<code>start</code>默认为2。使用较大的值可以为ARH提供更好的初猜</li>
+<li><code>NSAVED</code>：保存密度和Fock矩阵的数量。 <code>nsaved</code>默认为8。在非常接近费米能级的轨道数很大的收敛困难时，应使用较大的<code>nsaved</code>值。</li>
+<li>默认的最小化方法是“Untransformed Pre-conditioned Conjugate Gradient”，可以使用以下两个关键词更改：<ul>
+<li><code>NOPRECOND</code>：禁用Untransformed Pre-conditioned CG最小化，不能在第二周期后的元素里使用</li>
+<li><code>TRANSPCG</code>：启用Transformed Pre-conditioned CG 方法，SCF可能会更好的收敛。</li>
 </ul>
-<p>eg：表示先在LDA水平下计算BO分子的g张量，再使用BP86泛函计算。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># -----------------------------------------------------</span><br><span class="line">! UKS LSD SVP grid5 NoFinalGrid TightSCF KeepInts</span><br><span class="line"># -----------------------------------------------------</span><br><span class="line">%eprnmr gtensor <span class="number">1</span> end</span><br><span class="line">* <span class="keyword">int</span> <span class="number">0</span> <span class="number">2</span></span><br><span class="line">B <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line">O <span class="number">1</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1.2049</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line">*</span><br><span class="line"># *************************************************</span><br><span class="line"># ****** This starts the input <span class="keyword">for</span> the next job *</span><br><span class="line"># *************************************************</span><br><span class="line">$new_job</span><br><span class="line"># --------------------------------------------------</span><br><span class="line">! BP86 SVP SmallPrint ReadInts NoKeepInts</span><br><span class="line"># --------------------------------------------------</span><br><span class="line">%eprnmr gtensor <span class="number">1</span> end</span><br><span class="line">* <span class="keyword">int</span> <span class="number">0</span> <span class="number">2</span></span><br><span class="line">B <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line">O <span class="number">1</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1.2049</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line">*</span><br></pre></td></tr></table></figure>
+</li>
+<li>在每一步SCF中，先执行常规CG最小化，跟踪总步长，如果在某个微迭代中步长超过了信任半径，则过程将在缩小的空间中切换到信任半径优化，在能级移动参数mu收敛后立即中止。在CG最小化期间生成的所有试验矢量的缩小空间中，将最终步骤计算为牛顿步骤。可以通过以下关键词修改参数：<ul>
+<li><code>NOSWITCHING</code>：关闭从普通CG到缩小的空间中的信任半径最小化的切换。在某些情况下，使用此选项有助于减少SCF循环的总数。</li>
+<li><code>SHIFTED</code>：设置此选项将在第一次微迭代中打开信任半径优化。</li>
+<li><code>CGITER=cgiter</code>：设置微迭代的最大数量。</li>
+<li>确定置信半径：<ul>
+<li><code>TRUSTR=trustr</code>：信任半径的初始值。默认为<code>0.5</code></li>
+<li><code>MAXTRUSTR=maxtrustr</code>：最大信任半径值。默认为<code>0.5</code>，并且不会改变。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>该方法仅适用于NOSYM计算</li>
+<li>在每一步都要计算总能量，计算非常昂贵，而且使用总能量，需要更高的积分精度才能获得稳定的SCF收敛，该方法可能不适用于所有情况，??使用<code>ADDDIFFUSEFIT</code>关键字或更高的<code>ZlmFit</code>质量设置来提高总能量的准确性，从而提高收敛性。??</li>
+</ul>
+</li>
+</ul>
+<h1 id="SCF不收敛"><a href="#SCF不收敛" class="headerlink" title="SCF不收敛"></a>SCF不收敛</h1><ol>
+<li>更换SCF加速收敛的方法</li>
+<li>使用ARH方法</li>
+<li>修改DIIS算法的参数<ul>
+<li><code>Mixing</code>高于默认值<code>0.2</code>会有更高的加速度，更低会更稳定的迭代</li>
+<li><code>N</code>默认为<code>10</code>，越大用于加速SCF的扩展向量的数量越多，SCF迭代更稳定，最多到25</li>
+<li><code>Cyc</code>是SDIIS启动的初始SCF迭代步数，默认值为<code>5</code>，更高计算越稳定，比如使用如下参数：<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">SCF</span></span><br><span class="line">    <span class="attribute">DIIS</span></span><br><span class="line">      <span class="attribute">N</span> <span class="number">25</span></span><br><span class="line">      <span class="attribute">Cyc</span> <span class="number">30</span></span><br><span class="line">    <span class="attribute">End</span></span><br><span class="line">    <span class="attribute">Mixing</span> <span class="number">0</span>.<span class="number">015</span></span><br><span class="line">    <span class="attribute">Mixing1</span> <span class="number">0</span>.<span class="number">09</span></span><br><span class="line">  <span class="attribute">End</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>HOMO-LUMO较为接近的情况（0.02Hatree以内），可能造成HOMO-LUMO的震荡。可以使用<code>Lshift vshift</code>方法，比如0.01，不能太大，不适于激发态的计算、<strong>解析频率</strong>、旋轨耦合的计算。</li>
+<li>使用Electron smearing设定在允许的能量范围内分数占据。</li>
+<li>其他：<a target="_blank" rel="noopener" href="https://www.fermitech.com.cn/wiki/doku.php?id=adf:scfnonconvergence">费米维基</a>的2、3、5。</li>
+</ol>
+<h1 id="几何优化"><a href="#几何优化" class="headerlink" title="几何优化"></a>几何优化</h1><ul>
+<li>基于准牛顿法优化</li>
+</ul>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Task GeometryOptimization</span><br><span class="line"></span><br><span class="line">GeometryOptimization</span><br><span class="line">   Convergence</span><br><span class="line">      Energy <span class="type">float</span></span><br><span class="line">      Gradients <span class="type">float</span></span><br><span class="line">      Step <span class="type">float</span></span><br><span class="line">      StressEnergyPerAtom <span class="type">float</span></span><br><span class="line">   <span class="keyword">End</span></span><br><span class="line">   MaxIterations <span class="type">integer</span></span><br><span class="line">   CalcPropertiesOnlyIfConverged Yes/<span class="keyword">No</span></span><br><span class="line">   OptimizeLattice Yes/<span class="keyword">No</span></span><br><span class="line">   KeepIntermediateResults Yes/<span class="keyword">No</span></span><br><span class="line">   PretendConverged Yes/<span class="keyword">No</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>20版以前的为：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">GEOMETRY</span><br><span class="line">	Converge &#123;<span class="attribute">E</span>=TolE&#125; &#123;<span class="attribute">Grad</span>=TolG&#125; &#123;<span class="attribute">Rad</span>=TolR&#125; &#123;<span class="attribute">Angle</span>=TolA&#125;</span><br><span class="line">	Iterations Niter</span><br><span class="line">	Inithess inithessian.file</span><br><span class="line">	Hessupd HessUpdate</span><br><span class="line">	Optim &#123;Delocal / Cartesian / Internal&#125; &#123;All / Selected&#125;</span><br><span class="line">	GEigenvalueThreshold threshold</span><br><span class="line">	Branch &#123;New / Old&#125;</span><br><span class="line">	<span class="keyword">Step</span> &#123;<span class="attribute">Rad</span>=MaxRadStep&#125; &#123;<span class="attribute">Angle</span>=MaxAngleStep&#125; &#123;<span class="attribute">TrustRadius</span>=MaxRadius&#125;</span><br><span class="line">	DIIS &#123;<span class="attribute">N</span>=NVect&#125; &#123;<span class="attribute">CYC</span>=Ncyc&#125;</span><br><span class="line">	Externprogram externprog.exe <span class="attribute">coord</span>=coords.inp <span class="attribute">energy</span>=energy.out <span class="attribute">grad</span>=grads.out</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="Convergence"><a href="#Convergence" class="headerlink" title="Convergence"></a><code>Convergence</code></h2><p>收敛部分的设置：</p>
 <ul>
-<li><p>在使用$new_job来设置多步作业时，下一步任务会默认使用前一步任务的所有参数设置。如果需要使用不同的参数，可以在下一步任务中修改相关参数。例如，在前一步计算中使用了RI近似，在后一步的计算中会默认使用，如果不想使用，则需要用关键词将其关闭。此外，下一步任务会默认使用上一步任务的轨道做初始猜测，如果在下一步任务中要使用其他的初始猜测，也要指定相关的关键词。</p>
-</li>
-<li><p>在ORCA的计算中，假设输入文件名为MyJob.inp，那么程序产生的所有的文件都名为MyJob.xxx。有时候在多步计算中，不同的步骤需要不同的文件名，可以通过%base这个变量来修改名称，例如:</p>
-<p><img src="/clipboard.png" alt="img"></p>
+<li><code>Energy</code>：能量变化，默认是<code>1e-05</code>Hartree。</li>
+<li><code>Gradients</code>：核梯度的阈值，默认是<code>0.001</code>Hartree/Angstrom</li>
+<li><code>Step</code>：收敛几何允许的最大笛卡尔步长，默认是<code>0.01</code>Angstrom</li>
+<li><code>StressEnergyPerAtom</code>：优化晶格向量时使用的阈值，默认是<code>0.0005</code>Hartree</li>
+</ul>
+<p>收敛判定（如果最大梯度和均方根梯度比收敛准则小10倍，则忽略最后两条）</p>
 <ul>
-<li>第一步任务中产生的所有文件以FirstJob开头，第二步任务中产生的文件以SecondJob开头。</li>
+<li>当前几何结构和上一个几何步骤的键能之间的差异小于<code>Energy</code></li>
+<li>最大笛卡尔核梯度小于<code>Gradients</code></li>
+<li>笛卡尔核梯度的均方根(RMS)小于2/3<code>Gradients</code></li>
+<li>最大笛卡尔步长小于<code>Step</code></li>
+<li>笛卡尔阶跃的均方根(RMS)小于2/3<code>Step</code></li>
 </ul>
-</li>
+<p>优化过程会不断地计算不同的分子结构，直到找到最低能量的结构为止。收敛标准得到5个T表示五个收敛标准都达到。其中第二个标准最重要，一般也是最后一个达到的，第二个标准是势能面的梯度最大值。这个标准非常严格，对于大量过渡金属参与的化学反应，过渡态搜索，有可能达不到这样严格的标准，一般到0.003左右也可以认为收敛了，可以将对应的分子结构拿来使用。</p>
+<blockquote>
+<p>2020版以前为总能量、梯度，笛卡尔步长，键角，默认为：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">GEOMETRY</span></span><br><span class="line"><span class="attribute">Converge</span> <span class="number">1</span>e-<span class="number">3</span> <span class="number">1</span>e-<span class="number">3</span> <span class="number">1</span>e-<span class="number">2</span> <span class="number">0</span>.<span class="number">5</span></span><br><span class="line"><span class="attribute">end</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li><code>MaxIterations</code>：允许收敛到所需结构的最大几何迭代次数。默认是max(30，<script type="math/tex">2 \times N_{free}</script>)，<script type="math/tex">N_{free}</script>是指自由度的数目，接近于3*原子数。</li>
+<li><code>CalcPropertiesOnlyIfConverged</code>：默认为<code>Yes</code>，当几何优化（过渡态搜索）收敛时，才计算相应的性质，比如频率，声子等，若为<code>False</code>，不收敛也可以计算。</li>
+<li><code>PretendConverged</code>：默认为<code>No</code>，当几何优化不收敛会报错。如果改成<code>True</code>，只会出现一个警告，并且表明几何优化是收敛的，在一些脚本编写中有用。</li>
 </ul>
-<h1 id="输入优先级别"><a href="#输入优先级别" class="headerlink" title="输入优先级别"></a>输入优先级别</h1><ul>
-<li><p>不区分大小写</p>
-</li>
-<li><p>先读取所有！关键词，不分顺序</p>
-<ul>
-<li><p>例外是如果基组指定两个，后面那个优先，辅助基组也是如此</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">! def2-SVP def2-TZVP</span><br><span class="line">! def2/J SARC/J</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>然后按输入文件中的block顺序读取，比！优先</p>
-</li>
-<li><p>大多数block输入关键字控制单个变量(尽管也有例外)。如果有重复的关键字，则使用后一个值。</p>
-</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">! def2-TZVP UKS</span><br><span class="line">%method</span><br><span class="line">functional BP86</span><br><span class="line">correlation C_LYP</span><br><span class="line">SpecialGridAtoms[<span class="number">1</span>] <span class="number">26</span>, <span class="number">27</span></span><br><span class="line">SpecialGridIntacc <span class="number">8</span>, <span class="number">8</span>, <span class="number">8</span></span><br><span class="line">SpecialGridAtoms <span class="number">28</span>, <span class="number">29</span></span><br><span class="line">end</span><br><span class="line">! PBE def2-SVP RKS</span><br></pre></td></tr></table></figure>
-<p>等同于</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">! UKS BLYP def2-SVP</span><br><span class="line">%method</span><br><span class="line">SpecialGridAtoms <span class="number">28</span>, <span class="number">29</span>, <span class="number">27</span></span><br><span class="line">SpecialGridIntacc <span class="number">8</span>, <span class="number">8</span>, <span class="number">8</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -417,7 +434,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/2020/05/28/%E3%80%90ORCA%E3%80%9101.%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/" title="【ORCA】01.输入文件">http://example.com/2020/05/28/【ORCA】01.输入文件/</a>
+    <a href="http://example.com/2019/09/23/%E3%80%90AMS%E3%80%9102.%E5%8D%95%E7%82%B9%E5%92%8CSCF/" title="【AMS】02.单点和SCF">http://example.com/2019/09/23/【AMS】02.单点和SCF/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -429,8 +446,8 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/%E8%BE%93%E5%85%A5/" rel="tag"><i class="fa fa-tag"></i> 输入</a>
-              <a href="/tags/%E5%86%85%E5%AD%98/" rel="tag"><i class="fa fa-tag"></i> 内存</a>
+              <a href="/tags/SCF/" rel="tag"><i class="fa fa-tag"></i> SCF</a>
+              <a href="/tags/%E5%8D%95%E7%82%B9/" rel="tag"><i class="fa fa-tag"></i> 单点</a>
           </div>
 
         
@@ -439,12 +456,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/05/28/%E3%80%90ORCA%E3%80%9102.%E5%87%A0%E4%BD%95%E5%9D%90%E6%A0%87%E8%BE%93%E5%85%A5/" rel="prev" title="【ORCA】02.几何坐标输入">
-      <i class="fa fa-chevron-left"></i> 【ORCA】02.几何坐标输入
+    <a href="/2019/09/23/%E3%80%90AMS%E3%80%9103.%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="prev" title="【AMS】03.几何优化">
+      <i class="fa fa-chevron-left"></i> 【AMS】03.几何优化
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/05/29/%E3%80%90ORCA%E3%80%91DLPNO-CCSD(T)/" rel="next" title="【ORCA】DLPNO-CCSD(T)">
-      【ORCA】DLPNO-CCSD(T) <i class="fa fa-chevron-right"></i>
+    <a href="/2019/09/25/%E3%80%90Linux%E3%80%91%E5%91%BD%E4%BB%A4/" rel="next" title="【Linux】命令">
+      【Linux】命令 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -505,7 +522,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">概要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B3%A8%E9%87%8A%E9%83%A8%E5%88%86"><span class="nav-number">2.</span> <span class="nav-text">注释部分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E9%83%A8%E5%88%86"><span class="nav-number">3.</span> <span class="nav-text">控制部分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E8%AF%8D%E9%83%A8%E5%88%86"><span class="nav-number">4.</span> <span class="nav-text">关键词部分</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E5%86%85%E5%AD%98"><span class="nav-number">4.1.</span> <span class="nav-text">全局内存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E6%AD%A5%E4%BD%9C%E4%B8%9A"><span class="nav-number">5.</span> <span class="nav-text">多步作业</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E4%BC%98%E5%85%88%E7%BA%A7%E5%88%AB"><span class="nav-number">6.</span> <span class="nav-text">输入优先级别</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%95%E7%82%B9%E8%AE%A1%E7%AE%97"><span class="nav-number">1.</span> <span class="nav-text">单点计算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SCF%E9%80%89%E9%A1%B9"><span class="nav-number">2.</span> <span class="nav-text">SCF选项</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Iterations"><span class="nav-number">2.1.</span> <span class="nav-text">Iterations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Converge"><span class="nav-number">2.2.</span> <span class="nav-text">Converge</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AccelerationMethod"><span class="nav-number">2.3.</span> <span class="nav-text">AccelerationMethod</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MESA"><span class="nav-number">2.3.1.</span> <span class="nav-text">MESA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ADIIS"><span class="nav-number">2.3.2.</span> <span class="nav-text">ADIIS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SDIIS"><span class="nav-number">2.3.3.</span> <span class="nav-text">SDIIS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#oldSCF"><span class="nav-number">2.4.</span> <span class="nav-text">oldSCF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lshift"><span class="nav-number">2.4.1.</span> <span class="nav-text">Lshift</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ARH"><span class="nav-number">2.4.2.</span> <span class="nav-text">ARH</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SCF%E4%B8%8D%E6%94%B6%E6%95%9B"><span class="nav-number">3.</span> <span class="nav-text">SCF不收敛</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96"><span class="nav-number">4.</span> <span class="nav-text">几何优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Convergence"><span class="nav-number">4.1.</span> <span class="nav-text">Convergence</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">4.2.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

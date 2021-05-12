@@ -610,274 +610,6 @@
       </tags>
   </entry>
   <entry>
-    <title>【ADF】03.键级</title>
-    <url>/2020/06/24/%E3%80%90ADF%E3%80%9103.%E9%94%AE%E7%BA%A7/</url>
-    <content><![CDATA[<h1 id="MAYER键级等"><a href="#MAYER键级等" class="headerlink" title="MAYER键级等"></a>MAYER键级等</h1><h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><ul>
-<li><p>优化好的结构，再算single point</p>
-</li>
-<li><p>设置好single piont的相关输入后，再点击ADFinput &gt; Details &gt; Userinput，在窗口中输入： </p>
-<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">bondorder printall</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>默认显示大于0.2的键级，如果需要自定义阈值，例如0.0（所有原子之间的键级无论大小均列出）可以设置为：</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">bondorder</span> printall tol=<span class="number">0</span>.<span class="number">0</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>同时ADFinput &gt; Details &gt; Symmetry，将默认的Auto改为<code>NOSYM</code>。</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">……</span><br><span class="line">bondorder printall</span><br><span class="line">ATOMS</span><br><span class="line">1 C      -5.772012228837       0.492926664171      -0.000000000000    </span><br><span class="line">……</span><br><span class="line">……</span><br><span class="line">……</span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line"></span><br><span class="line">BASIS</span><br><span class="line">type TZP</span><br><span class="line">……</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><ul>
-<li><p>计算完毕后，得到所有原子，两两之间的MAYER、G-J、N-M (1)、N-M (2)、N-M (3) (*)键级关系</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">-----------------------------------------------------------------------------------------------</span><br><span class="line">                          DIST. [A]                   BOND-ORDERS</span><br><span class="line">                                                  (THRESHOLD =  <span class="number">0.000</span> )</span><br><span class="line"> -----------------------------------------------------------------------------------------------</span><br><span class="line">                                      MAYER        G-J    N-M (<span class="number">1</span>)    N-M (<span class="number">2</span>)    N-M (<span class="number">3</span>) (*)</span><br><span class="line"> -----------------------------------------------------------------------------------------------</span><br><span class="line">  C      <span class="number">1</span> - C      <span class="number">2</span>     <span class="number">1.4005</span>     <span class="number">1.2389</span>     <span class="number">1.4344</span>     <span class="number">1.4936</span>     <span class="number">1.4415</span>     <span class="number">1.5643</span></span><br><span class="line">  C      <span class="number">1</span> - C      <span class="number">3</span>     <span class="number">2.4257</span>    <span class="number">-0.0243</span>     <span class="number">0.0085</span>     <span class="number">0.0089</span>    <span class="number">-0.0294</span>     <span class="number">0.0093</span></span><br><span class="line">  C      <span class="number">1</span> - C      <span class="number">4</span>     <span class="number">2.8009</span>     <span class="number">0.0719</span>     <span class="number">0.1189</span>     <span class="number">0.1238</span>     <span class="number">0.0845</span>     <span class="number">0.1297</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>ADF</category>
-      </categories>
-      <tags>
-        <tag>键级</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【AMS】01.输入文件</title>
-    <url>/2021/05/11/%E3%80%90AMS%E3%80%9101.%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/</url>
-    <content><![CDATA[<h1 id="主要结构"><a href="#主要结构" class="headerlink" title="主要结构"></a>主要结构</h1><ul>
-<li><code>System</code>，<code>Task</code>和<code>Engine</code>是必须的，其他比如<code>Properties</code>是可选的</li>
-</ul>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="variable">$AMSBIN</span>/ams -n 8 &lt;&lt; eor 1&gt;<span class="variable">$&#123;0/run/out&#125;</span> 2&gt;<span class="variable">$&#123;0/run/err&#125;</span></span><br><span class="line"></span><br><span class="line">System</span><br><span class="line">	Atoms</span><br><span class="line">		F         0.000000    0.000000    0.760010</span><br><span class="line">		F         0.000000    0.000000   -0.760010</span><br><span class="line">	End</span><br><span class="line">charge 0 </span><br><span class="line">End</span><br><span class="line"></span><br><span class="line">Task GeometryOptimization</span><br><span class="line"></span><br><span class="line">Engine ADF</span><br><span class="line">	TITLE UueFn</span><br><span class="line">	basis</span><br><span class="line">    <span class="built_in">	type </span>TZ2P</span><br><span class="line">    	core None</span><br><span class="line">    	CreateOutput <span class="literal">Yes</span></span><br><span class="line">  	end</span><br><span class="line">  	xc</span><br><span class="line">  		gga PBE </span><br><span class="line">  	end</span><br><span class="line">  	relativity</span><br><span class="line">    	level spin-orbit</span><br><span class="line">    	formalism ZORA</span><br><span class="line">  	end</span><br><span class="line">EndEngine</span><br></pre></td></tr></table></figure>
-<h2 id="System"><a href="#System" class="headerlink" title="System"></a>System</h2><ul>
-<li>单位默认都是 <code>Angstrom</code>，如果需要更改，可以在将<code>header</code>部分更改为<code>[Bohr]</code></li>
-</ul>
-<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">System</span> <span class="string">header</span></span><br><span class="line">   <span class="attr">Atoms</span> <span class="string">header</span></span><br><span class="line">      <span class="attr">...</span></span><br><span class="line">   <span class="attr">End</span></span><br><span class="line">   <span class="attr">Lattice</span> <span class="string">header</span></span><br><span class="line">      <span class="attr">...</span></span><br><span class="line">   <span class="attr">End</span></span><br><span class="line">   <span class="attr">FractionalCoords</span> <span class="string">Yes/No</span></span><br><span class="line">   <span class="attr">AllowCloseAtoms</span> <span class="string">Yes/No</span></span><br><span class="line">   <span class="attr">GeometryFile</span> <span class="string">string</span></span><br><span class="line">   <span class="attr">Symmetrize</span> <span class="string">Yes/No</span></span><br><span class="line">   <span class="attr">LatticeStrain</span> <span class="string">float_list</span></span><br><span class="line">   <span class="attr">SuperCell</span> <span class="string">integer_list</span></span><br><span class="line">   <span class="attr">Charge</span> <span class="string">float</span></span><br><span class="line">   <span class="attr">BondOrders</span></span><br><span class="line">      <span class="attr">...</span></span><br><span class="line">   <span class="attr">End</span></span><br><span class="line">   <span class="attr">...</span></span><br><span class="line"><span class="attr">End</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><strong><code>Atoms</code>：指定原子类型和坐标</strong><ul>
-<li>如果需要给坐标分区，可以在每个原子坐标最后面添加<code>region=name1</code>，<code>region=name2</code>……，一个原子可以在多个区域中，此时命名用<code>,</code>分隔<code>region=name1，name2</code></li>
-<li>可以更改原子的质量成为同位素(in Dalton) ，在每个原子坐标最后面添加<code>mass=number</code>即可</li>
-</ul>
-</li>
-<li><code>Lattice</code>：指定最多三个晶格向量</li>
-<li><code>FractionalCoords</code>：原子块中的原子坐标是否以晶格向量的分数坐标给出，默认为<code>No</code>。</li>
-<li><code>GeometryFile</code>：从.xyz文件中读取几何</li>
-<li><code>Symmetrize</code>：是否使输入结构对称，这也会将结构旋转转换为标准方向。默认为<code>No</code>。</li>
-<li><strong><code>Charge</code>：指定非周期体系的电荷，默认为<code>0.0</code></strong></li>
-<li><code>BondOrders</code>：指定原子和原子之间的键级，一般不需要。</li>
-</ul>
-<p>除了通过<code>System</code>指定系统，还可以用<code>Load System</code>读取<code>.rkf</code>文件中的之前的系统：</p>
-<figure class="highlight delphi"><table><tr><td class="code"><pre><span class="line">LoadSystem header</span><br><span class="line">   <span class="keyword">File</span> <span class="keyword">string</span></span><br><span class="line">   Section <span class="keyword">string</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>Section</code>：默认是<code>Molecule</code></li>
-</ul>
-<h2 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h2><ul>
-<li><p>Task的可选参数有：</p>
-<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">Task [SinglePoint | <span class="type">GeometryOptimization</span> | <span class="type">TransitionStateSearch</span> | <span class="type">IRC</span> | <span class="type">PESScan</span> | <span class="type">NEB</span> | <span class="type">VibrationalAnalysis</span> | <span class="type">MolecularDynamics</span> | <span class="type">GCMC</span>]</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h2><figure class="highlight gams"><table><tr><td class="code"><pre><span class="line">Properties</span><br><span class="line">   BondOrders <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Charges <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   DipoleGradients <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   DipoleMoment <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   ElasticTensor <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Gradients <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Hessian <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Molecules <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   NormalModes <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Other <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   PESPointCharacter <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Phonons <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Polarizability <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Raman <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   SelectedRegionForHessian string</span><br><span class="line">   StressTensor <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   VCD <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   VROA <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">End</span><br></pre></td></tr></table></figure>
-<h1 id="Engine-ADF"><a href="#Engine-ADF" class="headerlink" title="Engine ADF"></a>Engine ADF</h1><h2 id="基组"><a href="#基组" class="headerlink" title="基组"></a>基组</h2><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">Basis</span><br><span class="line">  <span class="built_in"> Type </span>[<span class="built_in">..</span>.]</span><br><span class="line">   Core [None | Small | Large]</span><br><span class="line">   CreateOutput <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">   Path string</span><br><span class="line">   PerAtomType</span><br><span class="line">      Core [None | Small | Large]</span><br><span class="line">      File stringS</span><br><span class="line">      Symbol string</span><br><span class="line">     <span class="built_in"> Type </span>[<span class="built_in">..</span>.]</span><br><span class="line">   End</span><br><span class="line">   PerRegion</span><br><span class="line">      Core [None | Small | Large]</span><br><span class="line">      Region string</span><br><span class="line">     <span class="built_in"> Type </span>[<span class="built_in">..</span>.]</span><br><span class="line">   End</span><br><span class="line">   FitType [<span class="built_in">..</span>.]</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>Type</code>：默认<code>DZ</code>，还有一系列：[SZ, DZ, DZP, TZP, TZ2P, QZ4P, TZ2P-J, QZ4P-J, AUG/ASZ, AUG/ADZ, AUG/ADZP, AUG/ATZP, AUG/ATZ2P, ET/ET-pVQZ, ET/ET-QZ3P, ET/ET-QZ3P-1DIFFUSE, ET/ET-QZ3P-2DIFFUSE, ET/ET-QZ3P-3DIFFUSE, POLTDDFT/DZ, POLTDDFT/DZP, POLTDDFT/TZP, POLTDDFT/TZ2P]</li>
-<li><code>Core</code>：默认<code>Large</code>，还可以选择<code>None</code>, <code>Small</code>, <code>Large</code></li>
-<li><code>CreateOutput</code>：默认为<code>No</code>。如果为<code>true</code>，原子创建运行的输出将打印到标准输出。如果为<code>false</code>，它将被保存到CreateAtoms.out文件中。</li>
-<li><code>Path</code>：默认为<code>$AMSRESOURCES/ADF</code>，ADF只在该文件夹中寻找合适的基组</li>
-<li><p><code>PerAtomType</code>：为一类原子指定基组</p>
-<ul>
-<li><code>File</code>：指定基组的位置，可以是相对于<code>$AMSRESOURCES/ADF</code>的相对位置，也可以是绝对位置</li>
-<li><code>Symbol</code>：定义基组的符号</li>
-</ul>
-</li>
-<li><p><code>PerRegion</code>：为一个区域的原子指定基组</p>
-<ul>
-<li><code>Region</code>：指定基组的区域，可以用逻辑运算符，比如<code>R1+R2</code></li>
-</ul>
-</li>
-</ul>
-<h2 id="泛函"><a href="#泛函" class="headerlink" title="泛函"></a>泛函</h2><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">XC</span><br><span class="line">  &#123;LDA LDA &#123;Stoll&#125;&#125;</span><br><span class="line">  &#123;GGA GGA&#125;</span><br><span class="line">  &#123;MetaGGA metagga&#125;</span><br><span class="line">  &#123;Model MODELPOT [IP]&#125;</span><br><span class="line">  &#123;HartreeFock&#125;</span><br><span class="line">  &#123;OEP fitmethod &#123;approximation&#125;&#125;</span><br><span class="line">  &#123;HYBRID hybrid &#123;<span class="attribute">HF</span>=HFpart&#125;&#125;</span><br><span class="line">  &#123;MetaHYBRID metahybrid&#125;</span><br><span class="line">  &#123;DOUBLEHYBRID doublehybrid&#125;</span><br><span class="line">  &#123;RPA&#125;</span><br><span class="line">  &#123;XCFUN&#125;</span><br><span class="line">  &#123;RANGESEP &#123;<span class="attribute">GAMMA</span>=X&#125; &#123;<span class="attribute">ALPHA</span>=a&#125; &#123;<span class="attribute">BETA</span>=b&#125;&#125;</span><br><span class="line">  (LibXC functional&#125;</span><br><span class="line">  &#123;DISPERSION [s6scaling] [<span class="attribute">RSCALE</span>=r0scaling] [Grimme3] [BJDAMP] [<span class="attribute">PAR1</span>=par1]  [<span class="attribute">PAR2</span>=par2]  [<span class="attribute">PAR3</span>=par3]  [<span class="attribute">PAR4</span>=par4] &#125;</span><br><span class="line">  &#123;Dispersion Grimme4 &#123;<span class="attribute">s6</span>=...&#125; &#123;<span class="attribute">s8</span>=...&#125; &#123;<span class="attribute">a1</span>=...&#125; &#123;<span class="attribute">a2</span>=...&#125;&#125;</span><br><span class="line">  &#123;DISPERSION dDsC&#125;</span><br><span class="line">  &#123;DISPERSION UFF&#125;</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-<h2 id="相对论"><a href="#相对论" class="headerlink" title="相对论"></a>相对论</h2><p>2020版本开始默认使用标量相对论效应：</p>
-<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">Relativity</span><br><span class="line">   Formalism [Pauli | <span class="type">ZORA</span> | <span class="type">X2C</span> | <span class="type">RA</span>-X2C]</span><br><span class="line">   Level [None | <span class="type">Scalar</span> | <span class="type">Spin</span>-Orbit]</span><br><span class="line">   Potential [MAPA | <span class="type">SAPA</span>]</span><br><span class="line">   SpinOrbitMagnetization [NonCollinear | <span class="type">Collinear</span> | <span class="type">CollinearX</span> | <span class="type">CollinearY</span> | <span class="type">CollinearZ</span>]</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>Formalism</code>：如果<code>level</code>里是<code>None</code>，则不需要考虑所选择的形式。<ul>
-<li><code>Pauli</code>：泡利哈密顿函数</li>
-<li><code>ZORA</code>：零阶正则近似哈密顿量。默认。</li>
-<li><code>X2C</code>：四分量狄拉克方程到二分量狄拉克方程的精确变换，是Dyall修正的Dirac方程。</li>
-<li><code>RA-X2C</code>：四分量狄拉克方程到二分量狄拉克方程的精确变换，是修正狄拉克方程的正规方法。</li>
-</ul>
-</li>
-<li><code>Level</code>：<ul>
-<li><code>None</code>：非相对论。哈密顿量也就是Kohn-Sham方程的形式。</li>
-<li><code>Scalar</code>：标量相对论，成本较低。默认。</li>
-<li><code>Spin-Orbit</code>：旋轨耦合，最好的理论水平，比普通计算昂贵（4-8倍）</li>
-</ul>
-</li>
-<li><code>Potential</code>：<ul>
-<li><code>MAPA</code>：默认。the Minumium of neutral Atomical potential Approximation 中性原子势近似值的最小值。MAPA优于SAPA的优点是可以降低ZORA的规格依赖性。 除了电子密度非常接近重核外，几乎所有特性的ZORA规范依赖性都很小。 非常接近重核的电子密度可用于解释Mossbauer光谱中的异构体位移。</li>
-<li><code>SAPA</code>：the Sum of neutral Atomical potential Approximation 中性原子势近似值之和。</li>
-</ul>
-</li>
-<li><code>SpinOrbitMagnetization</code>：只与自旋轨道耦合相关，而且在<code>unrestricted</code>下使用。在不受限制的计算中，大多数XC泛函都有自旋极化作为一种成分。通常，自旋量子化轴的方向是任意的，可以方便地选择为z轴。然而，在自旋轨道计算中，方向很重要，将磁化矢量的z分量放入XC函数中是任意的。<ul>
-<li><code>NonCollinear</code>：可以将磁化矢量的大小插入XC函数中。 这称为非共线方法。</li>
-<li><code>CollinearX</code>，<code>CollinearY</code>，<code>CollinearZ</code>：使用x，y或z分量作为XC函数的自旋极化。默认为z。</li>
-<li>：<code>Collinear</code>：同<code>CollinearZ</code></li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p>2019版及之前的输入格式为：</p>
-<figure class="highlight dust"><table><tr><td class="code"><pre><span class="line"><span class="xml">RELATIVISTIC </span><span class="template-variable">&#123;level&#125;</span><span class="xml"> </span><span class="template-variable">&#123;formalism&#125;</span><span class="xml"> </span><span class="template-variable">&#123;potential&#125;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><blockquote>
-<p>Scalar级别为：<code>RELATIVISTIC Scalar ZORA</code></p>
-</blockquote>
-</li>
-<li><p>SpinOrbit级别为：<code>RELATIVISTIC spinorbit ZORA</code></p>
-<ul>
-<li>注意此时：unrestricted不再适用，解决办法删掉unrestricted或加上collinear/nocollinear，以及nosym关键词</li>
-<li>并且不能同时计算解析freq</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>AMS</category>
-      </categories>
-      <tags>
-        <tag>输入</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【AMS】02.基础计算</title>
-    <url>/2019/09/23/%E3%80%90AMS%E3%80%9102.%E5%9F%BA%E7%A1%80%E8%AE%A1%E7%AE%97/</url>
-    <content><![CDATA[<h1 id="单点计算"><a href="#单点计算" class="headerlink" title="单点计算"></a>单点计算</h1><figure class="highlight ada"><table><tr><td class="code"><pre><span class="line"><span class="keyword">Task</span> SinglePoint</span><br></pre></td></tr></table></figure>
-<h1 id="SCF选项"><a href="#SCF选项" class="headerlink" title="SCF选项"></a>SCF选项</h1><figure class="highlight puppet"><table><tr><td class="code"><pre><span class="line">SCF</span><br><span class="line"> Iterations Niter</span><br><span class="line"> Converge <span class="keyword">SCFcnv</span> &#123; sconv2 &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">AccelerationMethod</span> &#123; ADIIS | LISTi | LISTb | fDIIS | LISTf | MESA | SDIIS &#125;</span><br><span class="line"> <span class="keyword">MESA</span> [NoFDIIS] [NoLISTb] [NoLISTf] [NoLISTi] [NoSDIIS] [NoADIIS]</span><br><span class="line"> ADIIS</span><br><span class="line">   &#123;THRESH1 a1&#125;</span><br><span class="line">   &#123;THRESH2 a2&#125;</span><br><span class="line"> End</span><br><span class="line"> NoADIIS</span><br><span class="line"> DIIS</span><br><span class="line">   &#123;N n&#125;</span><br><span class="line">   &#123;OK ok&#125;</span><br><span class="line">   &#123;cyc cyc&#125;</span><br><span class="line"> End</span><br><span class="line"> Mixing mix</span><br><span class="line"> Mixing1 mix1</span><br><span class="line"></span><br><span class="line"> OldSCF</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
-<h2 id="Iterations"><a href="#Iterations" class="headerlink" title="Iterations"></a>Iterations</h2><p><code>Iterations</code>SCF迭代的最大次数，<code>Niter</code>默认是<code>300</code></p>
-<h2 id="Converge"><a href="#Converge" class="headerlink" title="Converge"></a>Converge</h2><p><code>Converge</code> ：</p>
-<ul>
-<li><code>SCFcnv</code>表示停止迭代的收敛限，默认是<code>1e-6</code>。</li>
-<li><code>sconv2</code>表示SCF过程难以收敛时起作用的第二个标准，默认是<code>1e-3</code>，如果达到了，仅发出警告，但是继续计算。仍无法达到的时候SCF不收敛，只能用<code>ALLOW</code>来继续</li>
-</ul>
-<h2 id="AccelerationMethod"><a href="#AccelerationMethod" class="headerlink" title="AccelerationMethod"></a>AccelerationMethod</h2><p><code>AccelerationMethod</code>调用的SCF加速方法，默认情况下为<code>ADIIS</code>，还可以用<code>LISTi</code> | <code>LISTb</code> | <code>fDIIS</code> | <code>LISTf</code> | <code>MESA</code> | <code>SDIIS</code></p>
-<h3 id="MESA"><a href="#MESA" class="headerlink" title="MESA"></a>MESA</h3><p><code>AccelerationMethod MESA</code>是ADIIS, fDIIS, LISTb, LISTf, LISTi和 SDIIS方法的组合<br><code>MESA NoSDIIS</code>代表从其中删掉某一种方法，也可以直接使用该关键词调用MESA，优先级大于<code>AccelerationMethod</code>指定的方法。</p>
-<h3 id="ADIIS"><a href="#ADIIS" class="headerlink" title="ADIIS"></a>ADIIS</h3><p>使用ADIIS + SDIIS方法，根据 [F,P] 交换子矩阵中的最大元素<code>ErrMax</code>来确定具体方法：</p>
-<ul>
-<li>当ErrMax≥<code>a1</code>，只使用A-DIIS系数</li>
-<li>当ErrMax≤ <code>a2</code>，只使用SDIIS系数</li>
-<li>当<code>a2</code>≤ ErrMax≤ <code>a1</code>，根据ErrMax的值按一定的权重来计算<br><code>a1</code>和<code>a2</code>的默认值是<code>0.01</code>和<code>0.0001</code>，收敛比较困难的时候，可以降低阈值，只使用A-DIIS系数</li>
-</ul>
-<h3 id="SDIIS"><a href="#SDIIS" class="headerlink" title="SDIIS"></a>SDIIS</h3><p><code>AccelerationMethod SDIIS</code>与在没有指定<code>oldscf</code>的情况下使用<code>NoADIIS</code>意思相同，采用的是阻尼+SDIIS方法。从简单阻尼（Mixing）开始，持续到<code>ErrMax</code>降低到<code>DIIS OK</code>参数以下，但是不超过<code>DIIS Cyc</code>次迭代。之后使用纯的SDIIS方法。</p>
-<blockquote>
-<p>在指定<code>oldscf</code>的情况下使用<code>NoADIIS</code>会禁用在SCF收敛困难的时候自动切换到ADIIS + SDIIS方法</p>
-</blockquote>
-<ul>
-<li><p>指定<code>NoADIIS</code>时才可以设置 <code>DIIS</code>模块：</p>
-<ul>
-<li><p><code>N</code>用于加速SCF的扩展向量的数量，默认为<code>10</code>，小于2后会禁用DIIS。此数字不仅适用于Pulay DIIS方案，还适用于其他类似DIIS的方法，例如A-DIIS和LIST方法。</p>
-<blockquote>
-<p>LIST家族的方法对使用的扩展向量的数量非常敏感，接近收敛时，LIST中的向量数量会增加，但始终受<code>DIIS N</code>的限制，当难以收敛时，可以将<code>DIIS N</code>设置为大于10的值，比如12~20。</p>
-</blockquote>
-</li>
-<li><code>OK</code>禁用A-DIIS时，SDIIS起始条件。默认为<code>0.5</code> a.u.。</li>
-<li><code>Cyc</code>禁用A-DIIS时，无论上面的<code>DIIS OK</code>值如何，SDIIS都会在此迭代下启动，默认值为<code>5</code></li>
-</ul>
-</li>
-<li><code>Mixing</code>中，指将下一个Fock矩阵确定为<script type="math/tex">F = mix F_{n} + (1-mix) F_{n-1}</script>，<code>mix</code>默认为<code>0.2</code></li>
-<li><code>Mixing1</code>中指第一个SCF循环的混合参数值不同，默认为<code>0.2</code></li>
-</ul>
-<h2 id="oldSCF"><a href="#oldSCF" class="headerlink" title="oldSCF"></a>oldSCF</h2><p>在使用<code>Occupations Steep</code>、<code>Lshift</code>，<code>ARH</code>，<code>EDIIS</code>，<code>RESTOCC</code>时，会自动启用<code>oldSCF</code></p>
-<h3 id="Lshift"><a href="#Lshift" class="headerlink" title="Lshift"></a>Lshift</h3><p>能级移动方法，在前一次迭代的轨道表示中，Fock矩阵的对角元素提高虚轨道的<code>vshift</code>hartree。旋轨耦合不支持这种方法。</p>
-<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">Lshift</span> <span class="string">vshift</span></span><br><span class="line"><span class="attr">Lshift_err</span> <span class="string">Shift_err</span></span><br><span class="line"><span class="attr">Lshift_cyc</span> <span class="string">Shift_cyc</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>Lshift_err</code>指定一旦SCF error降至阈值以下，程序将关闭能级移动，<code>Shift_err</code>默认值为<code>0</code>。</li>
-<li><code>Lshift_cyc</code>指定在第几个SCF 迭代次数的时候再启动能级移动， <code>Shift_cyc</code>默认为<code>1</code>。</li>
-</ul>
-<h3 id="ARH"><a href="#ARH" class="headerlink" title="ARH"></a>ARH</h3><figure class="highlight dust"><table><tr><td class="code"><pre><span class="line"><span class="xml">SCF</span></span><br><span class="line"><span class="xml">  ARH</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;CONV conv&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;ITER iter&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;NSAVED nsaved&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;START start&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;FINAL&#125;</span><span class="xml"> ...</span></span><br><span class="line"><span class="xml">  End</span></span><br><span class="line"><span class="xml">  ...</span></span><br><span class="line"><span class="xml">End</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>CONV</code>：当RMS梯度及其最大分量均低于<code>conv</code>，ARH收敛，<code>conv</code>默认是1e-4</li>
-<li><code>ITER</code>：最大ARH迭代次数，<code>iter</code>默认为500</li>
-<li><code>FINAL</code>：确定ARH完成后是否继续SCF。如果设置了此选项，将执行一次Fock矩阵对角化以获得轨道，并且将停止SCF过程。默认选项为<code>OFF</code>。</li>
-<li><code>START</code>：开始调用ARH的SCF迭代次数，<code>start</code>默认为2。使用较大的值可以为ARH提供更好的初猜</li>
-<li><code>NSAVED</code>：保存密度和Fock矩阵的数量。 <code>nsaved</code>默认为8。在非常接近费米能级的轨道数很大的收敛困难时，应使用较大的<code>nsaved</code>值。</li>
-<li>默认的最小化方法是“Untransformed Pre-conditioned Conjugate Gradient”，可以使用以下两个关键词更改：<ul>
-<li><code>NOPRECOND</code>：禁用Untransformed Pre-conditioned CG最小化，不能在第二周期后的元素里使用</li>
-<li><code>TRANSPCG</code>：启用Transformed Pre-conditioned CG 方法，SCF可能会更好的收敛。</li>
-</ul>
-</li>
-<li>在每一步SCF中，先执行常规CG最小化，跟踪总步长，如果在某个微迭代中步长超过了信任半径，则过程将在缩小的空间中切换到信任半径优化，在能级移动参数mu收敛后立即中止。在CG最小化期间生成的所有试验矢量的缩小空间中，将最终步骤计算为牛顿步骤。可以通过以下关键词修改参数：<ul>
-<li><code>NOSWITCHING</code>：关闭从普通CG到缩小的空间中的信任半径最小化的切换。在某些情况下，使用此选项有助于减少SCF循环的总数。</li>
-<li><code>SHIFTED</code>：设置此选项将在第一次微迭代中打开信任半径优化。</li>
-<li><code>CGITER=cgiter</code>：设置微迭代的最大数量。</li>
-<li>确定置信半径：<ul>
-<li><code>TRUSTR=trustr</code>：信任半径的初始值。默认为<code>0.5</code></li>
-<li><code>MAXTRUSTR=maxtrustr</code>：最大信任半径值。默认为<code>0.5</code>，并且不会改变。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>缺点：<ul>
-<li>该方法仅适用于NOSYM计算</li>
-<li>在每一步都要计算总能量，计算非常昂贵，而且使用总能量，需要更高的积分精度才能获得稳定的SCF收敛，该方法可能不适用于所有情况，??使用<code>ADDDIFFUSEFIT</code>关键字或更高的<code>ZlmFit</code>质量设置来提高总能量的准确性，从而提高收敛性。??</li>
-</ul>
-</li>
-</ul>
-<h2 id="SCF不收敛"><a href="#SCF不收敛" class="headerlink" title="SCF不收敛"></a>SCF不收敛</h2><ol>
-<li>更换SCF加速收敛的方法</li>
-<li>使用ARH方法</li>
-<li>修改DIIS算法的参数<ul>
-<li><code>Mixing</code>高于默认值<code>0.2</code>会有更高的加速度，更低会更稳定的迭代</li>
-<li><code>N</code>默认为<code>10</code>，越大用于加速SCF的扩展向量的数量越多，SCF迭代更稳定，最多到25</li>
-<li><code>Cyc</code>是SDIIS启动的初始SCF迭代步数，默认值为<code>5</code>，更高计算越稳定，比如使用如下参数：<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">SCF</span></span><br><span class="line">    <span class="attribute">DIIS</span></span><br><span class="line">      <span class="attribute">N</span> <span class="number">25</span></span><br><span class="line">      <span class="attribute">Cyc</span> <span class="number">30</span></span><br><span class="line">    <span class="attribute">End</span></span><br><span class="line">    <span class="attribute">Mixing</span> <span class="number">0</span>.<span class="number">015</span></span><br><span class="line">    <span class="attribute">Mixing1</span> <span class="number">0</span>.<span class="number">09</span></span><br><span class="line">  <span class="attribute">End</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li>HOMO-LUMO较为接近的情况（0.02Hatree以内），可能造成HOMO-LUMO的震荡。可以使用<code>Lshift vshift</code>方法，比如0.01，不能太大，不适于激发态的计算、<strong>解析频率</strong>、旋轨耦合的计算。</li>
-<li>使用Electron smearing设定在允许的能量范围内分数占据。</li>
-<li>其他：<a href="https://www.fermitech.com.cn/wiki/doku.php?id=adf:scfnonconvergence">费米维基</a>的2、3、5。</li>
-</ol>
-<h1 id="几何优化"><a href="#几何优化" class="headerlink" title="几何优化"></a>几何优化</h1><ul>
-<li>基于准牛顿法优化</li>
-</ul>
-<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">Task GeometryOptimization</span><br><span class="line"></span><br><span class="line">GeometryOptimization</span><br><span class="line">   Convergence</span><br><span class="line">      Energy <span class="type">float</span></span><br><span class="line">      Gradients <span class="type">float</span></span><br><span class="line">      Step <span class="type">float</span></span><br><span class="line">      StressEnergyPerAtom <span class="type">float</span></span><br><span class="line">   <span class="keyword">End</span></span><br><span class="line">   MaxIterations <span class="type">integer</span></span><br><span class="line">   CalcPropertiesOnlyIfConverged Yes/<span class="keyword">No</span></span><br><span class="line">   OptimizeLattice Yes/<span class="keyword">No</span></span><br><span class="line">   KeepIntermediateResults Yes/<span class="keyword">No</span></span><br><span class="line">   PretendConverged Yes/<span class="keyword">No</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>20版以前的为：</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">GEOMETRY</span><br><span class="line">	Converge &#123;<span class="attribute">E</span>=TolE&#125; &#123;<span class="attribute">Grad</span>=TolG&#125; &#123;<span class="attribute">Rad</span>=TolR&#125; &#123;<span class="attribute">Angle</span>=TolA&#125;</span><br><span class="line">	Iterations Niter</span><br><span class="line">	Inithess inithessian.file</span><br><span class="line">	Hessupd HessUpdate</span><br><span class="line">	Optim &#123;Delocal / Cartesian / Internal&#125; &#123;All / Selected&#125;</span><br><span class="line">	GEigenvalueThreshold threshold</span><br><span class="line">	Branch &#123;New / Old&#125;</span><br><span class="line">	<span class="keyword">Step</span> &#123;<span class="attribute">Rad</span>=MaxRadStep&#125; &#123;<span class="attribute">Angle</span>=MaxAngleStep&#125; &#123;<span class="attribute">TrustRadius</span>=MaxRadius&#125;</span><br><span class="line">	DIIS &#123;<span class="attribute">N</span>=NVect&#125; &#123;<span class="attribute">CYC</span>=Ncyc&#125;</span><br><span class="line">	Externprogram externprog.exe <span class="attribute">coord</span>=coords.inp <span class="attribute">energy</span>=energy.out <span class="attribute">grad</span>=grads.out</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
-</blockquote>
-<h2 id="Convergence"><a href="#Convergence" class="headerlink" title="Convergence"></a><code>Convergence</code></h2><p>收敛部分的设置：</p>
-<ul>
-<li><code>Energy</code>：能量变化，默认是<code>1e-05</code>Hartree。</li>
-<li><code>Gradients</code>：核梯度的阈值，默认是<code>0.001</code>Hartree/Angstrom</li>
-<li><code>Step</code>：收敛几何允许的最大笛卡尔步长，默认是<code>0.01</code>Angstrom</li>
-<li><code>StressEnergyPerAtom</code>：优化晶格向量时使用的阈值，默认是<code>0.0005</code>Hartree</li>
-</ul>
-<p>收敛判定（如果最大梯度和均方根梯度比收敛准则小10倍，则忽略最后两条）</p>
-<ul>
-<li>当前几何结构和上一个几何步骤的键能之间的差异小于<code>Energy</code></li>
-<li>最大笛卡尔核梯度小于<code>Gradients</code></li>
-<li>笛卡尔核梯度的均方根(RMS)小于2/3<code>Gradients</code></li>
-<li>最大笛卡尔步长小于<code>Step</code></li>
-<li>笛卡尔阶跃的均方根(RMS)小于2/3<code>Step</code></li>
-</ul>
-<p>优化过程会不断地计算不同的分子结构，直到找到最低能量的结构为止。收敛标准得到5个T表示五个收敛标准都达到。其中第二个标准最重要，一般也是最后一个达到的，第二个标准是势能面的梯度最大值。这个标准非常严格，对于大量过渡金属参与的化学反应，过渡态搜索，有可能达不到这样严格的标准，一般到0.003左右也可以认为收敛了，可以将对应的分子结构拿来使用。</p>
-<blockquote>
-<p>2020版以前为总能量、梯度，笛卡尔步长，键角，默认为：</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">GEOMETRY</span></span><br><span class="line"><span class="attribute">Converge</span> <span class="number">1</span>e-<span class="number">3</span> <span class="number">1</span>e-<span class="number">3</span> <span class="number">1</span>e-<span class="number">2</span> <span class="number">0</span>.<span class="number">5</span></span><br><span class="line"><span class="attribute">end</span></span><br></pre></td></tr></table></figure>
-</blockquote>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
-<li><code>MaxIterations</code>：允许收敛到所需结构的最大几何迭代次数。默认是max(30，<script type="math/tex">2 \times N_{free}</script>)，<script type="math/tex">N_{free}</script>是指自由度的数目，接近于3*原子数。</li>
-<li><code>CalcPropertiesOnlyIfConverged</code>：默认为<code>Yes</code>，当几何优化（过渡态搜索）收敛时，才计算相应的性质，比如频率，声子等，若为<code>False</code>，不收敛也可以计算。</li>
-<li><code>PretendConverged</code>：默认为<code>No</code>，当几何优化不收敛会报错。如果改成<code>True</code>，只会出现一个警告，并且表明几何优化是收敛的，在一些脚本编写中有用。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>AMS</category>
-      </categories>
-      <tags>
-        <tag>SCF</tag>
-        <tag>单点</tag>
-        <tag>几何优化</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【CP2K】01.基础</title>
     <url>/2020/11/20/%E3%80%90CP2K%E3%80%9101.%E5%9F%BA%E7%A1%80/</url>
     <content><![CDATA[<h1 id="安装vim插件规范-inp文件"><a href="#安装vim插件规范-inp文件" class="headerlink" title="安装vim插件规范.inp文件"></a>安装vim插件规范.inp文件</h1><ol>
@@ -5927,6 +5659,333 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
       <tags>
         <tag>hexo</tag>
         <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【AMS】01.基本输入结构</title>
+    <url>/2021/05/11/%E3%80%90AMS%E3%80%9101.%E5%9F%BA%E6%9C%AC%E8%BE%93%E5%85%A5%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<h1 id="主要结构"><a href="#主要结构" class="headerlink" title="主要结构"></a>主要结构</h1><ul>
+<li><code>System</code>，<code>Task</code>和<code>Engine</code>是必须的，其他比如<code>Properties</code>是可选的</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="variable">$AMSBIN</span>/ams -n 8 &lt;&lt; eor 1&gt;<span class="variable">$&#123;0/run/out&#125;</span> 2&gt;<span class="variable">$&#123;0/run/err&#125;</span></span><br><span class="line"></span><br><span class="line">System</span><br><span class="line">	Atoms</span><br><span class="line">		F         0.000000    0.000000    0.760010</span><br><span class="line">		F         0.000000    0.000000   -0.760010</span><br><span class="line">	End</span><br><span class="line">charge 0 </span><br><span class="line">End</span><br><span class="line"></span><br><span class="line">Task GeometryOptimization</span><br><span class="line"></span><br><span class="line">Engine ADF</span><br><span class="line">	TITLE UueFn</span><br><span class="line">	basis</span><br><span class="line">    <span class="built_in">	type </span>TZ2P</span><br><span class="line">    	core None</span><br><span class="line">    	CreateOutput <span class="literal">Yes</span></span><br><span class="line">  	end</span><br><span class="line">  	xc</span><br><span class="line">  		gga PBE </span><br><span class="line">  	end</span><br><span class="line">  	relativity</span><br><span class="line">    	level spin-orbit</span><br><span class="line">    	formalism ZORA</span><br><span class="line">  	end</span><br><span class="line">EndEngine</span><br></pre></td></tr></table></figure>
+<h2 id="System"><a href="#System" class="headerlink" title="System"></a>System</h2><ul>
+<li>单位默认都是 <code>Angstrom</code>，如果需要更改，可以在将<code>header</code>部分更改为<code>[Bohr]</code></li>
+</ul>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">System</span> <span class="string">header</span></span><br><span class="line">   <span class="attr">Atoms</span> <span class="string">header</span></span><br><span class="line">      <span class="attr">...</span></span><br><span class="line">   <span class="attr">End</span></span><br><span class="line">   <span class="attr">Lattice</span> <span class="string">header</span></span><br><span class="line">      <span class="attr">...</span></span><br><span class="line">   <span class="attr">End</span></span><br><span class="line">   <span class="attr">FractionalCoords</span> <span class="string">Yes/No</span></span><br><span class="line">   <span class="attr">AllowCloseAtoms</span> <span class="string">Yes/No</span></span><br><span class="line">   <span class="attr">GeometryFile</span> <span class="string">string</span></span><br><span class="line">   <span class="attr">Symmetrize</span> <span class="string">Yes/No</span></span><br><span class="line">   <span class="attr">LatticeStrain</span> <span class="string">float_list</span></span><br><span class="line">   <span class="attr">SuperCell</span> <span class="string">integer_list</span></span><br><span class="line">   <span class="attr">Charge</span> <span class="string">float</span></span><br><span class="line">   <span class="attr">BondOrders</span></span><br><span class="line">      <span class="attr">...</span></span><br><span class="line">   <span class="attr">End</span></span><br><span class="line">   <span class="attr">...</span></span><br><span class="line"><span class="attr">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong><code>Atoms</code>：指定原子类型和坐标</strong><ul>
+<li>如果需要给坐标分区，可以在每个原子坐标最后面添加<code>region=name1</code>，<code>region=name2</code>……，一个原子可以在多个区域中，此时命名用<code>,</code>分隔<code>region=name1，name2</code></li>
+<li>可以更改原子的质量成为同位素(in Dalton) ，在每个原子坐标最后面添加<code>mass=number</code>即可</li>
+</ul>
+</li>
+<li><code>Lattice</code>：指定最多三个晶格向量</li>
+<li><code>FractionalCoords</code>：原子块中的原子坐标是否以晶格向量的分数坐标给出，默认为<code>No</code>。</li>
+<li><code>GeometryFile</code>：从.xyz文件中读取几何</li>
+<li><code>Symmetrize</code>：是否使输入结构对称，这也会将结构旋转转换为标准方向。默认为<code>No</code>。</li>
+<li><strong><code>Charge</code>：指定非周期体系的电荷，默认为<code>0.0</code></strong></li>
+<li><code>BondOrders</code>：指定原子和原子之间的键级，一般不需要。</li>
+</ul>
+<p>除了通过<code>System</code>指定系统，还可以用<code>Load System</code>读取<code>.rkf</code>文件中的之前的系统：</p>
+<figure class="highlight delphi"><table><tr><td class="code"><pre><span class="line">LoadSystem header</span><br><span class="line">   <span class="keyword">File</span> <span class="keyword">string</span></span><br><span class="line">   Section <span class="keyword">string</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Section</code>：默认是<code>Molecule</code></li>
+</ul>
+<h2 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h2><ul>
+<li><p>Task的可选参数有：</p>
+<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">Task [SinglePoint | <span class="type">GeometryOptimization</span> | <span class="type">TransitionStateSearch</span> | <span class="type">IRC</span> | <span class="type">PESScan</span> | <span class="type">NEB</span> | <span class="type">VibrationalAnalysis</span> | <span class="type">MolecularDynamics</span> | <span class="type">GCMC</span>]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h2><figure class="highlight gams"><table><tr><td class="code"><pre><span class="line">Properties</span><br><span class="line">   BondOrders <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Charges <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   DipoleGradients <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   DipoleMoment <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   ElasticTensor <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Gradients <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Hessian <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Molecules <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   NormalModes <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Other <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   PESPointCharacter <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Phonons <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Polarizability <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Raman <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   SelectedRegionForHessian string</span><br><span class="line">   StressTensor <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   VCD <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   VROA <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<h1 id="Engine-ADF"><a href="#Engine-ADF" class="headerlink" title="Engine ADF"></a>Engine ADF</h1><h2 id="基组"><a href="#基组" class="headerlink" title="基组"></a>基组</h2><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">Basis</span><br><span class="line">  <span class="built_in"> Type </span>[<span class="built_in">..</span>.]</span><br><span class="line">   Core [None | Small | Large]</span><br><span class="line">   CreateOutput <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">   Path string</span><br><span class="line">   PerAtomType</span><br><span class="line">      Core [None | Small | Large]</span><br><span class="line">      File stringS</span><br><span class="line">      Symbol string</span><br><span class="line">     <span class="built_in"> Type </span>[<span class="built_in">..</span>.]</span><br><span class="line">   End</span><br><span class="line">   PerRegion</span><br><span class="line">      Core [None | Small | Large]</span><br><span class="line">      Region string</span><br><span class="line">     <span class="built_in"> Type </span>[<span class="built_in">..</span>.]</span><br><span class="line">   End</span><br><span class="line">   FitType [<span class="built_in">..</span>.]</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Type</code>：默认<code>DZ</code>，还有一系列：[SZ, DZ, DZP, TZP, TZ2P, QZ4P, TZ2P-J, QZ4P-J, AUG/ASZ, AUG/ADZ, AUG/ADZP, AUG/ATZP, AUG/ATZ2P, ET/ET-pVQZ, ET/ET-QZ3P, ET/ET-QZ3P-1DIFFUSE, ET/ET-QZ3P-2DIFFUSE, ET/ET-QZ3P-3DIFFUSE, POLTDDFT/DZ, POLTDDFT/DZP, POLTDDFT/TZP, POLTDDFT/TZ2P]</li>
+<li><code>Core</code>：默认<code>Large</code>，还可以选择<code>None</code>, <code>Small</code>, <code>Large</code></li>
+<li><code>CreateOutput</code>：默认为<code>No</code>。如果为<code>true</code>，原子创建运行的输出将打印到标准输出。如果为<code>false</code>，它将被保存到CreateAtoms.out文件中。</li>
+<li><code>Path</code>：默认为<code>$AMSRESOURCES/ADF</code>，ADF只在该文件夹中寻找合适的基组</li>
+<li><p><code>PerAtomType</code>：为一类原子指定基组</p>
+<ul>
+<li><code>File</code>：指定基组的位置，可以是相对于<code>$AMSRESOURCES/ADF</code>的相对位置，也可以是绝对位置</li>
+<li><code>Symbol</code>：定义基组的符号</li>
+</ul>
+</li>
+<li><p><code>PerRegion</code>：为一个区域的原子指定基组</p>
+<ul>
+<li><code>Region</code>：指定基组的区域，可以用逻辑运算符，比如<code>R1+R2</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="泛函"><a href="#泛函" class="headerlink" title="泛函"></a>泛函</h2><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">XC</span><br><span class="line">  &#123;LDA LDA &#123;Stoll&#125;&#125;</span><br><span class="line">  &#123;GGA GGA&#125;</span><br><span class="line">  &#123;MetaGGA metagga&#125;</span><br><span class="line">  &#123;Model MODELPOT [IP]&#125;</span><br><span class="line">  &#123;HartreeFock&#125;</span><br><span class="line">  &#123;OEP fitmethod &#123;approximation&#125;&#125;</span><br><span class="line">  &#123;HYBRID hybrid &#123;<span class="attribute">HF</span>=HFpart&#125;&#125;</span><br><span class="line">  &#123;MetaHYBRID metahybrid&#125;</span><br><span class="line">  &#123;DOUBLEHYBRID doublehybrid&#125;</span><br><span class="line">  &#123;RPA&#125;</span><br><span class="line">  &#123;XCFUN&#125;</span><br><span class="line">  &#123;RANGESEP &#123;<span class="attribute">GAMMA</span>=X&#125; &#123;<span class="attribute">ALPHA</span>=a&#125; &#123;<span class="attribute">BETA</span>=b&#125;&#125;</span><br><span class="line">  (LibXC functional&#125;</span><br><span class="line">  &#123;DISPERSION [s6scaling] [<span class="attribute">RSCALE</span>=r0scaling] [Grimme3] [BJDAMP] [<span class="attribute">PAR1</span>=par1]  [<span class="attribute">PAR2</span>=par2]  [<span class="attribute">PAR3</span>=par3]  [<span class="attribute">PAR4</span>=par4] &#125;</span><br><span class="line">  &#123;Dispersion Grimme4 &#123;<span class="attribute">s6</span>=...&#125; &#123;<span class="attribute">s8</span>=...&#125; &#123;<span class="attribute">a1</span>=...&#125; &#123;<span class="attribute">a2</span>=...&#125;&#125;</span><br><span class="line">  &#123;DISPERSION dDsC&#125;</span><br><span class="line">  &#123;DISPERSION UFF&#125;</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h2 id="相对论"><a href="#相对论" class="headerlink" title="相对论"></a>相对论</h2><p>2020版本开始默认使用标量相对论效应：</p>
+<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">Relativity</span><br><span class="line">   Formalism [Pauli | <span class="type">ZORA</span> | <span class="type">X2C</span> | <span class="type">RA</span>-X2C]</span><br><span class="line">   Level [None | <span class="type">Scalar</span> | <span class="type">Spin</span>-Orbit]</span><br><span class="line">   Potential [MAPA | <span class="type">SAPA</span>]</span><br><span class="line">   SpinOrbitMagnetization [NonCollinear | <span class="type">Collinear</span> | <span class="type">CollinearX</span> | <span class="type">CollinearY</span> | <span class="type">CollinearZ</span>]</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Formalism</code>：如果<code>level</code>里是<code>None</code>，则不需要考虑所选择的形式。<ul>
+<li><code>Pauli</code>：泡利哈密顿函数</li>
+<li><code>ZORA</code>：零阶正则近似哈密顿量。默认。</li>
+<li><code>X2C</code>：四分量狄拉克方程到二分量狄拉克方程的精确变换，是Dyall修正的Dirac方程。</li>
+<li><code>RA-X2C</code>：四分量狄拉克方程到二分量狄拉克方程的精确变换，是修正狄拉克方程的正规方法。</li>
+</ul>
+</li>
+<li><code>Level</code>：<ul>
+<li><code>None</code>：非相对论。哈密顿量也就是Kohn-Sham方程的形式。</li>
+<li><code>Scalar</code>：标量相对论，成本较低。默认。</li>
+<li><code>Spin-Orbit</code>：旋轨耦合，最好的理论水平，比普通计算昂贵（4-8倍）</li>
+</ul>
+</li>
+<li><code>Potential</code>：<ul>
+<li><code>MAPA</code>：默认。the Minumium of neutral Atomical potential Approximation 中性原子势近似值的最小值。MAPA优于SAPA的优点是可以降低ZORA的规格依赖性。 除了电子密度非常接近重核外，几乎所有特性的ZORA规范依赖性都很小。 非常接近重核的电子密度可用于解释Mossbauer光谱中的异构体位移。</li>
+<li><code>SAPA</code>：the Sum of neutral Atomical potential Approximation 中性原子势近似值之和。</li>
+</ul>
+</li>
+<li><code>SpinOrbitMagnetization</code>：只与自旋轨道耦合相关，而且在<code>unrestricted</code>下使用。在不受限制的计算中，大多数XC泛函都有自旋极化作为一种成分。通常，自旋量子化轴的方向是任意的，可以方便地选择为z轴。然而，在自旋轨道计算中，方向很重要，将磁化矢量的z分量放入XC函数中是任意的。<ul>
+<li><code>NonCollinear</code>：可以将磁化矢量的大小插入XC函数中。 这称为非共线方法。</li>
+<li><code>CollinearX</code>，<code>CollinearY</code>，<code>CollinearZ</code>：使用x，y或z分量作为XC函数的自旋极化。默认为z。</li>
+<li>：<code>Collinear</code>：同<code>CollinearZ</code></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>2019版及之前的输入格式为：</p>
+<figure class="highlight dust"><table><tr><td class="code"><pre><span class="line"><span class="xml">RELATIVISTIC </span><span class="template-variable">&#123;level&#125;</span><span class="xml"> </span><span class="template-variable">&#123;formalism&#125;</span><span class="xml"> </span><span class="template-variable">&#123;potential&#125;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><blockquote>
+<p>Scalar级别为：<code>RELATIVISTIC Scalar ZORA</code></p>
+</blockquote>
+</li>
+<li><p>SpinOrbit级别为：<code>RELATIVISTIC spinorbit ZORA</code></p>
+<ul>
+<li>注意此时：unrestricted不再适用，解决办法删掉unrestricted或加上collinear/nocollinear，以及nosym关键词</li>
+<li>并且不能同时计算解析freq</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>AMS</category>
+      </categories>
+      <tags>
+        <tag>输入</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【AMS】02.单点和SCF</title>
+    <url>/2019/09/23/%E3%80%90AMS%E3%80%9102.%E5%8D%95%E7%82%B9%E5%92%8CSCF/</url>
+    <content><![CDATA[<h1 id="单点计算"><a href="#单点计算" class="headerlink" title="单点计算"></a>单点计算</h1><figure class="highlight ada"><table><tr><td class="code"><pre><span class="line"><span class="keyword">Task</span> SinglePoint</span><br></pre></td></tr></table></figure>
+<h1 id="SCF选项"><a href="#SCF选项" class="headerlink" title="SCF选项"></a>SCF选项</h1><figure class="highlight puppet"><table><tr><td class="code"><pre><span class="line">SCF</span><br><span class="line"> Iterations Niter</span><br><span class="line"> Converge <span class="keyword">SCFcnv</span> &#123; sconv2 &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">AccelerationMethod</span> &#123; ADIIS | LISTi | LISTb | fDIIS | LISTf | MESA | SDIIS &#125;</span><br><span class="line"> <span class="keyword">MESA</span> [NoFDIIS] [NoLISTb] [NoLISTf] [NoLISTi] [NoSDIIS] [NoADIIS]</span><br><span class="line"> ADIIS</span><br><span class="line">   &#123;THRESH1 a1&#125;</span><br><span class="line">   &#123;THRESH2 a2&#125;</span><br><span class="line"> End</span><br><span class="line"> NoADIIS</span><br><span class="line"> DIIS</span><br><span class="line">   &#123;N n&#125;</span><br><span class="line">   &#123;OK ok&#125;</span><br><span class="line">   &#123;cyc cyc&#125;</span><br><span class="line"> End</span><br><span class="line"> Mixing mix</span><br><span class="line"> Mixing1 mix1</span><br><span class="line"></span><br><span class="line"> OldSCF</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<h2 id="Iterations"><a href="#Iterations" class="headerlink" title="Iterations"></a>Iterations</h2><p><code>Iterations</code>SCF迭代的最大次数，<code>Niter</code>默认是<code>300</code></p>
+<h2 id="Converge"><a href="#Converge" class="headerlink" title="Converge"></a>Converge</h2><p><code>Converge</code> ：</p>
+<ul>
+<li><code>SCFcnv</code>表示停止迭代的收敛限，默认是<code>1e-6</code>。</li>
+<li><code>sconv2</code>表示SCF过程难以收敛时起作用的第二个标准，默认是<code>1e-3</code>，如果达到了，仅发出警告，但是继续计算。仍无法达到的时候SCF不收敛，只能用<code>ALLOW</code>来继续</li>
+</ul>
+<h2 id="AccelerationMethod"><a href="#AccelerationMethod" class="headerlink" title="AccelerationMethod"></a>AccelerationMethod</h2><p><code>AccelerationMethod</code>调用的SCF加速方法，默认情况下为<code>ADIIS</code>，还可以用<code>LISTi</code> | <code>LISTb</code> | <code>fDIIS</code> | <code>LISTf</code> | <code>MESA</code> | <code>SDIIS</code></p>
+<h3 id="MESA"><a href="#MESA" class="headerlink" title="MESA"></a>MESA</h3><p><code>AccelerationMethod MESA</code>是ADIIS, fDIIS, LISTb, LISTf, LISTi和 SDIIS方法的组合<br><code>MESA NoSDIIS</code>代表从其中删掉某一种方法，也可以直接使用该关键词调用MESA，优先级大于<code>AccelerationMethod</code>指定的方法。</p>
+<h3 id="ADIIS"><a href="#ADIIS" class="headerlink" title="ADIIS"></a>ADIIS</h3><p>使用ADIIS + SDIIS方法，根据 [F,P] 交换子矩阵中的最大元素<code>ErrMax</code>来确定具体方法：</p>
+<ul>
+<li>当ErrMax≥<code>a1</code>，只使用A-DIIS系数</li>
+<li>当ErrMax≤ <code>a2</code>，只使用SDIIS系数</li>
+<li>当<code>a2</code>≤ ErrMax≤ <code>a1</code>，根据ErrMax的值按一定的权重来计算<br><code>a1</code>和<code>a2</code>的默认值是<code>0.01</code>和<code>0.0001</code>，收敛比较困难的时候，可以降低阈值，只使用A-DIIS系数</li>
+</ul>
+<h3 id="SDIIS"><a href="#SDIIS" class="headerlink" title="SDIIS"></a>SDIIS</h3><p><code>AccelerationMethod SDIIS</code>与在没有指定<code>oldscf</code>的情况下使用<code>NoADIIS</code>意思相同，采用的是阻尼+SDIIS方法。从简单阻尼（Mixing）开始，持续到<code>ErrMax</code>降低到<code>DIIS OK</code>参数以下，但是不超过<code>DIIS Cyc</code>次迭代。之后使用纯的SDIIS方法。</p>
+<blockquote>
+<p>在指定<code>oldscf</code>的情况下使用<code>NoADIIS</code>会禁用在SCF收敛困难的时候自动切换到ADIIS + SDIIS方法</p>
+</blockquote>
+<ul>
+<li><p>指定<code>NoADIIS</code>时才可以设置 <code>DIIS</code>模块：</p>
+<ul>
+<li><p><code>N</code>用于加速SCF的扩展向量的数量，默认为<code>10</code>，小于2后会禁用DIIS。此数字不仅适用于Pulay DIIS方案，还适用于其他类似DIIS的方法，例如A-DIIS和LIST方法。</p>
+<blockquote>
+<p>LIST家族的方法对使用的扩展向量的数量非常敏感，接近收敛时，LIST中的向量数量会增加，但始终受<code>DIIS N</code>的限制，当难以收敛时，可以将<code>DIIS N</code>设置为大于10的值，比如12~20。</p>
+</blockquote>
+</li>
+<li><code>OK</code>禁用A-DIIS时，SDIIS起始条件。默认为<code>0.5</code> a.u.。</li>
+<li><code>Cyc</code>禁用A-DIIS时，无论上面的<code>DIIS OK</code>值如何，SDIIS都会在此迭代下启动，默认值为<code>5</code></li>
+</ul>
+</li>
+<li><code>Mixing</code>中，指将下一个Fock矩阵确定为<script type="math/tex">F = mix F_{n} + (1-mix) F_{n-1}</script>，<code>mix</code>默认为<code>0.2</code></li>
+<li><code>Mixing1</code>中指第一个SCF循环的混合参数值不同，默认为<code>0.2</code></li>
+</ul>
+<h2 id="oldSCF"><a href="#oldSCF" class="headerlink" title="oldSCF"></a>oldSCF</h2><p>在使用<code>Occupations Steep</code>、<code>Lshift</code>，<code>ARH</code>，<code>EDIIS</code>，<code>RESTOCC</code>时，会自动启用<code>oldSCF</code></p>
+<h3 id="Lshift"><a href="#Lshift" class="headerlink" title="Lshift"></a>Lshift</h3><p>能级移动方法，在前一次迭代的轨道表示中，Fock矩阵的对角元素提高虚轨道的<code>vshift</code>hartree。旋轨耦合不支持这种方法。</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">Lshift</span> <span class="string">vshift</span></span><br><span class="line"><span class="attr">Lshift_err</span> <span class="string">Shift_err</span></span><br><span class="line"><span class="attr">Lshift_cyc</span> <span class="string">Shift_cyc</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Lshift_err</code>指定一旦SCF error降至阈值以下，程序将关闭能级移动，<code>Shift_err</code>默认值为<code>0</code>。</li>
+<li><code>Lshift_cyc</code>指定在第几个SCF 迭代次数的时候再启动能级移动， <code>Shift_cyc</code>默认为<code>1</code>。</li>
+</ul>
+<h3 id="ARH"><a href="#ARH" class="headerlink" title="ARH"></a>ARH</h3><figure class="highlight dust"><table><tr><td class="code"><pre><span class="line"><span class="xml">SCF</span></span><br><span class="line"><span class="xml">  ARH</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;CONV conv&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;ITER iter&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;NSAVED nsaved&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;START start&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;FINAL&#125;</span><span class="xml"> ...</span></span><br><span class="line"><span class="xml">  End</span></span><br><span class="line"><span class="xml">  ...</span></span><br><span class="line"><span class="xml">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>CONV</code>：当RMS梯度及其最大分量均低于<code>conv</code>，ARH收敛，<code>conv</code>默认是1e-4</li>
+<li><code>ITER</code>：最大ARH迭代次数，<code>iter</code>默认为500</li>
+<li><code>FINAL</code>：确定ARH完成后是否继续SCF。如果设置了此选项，将执行一次Fock矩阵对角化以获得轨道，并且将停止SCF过程。默认选项为<code>OFF</code>。</li>
+<li><code>START</code>：开始调用ARH的SCF迭代次数，<code>start</code>默认为2。使用较大的值可以为ARH提供更好的初猜</li>
+<li><code>NSAVED</code>：保存密度和Fock矩阵的数量。 <code>nsaved</code>默认为8。在非常接近费米能级的轨道数很大的收敛困难时，应使用较大的<code>nsaved</code>值。</li>
+<li>默认的最小化方法是“Untransformed Pre-conditioned Conjugate Gradient”，可以使用以下两个关键词更改：<ul>
+<li><code>NOPRECOND</code>：禁用Untransformed Pre-conditioned CG最小化，不能在第二周期后的元素里使用</li>
+<li><code>TRANSPCG</code>：启用Transformed Pre-conditioned CG 方法，SCF可能会更好的收敛。</li>
+</ul>
+</li>
+<li>在每一步SCF中，先执行常规CG最小化，跟踪总步长，如果在某个微迭代中步长超过了信任半径，则过程将在缩小的空间中切换到信任半径优化，在能级移动参数mu收敛后立即中止。在CG最小化期间生成的所有试验矢量的缩小空间中，将最终步骤计算为牛顿步骤。可以通过以下关键词修改参数：<ul>
+<li><code>NOSWITCHING</code>：关闭从普通CG到缩小的空间中的信任半径最小化的切换。在某些情况下，使用此选项有助于减少SCF循环的总数。</li>
+<li><code>SHIFTED</code>：设置此选项将在第一次微迭代中打开信任半径优化。</li>
+<li><code>CGITER=cgiter</code>：设置微迭代的最大数量。</li>
+<li>确定置信半径：<ul>
+<li><code>TRUSTR=trustr</code>：信任半径的初始值。默认为<code>0.5</code></li>
+<li><code>MAXTRUSTR=maxtrustr</code>：最大信任半径值。默认为<code>0.5</code>，并且不会改变。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>该方法仅适用于NOSYM计算</li>
+<li>在每一步都要计算总能量，计算非常昂贵，而且使用总能量，需要更高的积分精度才能获得稳定的SCF收敛，该方法可能不适用于所有情况，??使用<code>ADDDIFFUSEFIT</code>关键字或更高的<code>ZlmFit</code>质量设置来提高总能量的准确性，从而提高收敛性。??</li>
+</ul>
+</li>
+</ul>
+<h1 id="SCF不收敛"><a href="#SCF不收敛" class="headerlink" title="SCF不收敛"></a>SCF不收敛</h1><ol>
+<li>更换SCF加速收敛的方法</li>
+<li>使用ARH方法</li>
+<li>修改DIIS算法的参数<ul>
+<li><code>Mixing</code>高于默认值<code>0.2</code>会有更高的加速度，更低会更稳定的迭代</li>
+<li><code>N</code>默认为<code>10</code>，越大用于加速SCF的扩展向量的数量越多，SCF迭代更稳定，最多到25</li>
+<li><code>Cyc</code>是SDIIS启动的初始SCF迭代步数，默认值为<code>5</code>，更高计算越稳定，比如使用如下参数：<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">SCF</span></span><br><span class="line">    <span class="attribute">DIIS</span></span><br><span class="line">      <span class="attribute">N</span> <span class="number">25</span></span><br><span class="line">      <span class="attribute">Cyc</span> <span class="number">30</span></span><br><span class="line">    <span class="attribute">End</span></span><br><span class="line">    <span class="attribute">Mixing</span> <span class="number">0</span>.<span class="number">015</span></span><br><span class="line">    <span class="attribute">Mixing1</span> <span class="number">0</span>.<span class="number">09</span></span><br><span class="line">  <span class="attribute">End</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>HOMO-LUMO较为接近的情况（0.02Hatree以内），可能造成HOMO-LUMO的震荡。可以使用<code>Lshift vshift</code>方法，比如0.01，不能太大，不适于激发态的计算、<strong>解析频率</strong>、旋轨耦合的计算。</li>
+<li>使用Electron smearing设定在允许的能量范围内分数占据。</li>
+<li>其他：<a href="https://www.fermitech.com.cn/wiki/doku.php?id=adf:scfnonconvergence">费米维基</a>的2、3、5。</li>
+</ol>
+<h1 id="几何优化"><a href="#几何优化" class="headerlink" title="几何优化"></a>几何优化</h1><ul>
+<li>基于准牛顿法优化</li>
+</ul>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">Task GeometryOptimization</span><br><span class="line"></span><br><span class="line">GeometryOptimization</span><br><span class="line">   Convergence</span><br><span class="line">      Energy <span class="type">float</span></span><br><span class="line">      Gradients <span class="type">float</span></span><br><span class="line">      Step <span class="type">float</span></span><br><span class="line">      StressEnergyPerAtom <span class="type">float</span></span><br><span class="line">   <span class="keyword">End</span></span><br><span class="line">   MaxIterations <span class="type">integer</span></span><br><span class="line">   CalcPropertiesOnlyIfConverged Yes/<span class="keyword">No</span></span><br><span class="line">   OptimizeLattice Yes/<span class="keyword">No</span></span><br><span class="line">   KeepIntermediateResults Yes/<span class="keyword">No</span></span><br><span class="line">   PretendConverged Yes/<span class="keyword">No</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>20版以前的为：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">GEOMETRY</span><br><span class="line">	Converge &#123;<span class="attribute">E</span>=TolE&#125; &#123;<span class="attribute">Grad</span>=TolG&#125; &#123;<span class="attribute">Rad</span>=TolR&#125; &#123;<span class="attribute">Angle</span>=TolA&#125;</span><br><span class="line">	Iterations Niter</span><br><span class="line">	Inithess inithessian.file</span><br><span class="line">	Hessupd HessUpdate</span><br><span class="line">	Optim &#123;Delocal / Cartesian / Internal&#125; &#123;All / Selected&#125;</span><br><span class="line">	GEigenvalueThreshold threshold</span><br><span class="line">	Branch &#123;New / Old&#125;</span><br><span class="line">	<span class="keyword">Step</span> &#123;<span class="attribute">Rad</span>=MaxRadStep&#125; &#123;<span class="attribute">Angle</span>=MaxAngleStep&#125; &#123;<span class="attribute">TrustRadius</span>=MaxRadius&#125;</span><br><span class="line">	DIIS &#123;<span class="attribute">N</span>=NVect&#125; &#123;<span class="attribute">CYC</span>=Ncyc&#125;</span><br><span class="line">	Externprogram externprog.exe <span class="attribute">coord</span>=coords.inp <span class="attribute">energy</span>=energy.out <span class="attribute">grad</span>=grads.out</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="Convergence"><a href="#Convergence" class="headerlink" title="Convergence"></a><code>Convergence</code></h2><p>收敛部分的设置：</p>
+<ul>
+<li><code>Energy</code>：能量变化，默认是<code>1e-05</code>Hartree。</li>
+<li><code>Gradients</code>：核梯度的阈值，默认是<code>0.001</code>Hartree/Angstrom</li>
+<li><code>Step</code>：收敛几何允许的最大笛卡尔步长，默认是<code>0.01</code>Angstrom</li>
+<li><code>StressEnergyPerAtom</code>：优化晶格向量时使用的阈值，默认是<code>0.0005</code>Hartree</li>
+</ul>
+<p>收敛判定（如果最大梯度和均方根梯度比收敛准则小10倍，则忽略最后两条）</p>
+<ul>
+<li>当前几何结构和上一个几何步骤的键能之间的差异小于<code>Energy</code></li>
+<li>最大笛卡尔核梯度小于<code>Gradients</code></li>
+<li>笛卡尔核梯度的均方根(RMS)小于2/3<code>Gradients</code></li>
+<li>最大笛卡尔步长小于<code>Step</code></li>
+<li>笛卡尔阶跃的均方根(RMS)小于2/3<code>Step</code></li>
+</ul>
+<p>优化过程会不断地计算不同的分子结构，直到找到最低能量的结构为止。收敛标准得到5个T表示五个收敛标准都达到。其中第二个标准最重要，一般也是最后一个达到的，第二个标准是势能面的梯度最大值。这个标准非常严格，对于大量过渡金属参与的化学反应，过渡态搜索，有可能达不到这样严格的标准，一般到0.003左右也可以认为收敛了，可以将对应的分子结构拿来使用。</p>
+<blockquote>
+<p>2020版以前为总能量、梯度，笛卡尔步长，键角，默认为：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">GEOMETRY</span></span><br><span class="line"><span class="attribute">Converge</span> <span class="number">1</span>e-<span class="number">3</span> <span class="number">1</span>e-<span class="number">3</span> <span class="number">1</span>e-<span class="number">2</span> <span class="number">0</span>.<span class="number">5</span></span><br><span class="line"><span class="attribute">end</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li><code>MaxIterations</code>：允许收敛到所需结构的最大几何迭代次数。默认是max(30，<script type="math/tex">2 \times N_{free}</script>)，<script type="math/tex">N_{free}</script>是指自由度的数目，接近于3*原子数。</li>
+<li><code>CalcPropertiesOnlyIfConverged</code>：默认为<code>Yes</code>，当几何优化（过渡态搜索）收敛时，才计算相应的性质，比如频率，声子等，若为<code>False</code>，不收敛也可以计算。</li>
+<li><code>PretendConverged</code>：默认为<code>No</code>，当几何优化不收敛会报错。如果改成<code>True</code>，只会出现一个警告，并且表明几何优化是收敛的，在一些脚本编写中有用。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>AMS</category>
+      </categories>
+      <tags>
+        <tag>SCF</tag>
+        <tag>单点</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【AMS】03.几何优化</title>
+    <url>/2019/09/23/%E3%80%90AMS%E3%80%9103.%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/</url>
+    <content><![CDATA[<ul>
+<li>基于准牛顿法优化</li>
+</ul>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">Task GeometryOptimization</span><br><span class="line"></span><br><span class="line">GeometryOptimization</span><br><span class="line">   Convergence</span><br><span class="line">      Energy <span class="type">float</span></span><br><span class="line">      Gradients <span class="type">float</span></span><br><span class="line">      Step <span class="type">float</span></span><br><span class="line">      StressEnergyPerAtom <span class="type">float</span></span><br><span class="line">   <span class="keyword">End</span></span><br><span class="line">   MaxIterations <span class="type">integer</span></span><br><span class="line">   CalcPropertiesOnlyIfConverged Yes/<span class="keyword">No</span></span><br><span class="line">   OptimizeLattice Yes/<span class="keyword">No</span></span><br><span class="line">   KeepIntermediateResults Yes/<span class="keyword">No</span></span><br><span class="line">   PretendConverged Yes/<span class="keyword">No</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>20版以前的为：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">GEOMETRY</span><br><span class="line">	Converge &#123;<span class="attribute">E</span>=TolE&#125; &#123;<span class="attribute">Grad</span>=TolG&#125; &#123;<span class="attribute">Rad</span>=TolR&#125; &#123;<span class="attribute">Angle</span>=TolA&#125;</span><br><span class="line">	Iterations Niter</span><br><span class="line">	Inithess inithessian.file</span><br><span class="line">	Hessupd HessUpdate</span><br><span class="line">	Optim &#123;Delocal / Cartesian / Internal&#125; &#123;All / Selected&#125;</span><br><span class="line">	GEigenvalueThreshold threshold</span><br><span class="line">	Branch &#123;New / Old&#125;</span><br><span class="line">	<span class="keyword">Step</span> &#123;<span class="attribute">Rad</span>=MaxRadStep&#125; &#123;<span class="attribute">Angle</span>=MaxAngleStep&#125; &#123;<span class="attribute">TrustRadius</span>=MaxRadius&#125;</span><br><span class="line">	DIIS &#123;<span class="attribute">N</span>=NVect&#125; &#123;<span class="attribute">CYC</span>=Ncyc&#125;</span><br><span class="line">	Externprogram externprog.exe <span class="attribute">coord</span>=coords.inp <span class="attribute">energy</span>=energy.out <span class="attribute">grad</span>=grads.out</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h1 id="Convergence"><a href="#Convergence" class="headerlink" title="Convergence"></a><code>Convergence</code></h1><p>收敛部分的设置：</p>
+<ul>
+<li><code>Energy</code>：能量变化，默认是<code>1e-05</code>Hartree。</li>
+<li><code>Gradients</code>：核梯度的阈值，默认是<code>0.001</code>Hartree/Angstrom</li>
+<li><code>Step</code>：收敛几何允许的最大笛卡尔步长，默认是<code>0.01</code>Angstrom</li>
+<li><code>StressEnergyPerAtom</code>：优化晶格向量时使用的阈值，默认是<code>0.0005</code>Hartree</li>
+</ul>
+<p>收敛判定（如果最大梯度和均方根梯度比收敛准则小10倍，则忽略最后两条）</p>
+<ul>
+<li>当前几何结构和上一个几何步骤的键能之间的差异小于<code>Energy</code></li>
+<li>最大笛卡尔核梯度小于<code>Gradients</code></li>
+<li>笛卡尔核梯度的均方根(RMS)小于2/3<code>Gradients</code></li>
+<li>最大笛卡尔步长小于<code>Step</code></li>
+<li>笛卡尔阶跃的均方根(RMS)小于2/3<code>Step</code></li>
+</ul>
+<p>优化过程会不断地计算不同的分子结构，直到找到最低能量的结构为止。收敛标准得到5个T表示五个收敛标准都达到。其中第二个标准最重要，一般也是最后一个达到的，第二个标准是势能面的梯度最大值。这个标准非常严格，对于大量过渡金属参与的化学反应，过渡态搜索，有可能达不到这样严格的标准，一般到0.003左右也可以认为收敛了，可以将对应的分子结构拿来使用。</p>
+<blockquote>
+<p>2020版以前为总能量、梯度，笛卡尔步长，键角，默认为：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">GEOMETRY</span></span><br><span class="line"><span class="attribute">Converge</span> <span class="number">1</span>e-<span class="number">3</span> <span class="number">1</span>e-<span class="number">3</span> <span class="number">1</span>e-<span class="number">2</span> <span class="number">0</span>.<span class="number">5</span></span><br><span class="line"><span class="attribute">end</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><ul>
+<li><code>MaxIterations</code>：允许收敛到所需结构的最大几何迭代次数。默认是max(30，<script type="math/tex">2 \times N_{free}</script>)，<script type="math/tex">N_{free}</script>是指自由度的数目，接近于3*原子数。</li>
+<li><code>CalcPropertiesOnlyIfConverged</code>：默认为<code>Yes</code>，当几何优化（过渡态搜索）收敛时，才计算相应的性质，比如频率，声子等，若为<code>False</code>，不收敛也可以计算。</li>
+<li><code>PretendConverged</code>：默认为<code>No</code>，当几何优化不收敛会报错。如果改成<code>True</code>，只会出现一个警告，并且表明几何优化是收敛的，在一些脚本编写中有用。</li>
+</ul>
+<h1 id="几何不收敛"><a href="#几何不收敛" class="headerlink" title="几何不收敛"></a>几何不收敛</h1><h1 id="有虚频"><a href="#有虚频" class="headerlink" title="有虚频"></a>有虚频</h1><ul>
+<li><p>在原本的几何坐标上加上虚频的位移。一个简单的脚本。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash">简单查看adf输出的末尾能量，点群和是否有虚频，如果有加上虚频的位移矢量。</span></span><br><span class="line"><span class="meta">#</span><span class="bash">example:adf_simpleout *.out</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo &quot; &quot;</span><br><span class="line">echo &quot; &quot;</span><br><span class="line">echo &quot;Geometry: &quot;</span><br><span class="line">opt_geo_line=`grep -n &quot;Coordinates&quot; $&#123;1&#125; |tail -1|cut -d &#x27;:&#x27; -f 1`   #Coordinates in Geometry Cycle</span><br><span class="line">sed -n &quot;$&#123;opt_geo_line&#125;&quot;&#x27;,$p&#x27; $&#123;1&#125;|grep -o &quot;[a-zA-Z]\&#123;1,\&#125;[[:blank:]]\&#123;1,\&#125;-*[0-9]\&#123;1,\&#125;\.[0-9]*[[:blank:]]\&#123;1,\&#125;-*[0-9]\&#123;1,\&#125;\.[0-9]*[[:blank:]]\&#123;1,\&#125;-*[0-9]\&#123;1,\&#125;\.[0-9]*&quot;</span><br><span class="line"></span><br><span class="line">echo &quot;&quot;</span><br><span class="line">grep &#x27;Bond Energy&#x27;  $&#123;1&#125; | tail -3 | awk &#x27;&#123;print $3,$4,$5,$6&#125;&#x27;</span><br><span class="line"></span><br><span class="line">echo &quot;&quot;</span><br><span class="line">grep &#x27;Symmetry&#x27; $&#123;1&#125; |tail -1 | awk &#x27;&#123;print $3,$4,$5&#125;&#x27;</span><br><span class="line"></span><br><span class="line">echo &quot;&quot;</span><br><span class="line">freqline=`grep -n &quot;Vibrations and Normal Modes&quot; $&#123;1&#125; | tail -1| cut -d &#x27;:&#x27; -f 1`</span><br><span class="line">freqstart=`expr $&#123;freqline&#125; + 7`</span><br><span class="line">firstfreq=`sed -n $&#123;freqstart&#125;p $&#123;1&#125;| awk &#x27;&#123;print $1&#125;&#x27;`</span><br><span class="line">echo &quot;The first frequency is $&#123;firstfreq&#125;&quot;</span><br><span class="line"></span><br><span class="line">image=$(echo &quot;$&#123;firstfreq&#125; &lt; 0&quot; | bc)</span><br><span class="line"></span><br><span class="line">if [ $image -eq 1 ]</span><br><span class="line">then </span><br><span class="line"> echo &quot;&quot;</span><br><span class="line"> echo &quot;shift:&quot;</span><br><span class="line"> sed -n &quot;$&#123;opt_geo_line&#125;&quot;&#x27;,$p&#x27; $&#123;1&#125;|grep -o &quot;[a-zA-Z]\&#123;1,\&#125;[[:blank:]]\&#123;1,\&#125;-*[0-9]\&#123;1,\&#125;\.[0-9]*[[:blank:]]\&#123;1,\&#125;-*[0-9]\&#123;1,\&#125;\.[0-9]*[[:blank:]]\&#123;1,\&#125;-*[0-9]\&#123;1,\&#125;\.[0-9]*&quot; &gt; Geometry.txt</span><br><span class="line"> opt_geo_end_line=`grep -n &quot;[a-zA-Z]\&#123;1,\&#125;[[:blank:]]\&#123;1,\&#125;-*[0-9]\&#123;1,\&#125;\.[0-9]*[[:blank:]]\&#123;1,\&#125;-*[0-9]\&#123;1,\&#125;\.[0-9]*[[:blank:]]\&#123;1,\&#125;-*[0-9]\&#123;1,\&#125;\.[0-9]&quot; *out|tail -1|cut -d &#x27;:&#x27; -f 1`</span><br><span class="line"> atom_num=`expr $&#123;opt_geo_end_line&#125; - $&#123;opt_geo_line&#125; - 1`  </span><br><span class="line"> freq1=`expr $&#123;freqstart&#125; + 2`</span><br><span class="line"> freq2=`expr $&#123;freqline&#125; + 9 + $&#123;atom_num&#125;`</span><br><span class="line"> sed -n $&#123;freq1&#125;,$&#123;freq2&#125;p $&#123;1&#125; | awk &#x27;&#123;print $2,$3,$4&#125;&#x27; &gt; imagefreq.txt</span><br><span class="line"> for ((i=1; i &lt;= $&#123;atom_num&#125;;i++));do</span><br><span class="line">   a=`sed -n $&#123;i&#125;p Geometry.txt | awk &#x27;&#123; print $1 &#125;&#x27;` </span><br><span class="line">  </span><br><span class="line">   numx1=`sed -n $&#123;i&#125;p Geometry.txt | awk &#x27;&#123; print $2 &#125;&#x27;`</span><br><span class="line">   numx2=`sed -n $&#123;i&#125;p imagefreq.txt | awk &#x27;&#123; print $1 &#125;&#x27;` </span><br><span class="line">   numx3=$(echo &quot; $numx1 + $numx2 &quot;|bc)</span><br><span class="line">    </span><br><span class="line">   numy1=`sed -n $&#123;i&#125;p Geometry.txt | awk &#x27;&#123; print $3 &#125;&#x27;`</span><br><span class="line">   numy2=`sed -n $&#123;i&#125;p imagefreq.txt | awk &#x27;&#123; print $2 &#125;&#x27;`</span><br><span class="line">   numy3=$(echo &quot; $numy1 + $numy2 &quot;|bc)   </span><br><span class="line">   </span><br><span class="line">   numz1=`sed -n $&#123;i&#125;p Geometry.txt | awk &#x27;&#123; print $4 &#125;&#x27;`</span><br><span class="line">   numz2=`sed -n $&#123;i&#125;p imagefreq.txt | awk &#x27;&#123; print $3 &#125;&#x27;`</span><br><span class="line">   numz3=$(echo &quot; $numz1 + $numz2 &quot;|bc)</span><br><span class="line">  </span><br><span class="line">   printf &quot;%-10s %10.6f %10.6f %10.6f \n&quot; $a $numx3 $numy3 $numz3 </span><br><span class="line"> done</span><br><span class="line">rm Geometry.txt imagefreq.txt</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo &quot; &quot;</span><br><span class="line">echo &quot; &quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>AMS</category>
+      </categories>
+      <tags>
+        <tag>几何优化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【AMS】04.键级</title>
+    <url>/2020/06/24/%E3%80%90AMS%E3%80%9104.%E9%94%AE%E7%BA%A7/</url>
+    <content><![CDATA[<p>键级的计算可以通过两种方式。不管用哪种方式，都需要在<code>Engine ADF</code>中指定对称性为<code>NOSYM</code></p>
+<h1 id="方式1"><a href="#方式1" class="headerlink" title="方式1"></a>方式1</h1><p>在<code>Properties</code>中指定：</p>
+<figure class="highlight mathematica"><table><tr><td class="code"><pre><span class="line"><span class="keyword">Properties</span></span><br><span class="line">   BondOrders Yes</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<h1 id="方式2"><a href="#方式2" class="headerlink" title="方式2"></a>方式2</h1><p>在<code>Engine ADF</code>中指定：</p>
+<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">BondOrders</span><br><span class="line">   PrintAll Yes/No</span><br><span class="line">   PrintTolerance float</span><br><span class="line">   TypeForAMS [Nalewajski-Mrozek<span class="number">-1</span> | <span class="type">Nalewajski</span>-Mrozek<span class="number">-2</span> | <span class="type">Nalewajski</span>-Mrozek<span class="number">-3</span> | <span class="type">Mayer</span> | <span class="type">Gopinathan</span>-Jug]</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>PrintAll</code>：默认<code>No</code>，如果为是，将输出所有5种键级</li>
+<li><code>PrintTolerance</code>：默认为<code>0.2</code>，大于该阈值才能被输出</li>
+<li><code>TypeForAMS</code>：选择输出键级的种类。</li>
+</ul>
+<h1 id="2020版本之前"><a href="#2020版本之前" class="headerlink" title="2020版本之前"></a>2020版本之前</h1><h2 id="MAYER键级等"><a href="#MAYER键级等" class="headerlink" title="MAYER键级等"></a>MAYER键级等</h2><h3 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h3><ul>
+<li><p>优化好的结构，再算single point</p>
+</li>
+<li><p>设置好single piont的相关输入后，再点击ADFinput &gt; Details &gt; Userinput，在窗口中输入： </p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">bondorder printall</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>默认显示大于0.2的键级，如果需要自定义阈值，例如0.0（所有原子之间的键级无论大小均列出）可以设置为：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">bondorder</span> printall tol=<span class="number">0</span>.<span class="number">0</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>同时ADFinput &gt; Details &gt; Symmetry，将默认的Auto改为<code>NOSYM</code>。</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">……</span><br><span class="line">bondorder printall</span><br><span class="line">ATOMS</span><br><span class="line">1 C      -5.772012228837       0.492926664171      -0.000000000000    </span><br><span class="line">……</span><br><span class="line">……</span><br><span class="line">……</span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line"></span><br><span class="line">BASIS</span><br><span class="line">type TZP</span><br><span class="line">……</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h3><ul>
+<li><p>计算完毕后，得到所有原子，两两之间的MAYER、G-J、N-M (1)、N-M (2)、N-M (3) (*)键级关系</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">-----------------------------------------------------------------------------------------------</span><br><span class="line">                          DIST. [A]                   BOND-ORDERS</span><br><span class="line">                                                  (THRESHOLD =  <span class="number">0.000</span> )</span><br><span class="line"> -----------------------------------------------------------------------------------------------</span><br><span class="line">                                      MAYER        G-J    N-M (<span class="number">1</span>)    N-M (<span class="number">2</span>)    N-M (<span class="number">3</span>) (*)</span><br><span class="line"> -----------------------------------------------------------------------------------------------</span><br><span class="line">  C      <span class="number">1</span> - C      <span class="number">2</span>     <span class="number">1.4005</span>     <span class="number">1.2389</span>     <span class="number">1.4344</span>     <span class="number">1.4936</span>     <span class="number">1.4415</span>     <span class="number">1.5643</span></span><br><span class="line">  C      <span class="number">1</span> - C      <span class="number">3</span>     <span class="number">2.4257</span>    <span class="number">-0.0243</span>     <span class="number">0.0085</span>     <span class="number">0.0089</span>    <span class="number">-0.0294</span>     <span class="number">0.0093</span></span><br><span class="line">  C      <span class="number">1</span> - C      <span class="number">4</span>     <span class="number">2.8009</span>     <span class="number">0.0719</span>     <span class="number">0.1189</span>     <span class="number">0.1238</span>     <span class="number">0.0845</span>     <span class="number">0.1297</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>AMS</category>
+      </categories>
+      <tags>
+        <tag>键级</tag>
       </tags>
   </entry>
 </search>
