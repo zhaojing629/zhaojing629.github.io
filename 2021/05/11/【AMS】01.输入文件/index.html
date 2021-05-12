@@ -21,28 +21,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="molpro分子的对称性，定义波函和通过波函的对称性来指定占据的基本方法">
+  <meta name="description" content="ADF2020版本后的输入文件结构大改">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【molpro】02.对称性">
-<meta property="og:url" content="http://example.com/2020/11/16/%E3%80%90molpro%E3%80%9102.%E5%AF%B9%E7%A7%B0%E6%80%A7/index.html">
+<meta property="og:title" content="【AMS】01.输入文件">
+<meta property="og:url" content="http://example.com/2021/05/11/%E3%80%90AMS%E3%80%9101.%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/index.html">
 <meta property="og:site_name" content="Jing&#39;s Notes">
-<meta property="og:description" content="molpro分子的对称性，定义波函和通过波函的对称性来指定占据的基本方法">
+<meta property="og:description" content="ADF2020版本后的输入文件结构大改">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2020/11/16/%E3%80%90molpro%E3%80%9102.%E5%AF%B9%E7%A7%B0%E6%80%A7/1.png">
-<meta property="og:image" content="http://example.com/2020/11/16/%E3%80%90molpro%E3%80%9102.%E5%AF%B9%E7%A7%B0%E6%80%A7/2.png">
-<meta property="og:image" content="http://example.com/2020/11/16/%E3%80%90molpro%E3%80%9102.%E5%AF%B9%E7%A7%B0%E6%80%A7/3.png">
-<meta property="og:image" content="http://example.com/2020/11/16/%E3%80%90molpro%E3%80%9102.%E5%AF%B9%E7%A7%B0%E6%80%A7/4.png">
-<meta property="article:published_time" content="2020-11-16T14:19:52.000Z">
-<meta property="article:modified_time" content="2020-11-21T03:32:52.000Z">
+<meta property="article:published_time" content="2021-05-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-05-11T13:02:14.595Z">
 <meta property="article:author" content="Zhao Jing">
-<meta property="article:tag" content="点群">
-<meta property="article:tag" content="对称性">
-<meta property="article:tag" content="波函">
-<meta property="article:tag" content="占据">
+<meta property="article:tag" content="输入">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2020/11/16/%E3%80%90molpro%E3%80%9102.%E5%AF%B9%E7%A7%B0%E6%80%A7/1.png">
 
-<link rel="canonical" href="http://example.com/2020/11/16/%E3%80%90molpro%E3%80%9102.%E5%AF%B9%E7%A7%B0%E6%80%A7/">
+<link rel="canonical" href="http://example.com/2021/05/11/%E3%80%90AMS%E3%80%9101.%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/">
 
 
 <script id="page-configurations">
@@ -55,7 +47,7 @@
   };
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
-  <title>【molpro】02.对称性 | Jing's Notes</title>
+  <title>【AMS】01.输入文件 | Jing's Notes</title>
   
 
 
@@ -199,7 +191,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/16/%E3%80%90molpro%E3%80%9102.%E5%AF%B9%E7%A7%B0%E6%80%A7/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/11/%E3%80%90AMS%E3%80%9101.%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/touxiang.jpg">
@@ -212,7 +204,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          【molpro】02.对称性
+          【AMS】01.输入文件
         </h1>
 
         <div class="post-meta">
@@ -221,16 +213,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-11-16 22:19:52" itemprop="dateCreated datePublished" datetime="2020-11-16T22:19:52+08:00">2020-11-16</time>
+              <time title="创建时间：2021-05-11 00:00:00 / 修改时间：21:02:14" itemprop="dateCreated datePublished" datetime="2021-05-11T00:00:00+08:00">2021-05-11</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-21 11:32:52" itemprop="dateModified" datetime="2020-11-21T11:32:52+08:00">2020-11-21</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -241,7 +227,7 @@
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/molpro/" itemprop="url" rel="index"><span itemprop="name">molpro</span></a>
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/AMS/" itemprop="url" rel="index"><span itemprop="name">AMS</span></a>
                 </span>
             </span>
 
@@ -262,8 +248,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/11/16/%E3%80%90molpro%E3%80%9102.%E5%AF%B9%E7%A7%B0%E6%80%A7/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/16/%E3%80%90molpro%E3%80%9102.%E5%AF%B9%E7%A7%B0%E6%80%A7/" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/05/11/%E3%80%90AMS%E3%80%9101.%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/05/11/%E3%80%90AMS%E3%80%9101.%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -274,16 +260,16 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.6k</span>
+              <span>4.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>4 分钟</span>
             </span>
-            <div class="post-description">molpro分子的对称性，定义波函和通过波函的对称性来指定占据的基本方法</div>
+            <div class="post-description">ADF2020版本后的输入文件结构大改</div>
 
         </div>
       </header>
@@ -294,88 +280,101 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="对称性（点群）"><a href="#对称性（点群）" class="headerlink" title="对称性（点群）"></a>对称性（点群）</h1><ul>
-<li>MOLPRO只能使用阿贝尔点群对称性，对于有简并对称性的分子，必须使用阿贝尔子群，如下：</li>
+        <h1 id="主要结构"><a href="#主要结构" class="headerlink" title="主要结构"></a>主要结构</h1><ul>
+<li><code>System</code>，<code>Task</code>和<code>Engine</code>是必须的，其他比如<code>Properties</code>是可选的</li>
 </ul>
-<p><img src="1.png" style="zoom:80%;" /></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$AMSBIN</span>/ams -n 8 &lt;&lt; eor 1&gt;<span class="variable">$&#123;0/run/out&#125;</span> 2&gt;<span class="variable">$&#123;0/run/err&#125;</span></span><br><span class="line"></span><br><span class="line">System</span><br><span class="line">	Atoms</span><br><span class="line">		F         0.000000    0.000000    0.760010</span><br><span class="line">		F         0.000000    0.000000   -0.760010</span><br><span class="line">	End</span><br><span class="line">charge 0 </span><br><span class="line">End</span><br><span class="line"></span><br><span class="line">Task GeometryOptimization</span><br><span class="line"></span><br><span class="line">Engine ADF</span><br><span class="line">	TITLE UueFn</span><br><span class="line">	basis</span><br><span class="line">    <span class="built_in">	type </span>TZ2P</span><br><span class="line">    	core None</span><br><span class="line">    	CreateOutput <span class="literal">Yes</span></span><br><span class="line">  	end</span><br><span class="line">  	xc</span><br><span class="line">  		gga PBE </span><br><span class="line">  	end</span><br><span class="line">  	relativity</span><br><span class="line">    	level spin-orbit</span><br><span class="line">    	formalism ZORA</span><br><span class="line">  	end</span><br><span class="line">EndEngine</span><br></pre></td></tr></table></figure>
+<h2 id="System"><a href="#System" class="headerlink" title="System"></a>System</h2><ul>
+<li>单位默认都是 <code>Angstrom</code>，如果需要更改，可以在将<code>header</code>部分更改为<code>[Bohr]</code></li>
+</ul>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">System</span> <span class="string">header</span></span><br><span class="line">   <span class="attr">Atoms</span> <span class="string">header</span></span><br><span class="line">      <span class="attr">...</span></span><br><span class="line">   <span class="attr">End</span></span><br><span class="line">   <span class="attr">Lattice</span> <span class="string">header</span></span><br><span class="line">      <span class="attr">...</span></span><br><span class="line">   <span class="attr">End</span></span><br><span class="line">   <span class="attr">FractionalCoords</span> <span class="string">Yes/No</span></span><br><span class="line">   <span class="attr">AllowCloseAtoms</span> <span class="string">Yes/No</span></span><br><span class="line">   <span class="attr">GeometryFile</span> <span class="string">string</span></span><br><span class="line">   <span class="attr">Symmetrize</span> <span class="string">Yes/No</span></span><br><span class="line">   <span class="attr">LatticeStrain</span> <span class="string">float_list</span></span><br><span class="line">   <span class="attr">SuperCell</span> <span class="string">integer_list</span></span><br><span class="line">   <span class="attr">Charge</span> <span class="string">float</span></span><br><span class="line">   <span class="attr">BondOrders</span></span><br><span class="line">      <span class="attr">...</span></span><br><span class="line">   <span class="attr">End</span></span><br><span class="line">   <span class="attr">...</span></span><br><span class="line"><span class="attr">End</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>对于每个点群的不可约表示，编号为1至8，顺序如下表，表中还给出了x，y，和z乘积的转换特性。s表示各向同性函数，例如s轨道，另外，它还给出了这些群的x<sup>2</sup>，y<sup>2</sup>，和z<sup>2</sup>的转换特性：</li>
+<li><strong><code>Atoms</code>：指定原子类型和坐标</strong><ul>
+<li>如果需要给坐标分区，可以在每个原子坐标最后面添加<code>region=name1</code>，<code>region=name2</code>……，一个原子可以在多个区域中，此时命名用<code>,</code>分隔<code>region=name1，name2</code></li>
+<li>可以更改原子的质量成为同位素(in Dalton) ，在每个原子坐标最后面添加<code>mass=number</code>即可</li>
 </ul>
-<p><img src="2.png" style="zoom:80%;" /></p>
-<p><img src="3.png" style="zoom:80%;" /></p>
-<p><img src="4.png" style="zoom:80%;" /></p>
+</li>
+<li><code>Lattice</code>：指定最多三个晶格向量</li>
+<li><code>FractionalCoords</code>：原子块中的原子坐标是否以晶格向量的分数坐标给出，默认为<code>No</code>。</li>
+<li><code>GeometryFile</code>：从.xyz文件中读取几何</li>
+<li><code>Symmetrize</code>：是否使输入结构对称，这也会将结构旋转转换为标准方向。默认为<code>No</code>。</li>
+<li><strong><code>Charge</code>：指定非周期体系的电荷，默认为<code>0.0</code></strong></li>
+<li><code>BondOrders</code>：指定原子和原子之间的键级，一般不需要。</li>
+</ul>
+<p>除了通过<code>System</code>指定系统，还可以用<code>Load System</code>读取<code>.rkf</code>文件中的之前的系统：</p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LoadSystem header</span><br><span class="line">   <span class="keyword">File</span> <span class="keyword">string</span></span><br><span class="line">   Section <span class="keyword">string</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>轨道和基函数的引用格式一般是<code>序号.不可约表示编号</code>，比如C<sub>2v</sub>的3.2表示C<sub>2v</sub>的第二个不可约表示B<sub>2</sub>的第三个轨道。</li>
+<li><code>Section</code>：默认是<code>Molecule</code></li>
 </ul>
-<h1 id="波函"><a href="#波函" class="headerlink" title="波函"></a>波函</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><ul>
-<li><p>波函数的总对称性通过<code>wf</code>卡定义：</p>
-<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">WF,</span>nelec,irrep,spin</span><br></pre></td></tr></table></figure>
-<p>或</p>
-<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WF,<span class="comment">[NELEC=nelec]</span>,<span class="comment">[SYM<span class="comment">[METRY]</span>=irrep]</span>,<span class="comment">[spin= spin]</span>,<span class="comment">[CHARGE=charge]</span></span><br></pre></td></tr></table></figure>
+<h2 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h2><ul>
+<li><p>Task的可选参数有：</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Task [SinglePoint | <span class="type">GeometryOptimization</span> | <span class="type">TransitionStateSearch</span> | <span class="type">IRC</span> | <span class="type">PESScan</span> | <span class="type">NEB</span> | <span class="type">VibrationalAnalysis</span> | <span class="type">MolecularDynamics</span> | <span class="type">GCMC</span>]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h2><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Properties</span><br><span class="line">   BondOrders <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Charges <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   DipoleGradients <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   DipoleMoment <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   ElasticTensor <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Gradients <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Hessian <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Molecules <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   NormalModes <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Other <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   PESPointCharacter <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Phonons <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Polarizability <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Raman <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   SelectedRegionForHessian string</span><br><span class="line">   StressTensor <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   VCD <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   VROA <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<h1 id="Engine-ADF"><a href="#Engine-ADF" class="headerlink" title="Engine ADF"></a>Engine ADF</h1><h2 id="基组"><a href="#基组" class="headerlink" title="基组"></a>基组</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Basis</span><br><span class="line">  <span class="built_in"> Type </span>[<span class="built_in">..</span>.]</span><br><span class="line">   Core [None | Small | Large]</span><br><span class="line">   CreateOutput <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">   Path string</span><br><span class="line">   PerAtomType</span><br><span class="line">      Core [None | Small | Large]</span><br><span class="line">      File stringS</span><br><span class="line">      Symbol string</span><br><span class="line">     <span class="built_in"> Type </span>[<span class="built_in">..</span>.]</span><br><span class="line">   End</span><br><span class="line">   PerRegion</span><br><span class="line">      Core [None | Small | Large]</span><br><span class="line">      Region string</span><br><span class="line">     <span class="built_in"> Type </span>[<span class="built_in">..</span>.]</span><br><span class="line">   End</span><br><span class="line">   FitType [<span class="built_in">..</span>.]</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
 <ul>
-<li><code>nelec</code>是电子总数，也可以通过<code>charge</code>指定。默认是核电荷的总和。</li>
-<li><code>irrep</code>是波函数的对称性，用不可约表示的序号表示。默认是1全对称的（第一个不可约表示}<ul>
-<li>对于一个双重态来说，它等于一个已占据的分子轨道的对称性。</li>
-<li>如果是三重态，则是两个单占据轨道对称性的直积。（比如O<sub>2</sub>的最高单占据轨道分别为π<sub>g,x</sub>和π<sub>g,y</sub>，分别对应于B<sub>2g</sub>和B<sub>3g</sub>，直积为B<sub>1g</sub>，对称性为4。）</li>
-</ul>
-</li>
-<li><code>spin</code>是单电子数。默认对偶数个电子是1（单重态），否则是2（双重态）。</li>
-</ul>
-</li>
-<li><p>也可以通过变量来定义（系统变量需要用SET）：</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SET,<span class="attribute">CHARGE</span>=charge</span><br><span class="line">SET,<span class="attribute">NELEC</span>=nelec</span><br><span class="line">SET,<span class="attribute">SPIN</span>=spin</span><br><span class="line">SER,<span class="attribute">SYMMETRY</span>=irrep</span><br></pre></td></tr></table></figure>
+<li><code>Type</code>：默认<code>DZ</code>，还有一系列：[SZ, DZ, DZP, TZP, TZ2P, QZ4P, TZ2P-J, QZ4P-J, AUG/ASZ, AUG/ADZ, AUG/ADZP, AUG/ATZP, AUG/ATZ2P, ET/ET-pVQZ, ET/ET-QZ3P, ET/ET-QZ3P-1DIFFUSE, ET/ET-QZ3P-2DIFFUSE, ET/ET-QZ3P-3DIFFUSE, POLTDDFT/DZ, POLTDDFT/DZP, POLTDDFT/TZP, POLTDDFT/TZ2P]</li>
+<li><code>Core</code>：默认<code>Large</code>，还可以选择<code>None</code>, <code>Small</code>, <code>Large</code></li>
+<li><code>CreateOutput</code>：默认为<code>No</code>。如果为<code>true</code>，原子创建运行的输出将打印到标准输出。如果为<code>false</code>，它将被保存到CreateAtoms.out文件中。</li>
+<li><code>Path</code>：默认为<code>$AMSRESOURCES/ADF</code>，ADF只在该文件夹中寻找合适的基组</li>
+<li><p><code>PerAtomType</code>：为一类原子指定基组</p>
 <ul>
-<li>还可以使用<code>SCFSPIN</code>和<code>SCFSYM[METRY]</code>、<code>MCSPIN</code>和<code>MCSYM[METRY]</code>、<code>CISPIN</code>和<code>CISYM[METRY]</code>来定义仅用于HF、MCSCF、MRCI的自旋和对称性。</li>
+<li><code>File</code>：指定基组的位置，可以是相对于<code>$AMSRESOURCES/ADF</code>的相对位置，也可以是绝对位置</li>
+<li><code>Symbol</code>：定义基组的符号</li>
 </ul>
 </li>
-</ul>
-<p>因为有默认值，在很多情况下，不需要指定WF卡。如果需要指定，一般是在SCF计算中指定WF信息，后面的MCSCF或CI计算可以不指定WF；这也适用于续算。如果在命令输入区外给出WF指令，那么它作为全局指令处理。根据顺序执行。</p>
-<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><ul>
-<li><p>HCO<sup>+</sup>，<sup>2</sup>B<sub>2</sub>（一个电子从最高占据b<sub>2</sub>轨道失去）</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wf,<span class="number">15</span>,<span class="number">3</span>,<span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p>或</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wf,charge=<span class="number">1</span>,symmetry=<span class="number">3</span>,spin=<span class="number">1</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="轨道子空间"><a href="#轨道子空间" class="headerlink" title="轨道子空间"></a>轨道子空间</h1><h2 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h2><ul>
-<li><p>由<code>OCC</code>，<code>CORE</code>，<code>CLOSED</code>，<code>FROZEN</code>卡提供：</p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">OCC</span>,m<span class="number">1</span>,m<span class="number">2</span>,...m<span class="number">8</span>;</span><br><span class="line"><span class="attribute">CORE</span>,co<span class="number">1</span>,co<span class="number">2</span>,...co<span class="number">8</span>;</span><br><span class="line"><span class="attribute">CLOSED</span>,cl<span class="number">1</span>,cl<span class="number">2</span>,...cl<span class="number">8</span>;</span><br><span class="line"><span class="attribute">FROZEN</span>,fr<span class="number">1</span>,fr<span class="number">2</span>,...fr<span class="number">8</span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>轨道空间也可以在命令区外定义，作为全局指令处理，即用于随后所有的程序。对某些波函类型特定的空间，可以使用以下两种方式定义：</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OCC,<span class="number">4</span>,<span class="number">2</span>,<span class="number">1</span>,CONTEXT=MULTI</span><br></pre></td></tr></table></figure>
-<p>或</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OCC_MULTI,<span class="number">4</span>,<span class="number">2</span>,<span class="number">1</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><code>OCC</code>，<code>CORE</code>，和<code>CLOSED</code>命令一般在每个有关的程序模块中都是必须的；但是程序会记住最近一次使用的值，因此如果不改变前面的轨道空间值的话，这些命令可以忽略。这一信息也保存在续算中。</p>
-<h2 id="含义"><a href="#含义" class="headerlink" title="含义"></a>含义</h2><ul>
-<li><code>OCC</code>：<code>mi</code>是不可约表示i的占据轨道数（包括<code>CORE</code>/<code>FROZEN</code>轨道和<code>CLOSED</code>轨道）</li>
-<li><code>CORE</code>：芯轨道数</li>
-<li><code>CLOSED</code>：<code>cli</code>闭壳层轨道数（包括芯轨道）</li>
-<li><code>FROZEN</code>只能用于MCSCF程序，表示不做优化的冻芯轨道</li>
-</ul>
-<p>通常<code>OCC</code>≥<code>CLOSED</code>≥<code>CORE</code>，不同的计算中，<code>OCC</code>，<code>CORE</code>，<code>CLOSED</code>，<code>FROZEN的</code>含义略有不同，默认的值也会有所不同：</p>
+<li><p><code>PerRegion</code>：为一个区域的原子指定基组</p>
 <ul>
-<li>SCF中：<ul>
-<li><code>OCC</code>是任何出现在CSF中的轨道</li>
-</ul>
-</li>
-<li>MCSCF中：<ul>
-<li><code>OCC</code>是任何出现在CSF中的轨道</li>
-<li><code>FROZEN</code>轨道在所有CSF中都是双占据，并且冻结的（也就是不做优化）</li>
-<li><code>CLOSED</code>表示所有的双占据轨道（<code>FROZEN</code>中冻结的加上做优化的）</li>
-</ul>
-</li>
-<li>电子关联方法（CI，MPn，CCSD等）中：<ul>
-<li><code>OCC</code>表示在所有参考CSF中占据的轨道</li>
-</ul>
-</li>
-<li>在CI和CCSD程序中：<ul>
-<li><code>CORE</code>是不做关联能处理的轨道</li>
-<li><code>CLOSED</code>在所有的参考CSF中保持双占据的轨道。</li>
+<li><code>Region</code>：指定基组的区域，可以用逻辑运算符，比如<code>R1+R2</code></li>
 </ul>
 </li>
 </ul>
+<h2 id="泛函"><a href="#泛函" class="headerlink" title="泛函"></a>泛函</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">XC</span><br><span class="line">  &#123;LDA LDA &#123;Stoll&#125;&#125;</span><br><span class="line">  &#123;GGA GGA&#125;</span><br><span class="line">  &#123;MetaGGA metagga&#125;</span><br><span class="line">  &#123;Model MODELPOT [IP]&#125;</span><br><span class="line">  &#123;HartreeFock&#125;</span><br><span class="line">  &#123;OEP fitmethod &#123;approximation&#125;&#125;</span><br><span class="line">  &#123;HYBRID hybrid &#123;<span class="attribute">HF</span>=HFpart&#125;&#125;</span><br><span class="line">  &#123;MetaHYBRID metahybrid&#125;</span><br><span class="line">  &#123;DOUBLEHYBRID doublehybrid&#125;</span><br><span class="line">  &#123;RPA&#125;</span><br><span class="line">  &#123;XCFUN&#125;</span><br><span class="line">  &#123;RANGESEP &#123;<span class="attribute">GAMMA</span>=X&#125; &#123;<span class="attribute">ALPHA</span>=a&#125; &#123;<span class="attribute">BETA</span>=b&#125;&#125;</span><br><span class="line">  (LibXC functional&#125;</span><br><span class="line">  &#123;DISPERSION [s6scaling] [<span class="attribute">RSCALE</span>=r0scaling] [Grimme3] [BJDAMP] [<span class="attribute">PAR1</span>=par1]  [<span class="attribute">PAR2</span>=par2]  [<span class="attribute">PAR3</span>=par3]  [<span class="attribute">PAR4</span>=par4] &#125;</span><br><span class="line">  &#123;Dispersion Grimme4 &#123;<span class="attribute">s6</span>=...&#125; &#123;<span class="attribute">s8</span>=...&#125; &#123;<span class="attribute">a1</span>=...&#125; &#123;<span class="attribute">a2</span>=...&#125;&#125;</span><br><span class="line">  &#123;DISPERSION dDsC&#125;</span><br><span class="line">  &#123;DISPERSION UFF&#125;</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h2 id="相对论"><a href="#相对论" class="headerlink" title="相对论"></a>相对论</h2><p>2020版本开始默认使用标量相对论效应：</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Relativity</span><br><span class="line">   Formalism [Pauli | <span class="type">ZORA</span> | <span class="type">X2C</span> | <span class="type">RA</span>-X2C]</span><br><span class="line">   Level [None | <span class="type">Scalar</span> | <span class="type">Spin</span>-Orbit]</span><br><span class="line">   Potential [MAPA | <span class="type">SAPA</span>]</span><br><span class="line">   SpinOrbitMagnetization [NonCollinear | <span class="type">Collinear</span> | <span class="type">CollinearX</span> | <span class="type">CollinearY</span> | <span class="type">CollinearZ</span>]</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Formalism</code>：如果<code>level</code>里是<code>None</code>，则不需要考虑所选择的形式。<ul>
+<li><code>Pauli</code>：泡利哈密顿函数</li>
+<li><code>ZORA</code>：零阶正则近似哈密顿量。默认。</li>
+<li><code>X2C</code>：四分量狄拉克方程到二分量狄拉克方程的精确变换，是Dyall修正的Dirac方程。</li>
+<li><code>RA-X2C</code>：四分量狄拉克方程到二分量狄拉克方程的精确变换，是修正狄拉克方程的正规方法。</li>
+</ul>
+</li>
+<li><code>Level</code>：<ul>
+<li><code>None</code>：非相对论。哈密顿量也就是Kohn-Sham方程的形式。</li>
+<li><code>Scalar</code>：标量相对论，成本较低。默认。</li>
+<li><code>Spin-Orbit</code>：旋轨耦合，最好的理论水平，比普通计算昂贵（4-8倍）</li>
+</ul>
+</li>
+<li><code>Potential</code>：<ul>
+<li><code>MAPA</code>：默认。the Minumium of neutral Atomical potential Approximation 中性原子势近似值的最小值。MAPA优于SAPA的优点是可以降低ZORA的规格依赖性。 除了电子密度非常接近重核外，几乎所有特性的ZORA规范依赖性都很小。 非常接近重核的电子密度可用于解释Mossbauer光谱中的异构体位移。</li>
+<li><code>SAPA</code>：the Sum of neutral Atomical potential Approximation 中性原子势近似值之和。</li>
+</ul>
+</li>
+<li><code>SpinOrbitMagnetization</code>：只与自旋轨道耦合相关，而且在<code>unrestricted</code>下使用。在不受限制的计算中，大多数XC泛函都有自旋极化作为一种成分。通常，自旋量子化轴的方向是任意的，可以方便地选择为z轴。然而，在自旋轨道计算中，方向很重要，将磁化矢量的z分量放入XC函数中是任意的。<ul>
+<li><code>NonCollinear</code>：可以将磁化矢量的大小插入XC函数中。 这称为非共线方法。</li>
+<li><code>CollinearX</code>，<code>CollinearY</code>，<code>CollinearZ</code>：使用x，y或z分量作为XC函数的自旋极化。默认为z。</li>
+<li>：<code>Collinear</code>：同<code>CollinearZ</code></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>2019版及之前的输入格式为：</p>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">RELATIVISTIC </span><span class="template-variable">&#123;level&#125;</span><span class="xml"> </span><span class="template-variable">&#123;formalism&#125;</span><span class="xml"> </span><span class="template-variable">&#123;potential&#125;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><blockquote>
+<p>Scalar级别为：<code>RELATIVISTIC Scalar ZORA</code></p>
+</blockquote>
+</li>
+<li><p>SpinOrbit级别为：<code>RELATIVISTIC spinorbit ZORA</code></p>
+<ul>
+<li>注意此时：unrestricted不再适用，解决办法删掉unrestricted或加上collinear/nocollinear，以及nosym关键词</li>
+<li>并且不能同时计算解析freq</li>
+</ul>
+</li>
+</ul>
+</blockquote>
 
     </div>
 
@@ -406,7 +405,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/2020/11/16/%E3%80%90molpro%E3%80%9102.%E5%AF%B9%E7%A7%B0%E6%80%A7/" title="【molpro】02.对称性">http://example.com/2020/11/16/【molpro】02.对称性/</a>
+    <a href="http://example.com/2021/05/11/%E3%80%90AMS%E3%80%9101.%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/" title="【AMS】01.输入文件">http://example.com/2021/05/11/【AMS】01.输入文件/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -418,10 +417,7 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag"><i class="fa fa-tag"></i> 点群</a>
-              <a href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag"><i class="fa fa-tag"></i> 对称性</a>
-              <a href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag"><i class="fa fa-tag"></i> 波函</a>
-              <a href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag"><i class="fa fa-tag"></i> 占据</a>
+              <a href="/tags/%E8%BE%93%E5%85%A5/" rel="tag"><i class="fa fa-tag"></i> 输入</a>
           </div>
 
         
@@ -430,13 +426,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/11/11/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="prev" title="光谱项">
-      <i class="fa fa-chevron-left"></i> 光谱项
+    <a href="/2021/03/02/%E3%80%90Multiwfn%E3%80%91AIM%E5%88%86%E6%9E%90/" rel="prev" title="【Multiwfn】AIM分析">
+      <i class="fa fa-chevron-left"></i> 【Multiwfn】AIM分析
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/11/20/%E5%A4%9A%E7%BB%84%E6%80%81MCSCF/" rel="next" title="多组态MCSCF">
-      多组态MCSCF <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -496,7 +489,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E7%A7%B0%E6%80%A7%EF%BC%88%E7%82%B9%E7%BE%A4%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">对称性（点群）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B3%A2%E5%87%BD"><span class="nav-number">2.</span> <span class="nav-text">波函</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">2.2.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BD%A8%E9%81%93%E5%AD%90%E7%A9%BA%E9%97%B4"><span class="nav-number">3.</span> <span class="nav-text">轨道子空间</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89-1"><span class="nav-number">3.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AB%E4%B9%89"><span class="nav-number">3.2.</span> <span class="nav-text">含义</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">主要结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#System"><span class="nav-number">1.1.</span> <span class="nav-text">System</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Task"><span class="nav-number">1.2.</span> <span class="nav-text">Task</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Properties"><span class="nav-number">1.3.</span> <span class="nav-text">Properties</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Engine-ADF"><span class="nav-number">2.</span> <span class="nav-text">Engine ADF</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%BB%84"><span class="nav-number">2.1.</span> <span class="nav-text">基组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%9B%E5%87%BD"><span class="nav-number">2.2.</span> <span class="nav-text">泛函</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%AF%B9%E8%AE%BA"><span class="nav-number">2.3.</span> <span class="nav-text">相对论</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
