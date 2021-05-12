@@ -473,36 +473,6 @@
       </tags>
   </entry>
   <entry>
-    <title>【ADF】03.键级</title>
-    <url>/2020/06/24/%E3%80%90ADF%E3%80%9103.%E9%94%AE%E7%BA%A7/</url>
-    <content><![CDATA[<h1 id="MAYER键级等"><a href="#MAYER键级等" class="headerlink" title="MAYER键级等"></a>MAYER键级等</h1><h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><ul>
-<li><p>优化好的结构，再算single point</p>
-</li>
-<li><p>设置好single piont的相关输入后，再点击ADFinput &gt; Details &gt; Userinput，在窗口中输入： </p>
-<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">bondorder printall</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>默认显示大于0.2的键级，如果需要自定义阈值，例如0.0（所有原子之间的键级无论大小均列出）可以设置为：</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">bondorder</span> printall tol=<span class="number">0</span>.<span class="number">0</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>同时ADFinput &gt; Details &gt; Symmetry，将默认的Auto改为<code>NOSYM</code>。</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">……</span><br><span class="line">bondorder printall</span><br><span class="line">ATOMS</span><br><span class="line">1 C      -5.772012228837       0.492926664171      -0.000000000000    </span><br><span class="line">……</span><br><span class="line">……</span><br><span class="line">……</span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line"></span><br><span class="line">BASIS</span><br><span class="line">type TZP</span><br><span class="line">……</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><ul>
-<li><p>计算完毕后，得到所有原子，两两之间的MAYER、G-J、N-M (1)、N-M (2)、N-M (3) (*)键级关系</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">-----------------------------------------------------------------------------------------------</span><br><span class="line">                          DIST. [A]                   BOND-ORDERS</span><br><span class="line">                                                  (THRESHOLD =  <span class="number">0.000</span> )</span><br><span class="line"> -----------------------------------------------------------------------------------------------</span><br><span class="line">                                      MAYER        G-J    N-M (<span class="number">1</span>)    N-M (<span class="number">2</span>)    N-M (<span class="number">3</span>) (*)</span><br><span class="line"> -----------------------------------------------------------------------------------------------</span><br><span class="line">  C      <span class="number">1</span> - C      <span class="number">2</span>     <span class="number">1.4005</span>     <span class="number">1.2389</span>     <span class="number">1.4344</span>     <span class="number">1.4936</span>     <span class="number">1.4415</span>     <span class="number">1.5643</span></span><br><span class="line">  C      <span class="number">1</span> - C      <span class="number">3</span>     <span class="number">2.4257</span>    <span class="number">-0.0243</span>     <span class="number">0.0085</span>     <span class="number">0.0089</span>    <span class="number">-0.0294</span>     <span class="number">0.0093</span></span><br><span class="line">  C      <span class="number">1</span> - C      <span class="number">4</span>     <span class="number">2.8009</span>     <span class="number">0.0719</span>     <span class="number">0.1189</span>     <span class="number">0.1238</span>     <span class="number">0.0845</span>     <span class="number">0.1297</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>ADF</category>
-      </categories>
-      <tags>
-        <tag>键级</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【ADF】02.EDA-NOCV</title>
     <url>/2020/02/07/%E3%80%90ADF%E3%80%9102.EDA-NOCV/</url>
     <content><![CDATA[<h1 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h1><h2 id="碎片"><a href="#碎片" class="headerlink" title="碎片"></a>碎片</h2><ul>
@@ -640,6 +610,36 @@
       </tags>
   </entry>
   <entry>
+    <title>【ADF】03.键级</title>
+    <url>/2020/06/24/%E3%80%90ADF%E3%80%9103.%E9%94%AE%E7%BA%A7/</url>
+    <content><![CDATA[<h1 id="MAYER键级等"><a href="#MAYER键级等" class="headerlink" title="MAYER键级等"></a>MAYER键级等</h1><h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><ul>
+<li><p>优化好的结构，再算single point</p>
+</li>
+<li><p>设置好single piont的相关输入后，再点击ADFinput &gt; Details &gt; Userinput，在窗口中输入： </p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">bondorder printall</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>默认显示大于0.2的键级，如果需要自定义阈值，例如0.0（所有原子之间的键级无论大小均列出）可以设置为：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">bondorder</span> printall tol=<span class="number">0</span>.<span class="number">0</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>同时ADFinput &gt; Details &gt; Symmetry，将默认的Auto改为<code>NOSYM</code>。</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">……</span><br><span class="line">bondorder printall</span><br><span class="line">ATOMS</span><br><span class="line">1 C      -5.772012228837       0.492926664171      -0.000000000000    </span><br><span class="line">……</span><br><span class="line">……</span><br><span class="line">……</span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line"></span><br><span class="line">BASIS</span><br><span class="line">type TZP</span><br><span class="line">……</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><ul>
+<li><p>计算完毕后，得到所有原子，两两之间的MAYER、G-J、N-M (1)、N-M (2)、N-M (3) (*)键级关系</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">-----------------------------------------------------------------------------------------------</span><br><span class="line">                          DIST. [A]                   BOND-ORDERS</span><br><span class="line">                                                  (THRESHOLD =  <span class="number">0.000</span> )</span><br><span class="line"> -----------------------------------------------------------------------------------------------</span><br><span class="line">                                      MAYER        G-J    N-M (<span class="number">1</span>)    N-M (<span class="number">2</span>)    N-M (<span class="number">3</span>) (*)</span><br><span class="line"> -----------------------------------------------------------------------------------------------</span><br><span class="line">  C      <span class="number">1</span> - C      <span class="number">2</span>     <span class="number">1.4005</span>     <span class="number">1.2389</span>     <span class="number">1.4344</span>     <span class="number">1.4936</span>     <span class="number">1.4415</span>     <span class="number">1.5643</span></span><br><span class="line">  C      <span class="number">1</span> - C      <span class="number">3</span>     <span class="number">2.4257</span>    <span class="number">-0.0243</span>     <span class="number">0.0085</span>     <span class="number">0.0089</span>    <span class="number">-0.0294</span>     <span class="number">0.0093</span></span><br><span class="line">  C      <span class="number">1</span> - C      <span class="number">4</span>     <span class="number">2.8009</span>     <span class="number">0.0719</span>     <span class="number">0.1189</span>     <span class="number">0.1238</span>     <span class="number">0.0845</span>     <span class="number">0.1297</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>ADF</category>
+      </categories>
+      <tags>
+        <tag>键级</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【AMS】01.输入文件</title>
     <url>/2021/05/11/%E3%80%90AMS%E3%80%9101.%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6/</url>
     <content><![CDATA[<h1 id="主要结构"><a href="#主要结构" class="headerlink" title="主要结构"></a>主要结构</h1><ul>
@@ -748,7 +748,7 @@
   </entry>
   <entry>
     <title>【AMS】02.基础计算</title>
-    <url>/2021/05/11/%E3%80%90AMS%E3%80%9102.%E5%9F%BA%E7%A1%80%E8%AE%A1%E7%AE%97/</url>
+    <url>/2019/09/23/%E3%80%90AMS%E3%80%9102.%E5%9F%BA%E7%A1%80%E8%AE%A1%E7%AE%97/</url>
     <content><![CDATA[<h1 id="单点计算"><a href="#单点计算" class="headerlink" title="单点计算"></a>单点计算</h1><figure class="highlight ada"><table><tr><td class="code"><pre><span class="line"><span class="keyword">Task</span> SinglePoint</span><br></pre></td></tr></table></figure>
 <h1 id="SCF选项"><a href="#SCF选项" class="headerlink" title="SCF选项"></a>SCF选项</h1><figure class="highlight puppet"><table><tr><td class="code"><pre><span class="line">SCF</span><br><span class="line"> Iterations Niter</span><br><span class="line"> Converge <span class="keyword">SCFcnv</span> &#123; sconv2 &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">AccelerationMethod</span> &#123; ADIIS | LISTi | LISTb | fDIIS | LISTf | MESA | SDIIS &#125;</span><br><span class="line"> <span class="keyword">MESA</span> [NoFDIIS] [NoLISTb] [NoLISTf] [NoLISTi] [NoSDIIS] [NoADIIS]</span><br><span class="line"> ADIIS</span><br><span class="line">   &#123;THRESH1 a1&#125;</span><br><span class="line">   &#123;THRESH2 a2&#125;</span><br><span class="line"> End</span><br><span class="line"> NoADIIS</span><br><span class="line"> DIIS</span><br><span class="line">   &#123;N n&#125;</span><br><span class="line">   &#123;OK ok&#125;</span><br><span class="line">   &#123;cyc cyc&#125;</span><br><span class="line"> End</span><br><span class="line"> Mixing mix</span><br><span class="line"> Mixing1 mix1</span><br><span class="line"></span><br><span class="line"> OldSCF</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
 <h2 id="Iterations"><a href="#Iterations" class="headerlink" title="Iterations"></a>Iterations</h2><p><code>Iterations</code>SCF迭代的最大次数，<code>Niter</code>默认是<code>300</code></p>
@@ -2163,6 +2163,26 @@
       </tags>
   </entry>
   <entry>
+    <title>多组态MCSCF</title>
+    <url>/2020/11/20/%E5%A4%9A%E7%BB%84%E6%80%81MCSCF/</url>
+    <content><![CDATA[<h1 id="与CI的区别"><a href="#与CI的区别" class="headerlink" title="与CI的区别"></a>与CI的区别</h1><p>CI：</p>
+<script type="math/tex; mode=display">
+\Psi^{C I}=\sum_{P} C_{P} \Phi_{P}</script><p>MCSCF：</p>
+<script type="math/tex; mode=display">
+\Psi^{M C S C F}=\sum_{k=0}^{\operatorname{CSF}_{s}} A_{k} \Phi_{k}</script><ul>
+<li>CI解决的是动态相关，MCSCF解决的是静态相关</li>
+<li>通过变分法求得<script type="math/tex">C_P</script>，只优化系数。MCSCF中N电子的CSF为：<script type="math/tex">\Phi_{k}=\hat{A}\left|\phi_{1} \bar{\phi}_{1} \ldots \phi_{m} \bar{\phi}_{m}\right|</script>，单电子轨道为：<script type="math/tex">\phi_{i}=\sum_{\mu} \chi_{\mu} C_{\mu i}</script>，除了优化系数<script type="math/tex">A_{k}</script>，还会优化轨道，即<script type="math/tex">C_{\mu i}</script>。</li>
+<li>CASSCF中相当于在所选的活性空间中有一个Full CI并优化了所选的轨道。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+      </categories>
+      <tags>
+        <tag>MCSCF</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>光谱项</title>
     <url>/2020/11/11/%E5%85%89%E8%B0%B1%E9%A1%B9/</url>
     <content><![CDATA[<h1 id="双原子"><a href="#双原子" class="headerlink" title="双原子"></a>双原子</h1><h2 id="2S-1-Lambda-简单确定方法"><a href="#2S-1-Lambda-简单确定方法" class="headerlink" title="$^{2S+1}\Lambda$简单确定方法"></a>$^{2S+1}\Lambda$简单确定方法</h2><p>根据分子轨道占据来确定双原子的分子光谱项为$^{2S+1}\Lambda$：</p>
@@ -2395,26 +2415,6 @@
       </categories>
       <tags>
         <tag>光谱项</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>多组态MCSCF</title>
-    <url>/2020/11/20/%E5%A4%9A%E7%BB%84%E6%80%81MCSCF/</url>
-    <content><![CDATA[<h1 id="与CI的区别"><a href="#与CI的区别" class="headerlink" title="与CI的区别"></a>与CI的区别</h1><p>CI：</p>
-<script type="math/tex; mode=display">
-\Psi^{C I}=\sum_{P} C_{P} \Phi_{P}</script><p>MCSCF：</p>
-<script type="math/tex; mode=display">
-\Psi^{M C S C F}=\sum_{k=0}^{\operatorname{CSF}_{s}} A_{k} \Phi_{k}</script><ul>
-<li>CI解决的是动态相关，MCSCF解决的是静态相关</li>
-<li>通过变分法求得<script type="math/tex">C_P</script>，只优化系数。MCSCF中N电子的CSF为：<script type="math/tex">\Phi_{k}=\hat{A}\left|\phi_{1} \bar{\phi}_{1} \ldots \phi_{m} \bar{\phi}_{m}\right|</script>，单电子轨道为：<script type="math/tex">\phi_{i}=\sum_{\mu} \chi_{\mu} C_{\mu i}</script>，除了优化系数<script type="math/tex">A_{k}</script>，还会优化轨道，即<script type="math/tex">C_{\mu i}</script>。</li>
-<li>CASSCF中相当于在所选的活性空间中有一个Full CI并优化了所选的轨道。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-      </categories>
-      <tags>
-        <tag>MCSCF</tag>
       </tags>
   </entry>
   <entry>
