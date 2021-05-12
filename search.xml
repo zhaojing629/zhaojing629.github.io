@@ -603,7 +603,7 @@
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>ADF</category>
+        <category>AMS</category>
       </categories>
       <tags>
         <tag>能量分解</tag>
@@ -5952,6 +5952,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
     <title>【AMS】04.键级</title>
     <url>/2020/06/24/%E3%80%90AMS%E3%80%9104.%E9%94%AE%E7%BA%A7/</url>
     <content><![CDATA[<p>键级的计算可以通过两种方式。不管用哪种方式，都需要在<code>Engine ADF</code>中指定对称性为<code>NOSYM</code></p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">Engine</span> <span class="string">ADF </span></span><br><span class="line">  <span class="attr">symmetry</span> <span class="string">NOSYM</span></span><br><span class="line"><span class="attr">EndEngine</span></span><br></pre></td></tr></table></figure>
 <h1 id="方式1"><a href="#方式1" class="headerlink" title="方式1"></a>方式1</h1><p>在<code>Properties</code>中指定：</p>
 <figure class="highlight mathematica"><table><tr><td class="code"><pre><span class="line"><span class="keyword">Properties</span></span><br><span class="line">   BondOrders Yes</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
 <h1 id="方式2"><a href="#方式2" class="headerlink" title="方式2"></a>方式2</h1><p>在<code>Engine ADF</code>中指定：</p>
