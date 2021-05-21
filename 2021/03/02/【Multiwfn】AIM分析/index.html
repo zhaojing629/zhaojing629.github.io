@@ -28,13 +28,19 @@
 <meta property="og:site_name" content="Jing&#39;s Notes">
 <meta property="og:description" content="AIM分析">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/image-20210521212251604.png">
+<meta property="og:image" content="http://example.com/image-20210521205948041.png">
 <meta property="article:published_time" content="2021-03-02T07:28:44.000Z">
-<meta property="article:modified_time" content="2021-03-02T09:25:54.000Z">
+<meta property="article:modified_time" content="2021-05-21T13:45:23.519Z">
 <meta property="article:author" content="Zhao Jing">
 <meta property="article:tag" content="键级">
 <meta property="article:tag" content="AIM">
 <meta property="article:tag" content="电荷">
+<meta property="article:tag" content="临界点">
+<meta property="article:tag" content="键径">
+<meta property="article:tag" content="拓扑分析">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/image-20210521212251604.png">
 
 <link rel="canonical" href="http://example.com/2021/03/02/%E3%80%90Multiwfn%E3%80%91AIM%E5%88%86%E6%9E%90/">
 
@@ -215,10 +221,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-03-02 15:28:44 / 修改时间：17:25:54" itemprop="dateCreated datePublished" datetime="2021-03-02T15:28:44+08:00">2021-03-02</time>
+              <time title="创建时间：2021-03-02 15:28:44" itemprop="dateCreated datePublished" datetime="2021-03-02T15:28:44+08:00">2021-03-02</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-21 21:45:23" itemprop="dateModified" datetime="2021-05-21T21:45:23+08:00">2021-05-21</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -262,14 +274,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.5k</span>
+              <span>9.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>9 分钟</span>
             </span>
             <div class="post-description">AIM分析</div>
 
@@ -282,7 +294,145 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h1><p>加载.fch文件后的总体步骤：</p>
+        <p><a target="_blank" rel="noopener" href="http://bbs.keinsci.com/thread-362-1-1.html">http://bbs.keinsci.com/thread-362-1-1.html</a></p>
+<p>AIM（Atoms in molecular）是由已故的R. F. W. Bader从上世纪70年代开始发展的一套波函数分析理论体系。更严格的称为QTAIM (The quantum theory of atoms In molecules)。</p>
+<ul>
+<li>主要分析的函数：电子密度、电子密度梯度，电子拉普拉斯函数及Hessian、动能密度、势能密度、能量密度、费米穴、源函数等</li>
+<li>主要研究手段：绘图分析（曲面图、平面图、等值图）、临界点分析、拓扑路径分析、盆积分、分子间面分析等</li>
+<li>具体概念：AIM电荷、键径、键椭率、维里路径、定域化/离域化指数、AIM键级、AOM键级、eta指数、键金属性、盆偶极矩/四极矩、范德华表面、原子极化率等。如今AIM一词的已经被大为扩展，ELF、模糊原子、信息嫡等概念往往也被算进AIM的范畴。</li>
+</ul>
+<h1 id="拓扑分析"><a href="#拓扑分析" class="headerlink" title="拓扑分析"></a>拓扑分析</h1><p>实空间函数（以三维空间坐标为变量的函数）的拓扑分析主要是需寻找函数的不同类型的临界点，以及获得连接临界点的拓扑路径。</p>
+<ul>
+<li><strong>电子密度</strong>的拓扑分析是由Bader首先提出的，是AIM理论中的重要组成部分</li>
+<li>后来拓扑分析的思路又被Silvi、Savin等人用于分析ELF（<strong>电子定域化函数</strong>）</li>
+</ul>
+<h2 id="相关数学概念"><a href="#相关数学概念" class="headerlink" title="相关数学概念"></a>相关数学概念</h2><p>电子密度的梯度模：<script type="math/tex">|\nabla \rho(\mathbf{r})|=\sqrt{\left(\frac{\partial \rho(\mathbf{r})}{\partial x}\right)^{2}+\left(\frac{\partial \rho(\mathbf{r})}{\partial y}\right)^{2}+\left(\frac{\partial \rho(\mathbf{r})}{\partial z}\right)^{2}}</script></p>
+<p>约化密度梯度（Reduced density gradient）：<script type="math/tex">\operatorname{RDG}(\mathbf{r})=\frac{1}{2\left(3 \pi^{2}\right)^{1 / 3}} \frac{|\nabla \rho(\mathbf{r})|}{\rho(\mathbf{r})^{4 / 3}}</script></p>
+<ul>
+<li>约化密度梯度是电子密度的梯度是电子密度的梯度一种无量纲的形式，通常用在DFT泛函的表达式中，如今也用来展现弱相互作用区域。</li>
+</ul>
+<p>电子密度的Hessian矩阵：<script type="math/tex">\mathbf{A}\left(\mathbf{r}_{c}\right)=\left(\begin{array}{ccc}
+\frac{\partial^{2} \rho}{\partial x^{2}} & \frac{\partial^{2} \rho}{\partial x \partial y} & \frac{\partial^{2} \rho}{\partial x \partial z} \\
+\frac{\partial^{2} \rho}{\partial y \partial x} & \frac{\partial^{2} \rho}{\partial y^{2}} & \frac{\partial^{2} \rho}{\partial y \partial z} \\
+\frac{\partial^{2} \rho}{\partial z \partial x} & \frac{\partial^{2} \rho}{\partial z \partial y} & \frac{\partial^{2} \rho}{\partial z^{2}}
+\end{array}\right)_{\mathbf{r}=\mathbf{r}_{c}}</script></p>
+<ul>
+<li><script type="math/tex">\mathbf{A}</script>即临界点，对角元对应于对应方向上的曲率，非对角是混合二阶导数。</li>
+</ul>
+<p>将<script type="math/tex">\mathbf{A}</script>对角化，相当于把笛卡尔坐标x，y，z进行酉变换（相当于进行了旋转）成为x’，y’，z’，得到<script type="math/tex">\boldsymbol{\Lambda}=\left(\begin{array}{ccc}
+\frac{\partial^{2} \rho}{\partial x^{\prime 2}} & 0 & 0 \\
+0 & \frac{\partial^{2} \rho}{\partial \gamma^{\prime 2}} & 0 \\
+0 & 0 & \frac{\partial^{2} \rho}{\partial z^{\prime 2}}
+\end{array}\right)_{\mathbf{r}^{\prime}=\mathbf{r}_{c}}=\left(\begin{array}{ccc}
+\lambda_{1} & 0 & 0 \\
+0 & \lambda_{2} & 0 \\
+0 & 0 & \lambda_{3}
+\end{array}\right)</script></p>
+<ul>
+<li>三个本征值<script type="math/tex">\lambda_{1}</script>、<script type="math/tex">\lambda_{2}</script>、<script type="math/tex">\lambda_{3}</script>对应于临界点处在x’，y’，z’三个方向电子密度的曲率。</li>
+</ul>
+<h2 id="临界点"><a href="#临界点" class="headerlink" title="临界点"></a>临界点</h2><p>二维中的临界点：</p>
+<p><img src="/image-20210521212251604.png" alt="image-20210521212251604" style="zoom: 50%;" /></p>
+<p><strong>临界点（Critical point，CP）</strong>是实空间函数的梯度的模为0的点，用（m,n）表示。</p>
+<ul>
+<li>m是秩，对于临界点处电子密度非零曲率的数目：<ul>
+<li>在平衡结构下一般都是3</li>
+<li>体系处于不稳定的结构会出现m&lt;3的情况，不考虑。</li>
+</ul>
+</li>
+<li><script type="math/tex; mode=display">n=N_p-Nn</script><ul>
+<li><script type="math/tex">N_p</script>是Hessian矩阵正本征值的数目</li>
+<li><script type="math/tex">N_n</script>是Hessian矩阵负本征值的数目</li>
+</ul>
+</li>
+</ul>
+<p>所以三维的临界点可以分为四类：</p>
+<h3 id="3-3"><a href="#3-3" class="headerlink" title="(3,-3)"></a>(3,-3)</h3><p>Hessian矩阵三个本征值都为负。</p>
+<ul>
+<li><p>对应函数的局部极大点，也称为吸引子（attractor）。</p>
+</li>
+<li><p>对于电子密度函数，通常出现在离原子核很近的位置。</p>
+<ul>
+<li>对于重原子，(3,-3)临界点与原子核几乎精确重合，因此也称为核临界点（nuclear critical point，NCP）。氢原子由于电子数较少，受周围环境影响明显，因此(3,-3)临界点与氢核位置有一定偏离。</li>
+<li>一般情况下(3,-3)临界点与原子核一一对应，数目与原子数目一致。但是有些情况下原子核没有(3,-3)临界点，比如KrH<sup>+</sup>氢核对应的临界点被电子分布弥散的Kr所吞并。也有的(3,-3)临界点出现在原子核以外的位置，比如Li<sub>2</sub>在两个Li之间有(3,-3)临界点。</li>
+</ul>
+<blockquote>
+<p>电子密度在原子核处的尖峰导数不连续，因此严格讲梯度不为0，但实际计算使用的是高斯基函数，因此原子核处的导数是0</p>
+</blockquote>
+</li>
+<li><p>对于ELF函数，通常出现在共价键区域、孤对电子区域、原子核处。</p>
+</li>
+</ul>
+<h3 id="3-1"><a href="#3-1" class="headerlink" title="(3,-1)"></a>(3,-1)</h3><p>Hessian矩阵两个本征值为负，一个为正。对应函数的二阶鞍点。</p>
+<p>如图，箭头代表负梯度（数值最快下降方向），在垂直于键的平面上，此临界点是极大值，在顺着键的方向上，此临界点是极小值：</p>
+<p><img src="/image-20210521205948041.png" alt="image-20210521205948041" style="zoom:50%;" /></p>
+<ul>
+<li>对于电子密度函数，通常出现在有相互作用的两个原子之间，也被称为键临界点（bond critical point，BCP）。</li>
+<li>对于ELF函数，位置不甚确定，经常偏离两个相关的(3,-3)的连线很多。</li>
+</ul>
+<h3 id="3-1-1"><a href="#3-1-1" class="headerlink" title="(3,+1)"></a>(3,+1)</h3><p>Hessian矩阵两个本征值为正，一个为负。对应函数一阶鞍点，如同势能面上的过渡态。</p>
+<ul>
+<li>对于电子密度函数，通常出现在环体系平面中，如苯环的中心，也被称为环临界点（ring critical point，RCP），表现出位阻效应。在环的平面上，此临界点为电子密度极小值，在垂直于环的方向上为极大值。</li>
+<li>对于ELF，(3,+1)和(3,+3)通常较少讨论下。</li>
+</ul>
+<h3 id="3-3-1"><a href="#3-3-1" class="headerlink" title="(3,+3)"></a>(3,+3)</h3><p>Hessian矩阵三个本征值都为正，对应函数的局部极小点。</p>
+<ul>
+<li>对于电子密度函数，通常出现在笼状体系中，例如C60的中心。也被称为笼临界点（cage critical point，CCP）</li>
+</ul>
+<h3 id="Poincare-Hopf关系"><a href="#Poincare-Hopf关系" class="headerlink" title="Poincaré-Hopf关系"></a>Poincaré-Hopf关系</h3><p>n(3,-3) – n(3,-1) + n(3,+1) – n(3,+3) =</p>
+<ul>
+<li>1：孤立体系</li>
+<li>0：周期性体系</li>
+</ul>
+<p>所有临界点找全一定满足此关系，但是满足此条件不代表所有的临界点找全了。</p>
+<h2 id="拓扑路径"><a href="#拓扑路径" class="headerlink" title="拓扑路径"></a>拓扑路径</h2><p>拓扑路径是连接临界点的路径。一般比较关注的是(3,-1)与(3,-3)之间的路径。沿着BCP(3,-1)的Hessian矩阵本征值为正的本征向量方向分别向前和向后出发，顺着梯度方向不断前进就能找到两个(3,-3)，而经过的轨迹就是拓扑路径。（最陡上升法从BCO位置跟踪梯度的最大方向来生成）</p>
+<ul>
+<li>对于电子密度函数，这样的拓扑路径近似于化学键，因此称为键径（Bond path）。键径可以展示各类原子之间的相互作用的路径，键径的集合称为分子图（molecular graph），是对分子结构的确切描述。</li>
+<li>对于ELF，通过生成拓扑路径则可以将(3,-1)与(3,-3)临界点之间的关系清晰地表现出来。</li>
+</ul>
+<p>也有其他类型的拓扑路径，比如(3,+1)→(3,-1)，(3,+3) →(3,+1)</p>
+<h1 id="Multiwfn中的操作"><a href="#Multiwfn中的操作" class="headerlink" title="Multiwfn中的操作"></a>Multiwfn中的操作</h1><p>寻找临界点通常使用牛顿法。给出一个初猜点，通过反复迭代，就能找到与之最邻近的临界点。但牛顿法不一定每次都成功，有可能一直不收敛，也可能迭代过程中碰到Hessian矩阵为奇矩阵的情况，或者收敛到已找到的临界点位置，此时就要尝试从下一个初猜点开始了。初猜点与期望的临界点位置越近越容易成功收敛到相应的临界点。</p>
+<h2 id="电子密度"><a href="#电子密度" class="headerlink" title="电子密度"></a>电子密度</h2><p>电子密度函数的结构很简单，一般都是在原子核处像一个山峰耸立，向着四周呈指数降低，典型体系的各种临界点位置都能大致猜出来，正如上面已经提到的。寻找(3,-3)点的时候初猜点都选在原子核位置。寻找(3,-1)点的时候，初猜点都选在两个原子或者两个已找到的(3,-3)点连线的中点，在这个过程中也可能顺便找到(3,+1)和(3,+3)点。另外也常常将三个原子或四个原子的几何中心作为初猜，这分别适合进一步寻找尚未找到的(3,+1)和(3,-3)点。假设利用这几种初猜方式还是没找到一些期望的临界点，但通过经验可以估计出期望的点出现的大致空间范围，那么就应当在这个空间范围内设定一大堆初猜点来尝试寻找那个临界点。</p>
+<h3 id="一般情况"><a href="#一般情况" class="headerlink" title="一般情况"></a>一般情况</h3><ul>
+<li><p>使用Multiwfn加载fchk文件后：</p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">2 </span> //拓扑分析功能</span><br><span class="line"><span class="symbol">2 </span> //以所有原子核作为初猜点，目的是寻找所有核临界点</span><br><span class="line"><span class="symbol">3 </span> //以每一对距离不很远的原子核连线中点作为初猜点，主要用来寻找键临界点</span><br><span class="line"><span class="symbol">8 </span> //生成键径</span><br><span class="line"><span class="symbol">0 </span> //观看结果</span><br></pre></td></tr></table></figure>
+<ul>
+<li>此时文本界面会输出所有临界点和键径的信息，最后提示你Fine, Poincare-Hopf relationship is satisfied，这是所有临界点都已找到的必要非充分条件。凭借化学直觉或者如果这个条件没满足，临界点没找全，需要再用选项<code>4</code>（三个原子中心作为初猜）、选项<code>5</code>（四个原子中心作为初猜）或选项<code>6</code>（在某个位置附近随机设一大堆点）来进一步找临界点了。</li>
+<li>图形界面中：<ul>
+<li>可以选择显示哪种CP，是否显示CP的标签，是否显示原子等。</li>
+<li>紫色的球是(3,-3)，与原子核位置基本一致。桔黄色是键临界点，黄色是环临界点。棕色的线是键径。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="进一步寻找"><a href="#进一步寻找" class="headerlink" title="进一步寻找"></a>进一步寻找</h3><p>有些临界点比较特殊，在默认的设定下，用选项2~5都找不到临界点，需要人为调整一下参数寻找其他临界点的方法：</p>
+<ul>
+<li><p>重原子和氢连线上的键临界点找不到：在参数设定界面中将Set scale factor for stepsize一项设低，建议设为0.5，然后再重新找临界点。</p>
+</li>
+<li><p>由于初猜位置不合适：初猜点越接近临界点，就越有可能收敛到临界点。对极个别体系，选项2~5的方式设定的初猜点可能都不合适，故而会漏掉某些临界点，此时建议用选项6的方式设定初猜点。选项6会定义一个球心，然后让指定数目（通常设几百乃至上千）的初猜点随机分布在球体中来寻找临界点，只要能让初猜点随机分布的范围能够包含或者与潜在的临界点位置比较近，通常就能将那些临界点找出来。选项6的子选项1~6以不同方式定义这个球体的中心：</p>
+<ul>
+<li><code>10</code>：定义球体半径</li>
+<li><code>11</code>：设定将有多少个初猜点随机分布在球体中，</li>
+<li><code>0</code>：开始执行搜索。</li>
+<li><code>-1</code>，则用户不必设定球心，球心会自动依次定义在每个原子核上，也就是说，每个原子附近都会分布一堆初猜点来搜索临界点。</li>
+<li><code>-2</code>，则球心会自动依次定义在指定的原子核上，而非所有原子核上。</li>
+</ul>
+<p>选项6这种搜索方式对于电子密度临界点搜索用得机会不多，它最适合搜索ELF的临界点，因为ELF比电子密度临界点明显多得多，分布更复杂。</p>
+</li>
+</ul>
+<h3 id="分析、编辑结果"><a href="#分析、编辑结果" class="headerlink" title="分析、编辑结果"></a>分析、编辑结果</h3><ul>
+<li><p><code>7 Show real space function values at specific CP or all CPs</code>并且输入临界点的编号：可以获知这个临界点的一切信息，包括Multiwfn支持的各种实空间函数的数值（如电子密度、拉普拉斯值、动能密度、势能密度等）和电子密度的梯度以及Hessian矩阵，输出信息例如：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">CP Position:</span>   <span class="number">-1.54802279321209</span>    <span class="number">1.64407933432874</span>   <span class="number">-0.36311758584834</span></span><br><span class="line"><span class="attr">CP type:</span> <span class="string">(3,-1)</span></span><br><span class="line"><span class="attr">Density of all electrons:</span>  <span class="number">0.3333962073E+00</span></span><br><span class="line"><span class="attr">Density of Alpha electrons:</span>  <span class="number">0.1666981037E+00</span></span><br><span class="line"><span class="attr">Density of Beta electrons:</span>  <span class="number">0.1666981037E+00</span></span><br><span class="line"><span class="attr">Spin density of electrons:</span>  <span class="number">0.0000000000E+00</span></span><br><span class="line"><span class="string">Lagrangian</span> <span class="string">kinetic</span> <span class="string">energy</span> <span class="string">G(r):</span>  <span class="number">0.1055976596E+00</span></span><br><span class="line"><span class="string">Hamiltonian</span> <span class="string">kinetic</span> <span class="string">energy</span> <span class="string">K(r):</span>  <span class="number">0.3702940096E+00</span></span><br><span class="line"><span class="string">Potential</span> <span class="string">energy</span> <span class="string">density</span> <span class="string">V(r):</span> <span class="number">-0.4758916692E+00</span></span><br><span class="line"><span class="attr">Energy density:</span> <span class="number">-0.3702940096E+00</span></span><br><span class="line"><span class="attr">Laplacian of electron density:</span> <span class="number">-0.1058785400E+01</span></span><br><span class="line"><span class="string">Electron</span> <span class="string">localization</span> <span class="string">function</span> <span class="string">(ELF):</span>  <span class="number">0.9499848594E+00</span></span><br><span class="line"><span class="string">Localized</span> <span class="string">orbital</span> <span class="string">locator</span> <span class="string">(LOL):</span>  <span class="number">0.8133846890E+00</span></span><br><span class="line"><span class="string">...略</span></span><br></pre></td></tr></table></figure>
+<p>Multiwfn还可以将临界点上的各种函数分解为各个轨道的贡献（可以是分子轨道、定域化轨道等）</p>
+</li>
+<li><p><code>-9</code>：计算临界点间、原子间的距离、角度。</p>
+</li>
+<li><code>-4</code>：导入导出已找到的临界点、删除或人为地增加临界点。</li>
+<li><code>-5</code>：显示拓扑路径的详细信息（路径轨迹的坐标、路径长度等）并进行编辑和导入、导出，还能绘制各种实空间函数沿着键径上的变化图</li>
+</ul>
+<h2 id="ELF"><a href="#ELF" class="headerlink" title="ELF"></a>ELF</h2><p>对于ELF、LOL和电子密度拉普拉斯函数，寻找对应原子内核处的临界点（对应高度定域的1s轨道电子）还是用原子核位置作为初猜。但是对于价层的ELF临界点，由于其分布较难预料，而且数目众多，最好的办法就是直接在每个原子附近都设一大堆初猜点来寻找各个临界点。不过，由于ELF临界点太多而且分布太复杂，想找全所有临界点绝非易事，所以，只要看到化学意义显著的临界点（所有的(3,-3)，以及部分(3,-1)）都已经找到了，临界点的搜索就可以停掉了。除了牛顿法，还有一种基于立方格点的临界点搜索方法，可以通过Multiwfn的盆分析实现，见《使用Multiwfn做电子密度、ELF、静电势、密度差等函数的盆分析》（<a target="_blank" rel="noopener" href="http://sobereva.com/179），此方法虽然可以保证把(3,-3)搜索全，但定位精度低（精度取决于格点间距）。">http://sobereva.com/179），此方法虽然可以保证把(3,-3)搜索全，但定位精度低（精度取决于格点间距）。</a></p>
+<h1 id="AIM盆分析"><a href="#AIM盆分析" class="headerlink" title="AIM盆分析"></a>AIM盆分析</h1><p>加载.fch文件后的总体步骤：</p>
 <figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">17 </span>//盆分析</span><br><span class="line"><span class="symbol">1 </span> //生成盆并寻找吸引子</span><br><span class="line"><span class="symbol">1 </span> //用电子密度划分盆</span><br><span class="line"><span class="symbol">2 </span> //中等质量格点</span><br><span class="line"><span class="symbol">7 </span> //用混合格点积分AIM盆</span><br><span class="line"><span class="symbol">2 </span> //对边界进行精确修正</span><br><span class="line"><span class="symbol">1 </span> //积分电子密度，得到AIM电荷</span><br><span class="line"><span class="symbol">4 </span>//计算DI和LI</span><br></pre></td></tr></table></figure>
 <h2 id="生成盆"><a href="#生成盆" class="headerlink" title="生成盆"></a>生成盆</h2><p>以HCN为例：</p>
 <ol>
@@ -448,6 +598,9 @@
               <a href="/tags/%E9%94%AE%E7%BA%A7/" rel="tag"><i class="fa fa-tag"></i> 键级</a>
               <a href="/tags/AIM/" rel="tag"><i class="fa fa-tag"></i> AIM</a>
               <a href="/tags/%E7%94%B5%E8%8D%B7/" rel="tag"><i class="fa fa-tag"></i> 电荷</a>
+              <a href="/tags/%E4%B8%B4%E7%95%8C%E7%82%B9/" rel="tag"><i class="fa fa-tag"></i> 临界点</a>
+              <a href="/tags/%E9%94%AE%E5%BE%84/" rel="tag"><i class="fa fa-tag"></i> 键径</a>
+              <a href="/tags/%E6%8B%93%E6%89%91%E5%88%86%E6%9E%90/" rel="tag"><i class="fa fa-tag"></i> 拓扑分析</a>
           </div>
 
         
@@ -522,7 +675,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.</span> <span class="nav-text">操作步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E7%9B%86"><span class="nav-number">1.1.</span> <span class="nav-text">生成盆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%82%E7%9C%8B%E7%9B%86%E5%92%8C%E5%90%B8%E5%BC%95%E5%AD%90"><span class="nav-number">1.2.</span> <span class="nav-text">观看盆和吸引子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%AF%E5%88%86%E7%9B%86"><span class="nav-number">1.3.</span> <span class="nav-text">积分盆</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9D%87%E5%8C%80%E6%A0%BC%E7%82%B9"><span class="nav-number">1.3.1.</span> <span class="nav-text">使用均匀格点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%B7%B7%E5%90%88%E6%A0%BC%E7%82%B9%E7%A7%AF%E5%88%86%EF%BC%88%E6%9B%B4%E7%B2%BE%E7%A1%AE%EF%BC%89"><span class="nav-number">1.3.2.</span> <span class="nav-text">使用混合格点积分（更精确）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E5%8D%87%E7%B2%BE%E5%BA%A6"><span class="nav-number">1.3.3.</span> <span class="nav-text">提升精度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E5%AE%9A%E5%9F%9F%E5%8C%96%E6%8C%87%E6%95%B0-LI-%E5%92%8C%E7%A6%BB%E5%9F%9F%E5%8C%96%E6%8C%87%E6%95%B0-DI"><span class="nav-number">1.4.</span> <span class="nav-text">分析定域化指数(LI)和离域化指数(DI)</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8B%93%E6%89%91%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">拓扑分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%95%B0%E5%AD%A6%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">相关数学概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%B4%E7%95%8C%E7%82%B9"><span class="nav-number">1.2.</span> <span class="nav-text">临界点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3"><span class="nav-number">1.2.1.</span> <span class="nav-text">(3,-3)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">(3,-1)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-1"><span class="nav-number">1.2.3.</span> <span class="nav-text">(3,+1)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-1"><span class="nav-number">1.2.4.</span> <span class="nav-text">(3,+3)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Poincare-Hopf%E5%85%B3%E7%B3%BB"><span class="nav-number">1.2.5.</span> <span class="nav-text">Poincaré-Hopf关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%93%E6%89%91%E8%B7%AF%E5%BE%84"><span class="nav-number">1.3.</span> <span class="nav-text">拓扑路径</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Multiwfn%E4%B8%AD%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">Multiwfn中的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%B5%E5%AD%90%E5%AF%86%E5%BA%A6"><span class="nav-number">2.1.</span> <span class="nav-text">电子密度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E6%83%85%E5%86%B5"><span class="nav-number">2.1.1.</span> <span class="nav-text">一般情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E4%B8%80%E6%AD%A5%E5%AF%BB%E6%89%BE"><span class="nav-number">2.1.2.</span> <span class="nav-text">进一步寻找</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E3%80%81%E7%BC%96%E8%BE%91%E7%BB%93%E6%9E%9C"><span class="nav-number">2.1.3.</span> <span class="nav-text">分析、编辑结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ELF"><span class="nav-number">2.2.</span> <span class="nav-text">ELF</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AIM%E7%9B%86%E5%88%86%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">AIM盆分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E7%9B%86"><span class="nav-number">3.1.</span> <span class="nav-text">生成盆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%82%E7%9C%8B%E7%9B%86%E5%92%8C%E5%90%B8%E5%BC%95%E5%AD%90"><span class="nav-number">3.2.</span> <span class="nav-text">观看盆和吸引子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%AF%E5%88%86%E7%9B%86"><span class="nav-number">3.3.</span> <span class="nav-text">积分盆</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9D%87%E5%8C%80%E6%A0%BC%E7%82%B9"><span class="nav-number">3.3.1.</span> <span class="nav-text">使用均匀格点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%B7%B7%E5%90%88%E6%A0%BC%E7%82%B9%E7%A7%AF%E5%88%86%EF%BC%88%E6%9B%B4%E7%B2%BE%E7%A1%AE%EF%BC%89"><span class="nav-number">3.3.2.</span> <span class="nav-text">使用混合格点积分（更精确）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E5%8D%87%E7%B2%BE%E5%BA%A6"><span class="nav-number">3.3.3.</span> <span class="nav-text">提升精度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E5%AE%9A%E5%9F%9F%E5%8C%96%E6%8C%87%E6%95%B0-LI-%E5%92%8C%E7%A6%BB%E5%9F%9F%E5%8C%96%E6%8C%87%E6%95%B0-DI"><span class="nav-number">3.4.</span> <span class="nav-text">分析定域化指数(LI)和离域化指数(DI)</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -538,7 +691,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -549,7 +702,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -578,7 +731,7 @@
     <h3 class="widget-title"></h3>
     <div id="myCanvasContainer" class="widget tagcloud">
         <canvas width="250" height="250" id="resCanvas" style="width=100%">
-            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AIM/" rel="tag">AIM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASSCF/" rel="tag">CASSCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DLPNO/" rel="tag">DLPNO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HF/" rel="tag">HF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCSCF/" rel="tag">MCSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NBO/" rel="tag">NBO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RI%E8%BF%91%E4%BC%BC/" rel="tag">RI近似</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98/" rel="tag">内存</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="tag">几何优化</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%9D%E7%8C%9C/" rel="tag">初猜</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%9B%E5%B8%B8%E6%95%B0/" rel="tag">力常数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%82%B9/" rel="tag">单点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag">占据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%90%E6%A0%87/" rel="tag">坐标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%BB%84/" rel="tag">基组</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BB%84%E6%80%81/" rel="tag">多组态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag">对称性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag">波函</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag">点群</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E8%8D%B7/" rel="tag">电荷</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%9F%BA%E7%BB%84/" rel="tag">相对论基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%9D%E5%8A%BF/" rel="tag">赝势</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%85%E5%8A%A9%E5%9F%BA%E7%BB%84/" rel="tag">辅助基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5/" rel="tag">输入</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%87%BA/" rel="tag">输出</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E7%BA%A7/" rel="tag">键级</a><span class="tag-list-count">3</span></li></ul>
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AIM/" rel="tag">AIM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASSCF/" rel="tag">CASSCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DLPNO/" rel="tag">DLPNO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HF/" rel="tag">HF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCSCF/" rel="tag">MCSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NBO/" rel="tag">NBO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NICS/" rel="tag">NICS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RI%E8%BF%91%E4%BC%BC/" rel="tag">RI近似</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%B4%E7%95%8C%E7%82%B9/" rel="tag">临界点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98/" rel="tag">内存</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="tag">几何优化</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%9D%E7%8C%9C/" rel="tag">初猜</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%9B%E5%B8%B8%E6%95%B0/" rel="tag">力常数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%82%B9/" rel="tag">单点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag">占据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%90%E6%A0%87/" rel="tag">坐标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%BB%84/" rel="tag">基组</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BB%84%E6%80%81/" rel="tag">多组态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag">对称性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%93%E6%89%91%E5%88%86%E6%9E%90/" rel="tag">拓扑分析</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag">波函</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag">点群</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E8%8D%B7/" rel="tag">电荷</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%9F%BA%E7%BB%84/" rel="tag">相对论基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%8A%B3%E9%A6%99%E6%80%A7/" rel="tag">芳香性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%9D%E5%8A%BF/" rel="tag">赝势</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%85%E5%8A%A9%E5%9F%BA%E7%BB%84/" rel="tag">辅助基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5/" rel="tag">输入</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%87%BA/" rel="tag">输出</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E5%BE%84/" rel="tag">键径</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E7%BA%A7/" rel="tag">键级</a><span class="tag-list-count">3</span></li></ul>
         </canvas>
     </div>
 </div>
@@ -618,7 +771,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">204k</span>
+    <span title="站点总字数">213k</span>
 </div>
 
         
