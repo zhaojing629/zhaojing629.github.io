@@ -353,7 +353,7 @@ typora-root-url: html基础
   <img src="pulpit.jpg" alt="Pulpit rock" width="304" height="228">
   ```
 
-- 图像的名称使用`tltle`定义
+- 图像的名称使用`title`定义，当鼠标悬停在图片时显示的内容
 
   ```html
   <img loading="lazy" src="/images/logo.png" width="258" height="39" />

@@ -1,19 +1,63 @@
 ---
-title: 【ADF】03.键级
-typora-root-url: 【ADF】03.键级
+title: 【AMS】04.键级
+typora-root-url: 【AMS】04.键级
 mathjax: true
 date: 2020-6-24 17:09:30
 updated:
 tags: 键级
-categories: [计算化学,ADF]
-description: ADF中关于键级的计算
+categories: [计算化学,AMS]
+description: 2020后ADF中关于键级的计算
 ---
 
 
 
-# MAYER键级等
 
-## 输入
+
+
+
+
+
+键级的计算可以通过两种方式。不管用哪种方式，都需要在`Engine ADF`中指定对称性为`NOSYM`
+
+```
+  Engine ADF 
+    symmetry NOSYM
+  EndEngine
+```
+
+# 方式1
+
+在`Properties`中指定：
+
+```
+Properties
+   BondOrders Yes
+End
+```
+
+# 方式2
+
+在`Engine ADF`中指定：
+
+```
+BondOrders
+   PrintAll Yes/No
+   PrintTolerance float
+   TypeForAMS [Nalewajski-Mrozek-1 | Nalewajski-Mrozek-2 | Nalewajski-Mrozek-3 | Mayer | Gopinathan-Jug]
+End
+```
+
+- `PrintAll`：默认`No`，如果为是，将输出所有5种键级
+- `PrintTolerance`：默认为`0.2`，大于该阈值才能被输出
+- `TypeForAMS`：选择输出键级的种类。
+
+
+
+# 2020版本之前
+
+## MAYER键级等
+
+### 输入
 
 - 优化好的结构，再算single point
 
@@ -48,7 +92,7 @@ description: ADF中关于键级的计算
   ……
   ```
 
-## 输出
+### 输出
 
 - 计算完毕后，得到所有原子，两两之间的MAYER、G-J、N-M (1)、N-M (2)、N-M (3) (*)键级关系
 

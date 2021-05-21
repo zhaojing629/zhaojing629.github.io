@@ -1,13 +1,23 @@
 ---
-title: 【ADF】01.SCF相关
-typora-root-url: 【ADF】01.SCF相关
-date: 2019-09-23 
+title: 【AMS】02.单点和SCF
+typora-root-url: 【AMS】02.单点和SCF
+date: 2019-09-23
 updated:
 description: ADF的SCF选项以及不收敛的处理方法
-tags: SCF
+tags: [SCF,单点]
 mathjax: true
-categories: [计算化学,ADF]
+categories: [计算化学, AMS]
 ---
+
+
+
+
+
+# 单点计算
+
+```
+Task SinglePoint
+```
 
 # SCF选项
 
@@ -134,8 +144,7 @@ End
 3. 修改DIIS算法的参数
    - `Mixing`高于默认值`0.2`会有更高的加速度，更低会更稳定的迭代
    - `N`默认为`10`，越大用于加速SCF的扩展向量的数量越多，SCF迭代更稳定，最多到25
-   - `Cyc`是SDIIS启动的初始SCF迭代步数，默认值为`5`，更高计算越稳定   
-   比如使用如下参数：
+   - `Cyc`是SDIIS启动的初始SCF迭代步数，默认值为`5`，更高计算越稳定，比如使用如下参数：
    ```
     SCF
         DIIS
@@ -149,4 +158,13 @@ End
 4. HOMO-LUMO较为接近的情况（0.02Hatree以内），可能造成HOMO-LUMO的震荡。可以使用`Lshift vshift`方法，比如0.01，不能太大，不适于激发态的计算、**解析频率**、旋轨耦合的计算。
 5. 使用Electron smearing设定在允许的能量范围内分数占据。
 6. 其他：[费米维基](https://www.fermitech.com.cn/wiki/doku.php?id=adf:scfnonconvergence)的2、3、5。
+
+
+
+# 对称性检测失败
+
+- 通过软件对称后再导入坐标计算
+- 让坐标更对称一些，可以降低程序检测的难度。比如将一个原子移动到原点，主轴设置为z轴等：
+  - ADFinput > 选中原子 > Edit > Set Origin
+  - ADFinput > 选定两个原子确定方向 > Edit > Align > With Z-Axes
 

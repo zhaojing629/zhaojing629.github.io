@@ -4,7 +4,7 @@ typora-root-url: 【ADF】02.EDA-NOCV
 date: 2020-02-07
 updated:
 tags: 能量分解
-categories: [计算化学,ADF]
+categories: [计算化学,AMS]
 mathjax: true
 description: ADF的EDA-NOCV方法的使用
 ---
