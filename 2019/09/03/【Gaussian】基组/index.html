@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=EB Garamond:300,300italic,400,400italic,700,700italic|Dancing Script:300,300italic,400,400italic,700,700italic|ZCOOL XiaoWei:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Gaussian中关于基组的常见问题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Gaussian】基组">
+<meta property="og:url" content="http://example.com/2019/09/03/%E3%80%90Gaussian%E3%80%91%E5%9F%BA%E7%BB%84/index.html">
+<meta property="og:site_name" content="Jing&#39;s Notes">
+<meta property="og:description" content="Gaussian中关于基组的常见问题">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-09-03T06:47:37.000Z">
+<meta property="article:modified_time" content="2021-06-20T09:23:22.351Z">
+<meta property="article:author" content="Zhao Jing">
+<meta property="article:tag" content="基组">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2019/09/03/%E3%80%90Gaussian%E3%80%91%E5%9F%BA%E7%BB%84/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+  <title>【Gaussian】基组 | Jing's Notes</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d23c6dd5b34ecbaba18b829b9084946";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jing's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/09/03/%E3%80%90Gaussian%E3%80%91%E5%9F%BA%E7%BB%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="Zhao Jing">
+      <meta itemprop="description" content="做一棵树，只为岁月而生长。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jing's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【Gaussian】基组
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-09-03 14:47:37" itemprop="dateCreated datePublished" datetime="2019-09-03T14:47:37+08:00">2019-09-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-20 17:23:22" itemprop="dateModified" datetime="2021-06-20T17:23:22+08:00">2021-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">计算化学</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/Gaussian/" itemprop="url" rel="index"><span itemprop="name">Gaussian</span></a>
+                </span>
+            </span>
+
+          
+            <br>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/09/03/%E3%80%90Gaussian%E3%80%91%E5%9F%BA%E7%BB%84/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/09/03/%E3%80%90Gaussian%E3%80%91%E5%9F%BA%E7%BB%84/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+            <div class="post-description">Gaussian中关于基组的常见问题</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><a target="_blank" rel="noopener" href="https://gaussian.com/basissets/">https://gaussian.com/basissets/</a></p>
+<h1 id="高斯中的5d、6d"><a href="#高斯中的5d、6d" class="headerlink" title="高斯中的5d、6d"></a>高斯中的5d、6d</h1><ul>
+<li>5d和6d分别指球谐型d函数（由6个笛卡尔型d函数组合得到）和笛卡尔型d函数。</li>
+<li>高斯一般默认使用6d关键字（在使用gen等关键字时往往默认为5d）。</li>
+</ul>
+<h2 id="5d"><a href="#5d" class="headerlink" title="5d"></a>5d</h2><p>如果使用5d关键词，会使用xy、yz、xz、x^2-y^2、3*z^2-r^2这5种轨道描述d轨道。输出的d轨道符号会显示D 0, D+1, D-1, D+2, D-2。这不是指这样由GTF组合出来的波函数的角动量z轴分量的本征值，也不是指这5个轨道用来对应地近似描述5个真实的复数型原子轨道。这样的轨道符号没有意义，还会引起严重混淆，它仅仅是做个标识罢了。</p>
+<p>对应关系：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">作为基函数的GTF</th>
+<th style="text-align:center">实型真实原子轨道符号</th>
+<th style="text-align:center">高斯中用了5d关键字后对d轨道的标识</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">3*z^2-r^2</td>
+<td style="text-align:center">dz^2</td>
+<td style="text-align:center">d 0</td>
+</tr>
+<tr>
+<td style="text-align:center">xz</td>
+<td style="text-align:center">dxz</td>
+<td style="text-align:center">d+1</td>
+</tr>
+<tr>
+<td style="text-align:center">yz</td>
+<td style="text-align:center">dyz</td>
+<td style="text-align:center">d-1</td>
+</tr>
+<tr>
+<td style="text-align:center">x^2-y^2</td>
+<td style="text-align:center">dx^2-y^2</td>
+<td style="text-align:center">d+2</td>
+</tr>
+<tr>
+<td style="text-align:center">xy</td>
+<td style="text-align:center">dxy</td>
+<td style="text-align:center">d-2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="6d"><a href="#6d" class="headerlink" title="6d"></a>6d</h2><p>使用xx、yy、zz、yz、yx、zx这6种笛卡尔型GTF轨道，在输出的d轨道符号中也对应地以xx、yy、zz、yz、yx、zx标识。在d轨道基函数不分裂情况下，描述d轨道的可独立变分的基函数就相对于5d关键字时的5个增加到了6个，可看到输出文件中basis functions的数目对应地增加了。但无论用5d还是6d，输出文件显示的原始基函数（primitive gaussians，即笛卡尔型GTF）的数目都一样，这是因为5d的5个轨道仍需要有全部6种笛卡尔型d型GTF才能组合出来。</p>
+<ul>
+<li>比如对5d中的3<em>z^2-r^2函数来说，将其中r^2展开，可写成N</em>(2*z^2-x^2-y^2)，即等于zz、xx、yy三种笛卡尔型GTF系数按照<script type="math/tex">2:-1:-1</script>组合并乘上归一化系数，这个比值这是固定的，不会在计算过程中改变，某种意义上也可看作是CGTF（收缩型GTF）。</li>
+<li>6d型轨道好处是方便编程，能够直接计算各种积分。缺点很明显，由于缺乏与真实原子轨道的对应关系，结果不像用5d的结果那样方便分析。虽然这6个笛卡尔型轨道不直接对应于真实原子轨道，但在计算过程中经过变分，其结果同样会展现出真实原子轨道的行为。这是因为以它们为基函数变分的结果，等价于对它们线性变换后的基函数变分的结果。</li>
+<li><p>使用6d关键字，就是在5d型的基函数基础上多添加了一个内部含有节面的s型GTF轨道，由于这个轨道与其它s轨道有不小重叠，会造成一定线性相关问题，所以并不会比5d的结果有多少改进。</p>
+</li>
+<li><p>7f与10f的关系与5d与6d的关系类似，对于g、h等更高角动量函数也有如上讨论，笛卡尔型与球谐型GTF转换关系将更为复杂，而且组合方法并不唯一（比如有所谓标准纯f集、纯f“立方”集）。计算时若同时含有d和f轨，用5d时应当结合7f，用6d时应当结合10f。顺带一提，6d轨道间不都是正交的，例如XX与YY，而5d轨道间都是正交的，同样10f和7f的关系也是如此。</p>
+</li>
+</ul>
+<h1 id="高斯中的基函数的数目"><a href="#高斯中的基函数的数目" class="headerlink" title="高斯中的基函数的数目"></a>高斯中的基函数的数目</h1><p>例子：C的6-31+G*</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">C</span>     <span class="number">0</span></span><br><span class="line"><span class="attribute">S</span>   <span class="number">6</span>   <span class="number">1</span>.<span class="number">00</span>     &lt;--下面定义S型基函数壳层，其收缩度为<span class="number">6</span>，即这个基函数壳层由下面写的<span class="number">6</span>个primitive壳层收缩而成。<span class="number">1</span>.<span class="number">00</span>是刻度因子，不用去管它，总是输入<span class="number">1</span>.<span class="number">00</span>就行了（具体含义参见手册里gen关键词）</span><br><span class="line">   <span class="attribute">3047</span>.<span class="number">5249000</span>              <span class="number">0</span>.<span class="number">0018347</span>  &lt;---- 第<span class="number">1</span>个primitive壳层的指数和收缩系数</span><br><span class="line">    <span class="attribute">457</span>.<span class="number">3695100</span>              <span class="number">0</span>.<span class="number">0140373</span>  &lt;---- 第<span class="number">2</span>个primitive壳层...</span><br><span class="line">    <span class="attribute">103</span>.<span class="number">9486900</span>              <span class="number">0</span>.<span class="number">0688426</span>        </span><br><span class="line">     <span class="attribute">29</span>.<span class="number">2101550</span>              <span class="number">0</span>.<span class="number">2321844</span>        </span><br><span class="line">      <span class="attribute">9</span>.<span class="number">2866630</span>              <span class="number">0</span>.<span class="number">4679413</span>        </span><br><span class="line">      <span class="attribute">3</span>.<span class="number">1639270</span>              <span class="number">0</span>.<span class="number">3623120</span>        </span><br><span class="line"><span class="attribute">SP</span>   <span class="number">3</span>   <span class="number">1</span>.<span class="number">00</span>     &lt;--SP型基函数壳层，仅在Pople系列基组及其它少数基组中才出现，其中S和P型基函数共享相同指数但收缩系数不同，在Gaussian中用SP壳层比起单独用一个S壳层和一个P壳层计算起来更快</span><br><span class="line">      <span class="attribute">7</span>.<span class="number">8682724</span>             -<span class="number">0</span>.<span class="number">1193324</span>              <span class="number">0</span>.<span class="number">0689991</span>   &lt;--共用的指数，S的收缩系数，P的收缩系数</span><br><span class="line">      <span class="attribute">1</span>.<span class="number">8812885</span>             -<span class="number">0</span>.<span class="number">1608542</span>              <span class="number">0</span>.<span class="number">3164240</span>        </span><br><span class="line">      <span class="attribute">0</span>.<span class="number">5442493</span>              <span class="number">1</span>.<span class="number">1434564</span>              <span class="number">0</span>.<span class="number">7443083</span>        </span><br><span class="line"><span class="attribute">SP</span>   <span class="number">1</span>   <span class="number">1</span>.<span class="number">00</span></span><br><span class="line">      <span class="attribute">0</span>.<span class="number">1687144</span>              <span class="number">1</span>.<span class="number">0000000</span>              <span class="number">1</span>.<span class="number">0000000</span>        </span><br><span class="line"><span class="attribute">SP</span>   <span class="number">1</span>   <span class="number">1</span>.<span class="number">00</span>   &lt;--此壳层指数很小，所以显然是<span class="number">6</span>-<span class="number">31</span>+G*中的+号对应的弥散函数。弥散函数、极化函数的收缩度总是为<span class="number">1</span>，即未收缩，这样的壳层的收缩系数必定是<span class="number">1</span>.<span class="number">0</span>。</span><br><span class="line">      <span class="attribute">0</span>.<span class="number">0438000</span>              <span class="number">1</span>.<span class="number">0000000</span>              <span class="number">1</span>.<span class="number">0000000</span>        </span><br><span class="line"><span class="attribute">D</span>   <span class="number">1</span>   <span class="number">1</span>.<span class="number">00</span>   &lt;--D型极化函数，对应<span class="number">6</span>-<span class="number">31</span>+G*中的*。</span><br><span class="line">      <span class="attribute">0</span>.<span class="number">8000000</span>              <span class="number">1</span>.<span class="number">0000000</span>        </span><br></pre></td></tr></table></figure>
+<p>15 basis functions,  28 primitive gaussians,  15 cartesian basis functions</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>1s</th>
+<th>2s</th>
+<th>2p*3</th>
+<th>d*6</th>
+<th>总数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GTF</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>15</td>
+</tr>
+<tr>
+<td>PGTF</td>
+<td>6</td>
+<td>3+1</td>
+<td>3+1</td>
+<td>1</td>
+<td>28</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>无论高斯中用5d还是6d，输出文件显示的原始基函数（primitive gaussians，即笛卡尔型GTF）的数目都一样，这是因为5d的5个轨道仍需要有全部6种笛卡尔型d型GTF才能组合出来。</p>
+<h1 id="常见基组及其指定方法"><a href="#常见基组及其指定方法" class="headerlink" title="常见基组及其指定方法"></a>常见基组及其指定方法</h1><h2 id="6-31G类"><a href="#6-31G类" class="headerlink" title="6-31G类"></a><strong>6-31G类</strong></h2><p>可以用n-31G、n-31G**、n-31++G、n-31G(2df,p)等方式直接在关键词区域定义。</p>
+<h2 id="cc-pVnZ系列"><a href="#cc-pVnZ系列" class="headerlink" title="cc-pVnZ系列"></a>cc-pVnZ系列</h2><ul>
+<li>直接用cc-pVnZ指定。</li>
+<li>弥散函数用aug-cc-pVnZ、spAug-cc-pVnZ、dAug-cc-pVnZ等</li>
+</ul>
+<h2 id="def系列"><a href="#def系列" class="headerlink" title="def系列"></a>def系列</h2><ul>
+<li><p>def用SV, SVP, TZV, TZVP 等指定</p>
+</li>
+<li><p>def2-系列用Def2SV, Def2SVP, Def2SVPP, Def2TZV, Def2TZVP, Def2TZVPP, Def2QZV, Def2QZVP, Def2QZVPP, and QZVP等指定，去掉了”-“</p>
+</li>
+</ul>
+<h1 id="赝势的输入"><a href="#赝势的输入" class="headerlink" title="赝势的输入"></a><strong>赝势的输入</strong></h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># B3LYP/genecp</span><br><span class="line"></span><br><span class="line">Cu(CO)+</span><br><span class="line"></span><br><span class="line"><span class="number">1</span> <span class="number">1</span></span><br><span class="line"> Cu             </span><br><span class="line"> C                  <span class="number">1</span>            B1</span><br><span class="line"> O                  <span class="number">2</span>            B2    <span class="number">1</span>            <span class="number">180.</span></span><br><span class="line"></span><br><span class="line">Cu <span class="number">0</span></span><br><span class="line">Lanl2DZ    &lt;-- Cu用Lanl2DZ赝势基组</span><br><span class="line">****</span><br><span class="line">C O <span class="number">0</span></span><br><span class="line"><span class="number">6</span><span class="number">-31</span>G*   &lt;-- C O用的基组为<span class="number">6</span><span class="number">-31</span>G*</span><br><span class="line">****</span><br><span class="line"></span><br><span class="line">Cu <span class="number">0</span></span><br><span class="line">Lanl2   &lt;-- Cu用的赝势为Lanl2，这种赝势是Lanl2DZ赝势基组对应的赝势。如果不知道赝势名是什么，此处直接写赝势基组名就可以。比如这里也可以写成Lanl2DZ，和写Lanl2是等价的</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Stuttgart赝势"><a href="#Stuttgart赝势" class="headerlink" title="Stuttgart赝势"></a>Stuttgart赝势</h2><p>Stuttgart赝势规范的写法是nXY这种形式，含义是：</p>
+<ul>
+<li>n = 被赝势表示的核电子数</li>
+<li>X = S/M：拟合赝势时的参考体系。S是只考虑模型体系仅有的单个价电子的能量，M是考虑实际原子全部价电子的能量</li>
+<li>Y = HF/WB/DF：拟合赝势用的数据的计算级别。HF=Hartree-Fock非相对论（即此赝势不考虑相对论效应），WB=Wood-Boring准相对论，DF=Dirac-Fock全相对论</li>
+</ul>
+<p>每个元素的SDD默认的基组和可用的Stuttgart赝势：<a target="_blank" rel="noopener" href="https://gaussian.com/pseudo/">https://gaussian.com/pseudo/</a></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>有用可戳(●ˇ∀ˇ●)</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="Zhao Jing 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Zhao Jing
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2019/09/03/%E3%80%90Gaussian%E3%80%91%E5%9F%BA%E7%BB%84/" title="【Gaussian】基组">http://example.com/2019/09/03/【Gaussian】基组/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E5%9F%BA%E7%BB%84/" rel="tag"><i class="fa fa-tag"></i> 基组</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2019/09/23/%E3%80%90AMS%E3%80%9103.%E6%8C%AF%E5%8A%A8%E5%85%89%E8%B0%B1/" rel="next" title="【AMS】03.振动光谱">
+      【AMS】03.振动光谱 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%AB%98%E6%96%AF%E4%B8%AD%E7%9A%845d%E3%80%816d"><span class="nav-number">1.</span> <span class="nav-text">高斯中的5d、6d</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5d"><span class="nav-number">1.1.</span> <span class="nav-text">5d</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6d"><span class="nav-number">1.2.</span> <span class="nav-text">6d</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%AB%98%E6%96%AF%E4%B8%AD%E7%9A%84%E5%9F%BA%E5%87%BD%E6%95%B0%E7%9A%84%E6%95%B0%E7%9B%AE"><span class="nav-number">2.</span> <span class="nav-text">高斯中的基函数的数目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E5%9F%BA%E7%BB%84%E5%8F%8A%E5%85%B6%E6%8C%87%E5%AE%9A%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">常见基组及其指定方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-31G%E7%B1%BB"><span class="nav-number">3.1.</span> <span class="nav-text">6-31G类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cc-pVnZ%E7%B3%BB%E5%88%97"><span class="nav-number">3.2.</span> <span class="nav-text">cc-pVnZ系列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#def%E7%B3%BB%E5%88%97"><span class="nav-number">3.3.</span> <span class="nav-text">def系列</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B5%9D%E5%8A%BF%E7%9A%84%E8%BE%93%E5%85%A5"><span class="nav-number">4.</span> <span class="nav-text">赝势的输入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Stuttgart%E8%B5%9D%E5%8A%BF"><span class="nav-number">4.1.</span> <span class="nav-text">Stuttgart赝势</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhao Jing"
+      src="/images/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">Zhao Jing</p>
+  <div class="site-description" itemprop="description">做一棵树，只为岁月而生长。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaojing629" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaojing629" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:295483858@qq.com" title="E-Mail → mailto:295483858@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+<div class="sidebar-categories" p align="left">
+  <font size="2">
+  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/">计算化学</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/molpro/">molpro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/ORCA/">ORCA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/Multiwfn/">Multiwfn</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/Gaussian/">Gaussian</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/CP2K/">CP2K</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/AMS/">AMS</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%AB%99/">网站</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F/">系统</a></li></ul>
+  </font>
+  </p /div>
+
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title"></h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ADF/" rel="tag">ADF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AIM/" rel="tag">AIM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASSCF/" rel="tag">CASSCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DLPNO/" rel="tag">DLPNO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HF/" rel="tag">HF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCSCF/" rel="tag">MCSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NBO/" rel="tag">NBO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NICS/" rel="tag">NICS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RI%E8%BF%91%E4%BC%BC/" rel="tag">RI近似</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%B4%E7%95%8C%E7%82%B9/" rel="tag">临界点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98/" rel="tag">内存</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="tag">几何优化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%9D%E7%8C%9C/" rel="tag">初猜</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%9B%E5%B8%B8%E6%95%B0/" rel="tag">力常数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%82%B9/" rel="tag">单点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag">占据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%90%E6%A0%87/" rel="tag">坐标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%BB%84/" rel="tag">基组</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BB%84%E6%80%81/" rel="tag">多组态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag">对称性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%93%E6%89%91%E5%88%86%E6%9E%90/" rel="tag">拓扑分析</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag">波函</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag">点群</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E8%8D%B7/" rel="tag">电荷</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%9F%BA%E7%BB%84/" rel="tag">相对论基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%8A%B3%E9%A6%99%E6%80%A7/" rel="tag">芳香性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%9D%E5%8A%BF/" rel="tag">赝势</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%85%E5%8A%A9%E5%9F%BA%E7%BB%84/" rel="tag">辅助基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5/" rel="tag">输入</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%87%BA/" rel="tag">输出</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E5%BE%84/" rel="tag">键径</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E7%BA%A7/" rel="tag">键级</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%91%E7%8E%87/" rel="tag">频率</a><span class="tag-list-count">1</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-flask"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhao Jing</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">238k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='0,0,0' opacity='0.3' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : '3L90wCaNUKa1MzSQcAhzkLtk-gzGzoHsz',
+      appKey     : 'fQ4t73jXnb71Y9zQWfXj5bIP',
+      placeholder: "可以输入您发现文中的错误或建议~(。・∀・)ノ",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

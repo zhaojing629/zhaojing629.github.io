@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=EB Garamond:300,300italic,400,400italic,700,700italic|Dancing Script:300,300italic,400,400italic,700,700italic|ZCOOL XiaoWei:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="关于基组的基础知识">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基组">
+<meta property="og:url" content="http://example.com/2021/06/18/%E5%9F%BA%E7%BB%84/index.html">
+<meta property="og:site_name" content="Jing&#39;s Notes">
+<meta property="og:description" content="关于基组的基础知识">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/image-20210618172635946.png">
+<meta property="og:image" content="http://example.com/image-20210618190026149.png">
+<meta property="og:image" content="http://example.com/clipboard.png">
+<meta property="og:image" content="http://example.com/image-20210618194650821.png">
+<meta property="og:image" content="http://example.com/image-20210618200107486.png">
+<meta property="og:image" content="http://example.com/image-20210618234317761.png">
+<meta property="og:image" content="http://example.com/image-20210618235810647.png">
+<meta property="og:image" content="http://example.com/image-20210620132337991.png">
+<meta property="og:image" content="http://example.com/image-20210619175521235.png">
+<meta property="og:image" content="http://example.com/image-20210619175540777.png">
+<meta property="og:image" content="http://example.com/image-20210619175553336.png">
+<meta property="og:image" content="http://example.com/image-20210620141915170.png">
+<meta property="og:image" content="http://example.com/image-20210620142911231.png">
+<meta property="og:image" content="http://example.com/image-20210620151348582.png">
+<meta property="og:image" content="http://example.com/image-20210620145811319.png">
+<meta property="og:image" content="http://example.com/image-20210620145819965.png">
+<meta property="og:image" content="http://example.com/image-20210620145826955.png">
+<meta property="og:image" content="http://example.com/image-20210620162559498.png">
+<meta property="og:image" content="http://example.com/2021/06/18/%E5%9F%BA%E7%BB%84/clipboard-1624181630439.png">
+<meta property="og:image" content="http://example.com/2021/06/18/%E5%9F%BA%E7%BB%84/clipboard-1624181668873.png">
+<meta property="og:image" content="http://example.com/2021/06/18/%E5%9F%BA%E7%BB%84/clipboard-1624181675490.png">
+<meta property="article:published_time" content="2021-06-18T11:33:37.000Z">
+<meta property="article:modified_time" content="2021-06-20T09:34:38.095Z">
+<meta property="article:author" content="Zhao Jing">
+<meta property="article:tag" content="基组">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/image-20210618172635946.png">
+
+<link rel="canonical" href="http://example.com/2021/06/18/%E5%9F%BA%E7%BB%84/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+  <title>基组 | Jing's Notes</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d23c6dd5b34ecbaba18b829b9084946";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jing's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/18/%E5%9F%BA%E7%BB%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="Zhao Jing">
+      <meta itemprop="description" content="做一棵树，只为岁月而生长。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jing's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          基组
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-18 19:33:37" itemprop="dateCreated datePublished" datetime="2021-06-18T19:33:37+08:00">2021-06-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-20 17:34:38" itemprop="dateModified" datetime="2021-06-20T17:34:38+08:00">2021-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">计算化学</span></a>
+                </span>
+            </span>
+
+          
+            <br>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/18/%E5%9F%BA%E7%BB%84/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/18/%E5%9F%BA%E7%BB%84/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>21k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>19 分钟</span>
+            </span>
+            <div class="post-description">关于基组的基础知识</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ul>
+<li>从头算中，采取了LCAO-MO近似，即通过对原子轨道进行线性叠加来构造分子轨道：<script type="math/tex">\left|\psi_{\mu}\right\rangle=\sum_{i=1}^{n}\left|\varphi_{i}\right\rangle a_{i \mu}</script></li>
+<li>由原子的Hatree-Fock方程得到的原子轨道AO为数值解析的函数，因此需要通过解析函数来拟合：<script type="math/tex">\left|\varphi_{i}\right\rangle=\sum_{k=1}^{m}\left|\chi_{k}\right\rangle b_{k i}</script></li>
+<li>以基函数为基的Roothaan方程：<script type="math/tex">\left|\psi_{\mu}\right\rangle=\sum_{=1}^{n} \sum_{k=1}^{m}\left|\chi_{k}\right\rangle b_{k i} a_{i \mu}=\sum_{k=1}^{m}\left|\chi_{k}\right\rangle\left[\sum_{i=1}^{n} b_{k} a_{i \mu}\right]=\sum_{i=1}^{m}\left|\chi_{k}\right\rangle c_{k \mu}</script></li>
+<li>基函数集基本要求：<ul>
+<li>分子积分容易计算，且速度快；</li>
+<li>在较小的基组维界下即可逼近数学完备集的理论极限精度（MO的展开具有高的收敛性）</li>
+</ul>
+</li>
+<li>做SCF时，每迭代一次就系数就会改变一次，不断调整求解。</li>
+<li>基函数只有数学意义，函数越多结果越精确，但也取决于怎么合理地设基函数。（基函数数学形式很好，几个就行，基函数数学很烂，很多展开也不好）。</li>
+<li>当基函数无穷多，成为完备集，就达到了完备基组极限(Complete basis set limmit,CBS)，能够完美展开分子轨道。从基组角度来说没有误差，误差来源于理论方法。</li>
+<li>实际用的基组尺寸是有限的而达不到CBS，由此导致的计算结果的误差称为基组不完备性误差。</li>
+</ul>
+<h1 id="Y-l-m-部分"><a href="#Y-l-m-部分" class="headerlink" title="Y_{l m}部分"></a><script type="math/tex">Y_{l m}</script>部分</h1><h2 id="中心势场型AO基组"><a href="#中心势场型AO基组" class="headerlink" title="中心势场型AO基组"></a>中心势场型AO基组</h2><ul>
+<li>对单电子原子的薛定谔方程进行求解，通过球坐标的变换和使用变量分离法，得到<script type="math/tex">\varphi(r, \theta, \phi)=R_{n l}(r) Y_{l m}(\theta, \phi)</script>，其中球谐部分<script type="math/tex">Y_{l m}(\theta, \phi)</script>与势能无关。</li>
+<li>对于多电子体系，其他电子对第i个电子的排斥看为对核电荷的屏蔽，即引入屏蔽常数σ。与势能的径向部分写为<script type="math/tex">R_{n l}(r, \sigma)</script>，即得到<script type="math/tex">\varphi(r, \theta, \phi)=R_{n l}(r, \sigma) Y_{l m}(\theta, \phi)</script><ul>
+<li>n主量子数：1, 2, …</li>
+<li>l角量子数：0, 1, 2, …, n-1（s、p、d、f……）</li>
+<li>m磁量子数：0,±1, …,±l</li>
+</ul>
+</li>
+</ul>
+<h2 id="复AO和实AO"><a href="#复AO和实AO" class="headerlink" title="复AO和实AO"></a>复AO和实AO</h2><script type="math/tex; mode=display">Y_{l m}(\theta, \phi)$$分为复型（连属Legendre多项式）和实型
+
+例子：
+
+- $$\text { Complex }\left\{\begin{array}{l}
+  Y_{11}=\sqrt{\frac{3}{8 \pi}} \sin \theta e^{i \varphi} \\
+  Y_{10}=\sqrt{\frac{3}{4 \pi}} \cos \theta \\
+  Y_{1 \overline{1}}=\sqrt{\frac{3}{8 \pi}} \sin \theta e^{-i \varphi}
+  \end{array}\right.$$，具有球对称性$$K_h$$，无方向性，物理学家更关心。
+- $$\text { Real }\left\{\begin{array}{l}
+  Y_{p x}=\sqrt{\frac{3}{4 \pi}} \sin \theta \cos \varphi=\sqrt{\frac{3}{4 \pi}} \frac{x}{r} \\
+  Y_{p y}=\sqrt{\frac{3}{4 \pi}} \sin \theta \sin \varphi=\sqrt{\frac{3}{4 \pi}} \frac{y}{r} \\
+  Y_{p z}=\sqrt{\frac{3}{4 \pi}} \cos \theta=\sqrt{\frac{3}{4 \pi}} \frac{z}{r}
+  \end{array}\right.$$，具有立方对称性$$O_h$$，化学家更关心化学键中原子的位置和方向，所以降低其对称性，引入了x，y，z方向。
+
+![p型复AO和实AO的角度分布比较](/p型复AO和实AO的角度分布比较.png)
+
+特点：
+
+- 复AO无方向性；AO与共价键方向性相联系
+- 原子计算用复AO基，分子计算用实AO基
+- 复AO基与实AO基可以通过欧拉公式$$e^{i x}=\cos x+i \sin x$$，线性组合相互转换：$$Y_{p x}=\frac{1}{\sqrt{2}}\left(Y_{11}+Y_{1 \overline{1}}\right) ; \quad Y_{p y}=\frac{1}{\sqrt{2} i}\left(Y_{11}-Y_{1 \overline{1}}\right)</script><ul>
+<li>不同AO基的角度部分<script type="math/tex">Y_{l m}</script>均固定不变，基函数的选择实际上是选取<script type="math/tex">R_{n l}</script>合适的形式</li>
+</ul>
+<h1 id="R-n-l-部分"><a href="#R-n-l-部分" class="headerlink" title="R_{n l}部分"></a><script type="math/tex">R_{n l}</script>部分</h1><p>类氢原子轨道的径向函数为连属Laguerre多项式的形式：<script type="math/tex">R_{n l}(r)=N_{n} e^{-\rho / 2} \rho^{l} L_{n+l}^{2 l+1}(\rho) ; \quad \rho=\frac{2 Z}{n} \frac{r}{a_{0}}</script>，展开为：</p>
+<script type="math/tex; mode=display">
+R_{n l}(r)=\sum_{k=0}^{n-l-1} c_{k}\left(\frac{r}{a_{0}}\right)^{k}\left(\frac{r}{a_{0}}\right)^{l} e^{-\frac{Z r}{n a_{0}}}=\left[c_{0}+c_{1} \frac{r}{a_{0}}+\cdots+c_{n-l-1}\left(\frac{r}{a_{0}}\right)^{n-l-1}\right]\left(\frac{r}{a_{0}}\right)^{l} e^{-\frac{Z r}{n a_{0}}}</script><ul>
+<li>最高次项取到n-l-1，这样符合解薛定谔方程的量子数。</li>
+<li>函数中，n-l-1次多项式有n-l个极值点和n-l-1个节点，积分非常困难（时正时负），不便用于分子积分计算。</li>
+</ul>
+<p>例子：氢原子的2s和sp连属Laguerre多项式</p>
+<script type="math/tex; mode=display">R_{2 s}(r)=\left[c_{0}+c_{1} \frac{r}{a_{0}}\right] e^{-\frac{Z r}{n a_{0}}}$$$$\quad R_{2 p}(r)=\left[c_{0}\right]\left(\frac{r}{a_{0}}\right) e^{-\frac{Z r}{n a_{0}}}</script><p>径向分布函数：<script type="math/tex">D(r)=r^{2} R(r)^{2}</script></p>
+<p><img src="/image-20210618172635946.png" alt="image-20210618172635946" style="zoom: 40%;" /></p>
+<h1 id="Slater-Type-Orbital（STO）"><a href="#Slater-Type-Orbital（STO）" class="headerlink" title="Slater-Type Orbital（STO）"></a>Slater-Type Orbital（STO）</h1><p>Slater提出一种无节点型的简化径向函数</p>
+<script type="math/tex; mode=display">
+R_{n}(r ; \zeta)=N_{n, \zeta} r^{n-1} e^{-\varsigma r},\zeta=(Z-\sigma) / n</script><ul>
+<li>实际上是截取了类氢AO的最高次项，<script type="math/tex">\left(\cdots r^{n-l-1}\right) r^{l} e^{\cdots} \Rightarrow \cdots r^{n-1} e^{. \cdots}</script></li>
+<li>数值仅仅与<script type="math/tex">n</script>和<script type="math/tex">\sigma</script>（Slater screening constant）有关，即<script type="math/tex">\zeta</script>，而与<script type="math/tex">l</script>无关，取决于屏蔽效应</li>
+<li><script type="math/tex; mode=display">R_n$$无节点，因此函数集归一化但相互不正交：$$\left\langle R_{n} \mid R_{n^{\prime}}\right\rangle=\int R_{n}^{*}(r ; \varsigma) R_{n^{\prime}}(r ; \varsigma) r^{2} d \tau \neq \delta_{n n^{\prime}}</script></li>
+<li><script type="math/tex">R_{n}(r ; \zeta)</script>和<script type="math/tex">Y_{l m}</script>组合构成的基函数集通称“Slater型轨道”（STO），属于非正交的AO基集。但是其实严格来说不是一个轨道，只是一个函数拟合的轨道，严格的简称STF。</li>
+</ul>
+<h2 id="zeta的优化"><a href="#zeta的优化" class="headerlink" title="\zeta的优化"></a><script type="math/tex">\zeta</script>的优化</h2><ul>
+<li>这一方法取决于<script type="math/tex">\zeta</script>的精度。但是<script type="math/tex">\zeta</script>与分子有关，即随体系变化。</li>
+<li>先通过对个元素原子的SCF计算，对<script type="math/tex">\zeta</script>初步优化，再在分子环境下进行<script type="math/tex">\zeta</script>的再优化。</li>
+<li>对大量的中、小分子的“最优<script type="math/tex">\zeta</script>“进行平均，定义出“标准<script type="math/tex">\zeta</script>”，Gaussain和大多数软件的默认值都是标准<script type="math/tex">\zeta</script></li>
+</ul>
+<p><img src="/image-20210618190026149.png" alt="image-20210618190026149"></p>
+<h2 id="AO基组的大小等级"><a href="#AO基组的大小等级" class="headerlink" title="AO基组的大小等级"></a>AO基组的大小等级</h2><h3 id="极小基Minimal-basis-sets（MBS）"><a href="#极小基Minimal-basis-sets（MBS）" class="headerlink" title="极小基Minimal basis sets（MBS）"></a>极小基Minimal basis sets（MBS）</h3><ul>
+<li>原子的每个AO只对应一个基函数。也称为“单<script type="math/tex">\zeta</script>基组”，即<span id="单zeta">SZ</span>。因为基函数太少，不足以充分表现价层原子轨道在实际分子环境中的变形，如今已基本无人使用。</li>
+<li><script type="math/tex">\left\{\phi_{i}\right\}=\text { Core AO's }+\text { Valence AO's }</script>，包含芯基组和价基组</li>
+<li>精度比较低。</li>
+</ul>
+<h3 id="价基组Valence-basis-sets（VBS）"><a href="#价基组Valence-basis-sets（VBS）" class="headerlink" title="价基组Valence basis sets（VBS）"></a>价基组Valence basis sets（VBS）</h3><ul>
+<li>去除极小基中的“芯基组”，只留下价基组</li>
+<li>用于半经验和低级的价电子从头算</li>
+</ul>
+<h3 id="扩展基组（EBS）"><a href="#扩展基组（EBS）" class="headerlink" title="扩展基组（EBS）"></a>扩展基组（EBS）</h3><ul>
+<li>原子轨道由多个基函数描述，向极小基中增加基函数，进一步逼近完备集。<script type="math/tex">\left\{\phi_{i}\right\}=\text { Minimal BS }+\text {Additional BS }</script></li>
+<li>增大变分空间，计算精度得以改善</li>
+</ul>
+<h2 id="常见的STO扩展基组形式"><a href="#常见的STO扩展基组形式" class="headerlink" title="常见的STO扩展基组形式"></a>常见的STO扩展基组形式</h2><p><img src="/clipboard.png" alt="img" style="zoom: 33%;" /></p>
+<h3 id="nζ基组"><a href="#nζ基组" class="headerlink" title="nζ基组"></a>nζ基组</h3><ul>
+<li><span id="双zeta">双ζ基组</span>，DZ：每个AO对应2个n相同，但ζ不同的STO（ζ’&lt;ζ’）</li>
+<li>也有TZ，QZ等。</li>
+</ul>
+<h3 id="含极化函数的基组"><a href="#含极化函数的基组" class="headerlink" title="含极化函数的基组"></a><span id="极化">含极化函数的基组</span></h3><script type="math/tex; mode=display">\left\{\phi_{i}\right\}=\text { DZ }+\text { Polarization function }</script><ul>
+<li>向DZ基加入比价AO角量子数<script type="math/tex">l</script>更高的基函数以利于描述原子成键后的电子云极化变形。（ADF中描述位nZ2P，2P表示两个极化函数。）</li>
+<li>例子：比如为了描述H原子1s轨道成键的方向性，加入2p型极化函数。2p轨道就加入3d轨道，3d加入f轨道。</li>
+</ul>
+<p><img src="/image-20210618194650821.png" alt="image-20210618194650821" style="zoom:50%;" /></p>
+<h3 id="含弥散函数的基组"><a href="#含弥散函数的基组" class="headerlink" title="含弥散函数的基组"></a><span id="弥散">含弥散函数的基组</span></h3><ul>
+<li>分子的负离子因电子过量使电子云弥散度增加，向极化基组中添加<strong>小的ζ</strong>弥散函数使物理图像能正确反映。比如分子间弱相互作用（范德华力、氢键）体系或过渡态、激发态的计算通常也需要添加弥散函数。</li>
+<li>ζ越小，r增大时，<script type="math/tex">R_{n}(r ; \zeta)=N_{n, \zeta} r^{n-1} e^{-\varsigma r}</script>衰减的速度越慢，因此加入小ζ的STO有利于对原子核区域的电子运动的描述。</li>
+</ul>
+<p><img src="/image-20210618200107486.png" alt="image-20210618200107486" style="zoom:50%;" /></p>
+<h2 id="STO基组的优缺点和用途"><a href="#STO基组的优缺点和用途" class="headerlink" title="STO基组的优缺点和用途"></a>STO基组的优缺点和用途</h2><ul>
+<li>优点：与真实原子分子轨道的径向电子分布特性确实比较靠近，因为是从类氢原子推出来的。</li>
+<li>缺点：计算三、四中心双电子积分困难。<ul>
+<li>因为在球坐标下<script type="math/tex">\frac{1}{r_{12}}</script>的展开为<script type="math/tex">\frac{1}{r_{12}}=\sum_{l=0}^{\infty} \frac{r_{<}^{l}}{r_{>}^{l+1}} P_{l}(\cos \theta)</script>，是收敛很慢的无穷级数。（<script type="math/tex">P_{l}(\cos \theta)</script>为l阶Legendre多项式）</li>
+<li>另外，<script type="math/tex">e^{-\varsigma r}</script>中的<script type="math/tex">r=(x^2+y^2+z^2)^{1/2}</script>，积分困难，变量难以分离</li>
+</ul>
+</li>
+<li>用途：<ul>
+<li>主要用于半经验 MO 计算，因为把很多积分都忽略了。</li>
+<li>在从头计算中可用于原子和双原子分子的计算，很少用于比 CH4 更大的分子。</li>
+<li>近年来在密度泛函理论（DFT）中使用逐渐增多。DFT 中很多矩阵元都无法用解析函数表达，只能用数值积分，所以就不需要更复杂的基函数，直接用 Slater 基函数或者数值基组。比如ADF程序。</li>
+</ul>
+</li>
+</ul>
+<h1 id="高斯型基函数（GTO）"><a href="#高斯型基函数（GTO）" class="headerlink" title="高斯型基函数（GTO）"></a>高斯型基函数（GTO）</h1><ul>
+<li>Boys于1950年提出用归一化 Gaussian 函数作为径向函数：</li>
+</ul>
+<script type="math/tex; mode=display">
+R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
+{c_{n}=2^{n+1}[(2 n-1) ! !]^{-1 / 2} 2 \pi^{-1 / 4}}</script><ul>
+<li><script type="math/tex">R_n</script>与<script type="math/tex">Y_{lm}</script>组合称为Gaussian-type atomic orbitals，简称GTO。<ul>
+<li>球极坐标：<script type="math/tex">\chi_{n l m}(\alpha ; r, \theta, \varphi)=c_{n} r^{n-1} e^{-\alpha r^{2}} Y_{l m}(\theta, \varphi)</script>，球谐型高斯函数与实型原子轨道角度部分行为一致，通过调整收缩系数调整径向行为，就可以一一对应地近似描述实型原子轨道。</li>
+<li>直角坐标/笛卡尔型：<script type="math/tex">\chi_{L M N}(\alpha ; x, y, z)=N_{\alpha} x^{L} y^{M} z^{N} e^{-\alpha r^{2}}</script>，<ul>
+<li><script type="math/tex">N_{\alpha}</script>：归一化系数</li>
+<li>α：高斯函数指数（决定收敛快慢，越大收敛越快）</li>
+<li>r：距离原子核的距离，x，y，z也是r的笛卡尔分量</li>
+<li>L、M、N：决定了GTO的类型，<script type="math/tex">L+M+N=l</script>是AO的角量子数。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="GTO的标记"><a href="#GTO的标记" class="headerlink" title="GTO的标记"></a>GTO的标记</h2><p><img src="/image-20210618234317761.png" alt="image-20210618234317761" style="zoom:50%;" /></p>
+<ul>
+<li>O是原点，A、B为原子，原子A的坐标为：<script type="math/tex">\vec{R}_{A}=\vec{i} A_{x}+\vec{j} A_{y}+\vec{k} A_{z}</script></li>
+<li>电子的坐标为<script type="math/tex">e(x,y,z)</script>，<script type="math/tex">\vec{r}=\vec{i} x+\vec{j} y+\vec{k} z</script></li>
+<li>原子A上的GTO为：<script type="math/tex">\chi(A, \alpha, L, M, N)=N x_{A}^{L} y_{A}^{M} z_{A}^{N} e^{-r_{A}^{2}}</script><ul>
+<li><script type="math/tex; mode=display">r_{A}=\mid \vec{r}-\vec{R}_{A} \mid</script></li>
+<li><script type="math/tex; mode=display">x_{A}=x-A_{x}, y_{A}=y-A_{y}, \quad z_{A}=z-A_{z}</script></li>
+<li><script type="math/tex; mode=display">r_{A}=\sqrt{x_{A}^{2}+y_{A}^{2}+z_{A}^{2}}, \quad L+M+N=l</script></li>
+</ul>
+</li>
+</ul>
+<h2 id="GTO的特点"><a href="#GTO的特点" class="headerlink" title="GTO的特点"></a>GTO的特点</h2><ul>
+<li>中心位于各个原子核，径向无节点</li>
+<li>函数值的指数衰减比STO快得多，两者的指数上面分别是<script type="math/tex">-\alpha r^2</script>和<script type="math/tex">-\zeta r</script></li>
+<li>变量可分离：<script type="math/tex">x^{L} y^{M} z^{N} e^{-\alpha r^{2}}=x^{L} e^{-c x^{2}} \cdot y^{M} e^{-\alpha y^{2}} \cdot z^{N} e^{-\alpha z^{2}}</script></li>
+<li><p>位于 A、B 两中心上的两个 GTO 乘积可向广义质心作单中心展开：</p>
+<script type="math/tex; mode=display">
+\chi\left(A, \alpha_{1}, L_{1}, M_{1}, N_{1}\right) \cdot \chi\left(B, \alpha_{2}, L_{2}, M_{2}, N_{2}\right)=\sum_{L=0}^{L_{1}+L_{2}} \sum_{M=0}^{M_{1}+M_{2}} \sum_{n=0}^{N_{1}+N_{2}} C_{L M N} \chi(P, \alpha, L, M, N)</script><blockquote>
+<p><img src="/image-20210618235810647.png" alt="image-20210618235810647" style="zoom:50%;" /></p>
+<p>其中<script type="math/tex">|\overrightarrow{A P}|=\frac{\alpha_{2}}{\alpha_{1}+\alpha_{2}}|\overrightarrow{A B}| ;|\overrightarrow{B P}|=\frac{\alpha_{1}}{\alpha_{1}+\alpha_{2}}|\overrightarrow{A B}|</script>，即杠杆定理。比如4)（杠杆定理），两个高斯函数的乘积可转化为另一个中心上的高斯函数的加和，因此四中心积分可转化为双中心积分，进而转化为单中心积分。使积分的计算加快。而各种积分都是两个函数的乘积的形式，从而大大简化各种积分运算。</p>
+</blockquote>
+</li>
+<li><p>GTO径向函数相比于STO，除了e指数上的变化以外，<script type="math/tex">r^{n-1}</script>变成了<script type="math/tex">r^l</script>。<strong>则GTO不含主量子数n。</strong>n对各壳层的影响仅体现在α的大小上，即n越大，α越小。</p>
+</li>
+</ul>
+<blockquote>
+<p>由<script type="math/tex">L+M+N=l</script>，则：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}\chi_{L M N} &=N x^{L} y^{M} z^{N} e^{-\alpha r^{2}}=N r^{l}\left(\frac{x}{r}\right)^{L}\left(\frac{y}{r}\right)^{M}\left(\frac{z}{r}\right)^{N} e^{-\alpha r^{2}} \\&=N r^{l} e^{-\alpha r^{2}} \cos ^{L} \theta \sin ^{L+M} \phi \sin ^{M} \theta \cos ^{N} \phi \\&=N r^l e^{-\alpha r^{2}} \cdot \tilde{Y}_{L M N}(\theta, \phi)\end{aligned}</script></blockquote>
+<h2 id="从头算中使用的高斯型函数"><a href="#从头算中使用的高斯型函数" class="headerlink" title="从头算中使用的高斯型函数"></a>从头算中使用的高斯型函数</h2><p>因为没有主量子数n，而每个壳层中的基函数的收缩系数、GTF指数都是相同的，故实际基组在定义的时候都是按壳层来定义的。即角动量l相同的为一个壳层。直接分为：</p>
+<ul>
+<li>s型基函数：<script type="math/tex">e^{-\alpha r^{2}}</script></li>
+<li>p型基函数：<script type="math/tex">xe^{-\alpha r^{2}}</script>，<script type="math/tex">ye^{-\alpha r^{2}}</script>，<script type="math/tex">ze^{-\alpha r^{2}}</script></li>
+<li>d型基函数：<script type="math/tex">x^2e^{-\alpha r^{2}}</script>，<script type="math/tex">y^2 e^{-\alpha r^{2}}</script>，<script type="math/tex">z^2e^{-\alpha r^{2}}</script>，<script type="math/tex">xye^{-\alpha r^{2}}</script>，<script type="math/tex">xze^{-\alpha r^{2}}</script>，<script type="math/tex">yze^{-\alpha r^{2}}</script><ul>
+<li>但是这6个并不是完全独立的，因为<script type="math/tex">x^2+y^2+z^2=r^2</script></li>
+<li>这些笛卡尔型GTF可以线性组合，使角度部分行为与球谐型GTF一致（尽管组合后的函数形式与球谐型仍不同），以用于合理描述原子轨道。前三个可以写成为：<script type="math/tex">3z^2-r^2</script>，<script type="math/tex">x^2-y^2</script>，<script type="math/tex">x^2+y^2+z^2</script>。而其中最后一项<script type="math/tex">r^2</script>基函数,一般不用，它是一个特殊的球型GTF轨道，在某个径向距离（取决于指数）附近函数值较大，而接近GTF的中心和远离GTF时都很小。</li>
+<li>因此<script type="math/tex">3z^2-r^2</script>，<script type="math/tex">x^2-y^2</script>，<script type="math/tex">x^2+y^2+z^2</script>，<script type="math/tex">xy</script>，<script type="math/tex">xz</script>，<script type="math/tex">yz</script>构成了5个d型球谐基函数。</li>
+</ul>
+</li>
+<li>对于笛卡尔型GTO：</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">l</th>
+<th style="text-align:center">Type</th>
+<th style="text-align:center">L</th>
+<th style="text-align:center">M</th>
+<th style="text-align:center">N</th>
+<th style="text-align:center">l</th>
+<th style="text-align:center">Type</th>
+<th style="text-align:center">L</th>
+<th style="text-align:center">M</th>
+<th style="text-align:center">N</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0(S)</td>
+<td style="text-align:center">S</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">3(F)</td>
+<td style="text-align:center">XXX</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">1(P)</td>
+<td style="text-align:center">X</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">3(F)</td>
+<td style="text-align:center">YYY</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">1(P)</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">3(F)</td>
+<td style="text-align:center">ZZZ</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">3</td>
+</tr>
+<tr>
+<td style="text-align:center">1(P)</td>
+<td style="text-align:center">Z</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">3(F)</td>
+<td style="text-align:center">XXY</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">2(D)</td>
+<td style="text-align:center">XX</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">3(F)</td>
+<td style="text-align:center">XXZ</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">2(D)</td>
+<td style="text-align:center">YY</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">3(F)</td>
+<td style="text-align:center">YYZ</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">2(D)</td>
+<td style="text-align:center">ZZ</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">3(F)</td>
+<td style="text-align:center">XYY</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">2(D)</td>
+<td style="text-align:center">XY</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">3(F)</td>
+<td style="text-align:center">XZZ</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">2</td>
+</tr>
+<tr>
+<td style="text-align:center">2(D)</td>
+<td style="text-align:center">XZ</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">3(F)</td>
+<td style="text-align:center">YZZ</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">2</td>
+</tr>
+<tr>
+<td style="text-align:center">2(D)</td>
+<td style="text-align:center">YZ</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">3(F)</td>
+<td style="text-align:center">XYZ</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>G壳层【15种】：ZZZZ YZZZ YYZZ YYYZ YYYY XZZZ XYZZ XYYZ XYYY XXZZ XXYZ XXYY XXXZ XXXY XXXX<br>…</li>
+<li>实际计算时，对于角动量高于D的笛卡尔型基函数，一般把它们转化成球谐型高斯基函数再用，比如10个f也可以转换为7个f球谐型高斯基函数。这可以节约耗时和避免数值问题。并且与原子轨道特点相同。</li>
+</ul>
+<h2 id="GTO和STO的比较"><a href="#GTO和STO的比较" class="headerlink" title="GTO和STO的比较"></a>GTO和STO的比较</h2><p><img src="/image-20210620132337991.png" alt="image-20210620132337991"></p>
+<ul>
+<li>电子运动图像描述，STO更好。（GTO在原子核处抹去了尖峰，在离核远处衰减得太快）</li>
+<li>分子积分计算处理，GTO更好。STO双电子积分计算困难，不好直接去用它作为量子化学计算用的基函数。</li>
+<li>为了弥补GTO物理图像的缺陷，可以增大基函数的数目。<ul>
+<li>例子：10s6p-GTO用于B~Ne的计算，与双ζ-STO精度相似。<ul>
+<li>而GTO中的基函数总数为：10+6×3=28。STO中的基函数总数为：2+(1+3)×2=10</li>
+<li>(ij|kl)积分∝n<sup>4</sup>，因此采用GTO使得积分总数增大了2.8<sup>4</sup>=62倍，但是计算一个GTO积分比STO快3-4个数量级。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="高斯基组的分类"><a href="#高斯基组的分类" class="headerlink" title="高斯基组的分类"></a>高斯基组的分类</h2><h3 id="原始GTO（PGTO）"><a href="#原始GTO（PGTO）" class="headerlink" title="原始GTO（PGTO）"></a>原始GTO（PGTO）</h3><p>Primitive GTO直接采用单个归一化GTO作为基函数：<script type="math/tex">\chi_{L M N}(\alpha ; x, y, z)=N_{\alpha} x^{L} y^{M} z^{N} e^{-\alpha r^{2}}</script></p>
+<ul>
+<li>积分计算可行，GTF如果用得很少结果比较差，如果直接用大量的GTF作为基函数，（ij|kl）总数和<strong>F</strong>、<strong>H</strong>、<strong>S</strong>、<strong>D</strong>等矩阵维数，需要求解的系数太多，计算量太大，乃至内、外存占用剧烈增大。SCF计算时间随基函数数量n的增大而呈n<sup>3</sup>量级增加。</li>
+<li>因此PGTO一般只用于原子及仅含3~5个原子的小分子计算。</li>
+</ul>
+<h3 id="收缩GTO（CGTO）"><a href="#收缩GTO（CGTO）" class="headerlink" title="收缩GTO（CGTO）"></a>收缩GTO（CGTO）</h3><script type="math/tex; mode=display">
+\left|\chi_{\mu}(C G T O)\right\rangle=\sum_{i=1}^{k_{\mu}} d_{i \mu}\left|\chi_{i}(P G T O)\right\rangle</script><ul>
+<li>每个CGTO是若干个原始GTO固定比例的线性组合，其合适比例由原子从头计算确定。<ul>
+<li>GTO set：<script type="math/tex">\left\{\chi_{1}, \chi_{2}, \ldots, \chi_{n}\right\}</script>，CGTO set：<script type="math/tex">\left\{\eta_{1}, \eta_{2}, \ldots, \eta_{m}\right\}</script>，<script type="math/tex">\eta_{\mu}=\sum_{i=1}^{k_{\mu}} d_{i \mu} \chi_{i}</script></li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">
+\underbrace{\chi_{1}, \chi_{2}, \ldots, \chi_{k}}_{\eta_{1}} ; \underbrace{\chi_{k+1}, \chi_{k+2}, \ldots, \chi_{l}}_{\eta_{2}} ; \ldots ; \underbrace{\chi_{t+1}, \chi_{t+2}, \ldots, \chi_{n}}_{\eta_{m}}</script><ul>
+<li>收缩使MO变分线性空间维数减小，视收缩度不同而计算精度略有下降。若收缩方案合理则影响不大。</li>
+</ul>
+<p>例子：</p>
+<ul>
+<li>()表示原始GTF，[]表示收缩GTF。但是(9d5p)/[3s2p]上有表达不清楚的地方，所以也有612，41的写法。</li>
+</ul>
+<p><img src="/image-20210619175521235.png" alt="image-20210619175521235" style="zoom:50%;" /></p>
+<p><img src="/image-20210619175540777.png" alt="image-20210619175540777" style="zoom:50%;" /></p>
+<p><img src="/image-20210619175553336.png" alt="image-20210619175553336" style="zoom:50%;" /></p>
+<h4 id="收缩方式"><a href="#收缩方式" class="headerlink" title="收缩方式"></a>收缩方式</h4><p><img src="/image-20210620141915170.png" alt="image-20210620141915170" style="zoom:50%;" /></p>
+<h5 id="Segemented-Contracted"><a href="#Segemented-Contracted" class="headerlink" title="Segemented Contracted"></a>Segemented Contracted</h5><ul>
+<li>给定的PGTO只出现在一个CGTO中，比如STO-ng、6-31G*、Dunning DZ等基组。每个原子轨道用单独一组函数来拟合，1s, 2s, 2p等轨道的各自 的基函数都是完全分开的 ，没有关联，每 一个 shell 各自用不同 的 GTO 来表示。不共享任何指数。 程序简单，浪费计算量。</li>
+</ul>
+<script type="math/tex; mode=display">\left|\chi_{1}(\mathrm{CGTO})\right\rangle=\sum_{i=1}^{6} a_{i}\left|\chi_{i}(\mathrm{PGTO})\right\rangle，\left|\chi_{2}(\mathrm{CGTO})\right\rangle =\sum_{i=7}^{9} a_{i}\left|\chi_{i}(\mathrm{PGTO})\right\rangle，\left|\chi_{3}(\mathrm{CGTO})\right\rangle =\left|\chi_{10}(\mathrm{PGTO})\right\rangle</script><ul>
+<li><p>例子：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># O的SV基组：(7s,4p)/[3s,2p]或(511/31)</span></span><br><span class="line"><span class="attribute">O</span>	S</span><br><span class="line"><span class="attribute">2266</span>.<span class="number">1767785</span>             -<span class="number">0</span>.<span class="number">53431809926</span>D-<span class="number">02</span></span><br><span class="line"> <span class="attribute">340</span>.<span class="number">87010191</span>            -<span class="number">0</span>.<span class="number">39890039230</span>D-<span class="number">01</span></span><br><span class="line">  <span class="attribute">77</span>.<span class="number">363135167</span>           -<span class="number">0</span>.<span class="number">17853911985</span></span><br><span class="line">  <span class="attribute">21</span>.<span class="number">479644940</span>           -<span class="number">0</span>.<span class="number">46427684959</span></span><br><span class="line">   <span class="attribute">6</span>.<span class="number">6589433124</span>          -<span class="number">0</span>.<span class="number">44309745172</span></span><br><span class="line"><span class="attribute">O</span>	S</span><br><span class="line">   <span class="attribute">0</span>.<span class="number">80975975668</span>          <span class="number">1</span>.<span class="number">0000000</span></span><br><span class="line"><span class="attribute">O</span>	S</span><br><span class="line">   <span class="attribute">0</span>.<span class="number">25530772234</span>          <span class="number">1</span>.<span class="number">0000000</span></span><br><span class="line"><span class="attribute">O</span>	P</span><br><span class="line">  <span class="attribute">17</span>.<span class="number">721504317</span>            <span class="number">0</span>.<span class="number">43394573193</span>D-<span class="number">01</span></span><br><span class="line">   <span class="attribute">3</span>.<span class="number">8635505440</span>           <span class="number">0</span>.<span class="number">23094120765</span></span><br><span class="line">   <span class="attribute">1</span>.<span class="number">0480920883</span>           <span class="number">0</span>.<span class="number">51375311064</span></span><br><span class="line"><span class="attribute">O</span>	P</span><br><span class="line">   <span class="attribute">0</span>.<span class="number">27641544411</span>          <span class="number">1</span>.<span class="number">0000000</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="General-Contacted"><a href="#General-Contacted" class="headerlink" title="General Contacted"></a>General Contacted</h5><ul>
+<li>给定的PGTO可以出现在多个CGTO中，比如ANO等。1s, 2s, 3s 等用同一组幂指数 α 只是组合系数在变。 效率高，但基组复杂，写程序困难。</li>
+</ul>
+<script type="math/tex; mode=display">\left|\chi_{1}(\mathrm{CGTO})\right\rangle=\sum_{i=1}^{10} a_{i}\left|\chi_{i}(\mathrm{PGTO})\right\rangle，\left|\chi_{2}(\mathrm{CGTO})\right\rangle =\sum_{i=1}^{10} a_{i}\left|\chi_{i}(\mathrm{PGTO})\right\rangle，\left|\chi_{3}(\mathrm{CGTO})\right\rangle =\sum_{i=1}^{10} c_{i}\left|\chi_{i}(\mathrm{PGTO})\right\rangle</script><ul>
+<li><p>例子：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#H的ANO-RCC-VTZP： (<span class="number">8</span>s,<span class="number">4</span>p)/[<span class="number">3</span>s,<span class="number">2</span>p]</span><br><span class="line">H    S</span><br><span class="line"><span class="number">188.61445</span>   	<span class="number">.00096385</span>	 <span class="number">-.0013119</span> 		 <span class="number">.00242240</span></span><br><span class="line"> <span class="number">28.276596</span>  	<span class="number">.00749196</span>	 <span class="number">-.0103451</span> 		 <span class="number">.02033817</span></span><br><span class="line">  <span class="number">6.4248300</span> 	<span class="number">.03759541</span>	 <span class="number">-.0504953</span> 		 <span class="number">.08963935</span></span><br><span class="line">  <span class="number">1.8150410</span> 	<span class="number">.14339498</span>	 <span class="number">-.2073855</span> 		 <span class="number">.44229071</span></span><br><span class="line">   <span class="number">.59106300</span>	<span class="number">.34863630</span>	 <span class="number">-.4350885</span> 		 <span class="number">.57571439</span></span><br><span class="line">   <span class="number">.21214900</span>	<span class="number">.43829736</span>	 <span class="number">-.0247297</span> 		<span class="number">-.9802890</span></span><br><span class="line">   <span class="number">.07989100</span>	<span class="number">.16510661</span>	  <span class="number">.32252599</span>		<span class="number">-.6721538</span></span><br><span class="line">   <span class="number">.02796200</span>	<span class="number">.02102287</span>	  <span class="number">.70727538</span>		<span class="number">1.1417685</span></span><br><span class="line">H    P				</span><br><span class="line">  <span class="number">2.3050000</span> 	<span class="number">.11279019</span>	 <span class="number">-.2108688</span>		</span><br><span class="line">   <span class="number">.80675000</span>	<span class="number">.41850753</span>	 <span class="number">-.5943796</span>		</span><br><span class="line">   <span class="number">.28236200</span>	<span class="number">.47000773</span>	  <span class="number">.08968888</span>		</span><br><span class="line">   <span class="number">.09882700</span>	<span class="number">.18262603</span>	  <span class="number">.86116340</span>		</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="Hybrid-Contracted"><a href="#Hybrid-Contracted" class="headerlink" title="Hybrid Contracted"></a>Hybrid Contracted</h5><ul>
+<li><p>以上两种都有，比如cc-pVDZ。结合上述二者优缺点，内层用广义收缩， 价电子 价轨道用 segmented ，解释起来更便利。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># O的cc-pVDZ基组：(9s,4p,1d)/[3s,2p,1d]</span></span><br><span class="line"><span class="attribute">O</span>	s</span><br><span class="line"><span class="attribute">1</span>.<span class="number">172000</span>D+<span class="number">04</span>	 <span class="number">7</span>.<span class="number">100000</span>D-<span class="number">04</span>	-<span class="number">1</span>.<span class="number">600000</span>D-<span class="number">04</span></span><br><span class="line"><span class="attribute">1</span>.<span class="number">759000</span>D+<span class="number">03</span>	 <span class="number">5</span>.<span class="number">470000</span>D-<span class="number">03</span>	-<span class="number">1</span>.<span class="number">263000</span>D-<span class="number">03</span></span><br><span class="line"><span class="attribute">4</span>.<span class="number">008000</span>D+<span class="number">02</span>	 <span class="number">2</span>.<span class="number">783700</span>D-<span class="number">02</span>	-<span class="number">6</span>.<span class="number">267000</span>D-<span class="number">03</span></span><br><span class="line"><span class="attribute">1</span>.<span class="number">137000</span>D+<span class="number">02</span>	 <span class="number">1</span>.<span class="number">048000</span>D-<span class="number">01</span>	-<span class="number">2</span>.<span class="number">571600</span>D-<span class="number">02</span></span><br><span class="line"><span class="attribute">3</span>.<span class="number">703000</span>D+<span class="number">01</span>	 <span class="number">2</span>.<span class="number">830620</span>D-<span class="number">01</span>	-<span class="number">7</span>.<span class="number">092400</span>D-<span class="number">02</span></span><br><span class="line"><span class="attribute">1</span>.<span class="number">327000</span>D+<span class="number">01</span>	 <span class="number">4</span>.<span class="number">487190</span>D-<span class="number">01</span>	-<span class="number">1</span>.<span class="number">654110</span>D-<span class="number">01</span></span><br><span class="line"><span class="attribute">5</span>.<span class="number">025000</span>D+<span class="number">00</span>	 <span class="number">2</span>.<span class="number">709520</span>D-<span class="number">01</span>	-<span class="number">1</span>.<span class="number">169550</span>D-<span class="number">01</span></span><br><span class="line"><span class="attribute">1</span>.<span class="number">013000</span>D+<span class="number">00</span>	 <span class="number">1</span>.<span class="number">545800</span>D-<span class="number">02</span>	 <span class="number">5</span>.<span class="number">573680</span>D-<span class="number">01</span></span><br><span class="line"><span class="attribute">3</span>.<span class="number">023000</span>D-<span class="number">01</span>	-<span class="number">2</span>.<span class="number">585000</span>D-<span class="number">03</span>	 <span class="number">5</span>.<span class="number">727590</span>D-<span class="number">01</span></span><br><span class="line"><span class="attribute">O</span>	s</span><br><span class="line"><span class="attribute">3</span>.<span class="number">023000</span>D-<span class="number">01</span>	 <span class="number">1</span>.<span class="number">000000</span>D+<span class="number">00</span></span><br><span class="line"><span class="attribute">O</span>	p</span><br><span class="line"><span class="attribute">1</span>.<span class="number">770000</span>D+<span class="number">01</span>	 <span class="number">4</span>.<span class="number">301800</span>D-<span class="number">02</span></span><br><span class="line"><span class="attribute">3</span>.<span class="number">854000</span>D+<span class="number">00</span>	 <span class="number">2</span>.<span class="number">289130</span>D-<span class="number">01</span></span><br><span class="line"><span class="attribute">1</span>.<span class="number">046000</span>D+<span class="number">00</span>	 <span class="number">5</span>.<span class="number">087280</span>D-<span class="number">01</span></span><br><span class="line"><span class="attribute">2</span>.<span class="number">753000</span>D-<span class="number">01</span>	 <span class="number">4</span>.<span class="number">605310</span>D-<span class="number">01</span></span><br><span class="line"><span class="attribute">O</span>	p	         </span><br><span class="line"><span class="attribute">2</span>.<span class="number">753000</span>D-<span class="number">01</span>	 <span class="number">1</span>.<span class="number">000000</span>D+<span class="number">00</span></span><br><span class="line"><span class="attribute">O</span>	d</span><br><span class="line"><span class="attribute">1</span>.<span class="number">185000</span>D+<span class="number">00</span>	<span class="number">1</span>.<span class="number">0000000</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>幂指数较大的对应较内层的轨道，幂指数较小的对应较外层的轨道。通常外层的轨道，α 越小的基函数的贡献 即前面的组合系数绝对值越大，如 2s，3s 轨道相较于 1s 轨道而言， α 值小的 GTO 前的系数会较大，这可以帮助我们区分1s，2s 等不同的轨道。</p>
+</li>
+<li>GTO 与轨道之间只是定性的对应，没有严格的区分。有时算出 1s 轨道上有 2.1 个电子。有些基函数可能既对 1s 轨道有贡献，又对 2s 轨道有贡献。</li>
+</ul>
+<h1 id="STO基组用GTO展开"><a href="#STO基组用GTO展开" class="headerlink" title="STO基组用GTO展开"></a>STO基组用GTO展开</h1><ul>
+<li>用若干个GTO线性组合来近似1个STO 函数，这种收缩方案使得两类基组<a href="#GTO和STO的比较">取长补短</a>。</li>
+</ul>
+<script type="math/tex; mode=display">\phi_{n l}^{(L M N)}(\varsigma ; \vec{r}) \approx \phi^{\prime}(\vec{r})=\sum_{i=1}^{K} d_{i} \chi_{l}^{(L M N)}\left(\alpha_{i} ; \vec{r}\right)$$，其中$$\phi_{n l}^{(L M N)}(\varsigma ; \vec{r})$$=STO的径向部分+GTO的角度分布
+
+$$\varphi_{n l}^{(L M N)}(\varsigma ; \vec{r})=R_{n}(\varsigma ; r) \cdot \tilde{Y}_{l}^{L M N}(\theta, \phi)=N_{n l}^{\prime} r^{n-1} e^{-\alpha r} \sin ^{L+M} \phi \cos ^{L} \theta \sin ^{M} \theta \cos ^{N} \phi</script><p>角度部分可以从展开式中消去，仅需要展开径向函数：</p>
+<script type="math/tex; mode=display">R_{n}(\varsigma ; r) \approx R_{n}^{\prime}(r)=\sum_{i=1}^{K} d_{i} \widetilde{R}_{l}\left(\alpha_{i} ; r\right)</script><p>通过最小二乘法确定系数<script type="math/tex">\{d_i\}</script>，使积分误差<script type="math/tex">\Delta=\int_{\infty}\left|R_{n}(\varsigma ; r)-R_{n}^{\prime}(r)\right|^{2} d \tau</script>最小，并满足归一化条件<script type="math/tex">\int\left|R_{n}^{\prime}(\vec{r})\right|^{2} d \tau=1</script></p>
+<p>例子：用3个GTO组合近似一个STO</p>
+<p><img src="/image-20210620142911231.png" alt="image-20210620142911231" style="zoom:50%;" /></p>
+<ul>
+<li>组合GTO能较好地描述电子在AO重叠成键区域的行为</li>
+<li>描述远核和极近核区的电子运动不理想</li>
+</ul>
+<h2 id="刻度定理Scaling-Theorem"><a href="#刻度定理Scaling-Theorem" class="headerlink" title="刻度定理Scaling Theorem"></a>刻度定理Scaling Theorem</h2><ul>
+<li>当主量子数为n的STO在指数ζ=1时，GTO的展开式为：<script type="math/tex">\phi(1 ; \vec{r})=\sum_{i=1}^{k} d_{i} \chi_{i}\left(\alpha_{i} ; \vec{r}\right)</script></li>
+<li>当指数为任意ζ时：<script type="math/tex">\phi(\zeta ; \vec{r})=\sum_{i=1}^{k} d_{i} \chi_{i}\left(\zeta^2\alpha_{i} ; \vec{r}\right)</script></li>
+</ul>
+<p>真正拟合时，把ζ先当做1，拟合再乘以ζ<sup>2</sup></p>
+<h2 id="常见的STO-GTO基组"><a href="#常见的STO-GTO基组" class="headerlink" title="常见的STO-GTO基组"></a>常见的STO-GTO基组</h2><h3 id="STO-nG-n-2-6"><a href="#STO-nG-n-2-6" class="headerlink" title="STO-nG(n=2~6)"></a>STO-nG(n=2~6)</h3><p><img src="/image-20210620151348582.png" alt="image-20210620151348582"></p>
+<p>STO中的极小基（MBS）中的每个STO用n个GTO的线性组合拟合。</p>
+<ul>
+<li>用于共价型分子几何优化计算结果不错，但能量和电子分布精度较差。实际上还是<a href="#单zeta">SZ基组</a>。</li>
+<li>STO-6G与直接采用STO的精度相当，但和STO-3G、STO-4G相比并没有根本改善。</li>
+<li>主要用于大分子的几何优化计算，STO-3G、STO-4G过去较为常用，随着计算机性能改善，它们已被3-21G等基组取代。</li>
+</ul>
+<h3 id="价层劈裂基组"><a href="#价层劈裂基组" class="headerlink" title="价层劈裂基组"></a>价层劈裂基组</h3><ul>
+<li>虽然价层区域变化比较平滑，收缩系数α没必要很大，但是需要描述柔性，需要用多个基函数描述价层。又称价层劈裂基组。</li>
+<li>一个价层原子轨道若n个基函数描述，则此基组叫n分裂价(n-zeta)基组。</li>
+<li>常用4-31G、6-31G、4-311G、6-311G等是是由Pople等人从上世纪70年代初开始开发的基组，是所有基组中最知名的，即便如今也是很多人默认使用的基组。对前四周期原子有定义（Au、镧系、锕系没法算）。优点是可以根据计算精度要求比较自由的自定义等。</li>
+</ul>
+<h4 id="含义"><a href="#含义" class="headerlink" title="含义"></a>含义</h4><p><strong>双分裂价(double- zeta, DZ)基组：n-31G=SZ core+<a href="#双zeta">DZ valence</a></strong></p>
+<ul>
+<li>核AO对应于一个STO-nG，由n个Gaussian type function （GTF）收缩成的基函数去描述每个内层原子轨道</li>
+<li>价层AO劈裂成为两个ζ值不同的基函数，用一个收缩度为3的和一个未收缩的基函数描述每个价层原子轨道<ul>
+<li>inner basis：STO-3G（ζ）</li>
+<li>outer basis：STO-1G（ζ’&lt;ζ）</li>
+</ul>
+</li>
+</ul>
+<p><strong>三分裂价(triple-zeta, TZ)基组：n-311G=SZ core+TZ valence</strong></p>
+<ul>
+<li>核AO对应于一个STO-nG</li>
+<li>价层AO劈裂成为三个ζ值不同的基函数，用一个收缩度为3的和两个未收缩的基函数描述每个价层轨道。里中外分别是STO-3G、STO-1G、STO-1G（ζ&gt;ζ’&gt;ζ’’）</li>
+</ul>
+<h3 id="极化函数"><a href="#极化函数" class="headerlink" title="极化函数"></a><a href="#极化">极化函数</a></h3><ul>
+<li>极化函数是指角动量比最高占据原子轨道还要高的基函数。比如对于氧，角动量≥d的都是极化函数：对于Fe，角动量≥f的都是极化函数。</li>
+<li>极化函数一般是非收缩的。</li>
+<li><strong>极化函数总是要加</strong>，有极化函数时才能充分表现原子轨道在分子环境中的变形，对得到可靠的结果有极为重要的意义。后HF方法也要靠较充分的极化函数才能准确计算电子相关能。</li>
+</ul>
+<h4 id="含义-1"><a href="#含义-1" class="headerlink" title="含义"></a>含义</h4><ul>
+<li>n-31G*或者n-311G*即在n-31G与n-311G基础上向Li~Ar 原子（除了H、He，价电子为nsnp）加入6个d型的STO-1G 极化函数（<script type="math/tex">d_{x^2}</script>，<script type="math/tex">d_{y^2}</script>，<script type="math/tex">d_{z^2}</script>，<script type="math/tex">d_{xy}</script>，<script type="math/tex">d_{xz}</script>，<script type="math/tex">d_{yz}</script>）</li>
+<li>如果给H、He也加入3个p型的STO-1G极化函数（<script type="math/tex">p_x，p_y，p_z</script>），则为n-31G**和n-311G**。对于共价化合物的基态分子，可以给出接近HF极限的计算精度。</li>
+<li>还有n-31G(d,p)的写法，<em>和*</em>分别等价于(d)和(d,p)<ul>
+<li>d：给重元素加的极化函数，可以用d、2d、2df、3df、3d2f等，表示加几个d，几个f。</li>
+<li>p：给H、He加的极化函数，可以用p、2p、2pd、3pd等</li>
+</ul>
+</li>
+</ul>
+<p>例子：</p>
+<p><img src="/image-20210620145811319.png" alt="image-20210620145811319" style="zoom:33%;" /></p>
+<p><img src="/image-20210620145819965.png" alt="image-20210620145819965" style="zoom:33%;" /></p>
+<p><img src="/image-20210620145826955.png" alt="image-20210620145826955" style="zoom:33%;" /></p>
+<h3 id="弥散函数"><a href="#弥散函数" class="headerlink" title="弥散函数"></a><a href="#弥散">弥散函数</a></h3><ul>
+<li><p>弥散函数是指数非常小的基函数，因此能够延展到非常广的空间区域。</p>
+</li>
+<li><p>弥散函数都是非收缩的。极化函数和弥散函数的特征完全不同，没有任何可以相互代替的关系。</p>
+</li>
+<li><p>6-31+G*和6-31++G**就是在6-31G*或6-31G**基础上加入若干特小ζ值的弥散函数构成，用于计算阴离子、较高激发态分子、分子极化率（极化时电子已经比较远了）和分子间弱作用力</p>
+</li>
+<li>弥散函数的加入对中性基态分子的能量精度影响很少。</li>
+</ul>
+<h4 id="含义-2"><a href="#含义-2" class="headerlink" title="含义"></a>含义</h4><ul>
+<li>一个“+”表示对重原子（除了H、He）加一个s和一层p的弥散函数</li>
+<li>两个“++”除了给重原子加，也给H、He加一个s弥散函数</li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li>在大分子几何优化时为了减小计算量，可采用规模较小价层劈裂基组3-21G或加极化函数的3-21G*。</li>
+<li>还可以定义3-21G**、3-21+G**和3-21++G**基组，适用于较大分子激发态、阴离子和分子间作用能计算（用于密度泛函效果很好）</li>
+<li>在文献上见到例如6-311G**//3-21G*的符号就表示用低级基组进行几何优化，然后用高级基组计算能量和分子性质。</li>
+</ul>
+<h1 id="相关一致性基组"><a href="#相关一致性基组" class="headerlink" title="相关一致性基组"></a>相关一致性基组</h1><ul>
+<li>是专门给后HF计算而构建的一类基组，有很多子系列，最早从1988年开始提出，现在仍在发展，而pople系列没有发展了。</li>
+<li>包含大量高角动量函数。由于包含的GTF数目较多，用于HF/DFT时计算量较大而不划算。</li>
+<li>只定义了前四周期且缺少K钾。</li>
+</ul>
+<h2 id="cc-pVnZ含义"><a href="#cc-pVnZ含义" class="headerlink" title="cc-pVnZ含义"></a>cc-pVnZ含义</h2><ul>
+<li>cc表示correlation consistent，p表示polarized，V表示valence，nZ表示n-Zeta，n=D、T、Q、5……9</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Atoms</th>
+<th>cc-pVDZ</th>
+<th>cc-pVTZ</th>
+<th>cc-pVQZ</th>
+<th><strong>cc-pV5Z</strong></th>
+<th><strong>cc-pV6Z</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H</td>
+<td>2s,1p</td>
+<td>3s,2p,1d</td>
+<td>4s,3p,2d,1f</td>
+<td>5s,4p,3d,2f,1g</td>
+<td>6s,5p,4d,3f,2g,1h</td>
+</tr>
+<tr>
+<td>He</td>
+<td>2s,1p</td>
+<td>3s,2p,1d</td>
+<td>4s,3p,2d,1f</td>
+<td>5s,4p,3d,2f,1g</td>
+<td><em>not available</em></td>
+</tr>
+<tr>
+<td>Li-Be</td>
+<td>3s,2p,1d</td>
+<td>4s,3p,2d,1f</td>
+<td>5s,4p,3d,2f,1g</td>
+<td>6s,5p,4d,3f,2g,1h</td>
+<td><em>not available</em></td>
+</tr>
+<tr>
+<td>B-Ne</td>
+<td>3s,2p,1d</td>
+<td>4s,3p,2d,1f</td>
+<td>5s,4p,3d,2f,1g</td>
+<td>6s,5p,4d,3f,2g,1h</td>
+<td>7s,6p,5d,4f,3g,2h,1i</td>
+</tr>
+<tr>
+<td>Na-Ar</td>
+<td>4s,3p,1d</td>
+<td>5s,4p,2d,1f</td>
+<td>6s,5p,3d,2f,1g</td>
+<td>7s,6p,4d,3f,2g,1h</td>
+<td><em>not available</em></td>
+</tr>
+<tr>
+<td>Ca</td>
+<td>5s,4p,2d</td>
+<td>6s,5p,3d,1f</td>
+<td>7s,6p,4d,2f,1g</td>
+<td>8s,7p,5d,3f,2g,1h</td>
+<td><em>not available</em></td>
+</tr>
+<tr>
+<td>Sc-Zn</td>
+<td>6s,5p,3d, 1f</td>
+<td>7s,6p,4d,2f,1g</td>
+<td>8s,7p,5d,3f,2g,1h</td>
+<td>9s,8p,6d,4f,3g,2h,1i</td>
+<td><em>not available</em></td>
+</tr>
+<tr>
+<td>Ga-Kr</td>
+<td>5s,4p,2d</td>
+<td>6s,5p,3d,1f</td>
+<td>7s,6p,4d,2f,1g</td>
+<td>8s,7p,5d,3f,2g,1h</td>
+<td><em>not available</em></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>aug-cc-pVnZ:</p>
+<ul>
+<li>aug=augmented，是cc-pVnZ带弥散函数的版本，每个角动量都有对应的弥散函数，比不带弥散的版本昂贵甚巨。（pople系列对重原子只是加s、p的弥散，而对C，原本4s3p2d1f，改成aug就是5s4p3d2f）</li>
+</ul>
+<p>d、t-aug-cc-pVnZ</p>
+<ul>
+<li>加弥散更多的情况，对cc-pVnZ每个角动量加两层、三层弥散函数，用于精确描述里德堡激发、精确计算超极化率等目的，而aug-则只是加一层弥散</li>
+</ul>
+<p>cc-pVnZ-PP：</p>
+<ul>
+<li>是对于K以及从Cu开始的很多元素可以用的赝势基组</li>
+</ul>
+<p>月份基组：</p>
+<ul>
+<li>如jun-cc-pVTZ。是aug-cc-pVnZ系列的简化版最高档对应aug（八月），月份依次往下先砍掉最不重要的氢的弥散函数（成为jul），再依次砍掉重原子的最高角动量的弥散函数（成为jun, may…）直到只剩s和p弥散函数。</li>
+</ul>
+<h2 id="基函数的数目"><a href="#基函数的数目" class="headerlink" title="基函数的数目"></a>基函数的数目</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>H-He</th>
+<th>Li-Ne</th>
+<th>Na-Ar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cc-pVDZ</td>
+<td>[2<em>s</em>1<em>p</em>] → 5 func.</td>
+<td>[3<em>s</em>2<em>p</em>1<em>d</em>] → 14 func.</td>
+<td>[4<em>s</em>3<em>p</em>1<em>d</em>] → 18 func.</td>
+</tr>
+<tr>
+<td>cc-pVTZ</td>
+<td>[3<em>s</em>2<em>p</em>1<em>d</em>] → 14 func.</td>
+<td>[4<em>s</em>3<em>p</em>2<em>d</em>1<em>f</em>] → 30 func.</td>
+<td>[5<em>s</em>4<em>p</em>2<em>d</em>1<em>f</em>] → 34 func.</td>
+</tr>
+<tr>
+<td>cc-pVQZ</td>
+<td>[4<em>s</em>3<em>p</em>2<em>d</em>1<em>f</em>] → 30 func.</td>
+<td>[5<em>s</em>4<em>p</em>3<em>d</em>2<em>f</em>1<em>g</em>] → 55 func.</td>
+<td>[6<em>s</em>5<em>p</em>3<em>d</em>2<em>f</em>1<em>g</em>] → 59 func.</td>
+</tr>
+<tr>
+<td>aug-cc-pVDZ</td>
+<td>[3<em>s</em>2<em>p</em>] → 9 func.</td>
+<td>[4<em>s</em>3<em>p</em>2<em>d</em>] → 23 func.</td>
+<td>[5<em>s</em>4<em>p</em>2<em>d</em>] → 27 func.</td>
+</tr>
+<tr>
+<td>aug-cc-pVTZ</td>
+<td>[4<em>s</em>3<em>p</em>2<em>d</em>] → 23 func.</td>
+<td>[5<em>s</em>4<em>p</em>3<em>d</em>2<em>f</em>] → 46 func.</td>
+<td>[6<em>s</em>5<em>p</em>3<em>d</em>2<em>f</em>] → 50 func.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>H的cc-pVDZ：2s+1p*3=5</li>
+<li>Ar本身有 [1s, 2s, 2p, 3s, 3p]轨道，在cc-pVDZ中，[4<em>s</em>3<em>p</em>1<em>d</em>] 表示轨道为[1s, 2s, 2p, <strong>3s, 3s, 3p, 3p</strong>, 3d’]（其中’代表加入极化轨道），基函数数目为4s+3p*3+1d*5=18个。</li>
+</ul>
+<h1 id="Ahlrichs-def2系列基组"><a href="#Ahlrichs-def2系列基组" class="headerlink" title="Ahlrichs def2系列基组"></a><strong>Ahlrichs def2系列基组</strong></h1><ul>
+<li>非常适合DFT计算，也同样适合后HF计算。比同级别的cc-pVnZ便宜一些， 同样计算量下结果比Pople基组好。</li>
+<li>def代表default，是Turbomole程序里默认的基组。def2-系列之前有def-系列基组，def-TZVP比def2-TZVP便宜很多，适合替代6-311G**。</li>
+</ul>
+<h2 id="含义-3"><a href="#含义-3" class="headerlink" title="含义"></a>含义</h2><ul>
+<li><p>def2-SV(P)/SVP：Split Valence Polarized【(P)是对H没有加极化函数】。</p>
+</li>
+<li><p>def2-TZVP：Triple Zeta Valence Polarized【3分裂】</p>
+</li>
+<li><p>def2-TZVPP：相比def2-TZVP，对某些元素带更多极化函数，尤其是对H增加了d极化函数，对过渡金属增加了g极化函数【对于C、O、S等，一个P和两个P没有差别】</p>
+</li>
+<li>def2-QZVP/def2-QZVPP: Quadruple Zeta Valence Polarized【4分裂】【跟cc-pVQZ同档次】</li>
+</ul>
+<p>部分元素的不同级别的def2、def基组的尺寸对比（321代表3个s、2个p、1个d的基函数壳层）<img src="/image-20210620162559498.png" alt="image-20210620162559498"></p>
+<p>def系列与Pople系列基组的尺寸对应关系：</p>
+<ul>
+<li>def-SV(P)/SVP≈6-31G*/6-31G**：用于DFT粗略计算【定性正确】*</li>
+<li>def-TZVP&gt;6-311G(d,p)：用于DFT较好精度计算</li>
+<li>def-TZVPP≈6-311G(2df,2pd)：用于DFT精确计算，后HF较好精度计算</li>
+<li><em>def2 SV(P)/SVP≈6-31G\</em>/6-31G**：用于DFT粗略计算。</li>
+<li>def2-TZVP26-311G(2df,p)：用于DF T精确计算</li>
+<li>def2-TZVPP26-31YG(2df,2pd)：用于后HF较好精度计算</li>
+</ul>
+<p>大多数常用的全电子基组【内核价层电子全都描述】只对于前几周期有定义，例如6-31G、6-311G 系列只定义了前四周期，cc-pVnZ (n=D,T, Q, 5)也只定义了前四周期且缺少K钾。若体系还有其它元素，则不得不和其它基组混用(通常是面向较重原子的赝势基组)。<br>def2系列基组的一大优点是对于除了锕系以及最后一个周期外所有元素都有定义(def比def2还多 支持锕系元素)【普适】。对于大多数体系，可以直接用def2基组，不需要多个基组混用。<br>对于前四周期，def/def2基组是全电 子基组，对于之后的元素，def/def2基组是赝势基组【对内核不直接描述】【缺点是官方版本没有加弥散函数】。<br>给ahlrichs的def2系列基组加弥散的方法：<a target="_blank" rel="noopener" href="http://sobereva.com/340">http://sobereva.com/340</a></p>
+<h1 id="基组的选择"><a href="#基组的选择" class="headerlink" title="基组的选择"></a>基组的选择</h1><p>量子化学培训自测题-基组部分</p>
+<p><a target="_blank" rel="noopener" href="http://bbs.keinsci.com/thread-5426-1-1.html">http://bbs.keinsci.com/thread-5426-1-1.html</a></p>
+<p>谈谈量子化学中基组的选择</p>
+<p><a target="_blank" rel="noopener" href="http://sobereva.com/336">http://sobereva.com/336</a></p>
+<p>谈谈赝势基组的选用</p>
+<p><a target="_blank" rel="noopener" href="http://sobereva.com/373">http://sobereva.com/373</a></p>
+<p>详解Gaussian中混合基组、自定义基组和赝势基组的输入</p>
+<p><a target="_blank" rel="noopener" href="http://sobereva.com/60">http://sobereva.com/60</a></p>
+<p>赝势的函数形式以及在量子化学程序中定义的方式</p>
+<p><a target="_blank" rel="noopener" href="http://sobereva.com/188">http://sobereva.com/188</a></p>
+<p>写计算化学文章时引用理论方法、基组、程序时应注意的问题</p>
+<p><a target="_blank" rel="noopener" href="http://sobereva.com/370">http://sobereva.com/370</a></p>
+<ul>
+<li>氢的极化函数比起弥散函数的意义大得多得多，但必须给氢加极化的场合仅限于研究的问题和氢有直接关系，如氢转移反应、氢键、二氢键、和氢有关的键的性质（键长、键能、振动频率）等，其余情况给氢加极化并没什么用。</li>
+</ul>
+<ul>
+<li>弥散函数不是必须要加：<ul>
+<li>缺点：显著增加计算量；使得SCF收敛困难许多；使得一些波函数分析方法无法使用（如Mayer键级、Mulliken分析等，如果在计算时用了弥散函数，分析时把弥散去掉再产生一次波函数再分析）；破坏非占据分子轨道的化学意义；有时带来数值不稳定；可能因数值问题导致体系结构和波函数对称性下降</li>
+<li>不加弥散结果一定没法用：计算偶极矩、多极矩（因分子边缘地区比较敏感）；计算极化率、超极化率（不加会定性错误）；计算里德堡激发态（因价层电子可以激发到很弥散的轨道）；计算阴离子体系能量、电子亲和能（因为阴离子带负电荷，对额外电子束缚比较弱），计算色散主导的分子间相互作用</li>
+<li>加弥散很重要：计算弱相互作用能；计算Raman、ROA强度</li>
+<li>加弥散对改进结果有益：计算反应势垒；优化阴离子体系或弱相互作用体系的结构、对其进行振动分析</li>
+</ul>
+</li>
+<li>给氢加你散函数并无什么意义（加弥散一般是因为原子周围电子太多）。因为氢本身只有一个电子，电负性又小，在分子环境中一般都会被吸走不少电子，因此给它加弥散函数起不到什么效果，却会令计算量增加不少。因此需要弥散函数时，不建议用诸如6-311++G<strong>，而建议用6-311+G</strong>。即便研究氢键也不需要给氢加弥散函数（对结果没有明显影响）（但对于计算超极化率、氢带明显负电的情况则需要给氢加弥散）。</li>
+</ul>
+<p>一般问题的基组选择建议<br>(HF、普通泛函计算)<br>HF和普通泛函【双杂化以外的泛函】对高角动量极化函数要求低，计算量和GTF数目直接相关，因此不适合GTF多且极化函数多的cc-pVnZ系列。将计算量用在增大zeta数上明显更合适。<br>最低可接受级别：def2-SV(P)≈6-31G<em> &lt; def2-SVP≈6-31G<strong> 2-zeta基组<br>不错级别：6-311G</strong> &lt; def-TZVP 一般3-zeta基组<br>理想级别：def2-TZVP &lt; def2-TZVPP 高档3-zeta基组【普通泛函计算，基组不完备性误差已经很小了，再提升没有必要，普通泛函精度有限】<br>极限：def2-QZVP 4-zeta基组<br>同等基组尺寸下使用def/def2系列基组代替Pople基组可以获得明显更高精度!<br>对于需要弥散函数的情况勿忘加弥散函数!<br>(后HF、双杂化泛函计算)<br>后HF以及双杂化泛函【引入了一部分类似于MP2，因此对基组要求基本和后HF一样】需要角动量极化的数来表现电子相关效应，而且计算量主要取决于函数而非GTF数，故不怕收缩度高。cc-pVnZ系列是理想的选择，def2系列亦可，强烈不建议用Pople系列。<br>粗糙级别：6-311G*</em> &lt; def-TZVP    一般3-zeta基组<br>较好级别：cc-pVTZ，def2-TZVPP    优质3-zeta基组<br>理想级别：cc-pVQZ，def2-QZVPP    4-zeta基组【完全发挥后HF】<br>极限：cc-pV5Z        5-zeta基组【后HF想达到完备基组】<br>高档次后HF方法应该结合高质量的基组，方可充分发挥能力。诸如 CCSD(T)/CC-pVDZ这样的组合十分荒诞，没有CC-pVTZ就绝对甭用CCSD(T)!<br>对于需要弥散函数的情况勿忘加弥散函数!</p>
+<p><img src="clipboard-1624181630439.png" alt="img"></p>
+<p>基组越大越好么?<br>原则上来说基组越大结果精度越好，但是盲目用大基组只会白费时间，应注意以下问题：【理论方法的误差和基组的误差有相互抵消关系，如果很烂的方法用很大的基组没有必要】<br>要搞清楚到底自己对精度的要求有多高。理论化学研究应着眼于解决要解决的问题，基组及理论方法的选用够用即可，盲目计算高精度的数据没意义，如今算一个月的数据可能几十年后的人算几分钟就能得到，现在好不容易算出来的高精度的数据在以后可能都不值得一提<br>要弄清楚计算精度的瓶颈在哪里，是理论方法还是基组。从极小基提升至2-zeta结果准确度提升甚巨，提升至3-zeta也肯定有改进，但提升至4-zeta已经改进很小了，此时的瓶颈一般在于理论方法上而不在于基组了<br>普通DFT泛函结合4-zeta基组( 如cc-pVQZ)是没意义的，这样的基组是给高精度计算用的，因此理论方法也应该是高精度级别，否则鲜花插在了牛粪上。结合4-zeta基组时应该用高档次方法如CCSD(T),否则高质量基组体现不出价值。<br>有些问题对基组本身就不敏感，比如几何优化【对基组要求不高，中小基组，而能量、超极化率等要求比较高】，2-zeta-般够用，3-zeta已足矣， 继续提升无益：再比如振动频率计算用631G*并考虑校正因子足以得到可靠结果，用3-zeta会导致计算量提升甚巨，对结果也无明显改进</p>
+<p>混合基组<br>混合基组是指计算时有的原子用某种基组，而有的原子用另一种基组。<br>适当使用混合基组可以令计算耗时大为降低，而精度损失不多。例如，计算一个大体系的化学反应过程，反应部分只涉及其中一个区域，那么可以只给这个区域的原子用大基组( 如def2-TZVP)而其余部分用中、小基组(如6-31G*)。再比如，若体系有的地方局部带大量的负电荷，那么没必要对整个体系都加弥散函数，只给那部分的原子加上弥散函数就足够了。</p>
+<p><img src="clipboard-1624181668873.png" alt="img"></p>
+<p>相对论效应</p>
+<p><img src="clipboard-1624181675490.png" alt="img"></p>
+<h1 id="赝势和赝势基组"><a href="#赝势和赝势基组" class="headerlink" title="赝势和赝势基组"></a>赝势和赝势基组</h1><p>内核电子不是化学上感兴趣的。化学问题一般只关心价层电子。赝势(Pseudopotential，PP)将内核电子对价层电子的影响通过事先拟合好的势场来表达【全电子内核电子也会用基组描述，不能直接省，内核电子与价层电子有相互作用】。<br>基于赝势计算时需要使用专为其优化的赝势基组描述价电子。同一种赝势可以有多种与之匹配的赝势基组，精度有所不同。<br>有效核势(Effective core potential, ECP)【与PP并不等同】多数情况就是指赝势。<br>用赝势的好处<br>计算时不需要直接考虑内层电子，计算量相对于用全电子基组时大幅降低，原子所属周期越靠后节约时间越显著<br>相对论效应主要来自于内层电子。拟合赝势的时候如果考虑了相对论效应，则基于赝势计算的时候就可以把内层电子对价层电子的相对论的影响近似体现出来【对重元素一般用赝势】<br>对第四周期，特别是第五周期开始的原子强烈建议使用赝势，又省时间又能等效地体现出相对论效应<br>赝势的坏处<br>由于内层电子没有精确表达。导致对价层电子的影响描述得不够严格准确、内核电子的可极化效果和电子相关效应没有得到体现，一定程度会影响计算精度<br>必须依赖内核电子的性质无法计算，如NMR、X光光谱【NMR就是算核化学位移，X光光谱是激发内核电子】<br>大核与小核赝势<br>如果被赝势代替的内核电子(赝化的电子)较少就叫小核赝势。用这样的赝势计算时，价层、亚价层的电子都<br>需要明确计算。<br>如果赝化的电子数较多，就叫大核赝势，用这类赝势时只有价层电子是要明确地计算的。<br>小核赝势计算耗时比大核赝势更多，但由于考虑了亚价层电子，结果通常来说也更好，而且可移植性好，可以<br>适应不同化学环境的情况(如不同氧化态)。【普适性更好，实在算不动的时候再用大核】</p>
+<h2 id="常见的赝势和赝势基组"><a href="#常见的赝势和赝势基组" class="headerlink" title="常见的赝势和赝势基组"></a>常见的赝势和赝势基组</h2><h3 id="Lanl赝势-Los-Alamos-National-Laboratory"><a href="#Lanl赝势-Los-Alamos-National-Laboratory" class="headerlink" title="Lanl赝势(Los Alamos National Laboratory)"></a>Lanl赝势(Los Alamos National Laboratory)</h3><p>Hay和Wadt在上世纪80年代提出的很常用的一种赝势，对第四周期元素未考虑相对论效应，对更重的元素都考虑了相对论效应。<br>对过渡金属，Lanl1 是大核赝势【现在精度很糙，一般不用】，Lanl2是小核赝势。对主族二者一样，都是大核赝势。【有标配基组，作者顺带提的】二者都有MB（极小基）和DZ （双分裂价基）两个档次的标配赝势基组，最常用的是Lanl2DZ。<br>2008年又提出了Lanl2TZ，【不是严格的3-zeta基组】是对Lanl2DZ重新进行收缩得到，计算量有所增加但精度也有所提高。Lanl2TZ+是对第一周期过渡金属增加一层d弥散。Lanl2TZ(f)是对过渡金属增加一层f极化。<br>Lanl08【主要给主族用】是对于过渡金属和主族元素在Lanl2DZ基础上都彻底去收缩化。Lanl08+ 是在Lanl08基础上对于第一周期过渡金属加上弥散。Lanl08(d)和Lanl08(f)分别是在Lanl08基础上对主族和过渡金属加上d和f极化。<br>Lanl系列目前包含前六个周期绝大部分元素，不支持镧系锕系（仅Lanl2DZ支持极个别锕系)</p>
+<h3 id="Stuttgart赝势"><a href="#Stuttgart赝势" class="headerlink" title="Stuttgart赝势"></a>Stuttgart赝势</h3><p>也称SDD (Stuttgart/Dresden)赝势，对于过渡金属和主族都是大核和小核版本都有，且有考虑和不考虑相对论效应的版本，几乎涵盖整个周期表【甚至110多的元素】，精度较好，可靠度高，特别是计算镧系、锕系的首选。其标配的赝势基组适合用于DFT计算，后HF计算也基本能用</p>
+<h3 id="def-def2系列赝势基组"><a href="#def-def2系列赝势基组" class="headerlink" title="def/def2系列赝势基组"></a>def/def2系列赝势基组</h3><p>def/def2系列基组对前四周期是全电子基组，从第五周期开始是赝势基组【比如XeF4，Gaussian自动就知道F是全电子，Xe是赝势】，搭配Stuttgart小核赝势</p>
+<h3 id="aug-cc-pVnZ-PP-n-D-T-Q-5-系列赝势基组"><a href="#aug-cc-pVnZ-PP-n-D-T-Q-5-系列赝势基组" class="headerlink" title="(aug-)cc-pVnZ-PP (n=D,T,Q,5)系列赝势基组"></a>(aug-)cc-pVnZ-PP (n=D,T,Q,5)系列赝势基组</h3><p>是2003年开始陆续提出的最适合后HF计算的赝势基组，搭配Stuttgart小核赝势。很适合对轻原子结合(aug-)cc-pVnZ使用。特征和构建思想类似(aug-)cc-pVnZ系列，由于高角动量函数多，收缩度高，用在DFT计算上比较亏</p>
+<h2 id="赝势基组的选用"><a href="#赝势基组的选用" class="headerlink" title="赝势基组的选用"></a>赝势基组的选用</h2><p>使用的前提是对要算的元素有定义。镧系可以用Stuttgart赝势+标配基组或档次合适的def2系列赝势基组【对锕系没有定义】。锕系可以用Stuttgart赝势+标配基组或def-TZVP赝势基组。<br>DFT计算<br>计算条件差：Lanl2DZ【6-31G*】<br>计算条件一般：过渡金属用Lanl2TZ，主族用Lanl08或SDD<br>计算条件不错：过渡金属用Lanl2TZ(f)或SDD，主族用Lanl08(d)<br>计算条件很好：def2-TZVB<br>计算条件无限好：def2-QZVP（DFT计算用QZ级别其实很浪费）<br>后HF<br>计算条件奇差无比：cc-pVDZ-PP或def2-SVP<br>计算条件一般：过渡金属用SDD，主族用Lanl08(d)<br>计算条件不错：cc-pVTZ-PP或def2-TZVPP<br>计算条件很好：cc-pVQZ-PP或def2-QZVPP<br>def2对第四周期还是全电子基组，cc-pVnZ-PP对K以及从Cu开始的元素才有定义【Fe、Co、Ni等就用不了】。因此后HF计算时非要对除K以外的Cu之前的元素用赝势基组的话就只能靠Lanl或SDD了。</p>
+<p>赝势基组使用的注意事项<br>对于前三周期都不要用赝势基组，一方面没必要(内层电子不多，相对论效应不明显)，另一方面比起用恰当的全电子基组会损失精度<br>赝势下计算时程序输出的能量只是价电子能量<br>涉及到内核电子的研究时，如NMR，对被研究的原子切不可用赝势。但可以给其它原子用赝势【比如计算过渡金属配合物，算配体的核化学位移，过渡金属可以用赝势】</p>
+<ul>
+<li></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>有用可戳(●ˇ∀ˇ●)</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="Zhao Jing 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Zhao Jing
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2021/06/18/%E5%9F%BA%E7%BB%84/" title="基组">http://example.com/2021/06/18/基组/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E5%9F%BA%E7%BB%84/" rel="tag"><i class="fa fa-tag"></i> 基组</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/05/20/%E3%80%90Gaussian%E3%80%91%E6%A0%B8%E7%8B%AC%E7%AB%8B%E5%8C%96%E5%AD%A6%E4%BD%8D%E7%A7%BB%EF%BC%88NICS%EF%BC%89/" rel="prev" title="【Gaussian】核独立化学位移（NICS）">
+      <i class="fa fa-chevron-left"></i> 【Gaussian】核独立化学位移（NICS）
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Y-l-m-%E9%83%A8%E5%88%86"><span class="nav-number">1.</span> <span class="nav-text">Y_{l m}部分</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E5%BF%83%E5%8A%BF%E5%9C%BA%E5%9E%8BAO%E5%9F%BA%E7%BB%84"><span class="nav-number">1.1.</span> <span class="nav-text">中心势场型AO基组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8DAO%E5%92%8C%E5%AE%9EAO"><span class="nav-number">1.2.</span> <span class="nav-text">复AO和实AO</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#R-n-l-%E9%83%A8%E5%88%86"><span class="nav-number">2.</span> <span class="nav-text">R_{n l}部分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Slater-Type-Orbital%EF%BC%88STO%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">Slater-Type Orbital（STO）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#zeta%E7%9A%84%E4%BC%98%E5%8C%96"><span class="nav-number">3.1.</span> <span class="nav-text">\zeta的优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AO%E5%9F%BA%E7%BB%84%E7%9A%84%E5%A4%A7%E5%B0%8F%E7%AD%89%E7%BA%A7"><span class="nav-number">3.2.</span> <span class="nav-text">AO基组的大小等级</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%81%E5%B0%8F%E5%9F%BAMinimal-basis-sets%EF%BC%88MBS%EF%BC%89"><span class="nav-number">3.2.1.</span> <span class="nav-text">极小基Minimal basis sets（MBS）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%B7%E5%9F%BA%E7%BB%84Valence-basis-sets%EF%BC%88VBS%EF%BC%89"><span class="nav-number">3.2.2.</span> <span class="nav-text">价基组Valence basis sets（VBS）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E5%9F%BA%E7%BB%84%EF%BC%88EBS%EF%BC%89"><span class="nav-number">3.2.3.</span> <span class="nav-text">扩展基组（EBS）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84STO%E6%89%A9%E5%B1%95%E5%9F%BA%E7%BB%84%E5%BD%A2%E5%BC%8F"><span class="nav-number">3.3.</span> <span class="nav-text">常见的STO扩展基组形式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#n%CE%B6%E5%9F%BA%E7%BB%84"><span class="nav-number">3.3.1.</span> <span class="nav-text">nζ基组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AB%E6%9E%81%E5%8C%96%E5%87%BD%E6%95%B0%E7%9A%84%E5%9F%BA%E7%BB%84"><span class="nav-number">3.3.2.</span> <span class="nav-text">含极化函数的基组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AB%E5%BC%A5%E6%95%A3%E5%87%BD%E6%95%B0%E7%9A%84%E5%9F%BA%E7%BB%84"><span class="nav-number">3.3.3.</span> <span class="nav-text">含弥散函数的基组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STO%E5%9F%BA%E7%BB%84%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9%E5%92%8C%E7%94%A8%E9%80%94"><span class="nav-number">3.4.</span> <span class="nav-text">STO基组的优缺点和用途</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%AB%98%E6%96%AF%E5%9E%8B%E5%9F%BA%E5%87%BD%E6%95%B0%EF%BC%88GTO%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">高斯型基函数（GTO）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#GTO%E7%9A%84%E6%A0%87%E8%AE%B0"><span class="nav-number">4.1.</span> <span class="nav-text">GTO的标记</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GTO%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">4.2.</span> <span class="nav-text">GTO的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E5%A4%B4%E7%AE%97%E4%B8%AD%E4%BD%BF%E7%94%A8%E7%9A%84%E9%AB%98%E6%96%AF%E5%9E%8B%E5%87%BD%E6%95%B0"><span class="nav-number">4.3.</span> <span class="nav-text">从头算中使用的高斯型函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GTO%E5%92%8CSTO%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-number">4.4.</span> <span class="nav-text">GTO和STO的比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E6%96%AF%E5%9F%BA%E7%BB%84%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-number">4.5.</span> <span class="nav-text">高斯基组的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%A7%8BGTO%EF%BC%88PGTO%EF%BC%89"><span class="nav-number">4.5.1.</span> <span class="nav-text">原始GTO（PGTO）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B6%E7%BC%A9GTO%EF%BC%88CGTO%EF%BC%89"><span class="nav-number">4.5.2.</span> <span class="nav-text">收缩GTO（CGTO）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%94%B6%E7%BC%A9%E6%96%B9%E5%BC%8F"><span class="nav-number">4.5.2.1.</span> <span class="nav-text">收缩方式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Segemented-Contracted"><span class="nav-number">4.5.2.1.1.</span> <span class="nav-text">Segemented Contracted</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#General-Contacted"><span class="nav-number">4.5.2.1.2.</span> <span class="nav-text">General Contacted</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Hybrid-Contracted"><span class="nav-number">4.5.2.1.3.</span> <span class="nav-text">Hybrid Contracted</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#STO%E5%9F%BA%E7%BB%84%E7%94%A8GTO%E5%B1%95%E5%BC%80"><span class="nav-number">5.</span> <span class="nav-text">STO基组用GTO展开</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%BB%E5%BA%A6%E5%AE%9A%E7%90%86Scaling-Theorem"><span class="nav-number">5.1.</span> <span class="nav-text">刻度定理Scaling Theorem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84STO-GTO%E5%9F%BA%E7%BB%84"><span class="nav-number">5.2.</span> <span class="nav-text">常见的STO-GTO基组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#STO-nG-n-2-6"><span class="nav-number">5.2.1.</span> <span class="nav-text">STO-nG(n&#x3D;2~6)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%B7%E5%B1%82%E5%8A%88%E8%A3%82%E5%9F%BA%E7%BB%84"><span class="nav-number">5.2.2.</span> <span class="nav-text">价层劈裂基组</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%AB%E4%B9%89"><span class="nav-number">5.2.2.1.</span> <span class="nav-text">含义</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%81%E5%8C%96%E5%87%BD%E6%95%B0"><span class="nav-number">5.2.3.</span> <span class="nav-text">极化函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%AB%E4%B9%89-1"><span class="nav-number">5.2.3.1.</span> <span class="nav-text">含义</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%A5%E6%95%A3%E5%87%BD%E6%95%B0"><span class="nav-number">5.2.4.</span> <span class="nav-text">弥散函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%AB%E4%B9%89-2"><span class="nav-number">5.2.4.1.</span> <span class="nav-text">含义</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">5.3.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E4%B8%80%E8%87%B4%E6%80%A7%E5%9F%BA%E7%BB%84"><span class="nav-number">6.</span> <span class="nav-text">相关一致性基组</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cc-pVnZ%E5%90%AB%E4%B9%89"><span class="nav-number">6.1.</span> <span class="nav-text">cc-pVnZ含义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E5%87%BD%E6%95%B0%E7%9A%84%E6%95%B0%E7%9B%AE"><span class="nav-number">6.2.</span> <span class="nav-text">基函数的数目</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ahlrichs-def2%E7%B3%BB%E5%88%97%E5%9F%BA%E7%BB%84"><span class="nav-number">7.</span> <span class="nav-text">Ahlrichs def2系列基组</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AB%E4%B9%89-3"><span class="nav-number">7.1.</span> <span class="nav-text">含义</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%BB%84%E7%9A%84%E9%80%89%E6%8B%A9"><span class="nav-number">8.</span> <span class="nav-text">基组的选择</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B5%9D%E5%8A%BF%E5%92%8C%E8%B5%9D%E5%8A%BF%E5%9F%BA%E7%BB%84"><span class="nav-number">9.</span> <span class="nav-text">赝势和赝势基组</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E8%B5%9D%E5%8A%BF%E5%92%8C%E8%B5%9D%E5%8A%BF%E5%9F%BA%E7%BB%84"><span class="nav-number">9.1.</span> <span class="nav-text">常见的赝势和赝势基组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lanl%E8%B5%9D%E5%8A%BF-Los-Alamos-National-Laboratory"><span class="nav-number">9.1.1.</span> <span class="nav-text">Lanl赝势(Los Alamos National Laboratory)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stuttgart%E8%B5%9D%E5%8A%BF"><span class="nav-number">9.1.2.</span> <span class="nav-text">Stuttgart赝势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#def-def2%E7%B3%BB%E5%88%97%E8%B5%9D%E5%8A%BF%E5%9F%BA%E7%BB%84"><span class="nav-number">9.1.3.</span> <span class="nav-text">def&#x2F;def2系列赝势基组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#aug-cc-pVnZ-PP-n-D-T-Q-5-%E7%B3%BB%E5%88%97%E8%B5%9D%E5%8A%BF%E5%9F%BA%E7%BB%84"><span class="nav-number">9.1.4.</span> <span class="nav-text">(aug-)cc-pVnZ-PP (n&#x3D;D,T,Q,5)系列赝势基组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%9D%E5%8A%BF%E5%9F%BA%E7%BB%84%E7%9A%84%E9%80%89%E7%94%A8"><span class="nav-number">9.2.</span> <span class="nav-text">赝势基组的选用</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhao Jing"
+      src="/images/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">Zhao Jing</p>
+  <div class="site-description" itemprop="description">做一棵树，只为岁月而生长。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaojing629" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaojing629" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:295483858@qq.com" title="E-Mail → mailto:295483858@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+<div class="sidebar-categories" p align="left">
+  <font size="2">
+  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/">计算化学</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/molpro/">molpro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/ORCA/">ORCA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/Multiwfn/">Multiwfn</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/Gaussian/">Gaussian</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/CP2K/">CP2K</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/AMS/">AMS</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%AB%99/">网站</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F/">系统</a></li></ul>
+  </font>
+  </p /div>
+
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title"></h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ADF/" rel="tag">ADF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AIM/" rel="tag">AIM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASSCF/" rel="tag">CASSCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DLPNO/" rel="tag">DLPNO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HF/" rel="tag">HF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCSCF/" rel="tag">MCSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NBO/" rel="tag">NBO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NICS/" rel="tag">NICS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RI%E8%BF%91%E4%BC%BC/" rel="tag">RI近似</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%B4%E7%95%8C%E7%82%B9/" rel="tag">临界点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98/" rel="tag">内存</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="tag">几何优化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%9D%E7%8C%9C/" rel="tag">初猜</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%9B%E5%B8%B8%E6%95%B0/" rel="tag">力常数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%82%B9/" rel="tag">单点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag">占据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%90%E6%A0%87/" rel="tag">坐标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%BB%84/" rel="tag">基组</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BB%84%E6%80%81/" rel="tag">多组态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag">对称性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%93%E6%89%91%E5%88%86%E6%9E%90/" rel="tag">拓扑分析</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag">波函</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag">点群</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E8%8D%B7/" rel="tag">电荷</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%9F%BA%E7%BB%84/" rel="tag">相对论基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%8A%B3%E9%A6%99%E6%80%A7/" rel="tag">芳香性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%9D%E5%8A%BF/" rel="tag">赝势</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%85%E5%8A%A9%E5%9F%BA%E7%BB%84/" rel="tag">辅助基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5/" rel="tag">输入</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%87%BA/" rel="tag">输出</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E5%BE%84/" rel="tag">键径</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E7%BA%A7/" rel="tag">键级</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%91%E7%8E%87/" rel="tag">频率</a><span class="tag-list-count">1</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-flask"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhao Jing</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">238k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='0,0,0' opacity='0.3' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : '3L90wCaNUKa1MzSQcAhzkLtk-gzGzoHsz',
+      appKey     : 'fQ4t73jXnb71Y9zQWfXj5bIP',
+      placeholder: "可以输入您发现文中的错误或建议~(。・∀・)ノ",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

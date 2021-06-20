@@ -21,21 +21,22 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="ADF的SCF选项以及不收敛的处理方法">
+  <meta name="description" content="ADF的基本输入结构，SCF选项以及不收敛的处理方法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【AMS】02.单点和SCF">
-<meta property="og:url" content="http://example.com/2019/09/23/%E3%80%90AMS%E3%80%9102.%E5%8D%95%E7%82%B9%E5%92%8CSCF/index.html">
+<meta property="og:title" content="【ADF】02.单点和SCF">
+<meta property="og:url" content="http://example.com/2019/09/23/%E3%80%90ADF%E3%80%9102.%E5%8D%95%E7%82%B9%E5%92%8CSCF/index.html">
 <meta property="og:site_name" content="Jing&#39;s Notes">
-<meta property="og:description" content="ADF的SCF选项以及不收敛的处理方法">
+<meta property="og:description" content="ADF的基本输入结构，SCF选项以及不收敛的处理方法">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-09-22T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-05-13T08:42:44.583Z">
+<meta property="article:modified_time" content="2021-06-18T03:15:39.788Z">
 <meta property="article:author" content="Zhao Jing">
+<meta property="article:tag" content="ADF">
 <meta property="article:tag" content="SCF">
 <meta property="article:tag" content="单点">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2019/09/23/%E3%80%90AMS%E3%80%9102.%E5%8D%95%E7%82%B9%E5%92%8CSCF/">
+<link rel="canonical" href="http://example.com/2019/09/23/%E3%80%90ADF%E3%80%9102.%E5%8D%95%E7%82%B9%E5%92%8CSCF/">
 
 
 <script id="page-configurations">
@@ -48,7 +49,7 @@
   };
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
-  <title>【AMS】02.单点和SCF | Jing's Notes</title>
+  <title>【ADF】02.单点和SCF | Jing's Notes</title>
   
 
 
@@ -192,7 +193,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/09/23/%E3%80%90AMS%E3%80%9102.%E5%8D%95%E7%82%B9%E5%92%8CSCF/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/09/23/%E3%80%90ADF%E3%80%9102.%E5%8D%95%E7%82%B9%E5%92%8CSCF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/touxiang.jpg">
@@ -205,7 +206,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          【AMS】02.单点和SCF
+          【ADF】02.单点和SCF
         </h1>
 
         <div class="post-meta">
@@ -222,7 +223,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-13 16:42:44" itemprop="dateModified" datetime="2021-05-13T16:42:44+08:00">2021-05-13</time>
+                <time title="修改时间：2021-06-18 11:15:39" itemprop="dateModified" datetime="2021-06-18T11:15:39+08:00">2021-06-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -255,8 +256,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2019/09/23/%E3%80%90AMS%E3%80%9102.%E5%8D%95%E7%82%B9%E5%92%8CSCF/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2019/09/23/%E3%80%90AMS%E3%80%9102.%E5%8D%95%E7%82%B9%E5%92%8CSCF/" itemprop="commentCount"></span>
+    <a title="valine" href="/2019/09/23/%E3%80%90ADF%E3%80%9102.%E5%8D%95%E7%82%B9%E5%92%8CSCF/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/09/23/%E3%80%90ADF%E3%80%9102.%E5%8D%95%E7%82%B9%E5%92%8CSCF/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -267,16 +268,16 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.4k</span>
+              <span>6.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>6 分钟</span>
             </span>
-            <div class="post-description">ADF的SCF选项以及不收敛的处理方法</div>
+            <div class="post-description">ADF的基本输入结构，SCF选项以及不收敛的处理方法</div>
 
         </div>
       </header>
@@ -287,7 +288,76 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="单点计算"><a href="#单点计算" class="headerlink" title="单点计算"></a>单点计算</h1><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Task</span> SinglePoint</span><br></pre></td></tr></table></figure>
+        <h1 id="Engine-ADF"><a href="#Engine-ADF" class="headerlink" title="Engine ADF"></a>Engine ADF</h1><h2 id="基组"><a href="#基组" class="headerlink" title="基组"></a>基组</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Basis</span><br><span class="line">  <span class="built_in"> Type </span>[<span class="built_in">..</span>.]</span><br><span class="line">   Core [None | Small | Large]</span><br><span class="line">   CreateOutput <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">   Path string</span><br><span class="line">   PerAtomType</span><br><span class="line">      Core [None | Small | Large]</span><br><span class="line">      File stringS</span><br><span class="line">      Symbol string</span><br><span class="line">     <span class="built_in"> Type </span>[<span class="built_in">..</span>.]</span><br><span class="line">   End</span><br><span class="line">   PerRegion</span><br><span class="line">      Core [None | Small | Large]</span><br><span class="line">      Region string</span><br><span class="line">     <span class="built_in"> Type </span>[<span class="built_in">..</span>.]</span><br><span class="line">   End</span><br><span class="line">   FitType [<span class="built_in">..</span>.]</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>Type</code>：默认<code>DZ</code>，还有一系列：[SZ, DZ, DZP, TZP, TZ2P, QZ4P, TZ2P-J, QZ4P-J, AUG/ASZ, AUG/ADZ, AUG/ADZP, AUG/ATZP, AUG/ATZ2P, ET/ET-pVQZ, ET/ET-QZ3P, ET/ET-QZ3P-1DIFFUSE, ET/ET-QZ3P-2DIFFUSE, ET/ET-QZ3P-3DIFFUSE, POLTDDFT/DZ, POLTDDFT/DZP, POLTDDFT/TZP, POLTDDFT/TZ2P]</p>
+</li>
+<li><p><code>Core</code>：默认<code>Large</code>，还可以选择<code>None</code>, <code>Small</code>, <code>Large</code></p>
+</li>
+<li><p><code>CreateOutput</code>：默认为<code>No</code>。如果为<code>true</code>，原子创建运行的输出将打印到标准输出。如果为<code>false</code>，它将被保存到CreateAtoms.out文件中。</p>
+</li>
+<li><p><code>Path</code>：默认为<code>$AMSRESOURCES/ADF</code>，ADF只在该文件夹中寻找合适的基组</p>
+</li>
+<li><p><code>PerAtomType</code>：为一类原子指定基组</p>
+<ul>
+<li><code>File</code>：指定基组的位置，可以是相对于<code>$AMSRESOURCES/ADF</code>的相对位置，也可以是绝对位置</li>
+<li><code>Symbol</code>：哪一类原子</li>
+</ul>
+<p>这一部分也可以简写为：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PerAtomType <span class="attribute">Core</span>=None <span class="attribute">File</span>=string <span class="attribute">Symbol</span>=tring <span class="attribute">type</span>=XXX</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>PerRegion</code>：为一个区域的原子指定基组</p>
+<ul>
+<li><code>Region</code>：指定基组的区域，可以用逻辑运算符，比如<code>R1+R2</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="泛函"><a href="#泛函" class="headerlink" title="泛函"></a>泛函</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">XC</span><br><span class="line">  &#123;LDA LDA &#123;Stoll&#125;&#125;</span><br><span class="line">  &#123;GGA GGA&#125;</span><br><span class="line">  &#123;MetaGGA metagga&#125;</span><br><span class="line">  &#123;Model MODELPOT [IP]&#125;</span><br><span class="line">  &#123;HartreeFock&#125;</span><br><span class="line">  &#123;OEP fitmethod &#123;approximation&#125;&#125;</span><br><span class="line">  &#123;HYBRID hybrid &#123;<span class="attribute">HF</span>=HFpart&#125;&#125;</span><br><span class="line">  &#123;MetaHYBRID metahybrid&#125;</span><br><span class="line">  &#123;DOUBLEHYBRID doublehybrid&#125;</span><br><span class="line">  &#123;RPA&#125;</span><br><span class="line">  &#123;XCFUN&#125;</span><br><span class="line">  &#123;RANGESEP &#123;<span class="attribute">GAMMA</span>=X&#125; &#123;<span class="attribute">ALPHA</span>=a&#125; &#123;<span class="attribute">BETA</span>=b&#125;&#125;</span><br><span class="line">  (LibXC functional&#125;</span><br><span class="line">  &#123;DISPERSION [s6scaling] [<span class="attribute">RSCALE</span>=r0scaling] [Grimme3] [BJDAMP] [<span class="attribute">PAR1</span>=par1]  [<span class="attribute">PAR2</span>=par2]  [<span class="attribute">PAR3</span>=par3]  [<span class="attribute">PAR4</span>=par4] &#125;</span><br><span class="line">  &#123;Dispersion Grimme4 &#123;<span class="attribute">s6</span>=...&#125; &#123;<span class="attribute">s8</span>=...&#125; &#123;<span class="attribute">a1</span>=...&#125; &#123;<span class="attribute">a2</span>=...&#125;&#125;</span><br><span class="line">  &#123;DISPERSION dDsC&#125;</span><br><span class="line">  &#123;DISPERSION UFF&#125;</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h2 id="相对论"><a href="#相对论" class="headerlink" title="相对论"></a>相对论</h2><p>2020版本开始默认使用标量相对论效应：</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Relativity</span><br><span class="line">   Formalism [Pauli | <span class="type">ZORA</span> | <span class="type">X2C</span> | <span class="type">RA</span>-X2C]</span><br><span class="line">   Level [None | <span class="type">Scalar</span> | <span class="type">Spin</span>-Orbit]</span><br><span class="line">   Potential [MAPA | <span class="type">SAPA</span>]</span><br><span class="line">   SpinOrbitMagnetization [NonCollinear | <span class="type">Collinear</span> | <span class="type">CollinearX</span> | <span class="type">CollinearY</span> | <span class="type">CollinearZ</span>]</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Formalism</code>：如果<code>level</code>里是<code>None</code>，则不需要考虑所选择的形式。<ul>
+<li><code>Pauli</code>：泡利哈密顿函数</li>
+<li><code>ZORA</code>：零阶正则近似哈密顿量。默认。</li>
+<li><code>X2C</code>：四分量狄拉克方程到二分量狄拉克方程的精确变换，是Dyall修正的Dirac方程。</li>
+<li><code>RA-X2C</code>：四分量狄拉克方程到二分量狄拉克方程的精确变换，是修正狄拉克方程的正规方法。</li>
+</ul>
+</li>
+<li><code>Level</code>：<ul>
+<li><code>None</code>：非相对论。哈密顿量也就是Kohn-Sham方程的形式。</li>
+<li><code>Scalar</code>：标量相对论，成本较低。默认。</li>
+<li><code>Spin-Orbit</code>：旋轨耦合，最好的理论水平，比普通计算昂贵（4-8倍）</li>
+</ul>
+</li>
+<li><code>Potential</code>：<ul>
+<li><code>MAPA</code>：默认。the Minumium of neutral Atomical potential Approximation 中性原子势近似值的最小值。MAPA优于SAPA的优点是可以降低ZORA的规格依赖性。 除了电子密度非常接近重核外，几乎所有特性的ZORA规范依赖性都很小。 非常接近重核的电子密度可用于解释Mossbauer光谱中的异构体位移。</li>
+<li><code>SAPA</code>：the Sum of neutral Atomical potential Approximation 中性原子势近似值之和。</li>
+</ul>
+</li>
+<li><code>SpinOrbitMagnetization</code>：只与自旋轨道耦合相关，而且在<code>unrestricted</code>下使用。在不受限制的计算中，大多数XC泛函都有自旋极化作为一种成分。通常，自旋量子化轴的方向是任意的，可以方便地选择为z轴。然而，在自旋轨道计算中，方向很重要，将磁化矢量的z分量放入XC函数中是任意的。<ul>
+<li><code>NonCollinear</code>：可以将磁化矢量的大小插入XC函数中。 这称为非共线方法。</li>
+<li><code>CollinearX</code>，<code>CollinearY</code>，<code>CollinearZ</code>：使用x，y或z分量作为XC函数的自旋极化。默认为z。</li>
+<li>：<code>Collinear</code>：同<code>CollinearZ</code></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>2019版及之前的输入格式为：</p>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">RELATIVISTIC </span><span class="template-variable">&#123;level&#125;</span><span class="xml"> </span><span class="template-variable">&#123;formalism&#125;</span><span class="xml"> </span><span class="template-variable">&#123;potential&#125;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><blockquote>
+<p>Scalar级别为：<code>RELATIVISTIC Scalar ZORA</code></p>
+</blockquote>
+</li>
+<li><p>SpinOrbit级别为：<code>RELATIVISTIC spinorbit ZORA</code></p>
+<ul>
+<li>注意此时：unrestricted不再适用，解决办法删掉unrestricted或加上collinear/nocollinear，以及nosym关键词</li>
+<li>并且不能同时计算解析freq</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h1 id="单点计算"><a href="#单点计算" class="headerlink" title="单点计算"></a>单点计算</h1><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Task</span> SinglePoint</span><br></pre></td></tr></table></figure>
 <h1 id="SCF选项"><a href="#SCF选项" class="headerlink" title="SCF选项"></a>SCF选项</h1><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">SCF</span><br><span class="line"> Iterations Niter</span><br><span class="line"> Converge <span class="keyword">SCFcnv</span> &#123; sconv2 &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">AccelerationMethod</span> &#123; ADIIS | LISTi | LISTb | fDIIS | LISTf | MESA | SDIIS &#125;</span><br><span class="line"> <span class="keyword">MESA</span> [NoFDIIS] [NoLISTb] [NoLISTf] [NoLISTi] [NoSDIIS] [NoADIIS]</span><br><span class="line"> ADIIS</span><br><span class="line">   &#123;THRESH1 a1&#125;</span><br><span class="line">   &#123;THRESH2 a2&#125;</span><br><span class="line"> End</span><br><span class="line"> NoADIIS</span><br><span class="line"> DIIS</span><br><span class="line">   &#123;N n&#125;</span><br><span class="line">   &#123;OK ok&#125;</span><br><span class="line">   &#123;cyc cyc&#125;</span><br><span class="line"> End</span><br><span class="line"> Mixing mix</span><br><span class="line"> Mixing1 mix1</span><br><span class="line"></span><br><span class="line"> OldSCF</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
 <h2 id="Iterations"><a href="#Iterations" class="headerlink" title="Iterations"></a>Iterations</h2><p><code>Iterations</code>SCF迭代的最大次数，<code>Niter</code>默认是<code>300</code></p>
 <h2 id="Converge"><a href="#Converge" class="headerlink" title="Converge"></a>Converge</h2><p><code>Converge</code> ：</p>
@@ -409,7 +479,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/2019/09/23/%E3%80%90AMS%E3%80%9102.%E5%8D%95%E7%82%B9%E5%92%8CSCF/" title="【AMS】02.单点和SCF">http://example.com/2019/09/23/【AMS】02.单点和SCF/</a>
+    <a href="http://example.com/2019/09/23/%E3%80%90ADF%E3%80%9102.%E5%8D%95%E7%82%B9%E5%92%8CSCF/" title="【ADF】02.单点和SCF">http://example.com/2019/09/23/【ADF】02.单点和SCF/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -421,6 +491,7 @@
       <footer class="post-footer">
           
           <div class="post-tags">
+              <a href="/tags/ADF/" rel="tag"><i class="fa fa-tag"></i> ADF</a>
               <a href="/tags/SCF/" rel="tag"><i class="fa fa-tag"></i> SCF</a>
               <a href="/tags/%E5%8D%95%E7%82%B9/" rel="tag"><i class="fa fa-tag"></i> 单点</a>
           </div>
@@ -431,8 +502,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/09/23/%E3%80%90AMS%E3%80%9103.%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="prev" title="【AMS】03.几何优化">
-      <i class="fa fa-chevron-left"></i> 【AMS】03.几何优化
+    <a href="/2019/09/23/%E3%80%90AMS%E3%80%9102.%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="prev" title="【AMS】02.几何优化">
+      <i class="fa fa-chevron-left"></i> 【AMS】02.几何优化
     </a></div>
       <div class="post-nav-item">
     <a href="/2019/09/25/%E3%80%90Linux%E3%80%91%E5%91%BD%E4%BB%A4/" rel="next" title="【Linux】命令">
@@ -497,7 +568,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%95%E7%82%B9%E8%AE%A1%E7%AE%97"><span class="nav-number">1.</span> <span class="nav-text">单点计算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SCF%E9%80%89%E9%A1%B9"><span class="nav-number">2.</span> <span class="nav-text">SCF选项</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Iterations"><span class="nav-number">2.1.</span> <span class="nav-text">Iterations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Converge"><span class="nav-number">2.2.</span> <span class="nav-text">Converge</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AccelerationMethod"><span class="nav-number">2.3.</span> <span class="nav-text">AccelerationMethod</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MESA"><span class="nav-number">2.3.1.</span> <span class="nav-text">MESA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ADIIS"><span class="nav-number">2.3.2.</span> <span class="nav-text">ADIIS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SDIIS"><span class="nav-number">2.3.3.</span> <span class="nav-text">SDIIS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#oldSCF"><span class="nav-number">2.4.</span> <span class="nav-text">oldSCF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lshift"><span class="nav-number">2.4.1.</span> <span class="nav-text">Lshift</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ARH"><span class="nav-number">2.4.2.</span> <span class="nav-text">ARH</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SCF%E4%B8%8D%E6%94%B6%E6%95%9B"><span class="nav-number">3.</span> <span class="nav-text">SCF不收敛</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E7%A7%B0%E6%80%A7%E6%A3%80%E6%B5%8B%E5%A4%B1%E8%B4%A5"><span class="nav-number">4.</span> <span class="nav-text">对称性检测失败</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Engine-ADF"><span class="nav-number">1.</span> <span class="nav-text">Engine ADF</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%BB%84"><span class="nav-number">1.1.</span> <span class="nav-text">基组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%9B%E5%87%BD"><span class="nav-number">1.2.</span> <span class="nav-text">泛函</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%AF%B9%E8%AE%BA"><span class="nav-number">1.3.</span> <span class="nav-text">相对论</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%95%E7%82%B9%E8%AE%A1%E7%AE%97"><span class="nav-number">2.</span> <span class="nav-text">单点计算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SCF%E9%80%89%E9%A1%B9"><span class="nav-number">3.</span> <span class="nav-text">SCF选项</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Iterations"><span class="nav-number">3.1.</span> <span class="nav-text">Iterations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Converge"><span class="nav-number">3.2.</span> <span class="nav-text">Converge</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AccelerationMethod"><span class="nav-number">3.3.</span> <span class="nav-text">AccelerationMethod</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MESA"><span class="nav-number">3.3.1.</span> <span class="nav-text">MESA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ADIIS"><span class="nav-number">3.3.2.</span> <span class="nav-text">ADIIS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SDIIS"><span class="nav-number">3.3.3.</span> <span class="nav-text">SDIIS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#oldSCF"><span class="nav-number">3.4.</span> <span class="nav-text">oldSCF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lshift"><span class="nav-number">3.4.1.</span> <span class="nav-text">Lshift</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ARH"><span class="nav-number">3.4.2.</span> <span class="nav-text">ARH</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SCF%E4%B8%8D%E6%94%B6%E6%95%9B"><span class="nav-number">4.</span> <span class="nav-text">SCF不收敛</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E7%A7%B0%E6%80%A7%E6%A3%80%E6%B5%8B%E5%A4%B1%E8%B4%A5"><span class="nav-number">5.</span> <span class="nav-text">对称性检测失败</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -513,7 +584,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-count">38</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -524,7 +595,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -553,7 +624,7 @@
     <h3 class="widget-title"></h3>
     <div id="myCanvasContainer" class="widget tagcloud">
         <canvas width="250" height="250" id="resCanvas" style="width=100%">
-            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AIM/" rel="tag">AIM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASSCF/" rel="tag">CASSCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DLPNO/" rel="tag">DLPNO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HF/" rel="tag">HF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCSCF/" rel="tag">MCSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NBO/" rel="tag">NBO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NICS/" rel="tag">NICS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RI%E8%BF%91%E4%BC%BC/" rel="tag">RI近似</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%B4%E7%95%8C%E7%82%B9/" rel="tag">临界点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98/" rel="tag">内存</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="tag">几何优化</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%9D%E7%8C%9C/" rel="tag">初猜</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%9B%E5%B8%B8%E6%95%B0/" rel="tag">力常数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%82%B9/" rel="tag">单点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag">占据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%90%E6%A0%87/" rel="tag">坐标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%BB%84/" rel="tag">基组</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BB%84%E6%80%81/" rel="tag">多组态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag">对称性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%93%E6%89%91%E5%88%86%E6%9E%90/" rel="tag">拓扑分析</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag">波函</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag">点群</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E8%8D%B7/" rel="tag">电荷</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%9F%BA%E7%BB%84/" rel="tag">相对论基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%8A%B3%E9%A6%99%E6%80%A7/" rel="tag">芳香性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%9D%E5%8A%BF/" rel="tag">赝势</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%85%E5%8A%A9%E5%9F%BA%E7%BB%84/" rel="tag">辅助基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5/" rel="tag">输入</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%87%BA/" rel="tag">输出</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E5%BE%84/" rel="tag">键径</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E7%BA%A7/" rel="tag">键级</a><span class="tag-list-count">3</span></li></ul>
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ADF/" rel="tag">ADF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AIM/" rel="tag">AIM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASSCF/" rel="tag">CASSCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DLPNO/" rel="tag">DLPNO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HF/" rel="tag">HF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCSCF/" rel="tag">MCSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NBO/" rel="tag">NBO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NICS/" rel="tag">NICS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RI%E8%BF%91%E4%BC%BC/" rel="tag">RI近似</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%B4%E7%95%8C%E7%82%B9/" rel="tag">临界点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98/" rel="tag">内存</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="tag">几何优化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%9D%E7%8C%9C/" rel="tag">初猜</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%9B%E5%B8%B8%E6%95%B0/" rel="tag">力常数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%82%B9/" rel="tag">单点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag">占据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%90%E6%A0%87/" rel="tag">坐标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%BB%84/" rel="tag">基组</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BB%84%E6%80%81/" rel="tag">多组态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag">对称性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%93%E6%89%91%E5%88%86%E6%9E%90/" rel="tag">拓扑分析</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag">波函</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag">点群</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E8%8D%B7/" rel="tag">电荷</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%9F%BA%E7%BB%84/" rel="tag">相对论基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%8A%B3%E9%A6%99%E6%80%A7/" rel="tag">芳香性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%9D%E5%8A%BF/" rel="tag">赝势</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%85%E5%8A%A9%E5%9F%BA%E7%BB%84/" rel="tag">辅助基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5/" rel="tag">输入</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%87%BA/" rel="tag">输出</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E5%BE%84/" rel="tag">键径</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E7%BA%A7/" rel="tag">键级</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%91%E7%8E%87/" rel="tag">频率</a><span class="tag-list-count">1</span></li></ul>
         </canvas>
     </div>
 </div>
@@ -593,7 +664,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">213k</span>
+    <span title="站点总字数">238k</span>
 </div>
 
         

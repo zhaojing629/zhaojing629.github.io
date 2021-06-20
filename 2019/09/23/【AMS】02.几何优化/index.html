@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=EB Garamond:300,300italic,400,400italic,700,700italic|Dancing Script:300,300italic,400,400italic,700,700italic|ZCOOL XiaoWei:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="几何优化是在AMS块中指定">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【AMS】02.几何优化">
+<meta property="og:url" content="http://example.com/2019/09/23/%E3%80%90AMS%E3%80%9102.%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/index.html">
+<meta property="og:site_name" content="Jing&#39;s Notes">
+<meta property="og:description" content="几何优化是在AMS块中指定">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-09-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-06-18T03:57:55.765Z">
+<meta property="article:author" content="Zhao Jing">
+<meta property="article:tag" content="几何优化">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2019/09/23/%E3%80%90AMS%E3%80%9102.%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+  <title>【AMS】02.几何优化 | Jing's Notes</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d23c6dd5b34ecbaba18b829b9084946";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jing's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/09/23/%E3%80%90AMS%E3%80%9102.%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="Zhao Jing">
+      <meta itemprop="description" content="做一棵树，只为岁月而生长。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jing's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【AMS】02.几何优化
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-09-23 00:00:00" itemprop="dateCreated datePublished" datetime="2019-09-23T00:00:00+08:00">2019-09-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-18 11:57:55" itemprop="dateModified" datetime="2021-06-18T11:57:55+08:00">2021-06-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">计算化学</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/AMS/" itemprop="url" rel="index"><span itemprop="name">AMS</span></a>
+                </span>
+            </span>
+
+          
+            <br>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/09/23/%E3%80%90AMS%E3%80%9102.%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/09/23/%E3%80%90AMS%E3%80%9102.%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+            <div class="post-description">几何优化是在AMS块中指定</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="GeometryOptimization"><a href="#GeometryOptimization" class="headerlink" title="GeometryOptimization"></a><code>GeometryOptimization</code></h1><p>配置几何优化和过渡状态搜索的详细信息。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Task GeometryOptimization</span><br><span class="line"></span><br><span class="line">GeometryOptimization</span><br><span class="line">   Convergence</span><br><span class="line">      Energy <span class="type">float</span></span><br><span class="line">      Gradients <span class="type">float</span></span><br><span class="line">      Step <span class="type">float</span></span><br><span class="line">      StressEnergyPerAtom <span class="type">float</span></span><br><span class="line">   <span class="keyword">End</span></span><br><span class="line">   MaxIterations <span class="type">integer</span></span><br><span class="line">   CalcPropertiesOnlyIfConverged Yes/<span class="keyword">No</span></span><br><span class="line">   OptimizeLattice Yes/<span class="keyword">No</span></span><br><span class="line">   KeepIntermediateResults Yes/<span class="keyword">No</span></span><br><span class="line">   PretendConverged Yes/<span class="keyword">No</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>20版以前的为：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">GEOMETRY</span><br><span class="line">	Converge &#123;<span class="attribute">E</span>=TolE&#125; &#123;<span class="attribute">Grad</span>=TolG&#125; &#123;<span class="attribute">Rad</span>=TolR&#125; &#123;<span class="attribute">Angle</span>=TolA&#125;</span><br><span class="line">	Iterations Niter</span><br><span class="line">	Inithess inithessian.file</span><br><span class="line">	Hessupd HessUpdate</span><br><span class="line">	Optim &#123;Delocal / Cartesian / Internal&#125; &#123;All / Selected&#125;</span><br><span class="line">	GEigenvalueThreshold threshold</span><br><span class="line">	Branch &#123;New / Old&#125;</span><br><span class="line">	<span class="keyword">Step</span> &#123;<span class="attribute">Rad</span>=MaxRadStep&#125; &#123;<span class="attribute">Angle</span>=MaxAngleStep&#125; &#123;<span class="attribute">TrustRadius</span>=MaxRadius&#125;</span><br><span class="line">	DIIS &#123;<span class="attribute">N</span>=NVect&#125; &#123;<span class="attribute">CYC</span>=Ncyc&#125;</span><br><span class="line">	Externprogram externprog.exe <span class="attribute">coord</span>=coords.inp <span class="attribute">energy</span>=energy.out <span class="attribute">grad</span>=grads.out</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="Convergence"><a href="#Convergence" class="headerlink" title="Convergence"></a><code>Convergence</code></h2><p>收敛部分的设置：</p>
+<ul>
+<li><code>Energy</code>：能量变化，默认是<code>1e-05</code>Hartree。</li>
+<li><code>Gradients</code>：核梯度的阈值，默认是<code>0.001</code>Hartree/Angstrom</li>
+<li><code>Step</code>：收敛几何允许的最大笛卡尔步长，默认是<code>0.01</code>Angstrom</li>
+<li><code>StressEnergyPerAtom</code>：优化晶格向量时使用的阈值，默认是<code>0.0005</code>Hartree</li>
+</ul>
+<p>收敛判定（如果最大梯度和均方根梯度比收敛准则小10倍，则忽略最后两条）</p>
+<ul>
+<li>当前几何结构和上一个几何步骤的键能之间的差异小于<code>Energy</code></li>
+<li>最大笛卡尔核梯度小于<code>Gradients</code></li>
+<li>笛卡尔核梯度的均方根(RMS)小于2/3<code>Gradients</code></li>
+<li>最大笛卡尔步长小于<code>Step</code></li>
+<li>笛卡尔阶跃的均方根(RMS)小于2/3<code>Step</code></li>
+</ul>
+<p>优化过程会不断地计算不同的分子结构，直到找到最低能量的结构为止。收敛标准得到5个T表示五个收敛标准都达到。其中第二个标准最重要，一般也是最后一个达到的，第二个标准是势能面的梯度最大值。这个标准非常严格，对于大量过渡金属参与的化学反应，过渡态搜索，有可能达不到这样严格的标准，一般到0.003左右也可以认为收敛了，可以将对应的分子结构拿来使用。</p>
+<blockquote>
+<p>2020版以前为总能量、梯度，笛卡尔步长，键角，默认为：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">GEOMETRY</span></span><br><span class="line"><span class="attribute">Converge</span> <span class="number">1</span>e-<span class="number">3</span> <span class="number">1</span>e-<span class="number">3</span> <span class="number">1</span>e-<span class="number">2</span> <span class="number">0</span>.<span class="number">5</span></span><br><span class="line"><span class="attribute">end</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li><code>MaxIterations</code>：允许收敛到所需结构的最大几何迭代次数。默认是max(30，<script type="math/tex">2 \times N_{free}</script>)，<script type="math/tex">N_{free}</script>是指自由度的数目，接近于3*原子数。</li>
+<li><code>CalcPropertiesOnlyIfConverged</code>：默认为<code>Yes</code>，当几何优化（过渡态搜索）收敛时，才计算相应的性质，比如频率，声子等，若为<code>False</code>，不收敛也可以计算。</li>
+<li><code>PretendConverged</code>：默认为<code>No</code>，当几何优化不收敛会报错。如果改成<code>True</code>，只会出现一个警告，并且表明几何优化是收敛的，在一些脚本编写中有用。</li>
+<li><code>CoordinateType</code>：选择要执行优化的坐标类型。默认是<code>Auto</code>，自动为给定的方法选择最合适的方法。还可以选择<code>Delocalized</code>，<code>Cartesian</code></li>
+</ul>
+<h2 id="优化方法Mehod"><a href="#优化方法Mehod" class="headerlink" title="优化方法Mehod"></a>优化方法<code>Mehod</code></h2><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">   <span class="function"><span class="keyword">Method</span> [<span class="title">Auto</span> | <span class="title">Quasi</span>-<span class="title">Newton</span> | <span class="title">SCMGO</span> | <span class="title">FIRE</span> | <span class="title">L</span>-<span class="title">BFGS</span> | <span class="title">ConjugateGradients</span>]</span></span><br><span class="line"><span class="function">   <span class="title">CoordinateType</span> [<span class="title">Auto</span> | <span class="title">Delocalized</span> | <span class="title">Cartesian</span>]</span></span><br><span class="line"><span class="function"><span class="title">End</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Method</code>：默认为<code>auto</code>，根据系统大小和支持的优化选项自动选择合适的方法。</li>
+<li><code>CoordinateType</code>：默认是<code>auto</code>，自动为给定的方法选择最合适的方法。准牛顿法和SCMGO方法将使用<code>Delocalized</code>，所有其他方法将使用<code>Cartesian</code>。</li>
+</ul>
+<h3 id="InitialHessian"><a href="#InitialHessian" class="headerlink" title="InitialHessian"></a><code>InitialHessian</code></h3><ul>
+<li>使用拟牛顿法或 SCMGO 方法优化系统时初始模型 Hessian 的选项。</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">   InitialHessian</span><br><span class="line">      File string</span><br><span class="line">     <span class="built_in"> Type </span>[Auto | UnitMatrix | Swart | FromFile | Calculate | CalculateWithFastEngine]</span><br><span class="line">   End</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<h3 id="Quasi-Newton"><a href="#Quasi-Newton" class="headerlink" title="Quasi-Newton"></a><code>Quasi-Newton</code></h3><p>准牛顿几何优化：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">   Quasi-Newton</span><br><span class="line">      MaxGDIISVectors <span class="type">integer</span></span><br><span class="line">      Step</span><br><span class="line">         TrustRadius <span class="type">float</span></span><br><span class="line">      <span class="keyword">End</span></span><br><span class="line">      UpdateTSVectorEveryStep Yes/<span class="keyword">No</span></span><br><span class="line">   <span class="keyword">End</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>MaxGDIISVectors</code>：设置GDIIS向量的最大数量。默认为<code>0</code>，如果&gt; 0将启用GDIIS方法。</li>
+<li><code>Step</code>：信任半径的初始值。</li>
+<li><code>UpdateTSVectorEveryStep</code>：是否在每个步骤用当前特征向量更新TS反应坐标。默认为<code>Yes</code>。</li>
+</ul>
+<p>准牛顿优化器使用Hessian计算几何优化步骤。Hessian通常在开始时近似，然后在优化过程中进行更新。因此，非常好的初始Hessian可以提高优化器的性能，并导致更快，更稳定的收敛。初始Hessian的选择可以设置：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">   InitialHessian</span><br><span class="line">      File string</span><br><span class="line">     <span class="built_in"> Type </span>[Auto | UnitMatrix | Swart | FromFile | Calculate | CalculateWithFastEngine]</span><br><span class="line">   End</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>File</code>：包含初始Hessian（或包含它的结果目录）的KF文件。这可用于加载先前使用[Properties％Hessian]关键字计算出的Hessian。</p>
+</li>
+<li><p><code>Type</code>：默认为<code>auto</code>，让程序选择初始模型Hessian。</p>
+<ul>
+<li><code>UnitMatrix</code>：最简单的初始模型Hessian，只是优化坐标中的一个单位矩阵</li>
+<li><code>Swart</code>： model Hessian from M. Swart.</li>
+<li><code>FromFile</code>：从先前计算的结果加载Hessian。配合<code>File</code>使用</li>
+<li><code>Calculate</code>：计算初始的Hessian，计算比较昂贵，大多数建议用于TransitionStateSearch计算</li>
+<li><code>CalculateWithFastEngine</code>：使用更快的方法计算初始的Hessian</li>
+</ul>
+</li>
+</ul>
+<h3 id="FIRE"><a href="#FIRE" class="headerlink" title="FIRE"></a><code>FIRE</code></h3><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">   FIRE</span><br><span class="line">      AllowOverallRotation Yes/<span class="keyword">No</span></span><br><span class="line">      AllowOverallTranslation Yes/<span class="keyword">No</span></span><br><span class="line">      MapAtomsToUnitCell Yes/<span class="keyword">No</span></span><br><span class="line">      NMin <span class="type">integer</span></span><br><span class="line">      alphaStart <span class="type">float</span></span><br><span class="line">      dtMax <span class="type">float</span></span><br><span class="line">      dtStart <span class="type">float</span></span><br><span class="line">      fAlpha <span class="type">float</span></span><br><span class="line">      fDec <span class="type">float</span></span><br><span class="line">      fInc <span class="type">float</span></span><br><span class="line">      strainMass <span class="type">float</span></span><br><span class="line">   <span class="keyword">End</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<h3 id="SCMGO"><a href="#SCMGO" class="headerlink" title="SCMGO"></a><code>SCMGO</code></h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">   SCMGO</span><br><span class="line">      ContractPrimitives <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">      NumericalBMatrix <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">      <span class="keyword">Step</span></span><br><span class="line">         TrustRadius float</span><br><span class="line">         VariableTrustRadius <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">      End</span><br><span class="line">      logSCMGO <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">      testSCMGO <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">   End</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<h3 id="HessianFree"><a href="#HessianFree" class="headerlink" title="HessianFree"></a><code>HessianFree</code></h3><p>有限内存BFGS方法</p>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">   HessianFree</span><br><span class="line">      Step</span><br><span class="line">         MaxCartesianStep <span class="built_in">float</span></span><br><span class="line">         MinRadius <span class="built_in">float</span></span><br><span class="line">         TrialStep <span class="built_in">float</span></span><br><span class="line">         TrustRadius <span class="built_in">float</span></span><br><span class="line">      <span class="keyword">End</span></span><br><span class="line">   <span class="keyword">End</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<h1 id="几何不收敛"><a href="#几何不收敛" class="headerlink" title="几何不收敛"></a>几何不收敛</h1><ul>
+<li><p>修改优化方法为准牛顿</p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">    <span class="function"><span class="keyword">Method</span> <span class="title">Quasi</span>-<span class="title">Newton</span></span></span><br><span class="line"><span class="function">    <span class="title">Quasi</span>-<span class="title">Newton</span></span></span><br><span class="line"><span class="function">      <span class="title">Step</span></span></span><br><span class="line"><span class="function">         <span class="title">TrustRadius</span> 0.02</span></span><br><span class="line"><span class="function">      <span class="title">End</span></span></span><br><span class="line"><span class="function">      <span class="title">UpdateTSVectorEveryStep</span> <span class="title">True</span></span></span><br><span class="line"><span class="function">    <span class="title">End</span></span></span><br><span class="line"><span class="function"><span class="title">End</span></span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>有用可戳(●ˇ∀ˇ●)</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="Zhao Jing 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Zhao Jing
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2019/09/23/%E3%80%90AMS%E3%80%9102.%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" title="【AMS】02.几何优化">http://example.com/2019/09/23/【AMS】02.几何优化/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="tag"><i class="fa fa-tag"></i> 几何优化</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/09/23/%E3%80%90AMS%E3%80%9103.%E6%8C%AF%E5%8A%A8%E5%85%89%E8%B0%B1/" rel="prev" title="【AMS】03.振动光谱">
+      <i class="fa fa-chevron-left"></i> 【AMS】03.振动光谱
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/09/23/%E3%80%90ADF%E3%80%9102.%E5%8D%95%E7%82%B9%E5%92%8CSCF/" rel="next" title="【ADF】02.单点和SCF">
+      【ADF】02.单点和SCF <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#GeometryOptimization"><span class="nav-number">1.</span> <span class="nav-text">GeometryOptimization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Convergence"><span class="nav-number">1.1.</span> <span class="nav-text">Convergence</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">1.2.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95Mehod"><span class="nav-number">1.3.</span> <span class="nav-text">优化方法Mehod</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#InitialHessian"><span class="nav-number">1.3.1.</span> <span class="nav-text">InitialHessian</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Quasi-Newton"><span class="nav-number">1.3.2.</span> <span class="nav-text">Quasi-Newton</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FIRE"><span class="nav-number">1.3.3.</span> <span class="nav-text">FIRE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SCMGO"><span class="nav-number">1.3.4.</span> <span class="nav-text">SCMGO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HessianFree"><span class="nav-number">1.3.5.</span> <span class="nav-text">HessianFree</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%A0%E4%BD%95%E4%B8%8D%E6%94%B6%E6%95%9B"><span class="nav-number">2.</span> <span class="nav-text">几何不收敛</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhao Jing"
+      src="/images/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">Zhao Jing</p>
+  <div class="site-description" itemprop="description">做一棵树，只为岁月而生长。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaojing629" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaojing629" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:295483858@qq.com" title="E-Mail → mailto:295483858@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+<div class="sidebar-categories" p align="left">
+  <font size="2">
+  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/">计算化学</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/molpro/">molpro</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/ORCA/">ORCA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/Multiwfn/">Multiwfn</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/Gaussian/">Gaussian</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/CP2K/">CP2K</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/AMS/">AMS</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%AB%99/">网站</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F/">系统</a></li></ul>
+  </font>
+  </p /div>
+
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title"></h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ADF/" rel="tag">ADF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AIM/" rel="tag">AIM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASSCF/" rel="tag">CASSCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DLPNO/" rel="tag">DLPNO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HF/" rel="tag">HF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCSCF/" rel="tag">MCSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NBO/" rel="tag">NBO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NICS/" rel="tag">NICS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RI%E8%BF%91%E4%BC%BC/" rel="tag">RI近似</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%B4%E7%95%8C%E7%82%B9/" rel="tag">临界点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98/" rel="tag">内存</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="tag">几何优化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%9D%E7%8C%9C/" rel="tag">初猜</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%9B%E5%B8%B8%E6%95%B0/" rel="tag">力常数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%82%B9/" rel="tag">单点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag">占据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%90%E6%A0%87/" rel="tag">坐标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%BB%84/" rel="tag">基组</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BB%84%E6%80%81/" rel="tag">多组态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag">对称性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%93%E6%89%91%E5%88%86%E6%9E%90/" rel="tag">拓扑分析</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag">波函</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag">点群</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E8%8D%B7/" rel="tag">电荷</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%9F%BA%E7%BB%84/" rel="tag">相对论基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%8A%B3%E9%A6%99%E6%80%A7/" rel="tag">芳香性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%9D%E5%8A%BF/" rel="tag">赝势</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%85%E5%8A%A9%E5%9F%BA%E7%BB%84/" rel="tag">辅助基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5/" rel="tag">输入</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%87%BA/" rel="tag">输出</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E5%BE%84/" rel="tag">键径</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E7%BA%A7/" rel="tag">键级</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%91%E7%8E%87/" rel="tag">频率</a><span class="tag-list-count">1</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-flask"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhao Jing</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">238k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='0,0,0' opacity='0.3' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : '3L90wCaNUKa1MzSQcAhzkLtk-gzGzoHsz',
+      appKey     : 'fQ4t73jXnb71Y9zQWfXj5bIP',
+      placeholder: "可以输入您发现文中的错误或建议~(。・∀・)ノ",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
