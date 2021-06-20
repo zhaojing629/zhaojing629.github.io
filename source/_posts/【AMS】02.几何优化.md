@@ -1,9 +1,9 @@
 ---
-title: 【AMS】03.几何优化
-typora-root-url: 【AMS】03.几何优化
+title: 【AMS】02.几何优化
+typora-root-url: 【AMS】02.几何优化
 date: 2019-09-23
 updated:
-description: ADF2020版本后的几何优化相关
+description: 几何优化是在AMS块中指定
 tags: 几何优化
 mathjax: true
 categories: [计算化学, AMS]
@@ -13,11 +13,9 @@ categories: [计算化学, AMS]
 
 
 
+# `GeometryOptimization`
 
-
-
-
-# 几何优化
+配置几何优化和过渡状态搜索的详细信息。
 
 ```
 Task GeometryOptimization
@@ -86,6 +84,7 @@ End
 - `MaxIterations`：允许收敛到所需结构的最大几何迭代次数。默认是max(30，$$2 \times N_{free}$$)，$$N_{free}$$是指自由度的数目，接近于3*原子数。
 - `CalcPropertiesOnlyIfConverged`：默认为`Yes`，当几何优化（过渡态搜索）收敛时，才计算相应的性质，比如频率，声子等，若为`False`，不收敛也可以计算。
 - `PretendConverged`：默认为`No`，当几何优化不收敛会报错。如果改成`True`，只会出现一个警告，并且表明几何优化是收敛的，在一些脚本编写中有用。
+- `CoordinateType`：选择要执行优化的坐标类型。默认是`Auto`，自动为给定的方法选择最合适的方法。还可以选择`Delocalized`，`Cartesian`
 
 ## 优化方法`Mehod`
 
@@ -97,7 +96,20 @@ End
 ```
 
 - `Method`：默认为`auto`，根据系统大小和支持的优化选项自动选择合适的方法。
-- `CoordinateType`：默认是`auto`，根据给定的方法选择。准牛顿法和SCMGO方法将使用`Delocalized`，所有其他方法将使用`Cartesian`。
+- `CoordinateType`：默认是`auto`，自动为给定的方法选择最合适的方法。准牛顿法和SCMGO方法将使用`Delocalized`，所有其他方法将使用`Cartesian`。
+
+### `InitialHessian`
+
+- 使用拟牛顿法或 SCMGO 方法优化系统时初始模型 Hessian 的选项。
+
+```
+GeometryOptimization
+   InitialHessian
+      File string
+      Type [Auto | UnitMatrix | Swart | FromFile | Calculate | CalculateWithFastEngine]
+   End
+End
+```
 
 ### `Quasi-Newton`
 
@@ -160,9 +172,43 @@ GeometryOptimization
 End
 ```
 
+### `SCMGO`
+
+```
+GeometryOptimization
+   SCMGO
+      ContractPrimitives Yes/No
+      NumericalBMatrix Yes/No
+      Step
+         TrustRadius float
+         VariableTrustRadius Yes/No
+      End
+      logSCMGO Yes/No
+      testSCMGO Yes/No
+   End
+End
+```
+
+### `HessianFree`
+
+有限内存BFGS方法
+
+```
+GeometryOptimization
+   HessianFree
+      Step
+         MaxCartesianStep float
+         MinRadius float
+         TrialStep float
+         TrustRadius float
+      End
+   End
+End
+```
 
 
-## 几何不收敛
+
+# 几何不收敛
 
 - 修改优化方法为准牛顿
 
@@ -177,106 +223,4 @@ End
       End
   End
   ```
-
-  
-
-# 频率计算
-
-```
-Properties
-  NormalModes Yes
-End
-```
-
-## 解析频率
-
-
-
-```
-Engine ADF
-  AnalyticalFreq
-    B1Size float
-    B1Thresh float
-    Check_CPKS_From_Iteration integer
-    Debug string
-    Hessian [reflect | average]
-    Max_CPKS_Iterations integer
-    Print string
-    PrintNormalModeAnalysis Yes/No
-    U1_Accuracy float
-  End
-EndEngine
-```
-
-- `Max_CPKS_Iterations`：解析频率的计算需要求解Coupled Perturbed Kohn-Sham (CPKS)  (CPKS)方程，这是一个迭代过程。如果没有实现收敛（输出中会打印警告" CPKS failed to converge. Frequencies may be wrong")，可以增加迭代次数（收敛不能保证）。默认为`20`
-
-
-# 有虚频
-
-
-
-- 在原本的几何坐标上加上虚频的位移。一个简单的脚本。
-
-  ```shell
-  #!/bin/bash
-  #简单查看adf输出的末尾能量，点群和是否有虚频，如果有加上虚频的位移矢量。
-  #example:adf_simpleout *.out
-  
-  
-  echo " "
-  echo " "
-  echo "Geometry: "
-  opt_geo_line=`grep -n "Coordinates" ${1} |tail -1|cut -d ':' -f 1`   #Coordinates in Geometry Cycle
-  sed -n "${opt_geo_line}"',$p' ${1}|grep -o "[a-zA-Z]\{1,\}[[:blank:]]\{1,\}-*[0-9]\{1,\}\.[0-9]*[[:blank:]]\{1,\}-*[0-9]\{1,\}\.[0-9]*[[:blank:]]\{1,\}-*[0-9]\{1,\}\.[0-9]*"
-  
-  echo ""
-  grep 'Bond Energy'  ${1} | tail -3 | awk '{print $3,$4,$5,$6}'
-  
-  echo ""
-  grep 'Symmetry' ${1} |tail -1 | awk '{print $3,$4,$5}'
-  
-  echo ""
-  freqline=`grep -n "Vibrations and Normal Modes" ${1} | tail -1| cut -d ':' -f 1`
-  freqstart=`expr ${freqline} + 7`
-  firstfreq=`sed -n ${freqstart}p ${1}| awk '{print $1}'`
-  echo "The first frequency is ${firstfreq}"
-  
-  image=$(echo "${firstfreq} < 0" | bc)
-  
-  if [ $image -eq 1 ]
-  then 
-   echo ""
-   echo "shift:"
-   sed -n "${opt_geo_line}"',$p' ${1}|grep -o "[a-zA-Z]\{1,\}[[:blank:]]\{1,\}-*[0-9]\{1,\}\.[0-9]*[[:blank:]]\{1,\}-*[0-9]\{1,\}\.[0-9]*[[:blank:]]\{1,\}-*[0-9]\{1,\}\.[0-9]*" > Geometry.txt
-   opt_geo_end_line=`grep -n "[a-zA-Z]\{1,\}[[:blank:]]\{1,\}-*[0-9]\{1,\}\.[0-9]*[[:blank:]]\{1,\}-*[0-9]\{1,\}\.[0-9]*[[:blank:]]\{1,\}-*[0-9]\{1,\}\.[0-9]" *out|tail -1|cut -d ':' -f 1`
-   atom_num=`expr ${opt_geo_end_line} - ${opt_geo_line} - 1`  
-   freq1=`expr ${freqstart} + 2`
-   freq2=`expr ${freqline} + 9 + ${atom_num}`
-   sed -n ${freq1},${freq2}p ${1} | awk '{print $2,$3,$4}' > imagefreq.txt
-   for ((i=1; i <= ${atom_num};i++));do
-     a=`sed -n ${i}p Geometry.txt | awk '{ print $1 }'` 
-    
-     numx1=`sed -n ${i}p Geometry.txt | awk '{ print $2 }'`
-     numx2=`sed -n ${i}p imagefreq.txt | awk '{ print $1 }'` 
-     numx3=$(echo " $numx1 + $numx2 "|bc)
-      
-     numy1=`sed -n ${i}p Geometry.txt | awk '{ print $3 }'`
-     numy2=`sed -n ${i}p imagefreq.txt | awk '{ print $2 }'`
-     numy3=$(echo " $numy1 + $numy2 "|bc)   
-     
-     numz1=`sed -n ${i}p Geometry.txt | awk '{ print $4 }'`
-     numz2=`sed -n ${i}p imagefreq.txt | awk '{ print $3 }'`
-     numz3=$(echo " $numz1 + $numz2 "|bc)
-    
-     printf "%-10s %10.6f %10.6f %10.6f \n" $a $numx3 $numy3 $numz3 
-   done
-  rm Geometry.txt imagefreq.txt
-  fi
-  
-  echo " "
-  echo " "
-  
-  ```
-
-  
 
