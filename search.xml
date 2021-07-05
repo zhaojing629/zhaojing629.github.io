@@ -1,78 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>【Linux】MobaXterm快捷方式</title>
-    <url>/2020/02/10/MobaXterm%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F/</url>
-    <content><![CDATA[<blockquote>
-<p>标记：</p>
-<p><del>已经熟练掌握的</del></p>
-<p><strong>经常用到的</strong></p>
-</blockquote>
-<h1 id="文本处理"><a href="#文本处理" class="headerlink" title="文本处理"></a>文本处理</h1><ul>
-<li>Ctrl+U   删除光标到行首</li>
-<li>Ctrl+K   删除光标到行尾</li>
-<li>Ctrl+W  剪切到当前单词开头</li>
-<li><strong>Alt+D   剪切到当前单词词尾</strong></li>
-<li><del>Ctrl+D   删除光标所在字符=Delete</del></li>
-<li><del>Ctrl+H   删除光标前的字符=Backspace</del></li>
-<li>Ctrl+Y   粘贴最后一次被删除的单词</li>
-<li>Ctrl+7   恢复刚刚的内容</li>
-<li>Ctrl+(X U)    撤销刚才的操作 </li>
-<li>Ctrl+V   插入特殊字符,如Ctrl+(V Tab)加入Tab字符键</li>
-<li><del>Shift+Insert 粘贴</del></li>
-<li>鼠标中间滑轮 粘贴</li>
-</ul>
-<h1 id="交换"><a href="#交换" class="headerlink" title="交换"></a>交换</h1><ul>
-<li>Ctrl+T   交换光标位置前的两个字符</li>
-<li>Alt+T   颠倒光标相邻单词的位置=Esc+T</li>
-</ul>
-<h1 id="大小写"><a href="#大小写" class="headerlink" title="大小写"></a>大小写</h1><ul>
-<li>Alt+C   将光标所在字符到词尾改为首字母大写</li>
-<li>Alt+U   将光标所在字符到词尾转化为大写</li>
-<li>Alt+L    将光标所在字符到词尾转化为小写</li>
-</ul>
-<h1 id="光标移动"><a href="#光标移动" class="headerlink" title="光标移动"></a>光标移动</h1><ul>
-<li><del>Ctrl+A   光标移动到行首=home</del></li>
-<li><del>Ctrl+E   光标移动到行尾=end</del></li>
-<li>Alt+B   移到前一个单词首=ctrl+←</li>
-<li>Alt+F    移到后一个单词尾=ctrl+→</li>
-<li><del>Ctrl+F   向前一格=←</del></li>
-<li><del>Ctrl+B   向后一格=→</del></li>
-<li>Esc+B   移动到当前单词的开头</li>
-<li>Esc+F   移动到当前单词的结尾</li>
-<li>Ctrl+X X 在光标和行首切换</li>
-</ul>
-<h1 id="翻页"><a href="#翻页" class="headerlink" title="翻页"></a>翻页</h1><ul>
-<li>Shift+UpArrow    向上滚屏</li>
-<li>Shift+DownArrow  向下滚屏</li>
-<li>Shift+PageUp 向上翻页</li>
-<li>Shift+PageDown  向下翻页</li>
-<li>Ctrl+L   清屏</li>
-</ul>
-<h1 id="命令相关"><a href="#命令相关" class="headerlink" title="命令相关"></a>命令相关</h1><ul>
-<li>!!       执行上一条命令</li>
-<li>!?String?     执行含有String字符串的最新命令</li>
-<li>!$      以上一条命令的参数做为其参数\</li>
-<li><del>Ctrl+C   取消当前行命令</del></li>
-<li>Ctrl+P   显示上一条命令=↑</li>
-<li>Ctrl+N   显示下一条命令=↓</li>
-<li><del><strong>Ctrl+R   查找历史命令/继续向上检索</strong></del></li>
-<li><del>Ctrl+O   =Enter</del></li>
-<li><del>tab tab=esc esc esc=ctrl+I I  显示所有支持的命令</del></li>
-<li>Alt+Shift+,   历史命令第一项</li>
-</ul>
-<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><ul>
-<li><del>Ctrl+M  最小化窗口</del></li>
-</ul>
-]]></content>
-      <categories>
-        <category>系统</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CSS语法</title>
     <url>/2020/12/27/CSS%E8%AF%AD%E6%B3%95/</url>
     <content><![CDATA[<h1 id="CSS语法"><a href="#CSS语法" class="headerlink" title="CSS语法"></a>CSS语法</h1><p><img src="image-20201227135429409.png" alt=""></p>
@@ -300,6 +228,78 @@
       <tags>
         <tag>html</tag>
         <tag>CSS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Linux】MobaXterm快捷方式</title>
+    <url>/2020/02/10/MobaXterm%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F/</url>
+    <content><![CDATA[<blockquote>
+<p>标记：</p>
+<p><del>已经熟练掌握的</del></p>
+<p><strong>经常用到的</strong></p>
+</blockquote>
+<h1 id="文本处理"><a href="#文本处理" class="headerlink" title="文本处理"></a>文本处理</h1><ul>
+<li>Ctrl+U   删除光标到行首</li>
+<li>Ctrl+K   删除光标到行尾</li>
+<li>Ctrl+W  剪切到当前单词开头</li>
+<li><strong>Alt+D   剪切到当前单词词尾</strong></li>
+<li><del>Ctrl+D   删除光标所在字符=Delete</del></li>
+<li><del>Ctrl+H   删除光标前的字符=Backspace</del></li>
+<li>Ctrl+Y   粘贴最后一次被删除的单词</li>
+<li>Ctrl+7   恢复刚刚的内容</li>
+<li>Ctrl+(X U)    撤销刚才的操作 </li>
+<li>Ctrl+V   插入特殊字符,如Ctrl+(V Tab)加入Tab字符键</li>
+<li><del>Shift+Insert 粘贴</del></li>
+<li>鼠标中间滑轮 粘贴</li>
+</ul>
+<h1 id="交换"><a href="#交换" class="headerlink" title="交换"></a>交换</h1><ul>
+<li>Ctrl+T   交换光标位置前的两个字符</li>
+<li>Alt+T   颠倒光标相邻单词的位置=Esc+T</li>
+</ul>
+<h1 id="大小写"><a href="#大小写" class="headerlink" title="大小写"></a>大小写</h1><ul>
+<li>Alt+C   将光标所在字符到词尾改为首字母大写</li>
+<li>Alt+U   将光标所在字符到词尾转化为大写</li>
+<li>Alt+L    将光标所在字符到词尾转化为小写</li>
+</ul>
+<h1 id="光标移动"><a href="#光标移动" class="headerlink" title="光标移动"></a>光标移动</h1><ul>
+<li><del>Ctrl+A   光标移动到行首=home</del></li>
+<li><del>Ctrl+E   光标移动到行尾=end</del></li>
+<li>Alt+B   移到前一个单词首=ctrl+←</li>
+<li>Alt+F    移到后一个单词尾=ctrl+→</li>
+<li><del>Ctrl+F   向前一格=←</del></li>
+<li><del>Ctrl+B   向后一格=→</del></li>
+<li>Esc+B   移动到当前单词的开头</li>
+<li>Esc+F   移动到当前单词的结尾</li>
+<li>Ctrl+X X 在光标和行首切换</li>
+</ul>
+<h1 id="翻页"><a href="#翻页" class="headerlink" title="翻页"></a>翻页</h1><ul>
+<li>Shift+UpArrow    向上滚屏</li>
+<li>Shift+DownArrow  向下滚屏</li>
+<li>Shift+PageUp 向上翻页</li>
+<li>Shift+PageDown  向下翻页</li>
+<li>Ctrl+L   清屏</li>
+</ul>
+<h1 id="命令相关"><a href="#命令相关" class="headerlink" title="命令相关"></a>命令相关</h1><ul>
+<li>!!       执行上一条命令</li>
+<li>!?String?     执行含有String字符串的最新命令</li>
+<li>!$      以上一条命令的参数做为其参数\</li>
+<li><del>Ctrl+C   取消当前行命令</del></li>
+<li>Ctrl+P   显示上一条命令=↑</li>
+<li>Ctrl+N   显示下一条命令=↓</li>
+<li><del><strong>Ctrl+R   查找历史命令/继续向上检索</strong></del></li>
+<li><del>Ctrl+O   =Enter</del></li>
+<li><del>tab tab=esc esc esc=ctrl+I I  显示所有支持的命令</del></li>
+<li>Alt+Shift+,   历史命令第一项</li>
+</ul>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><ul>
+<li><del>Ctrl+M  最小化窗口</del></li>
+</ul>
+]]></content>
+      <categories>
+        <category>系统</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -610,85 +610,6 @@
       </tags>
   </entry>
   <entry>
-    <title>【AMS】02.几何优化</title>
-    <url>/2019/09/23/%E3%80%90AMS%E3%80%9102.%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/</url>
-    <content><![CDATA[<h1 id="GeometryOptimization"><a href="#GeometryOptimization" class="headerlink" title="GeometryOptimization"></a><code>GeometryOptimization</code></h1><p>配置几何优化和过渡状态搜索的详细信息。</p>
-<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">Task GeometryOptimization</span><br><span class="line"></span><br><span class="line">GeometryOptimization</span><br><span class="line">   Convergence</span><br><span class="line">      Energy <span class="type">float</span></span><br><span class="line">      Gradients <span class="type">float</span></span><br><span class="line">      Step <span class="type">float</span></span><br><span class="line">      StressEnergyPerAtom <span class="type">float</span></span><br><span class="line">   <span class="keyword">End</span></span><br><span class="line">   MaxIterations <span class="type">integer</span></span><br><span class="line">   CalcPropertiesOnlyIfConverged Yes/<span class="keyword">No</span></span><br><span class="line">   OptimizeLattice Yes/<span class="keyword">No</span></span><br><span class="line">   KeepIntermediateResults Yes/<span class="keyword">No</span></span><br><span class="line">   PretendConverged Yes/<span class="keyword">No</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>20版以前的为：</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">GEOMETRY</span><br><span class="line">	Converge &#123;<span class="attribute">E</span>=TolE&#125; &#123;<span class="attribute">Grad</span>=TolG&#125; &#123;<span class="attribute">Rad</span>=TolR&#125; &#123;<span class="attribute">Angle</span>=TolA&#125;</span><br><span class="line">	Iterations Niter</span><br><span class="line">	Inithess inithessian.file</span><br><span class="line">	Hessupd HessUpdate</span><br><span class="line">	Optim &#123;Delocal / Cartesian / Internal&#125; &#123;All / Selected&#125;</span><br><span class="line">	GEigenvalueThreshold threshold</span><br><span class="line">	Branch &#123;New / Old&#125;</span><br><span class="line">	<span class="keyword">Step</span> &#123;<span class="attribute">Rad</span>=MaxRadStep&#125; &#123;<span class="attribute">Angle</span>=MaxAngleStep&#125; &#123;<span class="attribute">TrustRadius</span>=MaxRadius&#125;</span><br><span class="line">	DIIS &#123;<span class="attribute">N</span>=NVect&#125; &#123;<span class="attribute">CYC</span>=Ncyc&#125;</span><br><span class="line">	Externprogram externprog.exe <span class="attribute">coord</span>=coords.inp <span class="attribute">energy</span>=energy.out <span class="attribute">grad</span>=grads.out</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
-</blockquote>
-<h2 id="Convergence"><a href="#Convergence" class="headerlink" title="Convergence"></a><code>Convergence</code></h2><p>收敛部分的设置：</p>
-<ul>
-<li><code>Energy</code>：能量变化，默认是<code>1e-05</code>Hartree。</li>
-<li><code>Gradients</code>：核梯度的阈值，默认是<code>0.001</code>Hartree/Angstrom</li>
-<li><code>Step</code>：收敛几何允许的最大笛卡尔步长，默认是<code>0.01</code>Angstrom</li>
-<li><code>StressEnergyPerAtom</code>：优化晶格向量时使用的阈值，默认是<code>0.0005</code>Hartree</li>
-</ul>
-<p>收敛判定（如果最大梯度和均方根梯度比收敛准则小10倍，则忽略最后两条）</p>
-<ul>
-<li>当前几何结构和上一个几何步骤的键能之间的差异小于<code>Energy</code></li>
-<li>最大笛卡尔核梯度小于<code>Gradients</code></li>
-<li>笛卡尔核梯度的均方根(RMS)小于2/3<code>Gradients</code></li>
-<li>最大笛卡尔步长小于<code>Step</code></li>
-<li>笛卡尔阶跃的均方根(RMS)小于2/3<code>Step</code></li>
-</ul>
-<p>优化过程会不断地计算不同的分子结构，直到找到最低能量的结构为止。收敛标准得到5个T表示五个收敛标准都达到。其中第二个标准最重要，一般也是最后一个达到的，第二个标准是势能面的梯度最大值。这个标准非常严格，对于大量过渡金属参与的化学反应，过渡态搜索，有可能达不到这样严格的标准，一般到0.003左右也可以认为收敛了，可以将对应的分子结构拿来使用。</p>
-<blockquote>
-<p>2020版以前为总能量、梯度，笛卡尔步长，键角，默认为：</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">GEOMETRY</span></span><br><span class="line"><span class="attribute">Converge</span> <span class="number">1</span>e-<span class="number">3</span> <span class="number">1</span>e-<span class="number">3</span> <span class="number">1</span>e-<span class="number">2</span> <span class="number">0</span>.<span class="number">5</span></span><br><span class="line"><span class="attribute">end</span></span><br></pre></td></tr></table></figure>
-</blockquote>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
-<li><code>MaxIterations</code>：允许收敛到所需结构的最大几何迭代次数。默认是max(30，<script type="math/tex">2 \times N_{free}</script>)，<script type="math/tex">N_{free}</script>是指自由度的数目，接近于3*原子数。</li>
-<li><code>CalcPropertiesOnlyIfConverged</code>：默认为<code>Yes</code>，当几何优化（过渡态搜索）收敛时，才计算相应的性质，比如频率，声子等，若为<code>False</code>，不收敛也可以计算。</li>
-<li><code>PretendConverged</code>：默认为<code>No</code>，当几何优化不收敛会报错。如果改成<code>True</code>，只会出现一个警告，并且表明几何优化是收敛的，在一些脚本编写中有用。</li>
-</ul>
-<h2 id="优化方法"><a href="#优化方法" class="headerlink" title="优化方法"></a>优化方法</h2><ul>
-<li><code>Method</code>：默认为<code>auto</code>，根据系统大小和支持的优化选项自动选择合适的方法。</li>
-<li><code>CoordinateType</code>：默认是<code>auto</code>，自动为给定的方法选择最合适的方法。准牛顿法和SCMGO方法将使用<code>Delocalized</code>，所有其他方法将使用<code>Cartesian</code>。</li>
-</ul>
-<h3 id="InitialHessian"><a href="#InitialHessian" class="headerlink" title="InitialHessian"></a><code>InitialHessian</code></h3><ul>
-<li>使用拟牛顿法或 SCMGO 方法优化系统时初始模型 Hessian 的选项。</li>
-</ul>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">   InitialHessian</span><br><span class="line">      File string</span><br><span class="line">     <span class="built_in"> Type </span>[Auto | UnitMatrix | Swart | FromFile | Calculate | CalculateWithFastEngine]</span><br><span class="line">   End</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>File</code>：包含初始Hessian（或包含它的结果目录）的KF文件。这可用于加载先前使用[Properties％Hessian]关键字计算出的Hessian。</li>
-<li><code>Type</code>：默认为<code>auto</code>，让程序选择初始模型Hessian。<ul>
-<li><code>UnitMatrix</code>：最简单的初始模型Hessian，只是优化坐标中的一个单位矩阵</li>
-<li><code>Swart</code>： model Hessian from M. Swart.</li>
-<li><code>FromFile</code>：从先前计算的结果加载Hessian。配合<code>File</code>使用</li>
-<li><code>Calculate</code>：计算初始的Hessian，计算比较昂贵，大多数建议用于TransitionStateSearch计算</li>
-<li><code>CalculateWithFastEngine</code>：使用更快的方法计算初始的Hessian</li>
-</ul>
-</li>
-</ul>
-<h3 id="Quasi-Newton"><a href="#Quasi-Newton" class="headerlink" title="Quasi-Newton"></a><code>Quasi-Newton</code></h3><p>准牛顿几何优化：</p>
-<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">   Quasi-Newton</span><br><span class="line">      MaxGDIISVectors <span class="type">integer</span></span><br><span class="line">      Step</span><br><span class="line">         TrustRadius <span class="type">float</span></span><br><span class="line">      <span class="keyword">End</span></span><br><span class="line">      UpdateTSVectorEveryStep Yes/<span class="keyword">No</span></span><br><span class="line">   <span class="keyword">End</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>MaxGDIISVectors</code>：设置GDIIS向量的最大数量。默认为<code>0</code>，如果&gt; 0将启用GDIIS方法。</li>
-<li><code>Step%TrustRadius</code>：信任半径的初始值。</li>
-<li><code>UpdateTSVectorEveryStep</code>：是否在每个步骤用当前特征向量更新TS反应坐标。默认为<code>Yes</code>。</li>
-</ul>
-<p>准牛顿优化器使用Hessian计算几何优化步骤。Hessian通常在开始时近似，然后在优化过程中进行更新。因此，非常好的<a href="#">初始Hessian</a>可以提高优化器的性能，并导致更快，更稳定的收敛。</p>
-<h3 id="FIRE"><a href="#FIRE" class="headerlink" title="FIRE"></a><code>FIRE</code></h3><figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">   FIRE</span><br><span class="line">      AllowOverallRotation Yes/<span class="keyword">No</span></span><br><span class="line">      AllowOverallTranslation Yes/<span class="keyword">No</span></span><br><span class="line">      MapAtomsToUnitCell Yes/<span class="keyword">No</span></span><br><span class="line">      NMin <span class="type">integer</span></span><br><span class="line">      alphaStart <span class="type">float</span></span><br><span class="line">      dtMax <span class="type">float</span></span><br><span class="line">      dtStart <span class="type">float</span></span><br><span class="line">      fAlpha <span class="type">float</span></span><br><span class="line">      fDec <span class="type">float</span></span><br><span class="line">      fInc <span class="type">float</span></span><br><span class="line">      strainMass <span class="type">float</span></span><br><span class="line">   <span class="keyword">End</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
-<h3 id="SCMGO"><a href="#SCMGO" class="headerlink" title="SCMGO"></a><code>SCMGO</code></h3><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">   SCMGO</span><br><span class="line">      ContractPrimitives <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">      NumericalBMatrix <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">      <span class="keyword">Step</span></span><br><span class="line">         TrustRadius float</span><br><span class="line">         VariableTrustRadius <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">      End</span><br><span class="line">      logSCMGO <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">      testSCMGO <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">   End</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
-<h3 id="HessianFree"><a href="#HessianFree" class="headerlink" title="HessianFree"></a><code>HessianFree</code></h3><p>有限内存BFGS方法</p>
-<figure class="highlight fortran"><table><tr><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">   HessianFree</span><br><span class="line">      Step</span><br><span class="line">         MaxCartesianStep <span class="built_in">float</span></span><br><span class="line">         MinRadius <span class="built_in">float</span></span><br><span class="line">         TrialStep <span class="built_in">float</span></span><br><span class="line">         TrustRadius <span class="built_in">float</span></span><br><span class="line">      <span class="keyword">End</span></span><br><span class="line">   <span class="keyword">End</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
-<h1 id="几何不收敛"><a href="#几何不收敛" class="headerlink" title="几何不收敛"></a>几何不收敛</h1><ul>
-<li><p>修改优化方法为准牛顿</p>
-<figure class="highlight oxygene"><table><tr><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">    <span class="function"><span class="keyword">Method</span> <span class="title">Quasi</span>-<span class="title">Newton</span></span></span><br><span class="line"><span class="function">    <span class="title">Quasi</span>-<span class="title">Newton</span></span></span><br><span class="line"><span class="function">      <span class="title">Step</span></span></span><br><span class="line"><span class="function">         <span class="title">TrustRadius</span> 0.02</span></span><br><span class="line"><span class="function">      <span class="title">End</span></span></span><br><span class="line"><span class="function">      <span class="title">UpdateTSVectorEveryStep</span> <span class="title">True</span></span></span><br><span class="line"><span class="function">    <span class="title">End</span></span></span><br><span class="line"><span class="function"><span class="title">End</span></span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>AMS</category>
-      </categories>
-      <tags>
-        <tag>几何优化</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【AMS】01.基本输入结构</title>
     <url>/2021/05/11/%E3%80%90AMS%E3%80%9101.%E5%9F%BA%E6%9C%AC%E8%BE%93%E5%85%A5%E7%BB%93%E6%9E%84/</url>
     <content><![CDATA[<ul>
@@ -784,6 +705,85 @@
       <tags>
         <tag>输入</tag>
         <tag>对称性</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【AMS】02.几何优化</title>
+    <url>/2019/09/23/%E3%80%90AMS%E3%80%9102.%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/</url>
+    <content><![CDATA[<h1 id="GeometryOptimization"><a href="#GeometryOptimization" class="headerlink" title="GeometryOptimization"></a><code>GeometryOptimization</code></h1><p>配置几何优化和过渡状态搜索的详细信息。</p>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">Task GeometryOptimization</span><br><span class="line"></span><br><span class="line">GeometryOptimization</span><br><span class="line">   Convergence</span><br><span class="line">      Energy <span class="type">float</span></span><br><span class="line">      Gradients <span class="type">float</span></span><br><span class="line">      Step <span class="type">float</span></span><br><span class="line">      StressEnergyPerAtom <span class="type">float</span></span><br><span class="line">   <span class="keyword">End</span></span><br><span class="line">   MaxIterations <span class="type">integer</span></span><br><span class="line">   CalcPropertiesOnlyIfConverged Yes/<span class="keyword">No</span></span><br><span class="line">   OptimizeLattice Yes/<span class="keyword">No</span></span><br><span class="line">   KeepIntermediateResults Yes/<span class="keyword">No</span></span><br><span class="line">   PretendConverged Yes/<span class="keyword">No</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>20版以前的为：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">GEOMETRY</span><br><span class="line">	Converge &#123;<span class="attribute">E</span>=TolE&#125; &#123;<span class="attribute">Grad</span>=TolG&#125; &#123;<span class="attribute">Rad</span>=TolR&#125; &#123;<span class="attribute">Angle</span>=TolA&#125;</span><br><span class="line">	Iterations Niter</span><br><span class="line">	Inithess inithessian.file</span><br><span class="line">	Hessupd HessUpdate</span><br><span class="line">	Optim &#123;Delocal / Cartesian / Internal&#125; &#123;All / Selected&#125;</span><br><span class="line">	GEigenvalueThreshold threshold</span><br><span class="line">	Branch &#123;New / Old&#125;</span><br><span class="line">	<span class="keyword">Step</span> &#123;<span class="attribute">Rad</span>=MaxRadStep&#125; &#123;<span class="attribute">Angle</span>=MaxAngleStep&#125; &#123;<span class="attribute">TrustRadius</span>=MaxRadius&#125;</span><br><span class="line">	DIIS &#123;<span class="attribute">N</span>=NVect&#125; &#123;<span class="attribute">CYC</span>=Ncyc&#125;</span><br><span class="line">	Externprogram externprog.exe <span class="attribute">coord</span>=coords.inp <span class="attribute">energy</span>=energy.out <span class="attribute">grad</span>=grads.out</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="Convergence"><a href="#Convergence" class="headerlink" title="Convergence"></a><code>Convergence</code></h2><p>收敛部分的设置：</p>
+<ul>
+<li><code>Energy</code>：能量变化，默认是<code>1e-05</code>Hartree。</li>
+<li><code>Gradients</code>：核梯度的阈值，默认是<code>0.001</code>Hartree/Angstrom</li>
+<li><code>Step</code>：收敛几何允许的最大笛卡尔步长，默认是<code>0.01</code>Angstrom</li>
+<li><code>StressEnergyPerAtom</code>：优化晶格向量时使用的阈值，默认是<code>0.0005</code>Hartree</li>
+</ul>
+<p>收敛判定（如果最大梯度和均方根梯度比收敛准则小10倍，则忽略最后两条）</p>
+<ul>
+<li>当前几何结构和上一个几何步骤的键能之间的差异小于<code>Energy</code></li>
+<li>最大笛卡尔核梯度小于<code>Gradients</code></li>
+<li>笛卡尔核梯度的均方根(RMS)小于2/3<code>Gradients</code></li>
+<li>最大笛卡尔步长小于<code>Step</code></li>
+<li>笛卡尔阶跃的均方根(RMS)小于2/3<code>Step</code></li>
+</ul>
+<p>优化过程会不断地计算不同的分子结构，直到找到最低能量的结构为止。收敛标准得到5个T表示五个收敛标准都达到。其中第二个标准最重要，一般也是最后一个达到的，第二个标准是势能面的梯度最大值。这个标准非常严格，对于大量过渡金属参与的化学反应，过渡态搜索，有可能达不到这样严格的标准，一般到0.003左右也可以认为收敛了，可以将对应的分子结构拿来使用。</p>
+<blockquote>
+<p>2020版以前为总能量、梯度，笛卡尔步长，键角，默认为：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">GEOMETRY</span></span><br><span class="line"><span class="attribute">Converge</span> <span class="number">1</span>e-<span class="number">3</span> <span class="number">1</span>e-<span class="number">3</span> <span class="number">1</span>e-<span class="number">2</span> <span class="number">0</span>.<span class="number">5</span></span><br><span class="line"><span class="attribute">end</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li><code>MaxIterations</code>：允许收敛到所需结构的最大几何迭代次数。默认是max(30，<script type="math/tex">2 \times N_{free}</script>)，<script type="math/tex">N_{free}</script>是指自由度的数目，接近于3*原子数。</li>
+<li><code>CalcPropertiesOnlyIfConverged</code>：默认为<code>Yes</code>，当几何优化（过渡态搜索）收敛时，才计算相应的性质，比如频率，声子等，若为<code>False</code>，不收敛也可以计算。</li>
+<li><code>PretendConverged</code>：默认为<code>No</code>，当几何优化不收敛会报错。如果改成<code>True</code>，只会出现一个警告，并且表明几何优化是收敛的，在一些脚本编写中有用。</li>
+</ul>
+<h2 id="优化方法"><a href="#优化方法" class="headerlink" title="优化方法"></a>优化方法</h2><ul>
+<li><code>Method</code>：默认为<code>auto</code>，根据系统大小和支持的优化选项自动选择合适的方法。</li>
+<li><code>CoordinateType</code>：默认是<code>auto</code>，自动为给定的方法选择最合适的方法。准牛顿法和SCMGO方法将使用<code>Delocalized</code>，所有其他方法将使用<code>Cartesian</code>。</li>
+</ul>
+<h3 id="InitialHessian"><a href="#InitialHessian" class="headerlink" title="InitialHessian"></a><code>InitialHessian</code></h3><ul>
+<li>使用拟牛顿法或 SCMGO 方法优化系统时初始模型 Hessian 的选项。</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">   InitialHessian</span><br><span class="line">      File string</span><br><span class="line">     <span class="built_in"> Type </span>[Auto | UnitMatrix | Swart | FromFile | Calculate | CalculateWithFastEngine]</span><br><span class="line">   End</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>File</code>：包含初始Hessian（或包含它的结果目录）的KF文件。这可用于加载先前使用[Properties％Hessian]关键字计算出的Hessian。</li>
+<li><code>Type</code>：默认为<code>auto</code>，让程序选择初始模型Hessian。<ul>
+<li><code>UnitMatrix</code>：最简单的初始模型Hessian，只是优化坐标中的一个单位矩阵</li>
+<li><code>Swart</code>： model Hessian from M. Swart.</li>
+<li><code>FromFile</code>：从先前计算的结果加载Hessian。配合<code>File</code>使用</li>
+<li><code>Calculate</code>：计算初始的Hessian，计算比较昂贵，大多数建议用于TransitionStateSearch计算</li>
+<li><code>CalculateWithFastEngine</code>：使用更快的方法计算初始的Hessian</li>
+</ul>
+</li>
+</ul>
+<h3 id="Quasi-Newton"><a href="#Quasi-Newton" class="headerlink" title="Quasi-Newton"></a><code>Quasi-Newton</code></h3><p>准牛顿几何优化：</p>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">   Quasi-Newton</span><br><span class="line">      MaxGDIISVectors <span class="type">integer</span></span><br><span class="line">      Step</span><br><span class="line">         TrustRadius <span class="type">float</span></span><br><span class="line">      <span class="keyword">End</span></span><br><span class="line">      UpdateTSVectorEveryStep Yes/<span class="keyword">No</span></span><br><span class="line">   <span class="keyword">End</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>MaxGDIISVectors</code>：设置GDIIS向量的最大数量。默认为<code>0</code>，如果&gt; 0将启用GDIIS方法。</li>
+<li><code>Step%TrustRadius</code>：信任半径的初始值。</li>
+<li><code>UpdateTSVectorEveryStep</code>：是否在每个步骤用当前特征向量更新TS反应坐标。默认为<code>Yes</code>。</li>
+</ul>
+<p>准牛顿优化器使用Hessian计算几何优化步骤。Hessian通常在开始时近似，然后在优化过程中进行更新。因此，非常好的<a href="#">初始Hessian</a>可以提高优化器的性能，并导致更快，更稳定的收敛。</p>
+<h3 id="FIRE"><a href="#FIRE" class="headerlink" title="FIRE"></a><code>FIRE</code></h3><figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">   FIRE</span><br><span class="line">      AllowOverallRotation Yes/<span class="keyword">No</span></span><br><span class="line">      AllowOverallTranslation Yes/<span class="keyword">No</span></span><br><span class="line">      MapAtomsToUnitCell Yes/<span class="keyword">No</span></span><br><span class="line">      NMin <span class="type">integer</span></span><br><span class="line">      alphaStart <span class="type">float</span></span><br><span class="line">      dtMax <span class="type">float</span></span><br><span class="line">      dtStart <span class="type">float</span></span><br><span class="line">      fAlpha <span class="type">float</span></span><br><span class="line">      fDec <span class="type">float</span></span><br><span class="line">      fInc <span class="type">float</span></span><br><span class="line">      strainMass <span class="type">float</span></span><br><span class="line">   <span class="keyword">End</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<h3 id="SCMGO"><a href="#SCMGO" class="headerlink" title="SCMGO"></a><code>SCMGO</code></h3><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">   SCMGO</span><br><span class="line">      ContractPrimitives <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">      NumericalBMatrix <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">      <span class="keyword">Step</span></span><br><span class="line">         TrustRadius float</span><br><span class="line">         VariableTrustRadius <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">      End</span><br><span class="line">      logSCMGO <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">      testSCMGO <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">   End</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<h3 id="HessianFree"><a href="#HessianFree" class="headerlink" title="HessianFree"></a><code>HessianFree</code></h3><p>有限内存BFGS方法</p>
+<figure class="highlight fortran"><table><tr><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">   HessianFree</span><br><span class="line">      Step</span><br><span class="line">         MaxCartesianStep <span class="built_in">float</span></span><br><span class="line">         MinRadius <span class="built_in">float</span></span><br><span class="line">         TrialStep <span class="built_in">float</span></span><br><span class="line">         TrustRadius <span class="built_in">float</span></span><br><span class="line">      <span class="keyword">End</span></span><br><span class="line">   <span class="keyword">End</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<h1 id="几何不收敛"><a href="#几何不收敛" class="headerlink" title="几何不收敛"></a>几何不收敛</h1><ul>
+<li><p>修改优化方法为准牛顿</p>
+<figure class="highlight oxygene"><table><tr><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">    <span class="function"><span class="keyword">Method</span> <span class="title">Quasi</span>-<span class="title">Newton</span></span></span><br><span class="line"><span class="function">    <span class="title">Quasi</span>-<span class="title">Newton</span></span></span><br><span class="line"><span class="function">      <span class="title">Step</span></span></span><br><span class="line"><span class="function">         <span class="title">TrustRadius</span> 0.02</span></span><br><span class="line"><span class="function">      <span class="title">End</span></span></span><br><span class="line"><span class="function">      <span class="title">UpdateTSVectorEveryStep</span> <span class="title">True</span></span></span><br><span class="line"><span class="function">    <span class="title">End</span></span></span><br><span class="line"><span class="function"><span class="title">End</span></span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>AMS</category>
+      </categories>
+      <tags>
+        <tag>几何优化</tag>
       </tags>
   </entry>
   <entry>
@@ -2200,6 +2200,26 @@
       </tags>
   </entry>
   <entry>
+    <title>多组态MCSCF</title>
+    <url>/2020/11/20/%E5%A4%9A%E7%BB%84%E6%80%81MCSCF/</url>
+    <content><![CDATA[<h1 id="与CI的区别"><a href="#与CI的区别" class="headerlink" title="与CI的区别"></a>与CI的区别</h1><p>CI：</p>
+<script type="math/tex; mode=display">
+\Psi^{C I}=\sum_{P} C_{P} \Phi_{P}</script><p>MCSCF：</p>
+<script type="math/tex; mode=display">
+\Psi^{M C S C F}=\sum_{k=0}^{\operatorname{CSF}_{s}} A_{k} \Phi_{k}</script><ul>
+<li>CI解决的是动态相关，MCSCF解决的是静态相关</li>
+<li>通过变分法求得<script type="math/tex">C_P</script>，只优化系数。MCSCF中N电子的CSF为：<script type="math/tex">\Phi_{k}=\hat{A}\left|\phi_{1} \bar{\phi}_{1} \ldots \phi_{m} \bar{\phi}_{m}\right|</script>，单电子轨道为：<script type="math/tex">\phi_{i}=\sum_{\mu} \chi_{\mu} C_{\mu i}</script>，除了优化系数<script type="math/tex">A_{k}</script>，还会优化轨道，即<script type="math/tex">C_{\mu i}</script>。</li>
+<li>CASSCF中相当于在所选的活性空间中有一个Full CI并优化了所选的轨道。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+      </categories>
+      <tags>
+        <tag>MCSCF</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>光谱项</title>
     <url>/2020/11/11/%E5%85%89%E8%B0%B1%E9%A1%B9/</url>
     <content><![CDATA[<h1 id="双原子"><a href="#双原子" class="headerlink" title="双原子"></a>双原子</h1><h2 id="2S-1-Lambda-简单确定方法"><a href="#2S-1-Lambda-简单确定方法" class="headerlink" title="$^{2S+1}\Lambda$简单确定方法"></a>$^{2S+1}\Lambda$简单确定方法</h2><p>根据分子轨道占据来确定双原子的分子光谱项为$^{2S+1}\Lambda$：</p>
@@ -2432,26 +2452,6 @@
       </categories>
       <tags>
         <tag>光谱项</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>多组态MCSCF</title>
-    <url>/2020/11/20/%E5%A4%9A%E7%BB%84%E6%80%81MCSCF/</url>
-    <content><![CDATA[<h1 id="与CI的区别"><a href="#与CI的区别" class="headerlink" title="与CI的区别"></a>与CI的区别</h1><p>CI：</p>
-<script type="math/tex; mode=display">
-\Psi^{C I}=\sum_{P} C_{P} \Phi_{P}</script><p>MCSCF：</p>
-<script type="math/tex; mode=display">
-\Psi^{M C S C F}=\sum_{k=0}^{\operatorname{CSF}_{s}} A_{k} \Phi_{k}</script><ul>
-<li>CI解决的是动态相关，MCSCF解决的是静态相关</li>
-<li>通过变分法求得<script type="math/tex">C_P</script>，只优化系数。MCSCF中N电子的CSF为：<script type="math/tex">\Phi_{k}=\hat{A}\left|\phi_{1} \bar{\phi}_{1} \ldots \phi_{m} \bar{\phi}_{m}\right|</script>，单电子轨道为：<script type="math/tex">\phi_{i}=\sum_{\mu} \chi_{\mu} C_{\mu i}</script>，除了优化系数<script type="math/tex">A_{k}</script>，还会优化轨道，即<script type="math/tex">C_{\mu i}</script>。</li>
-<li>CASSCF中相当于在所选的活性空间中有一个Full CI并优化了所选的轨道。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-      </categories>
-      <tags>
-        <tag>MCSCF</tag>
       </tags>
   </entry>
   <entry>
