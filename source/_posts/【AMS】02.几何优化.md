@@ -84,16 +84,8 @@ End
 - `MaxIterations`：允许收敛到所需结构的最大几何迭代次数。默认是max(30，$$2 \times N_{free}$$)，$$N_{free}$$是指自由度的数目，接近于3*原子数。
 - `CalcPropertiesOnlyIfConverged`：默认为`Yes`，当几何优化（过渡态搜索）收敛时，才计算相应的性质，比如频率，声子等，若为`False`，不收敛也可以计算。
 - `PretendConverged`：默认为`No`，当几何优化不收敛会报错。如果改成`True`，只会出现一个警告，并且表明几何优化是收敛的，在一些脚本编写中有用。
-- `CoordinateType`：选择要执行优化的坐标类型。默认是`Auto`，自动为给定的方法选择最合适的方法。还可以选择`Delocalized`，`Cartesian`
 
-## 优化方法`Mehod`
-
-```
-GeometryOptimization
-   Method [Auto | Quasi-Newton | SCMGO | FIRE | L-BFGS | ConjugateGradients]
-   CoordinateType [Auto | Delocalized | Cartesian]
-End
-```
+## 优化方法
 
 - `Method`：默认为`auto`，根据系统大小和支持的优化选项自动选择合适的方法。
 - `CoordinateType`：默认是`auto`，自动为给定的方法选择最合适的方法。准牛顿法和SCMGO方法将使用`Delocalized`，所有其他方法将使用`Cartesian`。
@@ -110,6 +102,14 @@ GeometryOptimization
    End
 End
 ```
+
+- `File`：包含初始Hessian（或包含它的结果目录）的KF文件。这可用于加载先前使用[Properties％Hessian]关键字计算出的Hessian。
+- `Type`：默认为`auto`，让程序选择初始模型Hessian。
+  - `UnitMatrix`：最简单的初始模型Hessian，只是优化坐标中的一个单位矩阵
+  - `Swart`： model Hessian from M. Swart.
+  - `FromFile`：从先前计算的结果加载Hessian。配合`File`使用
+  - `Calculate`：计算初始的Hessian，计算比较昂贵，大多数建议用于TransitionStateSearch计算
+  - `CalculateWithFastEngine`：使用更快的方法计算初始的Hessian
 
 ### `Quasi-Newton`
 
@@ -128,29 +128,10 @@ End
 ```
 
 - `MaxGDIISVectors`：设置GDIIS向量的最大数量。默认为`0`，如果> 0将启用GDIIS方法。
-- `Step`：信任半径的初始值。
+- `Step%TrustRadius`：信任半径的初始值。
 - `UpdateTSVectorEveryStep`：是否在每个步骤用当前特征向量更新TS反应坐标。默认为`Yes`。
 
-准牛顿优化器使用Hessian计算几何优化步骤。Hessian通常在开始时近似，然后在优化过程中进行更新。因此，非常好的初始Hessian可以提高优化器的性能，并导致更快，更稳定的收敛。初始Hessian的选择可以设置：
-
-```
-GeometryOptimization
-   InitialHessian
-      File string
-      Type [Auto | UnitMatrix | Swart | FromFile | Calculate | CalculateWithFastEngine]
-   End
-End
-```
-
-- `File`：包含初始Hessian（或包含它的结果目录）的KF文件。这可用于加载先前使用[Properties％Hessian]关键字计算出的Hessian。
-
-- `Type`：默认为`auto`，让程序选择初始模型Hessian。
-
-  - `UnitMatrix`：最简单的初始模型Hessian，只是优化坐标中的一个单位矩阵
-  - `Swart`： model Hessian from M. Swart.
-  - `FromFile`：从先前计算的结果加载Hessian。配合`File`使用
-  - `Calculate`：计算初始的Hessian，计算比较昂贵，大多数建议用于TransitionStateSearch计算
-  - `CalculateWithFastEngine`：使用更快的方法计算初始的Hessian
+准牛顿优化器使用Hessian计算几何优化步骤。Hessian通常在开始时近似，然后在优化过程中进行更新。因此，非常好的[初始Hessian](#)可以提高优化器的性能，并导致更快，更稳定的收敛。
 
 ### `FIRE`
 

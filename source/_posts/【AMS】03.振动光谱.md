@@ -13,8 +13,12 @@ categories: [计算化学, AMS]
 
 
 
-- 通过系统的Hessian矩阵求得，即能量对于原子坐标的二阶导数得到Hessian矩阵。然后Hessian的特征值是频率，特征向量是简正模式。
+- 通过系统的Hessian矩阵求得，即能量对于原子坐标的二阶导数$$H_{ij} = \frac{\partial^2E}{\partial{}R_i\partial{}R_j}$$得到Hessian矩阵。然后Hessian的特征值是相应简正模式的力常数（按照谐振子公式，可以求得谐振频率），特征向量是简正模式。
+
+  - （非质量加权的）Hessian 作为变量保存在引擎结果文件 `AMSResults%Hessian`中。它不会打印到文本输出。列/行索引的顺序为：原子 1 的 x 分量、原子 1 的 y 分量、原子 1 的 z 分量、原子 2 的 x 分量等。
+
 - 完整 Hessian 的计算非常昂贵（全Hessian的数值计算需要6N个单点计算），因此只能计算完整光谱的一部分或者仅获得系统区域的模式。完整、部分或近似 Hessian 本身对于（基于 Hessian 的）几何优化或过渡状态搜索很有用。
+
 - 振动谱是通过在PES的一个(局部)最小值上微分法向模的特性而获得的。如果没有几何优化，会得到虚频。
 
 - 通常与`Task SinglePoint`、`Task GeometryOptimization`或`Task TransitionStateSearch`一起使用 
@@ -39,38 +43,45 @@ Properties
 End
 ```
 
+`ADF`块中也有相应的设置。
 
+## 重新扫描虚频
 
-
-
-
-
-## 解析频率
-
-
+主要用于识别虚频，因此是默认开启的
 
 ```
-Engine ADF
-  AnalyticalFreq
-    B1Size float
-    B1Thresh float
-    Check_CPKS_From_Iteration integer
-    Debug string
-    Hessian [reflect | average]
-    Max_CPKS_Iterations integer
-    Print string
-    PrintNormalModeAnalysis Yes/No
-    U1_Accuracy float
-  End
-EndEngine
+NormalModes
+   ReScanModes Yes/No
+   ReScanFreqRange float_list
+End
 ```
 
-- `Max_CPKS_Iterations`：解析频率的计算需要求解Coupled Perturbed Kohn-Sham (CPKS)  (CPKS)方程，这是一个迭代过程。如果没有实现收敛（输出中会打印警告" CPKS failed to converge. Frequencies may be wrong")，可以增加迭代次数（收敛不能保证）。默认为`20`
+- `ReScanModes`：默认是`Yes`，在正常模式计算结束后是否扫描虚模式。
+- `ReScanFreqRange`：默认是`[-10000000.0, 10.0]`，指定将扫描所有模式的频率范围。
+
+# `VibrationalAnalysis`数值频率
+
+数值频率计算是通过请求`VibrationalAnalysis`任务来执行的 
+
+```
+Task VibrationalAnalysis
+VibrationalAnalysis
+   Type ModeScanning
+   Displacement 0.001
+   NormalModes
+     ModeFile adf.rkf
+     # select all modes with imaginary frequencies
+     ModeSelect
+        ImFreq true
+     End
+   End
+End
+```
+
+
 
 
 # 有虚频
-
-
 
 - 在原本的几何坐标上加上虚频的位移。一个简单的脚本。
 
