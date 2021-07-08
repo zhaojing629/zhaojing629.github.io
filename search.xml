@@ -961,128 +961,6 @@
       </categories>
   </entry>
   <entry>
-    <title>【Gaussian】基组</title>
-    <url>/2019/09/03/%E3%80%90Gaussian%E3%80%91%E5%9F%BA%E7%BB%84/</url>
-    <content><![CDATA[<p><a href="https://gaussian.com/basissets/">https://gaussian.com/basissets/</a></p>
-<h1 id="高斯中的5d、6d"><a href="#高斯中的5d、6d" class="headerlink" title="高斯中的5d、6d"></a>高斯中的5d、6d</h1><ul>
-<li>5d和6d分别指球谐型d函数（由6个笛卡尔型d函数组合得到）和笛卡尔型d函数。</li>
-<li>高斯一般默认使用6d关键字（在使用gen等关键字时往往默认为5d）。</li>
-</ul>
-<h2 id="5d"><a href="#5d" class="headerlink" title="5d"></a>5d</h2><p>如果使用5d关键词，会使用xy、yz、xz、x^2-y^2、3*z^2-r^2这5种轨道描述d轨道。输出的d轨道符号会显示D 0, D+1, D-1, D+2, D-2。这不是指这样由GTF组合出来的波函数的角动量z轴分量的本征值，也不是指这5个轨道用来对应地近似描述5个真实的复数型原子轨道。这样的轨道符号没有意义，还会引起严重混淆，它仅仅是做个标识罢了。</p>
-<p>对应关系：</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">作为基函数的GTF</th>
-<th style="text-align:center">实型真实原子轨道符号</th>
-<th style="text-align:center">高斯中用了5d关键字后对d轨道的标识</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">3*z^2-r^2</td>
-<td style="text-align:center">dz^2</td>
-<td style="text-align:center">d 0</td>
-</tr>
-<tr>
-<td style="text-align:center">xz</td>
-<td style="text-align:center">dxz</td>
-<td style="text-align:center">d+1</td>
-</tr>
-<tr>
-<td style="text-align:center">yz</td>
-<td style="text-align:center">dyz</td>
-<td style="text-align:center">d-1</td>
-</tr>
-<tr>
-<td style="text-align:center">x^2-y^2</td>
-<td style="text-align:center">dx^2-y^2</td>
-<td style="text-align:center">d+2</td>
-</tr>
-<tr>
-<td style="text-align:center">xy</td>
-<td style="text-align:center">dxy</td>
-<td style="text-align:center">d-2</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h2 id="6d"><a href="#6d" class="headerlink" title="6d"></a>6d</h2><p>使用xx、yy、zz、yz、yx、zx这6种笛卡尔型GTF轨道，在输出的d轨道符号中也对应地以xx、yy、zz、yz、yx、zx标识。在d轨道基函数不分裂情况下，描述d轨道的可独立变分的基函数就相对于5d关键字时的5个增加到了6个，可看到输出文件中basis functions的数目对应地增加了。但无论用5d还是6d，输出文件显示的原始基函数（primitive gaussians，即笛卡尔型GTF）的数目都一样，这是因为5d的5个轨道仍需要有全部6种笛卡尔型d型GTF才能组合出来。</p>
-<ul>
-<li>比如对5d中的3<em>z^2-r^2函数来说，将其中r^2展开，可写成N</em>(2*z^2-x^2-y^2)，即等于zz、xx、yy三种笛卡尔型GTF系数按照<script type="math/tex">2:-1:-1</script>组合并乘上归一化系数，这个比值这是固定的，不会在计算过程中改变，某种意义上也可看作是CGTF（收缩型GTF）。</li>
-<li>6d型轨道好处是方便编程，能够直接计算各种积分。缺点很明显，由于缺乏与真实原子轨道的对应关系，结果不像用5d的结果那样方便分析。虽然这6个笛卡尔型轨道不直接对应于真实原子轨道，但在计算过程中经过变分，其结果同样会展现出真实原子轨道的行为。这是因为以它们为基函数变分的结果，等价于对它们线性变换后的基函数变分的结果。</li>
-<li><p>使用6d关键字，就是在5d型的基函数基础上多添加了一个内部含有节面的s型GTF轨道，由于这个轨道与其它s轨道有不小重叠，会造成一定线性相关问题，所以并不会比5d的结果有多少改进。</p>
-</li>
-<li><p>7f与10f的关系与5d与6d的关系类似，对于g、h等更高角动量函数也有如上讨论，笛卡尔型与球谐型GTF转换关系将更为复杂，而且组合方法并不唯一（比如有所谓标准纯f集、纯f“立方”集）。计算时若同时含有d和f轨，用5d时应当结合7f，用6d时应当结合10f。顺带一提，6d轨道间不都是正交的，例如XX与YY，而5d轨道间都是正交的，同样10f和7f的关系也是如此。</p>
-</li>
-</ul>
-<h1 id="高斯中的基函数的数目"><a href="#高斯中的基函数的数目" class="headerlink" title="高斯中的基函数的数目"></a>高斯中的基函数的数目</h1><p>例子：C的6-31+G*</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">C</span>     <span class="number">0</span></span><br><span class="line"><span class="attribute">S</span>   <span class="number">6</span>   <span class="number">1</span>.<span class="number">00</span>     &lt;--下面定义S型基函数壳层，其收缩度为<span class="number">6</span>，即这个基函数壳层由下面写的<span class="number">6</span>个primitive壳层收缩而成。<span class="number">1</span>.<span class="number">00</span>是刻度因子，不用去管它，总是输入<span class="number">1</span>.<span class="number">00</span>就行了（具体含义参见手册里gen关键词）</span><br><span class="line">   <span class="attribute">3047</span>.<span class="number">5249000</span>              <span class="number">0</span>.<span class="number">0018347</span>  &lt;---- 第<span class="number">1</span>个primitive壳层的指数和收缩系数</span><br><span class="line">    <span class="attribute">457</span>.<span class="number">3695100</span>              <span class="number">0</span>.<span class="number">0140373</span>  &lt;---- 第<span class="number">2</span>个primitive壳层...</span><br><span class="line">    <span class="attribute">103</span>.<span class="number">9486900</span>              <span class="number">0</span>.<span class="number">0688426</span>        </span><br><span class="line">     <span class="attribute">29</span>.<span class="number">2101550</span>              <span class="number">0</span>.<span class="number">2321844</span>        </span><br><span class="line">      <span class="attribute">9</span>.<span class="number">2866630</span>              <span class="number">0</span>.<span class="number">4679413</span>        </span><br><span class="line">      <span class="attribute">3</span>.<span class="number">1639270</span>              <span class="number">0</span>.<span class="number">3623120</span>        </span><br><span class="line"><span class="attribute">SP</span>   <span class="number">3</span>   <span class="number">1</span>.<span class="number">00</span>     &lt;--SP型基函数壳层，仅在Pople系列基组及其它少数基组中才出现，其中S和P型基函数共享相同指数但收缩系数不同，在Gaussian中用SP壳层比起单独用一个S壳层和一个P壳层计算起来更快</span><br><span class="line">      <span class="attribute">7</span>.<span class="number">8682724</span>             -<span class="number">0</span>.<span class="number">1193324</span>              <span class="number">0</span>.<span class="number">0689991</span>   &lt;--共用的指数，S的收缩系数，P的收缩系数</span><br><span class="line">      <span class="attribute">1</span>.<span class="number">8812885</span>             -<span class="number">0</span>.<span class="number">1608542</span>              <span class="number">0</span>.<span class="number">3164240</span>        </span><br><span class="line">      <span class="attribute">0</span>.<span class="number">5442493</span>              <span class="number">1</span>.<span class="number">1434564</span>              <span class="number">0</span>.<span class="number">7443083</span>        </span><br><span class="line"><span class="attribute">SP</span>   <span class="number">1</span>   <span class="number">1</span>.<span class="number">00</span></span><br><span class="line">      <span class="attribute">0</span>.<span class="number">1687144</span>              <span class="number">1</span>.<span class="number">0000000</span>              <span class="number">1</span>.<span class="number">0000000</span>        </span><br><span class="line"><span class="attribute">SP</span>   <span class="number">1</span>   <span class="number">1</span>.<span class="number">00</span>   &lt;--此壳层指数很小，所以显然是<span class="number">6</span>-<span class="number">31</span>+G*中的+号对应的弥散函数。弥散函数、极化函数的收缩度总是为<span class="number">1</span>，即未收缩，这样的壳层的收缩系数必定是<span class="number">1</span>.<span class="number">0</span>。</span><br><span class="line">      <span class="attribute">0</span>.<span class="number">0438000</span>              <span class="number">1</span>.<span class="number">0000000</span>              <span class="number">1</span>.<span class="number">0000000</span>        </span><br><span class="line"><span class="attribute">D</span>   <span class="number">1</span>   <span class="number">1</span>.<span class="number">00</span>   &lt;--D型极化函数，对应<span class="number">6</span>-<span class="number">31</span>+G*中的*。</span><br><span class="line">      <span class="attribute">0</span>.<span class="number">8000000</span>              <span class="number">1</span>.<span class="number">0000000</span>        </span><br></pre></td></tr></table></figure>
-<p>15 basis functions,  28 primitive gaussians,  15 cartesian basis functions</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th></th>
-<th>1s</th>
-<th>2s</th>
-<th>2p*3</th>
-<th>d*6</th>
-<th>总数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>GTF</td>
-<td>1</td>
-<td>2</td>
-<td>2</td>
-<td>1</td>
-<td>15</td>
-</tr>
-<tr>
-<td>PGTF</td>
-<td>6</td>
-<td>3+1</td>
-<td>3+1</td>
-<td>1</td>
-<td>28</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>无论高斯中用5d还是6d，输出文件显示的原始基函数（primitive gaussians，即笛卡尔型GTF）的数目都一样，这是因为5d的5个轨道仍需要有全部6种笛卡尔型d型GTF才能组合出来。</p>
-<h1 id="常见基组及其指定方法"><a href="#常见基组及其指定方法" class="headerlink" title="常见基组及其指定方法"></a>常见基组及其指定方法</h1><h2 id="6-31G类"><a href="#6-31G类" class="headerlink" title="6-31G类"></a><strong>6-31G类</strong></h2><p>可以用n-31G、n-31G**、n-31++G、n-31G(2df,p)等方式直接在关键词区域定义。</p>
-<h2 id="cc-pVnZ系列"><a href="#cc-pVnZ系列" class="headerlink" title="cc-pVnZ系列"></a>cc-pVnZ系列</h2><ul>
-<li>直接用cc-pVnZ指定。</li>
-<li>弥散函数用aug-cc-pVnZ、spAug-cc-pVnZ、dAug-cc-pVnZ等</li>
-</ul>
-<h2 id="def系列"><a href="#def系列" class="headerlink" title="def系列"></a>def系列</h2><ul>
-<li><p>def用SV, SVP, TZV, TZVP 等指定</p>
-</li>
-<li><p>def2-系列用Def2SV, Def2SVP, Def2SVPP, Def2TZV, Def2TZVP, Def2TZVPP, Def2QZV, Def2QZVP, Def2QZVPP, and QZVP等指定，去掉了”-“</p>
-</li>
-</ul>
-<p>用IOp(3/24=1)可以显示每个原子实际用的基组，检查是否设对了；也可以用GFPrint关键词输出相似内容，但没那么清楚；也可以用GFInput关键词来输出实际所用基组，这些信息可以直接作为基组输入的信息。</p>
-<h1 id="赝势的输入"><a href="#赝势的输入" class="headerlink" title="赝势的输入"></a><strong>赝势的输入</strong></h1><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"># B3LYP/genecp</span><br><span class="line"></span><br><span class="line">Cu(CO)+</span><br><span class="line"></span><br><span class="line"><span class="number">1</span> <span class="number">1</span></span><br><span class="line"> Cu             </span><br><span class="line"> C                  <span class="number">1</span>            B1</span><br><span class="line"> O                  <span class="number">2</span>            B2    <span class="number">1</span>            <span class="number">180.</span></span><br><span class="line"></span><br><span class="line">Cu <span class="number">0</span></span><br><span class="line">Lanl2DZ    &lt;-- Cu用Lanl2DZ赝势基组</span><br><span class="line">****</span><br><span class="line">C O <span class="number">0</span></span><br><span class="line"><span class="number">6</span><span class="number">-31</span>G*   &lt;-- C O用的基组为<span class="number">6</span><span class="number">-31</span>G*</span><br><span class="line">****</span><br><span class="line"></span><br><span class="line">Cu <span class="number">0</span></span><br><span class="line">Lanl2   &lt;-- Cu用的赝势为Lanl2，这种赝势是Lanl2DZ赝势基组对应的赝势。如果不知道赝势名是什么，此处直接写赝势基组名就可以。比如这里也可以写成Lanl2DZ，和写Lanl2是等价的</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="Stuttgart赝势"><a href="#Stuttgart赝势" class="headerlink" title="Stuttgart赝势"></a>Stuttgart赝势</h2><p>Stuttgart赝势规范的写法是nXY这种形式，含义是：</p>
-<ul>
-<li>n = 被赝势表示的核电子数</li>
-<li>X = S/M：拟合赝势时的参考体系。S是只考虑模型体系仅有的单个价电子的能量，M是考虑实际原子全部价电子的能量</li>
-<li>Y = HF/WB/DF：拟合赝势用的数据的计算级别。HF=Hartree-Fock非相对论（即此赝势不考虑相对论效应），WB=Wood-Boring准相对论，DF=Dirac-Fock全相对论</li>
-</ul>
-<p>每个元素的SDD默认的基组和可用的Stuttgart赝势：<a href="https://gaussian.com/pseudo/">https://gaussian.com/pseudo/</a></p>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>Gaussian</category>
-      </categories>
-      <tags>
-        <tag>基组</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【Gaussian】对称性</title>
     <url>/2021/03/02/%E3%80%90Gaussian%E3%80%91%E5%AF%B9%E7%A7%B0%E6%80%A7/</url>
     <content><![CDATA[<p>Gaussian默认启动对称性，有对称性的体系，让Gaussian正确判断出实际的点群，有以下好处：</p>
@@ -2028,8 +1906,8 @@
 <li><p>极小基SCF猜：</p>
 </li>
 <li><p>增加DIIS：</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">&#123;rhf,maxdis=<span class="number">30</span>,iptyp=<span class="string">&#x27;DIIS&#x27;</span>,nitord=<span class="number">20</span>; shift,<span class="number">-1.0</span>,<span class="number">-0.5</span>&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">&#123;rhf,maxdis=<span class="number">10</span>,iptyp=<span class="string">&#x27;KAIN&#x27;</span>,nitord=<span class="number">10</span>; shift,<span class="number">-1.0</span>,<span class="number">-0.5</span>&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">&#123;rhf,maxdis=<span class="number">30</span>,iptyp=DIIS,nitord=<span class="number">20</span>; shift,<span class="number">-1.0</span>,<span class="number">-0.5</span>&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">&#123;rhf,maxdis=<span class="number">10</span>,iptyp=KAIN,nitord=<span class="number">10</span>; shift,<span class="number">-1.0</span>,<span class="number">-0.5</span>&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 ]]></content>
@@ -4705,13 +4583,12 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 </li>
 <li>file定义写入数据的文件名；如果为空，数据将写入到输出流中。如果忽略status或设置为NEW，那么文件中所有的旧内容都被清除；否则对文件追加。</li>
 </ul>
-<h1 id="输入文件一般结构和规则"><a href="#输入文件一般结构和规则" class="headerlink" title="输入文件一般结构和规则"></a>输入文件一般结构和规则</h1><figure class="highlight erlang-repl"><table><tr><td class="code"><pre><span class="line">***,title			! 标题（可选）</span><br><span class="line">memory,<span class="number">4</span>,m 			! 内存指定（可选）</span><br><span class="line">file,<span class="number">1</span>,name.int 	! 命名永久的积分文件（可选）</span><br><span class="line">file,<span class="number">2</span>,name.wfu 	! 命名永久的波函文件（可选）</span><br><span class="line"></span><br><span class="line">gprint,options 		! 全局打印选项（可选）</span><br><span class="line">gthresh,options 	! 全局阈值（可选）</span><br><span class="line">gdirect[,options] 	! 全局直接积分选项（可选）</span><br><span class="line">gexpec,opnames 		! 单电子算符的全局定义（可选）</span><br><span class="line"></span><br><span class="line">basis=basisname 	! 基的定义。如果不出现，使用cc-pVDZ</span><br><span class="line">geometry=&#123;...&#125; 		! 结构定义。</span><br><span class="line"></span><br><span class="line">var1=value,var2=value,... 	! 设定结构和/或波函定义中的变量</span><br><span class="line"></span><br><span class="line">&#123;command,options 		! 程序或流程的名称</span><br><span class="line">directive,data,option 	! 命令的指令（可选）</span><br><span class="line">...</span><br><span class="line">&#125; 				! 结束命令区</span><br><span class="line">--- 			! 结束输入（可选）</span><br></pre></td></tr></table></figure>
+<h1 id="输入文件格式"><a href="#输入文件格式" class="headerlink" title="输入文件格式"></a>输入文件格式</h1><h2 id="一般结构"><a href="#一般结构" class="headerlink" title="一般结构"></a>一般结构</h2><figure class="highlight erlang-repl"><table><tr><td class="code"><pre><span class="line">***,title			! 标题（可选）</span><br><span class="line">memory,<span class="number">4</span>,m 			! 内存指定（可选）</span><br><span class="line">file,<span class="number">1</span>,name.int 	! 命名永久的积分文件（可选）</span><br><span class="line">file,<span class="number">2</span>,name.wfu 	! 命名永久的波函文件（可选）</span><br><span class="line"></span><br><span class="line">gprint,options 		! 全局打印选项（可选）</span><br><span class="line">gthresh,options 	! 全局阈值（可选）</span><br><span class="line">gdirect[,options] 	! 全局直接积分选项（可选）</span><br><span class="line">gexpec,opnames 		! 单电子算符的全局定义（可选）</span><br><span class="line"></span><br><span class="line">basis=basisname 	! 基的定义。如果不出现，使用cc-pVDZ</span><br><span class="line">geometry=&#123;...&#125; 		! 结构定义。</span><br><span class="line"></span><br><span class="line">var1=value,var2=value,... 	! 设定结构和/或波函定义中的变量</span><br><span class="line"></span><br><span class="line">&#123;command,options 		! 程序或流程的名称</span><br><span class="line">directive,data,option 	! 命令的指令（可选）</span><br><span class="line">...</span><br><span class="line">&#125; 				! 结束命令区</span><br><span class="line">--- 			! 结束输入（可选）</span><br></pre></td></tr></table></figure>
 <ul>
 <li>输了memory卡应该是紧随标题的第一个以外，其他basis，geometry，gprint，gdirect，gthresh，gexpec，以及变量定义的顺序是任意的。</li>
 <li>可以在一个程序后调用其它几个程序。在程序的调用之间还可以重新定义基组和/或分子结构；程序将会自动确认是否需要重新计算积分。</li>
 </ul>
-<p>一般规则：</p>
-<ul>
+<h2 id="一般规则"><a href="#一般规则" class="headerlink" title="一般规则"></a>一般规则</h2><ul>
 <li><code>,</code>移到下一个制表位，即用来划定输入范围。</li>
 <li><code>;</code>结束记录，开始一个新的记录。用分号隔开的基本命令单位称为卡（card）。一个给定的输入行可以包含多个有效命令（用；隔开），也可以只有一个。</li>
 <li><code>!</code>忽略该输入行后面的内容（用于注释）。</li>
@@ -4725,9 +4602,20 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li><code>FILE</code>指定已命名的文件</li>
 <li><code>TEXT</code>打印文本</li>
 <li><code>TITLE</code>定义运行的标题或表格的标题</li>
-<li><p><code>CON</code>指定轨道组态</p>
-</li>
-<li><p><code>---</code>结束文件（忽略之后的输入）</p>
+<li><code>CON</code>指定轨道组态</li>
+<li><code>---</code>结束文件（忽略之后的输入）</li>
+</ul>
+<h2 id="一般格式"><a href="#一般格式" class="headerlink" title="一般格式"></a>一般格式</h2><p>整体格式一般是：</p>
+<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">COMMAND,</span> options</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight haskell"><table><tr><td class="code"><pre><span class="line">&#123; <span class="type">COMMAND</span>,options</span><br><span class="line"><span class="title">directives</span></span><br><span class="line"><span class="class"><span class="keyword">data</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>命令（COMMAND）比如有<code>HF, MP2, CCSD(T), MCSCF, MRCI</code></li>
+<li>指令（directives）比如有<code>OCC, CLOSED, WF, PRINT</code>等，格式一般<code>DIRECTIVE,data,options</code></li>
+<li>选项（options）的格式一般是<code>NAME[=value]</code><ul>
+<li>多个选项以逗号或空格分隔。</li>
+<li>如果选项在COMMAND一行或命令块内的指令上给出，则它们仅对相应的程序有效。</li>
+</ul>
 </li>
 </ul>
 <h1 id="memory卡"><a href="#memory卡" class="headerlink" title="memory卡"></a>memory卡</h1><figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">MEMORY,</span>n,scale<span class="comment">;</span></span><br></pre></td></tr></table></figure>
@@ -6929,6 +6817,286 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
       <tags>
         <tag>hexo</tag>
         <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Gaussian】01.基础知识</title>
+    <url>/2019/09/03/%E3%80%90Gaussian%E3%80%9101.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
+    <content><![CDATA[<h1 id="输入文件基本格式"><a href="#输入文件基本格式" class="headerlink" title="输入文件基本格式"></a>输入文件基本格式</h1><h1 id="坐标的输入"><a href="#坐标的输入" class="headerlink" title="坐标的输入"></a>坐标的输入</h1><ul>
+<li><code>geom=check</code>：输入结构从chk中读取，输入文件里此时不能写坐标</li>
+<li><code>geom=allcheck</code>：标题段落、电荷、自旋多重度、坐标都从chk中读取。输入文件里此时不能写坐标多重度等，关键词后面空行直接跟指定的基组或者为空。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>Gaussian</category>
+      </categories>
+      <tags>
+        <tag>基组</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Gaussian】02.基组</title>
+    <url>/2019/09/03/%E3%80%90Gaussian%E3%80%9102.%E5%9F%BA%E7%BB%84/</url>
+    <content><![CDATA[<p><a href="https://gaussian.com/basissets/">https://gaussian.com/basissets/</a></p>
+<h1 id="高斯中的5d、6d"><a href="#高斯中的5d、6d" class="headerlink" title="高斯中的5d、6d"></a>高斯中的5d、6d</h1><ul>
+<li>5d和6d分别指球谐型d函数（由6个笛卡尔型d函数组合得到）和笛卡尔型d函数。</li>
+<li>高斯一般默认使用6d关键字（在使用gen等关键字时往往默认为5d）。</li>
+</ul>
+<h2 id="5d"><a href="#5d" class="headerlink" title="5d"></a>5d</h2><p>如果使用5d关键词，会使用xy、yz、xz、x^2-y^2、3*z^2-r^2这5种轨道描述d轨道。输出的d轨道符号会显示D 0, D+1, D-1, D+2, D-2。这不是指这样由GTF组合出来的波函数的角动量z轴分量的本征值，也不是指这5个轨道用来对应地近似描述5个真实的复数型原子轨道。这样的轨道符号没有意义，还会引起严重混淆，它仅仅是做个标识罢了。</p>
+<p>对应关系：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">作为基函数的GTF</th>
+<th style="text-align:center">实型真实原子轨道符号</th>
+<th style="text-align:center">高斯中用了5d关键字后对d轨道的标识</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">3*z^2-r^2</td>
+<td style="text-align:center">dz^2</td>
+<td style="text-align:center">d 0</td>
+</tr>
+<tr>
+<td style="text-align:center">xz</td>
+<td style="text-align:center">dxz</td>
+<td style="text-align:center">d+1</td>
+</tr>
+<tr>
+<td style="text-align:center">yz</td>
+<td style="text-align:center">dyz</td>
+<td style="text-align:center">d-1</td>
+</tr>
+<tr>
+<td style="text-align:center">x^2-y^2</td>
+<td style="text-align:center">dx^2-y^2</td>
+<td style="text-align:center">d+2</td>
+</tr>
+<tr>
+<td style="text-align:center">xy</td>
+<td style="text-align:center">dxy</td>
+<td style="text-align:center">d-2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="6d"><a href="#6d" class="headerlink" title="6d"></a>6d</h2><p>使用xx、yy、zz、yz、yx、zx这6种笛卡尔型GTF轨道，在输出的d轨道符号中也对应地以xx、yy、zz、yz、yx、zx标识。在d轨道基函数不分裂情况下，描述d轨道的可独立变分的基函数就相对于5d关键字时的5个增加到了6个，可看到输出文件中basis functions的数目对应地增加了。但无论用5d还是6d，输出文件显示的原始基函数（primitive gaussians，即笛卡尔型GTF）的数目都一样，这是因为5d的5个轨道仍需要有全部6种笛卡尔型d型GTF才能组合出来。</p>
+<ul>
+<li>比如对5d中的3<em>z^2-r^2函数来说，将其中r^2展开，可写成N</em>(2*z^2-x^2-y^2)，即等于zz、xx、yy三种笛卡尔型GTF系数按照<script type="math/tex">2:-1:-1</script>组合并乘上归一化系数，这个比值这是固定的，不会在计算过程中改变，某种意义上也可看作是CGTF（收缩型GTF）。</li>
+<li>6d型轨道好处是方便编程，能够直接计算各种积分。缺点很明显，由于缺乏与真实原子轨道的对应关系，结果不像用5d的结果那样方便分析。虽然这6个笛卡尔型轨道不直接对应于真实原子轨道，但在计算过程中经过变分，其结果同样会展现出真实原子轨道的行为。这是因为以它们为基函数变分的结果，等价于对它们线性变换后的基函数变分的结果。</li>
+<li><p>使用6d关键字，就是在5d型的基函数基础上多添加了一个内部含有节面的s型GTF轨道，由于这个轨道与其它s轨道有不小重叠，会造成一定线性相关问题，所以并不会比5d的结果有多少改进。</p>
+</li>
+<li><p>7f与10f的关系与5d与6d的关系类似，对于g、h等更高角动量函数也有如上讨论，笛卡尔型与球谐型GTF转换关系将更为复杂，而且组合方法并不唯一（比如有所谓标准纯f集、纯f“立方”集）。计算时若同时含有d和f轨，用5d时应当结合7f，用6d时应当结合10f。顺带一提，6d轨道间不都是正交的，例如XX与YY，而5d轨道间都是正交的，同样10f和7f的关系也是如此。</p>
+</li>
+</ul>
+<h1 id="高斯中的基函数的数目"><a href="#高斯中的基函数的数目" class="headerlink" title="高斯中的基函数的数目"></a>高斯中的基函数的数目</h1><p>例子：C的6-31+G*</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">C</span>     <span class="number">0</span></span><br><span class="line"><span class="attribute">S</span>   <span class="number">6</span>   <span class="number">1</span>.<span class="number">00</span>     &lt;--下面定义S型基函数壳层，其收缩度为<span class="number">6</span>，即这个基函数壳层由下面写的<span class="number">6</span>个primitive壳层收缩而成。<span class="number">1</span>.<span class="number">00</span>是刻度因子，不用去管它，总是输入<span class="number">1</span>.<span class="number">00</span>就行了（具体含义参见手册里gen关键词）</span><br><span class="line">   <span class="attribute">3047</span>.<span class="number">5249000</span>              <span class="number">0</span>.<span class="number">0018347</span>  &lt;---- 第<span class="number">1</span>个primitive壳层的指数和收缩系数</span><br><span class="line">    <span class="attribute">457</span>.<span class="number">3695100</span>              <span class="number">0</span>.<span class="number">0140373</span>  &lt;---- 第<span class="number">2</span>个primitive壳层...</span><br><span class="line">    <span class="attribute">103</span>.<span class="number">9486900</span>              <span class="number">0</span>.<span class="number">0688426</span>        </span><br><span class="line">     <span class="attribute">29</span>.<span class="number">2101550</span>              <span class="number">0</span>.<span class="number">2321844</span>        </span><br><span class="line">      <span class="attribute">9</span>.<span class="number">2866630</span>              <span class="number">0</span>.<span class="number">4679413</span>        </span><br><span class="line">      <span class="attribute">3</span>.<span class="number">1639270</span>              <span class="number">0</span>.<span class="number">3623120</span>        </span><br><span class="line"><span class="attribute">SP</span>   <span class="number">3</span>   <span class="number">1</span>.<span class="number">00</span>     &lt;--SP型基函数壳层，仅在Pople系列基组及其它少数基组中才出现，其中S和P型基函数共享相同指数但收缩系数不同，在Gaussian中用SP壳层比起单独用一个S壳层和一个P壳层计算起来更快</span><br><span class="line">      <span class="attribute">7</span>.<span class="number">8682724</span>             -<span class="number">0</span>.<span class="number">1193324</span>              <span class="number">0</span>.<span class="number">0689991</span>   &lt;--共用的指数，S的收缩系数，P的收缩系数</span><br><span class="line">      <span class="attribute">1</span>.<span class="number">8812885</span>             -<span class="number">0</span>.<span class="number">1608542</span>              <span class="number">0</span>.<span class="number">3164240</span>        </span><br><span class="line">      <span class="attribute">0</span>.<span class="number">5442493</span>              <span class="number">1</span>.<span class="number">1434564</span>              <span class="number">0</span>.<span class="number">7443083</span>        </span><br><span class="line"><span class="attribute">SP</span>   <span class="number">1</span>   <span class="number">1</span>.<span class="number">00</span></span><br><span class="line">      <span class="attribute">0</span>.<span class="number">1687144</span>              <span class="number">1</span>.<span class="number">0000000</span>              <span class="number">1</span>.<span class="number">0000000</span>        </span><br><span class="line"><span class="attribute">SP</span>   <span class="number">1</span>   <span class="number">1</span>.<span class="number">00</span>   &lt;--此壳层指数很小，所以显然是<span class="number">6</span>-<span class="number">31</span>+G*中的+号对应的弥散函数。弥散函数、极化函数的收缩度总是为<span class="number">1</span>，即未收缩，这样的壳层的收缩系数必定是<span class="number">1</span>.<span class="number">0</span>。</span><br><span class="line">      <span class="attribute">0</span>.<span class="number">0438000</span>              <span class="number">1</span>.<span class="number">0000000</span>              <span class="number">1</span>.<span class="number">0000000</span>        </span><br><span class="line"><span class="attribute">D</span>   <span class="number">1</span>   <span class="number">1</span>.<span class="number">00</span>   &lt;--D型极化函数，对应<span class="number">6</span>-<span class="number">31</span>+G*中的*。</span><br><span class="line">      <span class="attribute">0</span>.<span class="number">8000000</span>              <span class="number">1</span>.<span class="number">0000000</span>        </span><br></pre></td></tr></table></figure>
+<p>15 basis functions,  28 primitive gaussians,  15 cartesian basis functions</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>1s</th>
+<th>2s</th>
+<th>2p*3</th>
+<th>d*6</th>
+<th>总数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GTF</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>15</td>
+</tr>
+<tr>
+<td>PGTF</td>
+<td>6</td>
+<td>3+1</td>
+<td>3+1</td>
+<td>1</td>
+<td>28</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>无论高斯中用5d还是6d，输出文件显示的原始基函数（primitive gaussians，即笛卡尔型GTF）的数目都一样，这是因为5d的5个轨道仍需要有全部6种笛卡尔型d型GTF才能组合出来。</p>
+<h1 id="常见基组及其指定方法"><a href="#常见基组及其指定方法" class="headerlink" title="常见基组及其指定方法"></a>常见基组及其指定方法</h1><h2 id="6-31G类"><a href="#6-31G类" class="headerlink" title="6-31G类"></a><strong>6-31G类</strong></h2><p>可以用n-31G、n-31G**、n-31++G、n-31G(2df,p)等方式直接在关键词区域定义。</p>
+<h2 id="cc-pVnZ系列"><a href="#cc-pVnZ系列" class="headerlink" title="cc-pVnZ系列"></a>cc-pVnZ系列</h2><ul>
+<li>直接用cc-pVnZ指定。</li>
+<li>弥散函数用aug-cc-pVnZ、spAug-cc-pVnZ、dAug-cc-pVnZ等</li>
+</ul>
+<h2 id="def系列"><a href="#def系列" class="headerlink" title="def系列"></a>def系列</h2><ul>
+<li><p>def用SV, SVP, TZV, TZVP 等指定</p>
+</li>
+<li><p>def2-系列用Def2SV, Def2SVP, Def2SVPP, Def2TZV, Def2TZVP, Def2TZVPP, Def2QZV, Def2QZVP, Def2QZVPP, and QZVP等指定，去掉了”-“</p>
+</li>
+</ul>
+<p>用IOp(3/24=1)可以显示每个原子实际用的基组，检查是否设对了；也可以用GFPrint关键词输出相似内容，但没那么清楚；也可以用GFInput关键词来输出实际所用基组，这些信息可以直接作为基组输入的信息。</p>
+<h1 id="赝势的输入"><a href="#赝势的输入" class="headerlink" title="赝势的输入"></a><strong>赝势的输入</strong></h1><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"># B3LYP/genecp</span><br><span class="line"></span><br><span class="line">Cu(CO)+</span><br><span class="line"></span><br><span class="line"><span class="number">1</span> <span class="number">1</span></span><br><span class="line"> Cu             </span><br><span class="line"> C                  <span class="number">1</span>            B1</span><br><span class="line"> O                  <span class="number">2</span>            B2    <span class="number">1</span>            <span class="number">180.</span></span><br><span class="line"></span><br><span class="line">Cu <span class="number">0</span></span><br><span class="line">Lanl2DZ    &lt;-- Cu用Lanl2DZ赝势基组</span><br><span class="line">****</span><br><span class="line">C O <span class="number">0</span></span><br><span class="line"><span class="number">6</span><span class="number">-31</span>G*   &lt;-- C O用的基组为<span class="number">6</span><span class="number">-31</span>G*</span><br><span class="line">****</span><br><span class="line"></span><br><span class="line">Cu <span class="number">0</span></span><br><span class="line">Lanl2   &lt;-- Cu用的赝势为Lanl2，这种赝势是Lanl2DZ赝势基组对应的赝势。如果不知道赝势名是什么，此处直接写赝势基组名就可以。比如这里也可以写成Lanl2DZ，和写Lanl2是等价的</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Stuttgart赝势"><a href="#Stuttgart赝势" class="headerlink" title="Stuttgart赝势"></a>Stuttgart赝势</h2><p>Stuttgart赝势规范的写法是nXY这种形式，含义是：</p>
+<ul>
+<li>n = 被赝势表示的核电子数</li>
+<li>X = S/M：拟合赝势时的参考体系。S是只考虑模型体系仅有的单个价电子的能量，M是考虑实际原子全部价电子的能量</li>
+<li>Y = HF/WB/DF：拟合赝势用的数据的计算级别。HF=Hartree-Fock非相对论（即此赝势不考虑相对论效应），WB=Wood-Boring准相对论，DF=Dirac-Fock全相对论</li>
+</ul>
+<p>每个元素的SDD默认的基组和可用的Stuttgart赝势：<a href="https://gaussian.com/pseudo/">https://gaussian.com/pseudo/</a></p>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>Gaussian</category>
+      </categories>
+      <tags>
+        <tag>基组</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Gaussian】03.单点计算</title>
+    <url>/2019/09/09/%E3%80%90Gaussian%E3%80%9103.%E5%8D%95%E7%82%B9%E8%AE%A1%E7%AE%97/</url>
+    <content><![CDATA[<h1 id="Geom几何相关选项"><a href="#Geom几何相关选项" class="headerlink" title="Geom几何相关选项"></a><code>Geom</code>几何相关选项</h1><h1 id="SCF相关选项"><a href="#SCF相关选项" class="headerlink" title="SCF相关选项"></a><code>SCF</code>相关选项</h1><h2 id="算法相关"><a href="#算法相关" class="headerlink" title="算法相关"></a>算法相关</h2><ul>
+<li><code>DIIS</code>：迭代子空间中直接求逆。在迭代子空间 (DIIS) 外推方法中使用 Pulay 的直接反演 。默认的加速SCF收敛的方法。使用<code>NoDIIS</code>关闭。</li>
+<li><code>Fermi</code>：默认是<code>NoFermi</code>关闭。使用Fermi展宽时，此时默认也会择情自动使用能级移动和阻尼。</li>
+</ul>
+<h1 id="初猜guess"><a href="#初猜guess" class="headerlink" title="初猜guess="></a>初猜<code>guess=</code></h1><h2 id="算法相关-1"><a href="#算法相关-1" class="headerlink" title="算法相关"></a>算法相关</h2><ul>
+<li><code>Harris</code>：使用Harris泛函的DFT方法的结果作为初猜。是所有HF和DFT的默认方法。通过自由原子密度叠加作为分子电子密度来构建KS算符，然后将变分得到的轨道用做后续计算的初猜，这步只做一次而不像普通DFT方法继续做迭代。</li>
+<li><code>Huckel</code>：扩展Huckel方法，也不需要迭代。是一些半经验方法（CNDO、INDO、MNDO 和 MINDO3 ）的初猜默认设置。对于涉及许多第二行原子的 PM6 计算，应考虑 Huckel 猜测。 </li>
+<li><code>INDO</code>：实指INDO、CNDO、Huckel的混合。第一行为INDO，第二行为CNDO，第三行及以上为Huckel。<ul>
+<li>是迭代的方法，给高等级计算提供初猜波函数之前自身也需要初猜（扩展Huckel方法），本身亦有不收敛的可能。</li>
+</ul>
+</li>
+<li><code>Core</code>：将核哈密顿量对角化以形成初始猜测。是一些半经验方法（AM1、PM3、PM3MM、PM6 和 PDDG ）计算的默认设置。初始的Fock矩阵元只含单电子项而不含双电子项，即密度矩阵用空矩阵，比较粗糙。</li>
+<li><code>AM1</code>：进行AM1计算作为初猜。一般不能直接使用。</li>
+</ul>
+<h2 id="读取波函数作为初猜"><a href="#读取波函数作为初猜" class="headerlink" title="读取波函数作为初猜"></a>读取波函数作为初猜</h2><p><code>guess=read</code>可以从chk文件中读取波函数作为初猜。</p>
+<ul>
+<li>比如某个体系之前已经算过一次，并且有chk文件，那么chk文件里就记录了收敛的波函数。若又想重算一次（先用小基组，再用大基组；或者写掉了关键词，想重新算），为了节约时间，可以通过guess-read直接从chk里读取已收敛的波函数，这样SCF只需要一轮就能收敛。</li>
+</ul>
+<p>同时<code>%chk=</code>部分有两种写法</p>
+<ul>
+<li><p><code>%chk=name.chk</code>会从该chk文件中读取波函数，并且改写该文件。（覆盖模式）</p>
+</li>
+<li><p>如果避免破坏之前的版本，可以用</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">%<span class="attribute">oldchk</span>=C:\name.chk</span><br><span class="line">%<span class="attribute">chk</span>=C:\new.chk</span><br><span class="line"><span class="comment"># guess=read</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="检测波函数的稳定性stable"><a href="#检测波函数的稳定性stable" class="headerlink" title="检测波函数的稳定性stable"></a>检测波函数的稳定性<code>stable</code></h1><ul>
+<li><code>stable</code>只检查波函数稳定性</li>
+<li><code>stable=opt</code>如果检查到不稳定就找到一个最近的稳定点</li>
+</ul>
+<p>提示结果有：</p>
+<ul>
+<li><code>The wavefunction is stable under the perturbations considered.</code> 表示当前的波函数是最稳定的</li>
+<li><code>The wavefunction has an RHF -&gt; UHF instability</code>表示对闭壳层计算，但是基态是开壳层，被当成了闭壳层计算</li>
+<li><code>The wavefunction has an internal instability</code>说明可能是其他情况。</li>
+</ul>
+<h1 id="SCF不收敛的常用做法"><a href="#SCF不收敛的常用做法" class="headerlink" title="SCF不收敛的常用做法"></a>SCF不收敛的常用做法</h1><p>首先要使用<code>#P</code>，这样SCF迭代过程的每一轮信息才会输出出来，能够了解当前已经迭代到了第几轮，能量变化（Delta-E）、密度矩阵元最大变化（MaxDP）和密度矩阵平均变化（RMSDP）是多少，当前离收敛限还有多远（收敛限会在SCF开始之前明确提示）以及迭代过程是否有收敛的趋势。</p>
+<ul>
+<li>可以通过<code>grep “SCF Done”  *log</code>和<code>grep &quot;Delta-E=&quot; *log</code>来输出并查看趋势。</li>
+</ul>
+<h2 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h2><p>参考<a href="http://sobereva.com/61：">http://sobereva.com/61：</a></p>
+<ul>
+<li><p>使用<code>int=ultrafine</code>增加泛函积分格点的精度。</p>
+<ul>
+<li>对于M06、M06-2X等明尼苏达系列泛函可尝试。对于其它泛函见效几率则比较有限。</li>
+<li>G09默认是<code>int=fine</code>，相当于(75,302)，可以提升到<code>int=ultrafine</code>（G16默认），相当于(99,590)</li>
+</ul>
+</li>
+<li><p>使用<code>SCF=NoVarAcc</code>避免因自动降低积分精度，即使迭代过程中精度不发生变化。</p>
+<ul>
+<li>Gaussian会自动在计算初期时降低积分计算精度以加快计算，但有可能因此阻碍收敛。</li>
+<li>对于使用了弥散函数的情况出现不收敛时建议尝试。</li>
+</ul>
+</li>
+<li><p>用<code>int=acc2e=12</code>（G16默认）可以增加积分精度。</p>
+<ul>
+<li>对因为使用大量弥散函数（其它情况不算）导致的大体系难收敛问题奏效几率较大。</li>
+</ul>
+</li>
+<li><p>用<code>SCF=noincfock</code>避免近似方式构建Fock矩阵。</p>
+<ul>
+<li>Gaussian默认使用Incremental Fock方式以近似方式构建Fock矩阵来显著节约迭代过程每一步的时间，但可能因此阻碍收敛。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>含有很<strong>大量弥散</strong>函数的基组（如aug-cc-pVTZ及更大）计算中、大体系时，往往很难收敛。</p>
+<p><code>SCF(novaracc,noincfock) int=acc2e=12</code>同时使用（对于G16<code>SCF(novaracc,noincfock)</code>即可），解决问题的几率较大，而耗时增加不算很大。但是如果基组里弥散函数不多，或者没加弥散函数，解决不收敛的概率不太高。</p>
+</blockquote>
+<ul>
+<li>使用<code>SCF=vshift=x</code>（x=300~500）用能级移动法提升虚轨道能量以增大HOMO-LUMO gap，避免虚轨道和占据轨道间过度混合。<ul>
+<li>只影响收敛过程，而不影响任何最终计算结果，包括轨道能级。</li>
+<li>对于HOMO-LUMO gap较小情况，常见的比如<strong>含过渡金属</strong>的体系，可尝试。从300依次增加。</li>
+</ul>
+</li>
+<li>用<code>SCF=conver=N</code>改变收敛限。令密度矩阵RMS收敛限为1E-N，密度矩阵最大变化和能量收敛限都为1E(-N+2)。<ul>
+<li>G09/16对单点计算默认是<code>SCF=tight</code>，相当于<code>SCF=conver=8</code>，对密度矩阵的收敛要求有点太严，往往不容易达到，而且达到的时候能量通常都早已经收敛到极高精度了。</li>
+<li>对于计算单点能的目的可降到<code>conver=6</code>，相当于把收敛标准放宽100倍，通常收敛时能量变化已经非常小了。</li>
+<li>但是做几何优化、振动分析的时候不建议降低默认的SCF收敛限，否则可能结果不准确，还可能阻碍几何优化的收敛。</li>
+<li>如果优化时有些体系的初猜结构可能构建得和实际结构偏差较大，导致优化初期SCF收敛难，可降低SCF收敛限到<code>=6</code>使结构粗略收敛，再在最后的结构下用默认的SCF收敛限进一步严格优化。但此法对于G16不适用，因为G16中后HF和涉及能量导数的任务都强制要求收敛到至少<code>SCF=conver=8</code>的水平，否则无法继续进行。</li>
+</ul>
+</li>
+<li>尝试其它泛函作为初猜。若某个泛函下计算不收敛，可以尝试其它泛函，如果能收敛，再<a href="#读取波函数作为初猜">用<code>guess=read</code>读取其收敛的波函数作为初猜</a>。<ul>
+<li>比如M06-2X等明尼苏达系列泛函SCF难度往往高于其它泛函，碰到难收敛的时候，可以试试B3LYP等泛函，如果发现能收敛，将之作为M06-2X的初猜。</li>
+<li>通常HF成份越高的泛函往往越容易收敛，特别是对于含过渡金属的体系来说。</li>
+</ul>
+</li>
+<li>尝试小基组作为初猜。小基组通常比大基组更容易收敛。直接用大基组难收敛但小基组能收敛时，可将小基组收敛的波函数作为大基组计算时的初猜。<ul>
+<li>比如def2-TZVP收敛不了，但def2-SVP能收敛，可尝试用后者收敛的波函数作为def2-TZVP计算时的初猜。</li>
+<li>比如加弥散函数后收敛会变得更困难，用aug-cc-pVTZ计算时发现不收敛，cc-pVTZ能收敛则将其收敛的波函数当aug-cc-pVTZ的初猜</li>
+<li>两个基组尺寸差异太大没什么意义，比如拿STO-3G收敛的波函数当def2-TZVP的初猜对收敛并不会带来明显的益处。</li>
+<li>对于特别难收敛的情况，可以尝试逐级提升基组档次，如STO-3G→3-21G→6-31G<em>→6-311G*</em>→def2-TZVP。</li>
+</ul>
+</li>
+<li>使用<code>guess=huckel</code>、<code>guess=INDO</code><a href="#算法相关">改变默认的初猜方法</a>。</li>
+<li>使用<code>SCF=QC</code>或者<code>SCF=XQC</code>二次收敛方法（Quadratic convergence, QC），这种方法收敛所需步数通常比默认情况更少，有一定可能性解决SCF不收敛。<ul>
+<li>G09中，<code>SCF=XQC</code>代表先用普通方式迭代到64轮（或者自己用<code>scf=maxcyc</code>设的值），如果不收敛再自动切换为QC。</li>
+<li>而G16中用<code>SCF=XQC</code>时，是用<code>MaxConventionalCycles=N</code>设定常规迭代多少轮不收敛才切换为XQC，N默认为<code>32</code>。</li>
+<li>缺点：<ul>
+<li>QC方法耗时颇高，SCF每一轮的耗时是平常的好几倍</li>
+<li>如果必须借助此方法SCF才能收敛的话，非常有可能最终并没有收敛到最稳定的波函数，导致得到的能量高于此结构下当前级别的基态的真实值，因此结果无意义。用QC时建议同时加上stable关键词检测一下所得波函数稳定性（如果是优化，则对最后一个结构测试一下稳定性。）</li>
+<li>用QC时照样还是可能最后不收敛，最终会提示L508报错，这期间会做漫长的计算，导致花了大量时间做无用功。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>SCF=Fermi</code>使用Fermi展宽</li>
+<li>使用<code>SCF=noDIIS</code>关闭DIIS的SCF加速方法。</li>
+<li>修改分子的几何结构。略微改变分子几何结构，比如稍微缩短/伸长键长、改变键角，若能得到收敛的波函数，可作为原来的几何构型下计算的初猜。Gaussian在几何优化中一般也会自动将当前步结构的收敛波函数作为计算下一步结构的波函数的初猜。</li>
+<li><p>对于开壳层体系，可以先计算相应的闭壳层离子体系得到收敛的波函数，然后读取其收敛的波函数作为初猜。</p>
+<ul>
+<li>RO方式计算开壳层体系比非限制性计算(U)难收敛得多得多，如果RO收敛不了，先改成U</li>
+</ul>
+</li>
+<li><p>先计算电离态，将得到收敛波函数用作初猜。因为电子数少的时候往往更容易收敛，比如阳离子比阴离子一般容易收敛。</p>
+</li>
+<li><p>含有溶剂可以使用其它溶剂下或者真空下或者其它溶剂模型计算谨慎性初猜。</p>
+</li>
+<li><p><code>SCF=maxcyc=N</code>或者<code>scfcyc=N</code>加大迭代次数。默认的128已经绝对够大，一般60步不收敛的话继续算下去收故成功的可能性就已经微乎其微了。</p>
+</li>
+<li><p>改用其它方法或基组，或尝试其它程序来计算当前体系。通过转换结果文件来作为Gaussian的初猜。</p>
+<ul>
+<li>用Multiwfn载入那个程序产生的含有基函数信息的文件（如.molden），进入主功能100的子功能2，选择导出波函数为fch文件，之后再用Gaussian的unfchk工具将之转换成chk文件，然后Gaussian计算时用<code>guess=read</code>从中读取波函数作为初猜</li>
+</ul>
+</li>
+</ul>
+<h2 id="批量脚本"><a href="#批量脚本" class="headerlink" title="批量脚本"></a>批量脚本</h2><p>将上述方法都试一下的脚本，先新建一个文件夹，在其中存在.gjf和.sub文件，.gjf部分写入<code># SCF</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mkdir 01_novaracc_noincfock 02_vshift300 03_vshift400 04_vshift500 05_huckel 06_INDO 07_QC 08_XQC 09_Fermi 10_NODIIS</span><br><span class="line"></span><br><span class="line">for i in 01 02 03 04 05 06 07 08 09 10</span><br><span class="line">do</span><br><span class="line">cp *gjf g16* $&#123;i&#125;*</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">cd 01_novaracc_noincfock</span><br><span class="line">fckr SCF SCF\(novaracc,noincfock,maxcyc=300\)</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 02_vshift300</span><br><span class="line">fckr SCF SCF\(vshift=300,maxcyc=300\)</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 03_vshift400</span><br><span class="line">fckr SCF SCF\(vshift=400,maxcyc=300\)</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 04_vshift500</span><br><span class="line">fckr SCF SCF\(vshift=500,maxcyc=300\)</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 05_huckel</span><br><span class="line">fckr SCF &#x27;SCF\(maxcyc=300\) guess=huckel&#x27;</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 06_INDO</span><br><span class="line">fckr SCF &#x27;SCF\(maxcyc=300\) guess=INDO&#x27;</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 07_QC</span><br><span class="line">fckr SCF SCF=QC</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 08_XQC</span><br><span class="line">fckr SCF SCF=XQC</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 09_Fermi</span><br><span class="line">fckr SCF SCF\(maxcyc=300,Fermi\)</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 10_NODIIS</span><br><span class="line">fckr SCF SCF\(maxcyc=300,NODIIS\)</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>Gaussian</category>
+      </categories>
+      <tags>
+        <tag>SCF</tag>
+        <tag>收敛</tag>
+        <tag>单点</tag>
       </tags>
   </entry>
 </search>
