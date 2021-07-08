@@ -7099,4 +7099,233 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
         <tag>单点</tag>
       </tags>
   </entry>
+  <entry>
+    <title>【ADF】01.基本计算设置</title>
+    <url>/2019/09/23/%E3%80%90ADF%E3%80%9101.%E5%9F%BA%E6%9C%AC%E8%AE%A1%E7%AE%97%E8%AE%BE%E7%BD%AE/</url>
+    <content><![CDATA[<h1 id="基组basis"><a href="#基组basis" class="headerlink" title="基组basis"></a>基组<code>basis</code></h1><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">Basis</span><br><span class="line">  <span class="built_in"> Type </span>[<span class="built_in">..</span>.]</span><br><span class="line">   Core [None | Small | Large]</span><br><span class="line">   CreateOutput <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">   Path string</span><br><span class="line">   PerAtomType</span><br><span class="line">      Core [None | Small | Large]</span><br><span class="line">      File stringS</span><br><span class="line">      Symbol string</span><br><span class="line">     <span class="built_in"> Type </span>[<span class="built_in">..</span>.]</span><br><span class="line">   End</span><br><span class="line">   PerRegion</span><br><span class="line">      Core [None | Small | Large]</span><br><span class="line">      Region string</span><br><span class="line">     <span class="built_in"> Type </span>[<span class="built_in">..</span>.]</span><br><span class="line">   End</span><br><span class="line">   FitType [<span class="built_in">..</span>.]</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Type</code>：默认<code>DZ</code>，还有一系列：[SZ, DZ, DZP, TZP, TZ2P, QZ4P, TZ2P-J, QZ4P-J, AUG/ASZ, AUG/ADZ, AUG/ADZP, AUG/ATZP, AUG/ATZ2P, ET/ET-pVQZ, ET/ET-QZ3P, ET/ET-QZ3P-1DIFFUSE, ET/ET-QZ3P-2DIFFUSE, ET/ET-QZ3P-3DIFFUSE, POLTDDFT/DZ, POLTDDFT/DZP, POLTDDFT/TZP, POLTDDFT/TZ2P]</li>
+<li><code>Core</code>：默认<code>Large</code>，还可以选择<code>None</code>, <code>Small</code>, <code>Large</code></li>
+<li><code>CreateOutput</code>：默认为<code>No</code>。如果为<code>true</code>，原子创建运行的输出将打印到标准输出。如果为<code>false</code>，它将被保存到CreateAtoms.out文件中。</li>
+<li><code>Path</code>：默认为<code>$AMSRESOURCES/ADF</code>，ADF只在该文件夹中寻找合适的基组</li>
+</ul>
+<h2 id="PerAtomType"><a href="#PerAtomType" class="headerlink" title="PerAtomType"></a><code>PerAtomType</code></h2><p>为一类原子指定基组</p>
+<ul>
+<li><code>Symbol</code>：哪一类原子</li>
+<li><p><code>File</code>：指定基组的位置，可以是相对于<code>$AMSRESOURCES/ADF</code>的相对位置，也可以是绝对位置。应该在相对论计算的路径中包含 ZORA，例如<code>ZORA/QZ4P/Au</code>。通过 <code>Type</code> 和 <code>Core</code> 明确指定基组会覆盖自动基组文件选择。</p>
+</li>
+<li><p><code>Core</code>、<code>type</code>等：同上</p>
+</li>
+</ul>
+<p>这一部分也可以简写为：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">PerAtomType <span class="attribute">Core</span>=None <span class="attribute">File</span>=string <span class="attribute">Symbol</span>=tring <span class="attribute">type</span>=XXX</span><br></pre></td></tr></table></figure>
+<h2 id="PerRegion"><a href="#PerRegion" class="headerlink" title="PerRegion"></a><code>PerRegion</code></h2><p>为一个区域的原子指定基组，基本设置同上。</p>
+<ul>
+<li><code>Region</code>：指定基组的区域，可以用逻辑运算符，比如<code>R1+R2</code></li>
+</ul>
+<h1 id="泛函XC"><a href="#泛函XC" class="headerlink" title="泛函XC"></a>泛函<code>XC</code></h1><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">XC</span><br><span class="line">  &#123;LDA LDA &#123;Stoll&#125;&#125;</span><br><span class="line">  &#123;GGA GGA&#125;</span><br><span class="line">  &#123;MetaGGA metagga&#125;</span><br><span class="line">  &#123;Model MODELPOT [IP]&#125;</span><br><span class="line">  &#123;HartreeFock&#125;</span><br><span class="line">  &#123;OEP fitmethod &#123;approximation&#125;&#125;</span><br><span class="line">  &#123;HYBRID hybrid &#123;<span class="attribute">HF</span>=HFpart&#125;&#125;</span><br><span class="line">  &#123;MetaHYBRID metahybrid&#125;</span><br><span class="line">  &#123;DOUBLEHYBRID doublehybrid&#125;</span><br><span class="line">  &#123;RPA&#125;</span><br><span class="line">  &#123;XCFUN&#125;</span><br><span class="line">  &#123;RANGESEP &#123;<span class="attribute">GAMMA</span>=X&#125; &#123;<span class="attribute">ALPHA</span>=a&#125; &#123;<span class="attribute">BETA</span>=b&#125;&#125;</span><br><span class="line">  (LibXC functional&#125;</span><br><span class="line">  &#123;DISPERSION [s6scaling] [<span class="attribute">RSCALE</span>=r0scaling] [Grimme3] [BJDAMP] [<span class="attribute">PAR1</span>=par1]  [<span class="attribute">PAR2</span>=par2]  [<span class="attribute">PAR3</span>=par3]  [<span class="attribute">PAR4</span>=par4] &#125;</span><br><span class="line">  &#123;Dispersion Grimme4 &#123;<span class="attribute">s6</span>=...&#125; &#123;<span class="attribute">s8</span>=...&#125; &#123;<span class="attribute">a1</span>=...&#125; &#123;<span class="attribute">a2</span>=...&#125;&#125;</span><br><span class="line">  &#123;DISPERSION dDsC&#125;</span><br><span class="line">  &#123;DISPERSION UFF&#125;</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h1 id="相对论Relativity"><a href="#相对论Relativity" class="headerlink" title="相对论Relativity"></a>相对论<code>Relativity</code></h1><p>2020版本开始默认使用标量相对论效应：</p>
+<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">Relativity</span><br><span class="line">   Formalism [Pauli | <span class="type">ZORA</span> | <span class="type">X2C</span> | <span class="type">RA</span>-X2C]</span><br><span class="line">   Level [None | <span class="type">Scalar</span> | <span class="type">Spin</span>-Orbit]</span><br><span class="line">   Potential [MAPA | <span class="type">SAPA</span>]</span><br><span class="line">   SpinOrbitMagnetization [NonCollinear | <span class="type">Collinear</span> | <span class="type">CollinearX</span> | <span class="type">CollinearY</span> | <span class="type">CollinearZ</span>]</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Formalism</code>：如果<code>level</code>里是<code>None</code>，则不需要考虑所选择的形式。<ul>
+<li><code>Pauli</code>：泡利哈密顿函数</li>
+<li><code>ZORA</code>：零阶正则近似哈密顿量。默认。</li>
+<li><code>X2C</code>：四分量狄拉克方程到二分量狄拉克方程的精确变换，是Dyall修正的Dirac方程。</li>
+<li><code>RA-X2C</code>：四分量狄拉克方程到二分量狄拉克方程的精确变换，是修正狄拉克方程的正规方法。</li>
+</ul>
+</li>
+<li><code>Level</code>：<ul>
+<li><code>None</code>：非相对论。哈密顿量也就是Kohn-Sham方程的形式。</li>
+<li><code>Scalar</code>：标量相对论，成本较低。默认。</li>
+<li><code>Spin-Orbit</code>：旋轨耦合，最好的理论水平，比普通计算昂贵（4-8倍）</li>
+</ul>
+</li>
+<li><code>Potential</code>：<ul>
+<li><code>MAPA</code>：默认。the Minumium of neutral Atomical potential Approximation 中性原子势近似值的最小值。MAPA优于SAPA的优点是可以降低ZORA的规格依赖性。 除了电子密度非常接近重核外，几乎所有特性的ZORA规范依赖性都很小。 非常接近重核的电子密度可用于解释Mossbauer光谱中的异构体位移。</li>
+<li><code>SAPA</code>：the Sum of neutral Atomical potential Approximation 中性原子势近似值之和。</li>
+</ul>
+</li>
+<li><code>SpinOrbitMagnetization</code>：只与自旋轨道耦合相关，而且在<code>unrestricted</code>下使用。在不受限制的计算中，大多数XC泛函都有自旋极化作为一种成分。通常，自旋量子化轴的方向是任意的，可以方便地选择为z轴。然而，在自旋轨道计算中，方向很重要，将磁化矢量的z分量放入XC函数中是任意的。<ul>
+<li><code>NonCollinear</code>：可以将磁化矢量的大小插入XC函数中。 这称为非共线方法。</li>
+<li><code>CollinearX</code>，<code>CollinearY</code>，<code>CollinearZ</code>：使用x，y或z分量作为XC函数的自旋极化。默认为z。</li>
+<li>：<code>Collinear</code>：同<code>CollinearZ</code></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>2019版及之前的输入格式为：</p>
+<figure class="highlight dust"><table><tr><td class="code"><pre><span class="line"><span class="xml">RELATIVISTIC </span><span class="template-variable">&#123;level&#125;</span><span class="xml"> </span><span class="template-variable">&#123;formalism&#125;</span><span class="xml"> </span><span class="template-variable">&#123;potential&#125;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><blockquote>
+<p>Scalar级别为：<code>RELATIVISTIC Scalar ZORA</code></p>
+</blockquote>
+</li>
+<li><p>SpinOrbit级别为：<code>RELATIVISTIC spinorbit ZORA</code></p>
+<ul>
+<li>注意此时：unrestricted不再适用，解决办法删掉unrestricted或加上collinear/nocollinear，以及nosym关键词</li>
+<li>并且不能同时计算解析freq</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h1 id="SCF选项"><a href="#SCF选项" class="headerlink" title="SCF选项"></a>SCF选项</h1><figure class="highlight puppet"><table><tr><td class="code"><pre><span class="line">SCF</span><br><span class="line"> Iterations Niter</span><br><span class="line"> Converge <span class="keyword">SCFcnv</span> &#123; sconv2 &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">AccelerationMethod</span> &#123; ADIIS | LISTi | LISTb | fDIIS | LISTf | MESA | SDIIS &#125;</span><br><span class="line"> <span class="keyword">MESA</span> [NoFDIIS] [NoLISTb] [NoLISTf] [NoLISTi] [NoSDIIS] [NoADIIS]</span><br><span class="line"> ADIIS</span><br><span class="line">   &#123;THRESH1 a1&#125;</span><br><span class="line">   &#123;THRESH2 a2&#125;</span><br><span class="line"> End</span><br><span class="line"> NoADIIS</span><br><span class="line"> DIIS</span><br><span class="line">   &#123;N n&#125;</span><br><span class="line">   &#123;OK ok&#125;</span><br><span class="line">   &#123;cyc cyc&#125;</span><br><span class="line"> End</span><br><span class="line"> Mixing mix</span><br><span class="line"> Mixing1 mix1</span><br><span class="line"></span><br><span class="line"> OldSCF</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Iterations</code>SCF迭代的最大次数，<code>Niter</code>默认是<code>300</code></li>
+<li><code>Converge</code> <ul>
+<li><code>SCFcnv</code>表示停止迭代的收敛限，默认是<code>1e-6</code>。</li>
+<li><code>sconv2</code>表示SCF过程难以收敛时起作用的第二个标准，默认是<code>1e-3</code>，如果达到了，仅发出警告，但是继续计算。仍无法达到的时候SCF不收敛，只能用<code>ALLOW</code>来继续</li>
+</ul>
+</li>
+<li><code>oldSCF</code>：禁用默认 SCF 算法并使用旧的 SCF 算法。<ul>
+<li>默认 SCF 提高了大型机器上大型系统的性能（当计算使用许多任务时）。也推荐用于磁盘 I/O 速度较慢的机器，因为它向磁盘写入的数据较少。支持的默认收敛方法是 A-DIIS，但也支持 LISTi。在使用<code>Occupations Steep</code>、<code>Lshift</code>，<code>ARH</code>，<code>EDIIS</code>，<code>RESTOCC</code>时，会自动启用<code>oldSCF</code>。</li>
+</ul>
+</li>
+</ul>
+<h2 id="DIIS"><a href="#DIIS" class="headerlink" title="DIIS"></a><code>DIIS</code></h2><p>允许的最大 SCF 迭代数相关设置。</p>
+<ul>
+<li><p><code>BFac</code>：默认为<code>0.0</code>，即DIIS算法不支持最新的向量。一个合理的值是 0.2。</p>
+</li>
+<li><p><code>CX</code>：当出现非常大的 DIIS 系数时，DIIS 空间会减少。该值是阈值，默认是<code>5.0</code></p>
+</li>
+<li><p><code>CXX</code>：当出现非常大的 DIIS 系数时，切换到传统阻尼。该值是阈值，默认为<code>25.0</code></p>
+</li>
+<li><p><code>Cyc</code>：禁用A-DIIS时，无论<code>DIIS OK</code>值如何，SDIIS都会在此迭代下启动，默认值为<code>5</code></p>
+</li>
+<li><p><code>N</code>：用于加速SCF的扩展向量的数量，默认为<code>10</code>，小于2后会禁用DIIS。此数字不仅适用于Pulay DIIS方案，还适用于其他类似DIIS的方法，例如A-DIIS和LIST方法。</p>
+<blockquote>
+<p>LIST家族的方法对使用的扩展向量的数量非常敏感，接近收敛时，LIST中的向量数量会增加，但始终受<code>DIIS N</code>的限制，当难以收敛时，可以将<code>DIIS N</code>设置为大于10的值，比如12~20。</p>
+</blockquote>
+</li>
+<li><p><code>Ok</code>：禁用A-DIIS时，SDIIS起始条件。默认为<code>0.5</code> a.u.。</p>
+</li>
+</ul>
+<h2 id="加速方法"><a href="#加速方法" class="headerlink" title="加速方法"></a>加速方法</h2><ul>
+<li><code>AccelerationMethod</code>调用的SCF加速方法，默认情况下为<code>ADIIS</code>，还可以用<code>LISTi</code> | <code>LISTb</code> | <code>fDIIS</code> | <code>LISTf</code> | <code>MESA</code> | <code>SDIIS</code>。MESA采用的是ADIIS, fDIIS, LISTb, LISTf, LISTi和 SDIIS方法的组合。</li>
+<li><code>MESA</code>：代表从其中删掉某一种方法，可以直接使用该关键词调用MESA（也可以用<code>AccelerationMethod MESA</code>调用），优先级大于<code>AccelerationMethod</code>指定的方法。</li>
+<li><code>NoADIIS</code>：指定<code>NoADIIS</code>时才可以设置 <a href="#DIIS"><code>DIIS</code>模块</a>的<code>cycle</code>和<code>OK</code>。<ul>
+<li>如果<span id="NOADIIS">没有设置<code>oldSCF</code>，则指定 <code>NoADIIS</code> </span>与<a href="#SDIIS">将 AccelerationMethod 设置为 SDIIS</a> 的效果相同。</li>
+<li>在指定<code>oldscf</code>的情况下使用<code>NoADIIS</code>会禁用在SCF收敛困难的时候自动切换到ADIIS + SDIIS方法</li>
+</ul>
+</li>
+</ul>
+<h3 id="简单阻尼部分"><a href="#简单阻尼部分" class="headerlink" title="简单阻尼部分"></a>简单阻尼部分</h3><ul>
+<li><code>Mixing</code>：没有激活加速方法时，指将下一个Fock矩阵确定为<script type="math/tex">F = mix F_{n} + (1-mix) F_{n-1}</script>，<script type="math/tex">mix</script>默认为<code>0.2</code></li>
+<li><code>Mixing1</code>中指第一个SCF循环的混合参数值不同，默认为<code>0.2</code></li>
+</ul>
+<h3 id="ADIIS部分"><a href="#ADIIS部分" class="headerlink" title="ADIIS部分"></a>ADIIS部分</h3><p>使用ADIIS + SDIIS方法。根据 [F,P] 交换子矩阵中的最大元素<code>ErrMax</code>来确定具体方法：</p>
+<ul>
+<li>当ErrMax≥<code>a1</code>，只使用A-DIIS系数</li>
+<li>当ErrMax≤ <code>a2</code>，只使用SDIIS系数</li>
+<li>当<code>a2</code>≤ ErrMax≤ <code>a1</code>，根据ErrMax的值按一定的权重来计算<br><code>a1</code>和<code>a2</code>的默认值是<code>0.01</code>和<code>0.0001</code>，收敛比较困难的时候，可以降低阈值，只使用A-DIIS系数</li>
+</ul>
+<h3 id="SDIIS部分"><a href="#SDIIS部分" class="headerlink" title="SDIIS部分"></a>SDIIS部分</h3><p><a href="#NOADIIS">SDIIS</a> 代表原始的Pulay DIIS方法。禁用 A-DIIS 并将 SCF 切换为阻尼+SDIIS方法：从简单阻尼（Mixing）开始，持续到<code>ErrMax</code>降低到<a href="#DIIS"><code>DIIS OK</code></a>参数以下，但是不超过<code>DIIS Cyc</code>次迭代。之后使用纯的SDIIS方法。</p>
+<h2 id="能级移动"><a href="#能级移动" class="headerlink" title="能级移动"></a>能级移动</h2><ul>
+<li><p><code>Lshift</code>：能级移动方法，在前一次迭代的轨道表示中，Fock矩阵的对角元素提高虚轨道的<code>vshift</code>hartree。旋轨耦合不支持这种方法。</p>
+</li>
+<li><p><code>Lshift_err</code>指定一旦SCF error降至阈值以下，程序将关闭能级移动，<code>Shift_err</code>默认值为<code>0</code>。</p>
+</li>
+<li><p><code>Lshift_cyc</code>指定在第几个SCF 迭代次数的时候再启动能级移动， <code>Shift_cyc</code>默认为<code>1</code>。</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">Lshift</span> <span class="string">vshift</span></span><br><span class="line"><span class="attr">Lshift_err</span> <span class="string">Shift_err</span></span><br><span class="line"><span class="attr">Lshift_cyc</span> <span class="string">Shift_cyc </span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="ARH"><a href="#ARH" class="headerlink" title="ARH"></a><code>ARH</code></h2><figure class="highlight dust"><table><tr><td class="code"><pre><span class="line"><span class="xml">SCF</span></span><br><span class="line"><span class="xml">  ARH</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;CONV conv&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;ITER iter&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;NSAVED nsaved&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;START start&#125;</span></span><br><span class="line"><span class="xml">    </span><span class="template-variable">&#123;FINAL&#125;</span><span class="xml"> ...</span></span><br><span class="line"><span class="xml">  End</span></span><br><span class="line"><span class="xml">  ...</span></span><br><span class="line"><span class="xml">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>CONV</code>：当RMS梯度及其最大分量均低于<code>conv</code>，ARH收敛，<code>conv</code>默认是1e-4</li>
+<li><code>ITER</code>：最大ARH迭代次数，<code>iter</code>默认为500</li>
+<li><code>FINAL</code>：确定ARH完成后是否继续SCF。如果设置了此选项，将执行一次Fock矩阵对角化以获得轨道，并且将停止SCF过程。默认选项为<code>OFF</code>。</li>
+<li><code>START</code>：开始调用ARH的SCF迭代次数，<code>start</code>默认为2。使用较大的值可以为ARH提供更好的初猜</li>
+<li><code>NSAVED</code>：保存密度和Fock矩阵的数量。 <code>nsaved</code>默认为8。在非常接近费米能级的轨道数很大的收敛困难时，应使用较大的<code>nsaved</code>值。</li>
+<li>默认的最小化方法是“Untransformed Pre-conditioned Conjugate Gradient”，可以使用以下两个关键词更改：<ul>
+<li><code>NOPRECOND</code>：禁用Untransformed Pre-conditioned CG最小化，不能在第二周期后的元素里使用</li>
+<li><code>TRANSPCG</code>：启用Transformed Pre-conditioned CG 方法，SCF可能会更好的收敛。</li>
+</ul>
+</li>
+<li>在每一步SCF中，先执行常规CG最小化，跟踪总步长，如果在某个微迭代中步长超过了信任半径，则过程将在缩小的空间中切换到信任半径优化，在能级移动参数mu收敛后立即中止。在CG最小化期间生成的所有试验矢量的缩小空间中，将最终步骤计算为牛顿步骤。可以通过以下关键词修改参数：<ul>
+<li><code>NOSWITCHING</code>：关闭从普通CG到缩小的空间中的信任半径最小化的切换。在某些情况下，使用此选项有助于减少SCF循环的总数。</li>
+<li><code>SHIFTED</code>：设置此选项将在第一次微迭代中打开信任半径优化。</li>
+<li><code>CGITER=cgiter</code>：设置微迭代的最大数量。</li>
+<li>确定置信半径：<ul>
+<li><code>TRUSTR=trustr</code>：信任半径的初始值。默认为<code>0.5</code></li>
+<li><code>MAXTRUSTR=maxtrustr</code>：最大信任半径值。默认为<code>0.5</code>，并且不会改变。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>该方法仅适用于NOSYM计算</li>
+<li>在每一步都要计算总能量，计算非常昂贵，而且使用总能量，需要更高的积分精度才能获得稳定的SCF收敛，该方法可能不适用于所有情况，??使用<code>ADDDIFFUSEFIT</code>关键字或更高的<code>ZlmFit</code>质量设置来提高总能量的准确性，从而提高收敛性。??</li>
+</ul>
+</li>
+</ul>
+<h2 id="SCF不收敛"><a href="#SCF不收敛" class="headerlink" title="SCF不收敛"></a>SCF不收敛</h2><ol>
+<li>更换SCF加速收敛的方法</li>
+<li>使用ARH方法</li>
+<li>修改DIIS算法的参数<ul>
+<li><code>Mixing</code>高于默认值<code>0.2</code>会有更高的加速度，更低会更稳定的迭代</li>
+<li><code>N</code>默认为<code>10</code>，越大用于加速SCF的扩展向量的数量越多，SCF迭代更稳定，最多到25</li>
+<li><code>Cyc</code>是SDIIS启动的初始SCF迭代步数，默认值为<code>5</code>，更高计算越稳定，比如使用如下参数：<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">SCF</span></span><br><span class="line">    <span class="attribute">DIIS</span></span><br><span class="line">      <span class="attribute">N</span> <span class="number">25</span></span><br><span class="line">      <span class="attribute">Cyc</span> <span class="number">30</span></span><br><span class="line">    <span class="attribute">End</span></span><br><span class="line">    <span class="attribute">Mixing</span> <span class="number">0</span>.<span class="number">015</span></span><br><span class="line">    <span class="attribute">Mixing1</span> <span class="number">0</span>.<span class="number">09</span></span><br><span class="line"><span class="attribute">End</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>HOMO-LUMO较为接近的情况（0.02Hatree以内），可能造成HOMO-LUMO的震荡。可以使用<code>Lshift vshift</code>方法，比如0.01，不能太大，不适于激发态的计算、<strong>解析频率</strong>、旋轨耦合的计算。</li>
+<li>使用Electron smearing设定在允许的能量范围内分数占据。</li>
+<li>其他：<a href="https://www.fermitech.com.cn/wiki/doku.php?id=adf:scfnonconvergence">费米维基</a>的2、3、5。</li>
+</ol>
+<h1 id="对称性的设置"><a href="#对称性的设置" class="headerlink" title="对称性的设置"></a>对称性的设置</h1><p>除了在AMS中或<code>System</code>块中指定，<code>Engine ADF</code>中也可以设置对称性：</p>
+<ul>
+<li><code>Symmetry</code>：默认是<code>AUTO</code>，默认为<code>auto</code>，可以通过<code>nosym</code>、<code>C(LIN)</code>……等来指定对称性</li>
+<li><code>SymmetryTolerance</code>：用于检测系统对称性的容差。默认是<code>1e-07</code></li>
+</ul>
+<blockquote>
+<p>即使在<code>System</code>中设置了 <code>Symmetry nosym</code>，ADF中也可能会检测出对称性。因此要在ADF中也设置<code>nosym</code>。</p>
+</blockquote>
+<h1 id="指定占据IrrepOccupations"><a href="#指定占据IrrepOccupations" class="headerlink" title="指定占据IrrepOccupations"></a>指定占据<code>IrrepOccupations</code></h1><figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line">IrrepOccupations</span><br><span class="line">  irrep <span class="keyword">orbitalnumbers</span></span><br><span class="line"><span class="keyword"> </span> irrep <span class="keyword">orbitalnumbers</span></span><br><span class="line"><span class="keyword"> </span> ...</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>irrep</code>是不可约表示</p>
+</li>
+<li><p><code>orbitalnumbers</code>：</p>
+<ul>
+<li><p>可以是一个或者一系列数字，会按能量顺序排序，高于这些数字的占据都是0、</p>
+</li>
+<li><p>对于简并的对称性，要给出电子的总数。</p>
+</li>
+<li><p>在unrestricted的计算中【在使用（非）共线近似的无限制自旋轨道耦合计算中没有意义，在这种情况下，应该为每个不可约的占用数使用一个序列】，要用两个数字序列，通过<code>//</code>分隔开。前一组是α电子，后一组是β电子。如：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">IrrepOccupations</span><br><span class="line">   A <span class="number">28</span> <span class="comment">// 26</span></span><br><span class="line">End</span><br><span class="line">SpinPolarization <span class="number">2</span></span><br><span class="line">Symmetry NOSYM</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p>注意事项：</p>
+<ul>
+<li>电子总数不包括冻芯里的电子。</li>
+<li>如果数字序列比较长，可以组合内层的电子数，程序会自动拆分，比如对于单个原子，<code>P 17 3</code>会自动变成<code>P 6 6 5 3</code></li>
+<li>可以用分数占据</li>
+<li>在数值频率计算中，程序内部默认使用nosym，因此只能识别不可约表示A。</li>
+</ul>
+<h1 id="红外光谱"><a href="#红外光谱" class="headerlink" title="红外光谱"></a>红外光谱</h1><p>所需的 Hessian 可以通过数值计算或解析计算。这可以在输入的 AMS 部分设置。</p>
+<h2 id="解析频率"><a href="#解析频率" class="headerlink" title="解析频率"></a>解析频率</h2><p>对于相同的积分精度，解析 Hessian 与数值 Hessian 一样准确，但计算速度最多可提高 3 到 5 倍，具体取决于分子、积分网格参数和基组选择。但是解析Hessian目前只支持（包括 PW91 和 Hartree-Fock都不支持）：</p>
+<ul>
+<li><strong>LDA:</strong> XONLY, VWN, STOLL, PW92</li>
+<li><strong>Exchange GGA:</strong> Becke88, OPTx, PBEx, rPBEx, revPBEx, S12g</li>
+<li><strong>Correlation GGA:</strong> LYP, Perdew86, PBEc</li>
+<li><strong>XC GGA shortcuts:</strong> BP86, PBE, RPBE, revPBE, BLYP, OLYP, OPBE</li>
+</ul>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">AnalyticalFreq</span></span><br><span class="line">   <span class="attr">B1Size</span> <span class="string">float</span></span><br><span class="line">   <span class="attr">B1Thresh</span> <span class="string">float</span></span><br><span class="line">   <span class="attr">Check_CPKS_From_Iteration</span> <span class="string">integer</span></span><br><span class="line">   <span class="attr">Debug</span> <span class="string">string</span></span><br><span class="line">   <span class="attr">Hessian</span> <span class="string">[reflect | average]</span></span><br><span class="line">   <span class="attr">Max_CPKS_Iterations</span> <span class="string">integer</span></span><br><span class="line">   <span class="attr">Print</span> <span class="string">string</span></span><br><span class="line">   <span class="attr">PrintNormalModeAnalysis</span> <span class="string">Yes/No</span></span><br><span class="line">   <span class="attr">U1_Accuracy</span> <span class="string">float</span></span><br><span class="line"><span class="attr">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Max_CPKS_Iterations</code>：解析频率的计算需要求解Coupled Perturbed Kohn-Sham (CPKS)  (CPKS)方程，这是一个迭代过程。如果没有实现收敛（输出中会打印警告” CPKS failed to converge. Frequencies may be wrong”)，可以增加迭代次数（收敛不能保证）。默认为<code>20</code></li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>AMS</category>
+      </categories>
+      <tags>
+        <tag>对称性</tag>
+        <tag>基组</tag>
+        <tag>占据</tag>
+        <tag>SCF</tag>
+        <tag>AMS</tag>
+        <tag>ADF</tag>
+        <tag>相对论</tag>
+      </tags>
+  </entry>
 </search>
