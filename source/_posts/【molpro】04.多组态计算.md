@@ -272,7 +272,7 @@ restrict,nmin,nmax,orb1，orb2，....，orbn;
 ROTATE,orb1.sym,orb2.sym,angle
 ```
 
-- angle=`0`表示交换轨道，**只能针对相同对称性的交换**
+- angle=`0`表示交换轨道（等价于angle=90）。**只能针对相同对称性的交换**
 - `ROTATE`只在`START`卡之后才有意义。
 
 

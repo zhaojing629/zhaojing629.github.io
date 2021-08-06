@@ -3,7 +3,7 @@ title: 【ADF】01.基本计算设置
 typora-root-url: 【ADF】01.基本计算设置
 date: 2019-09-23
 updated:
-description: `Engine ADF`中的的基本输入结构，SCF选项以及不收敛的处理方法
+description: Engine ADF中的的基本输入结构，SCF选项以及不收敛的处理方法
 tags: [AMS, ADF, SCF, 基组, 对称性, 占据, 相对论]
 mathjax: true
 categories: [计算化学, AMS]

@@ -5,7 +5,7 @@ mathjax: true
 date: 2019-11-13
 updated:
 tags: [输入,输出,内存,坐标,基组,赝势]
-categories: [计算化学,molpro]
+categories: [计算化学, molpro]
 description: 输入文件简单学习
 ---
 
@@ -142,7 +142,9 @@ PUT,style,file,status,info
   - 忽略则写入当前结构的Z矩阵，可能的话还写入梯度。
 - file定义写入数据的文件名；如果为空，数据将写入到输出流中。如果忽略status或设置为NEW，那么文件中所有的旧内容都被清除；否则对文件追加。
 
-# 输入文件一般结构和规则
+# 输入文件格式
+
+## 一般结构
 
 ```
 ***,title			! 标题（可选）
@@ -170,7 +172,7 @@ directive,data,option 	! 命令的指令（可选）
 - 输了memory卡应该是紧随标题的第一个以外，其他basis，geometry，gprint，gdirect，gthresh，gexpec，以及变量定义的顺序是任意的。
 - 可以在一个程序后调用其它几个程序。在程序的调用之间还可以重新定义基组和/或分子结构；程序将会自动确认是否需要重新计算积分。
 
-一般规则：
+## 一般规则
 
 - `,`移到下一个制表位，即用来划定输入范围。
 - `;`结束记录，开始一个新的记录。用分号隔开的基本命令单位称为卡（card）。一个给定的输入行可以包含多个有效命令（用；隔开），也可以只有一个。
@@ -186,8 +188,30 @@ directive,data,option 	! 命令的指令（可选）
 - `TEXT`打印文本
 - `TITLE`定义运行的标题或表格的标题
 - `CON`指定轨道组态
-
 - `---`结束文件（忽略之后的输入）
+
+## 一般格式
+
+整体格式一般是：
+
+```
+COMMAND, options
+```
+
+或者
+
+```
+{ COMMAND,options
+directives
+data
+}
+```
+
+- 命令（COMMAND）比如有`HF, MP2, CCSD(T), MCSCF, MRCI`
+- 指令（directives）比如有`OCC, CLOSED, WF, PRINT`等，格式一般`DIRECTIVE,data,options`
+- 选项（options）的格式一般是`NAME[=value]`
+  - 多个选项以逗号或空格分隔。
+  - 如果选项在COMMAND一行或命令块内的指令上给出，则它们仅对相应的程序有效。
 
 # memory卡
 

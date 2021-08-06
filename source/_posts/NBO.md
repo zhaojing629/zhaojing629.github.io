@@ -38,7 +38,7 @@ description: NBO的一些使用方法
   2. 在~/.bashrc文件中加入`export PATH=$PATH:XXX/bin`
   3. 将XXX/bin/gaunbo6中的setenv GAUNBO后面的内容改成g09nbo或g16nbo；将setenv BINDIR后面的内容改为XXX/bin目录
   4. 重新进入终端即可。
-- 然后直接在Gaussian输入文件中使用诸如`Pop=NPA6`, `Pop=NBO6`, `Pop=NBO6Read`和`Pop=NBO6Delete`等关键词调用（如果是NBO7，将6改成7即可）
+- 然后直接在Gaussian输入文件中使用诸如`Pop=NPA6`，`Pop=NBO6`， `Pop=NBO6Read`和`Pop=NBO6Delete`，`pop=(nbo6,savenlmos)`，`pop=(nbo6,savenbos)`等关键词调用（如果是NBO7，将6改成7即可）
 
 ## orca中的NBO
 

@@ -1,6 +1,6 @@
 ---
-title: 【Gaussian】基组
-typora-root-url: 【Gaussian】基组
+title: 【Gaussian】02.基组
+typora-root-url: 【Gaussian】02.基组
 mathjax: true
 date: 2019-09-03 14:47:37
 updated:

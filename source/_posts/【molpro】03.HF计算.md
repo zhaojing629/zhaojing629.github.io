@@ -142,11 +142,11 @@ ORBPRINT,print,test
 - 增加DIIS：
 
   ```
-  {rhf,maxdis=30,iptyp='DIIS',nitord=20; shift,-1.0,-0.5}
+  {rhf,maxdis=30,iptyp=DIIS,nitord=20; shift,-1.0,-0.5}
   ```
 
   ```
-  {rhf,maxdis=10,iptyp='KAIN',nitord=10; shift,-1.0,-0.5}
+  {rhf,maxdis=10,iptyp=KAIN,nitord=10; shift,-1.0,-0.5}
   ```
 
   
