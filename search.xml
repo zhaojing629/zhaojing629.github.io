@@ -329,7 +329,7 @@
 <li>重新进入终端即可。</li>
 </ol>
 </li>
-<li>然后直接在Gaussian输入文件中使用诸如<code>Pop=NPA6</code>, <code>Pop=NBO6</code>, <code>Pop=NBO6Read</code>和<code>Pop=NBO6Delete</code>等关键词调用（如果是NBO7，将6改成7即可）</li>
+<li>然后直接在Gaussian输入文件中使用诸如<code>Pop=NPA6</code>，<code>Pop=NBO6</code>， <code>Pop=NBO6Read</code>和<code>Pop=NBO6Delete</code>，<code>pop=(nbo6,savenlmos)</code>，<code>pop=(nbo6,savenbos)</code>等关键词调用（如果是NBO7，将6改成7即可）</li>
 </ul>
 <h2 id="orca中的NBO"><a href="#orca中的NBO" class="headerlink" title="orca中的NBO"></a>orca中的NBO</h2><ul>
 <li><p>修改环境变量，即在~/.bashrc中加入</p>
@@ -2063,7 +2063,7 @@
 <h1 id="其他选项"><a href="#其他选项" class="headerlink" title="其他选项"></a>其他选项</h1><h2 id="rotate"><a href="#rotate" class="headerlink" title="rotate"></a>rotate</h2><p>将<code>sym</code>对称性中的初始轨道<code>orb1</code>和<code>orb2</code>做<code>angle</code>度的2×2 转动：</p>
 <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">ROTATE</span>,orb<span class="number">1</span>.sym,orb<span class="number">2</span>.sym,angle</span><br></pre></td></tr></table></figure>
 <ul>
-<li>angle=<code>0</code>表示交换轨道，<strong>只能针对相同对称性的交换</strong></li>
+<li>angle=<code>0</code>表示交换轨道（等价于angle=90）。<strong>只能针对相同对称性的交换</strong></li>
 <li><code>ROTATE</code>只在<code>START</code>卡之后才有意义。</li>
 </ul>
 ]]></content>
@@ -7326,6 +7326,93 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
         <tag>AMS</tag>
         <tag>ADF</tag>
         <tag>相对论</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【MOKIT】MOKIT编译过程和gamess的编译</title>
+    <url>/2020/05/29/%E3%80%90Mokit%E3%80%91Mokit%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B%E5%92%8Cgamess%E7%9A%84%E7%BC%96%E8%AF%91/</url>
+    <content><![CDATA[<p>参考量子化学公众号的博文：</p>
+<ul>
+<li><a href="https://mp.weixin.qq.com/s/bM244EiyhsYKwW5i8wq0TQ">自动做多参考态计算的程序MOKIT</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU5NjMxNjkzMw==&amp;mid=2247483886&amp;idx=1&amp;sn=c06c747a0c473e0f1928b6f10f139051&amp;chksm=fe65c784c9124e92d52b88b122acbec5439fe155ad6cbe2b7a902223387502dbbdae663e19aa&amp;scene=21#wechat_redirect">GAMESS编译教程</a></li>
+</ul>
+<h1 id="MOKIT编译"><a href="#MOKIT编译" class="headerlink" title="MOKIT编译"></a>MOKIT编译</h1><ol>
+<li><p><a href="https://gitlab.com/jxzou/mokit">下载</a>MOKIT整个源码压缩包，在Linux系统下的安装目录解压，重命名</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">unzip mokit-master.zip</span><br><span class="line">mv mokit-master mokit</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>进入mokit文件夹编译</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd mokit/src</span><br><span class="line">make all</span><br></pre></td></tr></table></figure>
+<p>注意：该步骤之前需要先找到Intel编译器的目录，否则会出现没有ifort命令的错误。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">source /opt/intel/bin/compilervars.sh intel64</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写mokit的运行脚本mokit.sub</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">export MOKIT_ROOT=/home/$USER/software/mokit</span><br><span class="line">export PATH=$MOKIT_ROOT/bin:$PATH</span><br><span class="line">export PYTHONPATH=$MOKIT_ROOT/lib:$PYTHONPATH</span><br><span class="line"></span><br><span class="line">export ORCA=/home/scicons/orca_4_1_2_linux_x86-64_shared_openmpi313</span><br><span class="line">export GMS=/home/zhaojing/software/gamess/rungms</span><br><span class="line"></span><br><span class="line">automr $&#123;1&#125;&gt;&amp; test.out&amp;</span><br></pre></td></tr></table></figure>
+<p>需要用到Gaussian、Gamess、ORCA、molpro等软件：</p>
+<ul>
+<li><p>MOKIT会识别系统中的GAUSS_EXEDIR变量，必要时自动调用Gaussian软件。但是有时候无法识别就需要手动在sub文件中添加以下三句，将<code>g16root=</code>后更改为服务器中高斯的目录即可。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export g16root=/home/scicons/Gaussian16B</span><br><span class="line">source $g16root/g16/bsd/g16.profile</span><br><span class="line">export GAUSS_SCRDIR=`mktemp -d`</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>变量ORCA对应量化软件ORCA可执行文件的完整路径</p>
+</li>
+<li>变量GMS对应量化软件GAMESS可执行文件的完整路径（如果没有需要进行安装）</li>
+</ul>
+</li>
+<li><p>将mokit.sub修改为可执行文件，运行即可</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">chmod</span> +<span class="selector-tag">x</span> <span class="selector-tag">mokit</span><span class="selector-class">.sub</span></span><br><span class="line"><span class="selector-tag">mokit</span><span class="selector-class">.sub</span> <span class="selector-tag">xxxx</span><span class="selector-class">.gjf</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="GAMESS编译"><a href="#GAMESS编译" class="headerlink" title="GAMESS编译"></a>GAMESS编译</h1><ol>
+<li><p><a href="http://bbs.keinsci.com/thread-727-1-1.html">下载gamess的安装包</a>，解压到安装目录文件下</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">tar</span> <span class="selector-tag">-zxvf</span> <span class="selector-tag">gamess-current</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>不要忘记<code>source /opt/intel/bin/compilervars.sh intel64</code>这一步</p>
+</li>
+<li><p>进入gamess目录，执行./config，开始进行配置：</p>
+<ol>
+<li>enter</li>
+<li>输入机器类型：<code>linux64</code></li>
+<li>设置安装目录，可选默认路径直接回车，也可自己定义路径</li>
+<li>enter</li>
+<li>版本号，可以自己设定，默认为00，则编译完成后会生成gamess.00.x可执行文件。（注意该步骤，mokit中的可执行文件使用的是gamess.01.x，所以最好此步包括后面的<code>./lked gamess 00</code>都用01。）</li>
+<li>选择fortran编译器，此处填<code>ifort</code></li>
+<li>编译器版本号，此处填<code>18</code></li>
+<li>enter</li>
+<li>选择数学库版本，此处填<code>mkl</code></li>
+<li>填写MKL库路径，软件会自动识别目录，如果正确，可以直接复制。</li>
+<li><code>proceed</code></li>
+<li>enter</li>
+<li>enter</li>
+<li>一般做节点内并行，选<code>sockets</code>即可</li>
+<li>no</li>
+<li>后面还有一些yes no，不太清楚……</li>
+</ol>
+</li>
+<li><p>编译DDI，这是GAMESS官方的并行库。</p>
+<figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line"><span class="keyword">cd</span> ddi</span><br><span class="line"><span class="string">./compddi</span></span><br><span class="line">mv ddikick.x <span class="string">..</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编译源代码并生成可执行文件</p>
+<figure class="highlight gams"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">cd</span></span> ..</span><br><span class="line">./compall &gt;&amp; compall.<span class="built_in">log</span> &amp;</span><br></pre></td></tr></table></figure>
+<p>这一步需要极其久的时间，完成后生成gamess.00.x可执行程序</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">./lked gamess <span class="number">00</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改rungms脚本</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="builtin-name">set</span> <span class="attribute">SCR</span>=/scratch/$USER/gamess  #这是临时文件目录</span><br><span class="line"><span class="builtin-name">set</span> <span class="attribute">USERSCR</span>=/scratch/$USER/gamess  #同上</span><br><span class="line"><span class="builtin-name">set</span> <span class="attribute">GMSPATH</span>=/opt/gamess  #GAMESS的安装目录</span><br></pre></td></tr></table></figure>
+<p>向下找到</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">if</span> ($NCPUS &gt; <span class="number">1</span>) <span class="selector-tag">then</span></span><br><span class="line">      <span class="selector-tag">switch</span> (<span class="built_in">`hostname`</span>)</span><br></pre></td></tr></table></figure>
+<p>在这个switch语句中添加一个case语句：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">case node01:  #输入节点名字</span><br><span class="line">            <span class="keyword">if</span> (<span class="variable">$NCPUS</span> &gt; 16) <span class="builtin-name">set</span> <span class="attribute">NCPUS</span>=16 #最多使用进程数</span><br><span class="line">            <span class="builtin-name">set</span> <span class="attribute">NNODES</span>=1</span><br><span class="line">            <span class="builtin-name">set</span> HOSTLIST=(`hostname`:<span class="attribute">cpus</span>=<span class="variable">$NCPUS</span>)</span><br><span class="line">            breaksw</span><br></pre></td></tr></table></figure>
+<p>用户将/opt/gamess这个目录写入环境变量：</p>
+<figure class="highlight elixir"><table><tr><td class="code"><pre><span class="line">export PATH=<span class="variable">$PATH</span><span class="symbol">:/opt/gamess</span></span><br></pre></td></tr></table></figure>
+<p>测试输入文件，<code>rungms XXX</code> 如果看到最后输出ddikick.x: exited gracefully.，则说明运行成功。</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>MOKIT</category>
+      </categories>
+      <tags>
+        <tag>DLPNO</tag>
       </tags>
   </entry>
 </search>
