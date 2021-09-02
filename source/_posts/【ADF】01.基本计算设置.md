@@ -64,6 +64,21 @@ PerAtomType Core=None File=string Symbol=tring type=XXX
 
 
 
+> ADF19中，为同元素的不同原子设置基组
+>
+> ```
+> ATOMS
+> O.F1 x y z
+> O.F2 x y z
+> End
+> basis
+> O.F1 TZ2P
+> O.F2 DZP
+> END
+> ```
+>
+> 
+
 # 泛函`XC`
 
 ```

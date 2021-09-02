@@ -59,6 +59,11 @@ End
 - `ReScanModes`：默认是`Yes`，在正常模式计算结束后是否扫描虚模式。
 - `ReScanFreqRange`：默认是`[-10000000.0, 10.0]`，指定将扫描所有模式的频率范围。
 
+> ADF19中，这部分的关键词为`SCANFREQ low high {NUM=num DISRAD=disrad}`
+>
+> - low high：扫描频率的反位，虚频用负数
+> - num：默认是2，用于数值微分的点数，还可以用4和6
+
 # `VibrationalAnalysis`数值频率
 
 数值频率计算是通过请求`VibrationalAnalysis`任务来执行的 

@@ -1,12 +1,12 @@
 ---
-title: 【MOKIT】MOKIT编译过程和gamess的编译
+title: 【MOKIT】MOKIT及其相关软件编译过程
 date: 2020-05-29 16:20:02
-typora-root-url: 【MOKIT】MOKIT编译过程和gamess的编译
+typora-root-url: 【MOKIT】MOKIT及其相关软件编译过程
 mathjax: true
 updated:
 tags: [DLPNO]
 categories: [计算化学, MOKIT]
-description: 进行Linux下MOKIT编译过程和gamess的编译
+description: 进行Linux下MOKIT编译过程和gamess的编译，OpenMolcas的编译
 ---
 
 参考量子化学公众号的博文：
@@ -62,7 +62,10 @@ description: 进行Linux下MOKIT编译过程和gamess的编译
      ```
 
    - 变量ORCA对应量化软件ORCA可执行文件的完整路径
+
    - 变量GMS对应量化软件GAMESS可执行文件的完整路径（如果没有需要进行安装）
+
+   - PySCF、OpenMolcas和Molpro软件分别由python、pymolcas和molpro命令运行，无需告诉MOKIT它们的位置。
 
 4. 将mokit.sub修改为可执行文件，运行即可
 
@@ -156,3 +159,4 @@ description: 进行Linux下MOKIT编译过程和gamess的编译
 
    测试输入文件，`rungms XXX` 如果看到最后输出ddikick.x: exited gracefully.，则说明运行成功。
 
+# OpenMolcas与QCMaquis 的安装
