@@ -464,10 +464,6 @@
 </ul>
 <figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">$NRTSTRA</span><br><span class="line">  STR        ! Wgt = <span class="number">48.55</span>%</span><br><span class="line">    LONE <span class="number">1</span> <span class="number">1</span> END</span><br><span class="line">    BOND S <span class="number">1</span> <span class="number">2</span> S <span class="number">1</span> <span class="number">4</span> S <span class="number">1</span> <span class="number">5</span> D <span class="number">2</span> <span class="number">3</span> S <span class="number">2</span> <span class="number">6</span> S <span class="number">3</span> <span class="number">7</span> S <span class="number">3</span> <span class="number">8</span> END</span><br><span class="line">  END</span><br><span class="line">  STR        ! Wgt = <span class="number">48.55</span>%</span><br><span class="line">    LONE <span class="number">3</span> <span class="number">1</span> END</span><br><span class="line">    BOND D <span class="number">1</span> <span class="number">2</span> S <span class="number">1</span> <span class="number">4</span> S <span class="number">1</span> <span class="number">5</span> S <span class="number">2</span> <span class="number">3</span> S <span class="number">2</span> <span class="number">6</span> S <span class="number">3</span> <span class="number">7</span> S <span class="number">3</span> <span class="number">8</span> END</span><br><span class="line">  END</span><br><span class="line">$END</span><br></pre></td></tr></table></figure>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>NBO</tag>
         <tag>键级</tag>
@@ -602,10 +598,6 @@
 <li>开壳层体系中NOCV def Density会分成α和β两组，如果需要看整体的，则需要Fields→Calculated，在Select Fields中选择配对的α和β轨道，中间的符号换成+，然后在SCM→View→Add→Isosurface:with phase→Select Field选择C-1。</li>
 </ul>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>能量分解</tag>
         <tag>ADF</tag>
@@ -700,10 +692,6 @@
 </li>
 </ul>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>输入</tag>
         <tag>对称性</tag>
@@ -781,10 +769,6 @@
 </li>
 </ul>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>几何优化</tag>
         <tag>AMS</tag>
@@ -832,10 +816,6 @@
 </li>
 </ul>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>频率</tag>
         <tag>AMS</tag>
@@ -874,10 +854,6 @@
 </li>
 </ul>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>键级</tag>
         <tag>AMS</tag>
@@ -968,10 +944,6 @@
 <li><code>PROGJECT-RESTRAT.wfn</code>：重启计算的轨道</li>
 </ul>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>CP2K</tag>
       </tags>
@@ -1015,10 +987,6 @@
 <li>尝试MP2，如果对称性也都下降了，那么很有可能高对称性结构不是最稳定的，最后收敛到的低对称性的结构才是真正极小点，因此若非要保持高对称性则无物理意义。</li>
 </ul>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>对称性</tag>
         <tag>Gaussian</tag>
@@ -1062,10 +1030,6 @@
 <li>若要清空，通过File→Close关闭当前文件，再次打开。</li>
 </ol>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>力常数</tag>
         <tag>Gaussian</tag>
@@ -1131,10 +1095,6 @@
 </li>
 </ol>
 <h2 id="AIM理论的电子密度的环临界点-RCP"><a href="#AIM理论的电子密度的环临界点-RCP" class="headerlink" title="AIM理论的电子密度的环临界点(RCP)"></a>AIM理论的电子密度的环临界点(RCP)</h2>]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>芳香性</tag>
         <tag>NICS</tag>
@@ -1563,10 +1523,6 @@
 <p>等同于</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">! UKS BLYP def2-SVP</span><br><span class="line">%method</span><br><span class="line">SpecialGridAtoms <span class="number">28</span>, <span class="number">29</span>, <span class="number">27</span></span><br><span class="line">SpecialGridIntacc <span class="number">8</span>, <span class="number">8</span>, <span class="number">8</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>输入</tag>
         <tag>内存</tag>
@@ -1684,10 +1640,6 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">!</span><br><span class="line">%freq </span><br><span class="line">restart truec</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>初猜</tag>
         <tag>ORCA</tag>
@@ -1748,10 +1700,6 @@
 </li>
 </ul>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>DLPNO</tag>
         <tag>ORCA</tag>
@@ -1843,10 +1791,6 @@
 </li>
 </ul>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>对称性</tag>
         <tag>点群</tag>
@@ -1935,10 +1879,6 @@
 </li>
 </ul>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>HF</tag>
         <tag>molpro</tag>
@@ -2092,10 +2032,6 @@
 <li><code>ROTATE</code>只在<code>START</code>卡之后才有意义。</li>
 </ul>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>多组态</tag>
         <tag>CASSCF</tag>
@@ -3067,10 +3003,6 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 </li>
 </ul>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>CP2K</tag>
       </tags>
@@ -3187,10 +3119,6 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 </li>
 </ul>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>CP2K</tag>
       </tags>
@@ -3341,10 +3269,6 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <h2 id="NaCl的晶胞优化"><a href="#NaCl的晶胞优化" class="headerlink" title="NaCl的晶胞优化"></a>NaCl的晶胞优化</h2><h3 id="输入文件模板template-inp-1"><a href="#输入文件模板template-inp-1" class="headerlink" title="输入文件模板template.inp"></a>输入文件模板template.inp</h3><figure class="highlight gams"><table><tr><td class="code"><pre><span class="line">@<span class="keyword">SET</span> SCALE_FACTOR <span class="comment">MY_SCALING</span></span><br><span class="line">@<span class="keyword">SET</span> <span class="comment">NREP 1</span></span><br><span class="line">@<span class="keyword">SET</span> <span class="comment">OPTIMIZER BFGS # LBFGS</span></span><br><span class="line">@<span class="keyword">SET</span> <span class="comment">CUTOFF MY_CUTOFF</span></span><br><span class="line">@<span class="keyword">SET</span> <span class="comment">SAFTEY_CUTOFF 1.1</span></span><br><span class="line"></span><br><span class="line">&amp;FORCE_EVAL</span><br><span class="line">  METHOD <span class="comment">QS</span></span><br><span class="line">  &amp;DFT</span><br><span class="line">    BASIS_SET_FILE_NAME <span class="comment">BASIS_MOLOPT</span></span><br><span class="line">    POTENTIAL_FILE_NAME <span class="comment">GTH_POTENTIALS</span></span><br><span class="line">    &amp;MGRID</span><br><span class="line">      CUTOFF <span class="comment">$&#123;CUTOFF&#125;</span></span><br><span class="line">      REL_CUTOFF <span class="comment">60</span></span><br><span class="line">    &amp;END <span class="comment">MGRID</span></span><br><span class="line">    &amp;QS</span><br><span class="line">      EPS_DEFAULT <span class="comment">1.0E-12</span></span><br><span class="line">    &amp;END <span class="comment">QS</span></span><br><span class="line">    &amp;SCF</span><br><span class="line">      SCF_GUESS <span class="comment">RESTART</span></span><br><span class="line">      &amp;OT <span class="comment">ON</span></span><br><span class="line">        MINIMIZER <span class="comment">DIIS</span></span><br><span class="line">      &amp;END <span class="comment">OT</span></span><br><span class="line">    &amp;END <span class="comment">SCF</span></span><br><span class="line">    &amp;XC</span><br><span class="line">      &amp;XC_FUNCTIONAL <span class="comment">Pade</span></span><br><span class="line">      &amp;END <span class="comment">XC_FUNCTIONAL</span></span><br><span class="line">    &amp;END <span class="comment">XC</span></span><br><span class="line">  &amp;END <span class="comment">DFT</span></span><br><span class="line">  &amp;SUBSYS</span><br><span class="line">    &amp;CELL</span><br><span class="line">      ABC <span class="comment">5.620*$&#123;SCALE_FACTOR&#125; 5.620*$&#123;SCALE_FACTOR&#125; 5.620*$&#123;SCALE_FACTOR&#125;</span></span><br><span class="line">      MULTIPLE_UNIT_CELL <span class="comment">$&#123;NREP&#125; $&#123;NREP&#125; $&#123;NREP&#125;</span></span><br><span class="line">      #&amp;CELL_REF</span><br><span class="line">      #  ABC <span class="comment">5.620*$&#123;SAFETY_FACTOR&#125; 5.620*$&#123;SAFETY_FACTOR&#125; 5.620*$&#123;SAFETY_FACTOR&#125;</span></span><br><span class="line">      #  MULTIPLE_UNIT_CELL <span class="comment">$&#123;NREP&#125; $&#123;NREP&#125; $&#123;NREP&#125;</span></span><br><span class="line">      #&amp;END</span><br><span class="line">    &amp;END <span class="comment">CELL</span></span><br><span class="line">    &amp;COORD</span><br><span class="line">		scaled</span><br><span class="line">		Na <span class="comment">0.000   0.000   0.000</span></span><br><span class="line">		Cl <span class="comment">0.500   0.500   0.500</span></span><br><span class="line">		Na <span class="comment">0.000   0.500   0.500</span></span><br><span class="line">		Cl <span class="comment">0.500   0.000   0.000</span></span><br><span class="line">		Na <span class="comment">0.500   0.000   0.500</span></span><br><span class="line">		Cl <span class="comment">0.000   0.500   0.000</span></span><br><span class="line">		Na <span class="comment">0.500   0.500   0.000</span></span><br><span class="line">		Cl <span class="comment">0.000   0.000   0.500</span></span><br><span class="line">    &amp;END</span><br><span class="line">    &amp;TOPOLOGY</span><br><span class="line">      MULTIPLE_UNIT_CELL <span class="comment">$&#123;NREP&#125; $&#123;NREP&#125; $&#123;NREP&#125;</span></span><br><span class="line">    &amp;END <span class="comment">TOPOLOGY</span></span><br><span class="line">    &amp;KIND <span class="comment">Na</span></span><br><span class="line">      BASIS_SET <span class="comment">DZVP-MOLOPT-SR-GTH</span></span><br><span class="line">      POTENTIAL <span class="comment">GTH-PADE-q9</span></span><br><span class="line">    &amp;END <span class="comment">KIND</span></span><br><span class="line">    &amp;KIND <span class="comment">Cl</span></span><br><span class="line">      BASIS_SET <span class="comment">DZVP-MOLOPT-SR-GTH</span></span><br><span class="line">      POTENTIAL <span class="comment">GTH-PADE-q7</span></span><br><span class="line">    &amp;END <span class="comment">KIND</span></span><br><span class="line">  &amp;END <span class="comment">SUBSYS</span></span><br><span class="line">&amp;END <span class="comment">FORCE_EVAL</span></span><br><span class="line"></span><br><span class="line">&amp;GLOBAL</span><br><span class="line">  PROJECT <span class="comment">NaCl</span></span><br><span class="line">  RUN_TYPE <span class="comment">ENERGY</span></span><br><span class="line">&amp;END <span class="comment">GLOBAL</span></span><br><span class="line"></span><br><span class="line">&amp;MOTION</span><br><span class="line">  &amp;GEO_OPT</span><br><span class="line">    OPTIMIZER <span class="comment">$&#123;OPTIMIZER&#125;</span></span><br><span class="line">  &amp;END</span><br><span class="line">  &amp;CELL_OPT</span><br><span class="line">    KEEP_SYMMETRY</span><br><span class="line">  &amp;END</span><br><span class="line">&amp;END <span class="comment">MOTION</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">CUTOFF</span>=<span class="string">&quot;280&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">for</span> ii in <span class="number">0</span>.<span class="number">800</span> <span class="number">0</span>.<span class="number">825</span> <span class="number">0</span>.<span class="number">850</span> <span class="number">0</span>.<span class="number">875</span> <span class="number">0</span>.<span class="number">900</span> <span class="number">0</span>.<span class="number">925</span> <span class="number">0</span>.<span class="number">950</span> <span class="number">0</span>.<span class="number">975</span> <span class="number">1</span>.<span class="number">000</span> <span class="number">1</span>.<span class="number">025</span> <span class="number">1</span>.<span class="number">050</span> <span class="number">1</span>.<span class="number">075</span> <span class="number">1</span>.<span class="number">100</span></span><br><span class="line"><span class="attribute">do</span></span><br><span class="line">   <span class="attribute">sed</span> -e <span class="string">&quot;s/MY_SCALING/$&#123;ii&#125;/g&quot;</span> NaCl_QS.inp &gt; temp.inp</span><br><span class="line">   <span class="attribute">sed</span> -e <span class="string">&quot;s/MY_CUTOFF/$&#123;CUTOFF&#125;/g&quot;</span> temp.inp &gt; input_<span class="variable">$&#123;ii&#125;</span>.inp</span><br><span class="line"><span class="attribute">done</span></span><br></pre></td></tr></table></figure>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>几何优化</tag>
         <tag>CP2K</tag>
@@ -3613,10 +3537,6 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 </li>
 </ul>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>键级</tag>
         <tag>AIM</tag>
@@ -3808,10 +3728,6 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 </li>
 </ul>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>输入</tag>
         <tag>内存</tag>
@@ -4180,10 +4096,6 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 </li>
 </ul>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>输入</tag>
         <tag>基组</tag>
@@ -4502,10 +4414,6 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <p><img src="image-20210211104550547.png" alt="image-20210211104550547"></p>
 <p><img src="image-20210211104603056.png" alt="image-20210211104603056"></p>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>SCF</tag>
         <tag>ORCA</tag>
@@ -4902,10 +4810,6 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <p>例子：Cu原子SCF d10s1→d9s2激发能，使用相对论Ne-芯的赝势和Stuttgart/Koeln小组的基组</p>
 <figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">***,CU</span><br><span class="line">gprint,basis,orbitals</span><br><span class="line">geometry=&#123;cu&#125;</span><br><span class="line">basis</span><br><span class="line">ECP,<span class="number">1</span>,<span class="number">10</span>,<span class="number">3</span>;   	! ECP input</span><br><span class="line"> <span class="number">1</span>; 			! NO LOCAL POTENTIAL</span><br><span class="line"> <span class="number">2</span>,<span class="number">1.</span>,<span class="number">0.</span>;</span><br><span class="line"> <span class="number">2</span>; 			! S POTENTIAL</span><br><span class="line"> <span class="number">2</span>,<span class="number">30.22</span>,<span class="number">355.770158</span>;<span class="number">2</span>,<span class="number">13.19</span>,<span class="number">70.865357</span>;</span><br><span class="line"> <span class="number">2</span>; 			! P POTENTIAL</span><br><span class="line"> <span class="number">2</span>,<span class="number">33.13</span>,<span class="number">233.891976</span>;<span class="number">2</span>,<span class="number">13.22</span>,<span class="number">53.947299</span>;</span><br><span class="line"> <span class="number">2</span>; 			! D POTENTIAL</span><br><span class="line"> <span class="number">2</span>,<span class="number">38.42</span>,<span class="number">-31.272165</span>;<span class="number">2</span>,<span class="number">13.26</span>,<span class="number">-2.741104</span>;</span><br><span class="line">! (<span class="number">8</span>s7p6d)/[<span class="number">6</span>s5p3d] BASIS SET</span><br><span class="line">s,<span class="number">1</span>,<span class="number">27.69632</span>,<span class="number">13.50535</span>,<span class="number">8.815355</span>,<span class="number">2.380805</span>,<span class="number">.952616</span>,<span class="number">.112662</span>,<span class="number">.040486</span>,<span class="number">.01</span>;</span><br><span class="line">c,<span class="number">1.3</span>,<span class="number">.231132</span>,<span class="number">-.656811</span>,<span class="number">-.545875</span>;</span><br><span class="line">p,<span class="number">1</span>,<span class="number">93.504327</span>,<span class="number">16.285464</span>,<span class="number">5.994236</span>,<span class="number">2.536875</span>,<span class="number">.897934</span>,<span class="number">.131729</span>,<span class="number">.030878</span>;</span><br><span class="line">c,<span class="number">1.2</span>,<span class="number">.022829</span>,<span class="number">-1.009513</span>;C,<span class="number">3.4</span>,<span class="number">.24645</span>,<span class="number">.792024</span>;</span><br><span class="line">d,<span class="number">1</span>,<span class="number">41.225006</span>,<span class="number">12.34325</span>,<span class="number">4.20192</span>,<span class="number">1.379825</span>,<span class="number">.383453</span>,<span class="number">.1</span>;</span><br><span class="line">c,<span class="number">1.4</span>,<span class="number">.044694</span>,<span class="number">.212106</span>,<span class="number">.453423</span>,<span class="number">.533465</span>;</span><br><span class="line">end</span><br><span class="line">rhf;</span><br><span class="line">e1=energy</span><br><span class="line">&#123;rhf;occ,<span class="number">4</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>;closed,<span class="number">4</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>;wf,<span class="number">19</span>,<span class="number">7</span>,<span class="number">1</span>;&#125;</span><br><span class="line">e2=energy</span><br><span class="line">de=(e2-e1)*toev  ! Delta E = <span class="number">-0.075</span> eV</span><br></pre></td></tr></table></figure>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>输入</tag>
         <tag>基组</tag>
@@ -6873,10 +6777,6 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 <li><code>geom=allcheck</code>：标题段落、电荷、自旋多重度、坐标都从chk中读取。输入文件里此时不能写坐标多重度等，关键词后面空行直接跟指定的基组或者为空。</li>
 </ul>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>基组</tag>
         <tag>Gaussian</tag>
@@ -6996,10 +6896,6 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 </ul>
 <p>每个元素的SDD默认的基组和可用的Stuttgart赝势：<a href="https://gaussian.com/pseudo/">https://gaussian.com/pseudo/</a></p>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>基组</tag>
         <tag>Gaussian</tag>
@@ -7137,10 +7033,6 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 <h2 id="批量脚本"><a href="#批量脚本" class="headerlink" title="批量脚本"></a>批量脚本</h2><p>将上述方法都试一下的脚本，先新建一个文件夹，在其中存在.gjf和.sub文件，.gjf部分写入<code># SCF</code></p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mkdir 01_novaracc_noincfock 02_vshift300 03_vshift400 04_vshift500 05_huckel 06_INDO 07_QC 08_XQC 09_Fermi 10_NODIIS</span><br><span class="line"></span><br><span class="line">for i in 01 02 03 04 05 06 07 08 09 10</span><br><span class="line">do</span><br><span class="line">cp *gjf g16* $&#123;i&#125;*</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">cd 01_novaracc_noincfock</span><br><span class="line">fckr SCF SCF\(novaracc,noincfock,maxcyc=300\)</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 02_vshift300</span><br><span class="line">fckr SCF SCF\(vshift=300,maxcyc=300\)</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 03_vshift400</span><br><span class="line">fckr SCF SCF\(vshift=400,maxcyc=300\)</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 04_vshift500</span><br><span class="line">fckr SCF SCF\(vshift=500,maxcyc=300\)</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 05_huckel</span><br><span class="line">fckr SCF &#x27;SCF\(maxcyc=300\) guess=huckel&#x27;</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 06_INDO</span><br><span class="line">fckr SCF &#x27;SCF\(maxcyc=300\) guess=INDO&#x27;</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 07_QC</span><br><span class="line">fckr SCF SCF=QC</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 08_XQC</span><br><span class="line">fckr SCF SCF=XQC</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 09_Fermi</span><br><span class="line">fckr SCF SCF\(maxcyc=300,Fermi\)</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 10_NODIIS</span><br><span class="line">fckr SCF SCF\(maxcyc=300,NODIIS\)</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br></pre></td></tr></table></figure>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>SCF</tag>
         <tag>收敛</tag>
@@ -7367,10 +7259,6 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 <li><code>Max_CPKS_Iterations</code>：解析频率的计算需要求解Coupled Perturbed Kohn-Sham (CPKS)  (CPKS)方程，这是一个迭代过程。如果没有实现收敛（输出中会打印警告” CPKS failed to converge. Frequencies may be wrong”)，可以增加迭代次数（收敛不能保证）。默认为<code>20</code></li>
 </ul>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>对称性</tag>
         <tag>基组</tag>
@@ -7463,10 +7351,6 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 </li>
 </ol>
 <h1 id="OpenMolcas与QCMaquis-的安装"><a href="#OpenMolcas与QCMaquis-的安装" class="headerlink" title="OpenMolcas与QCMaquis 的安装"></a>OpenMolcas与QCMaquis 的安装</h1>]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
         <tag>多组态</tag>
         <tag>MOKIT</tag>
