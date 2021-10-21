@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=EB Garamond:300,300italic,400,400italic,700,700italic|Dancing Script:300,300italic,400,400italic,700,700italic|ZCOOL XiaoWei:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Pyscf的基本输入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Pyscf】01.基本计算设置">
+<meta property="og:url" content="http://example.com/2021/09/02/%E3%80%90Pyscf%E3%80%9101.%E5%9F%BA%E6%9C%AC%E8%AE%A1%E7%AE%97%E8%AE%BE%E7%BD%AE/index.html">
+<meta property="og:site_name" content="Jing&#39;s Notes">
+<meta property="og:description" content="Pyscf的基本输入">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-09-02T02:46:39.000Z">
+<meta property="article:modified_time" content="2021-10-21T14:01:00.166Z">
+<meta property="article:author" content="Zhao Jing">
+<meta property="article:tag" content="输入">
+<meta property="article:tag" content="Pyscf">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/09/02/%E3%80%90Pyscf%E3%80%9101.%E5%9F%BA%E6%9C%AC%E8%AE%A1%E7%AE%97%E8%AE%BE%E7%BD%AE/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+  <title>【Pyscf】01.基本计算设置 | Jing's Notes</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d23c6dd5b34ecbaba18b829b9084946";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jing's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/02/%E3%80%90Pyscf%E3%80%9101.%E5%9F%BA%E6%9C%AC%E8%AE%A1%E7%AE%97%E8%AE%BE%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="Zhao Jing">
+      <meta itemprop="description" content="做一棵树，只为岁月而生长。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jing's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【Pyscf】01.基本计算设置
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-02 10:46:39" itemprop="dateCreated datePublished" datetime="2021-09-02T10:46:39+08:00">2021-09-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-21 22:01:00" itemprop="dateModified" datetime="2021-10-21T22:01:00+08:00">2021-10-21</time>
+              </span>
+
+          
+            <br>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/09/02/%E3%80%90Pyscf%E3%80%9101.%E5%9F%BA%E6%9C%AC%E8%AE%A1%E7%AE%97%E8%AE%BE%E7%BD%AE/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/09/02/%E3%80%90Pyscf%E3%80%9101.%E5%9F%BA%E6%9C%AC%E8%AE%A1%E7%AE%97%E8%AE%BE%E7%BD%AE/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+            <div class="post-description">Pyscf的基本输入</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="定义分子"><a href="#定义分子" class="headerlink" title="定义分子"></a>定义分子</h1><p>有三种方法可以定义和初始化一个分子，</p>
+<ul>
+<li><p>使用方法的关键字参数<code>Mole.build()</code>来初始化一个分子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyscf <span class="keyword">import</span> gto</span><br><span class="line">mol = gto.Mole()</span><br><span class="line">mol.build(</span><br><span class="line">	atom = <span class="string">&#x27;&#x27;&#x27;O 0 0 0; H  0 1 0; H 0 0 1&#x27;&#x27;&#x27;</span>,</span><br><span class="line">	basis = <span class="string">&#x27;sto-3g&#x27;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将几何、基础等分配给Mole 对象，然后调用该<code>build()</code>方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyscf <span class="keyword">import</span> gto</span><br><span class="line">mol = gto.Mole()</span><br><span class="line">mol.atom = <span class="string">&#x27;&#x27;&#x27;O 0 0 0; H  0 1 0; H 0 0 1&#x27;&#x27;&#x27;</span></span><br><span class="line">mol.basis = <span class="string">&#x27;sto-3g&#x27;</span></span><br><span class="line">mol.build()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用快捷功能<code>pyscf.M()</code>或<code>Mole.M()</code>。这些函数将所有参数传递给<code>build()</code>方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pyscf</span><br><span class="line">mol = pyscf.M(</span><br><span class="line">    atom = <span class="string">&#x27;&#x27;&#x27;O 0 0 0; H  0 1 0; H 0 0 1&#x27;&#x27;&#x27;</span>,</span><br><span class="line">    basis = <span class="string">&#x27;sto-3g&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyscf <span class="keyword">import</span> gto</span><br><span class="line">mol = gto.M(</span><br><span class="line">    atom = <span class="string">&#x27;&#x27;&#x27;O 0 0 0; H  0 1 0; H 0 0 1&#x27;&#x27;&#x27;</span>,</span><br><span class="line">    basis = <span class="string">&#x27;sto-3g&#x27;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="几何"><a href="#几何" class="headerlink" title="几何"></a>几何</h2><h3 id="笛卡尔形式"><a href="#笛卡尔形式" class="headerlink" title="笛卡尔形式"></a>笛卡尔形式</h3><p>默认单位为埃（可以通过将属性设置<code>unit</code> 为<code>&#39;Angstrom&#39;</code>或来指定单位<code>&#39;Bohr&#39;</code>）：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mol</span> = gto.Mole()</span><br><span class="line"><span class="attr">mol.atom</span> = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    O   0. 0. 0.</span></span><br><span class="line"><span class="string">    H   0. 1. 0.</span></span><br><span class="line"><span class="string">    H   0. 0. 1.</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="attr">mol.unit</span> = <span class="string">&#x27;B&#x27;</span> <span class="comment"># 不区分大小写，任何不以&#x27;B&#x27;或&#x27;AU&#x27;开头的字符串都被视为&#x27;Angstrom&#x27;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>分子中的原子由一个元素符号加上三个坐标数字表示。不同的原子应该由<code>;</code>或 换行符分隔 。在同一个原子中，<code>,</code>可以用来分隔不同的项目。空行或以 开头的<code>#</code>行将被忽略：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mol = pyscf.M(</span><br><span class="line">atom = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">#O 0 0 0</span></span><br><span class="line"><span class="string">H 0 1 0</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">H 0 0 1</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span>)</span><br><span class="line">mol.natm  <span class="comment">#分子的原子个数，会输出2</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>几何字符串不区分大小写。它还支持输入元素的核电荷：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mol</span> = gto.Mole()</span><br><span class="line"><span class="attr">mol.atom</span> = <span class="string">&#x27;&#x27;&#x27;8 0. 0. 0.; h 0. 1. 0; H 0. 0. 1.&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果需要标记一个原子以将其与其他原子区分开，可以在原子符号前加上数字<code>1234567890</code>或特殊字符<code>~!@#$%^&amp;*()_+.?:&lt;&gt;[]&#123;&#125;|</code>（非 <code>,</code>和<code>;</code>）作为前缀或后缀 。通过这种修饰，可以在不同的原子上指定不同的基组、质量或核模型：</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mol = gto.<span class="symbol">Mole</span>()</span><br><span class="line">mol.atom = <span class="string">&#x27;&#x27;</span><span class="string">&#x27;8 0 0 0; h:1 0 1 0; H@2 0 0 1&#x27;</span><span class="string">&#x27;&#x27;</span></span><br><span class="line">mol.unit = <span class="string">&#x27;B&#x27;</span></span><br><span class="line">mol.basis = &#123;<span class="string">&#x27;O&#x27;</span>: <span class="string">&#x27;sto-3g&#x27;</span>, <span class="string">&#x27;H&#x27;</span>: <span class="string">&#x27;cc-pvdz&#x27;</span>, <span class="string">&#x27;H@2&#x27;</span>: <span class="string">&#x27;6-31G&#x27;</span>&#125;</span><br><span class="line">mol.build()</span><br><span class="line">print(mol.<span class="symbol">_atom</span>)</span><br><span class="line">#输出结果为：[[<span class="string">&#x27;O&#x27;</span>, [<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>]], [<span class="string">&#x27;H:1&#x27;</span>, [<span class="number">0.0</span>, <span class="number">1.0</span>, <span class="number">0.0</span>]], [<span class="string">&#x27;H@2&#x27;</span>, [<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>]]]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>还可以指定 xyz 文件的路径，PySCF 将使用该文件中的坐标来构建<code>Mole.atom</code>.</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mol</span> = gto.M(atom=<span class="string">&quot;my_molecule.xyz&quot;</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mol = gto.Mole<span class="comment">()</span></span><br><span class="line">mol.atom = <span class="string">&quot;my_molecule.xyz&quot;</span></span><br><span class="line">mol.build<span class="comment">()</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可以输入以下内部格式的几何图形 <code>Mole.atom</code>：</p>
+<figure class="highlight gml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">atom = [[atom1, (<span class="symbol">x</span>, <span class="symbol">y</span>, z)],</span><br><span class="line">        [atom2, (<span class="symbol">x</span>, <span class="symbol">y</span>, z)],</span><br><span class="line">        ...</span><br><span class="line">        [atomN, (<span class="symbol">x</span>, <span class="symbol">y</span>, z)]]</span><br></pre></td></tr></table></figure>
+<p>这样可以使用 Python 脚本来构造几何：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mol = gto.Mole()</span><br><span class="line">mol<span class="selector-class">.atom</span> = [[<span class="string">&#x27;O&#x27;</span>,(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)], [<span class="string">&#x27;H&#x27;</span>,(<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>)], [<span class="string">&#x27;H&#x27;</span>,(<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>)]]</span><br><span class="line">mol<span class="selector-class">.atom</span>.extend([[<span class="string">&#x27;H&#x27;</span>, (<span class="selector-tag">i</span>, <span class="selector-tag">i</span>, i)] <span class="keyword">for</span> <span class="selector-tag">i</span> <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">5</span>)])</span><br><span class="line">mol.build()</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(mol._atom)</span></span></span><br><span class="line">#注意输出的结果单位是Bohr的。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/pyscf/pyscf/blob/master/examples/gto/03-ghost_atom.py">ghost分子</a> </p>
+</li>
+</ul>
+<h3 id="Z-matrix-输入格式"><a href="#Z-matrix-输入格式" class="headerlink" title="Z-matrix 输入格式"></a>Z-matrix 输入格式</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mol</span> = gto.Mole()</span><br><span class="line"><span class="attr">mol.atom</span> = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    O</span></span><br><span class="line"><span class="string">    H  1  1.2</span></span><br><span class="line"><span class="string">    H  1  1.2  2 105</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+<h3 id="打印分子"><a href="#打印分子" class="headerlink" title="打印分子"></a>打印分子</h3><p>建立好分子后，会存储为属性<code>Mole._atom</code>。</p>
+<ul>
+<li><p>一旦<code>Mole</code>构建了对象，就可以通过该<code>Mole.atom_coords()</code>函数访问分子几何结构。此函数为每个原子的坐标返回一个 (N,3) 数组：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">print</span>(mol.atom_coords(<span class="attribute">unit</span>=<span class="string">&#x27;Bohr&#x27;</span>)) # unit can be <span class="string">&quot;ANG&quot;</span> <span class="keyword">or</span> <span class="string">&quot;Bohr&quot;</span></span><br><span class="line"><span class="comment">#默认单位是Bohr</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="基组"><a href="#基组" class="headerlink" title="基组"></a>基组</h2><ul>
+<li><p>定义基组的最简单方法是将基的名称作为字符串分配给<code>Mole.basis</code>：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mol.basis</span> = <span class="string">&#x27;sto-3g&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>此输入将指定的基组应用于所有原子。字符串中基组的名称不区分大小写。名称中的空格、破折号和下划线都将被忽略。</p>
+</li>
+<li><p>如果不同元素需要不同的基组：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mol.basis</span> = &#123;<span class="string">&#x27;O&#x27;</span>: <span class="string">&#x27;sto-3g&#x27;</span>, <span class="string">&#x27;H&#x27;</span>: <span class="string">&#x27;6-31g&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>还可以使用辅助函数输入自定义基组。该函数<code>gto.basis.parse()</code>可以解析 NWChem 格式的基础字符串 </p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mol.basis = &#123;&#x27;O&#x27;: gto.basis.parse(&#x27;&#x27;&#x27;</span><br><span class="line">C    S</span><br><span class="line">     71.<span class="number">616837</span>0              0.<span class="number">15432897</span></span><br><span class="line">     13.<span class="number">045096</span>0              0.<span class="number">53532814</span></span><br><span class="line">      3.<span class="number">530512</span>2              0.<span class="number">44463454</span></span><br><span class="line">C    SP</span><br><span class="line">      2.<span class="number">941249</span>4             -0.<span class="number">09996723</span>             0.<span class="number">15591627</span></span><br><span class="line">      0.<span class="number">683483</span>1              0.<span class="number">39951283</span>             0.<span class="number">60768372</span></span><br><span class="line">      0.<span class="number">222289</span>9              0.<span class="number">70011547</span>             0.<span class="number">39195739</span></span><br><span class="line">&#x27;&#x27;&#x27;)&#125;</span><br></pre></td></tr></table></figure>
+<p>函数<code>gto.basis.load()</code>可以从数据库加载任意基组，即使基组与元素不匹配：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mol.basis</span> = &#123;<span class="string">&#x27;H&#x27;</span>: gto.basis.load(<span class="string">&#x27;sto3g&#x27;</span>, <span class="string">&#x27;C&#x27;</span>)&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>GHOST原子：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mol.basis</span> = &#123;<span class="string">&#x27;GHOST&#x27;</span>: gto.basis.load(<span class="string">&#x27;cc-pvdz&#x27;</span>, <span class="string">&#x27;O&#x27;</span>), <span class="string">&#x27;H&#x27;</span>: <span class="string">&#x27;sto3g&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>与几何输入的要求一样，可以使用原子符号（不区分大小写）或原子核电荷作为<code>basis</code>字典的关键字 。数字和特殊字符的前缀和后缀是允许的。如果修饰的原子符号出现在 <code>atom</code>但不在 中<code>basis</code>，基础解析器将删除所有修饰并在<code>basis</code>字典中寻找纯原子符号 ：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">mol</span>.atom = &#x27;<span class="number">8</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>; h<span class="number">1</span> <span class="number">0</span> <span class="number">1</span> <span class="number">0</span>; H<span class="number">2</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1</span>&#x27; mol.basis = &#123;&#x27;O&#x27;：&#x27;sto-<span class="number">3</span>g&#x27;，&#x27;H&#x27;：&#x27;sto<span class="number">3</span>g&#x27;，&#x27;H<span class="number">1</span>&#x27;：&#x27;<span class="number">6</span>-<span class="number">31</span>G&#x27;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#6-31G基组将分配给 atom H1，但STO-3G基将用于 atom H2</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="ECP"><a href="#ECP" class="headerlink" title="ECP"></a>ECP</h3><ul>
+<li><p>可以使用属性指定有效核心电位 (ECP) <code>Mole.ecp</code>。标量型 ECP 可用于所有分子和晶体方法。<a target="_blank" rel="noopener" href="https://pyscf.org/user/gto.html#ecp">内置标量 ECP 数</a>：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mol</span> = gto.M(atom=<span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string"> Na 0. 0. 0.</span></span><br><span class="line"><span class="string"> H  0.  0.  1.&#x27;&#x27;&#x27;</span>,</span><br><span class="line">            <span class="attr">basis</span>=&#123;<span class="string">&#x27;Na&#x27;</span>:<span class="string">&#x27;lanl2dz&#x27;</span>, <span class="string">&#x27;H&#x27;</span>:<span class="string">&#x27;sto3g&#x27;</span>&#125;,</span><br><span class="line">            <span class="attr">ecp</span> = &#123;<span class="string">&#x27;Na&#x27;</span>:<span class="string">&#x27;lanl2dz&#x27;</span>&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ECP 参数可以使用 NWChem 格式直接在输入脚本中指定</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">mol</span> <span class="string">=</span> <span class="string">gto.M(atom=&#x27;&#x27;&#x27;</span></span><br><span class="line"> <span class="string">Na</span> <span class="number">0</span><span class="string">.</span> <span class="number">0</span><span class="string">.</span> <span class="number">0</span><span class="string">.</span></span><br><span class="line"> <span class="string">H</span>  <span class="number">0</span><span class="string">.</span>  <span class="number">0</span><span class="string">.</span>  <span class="number">1</span><span class="string">.&#x27;&#x27;&#x27;,</span></span><br><span class="line">            <span class="string">basis=&#123;&#x27;Na&#x27;:&#x27;lanl2dz&#x27;,</span> <span class="string">&#x27;H&#x27;</span><span class="string">:&#x27;sto3g&#x27;&#125;,</span></span><br><span class="line">            <span class="string">ecp</span> <span class="string">=</span> &#123;<span class="attr">&#x27;Na&#x27;:</span> <span class="string">gto.basis.parse_ecp(&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">Na</span> <span class="string">nelec</span> <span class="number">10</span></span><br><span class="line"><span class="string">Na</span> <span class="string">ul</span></span><br><span class="line"><span class="number">0</span>      <span class="number">2.0000000</span>              <span class="number">6.0000000</span>        </span><br><span class="line"><span class="number">1</span>    <span class="number">175.5502590</span>            <span class="number">-10.0000000</span>        </span><br><span class="line"><span class="number">2</span>      <span class="number">2.3365719</span>             <span class="number">-6.0637782</span>        </span><br><span class="line"><span class="number">2</span>      <span class="number">0.7799867</span>             <span class="number">-0.7299393</span>        </span><br><span class="line"><span class="string">Na</span> <span class="string">S</span></span><br><span class="line"><span class="number">0</span>    <span class="number">243.3605846</span>              <span class="number">3.0000000</span>        </span><br><span class="line"><span class="number">1</span>     <span class="number">41.5764759</span>             <span class="number">36.2847626</span>        </span><br><span class="line"><span class="number">2</span>     <span class="number">13.2649167</span>             <span class="number">72.9304880</span>        </span><br><span class="line"><span class="number">2</span>      <span class="number">0.9764209</span>              <span class="number">6.0123861</span>        </span><br><span class="line"><span class="string">Na</span> <span class="string">P</span></span><br><span class="line"><span class="number">0</span>   <span class="number">1257.2650682              </span><span class="number">5.0000000</span>        </span><br><span class="line"><span class="number">1</span>    <span class="number">189.6248810</span>            <span class="number">117.4495683</span>        </span><br><span class="line"><span class="number">2</span>     <span class="number">54.5247759</span>            <span class="number">423.3986704</span>        </span><br><span class="line"><span class="number">2</span>      <span class="number">0.9461106</span>              <span class="number">7.1241813</span>        </span><br><span class="line"><span class="string">&#x27;&#x27;</span><span class="string">&#x27;)&#125;)</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="对称性"><a href="#对称性" class="headerlink" title="对称性"></a>对称性</h2><ul>
+<li><p>将属性设置为<code>Mole.symmetry</code>来为分子计算调用点群对称性<code>True</code>：</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mol = pyscf.M(</span><br><span class="line">     atom = &#x27;B <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>; H <span class="number">0</span> <span class="number">1</span> <span class="number">1</span>; H <span class="number">1</span> <span class="number">0</span> <span class="number">1</span>; H <span class="number">1</span> <span class="number">1</span> <span class="number">0</span>&#x27;,</span><br><span class="line">     symmetry = True</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>点群对称信息保存在<code>Mole</code>对象中。<code>symm</code>PySCF的对称模块 ( ) 可以检测任意点群。检测到的点组保存在 中<code>Mole.topgroup</code>，支持的子组保存在 中<code>Mole.groupname</code>：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">print</span><span class="params">(mol.topgroup)</span></span></span><br><span class="line">#C3v</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(mol.groupname)</span></span></span><br><span class="line">#Cs</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>PySCF 支持线性分子对称性 D∞h（<code>Dooh</code>在程序中标记）和C∞v （标记为<code>Coov</code>），D2h群及其子群。有时需要使用较低的对称性而不是检测到的对称性群。子群的对称性可以由<code>Mole.symmetry_subgroup</code>指定（不影响<code>Mole.symmetry</code>） ，程序将首先检测可能的最高对称群，然后将点群对称性降低到指定的子群：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mol = gto.Mole()</span><br><span class="line">mol<span class="selector-class">.atom</span> = <span class="string">&#x27;N 0 0 0; N 0 0 1&#x27;</span></span><br><span class="line">mol<span class="selector-class">.symmetry</span> = True</span><br><span class="line">mol<span class="selector-class">.symmetry_subgroup</span> = C2</span><br><span class="line">mol.build()</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(mol.topgroup)</span></span></span><br><span class="line">#Dooh</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(mol.groupname)</span></span></span><br><span class="line">#C2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>当将特定的对称性分配给 时<code>Mole.symmetry</code>，初始化函数<code>Mole.build()</code>将测试分子几何形状是否符合所需的对称性。如果没有，初始化将停止并发出错误消息：</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mol = gto.Mole()</span><br><span class="line">mol.atom = <span class="string">&#x27;O 0 0 0; C 0 0 1&#x27;</span></span><br><span class="line">mol.symmetry = <span class="string">&#x27;Dooh&#x27;</span></span><br><span class="line">mol.build()</span><br><span class="line"></span><br><span class="line">#RuntimeWarning: Unable to identify input symmetry Dooh.</span><br><span class="line">#Try symmetry=<span class="string">&quot;Coov&quot;</span> <span class="keyword">with</span> geometry (unit=<span class="string">&quot;Bohr&quot;</span>)</span><br><span class="line">#(<span class="string">&#x27;O&#x27;</span>, [<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">-0.809882624813598</span>])</span><br><span class="line">#(<span class="string">&#x27;C&#x27;</span>, [<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0798434997514639</span>])</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="轨道"><a href="#轨道" class="headerlink" title="轨道"></a>轨道</h3><p>在<code>Mole</code>对象中启用对称时，点群对称信息将用于构建对称适应轨道基组</p>
+<ul>
+<li>对称适应轨道被保存 <code>Mole.symm_orb</code>为二维阵列列表。列表中的每个元素都是不可约表示的 AO（原子轨道）到对称适应轨道转换矩阵。</li>
+<li>不可约表示的名称存储在 中<code>Mole.irrep_name</code>，它们的内部 ID存储在<code>Mole.irrep_id</code>：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mol = gto.Mole()</span><br><span class="line">mol.atom = <span class="string">&#x27;O 0 0 0; O 0 0 1.2&#x27;</span></span><br><span class="line">mol.spin = <span class="number">2</span></span><br><span class="line">mol.symmetry = <span class="string">&quot;D2h&quot;</span></span><br><span class="line">mol.build()</span><br><span class="line"><span class="keyword">for</span> s,i,c <span class="keyword">in</span> <span class="built_in">zip</span>(mol.irrep_name, mol.irrep_id, mol.symm_orb):</span><br><span class="line">    print(s, i, c.shape)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># Ag 0 (10, 3)</span></span><br><span class="line"><span class="comment"># B2g 2 (10, 1)</span></span><br><span class="line"><span class="comment"># B3g 3 (10, 1)</span></span><br><span class="line"><span class="comment"># B1u 5 (10, 3)</span></span><br><span class="line"><span class="comment"># B2u 6 (10, 1)</span></span><br><span class="line"><span class="comment"># B3u 7 (10, 1)</span></span><br></pre></td></tr></table></figure>
+<p>对称适应轨道用作以下 SCF 或后 SCF 计算的基函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mf = scf.RHF(mol)</span><br><span class="line">mf.kernel()</span><br><span class="line"><span class="comment"># converged SCF energy = -147.631655286561</span></span><br></pre></td></tr></table></figure>
+<p>可以检查每个不可约表示中 MO 的占用情况：</p>
+<ul>
+<li>为了标记给定轨道的不可约表示， <code>symm.label_orb_symm()</code>需要在<code>Mole</code>对象中初始化的点群对称性信息，包括不可约表示的 ID ( <code>Mole.irrep_id</code>) 和对称适应基<code>Mole.symm_orb</code>。对于每个<code>irrep_id</code>， <code>Mole.irrep_name</code>给出相关的不可表达符号 (A1, B1 …)。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy</span><br><span class="line"><span class="keyword">from</span> pyscf <span class="keyword">import</span> symm</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">myocc</span>(<span class="params">mf</span>):</span></span><br><span class="line">    mol = mf.mol</span><br><span class="line">    irrep_id = mol.irrep_id</span><br><span class="line">    so = mol.symm_orb</span><br><span class="line">    orbsym = symm.label_orb_symm(mol, irrep_id, so, mf.mo_coeff)</span><br><span class="line">    doccsym = numpy.array(orbsym)[mf.mo_occ==<span class="number">2</span>]</span><br><span class="line">    soccsym = numpy.array(orbsym)[mf.mo_occ==<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">for</span> ir,irname <span class="keyword">in</span> <span class="built_in">enumerate</span>(mol.irrep_name):</span><br><span class="line">        print(<span class="string">&#x27;%s, double-occ = %d, single-occ = %d&#x27;</span> %</span><br><span class="line">              (irname, <span class="built_in">sum</span>(doccsym==ir), <span class="built_in">sum</span>(soccsym==ir)))</span><br><span class="line">myocc(mf)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ag, double-occ = 3, single-occ = 0</span></span><br><span class="line"><span class="comment"># B2g, double-occ = 0, single-occ = 0</span></span><br><span class="line"><span class="comment"># B3g, double-occ = 0, single-occ = 1</span></span><br><span class="line"><span class="comment"># B1u, double-occ = 0, single-occ = 1</span></span><br><span class="line"><span class="comment"># B2u, double-occ = 0, single-occ = 0</span></span><br><span class="line"><span class="comment"># B3u, double-occ = 2, single-occ = 0</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>在 SCF 计算中，可以通过为不规则分配 alpha 电子和 beta 电子(alpha,beta)的数量来控制波函数的对称性 ：</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mf.irrep_nelec = &#123;<span class="string">&#x27;B2g&#x27;</span>: (<span class="number">1</span>,<span class="number">1</span>), <span class="string">&#x27;B3g&#x27;</span>: (<span class="number">1</span>,<span class="number">1</span>), <span class="string">&#x27;B2u&#x27;</span>: (<span class="number">1</span>,<span class="number">0</span>), <span class="string">&#x27;B3u&#x27;</span>: (<span class="number">1</span>,<span class="number">0</span>)&#125;</span><br><span class="line">mf.kernel()</span><br><span class="line"># converged SCF energy = <span class="number">-146.97333043702</span></span><br><span class="line">mf.get_irrep_nelec()</span><br><span class="line"># &#123;<span class="string">&#x27;Ag&#x27;</span>: (<span class="number">3</span>, <span class="number">3</span>), <span class="string">&#x27;B2g&#x27;</span>: (<span class="number">1</span>, <span class="number">1</span>), <span class="string">&#x27;B3g&#x27;</span>: (<span class="number">1</span>, <span class="number">1</span>), <span class="string">&#x27;B1u&#x27;</span>: (<span class="number">2</span>, <span class="number">2</span>), <span class="string">&#x27;B2u&#x27;</span>: (<span class="number">1</span>, <span class="number">0</span>), <span class="string">&#x27;B3u&#x27;</span>: (<span class="number">1</span>, <span class="number">0</span>)&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="电荷和自旋"><a href="#电荷和自旋" class="headerlink" title="电荷和自旋"></a>电荷和自旋</h2><ul>
+<li><p>属性<code>Mole.charge</code>是定义系统中电子总数的参数。</p>
+<ul>
+<li>自定义系统中指定电子总数用<code>Mole.nelectron</code>：</li>
+</ul>
+</li>
+<li><p><code>Mole.spin</code>是未成对电子的数量<em>2S</em>，即 alpha 和 beta 电子的数量之差。</p>
+</li>
+</ul>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mol.charge</span> = <span class="number">1</span></span><br><span class="line"><span class="attr">mol.spin</span> = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>这两个属性不影响<code>Mole.build</code>初始化函数中的任何其他参数。可以在<code>Mole</code>对象初始化后设置或修改它们 ：</li>
+</ul>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mol = gto.Mole()</span><br><span class="line">mol.atom = &#x27;O <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>; h <span class="number">0</span> <span class="number">1</span> <span class="number">0</span>; h <span class="number">0</span> <span class="number">0</span> <span class="number">1</span>&#x27;</span><br><span class="line">mol.basis = &#x27;sto<span class="number">-6</span>g&#x27;</span><br><span class="line">mol.spin = <span class="number">2</span></span><br><span class="line">mol.build()</span><br><span class="line">print(mol.nelec)</span><br><span class="line">#(<span class="number">6</span>, <span class="number">4</span>)</span><br><span class="line">mol.spin = <span class="number">0</span></span><br><span class="line">print(mol.nelec)</span><br><span class="line">#(<span class="number">5</span>, <span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="其他参数"><a href="#其他参数" class="headerlink" title="其他参数"></a>其他参数</h1><h2 id="输出、内存和打印级别"><a href="#输出、内存和打印级别" class="headerlink" title="输出、内存和打印级别"></a>输出、内存和打印级别</h2><ul>
+<li><p>使用<code>verbose</code>命令全局控制打印级别（打印级别可以是 0（安静，无输出）到 9（非常嘈杂）。最有用的消息在第 4 级（信息）和第 5 级（调试）打印。）：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mol.verbose</span> = <span class="number">4</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可以指定写入输出的位置（如果未分配此变量，消息将转储到 <code>sys.stdout</code>.）：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mol.output</span> = <span class="string">&#x27;path/to/log.txt&#x27;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可以全局控制最大内存使用量：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mol.max_memory</span> = <span class="number">1000</span> <span class="comment"># MB</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>默认大小也可以使用 shell 环境变量PYSCF_MAX_MEMORY定义。</li>
+</ul>
+</li>
+<li><p>属性<code>output</code>和<code>max_memory</code>也可以从命令行分配：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">python</span> <span class="built_in">input</span>.<span class="keyword">py</span> -<span class="keyword">o</span> /path/<span class="keyword">to</span>/my_log.txt -<span class="keyword">m</span> <span class="number">1000</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>默认情况下，命令行具有最高优先级，这意味着脚本中的设置将被命令行参数覆盖。要使输入解析器忽略命令行参数，可以调用 <code>Mole.build()</code>with：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mol.build(<span class="number">0</span>, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>第一个<code>0</code>防止<code>build()</code>转储输入文件。第二个<code>0</code>阻止<code>build()</code>解析命令行参数。</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>有用可戳(●ˇ∀ˇ●)</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="Zhao Jing 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Zhao Jing
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2021/09/02/%E3%80%90Pyscf%E3%80%9101.%E5%9F%BA%E6%9C%AC%E8%AE%A1%E7%AE%97%E8%AE%BE%E7%BD%AE/" title="【Pyscf】01.基本计算设置">http://example.com/2021/09/02/【Pyscf】01.基本计算设置/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E8%BE%93%E5%85%A5/" rel="tag"><i class="fa fa-tag"></i> 输入</a>
+              <a href="/tags/Pyscf/" rel="tag"><i class="fa fa-tag"></i> Pyscf</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/13/%E3%80%90Jmol%E3%80%91%E5%B8%B8%E8%A7%81%E7%9A%84%E6%8C%87%E4%BB%A4/" rel="prev" title="【Jmol】常见的指令">
+      <i class="fa fa-chevron-left"></i> 【Jmol】常见的指令
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/10/21/%E3%80%90LmodeA%E3%80%9101.%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/" rel="next" title="【LmodeA】01.基础使用">
+      【LmodeA】01.基础使用 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E5%88%86%E5%AD%90"><span class="nav-number">1.</span> <span class="nav-text">定义分子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%A0%E4%BD%95"><span class="nav-number">1.1.</span> <span class="nav-text">几何</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%9B%E5%8D%A1%E5%B0%94%E5%BD%A2%E5%BC%8F"><span class="nav-number">1.1.1.</span> <span class="nav-text">笛卡尔形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Z-matrix-%E8%BE%93%E5%85%A5%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.1.2.</span> <span class="nav-text">Z-matrix 输入格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%8D%B0%E5%88%86%E5%AD%90"><span class="nav-number">1.1.3.</span> <span class="nav-text">打印分子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%BB%84"><span class="nav-number">1.2.</span> <span class="nav-text">基组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ECP"><span class="nav-number">1.2.1.</span> <span class="nav-text">ECP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E7%A7%B0%E6%80%A7"><span class="nav-number">1.3.</span> <span class="nav-text">对称性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%A8%E9%81%93"><span class="nav-number">1.3.1.</span> <span class="nav-text">轨道</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%B5%E8%8D%B7%E5%92%8C%E8%87%AA%E6%97%8B"><span class="nav-number">1.4.</span> <span class="nav-text">电荷和自旋</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%8F%82%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">其他参数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E3%80%81%E5%86%85%E5%AD%98%E5%92%8C%E6%89%93%E5%8D%B0%E7%BA%A7%E5%88%AB"><span class="nav-number">2.1.</span> <span class="nav-text">输出、内存和打印级别</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhao Jing"
+      src="/images/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">Zhao Jing</p>
+  <div class="site-description" itemprop="description">做一棵树，只为岁月而生长。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaojing629" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaojing629" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:295483858@qq.com" title="E-Mail → mailto:295483858@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+<div class="sidebar-categories" p align="left">
+  <font size="2">
+  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/">计算化学</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/%E8%BD%AF%E4%BB%B6/">软件</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/%E5%8E%9F%E7%90%86/">原理</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%AB%99/">网站</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F/">系统</a></li></ul>
+  </font>
+  </p /div>
+
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title"></h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ADF/" rel="tag">ADF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AIM/" rel="tag">AIM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AMS/" rel="tag">AMS</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASSCF/" rel="tag">CASSCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CP2K/" rel="tag">CP2K</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DLPNO/" rel="tag">DLPNO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gaussian/" rel="tag">Gaussian</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HF/" rel="tag">HF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jmol/" rel="tag">Jmol</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LmodeA/" rel="tag">LmodeA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCSCF/" rel="tag">MCSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MOKIT/" rel="tag">MOKIT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Multiwfn/" rel="tag">Multiwfn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NBO/" rel="tag">NBO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NICS/" rel="tag">NICS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORCA/" rel="tag">ORCA</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pyscf/" rel="tag">Pyscf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RI%E8%BF%91%E4%BC%BC/" rel="tag">RI近似</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/compliance/" rel="tag">compliance</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/molpro/" rel="tag">molpro</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%B4%E7%95%8C%E7%82%B9/" rel="tag">临界点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98/" rel="tag">内存</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="tag">几何优化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%9D%E7%8C%9C/" rel="tag">初猜</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%9B%E5%B8%B8%E6%95%B0/" rel="tag">力常数</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%82%B9/" rel="tag">单点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag">占据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%90%E6%A0%87/" rel="tag">坐标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%BB%84/" rel="tag">基组</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BB%84%E6%80%81/" rel="tag">多组态</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag">对称性</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%93%E6%89%91%E5%88%86%E6%9E%90/" rel="tag">拓扑分析</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%94%B6%E6%95%9B/" rel="tag">收敛</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag">波函</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag">点群</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E8%8D%B7/" rel="tag">电荷</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA/" rel="tag">相对论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%9F%BA%E7%BB%84/" rel="tag">相对论基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%8A%B3%E9%A6%99%E6%80%A7/" rel="tag">芳香性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%9D%E5%8A%BF/" rel="tag">赝势</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%85%E5%8A%A9%E5%9F%BA%E7%BB%84/" rel="tag">辅助基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5/" rel="tag">输入</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%87%BA/" rel="tag">输出</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E5%BE%84/" rel="tag">键径</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E7%BA%A7/" rel="tag">键级</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%91%E7%8E%87/" rel="tag">频率</a><span class="tag-list-count">2</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-flask"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhao Jing</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">263k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='0,0,0' opacity='0.3' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : '3L90wCaNUKa1MzSQcAhzkLtk-gzGzoHsz',
+      appKey     : 'fQ4t73jXnb71Y9zQWfXj5bIP',
+      placeholder: "可以输入您发现文中的错误或建议~(。・∀・)ノ",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
