@@ -7816,6 +7816,10 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 </li>
 </ul>
 ]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
       <tags>
         <tag>输入</tag>
         <tag>Pyscf</tag>
