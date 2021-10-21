@@ -466,6 +466,7 @@
 ]]></content>
       <categories>
         <category>计算化学</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>NBO</tag>
@@ -603,10 +604,11 @@
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>AMS</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>能量分解</tag>
+        <tag>ADF</tag>
       </tags>
   </entry>
   <entry>
@@ -700,11 +702,12 @@
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>AMS</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>输入</tag>
         <tag>对称性</tag>
+        <tag>AMS</tag>
       </tags>
   </entry>
   <entry>
@@ -780,10 +783,11 @@
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>AMS</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>几何优化</tag>
+        <tag>AMS</tag>
       </tags>
   </entry>
   <entry>
@@ -830,10 +834,11 @@
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>AMS</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>频率</tag>
+        <tag>AMS</tag>
       </tags>
   </entry>
   <entry>
@@ -871,10 +876,11 @@
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>AMS</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>键级</tag>
+        <tag>AMS</tag>
       </tags>
   </entry>
   <entry>
@@ -964,8 +970,11 @@
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>CP2K</category>
+        <category>软件</category>
       </categories>
+      <tags>
+        <tag>CP2K</tag>
+      </tags>
   </entry>
   <entry>
     <title>【Gaussian】对称性</title>
@@ -1008,10 +1017,11 @@
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>Gaussian</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>对称性</tag>
+        <tag>Gaussian</tag>
       </tags>
   </entry>
   <entry>
@@ -1054,10 +1064,12 @@
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>Gaussian</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>力常数</tag>
+        <tag>Gaussian</tag>
+        <tag>compliance</tag>
       </tags>
   </entry>
   <entry>
@@ -1121,11 +1133,12 @@
 <h2 id="AIM理论的电子密度的环临界点-RCP"><a href="#AIM理论的电子密度的环临界点-RCP" class="headerlink" title="AIM理论的电子密度的环临界点(RCP)"></a>AIM理论的电子密度的环临界点(RCP)</h2>]]></content>
       <categories>
         <category>计算化学</category>
-        <category>Gaussian</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>芳香性</tag>
         <tag>NICS</tag>
+        <tag>Gaussian</tag>
       </tags>
   </entry>
   <entry>
@@ -1552,11 +1565,12 @@
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>ORCA</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>输入</tag>
         <tag>内存</tag>
+        <tag>ORCA</tag>
       </tags>
   </entry>
   <entry>
@@ -1672,10 +1686,11 @@
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>ORCA</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>初猜</tag>
+        <tag>ORCA</tag>
       </tags>
   </entry>
   <entry>
@@ -1735,10 +1750,11 @@
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>ORCA</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>DLPNO</tag>
+        <tag>ORCA</tag>
       </tags>
   </entry>
   <entry>
@@ -1829,13 +1845,14 @@
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>molpro</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>对称性</tag>
         <tag>点群</tag>
         <tag>波函</tag>
         <tag>占据</tag>
+        <tag>molpro</tag>
       </tags>
   </entry>
   <entry>
@@ -1920,10 +1937,11 @@
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>molpro</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>HF</tag>
+        <tag>molpro</tag>
       </tags>
   </entry>
   <entry>
@@ -2076,12 +2094,13 @@
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>molpro</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>多组态</tag>
         <tag>CASSCF</tag>
         <tag>MCSCF</tag>
+        <tag>molpro</tag>
       </tags>
   </entry>
   <entry>
@@ -2099,6 +2118,7 @@
 ]]></content>
       <categories>
         <category>计算化学</category>
+        <category>原理</category>
       </categories>
       <tags>
         <tag>MCSCF</tag>
@@ -2334,6 +2354,7 @@
 ]]></content>
       <categories>
         <category>计算化学</category>
+        <category>原理</category>
       </categories>
       <tags>
         <tag>光谱项</tag>
@@ -2409,6 +2430,7 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 ]]></content>
       <categories>
         <category>计算化学</category>
+        <category>原理</category>
       </categories>
       <tags>
         <tag>CI</tag>
@@ -3047,8 +3069,11 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>CP2K</category>
+        <category>软件</category>
       </categories>
+      <tags>
+        <tag>CP2K</tag>
+      </tags>
   </entry>
   <entry>
     <title>【CP2K】03.&amp;MGRID中的CUTOFF和RELEL_CUTOFF</title>
@@ -3166,6 +3191,9 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
         <category>计算化学</category>
         <category>CP2K</category>
       </categories>
+      <tags>
+        <tag>CP2K</tag>
+      </tags>
   </entry>
   <entry>
     <title>【CP2K】04.几何优化</title>
@@ -3315,10 +3343,11 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>CP2K</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>几何优化</tag>
+        <tag>CP2K</tag>
       </tags>
   </entry>
   <entry>
@@ -3586,7 +3615,7 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>Multiwfn</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>键级</tag>
@@ -3595,6 +3624,7 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
         <tag>临界点</tag>
         <tag>键径</tag>
         <tag>拓扑分析</tag>
+        <tag>Multiwfn</tag>
       </tags>
   </entry>
   <entry>
@@ -3780,11 +3810,12 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>ORCA</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>输入</tag>
         <tag>内存</tag>
+        <tag>ORCA</tag>
       </tags>
   </entry>
   <entry>
@@ -4151,7 +4182,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>ORCA</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>输入</tag>
@@ -4160,6 +4191,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
         <tag>RI近似</tag>
         <tag>赝势</tag>
         <tag>相对论基组</tag>
+        <tag>ORCA</tag>
       </tags>
   </entry>
   <entry>
@@ -4472,10 +4504,11 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>ORCA</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>SCF</tag>
+        <tag>ORCA</tag>
       </tags>
   </entry>
   <entry>
@@ -4871,7 +4904,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>molpro</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>输入</tag>
@@ -4880,6 +4913,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
         <tag>赝势</tag>
         <tag>输出</tag>
         <tag>坐标</tag>
+        <tag>molpro</tag>
       </tags>
   </entry>
   <entry>
@@ -6390,6 +6424,7 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 ]]></content>
       <categories>
         <category>计算化学</category>
+        <category>原理</category>
       </categories>
       <tags>
         <tag>基组</tag>
@@ -6840,10 +6875,11 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>Gaussian</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>基组</tag>
+        <tag>Gaussian</tag>
       </tags>
   </entry>
   <entry>
@@ -6962,10 +6998,11 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>Gaussian</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>基组</tag>
+        <tag>Gaussian</tag>
       </tags>
   </entry>
   <entry>
@@ -7102,12 +7139,13 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>Gaussian</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>SCF</tag>
         <tag>收敛</tag>
         <tag>单点</tag>
+        <tag>Gaussian</tag>
       </tags>
   </entry>
   <entry>
@@ -7331,7 +7369,7 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>AMS</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>对称性</tag>
@@ -7427,10 +7465,11 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 <h1 id="OpenMolcas与QCMaquis-的安装"><a href="#OpenMolcas与QCMaquis-的安装" class="headerlink" title="OpenMolcas与QCMaquis 的安装"></a>OpenMolcas与QCMaquis 的安装</h1>]]></content>
       <categories>
         <category>计算化学</category>
-        <category>MOKIT</category>
+        <category>软件</category>
       </categories>
       <tags>
-        <tag>DLPNO</tag>
+        <tag>多组态</tag>
+        <tag>MOKIT</tag>
       </tags>
   </entry>
   <entry>
@@ -7735,6 +7774,20 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
       </categories>
       <tags>
         <tag>Jmol</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【LmodeA】01.基础使用</title>
+    <url>/2021/10/21/%E3%80%90LmodeA%E3%80%9101.%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>频率</tag>
+        <tag>力常数</tag>
+        <tag>LmodeA</tag>
       </tags>
   </entry>
 </search>
