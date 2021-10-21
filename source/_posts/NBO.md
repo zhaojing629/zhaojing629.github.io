@@ -5,7 +5,7 @@ mathjax: true
 date: 2020-11-27 22:13:28
 updated:
 tags: [NBO, 键级]
-categories: 计算化学
+categories: [计算化学, 软件]
 description: NBO的一些使用方法
 ---
 

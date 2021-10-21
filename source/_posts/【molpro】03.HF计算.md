@@ -4,8 +4,8 @@ typora-root-url: 【molpro】03.HF计算
 mathjax: true
 date: 2019-11-16 22:10:02
 updated: 
-tags: HF
-categories: [计算化学,molpro]
+tags: [molpro, HF]
+categories: [计算化学, 软件]
 description: molpro的HF计算
 ---
 

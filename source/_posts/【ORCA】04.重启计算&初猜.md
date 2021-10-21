@@ -4,8 +4,8 @@ typora-root-url: 【ORCA】04.重启计算&初猜
 mathjax: true
 date: 2020-09-04
 updated:
-tags: [初猜]
-categories: [计算化学,ORCA]
+tags: [ORCA, 初猜]
+categories: [计算化学, 软件]
 description: ORCA的SCF计算比较糟糕，因此通常最好使用初猜，能加快计算速度
 ---
 

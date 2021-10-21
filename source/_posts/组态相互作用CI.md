@@ -5,7 +5,7 @@ mathjax: true
 date: 2020-11-20 14:16:33
 updated:
 tags: [CI]
-categories: 计算化学
+categories: [计算化学, 原理]
 description: 组态相互作用CI的一些原理
 ---
 

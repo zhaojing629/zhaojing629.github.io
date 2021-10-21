@@ -4,8 +4,8 @@ typora-root-url: 【Gaussian】03.单点计算
 mathjax: true
 date: 2019-09-09 20:52:39
 updated: 
-tags: [SCF, 收敛, 单点]
-categories: [计算化学,Gaussian]
+tags: [Gaussian, SCF, 收敛, 单点]
+categories: [计算化学, 软件]
 description: 单点计算的一些基础和SCF不收敛的一些处理方法
 ---
 

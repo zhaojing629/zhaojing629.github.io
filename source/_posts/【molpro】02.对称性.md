@@ -5,8 +5,8 @@ typora-root-url: 【molpro】02.对称性
 mathjax: true
 date: 2020-11-16 22:19:52
 updated:
-tags: [点群,对称性,波函,占据]
-categories: [计算化学,molpro]
+tags: [molpro, 点群,对称性,波函,占据]
+categories: [计算化学, 软件]
 description: molpro分子的对称性，定义波函和通过波函的对称性来指定占据的基本方法
 ---
 

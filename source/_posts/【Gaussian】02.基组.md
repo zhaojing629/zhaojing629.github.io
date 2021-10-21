@@ -4,8 +4,8 @@ typora-root-url: 【Gaussian】02.基组
 mathjax: true
 date: 2019-09-03 14:47:37
 updated:
-tags: [基组]
-categories: [计算化学,Gaussian]
+tags: [Gaussian, 基组]
+categories: [计算化学, 软件]
 description: Gaussian中关于基组的常见问题
 ---
 

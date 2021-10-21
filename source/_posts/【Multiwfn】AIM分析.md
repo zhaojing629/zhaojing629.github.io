@@ -4,8 +4,8 @@ typora-root-url: 【Multiwfn】AIM分析
 mathjax: true
 date: 2021-03-02 15:28:44
 updated:
-tags: [AIM, 键级, 电荷, 临界点, 键径, 拓扑分析]
-categories: [计算化学, Multiwfn]
+tags: [Multiwfn, AIM, 键级, 电荷, 临界点, 键径, 拓扑分析]
+categories: [计算化学, 软件]
 description: AIM分析
 ---
 

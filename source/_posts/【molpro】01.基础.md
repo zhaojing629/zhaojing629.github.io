@@ -4,8 +4,8 @@ typora-root-url: 【molpro】01.基础
 mathjax: true
 date: 2019-11-13
 updated:
-tags: [输入,输出,内存,坐标,基组,赝势]
-categories: [计算化学, molpro]
+tags: [molpro, 输入,输出,内存,坐标,基组,赝势]
+categories: [计算化学, 软件]
 description: 输入文件简单学习
 ---
 

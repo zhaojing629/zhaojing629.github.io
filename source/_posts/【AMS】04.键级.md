@@ -4,8 +4,8 @@ typora-root-url: 【AMS】04.键级
 mathjax: true
 date: 2020-6-24 17:09:30
 updated:
-tags: 键级
-categories: [计算化学,AMS]
+tags: [AMS, 键级]
+categories: [计算化学, 软件]
 description: 2020后ADF中关于键级的计算
 ---
 

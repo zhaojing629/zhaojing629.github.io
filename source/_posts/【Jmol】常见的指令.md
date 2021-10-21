@@ -3,9 +3,9 @@ title: 【Jmol】常见的指令
 typora-root-url: 【Jmol】常见的指令
 date: 2021-08-13 19:33:37
 updated:
-tags: Jmol
+tags: [Jmol】
 mathjax: true
-categories: 计算化学
+categories: [计算化学, 软件]
 description: Jmol常见的指令
 ---
 

@@ -4,8 +4,8 @@ typora-root-url: 【Gaussian】对称性
 mathjax: true
 date: 2021-03-02 14:47:37
 updated:
-tags: [对称性]
-categories: [计算化学,Gaussian]
+tags: [Gaussian, 对称性]
+categories: [计算化学, 软件]
 description: 对称性的一些设定
 ---
 

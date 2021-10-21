@@ -4,8 +4,8 @@ typora-root-url: 【Gaussian】核独立化学位移（NICS）
 mathjax: true
 date: 2021-05-20 09:43:06
 updated:
-tags: [芳香性, NICS]
-categories: [计算化学, Gaussian]
+tags: [Gaussian, 芳香性, NICS]
+categories: [计算化学, 软件]
 description: 利用核独立化学位移考察芳香性
 ---
 

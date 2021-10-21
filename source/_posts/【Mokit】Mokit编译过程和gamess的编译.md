@@ -4,8 +4,8 @@ date: 2020-05-29 16:20:02
 typora-root-url: 【MOKIT】MOKIT及其相关软件编译过程
 mathjax: true
 updated:
-tags: [DLPNO]
-categories: [计算化学, MOKIT]
+tags: [MOKIT, 多组态]
+categories: [计算化学, 软件]
 description: 进行Linux下MOKIT编译过程和gamess的编译，OpenMolcas的编译
 ---
 

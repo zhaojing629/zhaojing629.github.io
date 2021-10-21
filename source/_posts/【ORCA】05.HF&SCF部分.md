@@ -4,8 +4,8 @@ typora-root-url: 【ORCA】05.HF&SCF部分
 mathjax: true
 date: 2020-09-04
 updated:
-tags: [SCF]
-categories: [计算化学,ORCA]
+tags: [ORCA, SCF]
+categories: [计算化学, 软件]
 description: ORCA的SCF部分
 ---
 

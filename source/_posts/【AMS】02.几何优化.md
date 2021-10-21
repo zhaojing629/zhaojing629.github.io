@@ -4,9 +4,9 @@ typora-root-url: 【AMS】02.几何优化
 date: 2019-09-23
 updated:
 description: 几何优化是在AMS块中指定
-tags: 几何优化
+tags: [AMS, 几何优化]
 mathjax: true
-categories: [计算化学, AMS]
+categories: [计算化学, 软件]
 ---
 
 

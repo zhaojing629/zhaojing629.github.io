@@ -4,8 +4,8 @@ typora-root-url: 【ORCA】03.基组
 mathjax: true
 date: 2020-09-05
 updated:
-tags: [输入,基组,辅助基组,RI近似,赝势,相对论基组]
-categories: [计算化学,ORCA]
+tags: [ORCA, 输入,基组,辅助基组,RI近似,赝势,相对论基组]
+categories: [计算化学, 软件]
 description: ORCA基组相关
 ---
 

@@ -4,8 +4,8 @@ typora-root-url: 【ORCA】02.几何坐标输入
 mathjax: true
 date: 2020-05-28
 updated:
-tags: [输入,内存]
-categories: [计算化学,ORCA]
+tags: [ORCA, 输入,内存]
+categories: [计算化学, 软件]
 description: ORCA输入文件
 ---
 

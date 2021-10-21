@@ -4,8 +4,8 @@ typora-root-url: 【molpro】04.多组态计算
 mathjax: true
 date: 2019-11-17
 updated:
-tags: [多组态,CASSCF,MCSCF]
-categories: [计算化学,molpro]
+tags: [molpro, 多组态,CASSCF,MCSCF]
+categories: [计算化学,软件]
 description: CASSCF以及一般MCSCF计算
 ---
 

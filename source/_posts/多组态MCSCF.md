@@ -5,7 +5,7 @@ mathjax: true
 date: 2020-11-20 13:45:39
 updated:
 tags: MCSCF
-categories: 计算化学
+categories: [计算化学, 原理]
 description: 多组态方法的一些原理
 ---
 

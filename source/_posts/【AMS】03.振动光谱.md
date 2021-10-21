@@ -4,9 +4,9 @@ typora-root-url: 【AMS】03.振动光谱
 date: 2019-09-23
 updated:
 description: 计算频率的一些
-tags: 频率
+tags: [AMS, 频率]
 mathjax: true
-categories: [计算化学, AMS]
+categories: [计算化学, 软件]
 ---
 
 

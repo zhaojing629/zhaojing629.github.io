@@ -4,8 +4,8 @@ typora-root-url: 【Gaussian】柔性力常数
 mathjax: true
 date: 2020-09-21 20:32:22
 updated: 
-tags: 力常数
-categories: [计算化学,Gaussian]
+tags: [Gaussian, compliance, 力常数]
+categories: [计算化学, 软件]
 description: 计算柔性力常数的方法
 ---
 

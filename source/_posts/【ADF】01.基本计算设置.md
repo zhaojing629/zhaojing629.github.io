@@ -6,7 +6,7 @@ updated:
 description: Engine ADF中的的基本输入结构，SCF选项以及不收敛的处理方法
 tags: [AMS, ADF, SCF, 基组, 对称性, 占据, 相对论]
 mathjax: true
-categories: [计算化学, AMS]
+categories: [计算化学, 软件]
 ---
 
 

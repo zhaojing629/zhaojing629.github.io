@@ -4,9 +4,9 @@ typora-root-url: 【AMS】01.基本输入结构
 date: 2021-05-11
 updated:
 description: AMS2020的主要结构
-tags: [输入, 对称性]
+tags: [AMS, 输入, 对称性]
 mathjax: true
-categories: [计算化学, AMS]
+categories: [计算化学, 软件]
 ---
 
 
