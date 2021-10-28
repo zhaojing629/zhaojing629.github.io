@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=EB Garamond:300,300italic,400,400italic,700,700italic|Dancing Script:300,300italic,400,400italic,700,700italic|ZCOOL XiaoWei:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="通过VMD绘制轨道的基本操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【VMD】01.绘制分子轨道">
+<meta property="og:url" content="http://example.com/2020/09/29/%E3%80%90VMD%E3%80%9101.%E7%BB%98%E5%88%B6%E5%88%86%E5%AD%90%E8%BD%A8%E9%81%93/index.html">
+<meta property="og:site_name" content="Jing&#39;s Notes">
+<meta property="og:description" content="通过VMD绘制轨道的基本操作">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-29T02:46:39.000Z">
+<meta property="article:modified_time" content="2021-10-28T13:22:42.013Z">
+<meta property="article:author" content="Zhao Jing">
+<meta property="article:tag" content="VMD">
+<meta property="article:tag" content="绘图">
+<meta property="article:tag" content="分子轨道">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2020/09/29/%E3%80%90VMD%E3%80%9101.%E7%BB%98%E5%88%B6%E5%88%86%E5%AD%90%E8%BD%A8%E9%81%93/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+  <title>【VMD】01.绘制分子轨道 | Jing's Notes</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d23c6dd5b34ecbaba18b829b9084946";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jing's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/29/%E3%80%90VMD%E3%80%9101.%E7%BB%98%E5%88%B6%E5%88%86%E5%AD%90%E8%BD%A8%E9%81%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="Zhao Jing">
+      <meta itemprop="description" content="做一棵树，只为岁月而生长。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jing's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【VMD】01.绘制分子轨道
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-29 10:46:39" itemprop="dateCreated datePublished" datetime="2020-09-29T10:46:39+08:00">2020-09-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-28 21:22:42" itemprop="dateModified" datetime="2021-10-28T21:22:42+08:00">2021-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">计算化学</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/%E8%BD%AF%E4%BB%B6/" itemprop="url" rel="index"><span itemprop="name">软件</span></a>
+                </span>
+            </span>
+
+          
+            <br>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/09/29/%E3%80%90VMD%E3%80%9101.%E7%BB%98%E5%88%B6%E5%88%86%E5%AD%90%E8%BD%A8%E9%81%93/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/29/%E3%80%90VMD%E3%80%9101.%E7%BB%98%E5%88%B6%E5%88%86%E5%AD%90%E8%BD%A8%E9%81%93/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+            <div class="post-description">通过VMD绘制轨道的基本操作</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="单个cube文件"><a href="#单个cube文件" class="headerlink" title="单个cube文件"></a>单个cube文件</h1><ol>
+<li><p>直接将*.cub文件拖入main窗口</p>
+</li>
+<li><p>将分子改为球棍模型：Graphics→Representation→Drawing method→CPK</p>
+</li>
+<li><p>新建一个等值面：Graphics→Representation→Create Rep</p>
+<ol>
+<li>修改Drawing method为Isosurface</li>
+<li>修改Isovalue为0.05</li>
+<li>修改等值面风格：在Draw中选择Solid Surface（实心）或者Wireframe（网格显示）</li>
+<li>取消显示边框：修改Show为Isosurface</li>
+<li>修改颜色：在Coloring Method选择colorID，在其后选择颜色，如1（红色）</li>
+<li>修改材质：在Material中选择，比如Glossy</li>
+</ol>
+</li>
+<li><p>重复步骤3，除了：</p>
+<ol>
+<li>将Isovalue为负的</li>
+<li>颜色修改为另一个颜色，比如0（蓝色）</li>
+</ol>
+</li>
+<li><p>其他美化：</p>
+<ol>
+<li>display→depth cueing→off</li>
+<li>display→Rendermode→GLSL</li>
+<li>修改背景为白色：Graphics→Color→Display→Background→White</li>
+<li>取消显示坐标轴：Display→Axes→off</li>
+<li>……</li>
+</ol>
+</li>
+<li><p>导出：File→Render→Tachyon，修改Filename，Start Rendering即可，此时VMD目录下有相应的*.dat（是Tachyon的输入文件）和*.bmp文件（在默认设置下渲染出来的图像文件）。</p>
+<ul>
+<li>还可以通过Flie→Save Visualization state…保存当前的操作</li>
+</ul>
+</li>
+<li><p>进一步渲染，6中是使用的默认方法，可以调用VMD自带的tachyon_WIN32.exe渲染器进一步在当前目录下使用*dat文件渲染出*.bmp图像文件，在命令行中输入：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">tachyon_WIN32</span>.exe XXXX.dat -format BMP -o XXXX.bmp -trans_raster<span class="number">3</span>d -res <span class="number">2000</span> <span class="number">1500</span> -fullshade -numthreads <span class="number">4</span> -aasamples <span class="number">24</span> -shadow_filter_off</span><br></pre></td></tr></table></figure>
+<ul>
+<li>透明着色选项：<code>-trans_raster3d</code>（实测效果比其它选项更好）</li>
+<li><code>-res</code>：渲染出的图像像素为2000*1500（通常来说已经足够大了）。</li>
+<li><code>-fullshade</code>代表渲染时考虑阴影效果，还可以用<code>-mediumshade</code>等。</li>
+<li><code>-numthreads</code>设定渲染时的线程数（建议设为CPU的实际物理核心数）。</li>
+<li><code>-aasamples</code>是抗锯齿设定，数值越大抗锯齿效果越好。</li>
+<li><code>-shadow_filter_off</code>：绘制出的图也有阴影效果，但透明的材质的物体，即轨道等值面，不会产生阴影。</li>
+</ul>
+</li>
+</ol>
+<h1 id="批量处理多个轨道文件"><a href="#批量处理多个轨道文件" class="headerlink" title="批量处理多个轨道文件"></a>批量处理多个轨道文件</h1><h2 id="1-生成cube文件"><a href="#1-生成cube文件" class="headerlink" title="1. 生成cube文件"></a>1. 生成cube文件</h2><h3 id="打开Multiwfn生成"><a href="#打开Multiwfn生成" class="headerlink" title="打开Multiwfn生成"></a>打开Multiwfn生成</h3><ol>
+<li><p>Multiwfn载入*fchk文件后，通过以下命令一步步生成。然后就会在Multiwfn文件夹下生成orb0000XX.cub的文件。</p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">200 </span>#其他功能</span><br><span class="line"><span class="symbol">3 </span>#保存轨道</span><br><span class="line"><span class="number">1</span>-<span class="number">4</span>，<span class="number">47</span>-<span class="number">50</span> #绘制轨道的范围</span><br><span class="line"><span class="symbol">3 </span>#选择格点质量</span><br><span class="line"><span class="symbol">1 </span>#单独保存每一个</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>如果是空轨道，Multiwfn计算格点数据的默认的延展距离不够大，可能造成以比较小的轨道等值面数值显示时轨道等值面被截断，可以在第三行和第四行之间加入以下步骤将延展距离加大到12Bohr：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">-10</span></span><br><span class="line"><span class="number">12</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>以上内容可以保存为一个文本文件放在Multiwfn文件夹下用于后续的批处理，如showorb.txt（Multiwfn文件夹中的examples\scripts也有）</p>
+</li>
+</ul>
+</li>
+<li><p>再将*.cub文件移动到VMD根文件夹下</p>
+</li>
+</ol>
+<h3 id="不打开Multiwfn生成"><a href="#不打开Multiwfn生成" class="headerlink" title="不打开Multiwfn生成"></a>不打开Multiwfn生成</h3><ol>
+<li><p>通过Windows批处理命令，在Multiwfn文件夹下新建showorb.bat文件（Multiwfn文件夹中的examples\scripts也有）：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Multiwfn .\XXXXXXXX<span class="selector-class">.fchk</span> &lt; showorb.txt</span><br><span class="line">move /Y *<span class="selector-class">.cub</span> <span class="string">&quot;XXXX\VMD\&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>修改*.fchk文件的路径和名字</li>
+<li>修改VMD的路径，如果路径中有空格，必须加双引号。</li>
+</ul>
+</li>
+<li><p>直接双击showorb.bat，这个脚本就会调用Multiwfn去对指定的输入文件计算要考察的各个轨道的格点数据，并且导出为cube文件，所有算出来的cube文件会被这个脚本自动挪到VMD目录下。</p>
+</li>
+</ol>
+<h2 id="2-绘制部分"><a href="#2-绘制部分" class="headerlink" title="2. 绘制部分"></a>2. 绘制部分</h2><ul>
+<li><p>把Multiwfn文件包的examples\scripts目录下的VMD绘图脚本<strong>showorb.vmd</strong>拷到VMD目录下，然后用文本编辑器编辑VMD目录下的<strong>vmd.rc</strong>，在最后插入此命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> showorb.vmd</span><br></pre></td></tr></table></figure>
+<ul>
+<li>它定义了三个命令：<ul>
+<li><code>orb</code>：用来载入和显示轨道。输入orb 33，就会载入VMD目录下的orb000033.cub，并把它的绘制方式修改为等值面图的形式。之后如果比如再输入orb 34，则33号轨道就会被撤销，而将orb00034.cub以等值面形式显示。</li>
+<li><code>orbiso</code>：用来修改等值面数值，默认为0.05。</li>
+<li><code>orbclean</code>：用来把VMD目录下所有orb开头的.cub文件全都删掉。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>启动VMD，在命令行窗口输入就可以显示相应的文件。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">orb</span> <span class="selector-attr">[序号]</span> </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>看完轨道后，输入<code>orbclean</code>可以把VMD目录下的cub文件都清掉。</p>
+</li>
+</ul>
+<h3 id="showorb-vmd"><a href="#showorb-vmd" class="headerlink" title="showorb.vmd"></a>showorb.vmd</h3><h4 id="orb命令"><a href="#orb命令" class="headerlink" title="orb命令"></a><code>orb</code>命令</h4><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">proc orb &#123;iorb&#125; &#123;</span><br><span class="line">#修改轨道等值面数值默认值，推荐<span class="number">0.02</span>~<span class="number">0.06</span></span><br><span class="line">set isoval <span class="number">0.05</span></span><br><span class="line"></span><br><span class="line">#修改等值面材质，如果想改成透明的，可以使用EdgyGlass或Translucent等</span><br><span class="line">set mater Glossy</span><br><span class="line"></span><br><span class="line">#开启额外的<span class="number">3</span>号光源令图像更亮</span><br><span class="line">#light <span class="number">3</span> on</span><br><span class="line"></span><br><span class="line">color Display Background white</span><br><span class="line">display depthcue off</span><br><span class="line"></span><br><span class="line">#设置某个元素的颜色</span><br><span class="line">color Name C tan</span><br><span class="line">#修改tan颜色的定义。这最终使得碳原子比其默认的深青色显得更柔美</span><br><span class="line">#color change rgb tan <span class="number">0.700000</span> <span class="number">0.560000</span> <span class="number">0.360000</span></span><br><span class="line"></span><br><span class="line">display projection Orthographic</span><br><span class="line">display rendermode GLSL</span><br><span class="line">axes location Off</span><br><span class="line"></span><br><span class="line">if &#123;[molinfo num]&gt;<span class="number">0</span>&#125; &#123;</span><br><span class="line">set viewpoint [molinfo top get &#123;center_matrix rotate_matrix scale_matrix&#125;]</span><br><span class="line">&#125;</span><br><span class="line">mol delete top</span><br><span class="line"></span><br><span class="line">#修改cub文件的命名格式</span><br><span class="line">#mol new AdNDPorb[format %<span class="number">04</span>d $iorb].cub</span><br><span class="line">mol new orb[format %<span class="number">06</span>d $iorb].cub</span><br><span class="line"></span><br><span class="line">mol modstyle <span class="number">0</span> top CPK <span class="number">0.800000</span> <span class="number">0.300000</span> <span class="number">22.000000</span> <span class="number">22.000000</span></span><br><span class="line">mol addrep top</span><br><span class="line">mol modstyle <span class="number">1</span> top Isosurface $isoval <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">#修改正等值面颜色淡绿色</span><br><span class="line">#mol modcolor <span class="number">1</span> top ColorID <span class="number">12</span></span><br><span class="line">mol modcolor <span class="number">1</span> top ColorID <span class="number">1</span></span><br><span class="line"></span><br><span class="line">mol modmaterial <span class="number">1</span> top $mater</span><br><span class="line">mol addrep top</span><br><span class="line">mol modstyle <span class="number">2</span> top Isosurface -$isoval <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">#修改负值部分等值面的颜色为淡蓝色</span><br><span class="line">#mol modcolor <span class="number">2</span> top ColorID <span class="number">22</span></span><br><span class="line">mol modcolor <span class="number">2</span> top ColorID <span class="number">0</span></span><br><span class="line"></span><br><span class="line">mol modmaterial <span class="number">2</span> top $mater</span><br><span class="line">if [info exists viewpoint] &#123;</span><br><span class="line">molinfo top set &#123;center_matrix rotate_matrix scale_matrix&#125; $viewpoint</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#保存当前状态的渲染文件</span><br><span class="line">#render Tachyon $iorb.dat <span class="string">&quot;tachyon_WIN32.exe $&#123;iorb&#125;.dat -format BMP -o $&#123;iorb&#125;.bmp -trans_raster3d -res 2000 1500 -numthreads 4 -aasamples 24 -mediumshade &quot;</span></span><br><span class="line">render Tachyon $iorb.dat <span class="string">&quot;tachyon_WIN32.exe $&#123;iorb&#125;.dat -format BMP -o $&#123;iorb&#125;.bmp  -aasamples 12&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其他美化：</p>
+<ul>
+<li>material change mirror Opaque 0.15：修改不透明材质（用于显示分子结构）的mirror属性，大于0的时候通过考虑光线追踪的渲染器渲染的时候就会有反光效果</li>
+<li>material change outline Opaque 4.000000：设定不透明材质的轮廓深度</li>
+<li>material change outlinewidth Opaque 0.5：设定不透明材质的轮廓粗度。设置轮廓可以使原子有勾边效果（有效避免白色的氢原子在某些地方和白色背景连为一体）</li>
+<li>material change ambient Glossy 0.1：设置用于显示等值面的Glossy材质的ambient属性</li>
+<li>material change diffuse Glossy 0.600000</li>
+<li>material change opacity Glossy 0.75：把Glossy材质改为微透明</li>
+<li>material change shininess Glossy 1.0</li>
+<li>display distance -7.0：让视角距离画面的更远，可避免在窗口边缘的物体由于近大远小而畸变太厉害</li>
+<li>display height 10：这句是避免因为减小了distance而导致图像变小</li>
+<li>……</li>
+</ul>
+<h4 id="orbiso命令"><a href="#orbiso命令" class="headerlink" title="orbiso命令"></a><code>orbiso</code>命令</h4><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">proc orbiso &#123;isoval&#125; &#123;</span><br><span class="line">mol modstyle <span class="number">1</span> top Isosurface $isoval <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1</span> <span class="number">1</span></span><br><span class="line">mol modstyle <span class="number">2</span> top Isosurface -$isoval <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1</span> <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="orbclean命令"><a href="#orbclean命令" class="headerlink" title="orbclean命令"></a><code>orbclean</code>命令</h4><figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">proc</span><span class="title"> orbclean</span> &#123;&#125; &#123;</span><br><span class="line"><span class="comment">#修改cub文件的命名格式</span></span><br><span class="line"><span class="comment">#file delete &#123;*&#125;[glob AdNDPorb*.cub]</span></span><br><span class="line"><span class="keyword">file</span> delete &#123;*&#125;[<span class="keyword">glob</span> orb*.cub]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="使用脚本任意cube文件"><a href="#使用脚本任意cube文件" class="headerlink" title="使用脚本任意cube文件"></a>使用脚本任意cube文件</h1><p>把Multiwfn文件包的examples\scripts目录下的VMD绘图脚本showorb.vmd拷到VMD目录下，然后用文本编辑器编辑VMD目录下的vmd.rc，在最后插入此命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> showcub.vmd</span><br></pre></td></tr></table></figure>
+<p>此脚本定义了四条命令，可以直接在VMD的控制台里输入，这里直接给出一些例子：</p>
+<ul>
+<li><code>cub MIO</code>：将VMD目录下的MIO.cub绘制成等值面图，正值和负值部分分别用绿色和蓝色显示，等值面数值分别为默认值0.05和-0.05</li>
+<li><code>cub MIO 0.02</code>：同上，但正值和负值部分等值面数值直接分别设为0.02和-0.02</li>
+<li><code>cubiso 0.015</code>：在使用cub命令后使用，把当前载入的格点数据的正值和负值部分分别设为0.015和-0.015</li>
+</ul>
+<p>有的时候我们需要同时将两个cube文件显示在一起，此脚本里也定义了相应命令用于此目的，示例：</p>
+<ul>
+<li><code>cub2 eri nozomi</code>：将VMD目录下的eri.cub和nozomi.cub同时绘制成等值面，分别用绿色和蓝色表示，等值面数值都为默认的0.05（注：如果eri和nozomi格点数据里也有负值部分，负值部分不会被显示出来）</li>
+<li><code>cub2 eri nozomi 0.02</code>：同上，但是二者的等值面数值都直接设为0.02</li>
+<li><code>cub2iso 0.015</code>：在使用cub2命令后使用，代表把已载入的两套cube文件对应的等值面数值都设为0.015</li>
+</ul>
+<p>用Multiwfn的主功能5计算完这个体系的自旋密度格点数据后，在后处理菜单选择导出cube文件，当前目录下就得到了spindensity.cub。将此文件挪到VMD目录下，启动VMD，直接输入cub spindensity 0.01</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>有用可戳(●ˇ∀ˇ●)</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="Zhao Jing 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Zhao Jing
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2020/09/29/%E3%80%90VMD%E3%80%9101.%E7%BB%98%E5%88%B6%E5%88%86%E5%AD%90%E8%BD%A8%E9%81%93/" title="【VMD】01.绘制分子轨道">http://example.com/2020/09/29/【VMD】01.绘制分子轨道/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/VMD/" rel="tag"><i class="fa fa-tag"></i> VMD</a>
+              <a href="/tags/%E7%BB%98%E5%9B%BE/" rel="tag"><i class="fa fa-tag"></i> 绘图</a>
+              <a href="/tags/%E5%88%86%E5%AD%90%E8%BD%A8%E9%81%93/" rel="tag"><i class="fa fa-tag"></i> 分子轨道</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/24/%E3%80%90Linux%E3%80%91Windows%E4%B8%8B%E5%AE%89%E8%A3%85%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="prev" title="【Linux】Windows下安装虚拟机">
+      <i class="fa fa-chevron-left"></i> 【Linux】Windows下安装虚拟机
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/06/%E6%90%AD%E5%BB%BA%E7%BD%91%E7%AB%99%E6%95%99%E7%A8%8B/" rel="next" title="搭建个人网站">
+      搭建个人网站 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%95%E4%B8%AAcube%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">单个cube文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%B9%E9%87%8F%E5%A4%84%E7%90%86%E5%A4%9A%E4%B8%AA%E8%BD%A8%E9%81%93%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">批量处理多个轨道文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%94%9F%E6%88%90cube%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">1. 生成cube文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%BC%80Multiwfn%E7%94%9F%E6%88%90"><span class="nav-number">2.1.1.</span> <span class="nav-text">打开Multiwfn生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E6%89%93%E5%BC%80Multiwfn%E7%94%9F%E6%88%90"><span class="nav-number">2.1.2.</span> <span class="nav-text">不打开Multiwfn生成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%BB%98%E5%88%B6%E9%83%A8%E5%88%86"><span class="nav-number">2.2.</span> <span class="nav-text">2. 绘制部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#showorb-vmd"><span class="nav-number">2.2.1.</span> <span class="nav-text">showorb.vmd</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#orb%E5%91%BD%E4%BB%A4"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">orb命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#orbiso%E5%91%BD%E4%BB%A4"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">orbiso命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#orbclean%E5%91%BD%E4%BB%A4"><span class="nav-number">2.2.1.3.</span> <span class="nav-text">orbclean命令</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%84%9A%E6%9C%AC%E4%BB%BB%E6%84%8Fcube%E6%96%87%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">使用脚本任意cube文件</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhao Jing"
+      src="/images/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">Zhao Jing</p>
+  <div class="site-description" itemprop="description">做一棵树，只为岁月而生长。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">60</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaojing629" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaojing629" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:295483858@qq.com" title="E-Mail → mailto:295483858@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+<div class="sidebar-categories" p align="left">
+  <font size="2">
+  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/">计算化学</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/%E8%BD%AF%E4%BB%B6/">软件</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/%E5%8E%9F%E7%90%86/">原理</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%AB%99/">网站</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F/">系统</a></li></ul>
+  </font>
+  </p /div>
+
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title"></h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ADF/" rel="tag">ADF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AIM/" rel="tag">AIM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AMS/" rel="tag">AMS</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASSCF/" rel="tag">CASSCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CP2K/" rel="tag">CP2K</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DLPNO/" rel="tag">DLPNO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gaussian/" rel="tag">Gaussian</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HF/" rel="tag">HF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jmol/" rel="tag">Jmol</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LmodeA/" rel="tag">LmodeA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCSCF/" rel="tag">MCSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MOKIT/" rel="tag">MOKIT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Multiwfn/" rel="tag">Multiwfn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NBO/" rel="tag">NBO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NICS/" rel="tag">NICS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORCA/" rel="tag">ORCA</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pyscf/" rel="tag">Pyscf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RI%E8%BF%91%E4%BC%BC/" rel="tag">RI近似</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMD/" rel="tag">VMD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/compliance/" rel="tag">compliance</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/molpro/" rel="tag">molpro</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%B4%E7%95%8C%E7%82%B9/" rel="tag">临界点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98/" rel="tag">内存</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="tag">几何优化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%AD%90%E8%BD%A8%E9%81%93/" rel="tag">分子轨道</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%9D%E7%8C%9C/" rel="tag">初猜</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%9B%E5%B8%B8%E6%95%B0/" rel="tag">力常数</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%82%B9/" rel="tag">单点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag">占据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%90%E6%A0%87/" rel="tag">坐标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%BB%84/" rel="tag">基组</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BB%84%E6%80%81/" rel="tag">多组态</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag">对称性</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%93%E6%89%91%E5%88%86%E6%9E%90/" rel="tag">拓扑分析</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%94%B6%E6%95%9B/" rel="tag">收敛</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag">波函</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag">点群</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E8%8D%B7/" rel="tag">电荷</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA/" rel="tag">相对论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%9F%BA%E7%BB%84/" rel="tag">相对论基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%98%E5%9B%BE/" rel="tag">绘图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%8A%B3%E9%A6%99%E6%80%A7/" rel="tag">芳香性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%9D%E5%8A%BF/" rel="tag">赝势</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%85%E5%8A%A9%E5%9F%BA%E7%BB%84/" rel="tag">辅助基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5/" rel="tag">输入</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%87%BA/" rel="tag">输出</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E5%BE%84/" rel="tag">键径</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E7%BA%A7/" rel="tag">键级</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%91%E7%8E%87/" rel="tag">频率</a><span class="tag-list-count">2</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-flask"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhao Jing</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">270k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='0,0,0' opacity='0.3' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : '3L90wCaNUKa1MzSQcAhzkLtk-gzGzoHsz',
+      appKey     : 'fQ4t73jXnb71Y9zQWfXj5bIP',
+      placeholder: "可以输入您发现文中的错误或建议~(。・∀・)ノ",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
