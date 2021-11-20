@@ -7698,9 +7698,10 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 <ul>
 <li><code>measure ON/OFF</code>：打开和关闭距离、角度、二面角测量标签和测量线。</li>
 <li><code>measure DELETE</code>：删除所有测量</li>
+<li><code>measure &quot;n:labelFormat&quot;</code>：测量对象及其单位，n为2、3、或4，代表键长、……。label format中可为”//unit”，代表测量单位等。</li>
 </ul>
 <p>例子：</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">measure</span> RANGE <span class="number">1</span>.<span class="number">5</span> <span class="number">2</span>.<span class="number">5</span> <span class="literal">ALL</span> (_C) (_U)</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">measure</span> RANGE <span class="number">1</span>.<span class="number">5</span> <span class="number">2</span>.<span class="number">5</span> <span class="literal">ALL</span> (_C) (_U) <span class="string">&quot;2://pm&quot;</span></span><br></pre></td></tr></table></figure>
 <h1 id="set-lighting"><a href="#set-lighting" class="headerlink" title="set (lighting)"></a>set (lighting)</h1><ul>
 <li><code>set zShade OFF</code>：是否启用“雾”或“淡入淡出”效果。根据与观察者的距离对对象进行着色，使远处的对象淡入背景中。<ul>
 <li>使用 <code>SLAB</code> 和 <code>DEPTH</code> 设置的值分别确定无效果点和完全效果点（默认为 100 和 0）。当 <code>ZSLAB</code> 不等于 <code>ZDEPTH</code> 时（默认均为0），<code>SLAB</code> 和 <code>DEPTH</code> 的设置被 <code>ZSLAB</code> 和 <code>ZDEPTH</code> 覆盖。</li>
@@ -7768,6 +7769,7 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 <li><code>(carbon)[3]</code>：选择第三个C原子，[0]表示最后一个原子，负数表示从最后一个原子（0）开始基数。</li>
 </ul>
 <p>如果需要嵌入到其他表达式中，还需要在外面加<code>&#123;&#125;</code>，比如<code>measure &#123;(_O)[1]&#125; &#123;(_O)[2]&#125;</code></p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="comment">#z</span></span><br><span class="line"><span class="attribute">select</span> (&#123;<span class="number">4</span> <span class="number">7</span> <span class="number">8</span> <span class="number">12</span>:<span class="number">16</span> <span class="number">25</span>:<span class="number">29</span> <span class="number">32</span> <span class="number">35</span>:<span class="number">40</span> <span class="number">43</span>:<span class="number">84</span>&#125;)</span><br></pre></td></tr></table></figure>
 <h1 id="atom-properties-原子属性"><a href="#atom-properties-原子属性" class="headerlink" title="[atom properties]原子属性"></a>[atom properties]原子属性</h1><p><a href="https://chemapps.stolaf.edu/jmol/docs/index.htm?ver=14.31#atomproperties">https://chemapps.stolaf.edu/jmol/docs/index.htm?ver=14.31#atomproperties</a></p>
 <div class="table-container">
 <table>
@@ -7819,11 +7821,9 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 <p>设置边界框的坐标</p>
 <figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">boundbox &#123;<span class="number">0</span> <span class="number">0</span> <span class="number">0</span>&#125;&#123;<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-      </categories>
       <tags>
         <tag>Jmol</tag>
+        <tag>绘图</tag>
       </tags>
   </entry>
   <entry>
