@@ -8766,157 +8766,6 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
       </tags>
   </entry>
   <entry>
-    <title>【Pyscf】01.基本计算设置</title>
-    <url>/2021/09/02/%E3%80%90Pyscf%E3%80%9101.%E5%9F%BA%E6%9C%AC%E8%AE%A1%E7%AE%97%E8%AE%BE%E7%BD%AE%20(SFConflict%202019311526@tsinghua.edu.cn%202021-11-04-14-47-00)/</url>
-    <content><![CDATA[<h1 id="定义分子"><a href="#定义分子" class="headerlink" title="定义分子"></a>定义分子</h1><p>有三种方法可以定义和初始化一个分子，</p>
-<ol>
-<li><p>使用方法的关键字参数<code>Mole.build()</code>来初始化一个分子：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyscf <span class="keyword">import</span> gto</span><br><span class="line">mol = gto.Mole()</span><br><span class="line">mol.build(</span><br><span class="line">	atom = <span class="string">&#x27;&#x27;&#x27;O 0 0 0; H  0 1 0; H 0 0 1&#x27;&#x27;&#x27;</span>,</span><br><span class="line">	basis = <span class="string">&#x27;sto-3g&#x27;</span>)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>将几何、基础等分配给Mole 对象，然后调用该<code>build()</code>方法：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyscf <span class="keyword">import</span> gto</span><br><span class="line">mol = gto.Mole()</span><br><span class="line">mol.atom = <span class="string">&#x27;&#x27;&#x27;O 0 0 0; H  0 1 0; H 0 0 1&#x27;&#x27;&#x27;</span></span><br><span class="line">mol.basis = <span class="string">&#x27;sto-3g&#x27;</span></span><br><span class="line">mol.build()</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用快捷功能<code>pyscf.M()</code>或<code>Mole.M()</code>。这些函数将所有参数传递给<code>build()</code>方法：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pyscf</span><br><span class="line">mol = pyscf.M(</span><br><span class="line">    atom = <span class="string">&#x27;&#x27;&#x27;O 0 0 0; H  0 1 0; H 0 0 1&#x27;&#x27;&#x27;</span>,</span><br><span class="line">    basis = <span class="string">&#x27;sto-3g&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyscf <span class="keyword">import</span> gto</span><br><span class="line">mol = gto.M(</span><br><span class="line">    atom = <span class="string">&#x27;&#x27;&#x27;O 0 0 0; H  0 1 0; H 0 0 1&#x27;&#x27;&#x27;</span>,</span><br><span class="line">    basis = <span class="string">&#x27;sto-3g&#x27;</span>)</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="几何"><a href="#几何" class="headerlink" title="几何"></a>几何</h2><h3 id="笛卡尔形式"><a href="#笛卡尔形式" class="headerlink" title="笛卡尔形式"></a>笛卡尔形式</h3><p>默认单位为埃（可以通过将属性设置<code>unit</code> 为<code>&#39;Angstrom&#39;</code>或<code>Bohr</code>来指定单位）：</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol</span> = gto.Mole()</span><br><span class="line"><span class="attr">mol.atom</span> = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    O   0. 0. 0.</span></span><br><span class="line"><span class="string">    H   0. 1. 0.</span></span><br><span class="line"><span class="string">    H   0. 0. 1.</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="attr">mol.unit</span> = <span class="string">&#x27;B&#x27;</span> <span class="comment"># 不区分大小写，任何不以&#x27;B&#x27;或&#x27;AU&#x27;开头的字符串都被视为&#x27;Angstrom&#x27;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>分子中的原子由一个元素符号加上三个坐标数字表示。不同的原子应该由<code>;</code>或 换行符分隔 。在同一个原子中，<code>,</code>可以用来分隔不同的项目。空行或以 开头的<code>#</code>行将被忽略：</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">mol = pyscf.M(</span><br><span class="line">atom = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">#O 0 0 0</span></span><br><span class="line"><span class="string">H 0 1 0</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">H 0 0 1</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span>)</span><br><span class="line">mol.natm  <span class="comment">#分子的原子个数，会输出2</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>几何字符串不区分大小写。它还支持输入元素的核电荷：</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol</span> = gto.Mole()</span><br><span class="line"><span class="attr">mol.atom</span> = <span class="string">&#x27;&#x27;&#x27;8 0. 0. 0.; h 0. 1. 0; H 0. 0. 1.&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>如果需要标记一个原子以将其与其他原子区分开，可以在原子符号前加上数字<code>1234567890</code>或特殊字符<code>~!@#$%^&amp;*()_+.?:&lt;&gt;[]&#123;&#125;|</code>（非 <code>,</code>和<code>;</code>）作为前缀或后缀 。通过这种修饰，可以在不同的原子上指定不同的基组、质量或核模型：</p>
-<figure class="highlight prolog"><table><tr><td class="code"><pre><span class="line">mol = gto.<span class="symbol">Mole</span>()</span><br><span class="line">mol.atom = <span class="string">&#x27;&#x27;</span><span class="string">&#x27;8 0 0 0; h:1 0 1 0; H@2 0 0 1&#x27;</span><span class="string">&#x27;&#x27;</span></span><br><span class="line">mol.unit = <span class="string">&#x27;B&#x27;</span></span><br><span class="line">mol.basis = &#123;<span class="string">&#x27;O&#x27;</span>: <span class="string">&#x27;sto-3g&#x27;</span>, <span class="string">&#x27;H&#x27;</span>: <span class="string">&#x27;cc-pvdz&#x27;</span>, <span class="string">&#x27;H@2&#x27;</span>: <span class="string">&#x27;6-31G&#x27;</span>&#125;</span><br><span class="line">mol.build()</span><br><span class="line">print(mol.<span class="symbol">_atom</span>)</span><br><span class="line">#输出结果为：[[<span class="string">&#x27;O&#x27;</span>, [<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>]], [<span class="string">&#x27;H:1&#x27;</span>, [<span class="number">0.0</span>, <span class="number">1.0</span>, <span class="number">0.0</span>]], [<span class="string">&#x27;H@2&#x27;</span>, [<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>]]]</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>还可以指定 xyz 文件的路径，PySCF 将使用该文件中的坐标来构建<code>Mole.atom</code>.</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol</span> = gto.M(atom=<span class="string">&quot;my_molecule.xyz&quot;</span>)</span><br></pre></td></tr></table></figure>
-<figure class="highlight gcode"><table><tr><td class="code"><pre><span class="line">mol = gto.Mole<span class="comment">()</span></span><br><span class="line">mol.atom = <span class="string">&quot;my_molecule.xyz&quot;</span></span><br><span class="line">mol.build<span class="comment">()</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>可以输入以下内部格式的几何图形 <code>Mole.atom</code>：</p>
-<figure class="highlight gml"><table><tr><td class="code"><pre><span class="line">atom = [[atom1, (<span class="symbol">x</span>, <span class="symbol">y</span>, z)],</span><br><span class="line">        [atom2, (<span class="symbol">x</span>, <span class="symbol">y</span>, z)],</span><br><span class="line">        ...</span><br><span class="line">        [atomN, (<span class="symbol">x</span>, <span class="symbol">y</span>, z)]]</span><br></pre></td></tr></table></figure>
-<p>这样可以使用 Python 脚本来构造几何：</p>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">mol = gto.Mole()</span><br><span class="line">mol<span class="selector-class">.atom</span> = [[<span class="string">&#x27;O&#x27;</span>,(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)], [<span class="string">&#x27;H&#x27;</span>,(<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>)], [<span class="string">&#x27;H&#x27;</span>,(<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>)]]</span><br><span class="line">mol<span class="selector-class">.atom</span>.extend([[<span class="string">&#x27;H&#x27;</span>, (<span class="selector-tag">i</span>, <span class="selector-tag">i</span>, i)] <span class="keyword">for</span> <span class="selector-tag">i</span> <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">5</span>)])</span><br><span class="line">mol.build()</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(mol._atom)</span></span></span><br><span class="line">#注意输出的结果单位是Bohr的。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><a href="https://github.com/pyscf/pyscf/blob/master/examples/gto/03-ghost_atom.py">ghost分子</a> </p>
-</li>
-</ul>
-<h3 id="Z-matrix-输入格式"><a href="#Z-matrix-输入格式" class="headerlink" title="Z-matrix 输入格式"></a>Z-matrix 输入格式</h3><figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol</span> = gto.Mole()</span><br><span class="line"><span class="attr">mol.atom</span> = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    O</span></span><br><span class="line"><span class="string">    H  1  1.2</span></span><br><span class="line"><span class="string">    H  1  1.2  2 105</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
-<h3 id="打印分子"><a href="#打印分子" class="headerlink" title="打印分子"></a>打印分子</h3><p>建立好分子后，会存储为属性<code>Mole._atom</code>。</p>
-<ul>
-<li><p>一旦<code>Mole</code>构建了对象，就可以通过该<code>Mole.atom_coords()</code>函数访问分子几何结构。此函数为每个原子的坐标返回一个 (N,3) 数组：</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="builtin-name">print</span>(mol.atom_coords(<span class="attribute">unit</span>=<span class="string">&#x27;Bohr&#x27;</span>)) # unit can be <span class="string">&quot;ANG&quot;</span> <span class="keyword">or</span> <span class="string">&quot;Bohr&quot;</span></span><br><span class="line"><span class="comment">#默认单位是Bohr</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="基组"><a href="#基组" class="headerlink" title="基组"></a>基组</h2><ul>
-<li><p>定义基组的最简单方法是将基的名称作为字符串分配给<code>Mole.basis</code>：</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol.basis</span> = <span class="string">&#x27;sto-3g&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>此输入将指定的基组应用于所有原子。字符串中基组的名称不区分大小写。名称中的空格、破折号和下划线都将被忽略。</p>
-</li>
-<li><p>如果不同元素需要不同的基组：</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol.basis</span> = &#123;<span class="string">&#x27;O&#x27;</span>: <span class="string">&#x27;sto-3g&#x27;</span>, <span class="string">&#x27;H&#x27;</span>: <span class="string">&#x27;6-31g&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>还可以使用辅助函数输入自定义基组。该函数<code>gto.basis.parse()</code>可以解析 NWChem 格式的基础字符串 </p>
-<figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line">mol.basis = &#123;&#x27;O&#x27;: gto.basis.parse(&#x27;&#x27;&#x27;</span><br><span class="line">C    S</span><br><span class="line">     71.<span class="number">616837</span>0              0.<span class="number">15432897</span></span><br><span class="line">     13.<span class="number">045096</span>0              0.<span class="number">53532814</span></span><br><span class="line">      3.<span class="number">530512</span>2              0.<span class="number">44463454</span></span><br><span class="line">C    SP</span><br><span class="line">      2.<span class="number">941249</span>4             -0.<span class="number">09996723</span>             0.<span class="number">15591627</span></span><br><span class="line">      0.<span class="number">683483</span>1              0.<span class="number">39951283</span>             0.<span class="number">60768372</span></span><br><span class="line">      0.<span class="number">222289</span>9              0.<span class="number">70011547</span>             0.<span class="number">39195739</span></span><br><span class="line">&#x27;&#x27;&#x27;)&#125;</span><br></pre></td></tr></table></figure>
-<p>函数<code>gto.basis.load()</code>可以从数据库加载任意基组，即使基组与元素不匹配：</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol.basis</span> = &#123;<span class="string">&#x27;H&#x27;</span>: gto.basis.load(<span class="string">&#x27;sto3g&#x27;</span>, <span class="string">&#x27;C&#x27;</span>)&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>GHOST原子：</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol.basis</span> = &#123;<span class="string">&#x27;GHOST&#x27;</span>: gto.basis.load(<span class="string">&#x27;cc-pvdz&#x27;</span>, <span class="string">&#x27;O&#x27;</span>), <span class="string">&#x27;H&#x27;</span>: <span class="string">&#x27;sto3g&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>与几何输入的要求一样，可以使用原子符号（不区分大小写）或原子核电荷作为<code>basis</code>字典的关键字 。数字和特殊字符的前缀和后缀是允许的。如果修饰的原子符号出现在 <code>atom</code>但不在 中<code>basis</code>，基础解析器将删除所有修饰并在<code>basis</code>字典中寻找纯原子符号 ：</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">mol</span>.atom = &#x27;<span class="number">8</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>; h<span class="number">1</span> <span class="number">0</span> <span class="number">1</span> <span class="number">0</span>; H<span class="number">2</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1</span>&#x27; mol.basis = &#123;&#x27;O&#x27;：&#x27;sto-<span class="number">3</span>g&#x27;，&#x27;H&#x27;：&#x27;sto<span class="number">3</span>g&#x27;，&#x27;H<span class="number">1</span>&#x27;：&#x27;<span class="number">6</span>-<span class="number">31</span>G&#x27;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#6-31G基组将分配给 atom H1，但STO-3G基将用于 atom H2</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="ECP"><a href="#ECP" class="headerlink" title="ECP"></a>ECP</h3><ul>
-<li><p>可以使用属性指定有效核心电位 (ECP) <code>Mole.ecp</code>。标量型 ECP 可用于所有分子和晶体方法。<a href="https://pyscf.org/user/gto.html#ecp">内置标量 ECP 数</a>：</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol</span> = gto.M(atom=<span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string"> Na 0. 0. 0.</span></span><br><span class="line"><span class="string"> H  0.  0.  1.&#x27;&#x27;&#x27;</span>,</span><br><span class="line">            <span class="attr">basis</span>=&#123;<span class="string">&#x27;Na&#x27;</span>:<span class="string">&#x27;lanl2dz&#x27;</span>, <span class="string">&#x27;H&#x27;</span>:<span class="string">&#x27;sto3g&#x27;</span>&#125;,</span><br><span class="line">            <span class="attr">ecp</span> = &#123;<span class="string">&#x27;Na&#x27;</span>:<span class="string">&#x27;lanl2dz&#x27;</span>&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>ECP 参数可以使用 NWChem 格式直接在输入脚本中指定</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">mol</span> <span class="string">=</span> <span class="string">gto.M(atom=&#x27;&#x27;&#x27;</span></span><br><span class="line"> <span class="string">Na</span> <span class="number">0</span><span class="string">.</span> <span class="number">0</span><span class="string">.</span> <span class="number">0</span><span class="string">.</span></span><br><span class="line"> <span class="string">H</span>  <span class="number">0</span><span class="string">.</span>  <span class="number">0</span><span class="string">.</span>  <span class="number">1</span><span class="string">.&#x27;&#x27;&#x27;,</span></span><br><span class="line">            <span class="string">basis=&#123;&#x27;Na&#x27;:&#x27;lanl2dz&#x27;,</span> <span class="string">&#x27;H&#x27;</span><span class="string">:&#x27;sto3g&#x27;&#125;,</span></span><br><span class="line">            <span class="string">ecp</span> <span class="string">=</span> &#123;<span class="attr">&#x27;Na&#x27;:</span> <span class="string">gto.basis.parse_ecp(&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">Na</span> <span class="string">nelec</span> <span class="number">10</span></span><br><span class="line"><span class="string">Na</span> <span class="string">ul</span></span><br><span class="line"><span class="number">0</span>      <span class="number">2.0000000</span>              <span class="number">6.0000000</span>        </span><br><span class="line"><span class="number">1</span>    <span class="number">175.5502590</span>            <span class="number">-10.0000000</span>        </span><br><span class="line"><span class="number">2</span>      <span class="number">2.3365719</span>             <span class="number">-6.0637782</span>        </span><br><span class="line"><span class="number">2</span>      <span class="number">0.7799867</span>             <span class="number">-0.7299393</span>        </span><br><span class="line"><span class="string">Na</span> <span class="string">S</span></span><br><span class="line"><span class="number">0</span>    <span class="number">243.3605846</span>              <span class="number">3.0000000</span>        </span><br><span class="line"><span class="number">1</span>     <span class="number">41.5764759</span>             <span class="number">36.2847626</span>        </span><br><span class="line"><span class="number">2</span>     <span class="number">13.2649167</span>             <span class="number">72.9304880</span>        </span><br><span class="line"><span class="number">2</span>      <span class="number">0.9764209</span>              <span class="number">6.0123861</span>        </span><br><span class="line"><span class="string">Na</span> <span class="string">P</span></span><br><span class="line"><span class="number">0</span>   <span class="number">1257.2650682              </span><span class="number">5.0000000</span>        </span><br><span class="line"><span class="number">1</span>    <span class="number">189.6248810</span>            <span class="number">117.4495683</span>        </span><br><span class="line"><span class="number">2</span>     <span class="number">54.5247759</span>            <span class="number">423.3986704</span>        </span><br><span class="line"><span class="number">2</span>      <span class="number">0.9461106</span>              <span class="number">7.1241813</span>        </span><br><span class="line"><span class="string">&#x27;&#x27;</span><span class="string">&#x27;)&#125;)</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="对称性"><a href="#对称性" class="headerlink" title="对称性"></a>对称性</h2><ul>
-<li><p>将属性设置为<code>Mole.symmetry</code>来为分子计算调用点群对称性<code>True</code>：</p>
-<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">mol = pyscf.M(</span><br><span class="line">     atom = &#x27;B <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>; H <span class="number">0</span> <span class="number">1</span> <span class="number">1</span>; H <span class="number">1</span> <span class="number">0</span> <span class="number">1</span>; H <span class="number">1</span> <span class="number">1</span> <span class="number">0</span>&#x27;,</span><br><span class="line">     symmetry = True</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>点群对称信息保存在<code>Mole</code>对象中。<code>symm</code>PySCF的对称模块 ( ) 可以检测任意点群。检测到的点组保存在 中<code>Mole.topgroup</code>，支持的子组保存在 中<code>Mole.groupname</code>：</p>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">print</span><span class="params">(mol.topgroup)</span></span></span><br><span class="line">#C3v</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(mol.groupname)</span></span></span><br><span class="line">#Cs</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>PySCF 支持线性分子对称性 D<sub>∞h</sub>（<code>Dooh</code>在程序中标记）和C<sub>∞v</sub> （标记为<code>Coov</code>），D2h群及其子群。有时需要使用较低的对称性而不是检测到的对称性群。子群的对称性可以由<code>Mole.symmetry_subgroup</code>指定（不影响<code>Mole.symmetry</code>） ，程序将首先检测可能的最高对称群，然后将点群对称性降低到指定的子群：</p>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">mol = gto.Mole()</span><br><span class="line">mol<span class="selector-class">.atom</span> = <span class="string">&#x27;N 0 0 0; N 0 0 1&#x27;</span></span><br><span class="line">mol<span class="selector-class">.symmetry</span> = True</span><br><span class="line">mol<span class="selector-class">.symmetry_subgroup</span> = C2</span><br><span class="line">mol.build()</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(mol.topgroup)</span></span></span><br><span class="line">#Dooh</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(mol.groupname)</span></span></span><br><span class="line">#C2</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>当将特定的对称性分配给 时<code>Mole.symmetry</code>，初始化函数<code>Mole.build()</code>将测试分子几何形状是否符合所需的对称性。如果没有，初始化将停止并发出错误消息：</p>
-<figure class="highlight clean"><table><tr><td class="code"><pre><span class="line">mol = gto.Mole()</span><br><span class="line">mol.atom = <span class="string">&#x27;O 0 0 0; C 0 0 1&#x27;</span></span><br><span class="line">mol.symmetry = <span class="string">&#x27;Dooh&#x27;</span></span><br><span class="line">mol.build()</span><br><span class="line"></span><br><span class="line">#RuntimeWarning: Unable to identify input symmetry Dooh.</span><br><span class="line">#Try symmetry=<span class="string">&quot;Coov&quot;</span> <span class="keyword">with</span> geometry (unit=<span class="string">&quot;Bohr&quot;</span>)</span><br><span class="line">#(<span class="string">&#x27;O&#x27;</span>, [<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">-0.809882624813598</span>])</span><br><span class="line">#(<span class="string">&#x27;C&#x27;</span>, [<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0798434997514639</span>])</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="轨道"><a href="#轨道" class="headerlink" title="轨道"></a>轨道</h3><p>在<code>Mole</code>对象中启用对称时，点群对称信息将用于构建对称适应轨道基组</p>
-<ul>
-<li>对称适应轨道被保存 <code>Mole.symm_orb</code>为二维阵列列表。列表中的每个元素都是不可约表示的 AO（原子轨道）到对称适应轨道转换矩阵。</li>
-<li>不可约表示的名称存储在 中<code>Mole.irrep_name</code>，它们的内部 ID存储在<code>Mole.irrep_id</code>：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">mol = gto.Mole()</span><br><span class="line">mol.atom = <span class="string">&#x27;O 0 0 0; O 0 0 1.2&#x27;</span></span><br><span class="line">mol.spin = <span class="number">2</span></span><br><span class="line">mol.symmetry = <span class="string">&quot;D2h&quot;</span></span><br><span class="line">mol.build()</span><br><span class="line"><span class="keyword">for</span> s,i,c <span class="keyword">in</span> <span class="built_in">zip</span>(mol.irrep_name, mol.irrep_id, mol.symm_orb):</span><br><span class="line">    print(s, i, c.shape)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># Ag 0 (10, 3)</span></span><br><span class="line"><span class="comment"># B2g 2 (10, 1)</span></span><br><span class="line"><span class="comment"># B3g 3 (10, 1)</span></span><br><span class="line"><span class="comment"># B1u 5 (10, 3)</span></span><br><span class="line"><span class="comment"># B2u 6 (10, 1)</span></span><br><span class="line"><span class="comment"># B3u 7 (10, 1)</span></span><br></pre></td></tr></table></figure>
-<p>对称适应轨道用作以下 SCF 或后 SCF 计算的基函数：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">mf = scf.RHF(mol)</span><br><span class="line">mf.kernel()</span><br><span class="line"><span class="comment"># converged SCF energy = -147.631655286561</span></span><br></pre></td></tr></table></figure>
-<p>可以检查每个不可约表示中 MO 的占用情况：</p>
-<ul>
-<li>为了标记给定轨道的不可约表示， <code>symm.label_orb_symm()</code>需要在<code>Mole</code>对象中初始化的点群对称性信息，包括不可约表示的 ID ( <code>Mole.irrep_id</code>) 和对称适应基<code>Mole.symm_orb</code>。对于每个<code>irrep_id</code>， <code>Mole.irrep_name</code>给出相关的不可表达符号 (A1, B1 …)。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy</span><br><span class="line"><span class="keyword">from</span> pyscf <span class="keyword">import</span> symm</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">myocc</span>(<span class="params">mf</span>):</span></span><br><span class="line">    mol = mf.mol</span><br><span class="line">    irrep_id = mol.irrep_id</span><br><span class="line">    so = mol.symm_orb</span><br><span class="line">    orbsym = symm.label_orb_symm(mol, irrep_id, so, mf.mo_coeff)</span><br><span class="line">    doccsym = numpy.array(orbsym)[mf.mo_occ==<span class="number">2</span>]</span><br><span class="line">    soccsym = numpy.array(orbsym)[mf.mo_occ==<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">for</span> ir,irname <span class="keyword">in</span> <span class="built_in">enumerate</span>(mol.irrep_name):</span><br><span class="line">        print(<span class="string">&#x27;%s, double-occ = %d, single-occ = %d&#x27;</span> %</span><br><span class="line">              (irname, <span class="built_in">sum</span>(doccsym==ir), <span class="built_in">sum</span>(soccsym==ir)))</span><br><span class="line">myocc(mf)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ag, double-occ = 3, single-occ = 0</span></span><br><span class="line"><span class="comment"># B2g, double-occ = 0, single-occ = 0</span></span><br><span class="line"><span class="comment"># B3g, double-occ = 0, single-occ = 1</span></span><br><span class="line"><span class="comment"># B1u, double-occ = 0, single-occ = 1</span></span><br><span class="line"><span class="comment"># B2u, double-occ = 0, single-occ = 0</span></span><br><span class="line"><span class="comment"># B3u, double-occ = 2, single-occ = 0</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>在 SCF 计算中，可以通过为不规则分配 alpha 电子和 beta 电子(alpha,beta)的数量来控制波函数的对称性 ：</li>
-</ul>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">mf.irrep_nelec = &#123;<span class="string">&#x27;B2g&#x27;</span>: (<span class="number">1</span>,<span class="number">1</span>), <span class="string">&#x27;B3g&#x27;</span>: (<span class="number">1</span>,<span class="number">1</span>), <span class="string">&#x27;B2u&#x27;</span>: (<span class="number">1</span>,<span class="number">0</span>), <span class="string">&#x27;B3u&#x27;</span>: (<span class="number">1</span>,<span class="number">0</span>)&#125;</span><br><span class="line">mf.kernel()</span><br><span class="line"># converged SCF energy = <span class="number">-146.97333043702</span></span><br><span class="line">mf.get_irrep_nelec()</span><br><span class="line"># &#123;<span class="string">&#x27;Ag&#x27;</span>: (<span class="number">3</span>, <span class="number">3</span>), <span class="string">&#x27;B2g&#x27;</span>: (<span class="number">1</span>, <span class="number">1</span>), <span class="string">&#x27;B3g&#x27;</span>: (<span class="number">1</span>, <span class="number">1</span>), <span class="string">&#x27;B1u&#x27;</span>: (<span class="number">2</span>, <span class="number">2</span>), <span class="string">&#x27;B2u&#x27;</span>: (<span class="number">1</span>, <span class="number">0</span>), <span class="string">&#x27;B3u&#x27;</span>: (<span class="number">1</span>, <span class="number">0</span>)&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="电荷和自旋"><a href="#电荷和自旋" class="headerlink" title="电荷和自旋"></a>电荷和自旋</h2><ul>
-<li><p>属性<code>Mole.charge</code>是定义系统中电子总数的参数。</p>
-<ul>
-<li>自定义系统中指定电子总数用<code>Mole.nelectron</code>：</li>
-</ul>
-</li>
-<li><p><code>Mole.spin</code>是未成对电子的数量<em>2S</em>，即 alpha 和 beta 电子的数量之差。</p>
-</li>
-</ul>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol.charge</span> = <span class="number">1</span></span><br><span class="line"><span class="attr">mol.spin</span> = <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>这两个属性不影响<code>Mole.build</code>初始化函数中的任何其他参数。可以在<code>Mole</code>对象初始化后设置或修改它们 ：</li>
-</ul>
-<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">mol = gto.Mole()</span><br><span class="line">mol.atom = &#x27;O <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>; h <span class="number">0</span> <span class="number">1</span> <span class="number">0</span>; h <span class="number">0</span> <span class="number">0</span> <span class="number">1</span>&#x27;</span><br><span class="line">mol.basis = &#x27;sto<span class="number">-6</span>g&#x27;</span><br><span class="line">mol.spin = <span class="number">2</span></span><br><span class="line">mol.build()</span><br><span class="line">print(mol.nelec)</span><br><span class="line">#(<span class="number">6</span>, <span class="number">4</span>)</span><br><span class="line">mol.spin = <span class="number">0</span></span><br><span class="line">print(mol.nelec)</span><br><span class="line">#(<span class="number">5</span>, <span class="number">5</span>)</span><br></pre></td></tr></table></figure>
-<h1 id="其他参数"><a href="#其他参数" class="headerlink" title="其他参数"></a>其他参数</h1><h2 id="输出、内存和打印级别"><a href="#输出、内存和打印级别" class="headerlink" title="输出、内存和打印级别"></a>输出、内存和打印级别</h2><ul>
-<li><p>使用<code>verbose</code>命令全局控制打印级别（打印级别可以是 0（安静，无输出）到 9（非常嘈杂）。最有用的消息在第 4 级（信息）和第 5 级（调试）打印。）：</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol.verbose</span> = <span class="number">4</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>可以指定写入输出的位置（如果未分配此变量，消息将转储到 <code>sys.stdout</code>.）：</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol.output</span> = <span class="string">&#x27;path/to/log.txt&#x27;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>可以全局控制最大内存使用量：</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol.max_memory</span> = <span class="number">1000</span> <span class="comment"># MB</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>默认大小也可以使用 shell 环境变量PYSCF_MAX_MEMORY定义。</li>
-</ul>
-</li>
-<li><p>属性<code>output</code>和<code>max_memory</code>也可以从命令行分配：</p>
-<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">python</span> <span class="built_in">input</span>.<span class="keyword">py</span> -<span class="keyword">o</span> /path/<span class="keyword">to</span>/my_log.txt -<span class="keyword">m</span> <span class="number">1000</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>默认情况下，命令行具有最高优先级，这意味着脚本中的设置将被命令行参数覆盖。要使输入解析器忽略命令行参数，可以调用 <code>Mole.build()</code>with：</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">mol.build(<span class="number">0</span>, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-<p>第一个<code>0</code>防止<code>build()</code>转储输入文件。第二个<code>0</code>阻止<code>build()</code>解析命令行参数。</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
-      <tags>
-        <tag>输入</tag>
-        <tag>Pyscf</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【molpro】06.旋轨耦合计算</title>
     <url>/2021/11/27/%E3%80%90molpro%E3%80%9106.%E6%97%8B%E8%BD%A8%E8%80%A6%E5%90%88%E8%AE%A1%E7%AE%97/</url>
     <content><![CDATA[<h1 id="仅旋轨耦合计算"><a href="#仅旋轨耦合计算" class="headerlink" title="仅旋轨耦合计算"></a>仅旋轨耦合计算</h1><p>首先要通过casscf计算，再保存对应的波函数</p>
@@ -9045,6 +8894,124 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
         <tag>molpro</tag>
         <tag>CASPT2</tag>
         <tag>微扰理论</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【【草稿】】价键理论（VB）</title>
+    <url>/2021/04/16/%E3%80%90%E3%80%90%E8%8D%89%E7%A8%BF%E3%80%91%E3%80%91%E4%BB%B7%E9%94%AE%E7%90%86%E8%AE%BA%EF%BC%88VB%EF%BC%89%E4%BB%B7%E9%94%AE%E7%90%86%E8%AE%BA%EF%BC%88VB%EF%BC%89/</url>
+    <content><![CDATA[<p>价键理论是多电子波函数</p>
+<p>分子轨道不区分电子在哪个原子核上</p>
+<h1 id="价键理论（VB）"><a href="#价键理论（VB）" class="headerlink" title="价键理论（VB）"></a>价键理论（VB）</h1><h2 id="Heitler-London价键理论对H2的求解"><a href="#Heitler-London价键理论对H2的求解" class="headerlink" title="Heitler-London价键理论对H2的求解"></a>Heitler-London价键理论对H<sub>2</sub>的求解</h2><ol>
+<li>首先假定1号电子与2号原子核之间的吸引可以省略</li>
+<li>其次电子是不可区分的</li>
+<li>加上自旋的反对称</li>
+</ol>
+<script type="math/tex; mode=display">\Psi_{VB}=[\phi_a(1)\phi_b(2)+\phi_a(2)\phi_b(1)][\alpha(1)\beta(2)-\alpha(2)\beta(1)]\\=\\=|a\bar{b}|+|b\bar{a}|</script><script type="math/tex; mode=display">E=<\Psi_{VB}|\hat{H}|\Psi_{VB}>=<|a\bar{b}|+|b\bar{a}||\hat{H}||a\bar{b}|+|b\bar{a}|></script><h3 id="离子项"><a href="#离子项" class="headerlink" title="离子项"></a>离子项</h3><h3 id="三重态"><a href="#三重态" class="headerlink" title="三重态"></a>三重态</h3><h2 id="现代VB理论"><a href="#现代VB理论" class="headerlink" title="现代VB理论"></a>现代VB理论</h2><h3 id="Coulson-Fischer-VB-Model-1949"><a href="#Coulson-Fischer-VB-Model-1949" class="headerlink" title="Coulson-Fischer VB Model (1949)"></a>Coulson-Fischer VB Model (1949)</h3><h3 id="Goddard-GVB-model-1973"><a href="#Goddard-GVB-model-1973" class="headerlink" title="Goddard GVB model (1973)"></a>Goddard GVB model (1973)</h3><h3 id="Spin-Coupled-VB-Model"><a href="#Spin-Coupled-VB-Model" class="headerlink" title="Spin-Coupled VB Model"></a>Spin-Coupled VB Model</h3><h1 id="分子轨道理论（MO）"><a href="#分子轨道理论（MO）" class="headerlink" title="分子轨道理论（MO）"></a>分子轨道理论（MO）</h1>]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>原理</category>
+      </categories>
+      <tags>
+        <tag>变分法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【【草稿】】量子化学基本常识</title>
+    <url>/2021/04/19/%E3%80%90%E3%80%90%E8%8D%89%E7%A8%BF%E3%80%91%E3%80%91%E9%87%8F%E5%AD%90%E5%8C%96%E5%AD%A6%E5%9F%BA%E6%9C%AC%E5%B8%B8%E8%AF%86/</url>
+    <content><![CDATA[<p>理解经典力学和量子力学的联系</p>
+<p>经典力学</p>
+<p>能量：$E=\frac{1}{2} mv^2$</p>
+<p>动量：$p=mv$</p>
+<h1 id="光"><a href="#光" class="headerlink" title="光"></a>光</h1><p>波粒二象性</p>
+<ul>
+<li>胡克（1665）：光波动说</li>
+<li>牛顿（1672）：光微粒说（解释了反射，折射和干涉）、白光是由其他颜色混合而成的（几何光学）</li>
+<li>惠更斯（1678）：光的波动理论（衍射、干涉和偏振）</li>
+<li>托马斯·杨（1801）：杨氏双缝实验实验证实衍射和干涉</li>
+<li>麦克斯韦（1864）：光是电磁波</li>
+<li><p>赫兹（1888）：实验证明了光是一种电磁波，<script type="math/tex">\lambda \nu = c</script></p>
+</li>
+<li><p>黑体辐射问题：</p>
+<ul>
+<li>Wien（1889）：</li>
+<li>Rayleigh-Jeans law（1900）：</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<h1 id="算符"><a href="#算符" class="headerlink" title="算符"></a>算符</h1><p>符符是把一个函数变为另一个函数的数学运算符号。比如<script type="math/tex">\hat{D}=\frac{\partial}{\partial x}</script>，则<script type="math/tex">\hat{D}f(x)=\frac{\partial f(x)}{\partial x}</script>：</p>
+<ul>
+<li>拉普拉斯算符：<script type="math/tex">\nabla^2=\frac{\partial^2}{\partial x^2}+\frac{\partial^2}{\partial y^2}+\frac{\partial^2}{\partial z^2}</script></li>
+<li>动量：<script type="math/tex">\hat{p}_x=-i\hbar\frac{\partial}{\partial x}</script>，<script type="math/tex">\hat{p}=-i \hbar\left(\vec{i} \frac{\partial}{\partial x}+\vec{j} \frac{\partial}{\partial y}+\vec{k} \frac{\partial}{\partial z}\right)=-i \hbar \nabla</script></li>
+<li>动能：<script type="math/tex">\hat{T}=\frac{1}{2 m} \hat{p} \cdot \hat{p}=\frac{1}{2 m}(-i \hbar \nabla) \cdot(-i \hbar \nabla)=-\frac{\hbar^{2}}{2 m} \nabla^{2}</script></li>
+</ul>
+<h2 id="算符的运算律"><a href="#算符的运算律" class="headerlink" title="算符的运算律"></a>算符的运算律</h2><ul>
+<li>加法：<script type="math/tex">\hat{A}+\hat{B}=\hat{C}</script>，<script type="math/tex">\hat{C} \psi=(\hat{A}+\hat{B}) \psi=\hat{A} \psi+\hat{B} \psi</script></li>
+<li>乘法：<script type="math/tex">\hat{A}\hat{B}=\hat{C}</script>，<script type="math/tex">\hat{C} \psi=(\hat{A}\hat{B}) \psi=\hat{A}(\hat{B} \psi)</script></li>
+<li>平方：<script type="math/tex">\hat{A}\hat{A}=\hat{A}^2</script>，<script type="math/tex">\hat{A}\hat{A}\cdots\hat{A}=\hat{A}^n</script></li>
+</ul>
+<h2 id="算符的对易"><a href="#算符的对易" class="headerlink" title="算符的对易"></a>算符的对易</h2><ul>
+<li>如果<script type="math/tex">[\hat{A},\hat{B}]=\hat{A}\hat{B}-\hat{B}\hat{A}=0</script>，则<script type="math/tex">\hat{A},\hat{B}</script>对易，反之，不对易</li>
+<li>如果<script type="math/tex">[\hat{A},\hat{B}]_+=\hat{A}\hat{B}+\hat{B}\hat{A}=0</script>，则<script type="math/tex">\hat{A},\hat{B}</script>反对易</li>
+</ul>
+<p>对易子满足：</p>
+<ul>
+<li><script type="math/tex; mode=display">[\hat{A}, \hat{B}]=-[\hat{B}, \hat{A}]</script></li>
+<li><script type="math/tex; mode=display">[\hat{A}, \hat{B}+\hat{C}]=[\hat{A}, \hat{B}]+[\hat{A}, \hat{C}]</script></li>
+<li><script type="math/tex; mode=display">[\hat{A}, \hat{B} \hat{C}]=\hat{B}[\hat{A}, \hat{C}]+[\hat{A}, \hat{B}] \hat{C}</script></li>
+<li><script type="math/tex; mode=display">[\hat{A} \hat{B}, \hat{C}]=\hat{A}[\hat{B}, \hat{C}]+[\hat{A}, \hat{C}] \hat{B}</script></li>
+<li>Jacobi恒等式：<script type="math/tex">[\hat{\mathrm{A}},[\hat{\mathrm{B}}, \hat{\mathrm{C}}]]+[\hat{\mathrm{B}},[\hat{\mathrm{A}}, \hat{\mathrm{C}}]]+[\hat{\mathrm{C}},[\hat{\mathrm{A}}, \hat{\mathrm{B}}]]=0</script></li>
+</ul>
+<h2 id="线性算符"><a href="#线性算符" class="headerlink" title="线性算符"></a>线性算符</h2><script type="math/tex; mode=display">\hat{L}(c_{1}\psi_{1}+c_{2}\psi_{2})=c_{1}\hat{L}\psi_{1}+c_2 \hat{L}\psi_{2}</script><ul>
+<li>线性算符：<script type="math/tex">\hat{x}^2,\frac{d}{dx},\frac{d^2}{dx^2},\cdots</script></li>
+<li>非线性算符：<script type="math/tex">cos,(\ )^2,\sqrt,\cdots</script></li>
+</ul>
+<h2 id="常见算符"><a href="#常见算符" class="headerlink" title="常见算符"></a>常见算符</h2><h3 id="角动量算符"><a href="#角动量算符" class="headerlink" title="角动量算符"></a>角动量算符</h3><h4 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h4><script type="math/tex; mode=display">\vec{L}=\vec{r} \times \vec{p}=\begin{vmatrix}  
+\vec{i} & \vec{j} & \vec{k} \\
+x & y & z \\
+p_{x} & p_{y} & p_{z} 
+\end{vmatrix}=\begin{vmatrix}
+y & z \\
+p_{y} & p_{z}
+\end{vmatrix} \vec{i}-\begin{vmatrix}
+x & z \\
+p_{x} & p_{z}
+\end{vmatrix} \vec{j}+\begin{vmatrix}
+x & y \\
+p_{x} & p_{y}
+\end{vmatrix} \vec{k}=L_{x} \vec{i}+L_{y} \vec{j}+L_{z} \vec{k}</script><h3 id="动能算符"><a href="#动能算符" class="headerlink" title="动能算符"></a>动能算符</h3><h3 id="势能算符"><a href="#势能算符" class="headerlink" title="势能算符"></a>势能算符</h3><h1 id="量子力学基本假设"><a href="#量子力学基本假设" class="headerlink" title="量子力学基本假设"></a>量子力学基本假设</h1><h2 id="假设-1"><a href="#假设-1" class="headerlink" title="假设 1"></a>假设 1</h2><p>微观体系的状态用波函数<script type="math/tex">\Psi\left(\vec{x}_{1}, \vec{x}_{2}, \cdots, \vec{x}_{N}, t\right)</script>描述。</p>
+<h2 id="假设-2"><a href="#假设-2" class="headerlink" title="假设 2"></a>假设 2</h2><p>微观体系的力学量（可观测量）用厄米算符表示。</p>
+<h2 id="假设3"><a href="#假设3" class="headerlink" title="假设3"></a>假设3</h2><p>微观体系力学量算符的全部本征函数<script type="math/tex">\{\phi_{i}, i=1,2, \ldots\}</script> 构成一个数学完备集，体系的任意状态<script type="math/tex">\Psi</script>均可表示为这些本征函数的线性组合：<script type="math/tex">\Psi=\sum_{i}c_i\phi_i</script></p>
+<h3 id="本征值和本征函数"><a href="#本征值和本征函数" class="headerlink" title="本征值和本征函数"></a>本征值和本征函数</h3><script type="math/tex; mode=display">$$
+
+定理 1：厄米算符的本征值为实数。
+
+定理 2：厄米算符不同的两个本征函数互相正交。
+
+## 假设4
+
+在状态$$\Psi$$下，微观体系力学量$$F$$的测量平均值$$\bar{F}$$等于算符$$\hat{F}$$的状态期望值$$\langle\hat{F}\rangle$$ ，即$$\bar{F}=\langle\hat{F}\rangle=\frac{\int \Psi^{*} \hat{F} \Psi d \tau}{\int \Psi^{*} \Psi d \tau}=\frac{\langle\Psi|\hat{F}| \Psi\rangle}{\langle\Psi \mid \Psi\rangle}</script><h2 id="假设5"><a href="#假设5" class="headerlink" title="假设5"></a>假设5</h2><h2 id="假设6"><a href="#假设6" class="headerlink" title="假设6"></a>假设6</h2>]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>原理</category>
+      </categories>
+      <tags>
+        <tag>变分法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【【草稿】】变分法</title>
+    <url>/2021/04/19/%E3%80%90%E3%80%90%E8%8D%89%E7%A8%BF%E3%80%91%E3%80%91%E5%8F%98%E5%88%86%E6%B3%95/</url>
+    <content><![CDATA[<p>微扰理论：构造一个近似的哈密顿算符</p>
+<p>变分法：构造一个近似的波函数</p>
+<h1 id="变分法"><a href="#变分法" class="headerlink" title="变分法"></a>变分法</h1><p>变分原理：</p>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>原理</category>
+      </categories>
+      <tags>
+        <tag>变分法</tag>
       </tags>
   </entry>
 </search>
