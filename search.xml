@@ -8917,7 +8917,7 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
       </tags>
   </entry>
   <entry>
-    <title></title>
+    <title>【molpro】06.旋轨耦合计算</title>
     <url>/2021/11/27/%E3%80%90molpro%E3%80%9106.%E6%97%8B%E8%BD%A8%E8%80%A6%E5%90%88%E8%AE%A1%E7%AE%97/</url>
     <content><![CDATA[<h1 id="仅旋轨耦合计算"><a href="#仅旋轨耦合计算" class="headerlink" title="仅旋轨耦合计算"></a>仅旋轨耦合计算</h1><p>首先要通过casscf计算，再保存对应的波函数</p>
 <figure class="highlight stata"><table><tr><td class="code"><pre><span class="line">&#123;<span class="keyword">ci</span>;...;<span class="keyword">save</span>,record1.<span class="keyword">file</span>&#125;</span><br></pre></td></tr></table></figure>
@@ -8984,7 +8984,7 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
       </tags>
   </entry>
   <entry>
-    <title></title>
+    <title>【molpro】05.多态多参考</title>
     <url>/2021/11/27/%E3%80%90molpro%E3%80%9105.%E5%A4%9A%E6%80%81%E5%A4%9A%E5%8F%82%E8%80%83/</url>
     <content><![CDATA[<ul>
 <li><p>CASSCF主要是考虑静态相关，CI，微扰理论等考虑动态相关。MRCI和CASPT2都考虑了。</p>
