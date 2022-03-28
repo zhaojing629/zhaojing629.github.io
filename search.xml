@@ -621,102 +621,26 @@
       </tags>
   </entry>
   <entry>
-    <title>【AMS】01.基本输入结构</title>
-    <url>/2021/05/11/%E3%80%90AMS%E3%80%9101.%E5%9F%BA%E6%9C%AC%E8%BE%93%E5%85%A5%E7%BB%93%E6%9E%84/</url>
-    <content><![CDATA[<ul>
-<li><code>System</code>，<code>Task</code>和<code>Engine</code>是必须的，其他的块比如<code>Properties</code>等是可选的</li>
-</ul>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="variable">$AMSBIN</span>/ams -n 8 &lt;&lt; eor 1&gt;<span class="variable">$&#123;0/run/out&#125;</span> 2&gt;<span class="variable">$&#123;0/run/err&#125;</span></span><br><span class="line"></span><br><span class="line">System</span><br><span class="line">	Atoms</span><br><span class="line">		F         0.000000    0.000000    0.760010</span><br><span class="line">		F         0.000000    0.000000   -0.760010</span><br><span class="line">End</span><br><span class="line">charge 0 </span><br><span class="line">End</span><br><span class="line"></span><br><span class="line">Task GeometryOptimization</span><br><span class="line"></span><br><span class="line">Engine ADF</span><br><span class="line">	TITLE UueFn</span><br><span class="line">	basis</span><br><span class="line">	<span class="built_in">	type </span>TZ2P</span><br><span class="line">		core None</span><br><span class="line">		CreateOutput <span class="literal">Yes</span></span><br><span class="line">	end</span><br><span class="line">	xc</span><br><span class="line">		gga PBE </span><br><span class="line">	end</span><br><span class="line">	relativity</span><br><span class="line">		level spin-orbit</span><br><span class="line">		formalism ZORA</span><br><span class="line">	end</span><br><span class="line">EndEngine</span><br></pre></td></tr></table></figure>
-<h1 id="System"><a href="#System" class="headerlink" title="System"></a><code>System</code></h1><figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">System</span> <span class="string">header</span></span><br><span class="line">   <span class="attr">Atoms</span> <span class="string">header</span></span><br><span class="line">      <span class="attr">...</span></span><br><span class="line">   <span class="attr">End</span></span><br><span class="line">   <span class="attr">Lattice</span> <span class="string">header</span></span><br><span class="line">      <span class="attr">...</span></span><br><span class="line">   <span class="attr">End</span></span><br><span class="line">   <span class="attr">GeometryFile</span> <span class="string">string   </span></span><br><span class="line">   <span class="attr">FractionalCoords</span> <span class="string">Yes/No</span></span><br><span class="line">   </span><br><span class="line">   <span class="attr">Symmetrize</span> <span class="string">Yes/No</span></span><br><span class="line">   <span class="attr">Symmetry</span> <span class="string">[...]</span></span><br><span class="line">   </span><br><span class="line">   <span class="attr">LatticeStrain</span> <span class="string">float_list</span></span><br><span class="line">   <span class="attr">SuperCell</span> <span class="string">integer_list</span></span><br><span class="line">   <span class="attr">AllowCloseAtoms</span> <span class="string">Yes/No</span></span><br><span class="line">   </span><br><span class="line">   <span class="attr">Charge</span> <span class="string">float</span></span><br><span class="line">   </span><br><span class="line">   <span class="attr">BondOrders</span></span><br><span class="line">      <span class="attr">...</span></span><br><span class="line">   <span class="attr">End</span></span><br><span class="line">   <span class="attr">...</span></span><br><span class="line"><span class="attr">End</span></span><br></pre></td></tr></table></figure>
-<h2 id="几何结构的指定"><a href="#几何结构的指定" class="headerlink" title="几何结构的指定"></a>几何结构的指定</h2><ul>
-<li><code>header</code>：单位默认都是 <code>Angstrom</code>，如果需要更改，可以在将<code>header</code>部分更改为<code>[Bohr]</code></li>
-<li><strong><code>Atoms</code>：指定原子类型和坐标</strong><ul>
-<li>如果需要给坐标<strong>分区</strong>，可以在每个原子坐标最后面添加<code>region=name1</code>，<code>region=name2</code>……，一个原子可以在多个区域中，此时命名用<code>,</code>分隔<code>region=name1，name2</code></li>
-<li>可以更改原子的质量成为同位素(以Dalton为单位) ，在每个原子坐标最后面添加<code>mass=数字</code>即可</li>
-</ul>
+    <title>【AMS】05.过渡态</title>
+    <url>/2021/12/10/%E3%80%90AMS%E3%80%9101.%E5%9F%BA%E6%9C%AC%E8%BE%93%E5%85%A5%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<h1 id="1-线性扫描"><a href="#1-线性扫描" class="headerlink" title="1. 线性扫描"></a>1. 线性扫描</h1><ul>
+<li><p>将反应物放在一起，猜测反应路径，即一个反应物靠近另一个反应物的过程。可以是键长、键角、二面角等。</p>
 </li>
-<li><code>Lattice</code>：指定最多三个晶格向量</li>
-<li><code>GeometryFile</code>：从.xyz文件中读取几何，不需要再指定<code>atoms</code>和<code>lattice</code>块。</li>
-<li><code>FractionalCoords</code>：原子块中的原子坐标是否以晶格向量的分数坐标给出，默认为<code>No</code>。</li>
-<li><strong><code>Charge</code></strong>：默认为<code>0.0</code>，<strong>系统总电荷</strong>（仅适用于非周期系统）。</li>
-<li><code>BondOrders</code>：定义键级，目前仅由<code>ForceField</code>引擎使用。</li>
-</ul>
-<h2 id="对称性的指定"><a href="#对称性的指定" class="headerlink" title="对称性的指定"></a>对称性的指定</h2><p>对称性也可以在<a href="#`Symmetry`">AMS中的块</a>和ADF中的块指定，<code>System</code>中：</p>
-<ul>
-<li><code>Symmetrize</code>：是否使输入结构对称，这也会将结构旋转转换为标准方向。默认为<code>No</code>。</li>
-<li><code>Symmetry</code>：默认为<code>auto</code>，可以通过<code>nosym</code>、<code>C(LIN)</code>……等来指定对称性</li>
-</ul>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
-<li><strong><code>Charge</code>：指定非周期体系的电荷，默认为<code>0.0</code></strong></li>
-<li><code>BondOrders</code>：指定原子和原子之间的键级，一般不需要。</li>
-</ul>
-<p>除了通过<code>System</code>指定系统，还可以用<code>Load System</code>读取<code>.rkf</code>文件中的之前的系统：</p>
-<figure class="highlight delphi"><table><tr><td class="code"><pre><span class="line">LoadSystem header</span><br><span class="line">   <span class="keyword">File</span> <span class="keyword">string</span></span><br><span class="line">   Section <span class="keyword">string</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>Section</code>：默认是<code>Molecule</code></li>
-</ul>
-<h1 id="LoadSystem"><a href="#LoadSystem" class="headerlink" title="LoadSystem"></a><code>LoadSystem</code></h1><p>除了<code>System</code>在输入块中指定要模拟的系统之外，还可以从<code>.rkf</code>AMS的二进制结果文件中读取先前计算中使用的系统。<code>LoadSystem</code>块与<code>System</code>块是互斥的，系统要么需要在输入中指定，要么从先前的结果文件中加载。</p>
-<figure class="highlight delphi"><table><tr><td class="code"><pre><span class="line">LoadSystem header</span><br><span class="line">   <span class="keyword">File</span> <span class="keyword">string</span></span><br><span class="line">   Section <span class="keyword">string</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>File</code>：从中加载系统的 KF 文件的路径。它也可能是包含它的结果目录。</li>
-<li><code>Section</code>：KF 文件中用于加载系统的部分。默认为<code>Molecule</code></li>
-</ul>
-<h1 id="Task"><a href="#Task" class="headerlink" title="Task"></a><code>Task</code></h1><ul>
-<li><p>Task的可选参数有：</p>
-<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">Task [SinglePoint | <span class="type">GeometryOptimization</span> | <span class="type">TransitionStateSearch</span> | <span class="type">IRC</span> | <span class="type">PESScan</span> | <span class="type">NEB</span> | <span class="type">VibrationalAnalysis</span> | <span class="type">MolecularDynamics</span> | <span class="type">GCMC</span>]</span><br></pre></td></tr></table></figure>
+<li><p>设置扫描的范围和点数。</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Task</span> PESScan</span><br><span class="line"><span class="attribute">PESScan</span></span><br><span class="line">    <span class="attribute">ScanCoordinate</span></span><br><span class="line">        <span class="attribute">nPoints</span> <span class="number">10</span></span><br><span class="line">        <span class="attribute">Angle</span> <span class="number">6</span> <span class="number">1</span> <span class="number">7</span> <span class="number">28</span>.<span class="number">9</span>  <span class="number">90</span></span><br><span class="line">    <span class="attribute">End</span></span><br><span class="line"><span class="attribute">End</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果是两个参数同时 变化，扫描10个点，则是：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Task</span> PESScan</span><br><span class="line"><span class="attribute">PESScan</span></span><br><span class="line">    <span class="attribute">ScanCoordinate</span></span><br><span class="line">        <span class="attribute">nPoints</span> <span class="number">10</span></span><br><span class="line">        <span class="attribute">Distance</span>  <span class="number">1</span> <span class="number">2</span>  <span class="number">0</span>.<span class="number">8</span> <span class="number">1</span>.<span class="number">1</span></span><br><span class="line">        <span class="attribute">Distance</span>  <span class="number">1</span> <span class="number">3</span>  <span class="number">0</span>.<span class="number">8</span> <span class="number">1</span>.<span class="number">1</span></span><br><span class="line">    <span class="attribute">End</span></span><br><span class="line"><span class="attribute">End</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>计算完成后，基于能量最高的点再进行单点频率计算。</p>
 </li>
 </ul>
-<h1 id="Engine"><a href="#Engine" class="headerlink" title="Engine"></a><code>Engine</code></h1><figure class="highlight lasso"><table><tr><td class="code"><pre><span class="line">Engine <span class="keyword">header</span></span><br><span class="line"><span class="params">...</span></span><br><span class="line">EndEngine</span><br></pre></td></tr></table></figure>
-<ul>
-<li>在<code>header</code>中可以指定的有：<ul>
-<li><code>ADF</code></li>
-<li><code>BAND</code></li>
-<li><code>DFTB</code></li>
-<li><code>ReaxFF</code></li>
-<li><code>MLPotential</code></li>
-<li><code>ForceField</code></li>
-<li><code>Hybrid</code></li>
-<li><code>MOPAC</code></li>
-<li><code>External</code></li>
-<li><code>LennardJones</code></li>
-</ul>
-</li>
-</ul>
-<h1 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a><code>Properties</code></h1><figure class="highlight gams"><table><tr><td class="code"><pre><span class="line">Properties</span><br><span class="line">   BondOrders <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Charges <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   DipoleGradients <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   DipoleMoment <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   ElasticTensor <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Gradients <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Hessian <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Molecules <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   NormalModes <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Other <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   PESPointCharacter <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Phonons <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Polarizability <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Raman <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   SelectedRegionForHessian string</span><br><span class="line">   StressTensor <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   VCD <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   VROA <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">End</span><br></pre></td></tr></table></figure>
-<h1 id="Symmetry"><a href="#Symmetry" class="headerlink" title="Symmetry"></a><code>Symmetry</code></h1><p>指定关于对称检测和使用的细节。</p>
-<figure class="highlight fortran"><table><tr><td class="code"><pre><span class="line">Symmetry</span><br><span class="line">   SymmetrizeTolerance <span class="built_in">float</span></span><br><span class="line">   Tolerance <span class="built_in">float</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>SymmetrizeTolerance</code>：默认为<code>0.05</code>，在要求对称化的情况下，用于检测对称性的容差。</li>
-<li><code>Tolerance</code>：默认为<code>1e-07</code>，用于检测系统对称性的容差。</li>
-</ul>
-<p>另外，<code>UseSymmetry</code>可以指定是否在 AMS 中使用系统的对称性。对称性会在上述<code>Symmetry</code> 块中给出的容差内被识别。</p>
-<figure class="highlight gams"><table><tr><td class="code"><pre><span class="line">UseSymmetry <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br></pre></td></tr></table></figure>
-<p>为了让 AMS 识别分子的（亚）对称性，分子必须在空间中具有特定的取向：</p>
-<ul>
-<li>原点是对称群的一个不动点</li>
-<li>z轴是主旋转轴</li>
-<li>xy平面是 σ<sub>h</sub>面（轴群，C(s)）</li>
-<li>x轴是C<sub>2</sub>轴（D对称）</li>
-<li>xz平面是一个 σ<sub>v</sub>平面（C<sub>nv</sub> 对称性）</li>
-<li>在T<sub>d</sub> 和O<sub>h</sub> 中，z轴是四重轴（分别为S<sub>4</sub>和C 4）并且（111）方向是三重轴。</li>
-</ul>
-<h2 id="检测对称性失败"><a href="#检测对称性失败" class="headerlink" title="检测对称性失败"></a>检测对称性失败</h2><ul>
-<li>通过软件对称后再导入坐标计算</li>
-<li>让坐标更对称一些，可以降低程序检测的难度。比如将一个原子移动到原点，主轴设置为z轴等：<ul>
-<li>ADFinput &gt; 选中原子 &gt; Edit &gt; Set Origin</li>
-<li>ADFinput &gt; 选定两个原子确定方向 &gt; Edit &gt; Align &gt; With Z-Axes</li>
-</ul>
-</li>
-</ul>
+<h1 id="2-频率计算"><a href="#2-频率计算" class="headerlink" title="2. 频率计算"></a>2. 频率计算</h1><figure class="highlight ada"><table><tr><td class="code"><pre><span class="line"><span class="keyword">Task</span> SinglePoint</span><br><span class="line">Properties</span><br><span class="line">  NormalModes YES</span><br><span class="line"><span class="keyword">END</span></span><br></pre></td></tr></table></figure>
+<h1 id="3-过渡态搜索"><a href="#3-过渡态搜索" class="headerlink" title="3. 过渡态搜索"></a>3. 过渡态搜索</h1><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">Task TransitionStateSearch</span><br><span class="line">GeometryOptimization</span><br><span class="line">    InitialHessian</span><br><span class="line">       <span class="built_in"> Type </span>FromFile</span><br><span class="line">        File <span class="built_in">..</span>/2_SinglePoint/XXXX.rkf</span><br><span class="line">    End</span><br><span class="line">End</span><br><span class="line">Properties</span><br><span class="line">    NormalModes <span class="literal">Yes</span></span><br><span class="line">End</span><br></pre></td></tr></table></figure>
 ]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
       <tags>
-        <tag>输入</tag>
-        <tag>对称性</tag>
         <tag>AMS</tag>
+        <tag>过渡态</tag>
       </tags>
   </entry>
   <entry>
@@ -753,17 +677,25 @@
 <li><code>CalcPropertiesOnlyIfConverged</code>：默认为<code>Yes</code>，当几何优化（过渡态搜索）收敛时，才计算相应的性质，比如频率，声子等，若为<code>False</code>，不收敛也可以计算。</li>
 <li><code>PretendConverged</code>：默认为<code>No</code>，当几何优化不收敛会报错。如果改成<code>True</code>，只会出现一个警告，并且表明几何优化是收敛的，在一些脚本编写中有用。</li>
 </ul>
-<h2 id="优化方法"><a href="#优化方法" class="headerlink" title="优化方法"></a>优化方法</h2><ul>
-<li><code>Method</code>：默认为<code>auto</code>，根据系统大小和支持的优化选项自动选择合适的方法。</li>
-<li><code>CoordinateType</code>：默认是<code>auto</code>，自动为给定的方法选择最合适的方法。准牛顿法和SCMGO方法将使用<code>Delocalized</code>，所有其他方法将使用<code>Cartesian</code>。</li>
+<h2 id="优化方法Method"><a href="#优化方法Method" class="headerlink" title="优化方法Method"></a>优化方法<code>Method</code></h2><ul>
+<li><p><code>Method</code>：默认为<code>auto</code>，根据系统大小和支持的优化选项自动选择合适的方法。选项有</p>
+<ul>
+<li><code>Quasi-Newton</code></li>
+<li><code>SCMGO</code></li>
+<li><code>FIRE</code></li>
+<li><code>L-BFGS</code></li>
+<li><code>ConjugateGradients</code></li>
 </ul>
-<h3 id="InitialHessian"><a href="#InitialHessian" class="headerlink" title="InitialHessian"></a><code>InitialHessian</code></h3><ul>
-<li>使用拟牛顿法或 SCMGO 方法优化系统时初始模型 Hessian 的选项。</li>
-</ul>
+</li>
+<li><p><code>CoordinateType</code>：默认是<code>auto</code>，自动为给定的方法选择最合适的方法。准牛顿法和SCMGO方法将使用<code>Delocalized</code>，所有其他方法将使用<code>Cartesian</code>。</p>
+</li>
+<li><p>使用拟牛顿法或 SCMGO 方法优化系统时<span id="初始Hessian">初始模型 Hessian </span>的选项<code>InitialHessian</code>：</p>
 <figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">   InitialHessian</span><br><span class="line">      File string</span><br><span class="line">     <span class="built_in"> Type </span>[Auto | UnitMatrix | Swart | FromFile | Calculate | CalculateWithFastEngine]</span><br><span class="line">   End</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
 <ul>
-<li><code>File</code>：包含初始Hessian（或包含它的结果目录）的KF文件。这可用于加载先前使用[Properties％Hessian]关键字计算出的Hessian。</li>
-<li><code>Type</code>：默认为<code>auto</code>，让程序选择初始模型Hessian。<ul>
+<li><p><code>File</code>：包含初始Hessian（或包含它的结果目录）的KF文件。这可用于加载先前使用[Properties％Hessian]关键字计算出的Hessian。</p>
+</li>
+<li><p><code>Type</code>：默认为<code>auto</code>，让程序选择初始模型Hessian。</p>
+<ul>
 <li><code>UnitMatrix</code>：最简单的初始模型Hessian，只是优化坐标中的一个单位矩阵</li>
 <li><code>Swart</code>： model Hessian from M. Swart.</li>
 <li><code>FromFile</code>：从先前计算的结果加载Hessian。配合<code>File</code>使用</li>
@@ -772,21 +704,29 @@
 </ul>
 </li>
 </ul>
+</li>
+</ul>
 <h3 id="Quasi-Newton"><a href="#Quasi-Newton" class="headerlink" title="Quasi-Newton"></a><code>Quasi-Newton</code></h3><p>准牛顿几何优化：</p>
-<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">   Quasi-Newton</span><br><span class="line">      MaxGDIISVectors <span class="type">integer</span></span><br><span class="line">      Step</span><br><span class="line">         TrustRadius <span class="type">float</span></span><br><span class="line">      <span class="keyword">End</span></span><br><span class="line">      UpdateTSVectorEveryStep Yes/<span class="keyword">No</span></span><br><span class="line">   <span class="keyword">End</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">   Quasi-Newton</span><br><span class="line">      MaxGDIISVectors <span class="type">integer</span></span><br><span class="line">      Step</span><br><span class="line">         TrustRadius <span class="type">float</span></span><br><span class="line">         VaryTrustRadius Yes/<span class="keyword">No</span></span><br><span class="line">      <span class="keyword">End</span></span><br><span class="line">      UpdateTSVectorEveryStep Yes/<span class="keyword">No</span></span><br><span class="line">   <span class="keyword">End</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>MaxGDIISVectors</code>：设置GDIIS向量的最大数量。默认为<code>0</code>，如果&gt; 0将启用GDIIS方法。</li>
 <li><code>Step%TrustRadius</code>：信任半径的初始值。</li>
+<li><code>Step%VaryTrustRadius</code>：是否允许信任半径在优化过程中改变。默认情况下，在能量最小化期间为 True，在过渡状态搜索期间为 False。（2021才支持）</li>
 <li><code>UpdateTSVectorEveryStep</code>：是否在每个步骤用当前特征向量更新TS反应坐标。默认为<code>Yes</code>。</li>
 </ul>
-<p>准牛顿优化器使用Hessian计算几何优化步骤。Hessian通常在开始时近似，然后在优化过程中进行更新。因此，非常好的<a href="#">初始Hessian</a>可以提高优化器的性能，并导致更快，更稳定的收敛。</p>
+<p>准牛顿优化器使用Hessian计算几何优化步骤。Hessian通常在开始时近似，然后在优化过程中进行更新。因此，非常好的<a href="#初始Hessian">初始Hessian</a>可以提高优化器的性能，并导致更快，更稳定的收敛。</p>
 <h3 id="FIRE"><a href="#FIRE" class="headerlink" title="FIRE"></a><code>FIRE</code></h3><figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">   FIRE</span><br><span class="line">      AllowOverallRotation Yes/<span class="keyword">No</span></span><br><span class="line">      AllowOverallTranslation Yes/<span class="keyword">No</span></span><br><span class="line">      MapAtomsToUnitCell Yes/<span class="keyword">No</span></span><br><span class="line">      NMin <span class="type">integer</span></span><br><span class="line">      alphaStart <span class="type">float</span></span><br><span class="line">      dtMax <span class="type">float</span></span><br><span class="line">      dtStart <span class="type">float</span></span><br><span class="line">      fAlpha <span class="type">float</span></span><br><span class="line">      fDec <span class="type">float</span></span><br><span class="line">      fInc <span class="type">float</span></span><br><span class="line">      strainMass <span class="type">float</span></span><br><span class="line">   <span class="keyword">End</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
 <h3 id="SCMGO"><a href="#SCMGO" class="headerlink" title="SCMGO"></a><code>SCMGO</code></h3><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">   SCMGO</span><br><span class="line">      ContractPrimitives <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">      NumericalBMatrix <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">      <span class="keyword">Step</span></span><br><span class="line">         TrustRadius float</span><br><span class="line">         VariableTrustRadius <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">      End</span><br><span class="line">      logSCMGO <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">      testSCMGO <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">   End</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
 <h3 id="HessianFree"><a href="#HessianFree" class="headerlink" title="HessianFree"></a><code>HessianFree</code></h3><p>有限内存BFGS方法</p>
 <figure class="highlight fortran"><table><tr><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">   HessianFree</span><br><span class="line">      Step</span><br><span class="line">         MaxCartesianStep <span class="built_in">float</span></span><br><span class="line">         MinRadius <span class="built_in">float</span></span><br><span class="line">         TrialStep <span class="built_in">float</span></span><br><span class="line">         TrustRadius <span class="built_in">float</span></span><br><span class="line">      <span class="keyword">End</span></span><br><span class="line">   <span class="keyword">End</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<h1 id="重新开始几何优化"><a href="#重新开始几何优化" class="headerlink" title="重新开始几何优化"></a>重新开始几何优化</h1><p>参见AMS的<code>LoadSystem</code>关键词，指定之前优化的ams.rkf文件作为File。可以使用相对路径。</p>
 <h1 id="几何不收敛"><a href="#几何不收敛" class="headerlink" title="几何不收敛"></a>几何不收敛</h1><ul>
-<li><p>修改优化方法为准牛顿</p>
+<li><p>修改<code>CoordinateType</code></p>
+</li>
+<li><p>修改优化方法：</p>
 <figure class="highlight oxygene"><table><tr><td class="code"><pre><span class="line">GeometryOptimization</span><br><span class="line">    <span class="function"><span class="keyword">Method</span> <span class="title">Quasi</span>-<span class="title">Newton</span></span></span><br><span class="line"><span class="function">    <span class="title">Quasi</span>-<span class="title">Newton</span></span></span><br><span class="line"><span class="function">      <span class="title">Step</span></span></span><br><span class="line"><span class="function">         <span class="title">TrustRadius</span> 0.02</span></span><br><span class="line"><span class="function">      <span class="title">End</span></span></span><br><span class="line"><span class="function">      <span class="title">UpdateTSVectorEveryStep</span> <span class="title">True</span></span></span><br><span class="line"><span class="function">    <span class="title">End</span></span></span><br><span class="line"><span class="function"><span class="title">End</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>提高<code>Engine ADF</code>中<code>NumericalQuality</code>的精度</p>
 </li>
 </ul>
 ]]></content>
@@ -1820,6 +1760,8 @@
 <ul>
 <li>轨道和基函数的引用格式一般是<code>序号.不可约表示编号</code>，比如C<sub>2v</sub>的3.2表示C<sub>2v</sub>的第二个不可约表示B<sub>2</sub>的第三个轨道。</li>
 </ul>
+<h1 id="指定对称性"><a href="#指定对称性" class="headerlink" title="指定对称性"></a>指定对称性</h1><p>在<code>geometry</code>块之前，通过表4.1中的生成元表示，例如：</p>
+<figure class="highlight gml"><table><tr><td class="code"><pre><span class="line">symmetry,<span class="symbol">x</span>,<span class="symbol">y</span></span><br><span class="line">geometry=&#123;o&#125;</span><br></pre></td></tr></table></figure>
 <h1 id="波函"><a href="#波函" class="headerlink" title="波函"></a>波函</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><ul>
 <li><p>波函数的总对称性通过<code>wf</code>卡定义：</p>
 <figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">WF,</span>nelec,irrep,spin</span><br></pre></td></tr></table></figure>
@@ -1832,7 +1774,7 @@
 <li>如果是三重态，则是两个单占据轨道对称性的直积。（比如O<sub>2</sub>的最高单占据轨道分别为π<sub>g,x</sub>和π<sub>g,y</sub>，分别对应于B<sub>2g</sub>和B<sub>3g</sub>，直积为B<sub>1g</sub>，对称性为4。）</li>
 </ul>
 </li>
-<li><code>spin</code>是单电子数。默认对偶数个电子是1（单重态），否则是2（双重态）。</li>
+<li><code>spin</code>是单电子数。默认对偶数个电子是0（单重态），否则是2（双重态）。</li>
 </ul>
 </li>
 <li><p>也可以通过变量来定义（系统变量需要用SET）：</p>
@@ -1994,9 +1936,28 @@
   <entry>
     <title>【molpro】04.多组态计算</title>
     <url>/2019/11/17/%E3%80%90molpro%E3%80%9104.%E5%A4%9A%E7%BB%84%E6%80%81%E8%AE%A1%E7%AE%97/</url>
-    <content><![CDATA[<h1 id="全活性空间自洽场CASSCF"><a href="#全活性空间自洽场CASSCF" class="headerlink" title="全活性空间自洽场CASSCF"></a>全活性空间自洽场CASSCF</h1><figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">casscf</span></span><br></pre></td></tr></table></figure>
-<p>全活性空间自洽场<code>CASSCF</code>，此命令的别名是<code>mcscf</code>或<code>multi</code>。这个命令后面可选地跟着定义波函数的进一步输入。</p>
-<h2 id="轨道子空间的定义"><a href="#轨道子空间的定义" class="headerlink" title="轨道子空间的定义"></a>轨道子空间的定义</h2><p>在一个CASSCF波函数中，已占据轨道空间被划分为一组非活性或闭壳层轨道和一组活性轨道：</p>
+    <content><![CDATA[<h1 id="一般输入结构"><a href="#一般输入结构" class="headerlink" title="一般输入结构"></a>一般输入结构</h1><ol>
+<li>用命令<code>MULTI</code>或<code>MCSCF</code>调用程序。</li>
+<li>定义轨道空间分区的卡：<code>OCC</code>，<code>FROZEN</code>，<code>CLOSED</code></li>
+<li>一般选项</li>
+<li><code>WF</code>卡，定义态的对称性</li>
+<li>与态对称性有关的选项：<code>WEIGHT</code>,<code>STATE</code>,<code>LQUANT</code></li>
+<li>态对称性的组态定义：<code>SELECT</code>,<code>CON</code>,<code>RESTRICT</code></li>
+<li>定义态对称性的主要组态：<code>PSPACE</code></li>
+<li>更多的一般选项。</li>
+</ol>
+<p>4~8可以重复几次，指定对于不同对称性的几个态的能量做平均。</p>
+<h2 id="MULTI-CASSCF调用程序"><a href="#MULTI-CASSCF调用程序" class="headerlink" title="MULTI/CASSCF调用程序"></a><code>MULTI</code>/<code>CASSCF</code>调用程序</h2><p>全活性空间自洽场<code>CASSCF</code>，此命令的别名是<code>mcscf</code>或<code>multi</code>。这个命令后面可选地跟着定义波函数的进一步输入。</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">casscf</span></span><br></pre></td></tr></table></figure>
+<p>该命令行后面可以接：</p>
+<ul>
+<li><code>MAXIT</code>：最大迭代数（默认10）</li>
+<li><code>ENERGY</code>：能量收敛阈值</li>
+<li><code>GRADIENT</code>：梯度收敛阈值</li>
+<li><code>STEP</code>：步长收敛阈值</li>
+<li><code>FAILSAFE</code>：（逻辑型）使用更稳定的收敛选项</li>
+</ul>
+<h2 id="OCC，FROZEN，CLOSED轨道子空间的定义"><a href="#OCC，FROZEN，CLOSED轨道子空间的定义" class="headerlink" title="OCC，FROZEN，CLOSED轨道子空间的定义"></a><code>OCC</code>，<code>FROZEN</code>，<code>CLOSED</code>轨道子空间的定义</h2><p>在一个CASSCF波函数中，已占据轨道空间被划分为一组非活性或闭壳层轨道和一组活性轨道：</p>
 <ul>
 <li>所有的非活性轨道在每个Slater行列式中都被双占据。</li>
 <li>活性轨道有不同的占据，所有可能的Slater行列式(或conﬁguration state functions，CSFs)都被考虑在内，通过把N<sub>act</sub>（=N<sub>el</sub>-2m<sub>closed</sub>）个电子以各种可能的方式分布在活性轨道中。（在m<sub>closed</sub>是封闭外壳的数量(不活跃)轨道，N<sub>el</sub>是电子的总数）因此，它对应于活性空间中的一个完整CI。</li>
@@ -2026,33 +1987,16 @@
 </ul>
 </li>
 </ul>
-<h2 id="定义被优化的态"><a href="#定义被优化的态" class="headerlink" title="定义被优化的态"></a>定义被优化的态</h2><p>每个需要优化的态的对称性用一个WF卡定义：</p>
+<h3 id="选择轨道的方法"><a href="#选择轨道的方法" class="headerlink" title="选择轨道的方法"></a>选择轨道的方法</h3><p>一般有两种选法：</p>
+<ul>
+<li>看原子的价层轨道</li>
+<li>看分子的成键和反键轨道</li>
+</ul>
+<p>可以先算个hf来看看<code>molden</code>文件中的轨道，注意输出的轨道<code>print,orbital</code>只输出占据轨道，通过<code>print,orbital=n</code>来控制输出的最低的空轨道数目。</p>
+<h2 id="WF定义被优化的态"><a href="#WF定义被优化的态" class="headerlink" title="WF定义被优化的态"></a><code>WF</code>定义被优化的态</h2><p>每个需要优化的态的对称性用一个WF卡定义：</p>
 <figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">WF,</span>elec,sym,spin</span><br></pre></td></tr></table></figure>
 <ul>
 <li>之后可以选择接<code>STATE</code>，<code>WEIGHT</code>，<code>RESTRICT</code>，<code>SELECT</code>，<code>CON</code>，和/或<code>PSPACE</code>卡来定义这个WF卡 ，这些卡总是指前一个WF卡定义的态对称性，但是各个卡之间的顺序是任意的。</li>
-</ul>
-<h2 id="态平均MCSCF"><a href="#态平均MCSCF" class="headerlink" title="态平均MCSCF"></a>态平均MCSCF</h2><p>为了计算激发态，通常最好对所考虑的所有状态的平均能量进行优化。这避免了优化过程中的根本问题，并为所有状态生成一组折衷轨道。</p>
-<ul>
-<li><p>通过<code>STATE,nstate;</code>定义当前对称性中态的数量，默认所有的态都用权重1来优化，它必须直接跟随在wf指令之后</p>
-<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">wf,<span class="number">16</span>,<span class="number">1</span>,<span class="number">0</span>;<span class="section">state</span>,<span class="number">2</span> !optimize two states of symmetry <span class="number">1</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>可以优化不同对称性的状态。在这种情况下，几个wf /state指令可以相互遵循：</p>
-<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">wf,<span class="number">16</span>,<span class="number">1</span>,<span class="number">0</span>;<span class="section">state</span>,<span class="number">2</span> !optimize two states of symmetry <span class="number">1</span> </span><br><span class="line">wf,<span class="number">16</span>,<span class="number">2</span>,<span class="number">0</span>;<span class="section">state</span>,<span class="number">1</span> !optimize one states of symmetry <span class="number">2</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>WEIGHT,w(1),w(2),...,w(nstate);</code>定义态平均计算中的权重，<code>w(i)</code>是当前对称性第i个态的权重。所有的权重默认都是1.0。</p>
-<ul>
-<li><p>如果只想优化特定态对称性的第二个态，可以指定</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">STATE,<span class="number">2</span>;WEIGHT,<span class="number">0</span>,<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
-<p>但是注意，这可能会导致根的跳跃问题。</p>
-</li>
-<li><p>优化对称性1的两个态，第一个权重0.2，第二个0.8</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">wf</span>,<span class="number">16</span>,<span class="number">1</span>,<span class="number">0</span>;state,<span class="number">2</span>;weight,<span class="number">0</span>.<span class="number">2</span>,<span class="number">0</span>.<span class="number">8</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>例子：对O<sub>2</sub>的状态平均计算，其中将$^1\Sigma^+_g$，$^3\Sigma_g^-$，$^1\Delta_g$放在一起处理：（在本例中，对具有不同自旋多重性的状态进行平均只对CASSCF可行，而对限制更严格的RASSCF或MCSCF波函数则不可行。）</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">***,O2</span></span><br><span class="line"><span class="string">print,basis,orbitals</span></span><br><span class="line"><span class="string">geometry=&#123;</span>                 </span><br><span class="line"><span class="string">o1</span></span><br><span class="line"><span class="string">o2,o1,r</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">r=2.2</span> <span class="string">bohr</span>                 </span><br><span class="line"><span class="string">basis=vtz</span></span><br><span class="line">&#123;<span class="string">hf</span></span><br><span class="line"><span class="string">wf</span>,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span></span><br><span class="line"><span class="string">occ</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">1</span>,,<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span></span><br><span class="line"><span class="string">open</span>,<span class="number">1.6</span>,<span class="number">1.7</span>&#125;</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">casscf</span>                    <span class="type">!invoke</span> <span class="string">CASSCF</span> <span class="string">program</span></span><br><span class="line"><span class="string">wf</span>,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span>                  <span class="type">!triplet</span> <span class="string">Sigma-</span></span><br><span class="line"><span class="string">wf</span>,<span class="number">16</span>,<span class="number">4</span>,<span class="number">0</span>                  <span class="type">!singlet</span> <span class="string">delta</span> <span class="string">(xy)</span></span><br><span class="line"><span class="string">wf</span>,<span class="number">16</span>,<span class="number">1</span>,<span class="number">0</span>&#125;                 <span class="type">!singlet</span> <span class="string">delta</span> <span class="string">(xx</span> <span class="bullet">-</span> <span class="string">yy)</span></span><br></pre></td></tr></table></figure>
-</li>
 </ul>
 <h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>如果全部选择默认，那么甲醛的CASSCF计算最简单的输入是：</p>
 <figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">***,formaldehyde</span></span><br><span class="line"><span class="meta">print,orbitals,civector</span>   <span class="string">! 打印轨道和CI矢量</span></span><br><span class="line">                          </span><br><span class="line"><span class="attr">angstrom</span></span><br><span class="line"><span class="attr">geometry</span>=<span class="string">&#123;   </span></span><br><span class="line"><span class="attr">C</span></span><br><span class="line"><span class="attr">O</span>  <span class="string">, C , rco</span></span><br><span class="line"><span class="attr">H1</span> <span class="string">, C , rch , O , hco</span></span><br><span class="line"><span class="attr">H2</span> <span class="string">, C , rch , O , hco , H1 , 180</span></span><br><span class="line"><span class="attr">&#125;</span></span><br><span class="line"><span class="attr">rco</span>=<span class="string">1.182 Ang</span></span><br><span class="line"><span class="attr">rch</span>=<span class="string">1.102 Ang</span></span><br><span class="line"><span class="attr">hco</span>=<span class="string">122.1789 Degree</span></span><br><span class="line"></span><br><span class="line"><span class="attr">basis</span>=<span class="string">vdz</span></span><br><span class="line"><span class="attr">hf</span>                     <span class="string">!执行HF计算</span></span><br><span class="line"><span class="attr">casscf</span>                 <span class="string">!实行CASSCF计算，用HF轨道作为初猜</span></span><br></pre></td></tr></table></figure>
@@ -2067,13 +2011,31 @@
 <figure class="highlight maxima"><table><tr><td class="code"><pre><span class="line">&#123;casscf</span><br><span class="line">closed,<span class="number">3</span>               !<span class="number">3</span> inactive orbitals <span class="keyword">in</span> Symmetry <span class="number">1</span> (a1)</span><br><span class="line">occ,<span class="number">7</span>,<span class="number">2</span>,<span class="number">3</span>              !7a1, <span class="number">2b1</span>, <span class="number">3b2</span> occupied orbitals</span><br><span class="line">wf,<span class="number">16</span>,<span class="number">1</span>,<span class="number">0</span>&#125;             !<span class="number">16</span> electrons, Symmetry <span class="number">1</span> (A1), singlet</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h2 id="选择轨道的方法"><a href="#选择轨道的方法" class="headerlink" title="选择轨道的方法"></a>选择轨道的方法</h2><p>一般有两种选法：</p>
+<h1 id="态平均MCSCF"><a href="#态平均MCSCF" class="headerlink" title="态平均MCSCF"></a>态平均MCSCF</h1><p>为了计算激发态，通常最好对所考虑的所有状态的平均能量进行优化。这避免了优化过程中的根本问题，并为所有状态生成一组折衷轨道。</p>
 <ul>
-<li>看原子的价层轨道</li>
-<li>看分子的成键和反键轨道</li>
+<li><p>通过<code>STATE,nstate;</code>定义当前对称性中态的数量，默认所有的态都用权重1来优化，它必须直接跟随在wf指令之后</p>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">wf,<span class="number">16</span>,<span class="number">1</span>,<span class="number">0</span>;<span class="section">state</span>,<span class="number">2</span> !optimize two states of symmetry <span class="number">1</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可以优化不同对称性的状态。在这种情况下，几个wf /state指令可以相互遵循：</p>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">wf,<span class="number">16</span>,<span class="number">1</span>,<span class="number">0</span>;<span class="section">state</span>,<span class="number">2</span> !optimize two states of symmetry <span class="number">1</span> </span><br><span class="line">wf,<span class="number">16</span>,<span class="number">2</span>,<span class="number">0</span>;<span class="section">state</span>,<span class="number">1</span> !optimize one states of symmetry <span class="number">2</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>WEIGHT,w(1),w(2),...,w(nstate);</code>定义态平均计算中的权重，<code>w(i)</code>是当前对称性第i个态的权重。所有的权重默认都是1.0。</p>
+<ul>
+<li><font color=red>**如果只想优化特定态对称性的第二个态，可以指定:**</font>
+
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">STATE,<span class="number">2</span>;WEIGHT,<span class="number">0</span>,<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>但是注意，这可能会导致根的跳跃问题。</p>
+</li>
+<li><p>优化对称性1的两个态，第一个权重0.2，第二个0.8</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">wf</span>,<span class="number">16</span>,<span class="number">1</span>,<span class="number">0</span>;state,<span class="number">2</span>;weight,<span class="number">0</span>.<span class="number">2</span>,<span class="number">0</span>.<span class="number">8</span></span><br></pre></td></tr></table></figure>
+</li>
 </ul>
-<p>可以先算个hf来看看<code>molden</code>文件中的轨道，注意输出的轨道<code>print,orbital</code>只输出占据轨道，通过<code>print,orbital=n</code>来控制输出的最低的空轨道数目。</p>
-<h1 id="受限活性空间自洽场RASSCF"><a href="#受限活性空间自洽场RASSCF" class="headerlink" title="受限活性空间自洽场RASSCF"></a>受限活性空间自洽场RASSCF</h1><h2 id="占据限制"><a href="#占据限制" class="headerlink" title="占据限制"></a>占据限制</h2><p>由于CSFs或Slater行列式的数量以及计算成本会随着活动轨道的数量而迅速增加，所以最好使用更小的CSFs集合。选择的一种方法是限制某些子空间中的电子数。例如，可以只允许某些活跃轨道的强占据部分的单激发态和双激发态，或者将另一个活跃轨道的电子数限制在最多2个。通常，可以使用<code>restrict</code>指令来定义这些限制：</p>
+</li>
+<li><p>例子：对O<sub>2</sub>的状态平均计算，其中将$^1\Sigma^+_g$，$^3\Sigma_g^-$，$^1\Delta_g$放在一起处理：（在本例中，对具有不同自旋多重性的状态进行平均只对CASSCF可行，而对限制更严格的RASSCF或MCSCF波函数则不可行。）</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">***,O2</span></span><br><span class="line"><span class="string">print,basis,orbitals</span></span><br><span class="line"><span class="string">geometry=&#123;</span>                 </span><br><span class="line"><span class="string">o1</span></span><br><span class="line"><span class="string">o2,o1,r</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">r=2.2</span> <span class="string">bohr</span>                 </span><br><span class="line"><span class="string">basis=vtz</span></span><br><span class="line">&#123;<span class="string">hf</span></span><br><span class="line"><span class="string">wf</span>,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span></span><br><span class="line"><span class="string">occ</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">1</span>,,<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span></span><br><span class="line"><span class="string">open</span>,<span class="number">1.6</span>,<span class="number">1.7</span>&#125;</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">casscf</span>                    <span class="type">!invoke</span> <span class="string">CASSCF</span> <span class="string">program</span></span><br><span class="line"><span class="string">wf</span>,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span>                  <span class="type">!triplet</span> <span class="string">Sigma-</span></span><br><span class="line"><span class="string">wf</span>,<span class="number">16</span>,<span class="number">4</span>,<span class="number">0</span>                  <span class="type">!singlet</span> <span class="string">delta</span> <span class="string">(xy)</span></span><br><span class="line"><span class="string">wf</span>,<span class="number">16</span>,<span class="number">1</span>,<span class="number">0</span>&#125;                 <span class="type">!singlet</span> <span class="string">delta</span> <span class="string">(xx</span> <span class="bullet">-</span> <span class="string">yy)</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="restrict占据限制"><a href="#restrict占据限制" class="headerlink" title="restrict占据限制"></a><code>restrict</code>占据限制</h1><p>由于CSFs或Slater行列式的数量以及计算成本会随着活动轨道的数量而迅速增加，所以最好使用更小的CSFs集合。选择的一种方法是限制某些子空间中的电子数，得到受限活性空间自洽场RASSCF。例如，可以只允许某些活跃轨道的强占据部分的单激发态和双激发态，或者将另一个活跃轨道的电子数限制在最多2个。通常，可以使用<code>restrict</code>指令来定义这些限制：</p>
 <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">restrict</span>,nmin,nmax,orb<span class="number">1</span>，orb<span class="number">2</span>，....，orbn;</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>只有在指定轨道orb1，orb2，….，orbn中包含电子数在<code>nmin</code>和<code>nmax</code> 之间的组态，才能包含在波函中。。轨道按照<code>number.sym</code>的形式定义。</p>
@@ -2132,12 +2094,21 @@
 </ul>
 </li>
 </ul>
-<h1 id="其他选项"><a href="#其他选项" class="headerlink" title="其他选项"></a>其他选项</h1><h2 id="rotate"><a href="#rotate" class="headerlink" title="rotate"></a>rotate</h2><p>将<code>sym</code>对称性中的初始轨道<code>orb1</code>和<code>orb2</code>做<code>angle</code>度的2×2 转动：</p>
+<h1 id="其他选项"><a href="#其他选项" class="headerlink" title="其他选项"></a>其他选项</h1><h2 id="rotate"><a href="#rotate" class="headerlink" title="rotate"></a><code>rotate</code></h2><p>将<code>sym</code>对称性中的初始轨道<code>orb1</code>和<code>orb2</code>做<code>angle</code>度的2×2 转动：</p>
 <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">ROTATE</span>,orb<span class="number">1</span>.sym,orb<span class="number">2</span>.sym,angle</span><br></pre></td></tr></table></figure>
 <ul>
 <li>angle=<code>0</code>表示交换轨道（等价于angle=90）。<strong>只能针对相同对称性的交换</strong></li>
 <li><code>ROTATE</code>只在<code>START</code>卡之后才有意义。</li>
 </ul>
+<h2 id="natorb自然轨道"><a href="#natorb自然轨道" class="headerlink" title="natorb自然轨道"></a><code>natorb</code>自然轨道</h2><p>计算最终的自然轨道，并写到记录record中。（默认的record是2140.2，或者在ORBITAL卡指定）</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">NATORB</span>,<span class="selector-attr">[record,]</span> <span class="selector-attr">[options]</span></span><br></pre></td></tr></table></figure>
+<p>options的可以是：</p>
+<ul>
+<li><code>CI</code>：以计算的自然轨道为基，把哈密顿量对角化，并打印组态及其有关的因子。与全局打印中的<code>CIVECTOR</code>等同。</li>
+<li><code>PRINT(=n)</code>：打印每个对称性的n个虚轨道。与全局打印中的<code>ORBITAL(=n)</code>等同。</li>
+</ul>
+<h2 id="CANORB赝正则轨道"><a href="#CANORB赝正则轨道" class="headerlink" title="CANORB赝正则轨道"></a><code>CANORB</code>赝正则轨道</h2><p>正则化最终的轨道，等同于<code>CANONICAL</code>。options与自然轨道中的一样。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">CANORB</span>,<span class="selector-attr">[record,]</span> <span class="selector-attr">[options]</span></span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>计算化学</category>
@@ -7222,6 +7193,7 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 <ul>
 <li><code>Region</code>：指定基组的区域，可以用逻辑运算符，比如<code>R1+R2</code></li>
 </ul>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">Basis</span><br><span class="line">  <span class="built_in"> Type </span>DZ</span><br><span class="line">   Core None</span><br><span class="line">   PerRegion <span class="attribute">Region</span>=Accurate <span class="attribute">Type</span>=TZP</span><br><span class="line">   PerRegion <span class="attribute">Region</span>=Far      <span class="attribute">Type</span>=SZ</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>ADF19中，为同元素的不同原子设置基组</p>
 <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">ATOMS</span></span><br><span class="line"><span class="attribute">O</span>.F<span class="number">1</span> x y z</span><br><span class="line"><span class="attribute">O</span>.F<span class="number">2</span> x y z</span><br><span class="line"><span class="attribute">End</span></span><br><span class="line"><span class="attribute">basis</span></span><br><span class="line"><span class="attribute">O</span>.F<span class="number">1</span> TZ<span class="number">2</span>P</span><br><span class="line"><span class="attribute">O</span>.F<span class="number">2</span> DZP</span><br><span class="line"><span class="attribute">END</span></span><br></pre></td></tr></table></figure>
@@ -7251,7 +7223,7 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 <li><code>SpinOrbitMagnetization</code>：只与自旋轨道耦合相关，而且在<code>unrestricted</code>下使用。在不受限制的计算中，大多数XC泛函都有自旋极化作为一种成分。通常，自旋量子化轴的方向是任意的，可以方便地选择为z轴。然而，在自旋轨道计算中，方向很重要，将磁化矢量的z分量放入XC函数中是任意的。<ul>
 <li><code>NonCollinear</code>：可以将磁化矢量的大小插入XC函数中。 这称为非共线方法。</li>
 <li><code>CollinearX</code>，<code>CollinearY</code>，<code>CollinearZ</code>：使用x，y或z分量作为XC函数的自旋极化。默认为z。</li>
-<li>：<code>Collinear</code>：同<code>CollinearZ</code></li>
+<li><code>Collinear</code>：同<code>CollinearZ</code></li>
 </ul>
 </li>
 </ul>
@@ -7361,7 +7333,7 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 </li>
 </ul>
 <h2 id="SCF不收敛"><a href="#SCF不收敛" class="headerlink" title="SCF不收敛"></a>SCF不收敛</h2><ol>
-<li>更换SCF加速收敛的方法</li>
+<li>更换SCF<a href="#加速方法">加速收敛的方法</a></li>
 <li>使用ARH方法</li>
 <li>修改DIIS算法的参数<ul>
 <li><code>Mixing</code>高于默认值<code>0.2</code>会有更高的加速度，更低会更稳定的迭代</li>
@@ -7373,7 +7345,7 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 <li>使用Electron smearing设定在允许的能量范围内分数占据。</li>
 <li>其他：<a href="https://www.fermitech.com.cn/wiki/doku.php?id=adf:scfnonconvergence">费米维基</a>的2、3、5。</li>
 </ol>
-<h1 id="对称性的设置"><a href="#对称性的设置" class="headerlink" title="对称性的设置"></a>对称性的设置</h1><p>除了在AMS中或<code>System</code>块中指定，<code>Engine ADF</code>中也可以设置对称性：</p>
+<h1 id="对称性的设置"><a href="#对称性的设置" class="headerlink" title="对称性的设置"></a>对称性的设置</h1><p>除了在AMS中<code>System</code>块中指定，<code>Engine ADF</code>中也可以设置对称性：</p>
 <ul>
 <li><code>Symmetry</code>：默认是<code>AUTO</code>，默认为<code>auto</code>，可以通过<code>nosym</code>、<code>C(LIN)</code>……等来指定对称性</li>
 <li><code>SymmetryTolerance</code>：用于检测系统对称性的容差。默认是<code>1e-07</code></li>
@@ -7403,6 +7375,23 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 <li>如果数字序列比较长，可以组合内层的电子数，程序会自动拆分，比如对于单个原子，<code>P 17 3</code>会自动变成<code>P 6 6 5 3</code></li>
 <li>可以用分数占据</li>
 <li>在数值频率计算中，程序内部默认使用nosym，因此只能识别不可约表示A。</li>
+</ul>
+<h1 id="NumericalQuality"><a href="#NumericalQuality" class="headerlink" title="NumericalQuality"></a><code>NumericalQuality</code></h1><ul>
+<li>设置ADF计算的质量，包括BeckeGrid（数值积分）和 ZlmFit（密度拟合）。</li>
+<li>选项有<code>Basic</code>、<code>Normal</code>（默认）、<code>Good</code>、<code>VeryGood</code>、<code>Excellent</code></li>
+</ul>
+<h1 id="BeckeGrid"><a href="#BeckeGrid" class="headerlink" title="BeckeGrid"></a><code>BeckeGrid</code></h1><p>数值积分格点的选项。</p>
+<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">BECKEGRID</span><br><span class="line">  Quality [basic|<span class="type">normal</span>|<span class="type">good</span>|<span class="type">verygood</span>|<span class="type">excellent</span>]</span><br><span class="line">  &#123;QualityPerRegion</span><br><span class="line">     Region myregion</span><br><span class="line">     Quality &#123;Basic|<span class="type">Normal</span>|<span class="type">Good</span>|<span class="type">VeryGood</span>|<span class="type">Excellent</span>&#125;</span><br><span class="line">  <span class="keyword">End</span>&#125;</span><br><span class="line">  &#123;qpnear qpnear&#125;</span><br><span class="line">  &#123;RadialGridBoost boost&#125;</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>Quality</code>：选项有<code>auto</code>（默认）、<code>Basic</code>、<code>Normal</code>、<code>Good</code>、<code>VeryGood</code>、<code>Excellent</code>。会覆盖<code>NumericalQuality</code>中的设置。</p>
+</li>
+<li><p><code>QualityPerRegion</code>：设置特定区域的原子的积分格点质量。</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">BeckeGrid</span><br><span class="line">  QualityPerRegion <span class="attribute">Region</span>=Accurate <span class="attribute">Quality</span>=Good</span><br><span class="line">  QualityPerRegion <span class="attribute">Region</span>=Far      <span class="attribute">Quality</span>=Basic</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>qpnear</code>：默认为<code>4</code>Å。当在输入文件中指定了点电荷时，ADF 仅围绕那些接近原子的点电荷生成网格。<code>qpnear</code>指定的是最近的距离。</p>
+</li>
+<li><p><code>RadialGridBoost</code>：默认为<code>1.0</code>。增加径向积分点的数量。一些 XC 泛函需要非常精确的径向积分网格，因此 ADF 会自动将径向网格提升 3 倍用于一些数值敏感泛函。</p>
+</li>
 </ul>
 <h1 id="红外光谱"><a href="#红外光谱" class="headerlink" title="红外光谱"></a>红外光谱</h1><p>所需的 Hessian 可以通过数值计算或解析计算。这可以在输入的 AMS 部分设置。</p>
 <h2 id="解析频率"><a href="#解析频率" class="headerlink" title="解析频率"></a>解析频率</h2><p>对于相同的积分精度，解析 Hessian 与数值 Hessian 一样准确，但计算速度最多可提高 3 到 5 倍，具体取决于分子、积分网格参数和基组选择。但是解析Hessian目前只支持（包括 PW91 和 Hartree-Fock都不支持）：</p>
@@ -8654,6 +8643,408 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
       <tags>
         <tag>VMD</tag>
         <tag>绘图</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【AMS】05.过渡态</title>
+    <url>/2020/06/24/%E3%80%90AMS%E3%80%9105.%E8%BF%87%E6%B8%A1%E6%80%81/</url>
+    <content><![CDATA[<h1 id="通过PESScan计算"><a href="#通过PESScan计算" class="headerlink" title="通过PESScan计算"></a>通过<code>PESScan</code>计算</h1><ol>
+<li><p><strong>优化反应物和产物的结构</strong></p>
+</li>
+<li><p>猜测反应路径进行PESScan扫描计算。</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Task</span> PESScan</span><br><span class="line"><span class="attribute">PESScan</span></span><br><span class="line">    <span class="attribute">ScanCoordinate</span></span><br><span class="line">        <span class="attribute">nPoints</span> <span class="number">10</span></span><br><span class="line">        <span class="attribute">Distance</span> <span class="number">1</span> <span class="number">7</span> <span class="number">2</span>.<span class="number">092447</span> <span class="number">3</span>.<span class="number">0</span></span><br><span class="line">        <span class="attribute">Distance</span> <span class="number">1</span> <span class="number">6</span> <span class="number">2</span>.<span class="number">092447</span> <span class="number">3</span>.<span class="number">0</span></span><br><span class="line">    <span class="attribute">End</span></span><br><span class="line"><span class="attribute">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>如果需要确认过渡态，每个点计算频率比较费时，因此可以仅仅确认每个点的特征</p>
+<figure class="highlight gams"><table><tr><td class="code"><pre><span class="line">Properties</span><br><span class="line">   PESPointCharacter <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>计算2中反应路径最高点，看是否有虚频</p>
+<figure class="highlight ada"><table><tr><td class="code"><pre><span class="line"><span class="keyword">Task</span> SinglePoint</span><br><span class="line">Properties</span><br><span class="line">    NormalModes Yes</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对该点进行过渡态搜索，可以读3中的输出来进行计算。</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">Task TransitionStateSearch</span><br><span class="line">GeometryOptimization</span><br><span class="line">    InitialHessian</span><br><span class="line">       <span class="built_in"> Type </span>FromFile</span><br><span class="line">        File <span class="built_in">..</span>/3_step/OgF6_Scan.rkf</span><br><span class="line">    End</span><br><span class="line">End</span><br><span class="line">Properties</span><br><span class="line">   NormalModes <span class="literal">Yes</span></span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="PESScan的详细设置"><a href="#PESScan的详细设置" class="headerlink" title="PESScan的详细设置"></a>PESScan的详细设置</h2><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">PESScan</span><br><span class="line">   CalcPropertiesAtPESPoints [True | False]</span><br><span class="line">   FillUnconvergedGaps [True | False]</span><br><span class="line">   ScanCoordinate</span><br><span class="line">      nPoints <span class="built_in">int</span>eger</span><br><span class="line">      Coordinate <span class="built_in">int</span>eger [x|y|z] (<span class="built_in">float</span>)&#123;<span class="number">2</span>&#125;</span><br><span class="line">      Distance (<span class="built_in">int</span>eger)&#123;<span class="number">2</span>&#125; (<span class="built_in">float</span>)&#123;<span class="number">2</span>&#125;</span><br><span class="line">      Angle (<span class="built_in">int</span>eger)&#123;<span class="number">3</span>&#125; (<span class="built_in">float</span>)&#123;<span class="number">2</span>&#125;</span><br><span class="line">      Dihedral (<span class="built_in">int</span>eger)&#123;<span class="number">4</span>&#125; (<span class="built_in">float</span>)&#123;<span class="number">2</span>&#125;</span><br><span class="line">      SumDist (<span class="built_in">int</span>eger)&#123;<span class="number">4</span>&#125; (<span class="built_in">float</span>)&#123;<span class="number">2</span>&#125;</span><br><span class="line">      DifDist (<span class="built_in">int</span>eger)&#123;<span class="number">4</span>&#125; (<span class="built_in">float</span>)&#123;<span class="number">2</span>&#125;</span><br><span class="line">   End</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>CalcPropertiesAtPESPoints</code>：是否对 PES 的所有采样点执行额外的属性计算。默认为<code>False</code>。</p>
+</li>
+<li><p><code>FillUnconvergedGaps</code>：在最初通过 PES 后，从收敛的相邻点重新开始未收敛的点。默认为<code>Yes</code>。</p>
+</li>
+<li><p><code>PESScan</code>块中至少要包含一个<code>ScanCoordinate</code>块，指定要扫描的坐标和计算几何结构数目。默认情况下，沿每个扫描坐标（包括扫描的起点和终点）采样 10 个点。</p>
+<ul>
+<li><p>可以同时扫描两个坐标：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">ScanCoordinate</span></span><br><span class="line">   <span class="attribute">Distance</span>  <span class="number">1</span> <span class="number">2</span>  <span class="number">0</span>.<span class="number">8</span> <span class="number">1</span>.<span class="number">1</span></span><br><span class="line">   <span class="attribute">Distance</span>  <span class="number">1</span> <span class="number">3</span>  <span class="number">0</span>.<span class="number">8</span> <span class="number">1</span>.<span class="number">1</span></span><br><span class="line"><span class="attribute">End</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>也可以分别扫描两个坐标</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">ScanCoordinate</span></span><br><span class="line">   <span class="attribute">Distance</span>  <span class="number">1</span> <span class="number">2</span>  <span class="number">0</span>.<span class="number">8</span> <span class="number">1</span>.<span class="number">1</span></span><br><span class="line">   <span class="attribute">Distance</span>  <span class="number">1</span> <span class="number">3</span>  <span class="number">0</span>.<span class="number">8</span> <span class="number">1</span>.<span class="number">1</span></span><br><span class="line"><span class="attribute">End</span></span><br><span class="line"><span class="attribute">ScanCoordinate</span></span><br><span class="line">   <span class="attribute">Angle</span>  <span class="number">2</span> <span class="number">1</span> <span class="number">3</span>  <span class="number">90</span> <span class="number">130</span></span><br><span class="line"><span class="attribute">End</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="通过NEB计算"><a href="#通过NEB计算" class="headerlink" title="通过NEB计算"></a>通过<code>NEB</code>计算</h1><ol>
+<li><p>优化反应物和产物的结构</p>
+</li>
+<li><p>给出初始结果和最终结构</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="comment"># This is the initial system:</span></span><br><span class="line"><span class="attribute">System</span></span><br><span class="line">   <span class="attribute">Atoms</span></span><br><span class="line">      <span class="attribute">C</span>   <span class="number">0</span>.<span class="number">0000</span>   <span class="number">0</span>.<span class="number">0000</span>   <span class="number">0</span>.<span class="number">0000</span></span><br><span class="line">      <span class="attribute">N</span>   <span class="number">1</span>.<span class="number">1800</span>   <span class="number">0</span>.<span class="number">0000</span>   <span class="number">0</span>.<span class="number">0000</span></span><br><span class="line">      <span class="attribute">H</span>   <span class="number">2</span>.<span class="number">1960</span>   <span class="number">0</span>.<span class="number">0000</span>   <span class="number">0</span>.<span class="number">0000</span></span><br><span class="line">   <span class="attribute">End</span></span><br><span class="line"><span class="attribute">End</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># This is the final system (note the header &#x27;final&#x27; in the next line):</span></span><br><span class="line"><span class="attribute">System</span> final</span><br><span class="line">   <span class="attribute">Atoms</span></span><br><span class="line">      <span class="attribute">C</span>   <span class="number">0</span>.<span class="number">0000</span>   <span class="number">0</span>.<span class="number">0000</span>   <span class="number">0</span>.<span class="number">0000</span></span><br><span class="line">      <span class="attribute">N</span>   <span class="number">1</span>.<span class="number">1630</span>   <span class="number">0</span>.<span class="number">0000</span>   <span class="number">0</span>.<span class="number">0000</span></span><br><span class="line">      <span class="attribute">H</span>  -<span class="number">1</span>.<span class="number">0780</span>   <span class="number">0</span>.<span class="number">0000</span>   <span class="number">0</span>.<span class="number">0000</span></span><br><span class="line">   <span class="attribute">End</span></span><br><span class="line"><span class="attribute">End</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">Task</span> NEB</span><br><span class="line"><span class="attribute">Properties</span></span><br><span class="line">    <span class="attribute">PESPointCharacter</span> Yes</span><br><span class="line"><span class="attribute">End</span></span><br><span class="line"><span class="attribute">NEB</span></span><br><span class="line">    <span class="attribute">Images</span> <span class="number">20</span></span><br><span class="line"><span class="attribute">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>也可以用<code>System intermediate</code>给定第三个结构，来为过渡状态提供更好的近似值。此时最好将<code>OptimizeEnds</code>设置为<code>False</code>防止创建不平衡的反应路径。</li>
+</ul>
+</li>
+</ol>
+<h2 id="NEB的相关选项"><a href="#NEB的相关选项" class="headerlink" title="NEB的相关选项"></a>NEB的相关选项</h2><figure class="highlight gams"><table><tr><td class="code"><pre><span class="line">NEB</span><br><span class="line">   Climbing <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   ClimbingThreshold float</span><br><span class="line">   Images <span class="keyword">integer</span></span><br><span class="line">   InterpolateInternal <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   InterpolateShortest <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Iterations <span class="keyword">integer</span></span><br><span class="line">   Jacobian float        #固态 NEB</span><br><span class="line">   MapAtomsToCell <span class="keyword">Yes</span>/<span class="keyword">No</span>  #固态 NEB</span><br><span class="line">   OldTangent <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   OptimizeEnds <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   OptimizeLattice <span class="keyword">Yes</span>/<span class="keyword">No</span>  #固态 NEB</span><br><span class="line">   Parallel</span><br><span class="line">      nCoresPerGroup <span class="keyword">integer</span></span><br><span class="line">      nGroups <span class="keyword">integer</span></span><br><span class="line">      nNodesPerGroup <span class="keyword">integer</span></span><br><span class="line">   End</span><br><span class="line">   ReOptimizeEnds <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Restart string</span><br><span class="line">   Skewness float</span><br><span class="line">   Spring float</span><br><span class="line">End</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Climbing</code>：默认为<code>yes</code>。使用爬升图像算法将最高图像驱动到过渡状态。</li>
+<li><p><code>ClimbingThreshold</code>：默认为<code>0.0</code>Hartree/Bohr。如果 ClimbingThreshold &gt; 0 并且最大垂直力分量高于阈值，则在此步骤不执行攀爬。此条目可用于在开始搜索过渡态之前获得对反应路径的更好近似。典型值为 <code>0.01</code> Hartree/Bohr。</p>
+</li>
+<li><p><code>Images</code>：默认为<code>8</code>，即NEB 图像的数量（不包括两端）</p>
+</li>
+<li><code>InterpolateInternal</code>：默认为<code>yes</code>。初始 NEB 图像几何形状是通过在初始状态和最终状态之间进行插值来计算的。默认情况下，对于非周期系统，插值是在内部坐标系中执行的，但用户可以选择在笛卡尔坐标系中执行。对于周期系统，插值总是在笛卡尔坐标中完成。</li>
+<li><code>InterpolateShortest</code>：默认为<code>yes</code>。允许跨周期性单元边界进行插值。</li>
+<li><code>Iterations</code>：NEB 迭代的最大次数。默认值取决于自由度的数量（图像数量、原子数量、周期维度）。</li>
+<li><code>OptimizeEnds</code>：通过优化反应物和产品几何结构启动 NEB。默认为<code>yes</code>。</li>
+<li><code>Restart</code>：提供来自先前 NEB 计算的 ams.rkf 文件以重新开始。</li>
+<li><code>ReOptimizeEnds</code>：重新启动时重新优化反应物和产品的几何形状。默认为<code>No</code>。</li>
+<li><code>Spring</code>：力常数，单位是原子单位Hartree/Bohr^2，默认为<code>1.0</code>。</li>
+<li><code>Skewness</code>：图像移向或远离 TS 的程度，默认为<code>1.0</code>。大于 1 的值将确保图像集中在过渡状态附近。最佳值取决于路径长度、图像数量（更长的路径和更少的图像可能需要更大的 [Skewness]）</li>
+</ul>
+<p>在每次迭代中，可以并行计算图像。并行执行通常是完全自动配置的，也可以通过<code>Parallel</code>指定：</p>
+<ul>
+<li><code>nCoresPerGroup</code>：每个工作组中的内核数。</li>
+<li><code>nGroups</code>：处理器组的总数。这是将并行执行的任务数。</li>
+<li><code>nNodesPerGroup</code>：每组中的节点数。</li>
+</ul>
+<h1 id="通过PESExploration计算"><a href="#通过PESExploration计算" class="headerlink" title="通过PESExploration计算"></a>通过<code>PESExploration</code>计算</h1>]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>AMS</tag>
+        <tag>过渡态</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【ADF】03.精度控制</title>
+    <url>/2021/12/06/%E3%80%90ADF%E3%80%9103.%E7%B2%BE%E5%BA%A6%E6%8E%A7%E5%88%B6/</url>
+    <content><![CDATA[<h1 id="NumericalQuality"><a href="#NumericalQuality" class="headerlink" title="NumericalQuality"></a><code>NumericalQuality</code></h1><ul>
+<li>设置ADF计算的质量，包括BeckeGrid（数值积分）和 ZlmFit（密度拟合）。</li>
+<li>选项有<code>Basic</code>、<code>Normal</code>（默认）、<code>Good</code>、<code>VeryGood</code>、<code>Excellent</code></li>
+</ul>
+<h1 id="BeckeGrid数值积分"><a href="#BeckeGrid数值积分" class="headerlink" title="BeckeGrid数值积分"></a><code>BeckeGrid</code>数值积分</h1><p>数值积分格点的选项。</p>
+<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">BECKEGRID</span><br><span class="line">  Quality [basic|<span class="type">normal</span>|<span class="type">good</span>|<span class="type">verygood</span>|<span class="type">excellent</span>]</span><br><span class="line">  &#123;QualityPerRegion</span><br><span class="line">     Region myregion</span><br><span class="line">     Quality &#123;Basic|<span class="type">Normal</span>|<span class="type">Good</span>|<span class="type">VeryGood</span>|<span class="type">Excellent</span>&#125;</span><br><span class="line">  <span class="keyword">End</span>&#125;</span><br><span class="line">  &#123;qpnear qpnear&#125;</span><br><span class="line">  &#123;RadialGridBoost boost&#125;</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>Quality</code>：选项有<code>auto</code>（默认）、<code>Basic</code>、<code>Normal</code>、<code>Good</code>、<code>VeryGood</code>、<code>Excellent</code>。会覆盖<code>NumericalQuality</code>中的设置。</p>
+</li>
+<li><p><code>QualityPerRegion</code>：设置特定区域的原子的积分格点质量。</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">BeckeGrid</span><br><span class="line">  QualityPerRegion <span class="attribute">Region</span>=Accurate <span class="attribute">Quality</span>=Good</span><br><span class="line">  QualityPerRegion <span class="attribute">Region</span>=Far      <span class="attribute">Quality</span>=Basic</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>qpnear</code>：默认为<code>4</code>Å。当在输入文件中指定了点电荷时，ADF 仅围绕那些接近原子的点电荷生成网格。<code>qpnear</code>指定的是最近的距离。</p>
+</li>
+<li><p><code>RadialGridBoost</code>：默认为<code>1.0</code>。增加径向积分点的数量。一些 XC 泛函需要非常精确的径向积分网格，因此 ADF 会自动将径向网格提升 3 倍用于一些数值敏感泛函。</p>
+</li>
+</ul>
+<h1 id="ZLMFIT密度拟合"><a href="#ZLMFIT密度拟合" class="headerlink" title="ZLMFIT密度拟合"></a><code>ZLMFIT</code>密度拟合</h1><p>总电子密度被分成原子密度（以类似于为贝克网格划分体积的方式）。然后通过径向样条函数和实球谐函数 (Zlm) 的组合来近似这些原子密度。</p>
+<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">ZLMFIT</span><br><span class="line"> Quality &#123;basic|<span class="type">normal</span>|<span class="type">good</span>|<span class="type">verygood</span>|<span class="type">excellent</span>&#125;</span><br><span class="line"> &#123;QualityPerRegion</span><br><span class="line">    Region myregion</span><br><span class="line">    Quality &#123;Basic|<span class="type">Normal</span>|<span class="type">Good</span>|<span class="type">VeryGood</span>|<span class="type">Excellent</span>&#125;</span><br><span class="line"> <span class="keyword">End</span>&#125;</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>Quality</code>：选项有<code>auto</code>（默认）、<code>Basic</code>、<code>Normal</code>、<code>Good</code>、<code>VeryGood</code>、<code>Excellent</code>。会覆盖<code>NumericalQuality</code>中的设置。</p>
+</li>
+<li><p><code>QualityPerRegion</code>：设置特定区域的原子的 Zlm Fit 质量。</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">ZlmFit</span><br><span class="line">   QualityPerRegion <span class="attribute">Region</span>=Accurate <span class="attribute">Quality</span>=Good</span><br><span class="line">   QualityPerRegion <span class="attribute">Region</span>=Far      <span class="attribute">Quality</span>=Basic</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>AMS</tag>
+        <tag>ADF</tag>
+        <tag>精度</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Pyscf】01.基本计算设置</title>
+    <url>/2021/09/02/%E3%80%90Pyscf%E3%80%9101.%E5%9F%BA%E6%9C%AC%E8%AE%A1%E7%AE%97%E8%AE%BE%E7%BD%AE%20(SFConflict%202019311526@tsinghua.edu.cn%202021-11-04-14-47-00)/</url>
+    <content><![CDATA[<h1 id="定义分子"><a href="#定义分子" class="headerlink" title="定义分子"></a>定义分子</h1><p>有三种方法可以定义和初始化一个分子，</p>
+<ol>
+<li><p>使用方法的关键字参数<code>Mole.build()</code>来初始化一个分子：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyscf <span class="keyword">import</span> gto</span><br><span class="line">mol = gto.Mole()</span><br><span class="line">mol.build(</span><br><span class="line">	atom = <span class="string">&#x27;&#x27;&#x27;O 0 0 0; H  0 1 0; H 0 0 1&#x27;&#x27;&#x27;</span>,</span><br><span class="line">	basis = <span class="string">&#x27;sto-3g&#x27;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将几何、基础等分配给Mole 对象，然后调用该<code>build()</code>方法：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyscf <span class="keyword">import</span> gto</span><br><span class="line">mol = gto.Mole()</span><br><span class="line">mol.atom = <span class="string">&#x27;&#x27;&#x27;O 0 0 0; H  0 1 0; H 0 0 1&#x27;&#x27;&#x27;</span></span><br><span class="line">mol.basis = <span class="string">&#x27;sto-3g&#x27;</span></span><br><span class="line">mol.build()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用快捷功能<code>pyscf.M()</code>或<code>Mole.M()</code>。这些函数将所有参数传递给<code>build()</code>方法：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pyscf</span><br><span class="line">mol = pyscf.M(</span><br><span class="line">    atom = <span class="string">&#x27;&#x27;&#x27;O 0 0 0; H  0 1 0; H 0 0 1&#x27;&#x27;&#x27;</span>,</span><br><span class="line">    basis = <span class="string">&#x27;sto-3g&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyscf <span class="keyword">import</span> gto</span><br><span class="line">mol = gto.M(</span><br><span class="line">    atom = <span class="string">&#x27;&#x27;&#x27;O 0 0 0; H  0 1 0; H 0 0 1&#x27;&#x27;&#x27;</span>,</span><br><span class="line">    basis = <span class="string">&#x27;sto-3g&#x27;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="几何"><a href="#几何" class="headerlink" title="几何"></a>几何</h2><h3 id="笛卡尔形式"><a href="#笛卡尔形式" class="headerlink" title="笛卡尔形式"></a>笛卡尔形式</h3><p>默认单位为埃（可以通过将属性设置<code>unit</code> 为<code>&#39;Angstrom&#39;</code>或<code>Bohr</code>来指定单位）：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol</span> = gto.Mole()</span><br><span class="line"><span class="attr">mol.atom</span> = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    O   0. 0. 0.</span></span><br><span class="line"><span class="string">    H   0. 1. 0.</span></span><br><span class="line"><span class="string">    H   0. 0. 1.</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="attr">mol.unit</span> = <span class="string">&#x27;B&#x27;</span> <span class="comment"># 不区分大小写，任何不以&#x27;B&#x27;或&#x27;AU&#x27;开头的字符串都被视为&#x27;Angstrom&#x27;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>分子中的原子由一个元素符号加上三个坐标数字表示。不同的原子应该由<code>;</code>或 换行符分隔 。在同一个原子中，<code>,</code>可以用来分隔不同的项目。空行或以 开头的<code>#</code>行将被忽略：</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">mol = pyscf.M(</span><br><span class="line">atom = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">#O 0 0 0</span></span><br><span class="line"><span class="string">H 0 1 0</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">H 0 0 1</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span>)</span><br><span class="line">mol.natm  <span class="comment">#分子的原子个数，会输出2</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>几何字符串不区分大小写。它还支持输入元素的核电荷：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol</span> = gto.Mole()</span><br><span class="line"><span class="attr">mol.atom</span> = <span class="string">&#x27;&#x27;&#x27;8 0. 0. 0.; h 0. 1. 0; H 0. 0. 1.&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果需要标记一个原子以将其与其他原子区分开，可以在原子符号前加上数字<code>1234567890</code>或特殊字符<code>~!@#$%^&amp;*()_+.?:&lt;&gt;[]&#123;&#125;|</code>（非 <code>,</code>和<code>;</code>）作为前缀或后缀 。通过这种修饰，可以在不同的原子上指定不同的基组、质量或核模型：</p>
+<figure class="highlight prolog"><table><tr><td class="code"><pre><span class="line">mol = gto.<span class="symbol">Mole</span>()</span><br><span class="line">mol.atom = <span class="string">&#x27;&#x27;</span><span class="string">&#x27;8 0 0 0; h:1 0 1 0; H@2 0 0 1&#x27;</span><span class="string">&#x27;&#x27;</span></span><br><span class="line">mol.unit = <span class="string">&#x27;B&#x27;</span></span><br><span class="line">mol.basis = &#123;<span class="string">&#x27;O&#x27;</span>: <span class="string">&#x27;sto-3g&#x27;</span>, <span class="string">&#x27;H&#x27;</span>: <span class="string">&#x27;cc-pvdz&#x27;</span>, <span class="string">&#x27;H@2&#x27;</span>: <span class="string">&#x27;6-31G&#x27;</span>&#125;</span><br><span class="line">mol.build()</span><br><span class="line">print(mol.<span class="symbol">_atom</span>)</span><br><span class="line">#输出结果为：[[<span class="string">&#x27;O&#x27;</span>, [<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>]], [<span class="string">&#x27;H:1&#x27;</span>, [<span class="number">0.0</span>, <span class="number">1.0</span>, <span class="number">0.0</span>]], [<span class="string">&#x27;H@2&#x27;</span>, [<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>]]]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>还可以指定 xyz 文件的路径，PySCF 将使用该文件中的坐标来构建<code>Mole.atom</code>.</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol</span> = gto.M(atom=<span class="string">&quot;my_molecule.xyz&quot;</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight gcode"><table><tr><td class="code"><pre><span class="line">mol = gto.Mole<span class="comment">()</span></span><br><span class="line">mol.atom = <span class="string">&quot;my_molecule.xyz&quot;</span></span><br><span class="line">mol.build<span class="comment">()</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可以输入以下内部格式的几何图形 <code>Mole.atom</code>：</p>
+<figure class="highlight gml"><table><tr><td class="code"><pre><span class="line">atom = [[atom1, (<span class="symbol">x</span>, <span class="symbol">y</span>, z)],</span><br><span class="line">        [atom2, (<span class="symbol">x</span>, <span class="symbol">y</span>, z)],</span><br><span class="line">        ...</span><br><span class="line">        [atomN, (<span class="symbol">x</span>, <span class="symbol">y</span>, z)]]</span><br></pre></td></tr></table></figure>
+<p>这样可以使用 Python 脚本来构造几何：</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">mol = gto.Mole()</span><br><span class="line">mol<span class="selector-class">.atom</span> = [[<span class="string">&#x27;O&#x27;</span>,(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)], [<span class="string">&#x27;H&#x27;</span>,(<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>)], [<span class="string">&#x27;H&#x27;</span>,(<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>)]]</span><br><span class="line">mol<span class="selector-class">.atom</span>.extend([[<span class="string">&#x27;H&#x27;</span>, (<span class="selector-tag">i</span>, <span class="selector-tag">i</span>, i)] <span class="keyword">for</span> <span class="selector-tag">i</span> <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">5</span>)])</span><br><span class="line">mol.build()</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(mol._atom)</span></span></span><br><span class="line">#注意输出的结果单位是Bohr的。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><a href="https://github.com/pyscf/pyscf/blob/master/examples/gto/03-ghost_atom.py">ghost分子</a> </p>
+</li>
+</ul>
+<h3 id="Z-matrix-输入格式"><a href="#Z-matrix-输入格式" class="headerlink" title="Z-matrix 输入格式"></a>Z-matrix 输入格式</h3><figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol</span> = gto.Mole()</span><br><span class="line"><span class="attr">mol.atom</span> = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    O</span></span><br><span class="line"><span class="string">    H  1  1.2</span></span><br><span class="line"><span class="string">    H  1  1.2  2 105</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+<h3 id="打印分子"><a href="#打印分子" class="headerlink" title="打印分子"></a>打印分子</h3><p>建立好分子后，会存储为属性<code>Mole._atom</code>。</p>
+<ul>
+<li><p>一旦<code>Mole</code>构建了对象，就可以通过该<code>Mole.atom_coords()</code>函数访问分子几何结构。此函数为每个原子的坐标返回一个 (N,3) 数组：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="builtin-name">print</span>(mol.atom_coords(<span class="attribute">unit</span>=<span class="string">&#x27;Bohr&#x27;</span>)) # unit can be <span class="string">&quot;ANG&quot;</span> <span class="keyword">or</span> <span class="string">&quot;Bohr&quot;</span></span><br><span class="line"><span class="comment">#默认单位是Bohr</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="基组"><a href="#基组" class="headerlink" title="基组"></a>基组</h2><ul>
+<li><p>定义基组的最简单方法是将基的名称作为字符串分配给<code>Mole.basis</code>：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol.basis</span> = <span class="string">&#x27;sto-3g&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>此输入将指定的基组应用于所有原子。字符串中基组的名称不区分大小写。名称中的空格、破折号和下划线都将被忽略。</p>
+</li>
+<li><p>如果不同元素需要不同的基组：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol.basis</span> = &#123;<span class="string">&#x27;O&#x27;</span>: <span class="string">&#x27;sto-3g&#x27;</span>, <span class="string">&#x27;H&#x27;</span>: <span class="string">&#x27;6-31g&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>还可以使用辅助函数输入自定义基组。该函数<code>gto.basis.parse()</code>可以解析 NWChem 格式的基础字符串 </p>
+<figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line">mol.basis = &#123;&#x27;O&#x27;: gto.basis.parse(&#x27;&#x27;&#x27;</span><br><span class="line">C    S</span><br><span class="line">     71.<span class="number">616837</span>0              0.<span class="number">15432897</span></span><br><span class="line">     13.<span class="number">045096</span>0              0.<span class="number">53532814</span></span><br><span class="line">      3.<span class="number">530512</span>2              0.<span class="number">44463454</span></span><br><span class="line">C    SP</span><br><span class="line">      2.<span class="number">941249</span>4             -0.<span class="number">09996723</span>             0.<span class="number">15591627</span></span><br><span class="line">      0.<span class="number">683483</span>1              0.<span class="number">39951283</span>             0.<span class="number">60768372</span></span><br><span class="line">      0.<span class="number">222289</span>9              0.<span class="number">70011547</span>             0.<span class="number">39195739</span></span><br><span class="line">&#x27;&#x27;&#x27;)&#125;</span><br></pre></td></tr></table></figure>
+<p>函数<code>gto.basis.load()</code>可以从数据库加载任意基组，即使基组与元素不匹配：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol.basis</span> = &#123;<span class="string">&#x27;H&#x27;</span>: gto.basis.load(<span class="string">&#x27;sto3g&#x27;</span>, <span class="string">&#x27;C&#x27;</span>)&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>GHOST原子：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol.basis</span> = &#123;<span class="string">&#x27;GHOST&#x27;</span>: gto.basis.load(<span class="string">&#x27;cc-pvdz&#x27;</span>, <span class="string">&#x27;O&#x27;</span>), <span class="string">&#x27;H&#x27;</span>: <span class="string">&#x27;sto3g&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>与几何输入的要求一样，可以使用原子符号（不区分大小写）或原子核电荷作为<code>basis</code>字典的关键字 。数字和特殊字符的前缀和后缀是允许的。如果修饰的原子符号出现在 <code>atom</code>但不在 中<code>basis</code>，基础解析器将删除所有修饰并在<code>basis</code>字典中寻找纯原子符号 ：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">mol</span>.atom = &#x27;<span class="number">8</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>; h<span class="number">1</span> <span class="number">0</span> <span class="number">1</span> <span class="number">0</span>; H<span class="number">2</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1</span>&#x27; mol.basis = &#123;&#x27;O&#x27;：&#x27;sto-<span class="number">3</span>g&#x27;，&#x27;H&#x27;：&#x27;sto<span class="number">3</span>g&#x27;，&#x27;H<span class="number">1</span>&#x27;：&#x27;<span class="number">6</span>-<span class="number">31</span>G&#x27;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#6-31G基组将分配给 atom H1，但STO-3G基将用于 atom H2</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="ECP"><a href="#ECP" class="headerlink" title="ECP"></a>ECP</h3><ul>
+<li><p>可以使用属性指定有效核心电位 (ECP) <code>Mole.ecp</code>。标量型 ECP 可用于所有分子和晶体方法。<a href="https://pyscf.org/user/gto.html#ecp">内置标量 ECP 数</a>：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol</span> = gto.M(atom=<span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string"> Na 0. 0. 0.</span></span><br><span class="line"><span class="string"> H  0.  0.  1.&#x27;&#x27;&#x27;</span>,</span><br><span class="line">            <span class="attr">basis</span>=&#123;<span class="string">&#x27;Na&#x27;</span>:<span class="string">&#x27;lanl2dz&#x27;</span>, <span class="string">&#x27;H&#x27;</span>:<span class="string">&#x27;sto3g&#x27;</span>&#125;,</span><br><span class="line">            <span class="attr">ecp</span> = &#123;<span class="string">&#x27;Na&#x27;</span>:<span class="string">&#x27;lanl2dz&#x27;</span>&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ECP 参数可以使用 NWChem 格式直接在输入脚本中指定</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">mol</span> <span class="string">=</span> <span class="string">gto.M(atom=&#x27;&#x27;&#x27;</span></span><br><span class="line"> <span class="string">Na</span> <span class="number">0</span><span class="string">.</span> <span class="number">0</span><span class="string">.</span> <span class="number">0</span><span class="string">.</span></span><br><span class="line"> <span class="string">H</span>  <span class="number">0</span><span class="string">.</span>  <span class="number">0</span><span class="string">.</span>  <span class="number">1</span><span class="string">.&#x27;&#x27;&#x27;,</span></span><br><span class="line">            <span class="string">basis=&#123;&#x27;Na&#x27;:&#x27;lanl2dz&#x27;,</span> <span class="string">&#x27;H&#x27;</span><span class="string">:&#x27;sto3g&#x27;&#125;,</span></span><br><span class="line">            <span class="string">ecp</span> <span class="string">=</span> &#123;<span class="attr">&#x27;Na&#x27;:</span> <span class="string">gto.basis.parse_ecp(&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">Na</span> <span class="string">nelec</span> <span class="number">10</span></span><br><span class="line"><span class="string">Na</span> <span class="string">ul</span></span><br><span class="line"><span class="number">0</span>      <span class="number">2.0000000</span>              <span class="number">6.0000000</span>        </span><br><span class="line"><span class="number">1</span>    <span class="number">175.5502590</span>            <span class="number">-10.0000000</span>        </span><br><span class="line"><span class="number">2</span>      <span class="number">2.3365719</span>             <span class="number">-6.0637782</span>        </span><br><span class="line"><span class="number">2</span>      <span class="number">0.7799867</span>             <span class="number">-0.7299393</span>        </span><br><span class="line"><span class="string">Na</span> <span class="string">S</span></span><br><span class="line"><span class="number">0</span>    <span class="number">243.3605846</span>              <span class="number">3.0000000</span>        </span><br><span class="line"><span class="number">1</span>     <span class="number">41.5764759</span>             <span class="number">36.2847626</span>        </span><br><span class="line"><span class="number">2</span>     <span class="number">13.2649167</span>             <span class="number">72.9304880</span>        </span><br><span class="line"><span class="number">2</span>      <span class="number">0.9764209</span>              <span class="number">6.0123861</span>        </span><br><span class="line"><span class="string">Na</span> <span class="string">P</span></span><br><span class="line"><span class="number">0</span>   <span class="number">1257.2650682              </span><span class="number">5.0000000</span>        </span><br><span class="line"><span class="number">1</span>    <span class="number">189.6248810</span>            <span class="number">117.4495683</span>        </span><br><span class="line"><span class="number">2</span>     <span class="number">54.5247759</span>            <span class="number">423.3986704</span>        </span><br><span class="line"><span class="number">2</span>      <span class="number">0.9461106</span>              <span class="number">7.1241813</span>        </span><br><span class="line"><span class="string">&#x27;&#x27;</span><span class="string">&#x27;)&#125;)</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="对称性"><a href="#对称性" class="headerlink" title="对称性"></a>对称性</h2><ul>
+<li><p>将属性设置为<code>Mole.symmetry</code>来为分子计算调用点群对称性<code>True</code>：</p>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">mol = pyscf.M(</span><br><span class="line">     atom = &#x27;B <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>; H <span class="number">0</span> <span class="number">1</span> <span class="number">1</span>; H <span class="number">1</span> <span class="number">0</span> <span class="number">1</span>; H <span class="number">1</span> <span class="number">1</span> <span class="number">0</span>&#x27;,</span><br><span class="line">     symmetry = True</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>点群对称信息保存在<code>Mole</code>对象中。<code>symm</code>PySCF的对称模块 ( ) 可以检测任意点群。检测到的点组保存在 中<code>Mole.topgroup</code>，支持的子组保存在 中<code>Mole.groupname</code>：</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">print</span><span class="params">(mol.topgroup)</span></span></span><br><span class="line">#C3v</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(mol.groupname)</span></span></span><br><span class="line">#Cs</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>PySCF 支持线性分子对称性 D<sub>∞h</sub>（<code>Dooh</code>在程序中标记）和C<sub>∞v</sub> （标记为<code>Coov</code>），D2h群及其子群。有时需要使用较低的对称性而不是检测到的对称性群。子群的对称性可以由<code>Mole.symmetry_subgroup</code>指定（不影响<code>Mole.symmetry</code>） ，程序将首先检测可能的最高对称群，然后将点群对称性降低到指定的子群：</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">mol = gto.Mole()</span><br><span class="line">mol<span class="selector-class">.atom</span> = <span class="string">&#x27;N 0 0 0; N 0 0 1&#x27;</span></span><br><span class="line">mol<span class="selector-class">.symmetry</span> = True</span><br><span class="line">mol<span class="selector-class">.symmetry_subgroup</span> = C2</span><br><span class="line">mol.build()</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(mol.topgroup)</span></span></span><br><span class="line">#Dooh</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(mol.groupname)</span></span></span><br><span class="line">#C2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>当将特定的对称性分配给 时<code>Mole.symmetry</code>，初始化函数<code>Mole.build()</code>将测试分子几何形状是否符合所需的对称性。如果没有，初始化将停止并发出错误消息：</p>
+<figure class="highlight clean"><table><tr><td class="code"><pre><span class="line">mol = gto.Mole()</span><br><span class="line">mol.atom = <span class="string">&#x27;O 0 0 0; C 0 0 1&#x27;</span></span><br><span class="line">mol.symmetry = <span class="string">&#x27;Dooh&#x27;</span></span><br><span class="line">mol.build()</span><br><span class="line"></span><br><span class="line">#RuntimeWarning: Unable to identify input symmetry Dooh.</span><br><span class="line">#Try symmetry=<span class="string">&quot;Coov&quot;</span> <span class="keyword">with</span> geometry (unit=<span class="string">&quot;Bohr&quot;</span>)</span><br><span class="line">#(<span class="string">&#x27;O&#x27;</span>, [<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">-0.809882624813598</span>])</span><br><span class="line">#(<span class="string">&#x27;C&#x27;</span>, [<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0798434997514639</span>])</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="轨道"><a href="#轨道" class="headerlink" title="轨道"></a>轨道</h3><p>在<code>Mole</code>对象中启用对称时，点群对称信息将用于构建对称适应轨道基组</p>
+<ul>
+<li>对称适应轨道被保存 <code>Mole.symm_orb</code>为二维阵列列表。列表中的每个元素都是不可约表示的 AO（原子轨道）到对称适应轨道转换矩阵。</li>
+<li>不可约表示的名称存储在 中<code>Mole.irrep_name</code>，它们的内部 ID存储在<code>Mole.irrep_id</code>：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">mol = gto.Mole()</span><br><span class="line">mol.atom = <span class="string">&#x27;O 0 0 0; O 0 0 1.2&#x27;</span></span><br><span class="line">mol.spin = <span class="number">2</span></span><br><span class="line">mol.symmetry = <span class="string">&quot;D2h&quot;</span></span><br><span class="line">mol.build()</span><br><span class="line"><span class="keyword">for</span> s,i,c <span class="keyword">in</span> <span class="built_in">zip</span>(mol.irrep_name, mol.irrep_id, mol.symm_orb):</span><br><span class="line">    print(s, i, c.shape)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># Ag 0 (10, 3)</span></span><br><span class="line"><span class="comment"># B2g 2 (10, 1)</span></span><br><span class="line"><span class="comment"># B3g 3 (10, 1)</span></span><br><span class="line"><span class="comment"># B1u 5 (10, 3)</span></span><br><span class="line"><span class="comment"># B2u 6 (10, 1)</span></span><br><span class="line"><span class="comment"># B3u 7 (10, 1)</span></span><br></pre></td></tr></table></figure>
+<p>对称适应轨道用作以下 SCF 或后 SCF 计算的基函数：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">mf = scf.RHF(mol)</span><br><span class="line">mf.kernel()</span><br><span class="line"><span class="comment"># converged SCF energy = -147.631655286561</span></span><br></pre></td></tr></table></figure>
+<p>可以检查每个不可约表示中 MO 的占用情况：</p>
+<ul>
+<li>为了标记给定轨道的不可约表示， <code>symm.label_orb_symm()</code>需要在<code>Mole</code>对象中初始化的点群对称性信息，包括不可约表示的 ID ( <code>Mole.irrep_id</code>) 和对称适应基<code>Mole.symm_orb</code>。对于每个<code>irrep_id</code>， <code>Mole.irrep_name</code>给出相关的不可表达符号 (A1, B1 …)。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy</span><br><span class="line"><span class="keyword">from</span> pyscf <span class="keyword">import</span> symm</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">myocc</span>(<span class="params">mf</span>):</span></span><br><span class="line">    mol = mf.mol</span><br><span class="line">    irrep_id = mol.irrep_id</span><br><span class="line">    so = mol.symm_orb</span><br><span class="line">    orbsym = symm.label_orb_symm(mol, irrep_id, so, mf.mo_coeff)</span><br><span class="line">    doccsym = numpy.array(orbsym)[mf.mo_occ==<span class="number">2</span>]</span><br><span class="line">    soccsym = numpy.array(orbsym)[mf.mo_occ==<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">for</span> ir,irname <span class="keyword">in</span> <span class="built_in">enumerate</span>(mol.irrep_name):</span><br><span class="line">        print(<span class="string">&#x27;%s, double-occ = %d, single-occ = %d&#x27;</span> %</span><br><span class="line">              (irname, <span class="built_in">sum</span>(doccsym==ir), <span class="built_in">sum</span>(soccsym==ir)))</span><br><span class="line">myocc(mf)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ag, double-occ = 3, single-occ = 0</span></span><br><span class="line"><span class="comment"># B2g, double-occ = 0, single-occ = 0</span></span><br><span class="line"><span class="comment"># B3g, double-occ = 0, single-occ = 1</span></span><br><span class="line"><span class="comment"># B1u, double-occ = 0, single-occ = 1</span></span><br><span class="line"><span class="comment"># B2u, double-occ = 0, single-occ = 0</span></span><br><span class="line"><span class="comment"># B3u, double-occ = 2, single-occ = 0</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>在 SCF 计算中，可以通过为不规则分配 alpha 电子和 beta 电子(alpha,beta)的数量来控制波函数的对称性 ：</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">mf.irrep_nelec = &#123;<span class="string">&#x27;B2g&#x27;</span>: (<span class="number">1</span>,<span class="number">1</span>), <span class="string">&#x27;B3g&#x27;</span>: (<span class="number">1</span>,<span class="number">1</span>), <span class="string">&#x27;B2u&#x27;</span>: (<span class="number">1</span>,<span class="number">0</span>), <span class="string">&#x27;B3u&#x27;</span>: (<span class="number">1</span>,<span class="number">0</span>)&#125;</span><br><span class="line">mf.kernel()</span><br><span class="line"># converged SCF energy = <span class="number">-146.97333043702</span></span><br><span class="line">mf.get_irrep_nelec()</span><br><span class="line"># &#123;<span class="string">&#x27;Ag&#x27;</span>: (<span class="number">3</span>, <span class="number">3</span>), <span class="string">&#x27;B2g&#x27;</span>: (<span class="number">1</span>, <span class="number">1</span>), <span class="string">&#x27;B3g&#x27;</span>: (<span class="number">1</span>, <span class="number">1</span>), <span class="string">&#x27;B1u&#x27;</span>: (<span class="number">2</span>, <span class="number">2</span>), <span class="string">&#x27;B2u&#x27;</span>: (<span class="number">1</span>, <span class="number">0</span>), <span class="string">&#x27;B3u&#x27;</span>: (<span class="number">1</span>, <span class="number">0</span>)&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="电荷和自旋"><a href="#电荷和自旋" class="headerlink" title="电荷和自旋"></a>电荷和自旋</h2><ul>
+<li><p>属性<code>Mole.charge</code>是定义系统中电子总数的参数。</p>
+<ul>
+<li>自定义系统中指定电子总数用<code>Mole.nelectron</code>：</li>
+</ul>
+</li>
+<li><p><code>Mole.spin</code>是未成对电子的数量<em>2S</em>，即 alpha 和 beta 电子的数量之差。</p>
+</li>
+</ul>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol.charge</span> = <span class="number">1</span></span><br><span class="line"><span class="attr">mol.spin</span> = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>这两个属性不影响<code>Mole.build</code>初始化函数中的任何其他参数。可以在<code>Mole</code>对象初始化后设置或修改它们 ：</li>
+</ul>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">mol = gto.Mole()</span><br><span class="line">mol.atom = &#x27;O <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>; h <span class="number">0</span> <span class="number">1</span> <span class="number">0</span>; h <span class="number">0</span> <span class="number">0</span> <span class="number">1</span>&#x27;</span><br><span class="line">mol.basis = &#x27;sto<span class="number">-6</span>g&#x27;</span><br><span class="line">mol.spin = <span class="number">2</span></span><br><span class="line">mol.build()</span><br><span class="line">print(mol.nelec)</span><br><span class="line">#(<span class="number">6</span>, <span class="number">4</span>)</span><br><span class="line">mol.spin = <span class="number">0</span></span><br><span class="line">print(mol.nelec)</span><br><span class="line">#(<span class="number">5</span>, <span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="其他参数"><a href="#其他参数" class="headerlink" title="其他参数"></a>其他参数</h1><h2 id="输出、内存和打印级别"><a href="#输出、内存和打印级别" class="headerlink" title="输出、内存和打印级别"></a>输出、内存和打印级别</h2><ul>
+<li><p>使用<code>verbose</code>命令全局控制打印级别（打印级别可以是 0（安静，无输出）到 9（非常嘈杂）。最有用的消息在第 4 级（信息）和第 5 级（调试）打印。）：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol.verbose</span> = <span class="number">4</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可以指定写入输出的位置（如果未分配此变量，消息将转储到 <code>sys.stdout</code>.）：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol.output</span> = <span class="string">&#x27;path/to/log.txt&#x27;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可以全局控制最大内存使用量：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">mol.max_memory</span> = <span class="number">1000</span> <span class="comment"># MB</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>默认大小也可以使用 shell 环境变量PYSCF_MAX_MEMORY定义。</li>
+</ul>
+</li>
+<li><p>属性<code>output</code>和<code>max_memory</code>也可以从命令行分配：</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">python</span> <span class="built_in">input</span>.<span class="keyword">py</span> -<span class="keyword">o</span> /path/<span class="keyword">to</span>/my_log.txt -<span class="keyword">m</span> <span class="number">1000</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>默认情况下，命令行具有最高优先级，这意味着脚本中的设置将被命令行参数覆盖。要使输入解析器忽略命令行参数，可以调用 <code>Mole.build()</code>with：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">mol.build(<span class="number">0</span>, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>第一个<code>0</code>防止<code>build()</code>转储输入文件。第二个<code>0</code>阻止<code>build()</code>解析命令行参数。</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>输入</tag>
+        <tag>Pyscf</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2021/11/27/%E3%80%90molpro%E3%80%9106.%E6%97%8B%E8%BD%A8%E8%80%A6%E5%90%88%E8%AE%A1%E7%AE%97/</url>
+    <content><![CDATA[<h1 id="仅旋轨耦合计算"><a href="#仅旋轨耦合计算" class="headerlink" title="仅旋轨耦合计算"></a>仅旋轨耦合计算</h1><p>首先要通过casscf计算，再保存对应的波函数</p>
+<figure class="highlight stata"><table><tr><td class="code"><pre><span class="line">&#123;<span class="keyword">ci</span>;...;<span class="keyword">save</span>,record1.<span class="keyword">file</span>&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>如果是全电子计算中，继续计算SO的积分（BP哈密顿量的单、双电子自旋轨道积分可以预先计算并存储到硬盘上）：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">LSINT [<span class="string">,X</span>] [<span class="string">,Y</span>] [<span class="string">,Z</span>][<span class="symbol">,ONECENTER</span>] [;TWOINT,twoint;] [;PREFAC,prefac;]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>X</code>，<code>Y</code>，和<code>Z</code>定义计算的分量。如果没有给出，三个全部求解。预先计算积分的好处是它们可以用于后面的任何SO计算，但是这可能需要大量的硬盘空间（是在能量计算中积分的六倍）。如果没有给出<code>LSINT</code>卡，那么只要需要就会计算积分。</li>
+<li><code>ONECENTER</code>关键词激活单、双电子自旋轨道积分的单中心近似，对于大分子这会极大地减少计算时间。</li>
+<li><code>TWOINT</code>和<code>PREFAC</code> 可用于控制自旋轨道积分的精度。这些阈值类似于标准积分的<code>TWOINT</code>和<code>PREFAC</code>。<code>prefac</code>的默认值是<code>twoint</code>/100，<code>twoint</code>的默认值是<script type="math/tex">10^{−7}</script>。</li>
+</ul>
+</li>
+</ul>
+<p>生成和处理SO矩阵：</p>
+<figure class="highlight stata"><table><tr><td class="code"><pre><span class="line">&#123;<span class="keyword">ci</span>;hlsmat,<span class="keyword">type</span>,record1.<span class="keyword">file</span>,..,recordn.<span class="keyword">file</span>&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用记录record1，record2， record3，. . .中所有的态，计算整个SO矩阵元并进行对角化。这些记录文件必须用MRCI程序的<code>SAVE</code>指令产生。如前。</li>
+<li>type是用于Breit-Pauli计算的<code>ls</code>或是用于ECP-LS计算的<code>ecp</code>用于全电子或 ECP 计算。<ul>
+<li>如果<code>ls</code>给出（推荐），epcs 将用于所有持有 ecps 的原子，并且对剩余的原子进行全电子处理。</li>
+<li>如果<code>ecp</code>给出，自旋轨道仅包括 ecps 的贡献。</li>
+</ul>
+</li>
+<li>默认打印本征值以及基态与激发态之间的偶极跃迁矩阵元。</li>
+</ul>
+<h2 id="打印选项"><a href="#打印选项" class="headerlink" title="打印选项"></a>打印选项</h2><figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">PRINT</span>,option<span class="number">1</span>=value<span class="number">1</span>, option<span class="number">2</span>=value<span class="number">2</span>, . . .</span><br></pre></td></tr></table></figure>
+<p>选项可以是：</p>
+<ul>
+<li><code>HLS</code><ul>
+<li><code>=-1</code>：只打印SO能量以及基态和激发态之间的跃迁矩阵元（默认）。</li>
+<li>≥0，打印SO矩阵</li>
+<li>≥1，打印特性矩阵</li>
+<li>≥2，打印各个矩阵元（同<code>OPTION,MATEL</code>）。</li>
+<li>≥3，打印调试信息</li>
+</ul>
+</li>
+<li><code>VLS</code><ul>
+<li><code>=-1</code>：不打印本征矢（默认）。</li>
+<li>≥0，打印本征矢。</li>
+</ul>
+</li>
+</ul>
+<p>eg：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">print,hls=<span class="number">1</span>,vls=<span class="number">0</span></span><br></pre></td></tr></table></figure>
+<h2 id="其他选项"><a href="#其他选项" class="headerlink" title="其他选项"></a>其他选项</h2><p>使用OPTION指令设置（以任何次序）：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">OPTIONS [,<span class="attribute">WIGNER</span>=value] [,<span class="attribute">HLSTRANS</span>=value] [,<span class="attribute">MATEL</span>=value]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果用<code>HLSMAT</code>计算整个SO矩阵，那么通常不显示各个矩阵元。当给定了选项MATEL=1时，会打印各个矩阵元以及内部和外部组态类的贡献。</li>
+</ul>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>含有ECP的例子：</p>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">***,Br</span><br><span class="line">geometry=&#123;br&#125;</span><br><span class="line">basis=vtz-pp</span><br><span class="line">&#123;rhf;wf,sym=<span class="number">5</span>&#125;</span><br><span class="line">&#123;multi;wf,sym=<span class="number">2</span>;wf,sym=<span class="number">3</span>;wf,sym=<span class="number">5</span>&#125;  !<span class="number">2</span>P states, <span class="section">state</span> averaged</span><br><span class="line">&#123;ci;wf,sym=<span class="number">2</span>;save,<span class="number">5101.2</span>&#125;           !<span class="number">2</span>Px <span class="section">state</span></span><br><span class="line">&#123;ci;wf,sym=<span class="number">3</span>;save,<span class="number">5102.2</span>&#125;           !<span class="number">2</span>Py <span class="section">state</span></span><br><span class="line">&#123;ci;wf,sym=<span class="number">5</span>;save,<span class="number">5103.2</span>&#125;           !<span class="number">2</span>Pz <span class="section">state</span></span><br><span class="line">&#123;ci;hlsmat,ls,<span class="number">5101.2</span>,<span class="number">5102.2</span>,<span class="number">5103.2</span>&#125; !compute and diagonalize SO matrix</span><br></pre></td></tr></table></figure>
+<p>全电子的例子：</p>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">***,Br</span><br><span class="line">dkroll=<span class="number">1</span></span><br><span class="line">geometry=&#123;br&#125;</span><br><span class="line">basis=vtz-dk</span><br><span class="line">&#123;rhf;wf,sym=<span class="number">5</span>&#125;</span><br><span class="line">&#123;multi;wf,sym=<span class="number">2</span>;wf,sym=<span class="number">3</span>;wf,sym=<span class="number">5</span>&#125;  !<span class="number">2</span>P states, <span class="section">state</span> averaged</span><br><span class="line">&#123;lsint&#125;                             !Compute spin-orbit <span class="number">2</span>-electron integrals</span><br><span class="line">&#123;ci;wf,sym=<span class="number">2</span>;save,<span class="number">6101.2</span>&#125;           !<span class="number">2</span>Px <span class="section">state</span></span><br><span class="line">&#123;ci;wf,sym=<span class="number">3</span>;save,<span class="number">6102.2</span>&#125;           !<span class="number">2</span>Py <span class="section">state</span></span><br><span class="line">&#123;ci;wf,sym=<span class="number">5</span>;save,<span class="number">6103.2</span>&#125;           !<span class="number">2</span>Pz <span class="section">state</span></span><br><span class="line">&#123;ci;hlsmat,ls,<span class="number">6101.2</span>,<span class="number">6102.2</span>,<span class="number">6103.2</span>&#125; !compute and diagonalize SO matrix</span><br></pre></td></tr></table></figure>
+<p>S的例子：</p>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">***,SO calculation for the S-atom</span><br><span class="line">geometry=&#123;s&#125;</span><br><span class="line">basis=&#123;spd,s,vtz&#125;                                 !use uncontracted basis</span><br><span class="line"></span><br><span class="line">&#123;rhf;occ,<span class="number">3</span>,<span class="number">2</span>,<span class="number">2</span>,,<span class="number">2</span>;wf,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span>&#125;                      !rhf for <span class="number">3</span>P <span class="section">state</span></span><br><span class="line"></span><br><span class="line">&#123;multi                                            !casscf</span><br><span class="line">wf,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span>;wf,<span class="number">16</span>,<span class="number">6</span>,<span class="number">2</span>;wf,<span class="number">16</span>,<span class="number">7</span>,<span class="number">2</span>;                    !<span class="number">3</span>P states</span><br><span class="line">wf,<span class="number">16</span>,<span class="number">1</span>,<span class="number">0</span>;<span class="section">state</span>,<span class="number">3</span>;wf,<span class="number">16</span>,<span class="number">4</span>,<span class="number">0</span>;wf,<span class="number">16</span>,<span class="number">6</span>,<span class="number">0</span>;wf,<span class="number">16</span>,<span class="number">7</span>,<span class="number">0</span>&#125;  !<span class="number">1</span>D and <span class="number">1</span>S states</span><br><span class="line"></span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">1</span>,<span class="number">0</span>;save,<span class="number">3010.1</span>;<span class="section">state</span>,<span class="number">3</span>;noexc&#125;          !save casscf wavefunctions using mrci</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">4</span>,<span class="number">0</span>;save,<span class="number">3040.1</span>;noexc&#125;</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">6</span>,<span class="number">0</span>;save,<span class="number">3060.1</span>;noexc&#125;</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">7</span>,<span class="number">0</span>;save,<span class="number">3070.1</span>;noexc&#125;</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span>;save,<span class="number">3042.1</span>;noexc&#125;</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">6</span>,<span class="number">2</span>;save,<span class="number">3062.1</span>;noexc&#125;</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">7</span>,<span class="number">2</span>;save,<span class="number">3072.1</span>;noexc&#125;</span><br><span class="line"></span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">1</span>,<span class="number">0</span>;save,<span class="number">4010.1</span>;<span class="section">state</span>,<span class="number">3</span>&#125;                !mrci calculations for <span class="number">1</span>D, <span class="number">1</span>S states</span><br><span class="line">ed=energy(<span class="number">1</span>)                                      !save energy for <span class="number">1</span>D <span class="section">state</span> in variable ed</span><br><span class="line">es=energy(<span class="number">3</span>)                                      !save energy for <span class="number">1</span>S <span class="section">state</span> in variable es</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span>;save,<span class="number">4042.1</span>&#125;                        !mrci calculations for <span class="number">3</span>P states</span><br><span class="line">ep=energy                                         !save energy for <span class="number">3</span>P <span class="section">state</span> in variable ep</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">6</span>,<span class="number">2</span>;save,<span class="number">4062.1</span>&#125;                        !mrci calculations for <span class="number">3</span>P states</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">7</span>,<span class="number">2</span>;save,<span class="number">4072.1</span>&#125;                        !mrci calculations for <span class="number">3</span>P states</span><br><span class="line">text,only triplet states, casscf</span><br><span class="line"></span><br><span class="line">lsint                                             !compute so integrals</span><br><span class="line"></span><br><span class="line">text,<span class="number">3</span>P states, casscf</span><br><span class="line">&#123;ci;hlsmat,ls,<span class="number">3042.1</span>,<span class="number">3062.1</span>,<span class="number">3072.1</span>&#125;               !Only triplet states, casscf</span><br><span class="line"></span><br><span class="line">text,<span class="number">3</span>P states, mrci</span><br><span class="line">&#123;ci;hlsmat,ls,<span class="number">4042.1</span>,<span class="number">4062.1</span>,<span class="number">4072.1</span>&#125;               !Only triplet states, mrci</span><br><span class="line"></span><br><span class="line">text,<span class="number">3</span>P, <span class="number">1</span>D, <span class="number">1</span>S states, casscf</span><br><span class="line">&#123;ci;hlsmat,ls,<span class="number">3010.1</span>,<span class="number">3040.1</span>,<span class="number">3060.1</span>,<span class="number">3070.1</span>,<span class="number">3042.1</span>,<span class="number">3062.1</span>,<span class="number">3072.1</span>&#125;       !All states, casscf</span><br><span class="line"></span><br><span class="line">text,only triplet states, use mrci energies and casscf SO-matrix elements</span><br><span class="line">hlsdiag=[ed,ed,es,ed,ed,ed,ep,ep,ep]             !set variable hlsdiag to mrci energies</span><br><span class="line">&#123;ci;hlsmat,ls,<span class="number">3010.1</span>,<span class="number">3040.1</span>,<span class="number">3060.1</span>,<span class="number">3070.1</span>,<span class="number">3042.1</span>,<span class="number">3062.1</span>,<span class="number">3072.1</span>&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>molpro</tag>
+        <tag>旋轨耦合</tag>
+        <tag>SO</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2021/11/27/%E3%80%90molpro%E3%80%9105.%E5%A4%9A%E6%80%81%E5%A4%9A%E5%8F%82%E8%80%83/</url>
+    <content><![CDATA[<ul>
+<li><p>CASSCF主要是考虑静态相关，CI，微扰理论等考虑动态相关。MRCI和CASPT2都考虑了。</p>
+</li>
+<li><p>多参考微扰计算作为MRCI程序的特例执行。对于RS2（CASPT2，RASPT2），只需要对单电子算符计算矩阵元，因此计算量远远小于相应的MRCI。对于RS3（CASPT3），必须计算一阶波函的能量期待值，计算量几乎与一次MRCI迭代相同。RS2 和RS3程序使用与MRCI相同的组态空间，即，只对双激发的外组态进行内收缩。</p>
+</li>
+</ul>
+<h1 id="多参考微扰理论"><a href="#多参考微扰理论" class="headerlink" title="多参考微扰理论"></a>多参考微扰理论</h1><ul>
+<li>如果没有进一步的输入卡，波函的定义（芯轨道，闭壳层及活性轨道空间和对称性）对应最近的SCF或MCSCF计算所用的定义。轨道来自相应的SCF或MCSCF 计算，除非给出了<code>ORBITAL</code>指令。</li>
+<li>对于CASPT2计算，如果使用了（赝）正则轨道，零阶哈密顿量将会成为分块对角化的形式。这会加速收敛。因此在此前的MULTI计算中，推荐用<code>CANONICAL</code> 指令保存轨道（默认是<code>NATORB</code>）。</li>
+</ul>
+<p>执行二阶或三阶微扰计算：</p>
+<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">RS2,</span>options</span><br><span class="line"><span class="built_in">RS2C,</span>options</span><br><span class="line"><span class="built_in">RS3,</span>options</span><br></pre></td></tr></table></figure>
+<ul>
+<li>RS3总是包含RS2作为第一步计算。</li>
+<li>对于rs2和rs3，使用与MRCI完全相同的组态空间。在这种情况下，外层轨道空间中有两个电子的激发态在内部收缩。对于32位系统，相关轨道的总数限制为16，对于64位系统，相关轨道的总数限制为32。对于闭壳层单参考的情况，这等价于MP2或MP3。</li>
+<li>在rs2c情况下，单激发外部和内部组态空间的子空间也都是内收缩的。这种方法比RS2效率更高，特别是对具有多个闭壳层（非活性）轨道的大分子。特别地，在这种情况下，只有活性轨道的数量被限制为16个或32个，分别在32位和64位机器上，并且可以使用任何数量的封闭壳层（非活性的）轨道（根据程序参数定义的最大值）。RS2C调用新的更高效的二阶程序，如果不计算三阶项的话，一般使用这个。<ul>
+<li>注意，RS2和RS2c方法产生的结果略有不同。在这两种情况下，结果也与在MOLCAS中实现的使用Roos等人的方法得到的结果略有不同，因为后一种情况下，所有组态空间都在内部收缩。这就引入了MOLPRO中不存在的一些瓶颈。</li>
+</ul>
+</li>
+<li>可以使用restrict和/或select指令来执行限制活性空间RASPT2或常规MRPT2计算，如MCSCF和CASSCF部分所述。</li>
+</ul>
+<h2 id="Options"><a href="#Options" class="headerlink" title="Options"></a>Options</h2><ul>
+<li><p>MRPT2和CASPT2的计算经常遇到激发态计算的入侵态问题，导致波函数爆炸而不收敛。可以使用以下方法来避免。</p>
+<ul>
+<li><p><code>Gn</code>：使用修改的零阶哈密顿量</p>
+</li>
+<li><p><code>SHIFT=value</code>：能级移动（(Chem. Phys. Lett. 245, 215 (1995)).）典型的移动是0.1 − 0.3。在小数点之后只考虑两位数字。打印的能量以及ENERGY 变量包含了Roos和Andersson对能级移动建议的能量修正。收敛后还打印未修正的能量用于比较。</p>
+</li>
+<li><p><code>IPEA=value</code>：IPEA 能级移动。（G. Ghigo, B. O. Roos, and P.A. Malmqvist, Chem. Phys. Lett. 396, 142 (2004））</p>
+</li>
+<li>可以同时使用<code>SHIFT</code>和<code>IPEA</code>，但<code>Gn</code>选项不能和<code>IPEA</code>一起使用。</li>
+</ul>
+</li>
+<li><p><code>MIX=nstates</code>：调用nstates个态的多态（MS-CASPT2）处理。</p>
+</li>
+<li><code>ROOT=ioptroot</code>：在次梯度计算（比如几何优化）中需要优化的根数（只有在随后进行梯度计算时才需要）。和MS-CASPT2中的<code>nstates</code>有关。</li>
+<li><code>SAVEH=record</code>：在MS-CASPT2计算中，保存有效哈密顿量的记录。如果没有给出，则使用默认的记录（推荐）。</li>
+<li><code>INIT</code>：（逻辑型）用单个态的参考函数初始化MS-CASPT2。</li>
+<li><code>IGNORE</code>：（逻辑型）不使用CP-CASPT2的近似梯度计算标记。</li>
+</ul>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><figure class="highlight maxima"><table><tr><td class="code"><pre><span class="line">***,mscaspt2 <span class="keyword">for</span> h2o <span class="number">3B2</span> states</span><br><span class="line">basis=vdz</span><br><span class="line">geometry=&#123;O</span><br><span class="line">          H1,O,R;</span><br><span class="line">          H2,O,R,H1,THETA&#125;</span><br><span class="line">R=<span class="number">2.4</span></span><br><span class="line">Theta=<span class="number">98</span></span><br><span class="line">hf</span><br><span class="line">&#123;multi;closed,<span class="number">2</span></span><br><span class="line">wf,<span class="number">10</span>,<span class="number">1</span>,<span class="number">2</span>;state,<span class="number">3</span>         !three 3A1 states included <span class="keyword">in</span> sa-casscf</span><br><span class="line">wf,<span class="number">10</span>,<span class="number">2</span>,<span class="number">2</span>;state,<span class="number">2</span>         !two <span class="number">3B1</span> states included <span class="keyword">in</span> sa-casscf</span><br><span class="line">wf,<span class="number">10</span>,<span class="number">3</span>,<span class="number">2</span>;state,<span class="number">3</span>         !three <span class="number">3B2</span> states included <span class="keyword">in</span> sa-casscf</span><br><span class="line">canonical,<span class="number">2140.2</span>&#125;         !<span class="built_in">save</span> pseudo canonical orbitals</span><br><span class="line"></span><br><span class="line">&#123;rs2,xms=<span class="number">2</span>,mix=<span class="number">3</span>,root=<span class="number">2</span>;  !include three B2 states,</span><br><span class="line">                          !select the <span class="built_in">second</span> state <span class="keyword">for</span> gradients</span><br><span class="line">wf,<span class="number">10</span>,<span class="number">3</span>,<span class="number">2</span>&#125;                !Triplet B2 state symmetry</span><br><span class="line"></span><br><span class="line">optg                      !<span class="built_in">optimize</span> the geometry</span><br></pre></td></tr></table></figure>
+<h2 id="计算激发态"><a href="#计算激发态" class="headerlink" title="计算激发态"></a>计算激发态</h2><h3 id="分别计算每个态"><a href="#分别计算每个态" class="headerlink" title="分别计算每个态"></a>分别计算每个态</h3><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">STATE,<span class="number">1</span>,root</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>root</code>是所需要的根（即，2对应第一激发态）。在这种情况下，用于零阶哈密顿量的Fock算符用给定态的密度进行计算。</li>
+</ul>
+<h3 id="同时计算两个或更多的态"><a href="#同时计算两个或更多的态" class="headerlink" title="同时计算两个或更多的态"></a>同时计算两个或更多的态</h3><figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">STATE</span>, n<span class="meta"> [,root1, root2, . . . , rootn]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>n</code>是计算的态的个数。</li>
+<li>默认计算最低的n个根。默认设置也可以通过指定所需要的根<code>rooti</code>来修改。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>molpro</tag>
+        <tag>CASPT2</tag>
+        <tag>微扰理论</tag>
       </tags>
   </entry>
 </search>

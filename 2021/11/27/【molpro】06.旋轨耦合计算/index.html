@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=EB Garamond:300,300italic,400,400italic,700,700italic|Dancing Script:300,300italic,400,400italic,700,700italic|ZCOOL XiaoWei:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="旋轨耦合计算">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jing&#39;s Notes">
+<meta property="og:url" content="http://example.com/2021/11/27/%E3%80%90molpro%E3%80%9106.%E6%97%8B%E8%BD%A8%E8%80%A6%E5%90%88%E8%AE%A1%E7%AE%97/index.html">
+<meta property="og:site_name" content="Jing&#39;s Notes">
+<meta property="og:description" content="旋轨耦合计算">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-03-17T13:18:10.565Z">
+<meta property="article:author" content="Zhao Jing">
+<meta property="article:tag" content="molpro">
+<meta property="article:tag" content="旋轨耦合">
+<meta property="article:tag" content="SO">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/11/27/%E3%80%90molpro%E3%80%9106.%E6%97%8B%E8%BD%A8%E8%80%A6%E5%90%88%E8%AE%A1%E7%AE%97/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+  <title> | Jing's Notes</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d23c6dd5b34ecbaba18b829b9084946";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jing's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/27/%E3%80%90molpro%E3%80%9106.%E6%97%8B%E8%BD%A8%E8%80%A6%E5%90%88%E8%AE%A1%E7%AE%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="Zhao Jing">
+      <meta itemprop="description" content="做一棵树，只为岁月而生长。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jing's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-27 00:00:00" itemprop="dateCreated datePublished" datetime="2021-11-27T00:00:00+08:00">2021-11-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-17 21:18:10" itemprop="dateModified" datetime="2022-03-17T21:18:10+08:00">2022-03-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">计算化学</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/%E8%BD%AF%E4%BB%B6/" itemprop="url" rel="index"><span itemprop="name">软件</span></a>
+                </span>
+            </span>
+
+          
+            <br>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/11/27/%E3%80%90molpro%E3%80%9106.%E6%97%8B%E8%BD%A8%E8%80%A6%E5%90%88%E8%AE%A1%E7%AE%97/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/11/27/%E3%80%90molpro%E3%80%9106.%E6%97%8B%E8%BD%A8%E8%80%A6%E5%90%88%E8%AE%A1%E7%AE%97/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+            <div class="post-description">旋轨耦合计算</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="仅旋轨耦合计算"><a href="#仅旋轨耦合计算" class="headerlink" title="仅旋轨耦合计算"></a>仅旋轨耦合计算</h1><p>首先要通过casscf计算，再保存对应的波函数</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="keyword">ci</span>;...;<span class="keyword">save</span>,record1.<span class="keyword">file</span>&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>如果是全电子计算中，继续计算SO的积分（BP哈密顿量的单、双电子自旋轨道积分可以预先计算并存储到硬盘上）：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LSINT [<span class="string">,X</span>] [<span class="string">,Y</span>] [<span class="string">,Z</span>][<span class="symbol">,ONECENTER</span>] [;TWOINT,twoint;] [;PREFAC,prefac;]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>X</code>，<code>Y</code>，和<code>Z</code>定义计算的分量。如果没有给出，三个全部求解。预先计算积分的好处是它们可以用于后面的任何SO计算，但是这可能需要大量的硬盘空间（是在能量计算中积分的六倍）。如果没有给出<code>LSINT</code>卡，那么只要需要就会计算积分。</li>
+<li><code>ONECENTER</code>关键词激活单、双电子自旋轨道积分的单中心近似，对于大分子这会极大地减少计算时间。</li>
+<li><code>TWOINT</code>和<code>PREFAC</code> 可用于控制自旋轨道积分的精度。这些阈值类似于标准积分的<code>TWOINT</code>和<code>PREFAC</code>。<code>prefac</code>的默认值是<code>twoint</code>/100，<code>twoint</code>的默认值是<script type="math/tex">10^{−7}</script>。</li>
+</ul>
+</li>
+</ul>
+<p>生成和处理SO矩阵：</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="keyword">ci</span>;hlsmat,<span class="keyword">type</span>,record1.<span class="keyword">file</span>,..,recordn.<span class="keyword">file</span>&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用记录record1，record2， record3，. . .中所有的态，计算整个SO矩阵元并进行对角化。这些记录文件必须用MRCI程序的<code>SAVE</code>指令产生。如前。</li>
+<li>type是用于Breit-Pauli计算的<code>ls</code>或是用于ECP-LS计算的<code>ecp</code>用于全电子或 ECP 计算。<ul>
+<li>如果<code>ls</code>给出（推荐），epcs 将用于所有持有 ecps 的原子，并且对剩余的原子进行全电子处理。</li>
+<li>如果<code>ecp</code>给出，自旋轨道仅包括 ecps 的贡献。</li>
+</ul>
+</li>
+<li>默认打印本征值以及基态与激发态之间的偶极跃迁矩阵元。</li>
+</ul>
+<h2 id="打印选项"><a href="#打印选项" class="headerlink" title="打印选项"></a>打印选项</h2><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">PRINT</span>,option<span class="number">1</span>=value<span class="number">1</span>, option<span class="number">2</span>=value<span class="number">2</span>, . . .</span><br></pre></td></tr></table></figure>
+<p>选项可以是：</p>
+<ul>
+<li><code>HLS</code><ul>
+<li><code>=-1</code>：只打印SO能量以及基态和激发态之间的跃迁矩阵元（默认）。</li>
+<li>≥0，打印SO矩阵</li>
+<li>≥1，打印特性矩阵</li>
+<li>≥2，打印各个矩阵元（同<code>OPTION,MATEL</code>）。</li>
+<li>≥3，打印调试信息</li>
+</ul>
+</li>
+<li><code>VLS</code><ul>
+<li><code>=-1</code>：不打印本征矢（默认）。</li>
+<li>≥0，打印本征矢。</li>
+</ul>
+</li>
+</ul>
+<p>eg：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print,hls=<span class="number">1</span>,vls=<span class="number">0</span></span><br></pre></td></tr></table></figure>
+<h2 id="其他选项"><a href="#其他选项" class="headerlink" title="其他选项"></a>其他选项</h2><p>使用OPTION指令设置（以任何次序）：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OPTIONS [,<span class="attribute">WIGNER</span>=value] [,<span class="attribute">HLSTRANS</span>=value] [,<span class="attribute">MATEL</span>=value]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果用<code>HLSMAT</code>计算整个SO矩阵，那么通常不显示各个矩阵元。当给定了选项MATEL=1时，会打印各个矩阵元以及内部和外部组态类的贡献。</li>
+</ul>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>含有ECP的例子：</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">***,Br</span><br><span class="line">geometry=&#123;br&#125;</span><br><span class="line">basis=vtz-pp</span><br><span class="line">&#123;rhf;wf,sym=<span class="number">5</span>&#125;</span><br><span class="line">&#123;multi;wf,sym=<span class="number">2</span>;wf,sym=<span class="number">3</span>;wf,sym=<span class="number">5</span>&#125;  !<span class="number">2</span>P states, <span class="section">state</span> averaged</span><br><span class="line">&#123;ci;wf,sym=<span class="number">2</span>;save,<span class="number">5101.2</span>&#125;           !<span class="number">2</span>Px <span class="section">state</span></span><br><span class="line">&#123;ci;wf,sym=<span class="number">3</span>;save,<span class="number">5102.2</span>&#125;           !<span class="number">2</span>Py <span class="section">state</span></span><br><span class="line">&#123;ci;wf,sym=<span class="number">5</span>;save,<span class="number">5103.2</span>&#125;           !<span class="number">2</span>Pz <span class="section">state</span></span><br><span class="line">&#123;ci;hlsmat,ls,<span class="number">5101.2</span>,<span class="number">5102.2</span>,<span class="number">5103.2</span>&#125; !compute and diagonalize SO matrix</span><br></pre></td></tr></table></figure>
+<p>全电子的例子：</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">***,Br</span><br><span class="line">dkroll=<span class="number">1</span></span><br><span class="line">geometry=&#123;br&#125;</span><br><span class="line">basis=vtz-dk</span><br><span class="line">&#123;rhf;wf,sym=<span class="number">5</span>&#125;</span><br><span class="line">&#123;multi;wf,sym=<span class="number">2</span>;wf,sym=<span class="number">3</span>;wf,sym=<span class="number">5</span>&#125;  !<span class="number">2</span>P states, <span class="section">state</span> averaged</span><br><span class="line">&#123;lsint&#125;                             !Compute spin-orbit <span class="number">2</span>-electron integrals</span><br><span class="line">&#123;ci;wf,sym=<span class="number">2</span>;save,<span class="number">6101.2</span>&#125;           !<span class="number">2</span>Px <span class="section">state</span></span><br><span class="line">&#123;ci;wf,sym=<span class="number">3</span>;save,<span class="number">6102.2</span>&#125;           !<span class="number">2</span>Py <span class="section">state</span></span><br><span class="line">&#123;ci;wf,sym=<span class="number">5</span>;save,<span class="number">6103.2</span>&#125;           !<span class="number">2</span>Pz <span class="section">state</span></span><br><span class="line">&#123;ci;hlsmat,ls,<span class="number">6101.2</span>,<span class="number">6102.2</span>,<span class="number">6103.2</span>&#125; !compute and diagonalize SO matrix</span><br></pre></td></tr></table></figure>
+<p>S的例子：</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">***,SO calculation for the S-atom</span><br><span class="line">geometry=&#123;s&#125;</span><br><span class="line">basis=&#123;spd,s,vtz&#125;                                 !use uncontracted basis</span><br><span class="line"></span><br><span class="line">&#123;rhf;occ,<span class="number">3</span>,<span class="number">2</span>,<span class="number">2</span>,,<span class="number">2</span>;wf,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span>&#125;                      !rhf for <span class="number">3</span>P <span class="section">state</span></span><br><span class="line"></span><br><span class="line">&#123;multi                                            !casscf</span><br><span class="line">wf,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span>;wf,<span class="number">16</span>,<span class="number">6</span>,<span class="number">2</span>;wf,<span class="number">16</span>,<span class="number">7</span>,<span class="number">2</span>;                    !<span class="number">3</span>P states</span><br><span class="line">wf,<span class="number">16</span>,<span class="number">1</span>,<span class="number">0</span>;<span class="section">state</span>,<span class="number">3</span>;wf,<span class="number">16</span>,<span class="number">4</span>,<span class="number">0</span>;wf,<span class="number">16</span>,<span class="number">6</span>,<span class="number">0</span>;wf,<span class="number">16</span>,<span class="number">7</span>,<span class="number">0</span>&#125;  !<span class="number">1</span>D and <span class="number">1</span>S states</span><br><span class="line"></span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">1</span>,<span class="number">0</span>;save,<span class="number">3010.1</span>;<span class="section">state</span>,<span class="number">3</span>;noexc&#125;          !save casscf wavefunctions using mrci</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">4</span>,<span class="number">0</span>;save,<span class="number">3040.1</span>;noexc&#125;</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">6</span>,<span class="number">0</span>;save,<span class="number">3060.1</span>;noexc&#125;</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">7</span>,<span class="number">0</span>;save,<span class="number">3070.1</span>;noexc&#125;</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span>;save,<span class="number">3042.1</span>;noexc&#125;</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">6</span>,<span class="number">2</span>;save,<span class="number">3062.1</span>;noexc&#125;</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">7</span>,<span class="number">2</span>;save,<span class="number">3072.1</span>;noexc&#125;</span><br><span class="line"></span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">1</span>,<span class="number">0</span>;save,<span class="number">4010.1</span>;<span class="section">state</span>,<span class="number">3</span>&#125;                !mrci calculations for <span class="number">1</span>D, <span class="number">1</span>S states</span><br><span class="line">ed=energy(<span class="number">1</span>)                                      !save energy for <span class="number">1</span>D <span class="section">state</span> in variable ed</span><br><span class="line">es=energy(<span class="number">3</span>)                                      !save energy for <span class="number">1</span>S <span class="section">state</span> in variable es</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span>;save,<span class="number">4042.1</span>&#125;                        !mrci calculations for <span class="number">3</span>P states</span><br><span class="line">ep=energy                                         !save energy for <span class="number">3</span>P <span class="section">state</span> in variable ep</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">6</span>,<span class="number">2</span>;save,<span class="number">4062.1</span>&#125;                        !mrci calculations for <span class="number">3</span>P states</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">7</span>,<span class="number">2</span>;save,<span class="number">4072.1</span>&#125;                        !mrci calculations for <span class="number">3</span>P states</span><br><span class="line">text,only triplet states, casscf</span><br><span class="line"></span><br><span class="line">lsint                                             !compute so integrals</span><br><span class="line"></span><br><span class="line">text,<span class="number">3</span>P states, casscf</span><br><span class="line">&#123;ci;hlsmat,ls,<span class="number">3042.1</span>,<span class="number">3062.1</span>,<span class="number">3072.1</span>&#125;               !Only triplet states, casscf</span><br><span class="line"></span><br><span class="line">text,<span class="number">3</span>P states, mrci</span><br><span class="line">&#123;ci;hlsmat,ls,<span class="number">4042.1</span>,<span class="number">4062.1</span>,<span class="number">4072.1</span>&#125;               !Only triplet states, mrci</span><br><span class="line"></span><br><span class="line">text,<span class="number">3</span>P, <span class="number">1</span>D, <span class="number">1</span>S states, casscf</span><br><span class="line">&#123;ci;hlsmat,ls,<span class="number">3010.1</span>,<span class="number">3040.1</span>,<span class="number">3060.1</span>,<span class="number">3070.1</span>,<span class="number">3042.1</span>,<span class="number">3062.1</span>,<span class="number">3072.1</span>&#125;       !All states, casscf</span><br><span class="line"></span><br><span class="line">text,only triplet states, use mrci energies and casscf SO-matrix elements</span><br><span class="line">hlsdiag=[ed,ed,es,ed,ed,ed,ep,ep,ep]             !set variable hlsdiag to mrci energies</span><br><span class="line">&#123;ci;hlsmat,ls,<span class="number">3010.1</span>,<span class="number">3040.1</span>,<span class="number">3060.1</span>,<span class="number">3070.1</span>,<span class="number">3042.1</span>,<span class="number">3062.1</span>,<span class="number">3072.1</span>&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>有用可戳(●ˇ∀ˇ●)</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="Zhao Jing 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Zhao Jing
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2021/11/27/%E3%80%90molpro%E3%80%9106.%E6%97%8B%E8%BD%A8%E8%80%A6%E5%90%88%E8%AE%A1%E7%AE%97/" title="">http://example.com/2021/11/27/【molpro】06.旋轨耦合计算/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/molpro/" rel="tag"><i class="fa fa-tag"></i> molpro</a>
+              <a href="/tags/%E6%97%8B%E8%BD%A8%E8%80%A6%E5%90%88/" rel="tag"><i class="fa fa-tag"></i> 旋轨耦合</a>
+              <a href="/tags/SO/" rel="tag"><i class="fa fa-tag"></i> SO</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/27/%E3%80%90molpro%E3%80%9105.%E5%A4%9A%E6%80%81%E5%A4%9A%E5%8F%82%E8%80%83/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/12/06/%E3%80%90ADF%E3%80%9103.%E7%B2%BE%E5%BA%A6%E6%8E%A7%E5%88%B6/" rel="next" title="【ADF】03.精度控制">
+      【ADF】03.精度控制 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%85%E6%97%8B%E8%BD%A8%E8%80%A6%E5%90%88%E8%AE%A1%E7%AE%97"><span class="nav-number">1.</span> <span class="nav-text">仅旋轨耦合计算</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%8D%B0%E9%80%89%E9%A1%B9"><span class="nav-number">1.1.</span> <span class="nav-text">打印选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%80%89%E9%A1%B9"><span class="nav-number">1.2.</span> <span class="nav-text">其他选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">1.3.</span> <span class="nav-text">例子</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhao Jing"
+      src="/images/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">Zhao Jing</p>
+  <div class="site-description" itemprop="description">做一棵树，只为岁月而生长。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">66</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaojing629" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaojing629" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:295483858@qq.com" title="E-Mail → mailto:295483858@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+<div class="sidebar-categories" p align="left">
+  <font size="2">
+  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/">计算化学</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/%E8%BD%AF%E4%BB%B6/">软件</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/%E5%8E%9F%E7%90%86/">原理</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%AB%99/">网站</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F/">系统</a></li></ul>
+  </font>
+  </p /div>
+
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title"></h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ADF/" rel="tag">ADF</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AIM/" rel="tag">AIM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AMS/" rel="tag">AMS</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASPT2/" rel="tag">CASPT2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASSCF/" rel="tag">CASSCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CP2K/" rel="tag">CP2K</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DLPNO/" rel="tag">DLPNO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gaussian/" rel="tag">Gaussian</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HF/" rel="tag">HF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jmol/" rel="tag">Jmol</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LmodeA/" rel="tag">LmodeA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCSCF/" rel="tag">MCSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MOKIT/" rel="tag">MOKIT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Multiwfn/" rel="tag">Multiwfn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NBO/" rel="tag">NBO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NICS/" rel="tag">NICS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORCA/" rel="tag">ORCA</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pyscf/" rel="tag">Pyscf</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RI%E8%BF%91%E4%BC%BC/" rel="tag">RI近似</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SO/" rel="tag">SO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMD/" rel="tag">VMD</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/compliance/" rel="tag">compliance</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/molpro/" rel="tag">molpro</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%B4%E7%95%8C%E7%82%B9/" rel="tag">临界点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98/" rel="tag">内存</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="tag">几何优化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%AD%90%E8%BD%A8%E9%81%93/" rel="tag">分子轨道</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%9D%E7%8C%9C/" rel="tag">初猜</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%9B%E5%B8%B8%E6%95%B0/" rel="tag">力常数</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%82%B9/" rel="tag">单点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag">占据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%90%E6%A0%87/" rel="tag">坐标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%BB%84/" rel="tag">基组</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BB%84%E6%80%81/" rel="tag">多组态</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag">对称性</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E6%89%B0%E7%90%86%E8%AE%BA/" rel="tag">微扰理论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%93%E6%89%91%E5%88%86%E6%9E%90/" rel="tag">拓扑分析</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%94%B6%E6%95%9B/" rel="tag">收敛</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%8B%E8%BD%A8%E8%80%A6%E5%90%88/" rel="tag">旋轨耦合</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag">波函</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag">点群</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E8%8D%B7/" rel="tag">电荷</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA/" rel="tag">相对论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%9F%BA%E7%BB%84/" rel="tag">相对论基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B2%BE%E5%BA%A6/" rel="tag">精度</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%98%E5%9B%BE/" rel="tag">绘图</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%8A%B3%E9%A6%99%E6%80%A7/" rel="tag">芳香性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%9D%E5%8A%BF/" rel="tag">赝势</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%85%E5%8A%A9%E5%9F%BA%E7%BB%84/" rel="tag">辅助基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5/" rel="tag">输入</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%87%BA/" rel="tag">输出</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%87%E6%B8%A1%E6%80%81/" rel="tag">过渡态</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E5%BE%84/" rel="tag">键径</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E7%BA%A7/" rel="tag">键级</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%91%E7%8E%87/" rel="tag">频率</a><span class="tag-list-count">2</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-flask"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhao Jing</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">301k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='0,0,0' opacity='0.3' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : '3L90wCaNUKa1MzSQcAhzkLtk-gzGzoHsz',
+      appKey     : 'fQ4t73jXnb71Y9zQWfXj5bIP',
+      placeholder: "可以输入您发现文中的错误或建议~(。・∀・)ノ",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
