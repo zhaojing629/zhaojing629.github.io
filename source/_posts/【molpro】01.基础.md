@@ -1,5 +1,5 @@
 ---
-title: 【molpro】01.基础
+ title: 【molpro】01.基础
 typora-root-url: 【molpro】01.基础
 mathjax: true
 date: 2019-11-13
@@ -23,7 +23,7 @@ molpro [options] [datafile]
 - `datafile`：输入文件，可以取任何名字，但是要避免使用.out作为后缀，一般用.inp。unix中出现在molpro输入文件中的文件名总是转化为小写。
 
 - options：大部分选项都有合适的系统默认值，但是也可以在命令行中、环境变量MOLPRO OPTIONS中或文件./molpro.rc，$HOME/.molprorc，和library文件目录下的tuning.rc中（优先级递减）：
-  - `-d [directory]` ：定义放置临时文件的目录
+  - `-d [directory]` ：临时文件是临时的，并在作业结束时消失。默认情况下，此目录的位置为`/tmp/$USER`，或取自环境变量 TMPDIR。可以通过该选项定义放置临时文件的目录，
 
   - `-m n_scale`：<span id=mm>指定分配给程序的工作内存，单位是word=8byte</span>
 
@@ -269,7 +269,7 @@ FILE,file,name,[status]
 
 # print/gprint 全局打印选项
 
-通常，有两种打印选项：一种是局部的，由print指令指定，仅在一个作业步骤中使用；一种是全局的，在各个程序以外可以用GPRINT命令设置全局打印选项（g可用可不用，用了可以避免与程序特定的PRINT卡相混淆）。局部打印命令是特定方法输入的一部分，因此必须直接遵循相应的命令。全局打印选项作用于所有后续方法。
+通常，有两种打印选项：一种是局部的，由print指令指定，仅在一个作业步骤中使用；一种是全局的，在各个程序以外可以用GPRINT命令设置全局打印选项（g可加可不加，加了可以避免与程序特定的PRINT卡相混淆）。局部打印命令是特定方法输入的一部分，因此必须直接遵循相应的命令。全局打印选项作用于所有后续方法。
 
 ```
 GPRINT,key1[=value1],key2[=value2],. . .
@@ -280,7 +280,7 @@ NOGPRINT,key1,key2,. . .
   - `BASIS`：打印基的信息
   - `DISTANCE`：打印键长（默认）
   - `ANGLES`：打印键角信息（默认=0）。如果大于0，还打印二面角
-  - `ORBITAL`：打印SCF和MCSCF的轨道
+  - `ORBITAL(=int)`：打印SCF和MCSCF的轨道，打印每个对称性下的占据轨道和int个最低空轨道。
   - `CIVECTOR`：打印MCSCF的CI矢量（注意，默认情况下只打印大于0.05的CI系数。）
   - `PAIRS`：打印CI和CCSD中的电子对列表
   - `CS`：打印CI和CCSD中的单激发信息

@@ -62,6 +62,15 @@ PerAtomType Core=None File=string Symbol=tring type=XXX
 
 - `Region`：指定基组的区域，可以用逻辑运算符，比如`R1+R2`
 
+```
+   Basis
+      Type DZ
+      Core None
+      PerRegion Region=Accurate Type=TZP
+      PerRegion Region=Far      Type=SZ
+   End
+```
+
 
 
 > ADF19中，为同元素的不同原子设置基组
@@ -133,7 +142,7 @@ End
 - `SpinOrbitMagnetization`：只与自旋轨道耦合相关，而且在`unrestricted`下使用。在不受限制的计算中，大多数XC泛函都有自旋极化作为一种成分。通常，自旋量子化轴的方向是任意的，可以方便地选择为z轴。然而，在自旋轨道计算中，方向很重要，将磁化矢量的z分量放入XC函数中是任意的。
   - `NonCollinear`：可以将磁化矢量的大小插入XC函数中。 这称为非共线方法。
   - `CollinearX`，`CollinearY`，`CollinearZ`：使用x，y或z分量作为XC函数的自旋极化。默认为z。
-  - ：`Collinear`：同`CollinearZ`
+  - `Collinear`：同`CollinearZ`
 
 
 
@@ -201,9 +210,11 @@ End
 
 - `Ok`：禁用A-DIIS时，SDIIS起始条件。默认为`0.5` a.u.。
 
+
+
 ## 加速方法
 
-- `AccelerationMethod`调用的SCF加速方法，默认情况下为`ADIIS`，还可以用`LISTi` | `LISTb` | `fDIIS` | `LISTf` | `MESA` | `SDIIS`。MESA采用的是ADIIS, fDIIS, LISTb, LISTf, LISTi和 SDIIS方法的组合。
+- `AccelerationMethod`调用的SCF加速方法，**默认情况下为`ADIIS`，**还可以用`LISTi` | `LISTb` | `fDIIS` | `LISTf` | `MESA` | `SDIIS`。MESA采用的是ADIIS, fDIIS, LISTb, LISTf, LISTi和 SDIIS方法的组合。
 - `MESA`：代表从其中删掉某一种方法，可以直接使用该关键词调用MESA（也可以用`AccelerationMethod MESA`调用），优先级大于`AccelerationMethod`指定的方法。
 - `NoADIIS`：指定`NoADIIS`时才可以设置 [`DIIS`模块](#DIIS)的`cycle`和`OK`。
   - 如果<span id="NOADIIS">没有设置`oldSCF`，则指定 `NoADIIS` </span>与[将 AccelerationMethod 设置为 SDIIS](#SDIIS) 的效果相同。
@@ -226,6 +237,8 @@ End
 ### SDIIS部分
 
 [SDIIS](#NOADIIS) 代表原始的Pulay DIIS方法。禁用 A-DIIS 并将 SCF 切换为阻尼+SDIIS方法：从简单阻尼（Mixing）开始，持续到`ErrMax`降低到[`DIIS OK`](#DIIS)参数以下，但是不超过`DIIS Cyc`次迭代。之后使用纯的SDIIS方法。
+
+
 
 ## 能级移动
 
@@ -275,9 +288,11 @@ End
   - 该方法仅适用于NOSYM计算
   - 在每一步都要计算总能量，计算非常昂贵，而且使用总能量，需要更高的积分精度才能获得稳定的SCF收敛，该方法可能不适用于所有情况，??使用`ADDDIFFUSEFIT`关键字或更高的`ZlmFit`质量设置来提高总能量的准确性，从而提高收敛性。??
 
+
+
 ## SCF不收敛
 
-1. 更换SCF加速收敛的方法
+1. 更换SCF[加速收敛的方法](#加速方法)
 2. 使用ARH方法
 3. 修改DIIS算法的参数
    - `Mixing`高于默认值`0.2`会有更高的加速度，更低会更稳定的迭代
@@ -301,7 +316,7 @@ End
 
 # 对称性的设置
 
-除了在AMS中或`System`块中指定，`Engine ADF`中也可以设置对称性：
+除了在AMS中`System`块中指定，`Engine ADF`中也可以设置对称性：
 
 - `Symmetry`：默认是`AUTO`，默认为`auto`，可以通过`nosym`、`C(LIN)`……等来指定对称性
 - `SymmetryTolerance`：用于检测系统对称性的容差。默认是`1e-07`
@@ -342,6 +357,46 @@ End
 - 如果数字序列比较长，可以组合内层的电子数，程序会自动拆分，比如对于单个原子，`P 17 3`会自动变成`P 6 6 5 3`
 - 可以用分数占据
 - 在数值频率计算中，程序内部默认使用nosym，因此只能识别不可约表示A。
+
+
+
+# `NumericalQuality`
+
+- 设置ADF计算的质量，包括BeckeGrid（数值积分）和 ZlmFit（密度拟合）。
+- 选项有`Basic`、`Normal`（默认）、`Good`、`VeryGood`、`Excellent`
+
+# `BeckeGrid`
+
+数值积分格点的选项。
+
+```
+BECKEGRID
+  Quality [basic|normal|good|verygood|excellent]
+  {QualityPerRegion
+     Region myregion
+     Quality {Basic|Normal|Good|VeryGood|Excellent}
+  End}
+  {qpnear qpnear}
+  {RadialGridBoost boost}
+End
+```
+
+- `Quality`：选项有`auto`（默认）、`Basic`、`Normal`、`Good`、`VeryGood`、`Excellent`。会覆盖`NumericalQuality`中的设置。
+
+- `QualityPerRegion`：设置特定区域的原子的积分格点质量。
+
+  ```
+  BeckeGrid
+    QualityPerRegion Region=Accurate Quality=Good
+    QualityPerRegion Region=Far      Quality=Basic
+  End
+  ```
+
+- `qpnear`：默认为`4`Å。当在输入文件中指定了点电荷时，ADF 仅围绕那些接近原子的点电荷生成网格。`qpnear`指定的是最近的距离。
+
+- `RadialGridBoost`：默认为`1.0`。增加径向积分点的数量。一些 XC 泛函需要非常精确的径向积分网格，因此 ADF 会自动将径向网格提升 3 倍用于一些数值敏感泛函。
+
+
 
 # 红外光谱
 

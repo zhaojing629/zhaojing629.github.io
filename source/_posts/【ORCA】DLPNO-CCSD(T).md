@@ -5,7 +5,7 @@ typora-root-url: 【ORCA】DLPNO-CCSD(T)
 mathjax: true
 updated:
 tags: [ORCA, DLPNO]
-categories: [计算化学,软件]
+categories: [计算化学, 软件]
 description: ORCA DLPNO-CCSD(T)计算
 ---
 

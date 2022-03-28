@@ -5,21 +5,44 @@ mathjax: true
 date: 2019-11-17
 updated:
 tags: [molpro, 多组态,CASSCF,MCSCF]
-categories: [计算化学,软件]
+categories: [计算化学, 软件]
 description: CASSCF以及一般MCSCF计算
 ---
 
 
 
-# 全活性空间自洽场CASSCF
+
+
+# 一般输入结构
+
+1. 用命令`MULTI`或`MCSCF`调用程序。
+2. 定义轨道空间分区的卡：`OCC`，`FROZEN`，`CLOSED`
+3. 一般选项
+4. `WF`卡，定义态的对称性
+5. 与态对称性有关的选项：`WEIGHT`,`STATE`,`LQUANT`
+6. 态对称性的组态定义：`SELECT`,`CON`,`RESTRICT`
+7. 定义态对称性的主要组态：`PSPACE`
+8. 更多的一般选项。
+
+4~8可以重复几次，指定对于不同对称性的几个态的能量做平均。
+
+## `MULTI`/`CASSCF`调用程序
+
+全活性空间自洽场`CASSCF`，此命令的别名是`mcscf`或`multi`。这个命令后面可选地跟着定义波函数的进一步输入。
 
 ```
 casscf
 ```
 
-全活性空间自洽场`CASSCF`，此命令的别名是`mcscf`或`multi`。这个命令后面可选地跟着定义波函数的进一步输入。
+该命令行后面可以接：
 
-## 轨道子空间的定义
+- `MAXIT`：最大迭代数（默认10）
+- `ENERGY`：能量收敛阈值
+- `GRADIENT`：梯度收敛阈值
+- `STEP`：步长收敛阈值
+- `FAILSAFE`：（逻辑型）使用更稳定的收敛选项
+
+## `OCC`，`FROZEN`，`CLOSED`轨道子空间的定义
 
 在一个CASSCF波函数中，已占据轨道空间被划分为一组非活性或闭壳层轨道和一组活性轨道：
 
@@ -42,7 +65,16 @@ casscf
 - `FREEZE,orb.sym;`指定的轨道将不被优化，仍保持和初始猜测相同
   - `orb.sym` 应当是一个活性或闭壳层轨道，如果是`FROZEN`冻芯轨道，这个卡不起作用。
 
-## 定义被优化的态
+### 选择轨道的方法
+
+一般有两种选法：
+
+- 看原子的价层轨道
+- 看分子的成键和反键轨道
+
+可以先算个hf来看看`molden`文件中的轨道，注意输出的轨道`print,orbital`只输出占据轨道，通过`print,orbital=n`来控制输出的最低的空轨道数目。
+
+## `WF`定义被优化的态
 
 每个需要优化的态的对称性用一个WF卡定义：
 
@@ -51,61 +83,6 @@ WF,elec,sym,spin
 ```
 
 - 之后可以选择接`STATE`，`WEIGHT`，`RESTRICT`，`SELECT`，`CON`，和/或`PSPACE`卡来定义这个WF卡 ，这些卡总是指前一个WF卡定义的态对称性，但是各个卡之间的顺序是任意的。
-
-## 态平均MCSCF
-
-为了计算激发态，通常最好对所考虑的所有状态的平均能量进行优化。这避免了优化过程中的根本问题，并为所有状态生成一组折衷轨道。
-
-- 通过`STATE,nstate;`定义当前对称性中态的数量，默认所有的态都用权重1来优化，它必须直接跟随在wf指令之后
-
-  ```
-  wf,16,1,0;state,2 !optimize two states of symmetry 1
-  ```
-
-- 可以优化不同对称性的状态。在这种情况下，几个wf /state指令可以相互遵循：
-
-  ```
-  wf,16,1,0;state,2 !optimize two states of symmetry 1 
-  wf,16,2,0;state,1 !optimize one states of symmetry 2
-  ```
-
-- `WEIGHT,w(1),w(2),...,w(nstate);`定义态平均计算中的权重，`w(i)`是当前对称性第i个态的权重。所有的权重默认都是1.0。
-
-  - 如果只想优化特定态对称性的第二个态，可以指定
-
-    ```
-    STATE,2;WEIGHT,0,1;
-    ```
-
-    但是注意，这可能会导致根的跳跃问题。
-
-  - 优化对称性1的两个态，第一个权重0.2，第二个0.8
-
-    ```
-    wf,16,1,0;state,2;weight,0.2,0.8
-    ```
-
-- 例子：对O<sub>2</sub>的状态平均计算，其中将$^1\Sigma^+_g$，$^3\Sigma_g^-$，$^1\Delta_g$放在一起处理：（在本例中，对具有不同自旋多重性的状态进行平均只对CASSCF可行，而对限制更严格的RASSCF或MCSCF波函数则不可行。）
-
-  ```
-  ***,O2
-  print,basis,orbitals
-  geometry={                 
-  o1
-  o2,o1,r
-  }
-  r=2.2 bohr                 
-  basis=vtz
-  {hf
-  wf,16,4,2
-  occ,3,1,1,,2,1,1
-  open,1.6,1.7}
-  
-  {casscf                    !invoke CASSCF program
-  wf,16,4,2                  !triplet Sigma-
-  wf,16,4,0                  !singlet delta (xy)
-  wf,16,1,0}                 !singlet delta (xx - yy)
-  ```
 
 ## 例子
 
@@ -152,20 +129,67 @@ casscf                 !实行CASSCF计算，用HF轨道作为初猜
   ```
 
 
-## 选择轨道的方法
 
-一般有两种选法：
+# 态平均MCSCF
 
-- 看原子的价层轨道
-- 看分子的成键和反键轨道
+为了计算激发态，通常最好对所考虑的所有状态的平均能量进行优化。这避免了优化过程中的根本问题，并为所有状态生成一组折衷轨道。
 
-可以先算个hf来看看`molden`文件中的轨道，注意输出的轨道`print,orbital`只输出占据轨道，通过`print,orbital=n`来控制输出的最低的空轨道数目。
+- 通过`STATE,nstate;`定义当前对称性中态的数量，默认所有的态都用权重1来优化，它必须直接跟随在wf指令之后
 
-# 受限活性空间自洽场RASSCF
+  ```
+  wf,16,1,0;state,2 !optimize two states of symmetry 1
+  ```
 
-## 占据限制
+- 可以优化不同对称性的状态。在这种情况下，几个wf /state指令可以相互遵循：
 
-由于CSFs或Slater行列式的数量以及计算成本会随着活动轨道的数量而迅速增加，所以最好使用更小的CSFs集合。选择的一种方法是限制某些子空间中的电子数。例如，可以只允许某些活跃轨道的强占据部分的单激发态和双激发态，或者将另一个活跃轨道的电子数限制在最多2个。通常，可以使用`restrict`指令来定义这些限制：
+  ```
+  wf,16,1,0;state,2 !optimize two states of symmetry 1 
+  wf,16,2,0;state,1 !optimize one states of symmetry 2
+  ```
+
+- `WEIGHT,w(1),w(2),...,w(nstate);`定义态平均计算中的权重，`w(i)`是当前对称性第i个态的权重。所有的权重默认都是1.0。
+
+  - <font color=red>**如果只想优化特定态对称性的第二个态，可以指定:**</font>
+
+    ```
+    STATE,2;WEIGHT,0,1;
+    ```
+
+    但是注意，这可能会导致根的跳跃问题。
+
+  - 优化对称性1的两个态，第一个权重0.2，第二个0.8
+
+    ```
+    wf,16,1,0;state,2;weight,0.2,0.8
+    ```
+
+- 例子：对O<sub>2</sub>的状态平均计算，其中将$^1\Sigma^+_g$，$^3\Sigma_g^-$，$^1\Delta_g$放在一起处理：（在本例中，对具有不同自旋多重性的状态进行平均只对CASSCF可行，而对限制更严格的RASSCF或MCSCF波函数则不可行。）
+
+  ```
+  ***,O2
+  print,basis,orbitals
+  geometry={                 
+  o1
+  o2,o1,r
+  }
+  r=2.2 bohr                 
+  basis=vtz
+  {hf
+  wf,16,4,2
+  occ,3,1,1,,2,1,1
+  open,1.6,1.7}
+  
+  {casscf                    !invoke CASSCF program
+  wf,16,4,2                  !triplet Sigma-
+  wf,16,4,0                  !singlet delta (xy)
+  wf,16,1,0}                 !singlet delta (xx - yy)
+  ```
+
+
+
+# `restrict`占据限制
+
+由于CSFs或Slater行列式的数量以及计算成本会随着活动轨道的数量而迅速增加，所以最好使用更小的CSFs集合。选择的一种方法是限制某些子空间中的电子数，得到受限活性空间自洽场RASSCF。例如，可以只允许某些活跃轨道的强占据部分的单激发态和双激发态，或者将另一个活跃轨道的电子数限制在最多2个。通常，可以使用`restrict`指令来定义这些限制：
 
 ```
 restrict,nmin,nmax,orb1，orb2，....，orbn;
@@ -264,7 +288,7 @@ restrict,nmin,nmax,orb1，orb2，....，orbn;
 
 # 其他选项
 
-## rotate
+## `rotate`
 
 将`sym`对称性中的初始轨道`orb1`和`orb2`做`angle`度的2×2 转动：
 
@@ -275,7 +299,24 @@ ROTATE,orb1.sym,orb2.sym,angle
 - angle=`0`表示交换轨道（等价于angle=90）。**只能针对相同对称性的交换**
 - `ROTATE`只在`START`卡之后才有意义。
 
+## `natorb`自然轨道
 
+计算最终的自然轨道，并写到记录record中。（默认的record是2140.2，或者在ORBITAL卡指定）
 
+```
+NATORB,[record,] [options]
+```
 
+options的可以是：
+
+- `CI`：以计算的自然轨道为基，把哈密顿量对角化，并打印组态及其有关的因子。与全局打印中的`CIVECTOR`等同。
+- `PRINT(=n)`：打印每个对称性的n个虚轨道。与全局打印中的`ORBITAL(=n)`等同。
+
+## `CANORB`赝正则轨道
+
+正则化最终的轨道，等同于`CANONICAL`。options与自然轨道中的一样。
+
+```
+CANORB,[record,] [options]
+```
 

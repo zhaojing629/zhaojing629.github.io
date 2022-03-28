@@ -85,31 +85,36 @@ End
 - `CalcPropertiesOnlyIfConverged`：默认为`Yes`，当几何优化（过渡态搜索）收敛时，才计算相应的性质，比如频率，声子等，若为`False`，不收敛也可以计算。
 - `PretendConverged`：默认为`No`，当几何优化不收敛会报错。如果改成`True`，只会出现一个警告，并且表明几何优化是收敛的，在一些脚本编写中有用。
 
-## 优化方法
+## 优化方法`Method`
 
-- `Method`：默认为`auto`，根据系统大小和支持的优化选项自动选择合适的方法。
+- `Method`：默认为`auto`，根据系统大小和支持的优化选项自动选择合适的方法。选项有
+  - `Quasi-Newton`
+  - `SCMGO`
+  - `FIRE`
+  - `L-BFGS`
+  - `ConjugateGradients`
+
 - `CoordinateType`：默认是`auto`，自动为给定的方法选择最合适的方法。准牛顿法和SCMGO方法将使用`Delocalized`，所有其他方法将使用`Cartesian`。
 
-### `InitialHessian`
+- 使用拟牛顿法或 SCMGO 方法优化系统时<span id="初始Hessian">初始模型 Hessian </span>的选项`InitialHessian`：
 
-- 使用拟牛顿法或 SCMGO 方法优化系统时初始模型 Hessian 的选项。
+  ```
+  GeometryOptimization
+     InitialHessian
+        File string
+        Type [Auto | UnitMatrix | Swart | FromFile | Calculate | CalculateWithFastEngine]
+     End
+  End
+  ```
 
-```
-GeometryOptimization
-   InitialHessian
-      File string
-      Type [Auto | UnitMatrix | Swart | FromFile | Calculate | CalculateWithFastEngine]
-   End
-End
-```
+  - `File`：包含初始Hessian（或包含它的结果目录）的KF文件。这可用于加载先前使用[Properties％Hessian]关键字计算出的Hessian。
 
-- `File`：包含初始Hessian（或包含它的结果目录）的KF文件。这可用于加载先前使用[Properties％Hessian]关键字计算出的Hessian。
-- `Type`：默认为`auto`，让程序选择初始模型Hessian。
-  - `UnitMatrix`：最简单的初始模型Hessian，只是优化坐标中的一个单位矩阵
-  - `Swart`： model Hessian from M. Swart.
-  - `FromFile`：从先前计算的结果加载Hessian。配合`File`使用
-  - `Calculate`：计算初始的Hessian，计算比较昂贵，大多数建议用于TransitionStateSearch计算
-  - `CalculateWithFastEngine`：使用更快的方法计算初始的Hessian
+  - `Type`：默认为`auto`，让程序选择初始模型Hessian。
+    - `UnitMatrix`：最简单的初始模型Hessian，只是优化坐标中的一个单位矩阵
+    - `Swart`： model Hessian from M. Swart.
+    - `FromFile`：从先前计算的结果加载Hessian。配合`File`使用
+    - `Calculate`：计算初始的Hessian，计算比较昂贵，大多数建议用于TransitionStateSearch计算
+    - `CalculateWithFastEngine`：使用更快的方法计算初始的Hessian
 
 ### `Quasi-Newton`
 
@@ -121,6 +126,7 @@ GeometryOptimization
       MaxGDIISVectors integer
       Step
          TrustRadius float
+         VaryTrustRadius Yes/No
       End
       UpdateTSVectorEveryStep Yes/No
    End
@@ -129,9 +135,10 @@ End
 
 - `MaxGDIISVectors`：设置GDIIS向量的最大数量。默认为`0`，如果> 0将启用GDIIS方法。
 - `Step%TrustRadius`：信任半径的初始值。
+- `Step%VaryTrustRadius`：是否允许信任半径在优化过程中改变。默认情况下，在能量最小化期间为 True，在过渡状态搜索期间为 False。（2021才支持）
 - `UpdateTSVectorEveryStep`：是否在每个步骤用当前特征向量更新TS反应坐标。默认为`Yes`。
 
-准牛顿优化器使用Hessian计算几何优化步骤。Hessian通常在开始时近似，然后在优化过程中进行更新。因此，非常好的[初始Hessian](#)可以提高优化器的性能，并导致更快，更稳定的收敛。
+准牛顿优化器使用Hessian计算几何优化步骤。Hessian通常在开始时近似，然后在优化过程中进行更新。因此，非常好的[初始Hessian](#初始Hessian)可以提高优化器的性能，并导致更快，更稳定的收敛。
 
 ### `FIRE`
 
@@ -187,11 +194,15 @@ GeometryOptimization
 End
 ```
 
+# 重新开始几何优化
 
+参见AMS的`LoadSystem`关键词，指定之前优化的ams.rkf文件作为File。可以使用相对路径。
 
 # 几何不收敛
 
-- 修改优化方法为准牛顿
+- 修改`CoordinateType`
+
+- 修改优化方法：
 
   ```
   GeometryOptimization
@@ -205,3 +216,4 @@ End
   End
   ```
 
+- 提高`Engine ADF`中`NumericalQuality`的精度

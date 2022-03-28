@@ -3,9 +3,8 @@ title: 【Jmol】常见的指令
 typora-root-url: 【Jmol】常见的指令
 date: 2021-08-13 19:33:37
 updated:
-tags: [Jmol】
+tags: [Jmol, 绘图]
 mathjax: true
-categories: [计算化学, 软件]
 description: Jmol常见的指令
 ---
 
@@ -251,11 +250,12 @@ measure RANGE <minValue> <maxValue> ALL|ALLCONNECTED|DELETE (<atom expression>) 
 
 - `measure ON/OFF`：打开和关闭距离、角度、二面角测量标签和测量线。
 - `measure DELETE`：删除所有测量
+- `measure "n:labelFormat"`：测量对象及其单位，n为2、3、或4，代表键长、……。label format中可为"//unit"，代表测量单位等。
 
 例子：
 
 ```
-measure RANGE 1.5 2.5 ALL (_C) (_U)
+measure RANGE 1.5 2.5 ALL (_C) (_U) "2://pm"
 ```
 
 # set (lighting)   
@@ -344,6 +344,11 @@ measure RANGE 1.5 2.5 ALL (_C) (_U)
 - `(carbon)[3]`：选择第三个C原子，[0]表示最后一个原子，负数表示从最后一个原子（0）开始基数。
 
 如果需要嵌入到其他表达式中，还需要在外面加`{}`，比如`measure {(_O)[1]} {(_O)[2]}`
+
+```
+#z
+select ({4 7 8 12:16 25:29 32 35:40 43:84})
+```
 
 
 

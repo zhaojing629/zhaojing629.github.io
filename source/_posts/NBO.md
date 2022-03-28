@@ -98,9 +98,9 @@ NBO程序做的各种分析主要都是基于密度矩阵。在Gaussian中使用
 
 
 
-# 其他关键词
+# 各种关键词和功能
 
-## MEMORY
+## 内存`MEMORY`
 
 按字、兆、兆字节或千兆字节分配动态内存，比如分配1G的内存可以用：
 
@@ -113,18 +113,25 @@ MEMORY=1gb
 
 
 
-## 键级分析
+## 键级分析`bndidx`
 
 - 用了bndidx关键词后，NBO程序会进行键级分析，输出三种键级矩阵，包括：
   - `Wiberg bond index matrix in the NAO basis`，这是三种键级中唯一推荐的键级。
   - `Atom-atom overlap-weighted NAO bond order`，缺乏依据，实际结果又差，所以不要使用。
   - MO bond order毫无意义
 
+## 绘图`plot`
 
+```
+$NBO plot file=XXXXX $END
+```
 
+- 运行后就会有一批NBO plot文件\*.31、\*.32 ... \*.41在c:\ltwd下面生成:
+  - *.31文件储存的是基函数信息，\*.41是密度矩阵信息，对绘制轨道没直接用处。
+  - \*.32（PNAO）、\*.33（NAO）、\*.34（PNHO）、\*.35（NHO）、\*.36（PNBO）、\*.37（NBO）、\*.38（PNLMO）、\*.39（NLMO）、\*.40（MO）分别储存了相应的展开系数信息
+- 通过Multiwfn载入*.31文件后，再输入\*.32~\*.40文件中的一个绘制相应的轨道。
 
-
-## 自然共振理论分析NRT
+## 自然共振理论分析`NRT`
 
 ### 输入
 

@@ -208,3 +208,110 @@ test expression
 
   
 
+# 字符串截取
+
+## 从指定位置开始截取
+
+指定起始位置和截取长度
+
+- 从字符串左边开始计数
+
+  ```
+  ${string: start :length}
+  ```
+
+- 从右边开始计数，多了`0-`
+
+  ```
+  ${string: 0-start :length}
+  ```
+
+例子：
+
+```
+url="c.biancheng.net"
+echo ${url: 2: 9}
+> biancheng
+
+echo ${url: 2} #省略 length，截取到字符串末尾
+> biancheng.net
+
+echo ${url: 0-13: 9}
+> biancheng
+
+echo ${url: 0-13}  #省略 length，直接截取到字符串末尾
+> biancheng.net
+```
+
+## 从指定字符（子字符串）开始截取
+
+截取指定字符（子字符串）右边的所有字符或者左边的所有字符。
+
+- 使用 # 号截取右边字符
+
+  ```
+  ${string#*chars}
+  ```
+
+  - 其中，string 表示要截取的字符，chars 是指定的字符（或者子字符串），`*`是通配符的一种，表示任意长度的字符串。`*chars`连起来使用的意思是：忽略左边的所有字符，直到遇见 chars（chars 不会被截取）。
+
+    ```
+    url="http://c.biancheng.net/index.html"
+    echo ${url#*:}
+    echo ${url#*p:}
+    echo ${url#*ttp:}
+    
+    > //c.biancheng.net/index.html
+    ```
+
+  - 如果不需要忽略 chars 左边的字符，那么也可以不写`*`
+
+    ```
+    url="http://c.biancheng.net/index.html"
+    echo ${url#http://}
+    
+    > c.biancheng.net/index.html
+    ```
+
+  - 以上写法遇到第一个匹配的字符（子字符串）就结束了，如果希望直到最后一个指定字符（子字符串）再匹配结束，那么可以使用`##`
+
+    ```
+    url="http://c.biancheng.net/index.html"
+    echo ${url#*/}
+    > /c.biancheng.net/index.html
+    
+    echo ${url##*/}
+    > index.html
+    
+    str="---aa+++aa@@@"
+    echo ${str#*aa}   
+    > +++aa@@@
+    echo ${str##*aa}  
+    > @@@
+    ```
+
+- 使用 % 截取左边字符
+
+  ```
+  ${string%chars*}
+  ```
+
+  - 注意`*`的位置，因为要截取 chars 左边的字符，而忽略 chars 右边的字符，所以`*`应该位于 chars 的右侧。
+
+  - 其他方面`%`和`#`的用法相同
+
+    ```
+    url="http://c.biancheng.net/index.html"
+    echo ${url%/*}   
+    > http://c.biancheng.net
+    echo ${url%%/*}   
+    > http:
+    
+    str="---aa+++aa@@@"
+    echo ${str%aa*}   
+    > ---aa+++
+    echo ${str%%aa*}   
+    > ---
+    ```
+
+    

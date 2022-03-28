@@ -713,7 +713,9 @@ sed [options] -f scriptfile file(s)
   sed -n 's/test/TEST/p' file
   ```
 
-- 直接编辑文件，当需要从第N处匹配开始替换时，可以使用 `/Ng`：
+- 直接编辑文件，当需要**从第N处匹配开始替换时**，可以使用 `/Ng`：
+
+  - 省略g则默认是第一个
 
   ```
   sed -i 's/book/books/g' file
