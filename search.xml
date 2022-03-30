@@ -3570,6 +3570,7 @@ E_{n}=h\left(n+\frac{1}{2}\right) \nu=h\left(n+\frac{1}{2}\right) \frac{1}{2 \pi
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/b/bb/Anharmonic_oscillator.gif" alt="img"></p>
 <ul>
 <li>当n变化时，能量变化为hv。</li>
+<li>当分子吸收能量ΔE时，分子振动被激发，对应于振动的频率ν，根据关系ΔE = hν。当一个这样的能量量子被处于基态的分子吸收时，就会引发基本振动。</li>
 </ul>
 <h1 id="群论的应用"><a href="#群论的应用" class="headerlink" title="群论的应用"></a>群论的应用</h1><p>以$D_{3h}$点群的碳酸根$CO_3^-$为例，一共有3n-3=6种正则振动。</p>
 <p><img src="image-20220329142718038.png" alt=""  /></p>
@@ -3693,10 +3694,10 @@ E_{n}=h\left(n+\frac{1}{2}\right) \nu=h\left(n+\frac{1}{2}\right) \frac{1}{2 \pi
 </ul>
 </li>
 <li>从轨道特征上：<ul>
-<li>对于主族原子，电子可以从占据的$\sigma$、$\pi$、$n$（杂原子提供的孤对电子）轨道激发到反键轨道。$\sigma^<em>$和$\pi^</em>$<ul>
-<li>UV-Vis光谱感兴趣的范畴内主要出现的是$\pi$→$\pi^<em>$和$n$→$\pi^</em>$，这是能量最低的两类激发。</li>
-<li>$\sigma$→$\pi^<em>$和$n$→$\sigma^</em>$能量往往高一些。</li>
-<li>对于没有杂原子和$\pi$电子的，比如烷烃，就只有$\sigma$→$\sigma^<em>$了，由于$\sigma$是能量较低的占据轨道，$\sigma^</em>$是能量较高的空轨道，所以这种类型激发能很高。</li>
+<li>对于主族原子，电子可以从占据的$\sigma$、$\pi$、$n$（杂原子提供的孤对电子）轨道激发到反键轨道。<script type="math/tex">\sigma^*</script>和<script type="math/tex">\pi^*</script><ul>
+<li>UV-Vis光谱感兴趣的范畴内主要出现的是<script type="math/tex">\pi</script>→<script type="math/tex">\pi^*</script>和<script type="math/tex">n</script>→<script type="math/tex">\pi^*</script>，这是能量最低的两类激发。</li>
+<li><script type="math/tex">\sigma</script>→<script type="math/tex">\pi^*</script>和<script type="math/tex">n</script>→<script type="math/tex">\sigma^*</script>能量往往高一些。</li>
+<li>对于没有杂原子和<script type="math/tex">\pi</script>电子的，比如烷烃，就只有<script type="math/tex">\sigma</script>→<script type="math/tex">\sigma^*</script>了，由于<script type="math/tex">\sigma</script>是能量较低的占据轨道，<script type="math/tex">\sigma^*</script>是能量较高的空轨道，所以这种类型激发能很高。</li>
 </ul>
 </li>
 <li>对于过渡金属原子，d轨道也会参与，比如d-d、d-p金属内激发。</li>
