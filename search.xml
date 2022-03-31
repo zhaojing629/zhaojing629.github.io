@@ -1052,6 +1052,17 @@
 <li><code>geom=check</code>：输入结构从chk中读取，输入文件里此时不能写坐标</li>
 <li><code>geom=allcheck</code>：标题段落、电荷、自旋多重度、坐标都从chk中读取。输入文件里此时不能写坐标多重度等，关键词后面空行直接跟指定的基组或者为空。</li>
 </ul>
+<h1 id="chk文件"><a href="#chk文件" class="headerlink" title="chk文件"></a>chk文件</h1><ul>
+<li><p>在哪个操作系统下得到的chk文件就要在哪个操作系统下转换：</p>
+<ul>
+<li><p>Windows下点击Gaussian图形界面的Utilities-FormChk，选择chk文件</p>
+</li>
+<li><p>Linux使用格式：（直接formchk的前提是已经将formchk添加到环境变量中，否则可以是：相应的路径/formchk）</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">formchk</span> <span class="selector-tag">xxx</span><span class="selector-class">.chk</span> <span class="selector-tag">xxx</span><span class="selector-class">.fchk</span></span><br><span class="line"><span class="selector-tag">formchk</span> <span class="selector-tag">xxx</span><span class="selector-class">.chk</span> <span class="selector-id">#y</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>计算化学</category>
@@ -1673,6 +1684,36 @@
 </ul>
 <p>例子：</p>
 <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">measure</span> RANGE <span class="number">1</span>.<span class="number">5</span> <span class="number">2</span>.<span class="number">5</span> <span class="literal">ALL</span> (_C) (_U) <span class="string">&quot;2://pm&quot;</span></span><br></pre></td></tr></table></figure>
+<h1 id="mo"><a href="#mo" class="headerlink" title="mo"></a>mo</h1><p>可以将fchk文件通过Multiwfn转化成molden文件再进行绘图</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="number">100</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">6</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>mo ON/OFF</code>：开启或关闭分子轨道，默认是<code>ON</code></li>
+<li><p><code>mo (integer)</code>：显示指定的分子轨道，序号从1开始。</p>
+<ul>
+<li>注意：Jmol中的轨道是按能量排序的，因此可能和一些fchk文件中的轨道不一致，比如NLMO。可以通过将原始的轨道能量作为标签，保留三位小数，通过<code>MO list</code>去查找相应的序号。</li>
+</ul>
+</li>
+<li><p><code>mo COLOR [RGB-color] [RGB-color]</code>：第一个颜色为等值面负的颜色，第二个为正等值面的颜色</p>
+<ul>
+<li><code>mo COLOR [RGB-color]</code>：将等值面设置成某个颜色</li>
+</ul>
+</li>
+<li><code>mo CUTOFF (decimal)</code>：设置等值面的值。默认是0.05。</li>
+<li><code>mo RESOLUTION (decimal)</code>：等值面的精度，一般范围是4-10。分辨率越高，等值面越光滑，但是生成速度更慢。</li>
+</ul>
+<h2 id="显示效果"><a href="#显示效果" class="headerlink" title="显示效果"></a>显示效果</h2><ul>
+<li><code>mo mesh nofill</code>：除了网格，并且填充。默认是<code>mo mesh nofill</code></li>
+<li><code>mo fill nomesh</code>：可以去掉网格线</li>
+<li><code>mo translucent</code>：将等值面设置为透明的，后面可以跟0-1的小数设置透明度。</li>
+<li><p><code>mo nofill nomesh dots</code>：设置为点填充。</p>
+<ul>
+<li><code>mo fill nodots</code>：取消点填充。</li>
+</ul>
+</li>
+<li><p><code>mo fill</code>：</p>
+</li>
+<li><code>mo opaque</code>：</li>
+</ul>
 <h1 id="set-lighting"><a href="#set-lighting" class="headerlink" title="set (lighting)"></a>set (lighting)</h1><ul>
 <li><code>set zShade OFF</code>：是否启用“雾”或“淡入淡出”效果。根据与观察者的距离对对象进行着色，使远处的对象淡入背景中。<ul>
 <li>使用 <code>SLAB</code> 和 <code>DEPTH</code> 设置的值分别确定无效果点和完全效果点（默认为 100 和 0）。当 <code>ZSLAB</code> 不等于 <code>ZDEPTH</code> 时（默认均为0），<code>SLAB</code> 和 <code>DEPTH</code> 的设置被 <code>ZSLAB</code> 和 <code>ZDEPTH</code> 覆盖。</li>
@@ -9224,6 +9265,83 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
         <tag>赝势</tag>
         <tag>输出</tag>
         <tag>坐标</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PIO</title>
+    <url>/2021/08/23/PIO/</url>
+    <content><![CDATA[<h1 id="代码位置"><a href="#代码位置" class="headerlink" title="代码位置"></a>代码位置</h1><p><a href="https://github.com/jxzhangcc/PIO">https://github.com/jxzhangcc/PIO</a></p>
+<h1 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h1><h2 id="Gaussian计算部分"><a href="#Gaussian计算部分" class="headerlink" title="Gaussian计算部分"></a>Gaussian计算部分</h2><ol>
+<li><p>在高斯关键词部分加入pop=nbo6read</p>
+<ul>
+<li>nboread调用的是高斯自带的NBO3，要用NBO6得到.49，否则格式会有问题。格式修改见<a href="https://mp.weixin.qq.com/s?__biz=MzU5NDYxNjc5Ng==&amp;mid=2247485938&amp;idx=1&amp;sn=addcb81d6a9caed028a9ab86e336847d&amp;chksm=fe7fc141c9084857858ebeb9988bd73c70fd631f354a53aeb7768fcd4c6df9f890de7539d583&amp;mpshare=1&amp;scene=1&amp;srcid=&amp;sharer_sharetime=1589122912458&amp;sharer_shareid=f14b465eb222f6bb34657e2c0fafe383&amp;key=64daf1adc09d7c6ecdf51441f0e0e0081ff30416a8c76cafc75ab07809a89ccb0e3a0fde164cf3daa101192f723f9349e88e6622f494e3da3870bf9eaebe22bf9583324d7112cf0072a7c78f482c98d9&amp;ascene=1&amp;uin=MTY5ODAzMzEyNQ%3D%3D&amp;devicetype=Windows+10+x64&amp;version=62090070&amp;lang=zh_CN&amp;exportkey=AdPzWFyVBDaa5HawSncSSzA%3D&amp;pass_ticket=CJnCOXQ4GY3GwKDSPl0mmbvH12dznP%2F%2Bj30sXI1%2BLh1L4wzPIu4fEYHNwnZHTc2M">博文</a>。</li>
+</ul>
+</li>
+<li><p>在高斯输入文件的最后一行加入：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="variable">$NBO</span> <span class="attribute">AONAO</span>=W49 <span class="attribute">FNAO</span>=W49 <span class="attribute">DMNAO</span>=W49 SKIPBO <span class="attribute">file</span>=XXX  <span class="variable">$END</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>中XXX应与之后生成的 .fchk 文件名一致</li>
+<li>PIO_v3可能会报错，需要49文件的名字为大写的</li>
+</ul>
+</li>
+<li><p>通过formchk将chk转换成fchk</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">formchk</span> <span class="selector-tag">xxx</span><span class="selector-class">.chk</span> <span class="selector-tag">xxx</span><span class="selector-class">.fchk</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="pio部分"><a href="#pio部分" class="headerlink" title="pio部分"></a>pio部分</h2><ol>
+<li><p>此时应当有 .fchk 文件以及 NBO 生成的 .49 文件</p>
+</li>
+<li><p>pio命令一般在在/home/scicons/bin下，将其添加至环境变量即可。此时执行</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">pio</span>  <span class="variable">$&#123;FILENAME&#125;</span>.fchk &#123;碎片<span class="number">1</span> 的原子序号&#125; &#123;碎片<span class="number">2</span> 的原子序号&#125; </span><br></pre></td></tr></table></figure>
+<ul>
+<li>碎片可以是<code>xx-xx</code>这样的格式</li>
+</ul>
+</li>
+<li><p>如果报错，看体系是否是开壳层的，如果是开壳层，需要对.49文件进行一点修改</p>
+<ul>
+<li><p>开壳层，通过一下命令检查，会出现SPIN出现的行数，会发现默认顺序是aabb，正确的顺序应该是abab</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">grep -n ‘SPIN’ XXX<span class="number">.49</span></span><br></pre></td></tr></table></figure>
+<p><img src="clipboard.png" alt="img"></p>
+<p><img src="166a906be971e8d3d3b304cee0da821.png" alt="img" style="zoom: 50%;" /></p>
+<p><img src="ffc0c86714dea564d2a80ceeec2bfc1.png" alt="img" style="zoom:50%;" /></p>
+<p><img src="a91083a05da311f08735a5273b29fd7.png" alt="img" style="zoom:50%;" /></p>
+<p><img src="0178a4c2a265eed33bf7da46e8737d8.png" alt="img" style="zoom:50%;" /></p>
+<ul>
+<li><p>在NAO密度矩阵部分只有alpha，结束之后紧跟的是NAO的Fock矩阵，而第一个beta实际上是NAO密度矩阵的部分，将这部分移动到alpha密度矩阵的后面即可。</p>
+</li>
+<li><p>利用vim命令进行调换即可，调换方法：</p>
+<figure class="highlight vala"><table><tr><td class="code"><pre><span class="line"><span class="meta">#先删除第一个beta部分</span></span><br><span class="line">:<span class="number">129075</span>,<span class="number">154831</span>d</span><br><span class="line"><span class="meta">#光标停在第一个alpha最后一行，直接p即可</span></span><br><span class="line">p</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="结果分析部分"><a href="#结果分析部分" class="headerlink" title="结果分析部分"></a>结果分析部分</h2><ul>
+<li>pio对结果在生成的txt文件中，pio对的轨道在pio.fchk文件中，而PIMOs的记过在pimo.fchk中</li>
+<li>pio_v3还有raw文件，pio_v4已经删除</li>
+<li>轨道如果通过pio_v4分析得到，用Multiwfn或者Jmol打开转换得到的molden文件，能量都是0，要避免可以用pio_v3</li>
+</ul>
+<h1 id="Windows下运行"><a href="#Windows下运行" class="headerlink" title="Windows下运行"></a>Windows下运行</h1><ul>
+<li><p>需要下载python2和anaconda配置python2的运行环境</p>
+</li>
+<li><p>打开Anaconda的命令行，输入</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">conda</span> activate py<span class="number">27</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行命令：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">python</span> <span class="selector-tag">PIO</span><span class="selector-class">.py</span> <span class="selector-tag">FILENAME</span><span class="selector-class">.FChk</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>输入原子：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span><span class="number">-5</span>,<span class="number">8</span>,<span class="number">13</span> <span class="number">6</span><span class="number">-7</span>,<span class="number">9</span><span class="number">-12</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>PIO</tag>
       </tags>
   </entry>
 </search>
