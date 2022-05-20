@@ -28,7 +28,7 @@ description: NBO的一些使用方法
 - `pop=NBOread`：代表从输出文件末尾倒数第二行（倒数第一行是空行）的`$NBO`与`$END`之间读取NBO的关键词：
   - 空的：默认做NBO和NPA分析
   - `bndidx`：做键级分析
-  - `archive`：产生.47文件，包含坐标、基函数定义、轨道系数、密度矩阵、一些单电子积分。.47可以做作为NBO的输入文件。
+  - `archive`：结合`File=`产生.47文件，包含坐标、基函数定义、轨道系数、密度矩阵、一些单电子积分。.47可以做作为NBO的输入文件。
   - `plot file=AAA`：产生NBO plot文件，输出的文件前缀是AAA
 
 ### Gaussian结合更高版本的NBO
@@ -39,6 +39,40 @@ description: NBO的一些使用方法
   3. 将XXX/bin/gaunbo6中的setenv GAUNBO后面的内容改成g09nbo或g16nbo；将setenv BINDIR后面的内容改为XXX/bin目录
   4. 重新进入终端即可。
 - 然后直接在Gaussian输入文件中使用诸如`Pop=NPA6`，`Pop=NBO6`， `Pop=NBO6Read`和`Pop=NBO6Delete`，`pop=(nbo6,savenlmos)`，`pop=(nbo6,savenbos)`等关键词调用（如果是NBO7，将6改成7即可）
+
+###  常用
+
+- 计算NBO中的WBI键级，产生输出文件，计算AdNDP所需要的log文件，保存NLMO轨道：
+
+  ```
+   # pop(nbo6read,savenlmos)
+   
+   $NBO bndidx archive DMNAO AONAO File=XXX  $END
+  ```
+
+- 计算AdNDP所需要的log文件：
+
+  ```
+  #pop=nbo6read
+  
+   $NBO DMNAO AONAO $END
+  ```
+
+- 保存NLMO轨道:
+
+  ```
+  # pop=(nbo6,savenlmos)
+  ```
+
+- PIO中需要的：
+
+  ```
+  #pop=nbo6read
+  
+  $NBO AONAO=W49 FNAO=W49 DMNAO=W49 SKIPBO file=UCCe@C72_b3lyp_pio_C2_0_res  $END
+  ```
+
+  
 
 ## orca中的NBO
 
@@ -138,13 +172,14 @@ $NBO plot file=XXXXX $END
 两种关键词指定
 
 - 在.47文件中`$NBO`和`$END`之间写上`NRT`关键词即可
-- `NRTCML`或`NRTCML=n`：把所有贡献大于1%或n%的共振结构式一起输出到FIlename-nrt.cml中,可以直接用MarvinView观看。
+- `NRTCML`或`NRTCML=n`：把所有贡献大于1%或n%的共振结构式一起输出到FIlename-nrt.cml中,可以直接用**MarvinView观看**。
   - 注意，MarvinView中应选择View→Implicit→Hydrogens→Off，否则会自动显示一些不该存在的氢。
 
 其他`$NBO`和`$END`之间的关键词：
 
 - `NRTLST=n`：将权重大于`n`的结构输出在`$NRTSTR`部分。默认情况下仅打印参考结果。
-- `NRT <atom-1 atom-2 ... atom-n>`：在NRT关键词后面的尖括号里写上共振分析要考虑的原子范围即可进行局部的NRT分析。
+- `NRT <atom-1 atom-2 ... atom-n>`：在NRT关键词后面的尖括号里写上共振分析要考虑的原子范围即可进行**局部的NRT分析**。
+- `NRTFDM`：指定全密度矩阵计算多参考NRT。默认是关闭的，如果NBO检测到需要会提示，所以一般不用开。
 
 其他模块：
 

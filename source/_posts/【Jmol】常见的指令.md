@@ -16,7 +16,7 @@ description: Jmol常见的指令
 
 
 
-# background
+# `background`背景
 
 设置背景颜色或者图像。用法：
 
@@ -30,6 +30,42 @@ description: Jmol常见的指令
 >   - RGB颜色值：`[255, 0, 255]`，`{255,0,255} `，`{0.5, 0.5, 1}`
 >   - 十六进制颜色码：`[xFF00FF]`
 > - `[color-none-CPK]`：包含`[RGB-color]`和`none`
+
+# `boundbox`边界框
+
+边界框设置，与`boundingbox`含义相同。
+
+- `show BOUNDBOX`：中心是模型的几何中心而不是旋转中心（即平均原子位置）。输出格式为：
+
+  ```
+  boundbox: (centerX, centerY, centerZ) (vectorX, vectorY, vectorZ)
+  ```
+
+  - 比如边框的长就是2`vectorX`
+
+- 显示边界框：
+
+  ```
+  boundbox [atom-expression] [line-width-or-type]
+  ```
+
+  - `[atom-expression]`见[原子表达](#[atom-expression]原子表达)。默认是`*`
+
+  - `[line-width-or-type]`：`ON/OFF/DOTTED`（默认是`ON`，即实线）或`整数(1-19)`或者`小数(<2.0)`（后两者似乎与实线的粗细有关）
+
+- 通过中心和向量设定一个边界框：
+
+  ```
+  boundbox [atom-expression-or-coordinate] [xyz-coordinate] [line-width-or-type]{default: unchanged}
+  ```
+
+- 通过两个角设定一个边界框：
+
+  ```
+  boundbox CORNERS [atom-expression-or-coordinate] [atom-expression-or-coordinate] [line-width-or-type]{default: unchanged}
+  ```
+
+- ` getProperty boundBoxInfo`：获取边界框的信息
 
 # rotate
 
@@ -234,12 +270,24 @@ partial 3.4	#parialTriple2
 
 - `set measurementUnits (distance unit)`：设置测量单位，(distance unit)可以是`ANGSTROMS`、`AU`（或 `BOHR`）、`NM`（或 `NANOMETERS`）、（`PM` 或 `PICOMETERS`）、`VDW`、`HZ` 和 `NOE_HZ` 之一。
 
+  ```
+  set measurements angstroms
+  set measurements nm
+  set measurements pm
+  ```
+
 - `set measurementLabels ON`：设置为`FALSE`时仅关闭测量标签，保留线条。
+
 - `set showMeasurements TRUE`：设置为`FALSE`时，测量线和标签都关闭。
+
 - `set measurements DOTTED`：设置测量线为虚线。
+
 - `set justifyMeasurements FALSE`：将此参数设为 `TRUE` 可右对齐测量标签
+
 - `set measurements 数字`：数字带小数时，是以Å为单位；整数时是以像素为单位。
+
 - ` set defaultDistanceLabel "format"`、` set defaultAngleLabel "format"`、`set defaultTorsionLabel "format"`：分别设置标签的默认格式
+
 - 设置[字体](#font)
 
 `measure`的语法：
@@ -249,14 +297,60 @@ measure RANGE <minValue> <maxValue> ALL|ALLCONNECTED|DELETE (<atom expression>) 
 ```
 
 - `measure ON/OFF`：打开和关闭距离、角度、二面角测量标签和测量线。
+
 - `measure DELETE`：删除所有测量
-- `measure "n:labelFormat"`：测量对象及其单位，n为2、3、或4，代表键长、……。label format中可为"//unit"，代表测量单位等。
+
+- `measure "n:labelFormat"`：测量对象及其单位
+
+  - `n:`为2、3、或4，代表键长、键角、二面角。
+  - `n:`和`labelFormat`之间可以放`[atom properties]`原子属性来表示
+
+  - `label format`默认为`"%VALUE %UNITS"`，`%VALUE`可以表示小数位数；`//unit`，代表测量单位等。` //A`就是Å，还有`//nm`，`//pm`等
+  - 
 
 例子：
 
 ```
 measure RANGE 1.5 2.5 ALL (_C) (_U) "2://pm"
 ```
+
+```
+ measure 1.4 1.5 all (_C)[65][72]  (_C)[65][72]  "2:%a1-%a2 %0.3VALUE //A"
+```
+
+
+
+# mo
+
+可以将fchk文件通过Multiwfn转化成molden文件再进行绘图
+
+```
+100
+2
+6
+```
+
+
+
+- `mo ON/OFF`：开启或关闭分子轨道，默认是`ON`
+- `mo (integer)`：显示指定的分子轨道，序号从1开始。
+  - 注意：Jmol中的轨道是按能量排序的，因此可能和一些fchk文件中的轨道不一致，比如NLMO。可以通过将原始的轨道能量作为标签，保留三位小数，通过`MO list`去查找相应的序号。
+
+- ` mo COLOR [RGB-color] [RGB-color]`：第一个颜色为等值面负的颜色，第二个为正等值面的颜色
+  - `mo COLOR [RGB-color]`：将等值面设置成某个颜色
+- `mo CUTOFF (decimal)`：设置等值面的值。默认是0.05。
+- `mo RESOLUTION (decimal)`：等值面的精度，一般范围是4-10。分辨率越高，等值面越光滑，但是生成速度更慢。
+
+## 显示效果
+
+- `mo mesh nofill`：除了网格，并且填充。默认是` mo mesh nofill`
+- `mo fill nomesh`：可以去掉网格线
+- `mo translucent`：将等值面设置为透明的，后面可以跟0-1的小数设置透明度。
+- `mo nofill nomesh dots`：设置为点填充。
+  - `mo fill nodots`：取消点填充。
+
+- `mo fill`：
+- `mo opaque`：
 
 # set (lighting)   
 
@@ -300,9 +394,13 @@ measure RANGE 1.5 2.5 ALL (_C) (_U) "2://pm"
   - 压缩量`n` 是一个介于 0 和 10 之间的数字（默认为 2）。
   - 例子：`WRITE PNGT xxxx.png`
 
+- 保存为pov进一步渲染
 
+  ```
+  write POVRAY D:/desktop/mo/10-.pov
+  ```
 
-
+  - 生成的ini文件可以直接一起拖入到pov-ray中批量渲染
 
 
 

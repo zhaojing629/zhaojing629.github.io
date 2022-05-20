@@ -217,3 +217,103 @@ End
   ```
 
 - 提高`Engine ADF`中`NumericalQuality`的精度
+
+
+
+
+
+# 限制性几何优化`Constraints`
+
+> ADF2019中可以直接使用`Constraints`块
+>
+> ```
+> CONSTRAINTS
+>   ATOM Ia1 {Xa1 Ya1 Za1}
+>   COORD Ia1 Icoord {valcoord}
+>   DIST Ia1 Ia2 Ra
+>   ANGLE Ib1 Ib2 Ib3 Rb
+>   DIHED Ic1 Ic2 Ic3 Ic4 Rc
+>   SUMDIST Ic1 Ic2 Ic3 Ic4 Rc
+>   DIFDIST Ic1 Ic2 Ic3 Ic4 Rc
+>   BLOCK bname
+> end
+> ```
+
+- 在计算开始时，不需要满足约束条件。
+
+```
+Constraints
+   Atom integer
+   AtomList integer_list
+   FixedRegion string
+   Coordinate integer [x|y|z] float?
+   Distance (integer){2} float
+   All ... [Bonds|Triangles] ...
+   Angle (integer){3} float
+   Dihedral (integer){4} float
+   SumDist (integer){4} float
+   DifDist (integer){4} float
+   BlockAtoms integer_list
+   Block string
+   FreezeStrain [xx] [xy] [xz] [yy] [yz] [zz]
+   EqualStrain  [xx] [xy] [xz] [yy] [yz] [zz]
+End
+```
+
+## 固定原子
+
+- `Atom atomIdx`：用`System%Atoms`块中给出的索引`atomIdx`将原子固定在初始位置，如那样
+- `AtomList [atomIdx1 .. atomIdxN]`：固定列表中所有原子的初始位置
+- `FixedRegion regionName`：通过region的方法来指定固定原子块
+- `Coordinate atomIdx [x|y|z] coordValue`：用原子序号固定原子使其具有`coordValue`的笛卡尔坐标，如果`coordValue`缺失，就固定为初始值。
+
+## 内自由度
+
+- `Distance atomIdx1 atomIdx2 distValue`：键长
+- `Angle atomIdx1 atomIdx2 atomIdx3 angleValue`：键角
+- `Dihedral atomIdx1 atomIdx2 atomIdx3 atomIdx4 dihedValue`：二面角
+- `SumDist atomIdx1 atomIdx2 atomIdx3 atomIdx4 sumDistValue`：限制R(1,2)+R(3,4) 两个键长之和为固定值
+- `DifDist atomIdx1 atomIdx2 atomIdx3 atomIdx4 difDistValue`：限制R(1,2)-R(3,4) 两个键长之差为固定值
+
+## `All`
+
+- `Distance`为特定原子对来设定约束，如果想固定某种键或者键角：
+
+  ```
+  All [bondOrder] bonds at1 at2 [to distance]
+  All triangles at1 at2 at3
+  ```
+
+  - `bondOrder`可以是 `single`，`double`， `triple` 或者`aromatic`，如果省略了它，那么任何特定原子之间的键都会受到约束。
+  - 原子名是区分大小写的，它们必须和它们在原子块中的位置一样，或者用星号`*`表示任何原子。
+  - 如果忽略`distance`，则使用从初始几何结构开始的键长。
+
+- eg：将所有碳-碳单键的距离限制在1.4埃，所有氢原子键的距离限制在初始距离
+
+```
+Constraints
+   All single bonds C C to 1.4
+   All bonds H *
+End
+```
+
+## 区域约束
+
+- `BlockAtoms [atomIdx1 ... atomIdxN]`：冻结这个原子块的所有内部自由度
+
+- `Block regionName`：为Sy`stem% atoms`块中定义的区域中的所有原子创建一个块约束，如：
+
+  ```
+  System
+     Atoms
+        C  0.0  0.0  0.0    region=myblock
+        C  0.0  0.0  1.0    region=myblock
+        C  0.0  1.0  0.0
+     End
+  End
+  Constraints
+     Block myblock
+  End
+  ```
+
+  

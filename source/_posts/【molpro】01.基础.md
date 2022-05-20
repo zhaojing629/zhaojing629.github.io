@@ -1,5 +1,5 @@
 ---
- title: 【molpro】01.基础
+title: 【molpro】01.基础
 typora-root-url: 【molpro】01.基础
 mathjax: true
 date: 2019-11-13

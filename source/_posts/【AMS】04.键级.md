@@ -17,7 +17,7 @@ description: 2020后ADF中关于键级的计算
 
 
 
-键级的计算可以通过两种方式。不管用哪种方式，都需要在`Engine ADF`中指定对称性为`NOSYM`
+键级的计算要在`Engine ADF`中指定对称性为`NOSYM`
 
 ```
   Engine ADF 
@@ -25,9 +25,9 @@ description: 2020后ADF中关于键级的计算
   EndEngine
 ```
 
-# 方式1
 
-在`Properties`中指定：
+
+1. 在`Properties`中指定：
 
 ```
 Properties
@@ -35,9 +35,7 @@ Properties
 End
 ```
 
-# 方式2
-
-在`Engine ADF`中指定：
+2. 在`Engine ADF`中指定：
 
 ```
 BondOrders

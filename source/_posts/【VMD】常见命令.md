@@ -78,7 +78,7 @@ description: VMD中的Tk命令ji
 
 # `axes`
 
-![image-20211120181556786](/image-20211120181556786.png)
+![image-20211120181556786](image-20211120181556786.png)
 
 - `locations`：列出位置的列表
 
@@ -92,7 +92,7 @@ description: VMD中的Tk命令ji
 
 # `color`
 
-![image-20211120181437883](/image-20211120181437883.png)
+![image-20211120181437883](image-20211120181437883.png)
 
 - `<Category> <Name> <color>`：更改类别和名字指定的对象：
 
@@ -163,7 +163,7 @@ description: VMD中的Tk命令ji
 
 ## Molecule部分
 
-![image-20211120181853394](/image-20211120181853394.png)
+![image-20211120181853394](image-20211120181853394.png)
 
 分子的一些状态，对应于VMD main窗口中的一些标记（黑色为打开状态）：
 
@@ -174,12 +174,12 @@ description: VMD中的Tk命令ji
 - `top <molecule_number>`：置顶这个分子，对应于”T“
 - `rename <molecule_number> XX`：重命名指定的分子。
 
-![image-20211120181329843](/image-20211120181329843.png)
+![image-20211120181329843](image-20211120181329843.png)
 
 ## Representation部分
 
 
-![image-20211120185644801](/image-20211120185644801.png)
+![image-20211120185644801](image-20211120185644801.png)
 
 - `addrep <molecule_number>`：使用当前默认设置（比如原子选择、着色和渲染方法），为指定的分子添加新的表示。
 

@@ -6,7 +6,7 @@ date: 2021-10-21 21:34:04
 updated: 
 tags: [LmodeA, 频率, 力常数]
 categories: [计算化学, 软件]
-description: 学习LmodeA的过程
+description: 用于计算局域/柔性力常数
 ---
 
 
