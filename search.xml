@@ -316,7 +316,7 @@
 <li><code>pop=NBOread</code>：代表从输出文件末尾倒数第二行（倒数第一行是空行）的<code>$NBO</code>与<code>$END</code>之间读取NBO的关键词：<ul>
 <li>空的：默认做NBO和NPA分析</li>
 <li><code>bndidx</code>：做键级分析</li>
-<li><code>archive</code>：产生.47文件，包含坐标、基函数定义、轨道系数、密度矩阵、一些单电子积分。.47可以做作为NBO的输入文件。</li>
+<li><code>archive</code>：结合<code>File=</code>产生.47文件，包含坐标、基函数定义、轨道系数、密度矩阵、一些单电子积分。.47可以做作为NBO的输入文件。</li>
 <li><code>plot file=AAA</code>：产生NBO plot文件，输出的文件前缀是AAA</li>
 </ul>
 </li>
@@ -330,6 +330,20 @@
 </ol>
 </li>
 <li>然后直接在Gaussian输入文件中使用诸如<code>Pop=NPA6</code>，<code>Pop=NBO6</code>， <code>Pop=NBO6Read</code>和<code>Pop=NBO6Delete</code>，<code>pop=(nbo6,savenlmos)</code>，<code>pop=(nbo6,savenbos)</code>等关键词调用（如果是NBO7，将6改成7即可）</li>
+</ul>
+<h3 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h3><ul>
+<li><p>计算NBO中的WBI键级，产生输出文件，计算AdNDP所需要的log文件，保存NLMO轨道：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="comment"># pop(nbo6read,savenlmos)</span></span><br><span class="line"></span><br><span class="line"><span class="variable">$NBO</span> bndidx archive DMNAO AONAO <span class="attribute">File</span>=XXX  <span class="variable">$END</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>计算AdNDP所需要的log文件：</p>
+<figure class="highlight autoit"><table><tr><td class="code"><pre><span class="line"><span class="meta">#pop=nbo6read</span></span><br><span class="line"></span><br><span class="line"> $NBO DMNAO AONAO $END</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>保存NLMO轨道:</p>
+<figure class="highlight lisp"><table><tr><td class="code"><pre><span class="line"># pop=(<span class="name">nbo6</span>,savenlmos)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>PIO中需要的：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="comment">#pop=nbo6read</span></span><br><span class="line"></span><br><span class="line"><span class="variable">$NBO</span> <span class="attribute">AONAO</span>=W49 <span class="attribute">FNAO</span>=W49 <span class="attribute">DMNAO</span>=W49 SKIPBO <span class="attribute">file</span>=UCCe@C72_b3lyp_pio_C2_0_res  <span class="variable">$END</span></span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 <h2 id="orca中的NBO"><a href="#orca中的NBO" class="headerlink" title="orca中的NBO"></a>orca中的NBO</h2><ul>
 <li><p>修改环境变量，即在~/.bashrc中加入</p>
@@ -390,7 +404,7 @@
 <h2 id="自然共振理论分析NRT"><a href="#自然共振理论分析NRT" class="headerlink" title="自然共振理论分析NRT"></a>自然共振理论分析<code>NRT</code></h2><h3 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h3><p>两种关键词指定</p>
 <ul>
 <li>在.47文件中<code>$NBO</code>和<code>$END</code>之间写上<code>NRT</code>关键词即可</li>
-<li><code>NRTCML</code>或<code>NRTCML=n</code>：把所有贡献大于1%或n%的共振结构式一起输出到FIlename-nrt.cml中,可以直接用MarvinView观看。<ul>
+<li><code>NRTCML</code>或<code>NRTCML=n</code>：把所有贡献大于1%或n%的共振结构式一起输出到FIlename-nrt.cml中,可以直接用<strong>MarvinView观看</strong>。<ul>
 <li>注意，MarvinView中应选择View→Implicit→Hydrogens→Off，否则会自动显示一些不该存在的氢。</li>
 </ul>
 </li>
@@ -398,7 +412,8 @@
 <p>其他<code>$NBO</code>和<code>$END</code>之间的关键词：</p>
 <ul>
 <li><code>NRTLST=n</code>：将权重大于<code>n</code>的结构输出在<code>$NRTSTR</code>部分。默认情况下仅打印参考结果。</li>
-<li><code>NRT &lt;atom-1 atom-2 ... atom-n&gt;</code>：在NRT关键词后面的尖括号里写上共振分析要考虑的原子范围即可进行局部的NRT分析。</li>
+<li><code>NRT &lt;atom-1 atom-2 ... atom-n&gt;</code>：在NRT关键词后面的尖括号里写上共振分析要考虑的原子范围即可进行<strong>局部的NRT分析</strong>。</li>
+<li><code>NRTFDM</code>：指定全密度矩阵计算多参考NRT。默认是关闭的，如果NBO检测到需要会提示，所以一般不用开。</li>
 </ul>
 <p>其他模块：</p>
 <p>NBO轨道自动搜索结果随结构变化不是连续的，对于通过NRT考察化学过程电子结构的变化，为了满足分析数据的连贯性有意义，需要指定<code>NRTSTR</code>。</p>
@@ -661,26 +676,110 @@
       </tags>
   </entry>
   <entry>
-    <title>【AMS】05.过渡态</title>
-    <url>/2021/12/10/%E3%80%90AMS%E3%80%9101.%E5%9F%BA%E6%9C%AC%E8%BE%93%E5%85%A5%E7%BB%93%E6%9E%84/</url>
-    <content><![CDATA[<h1 id="1-线性扫描"><a href="#1-线性扫描" class="headerlink" title="1. 线性扫描"></a>1. 线性扫描</h1><ul>
-<li><p>将反应物放在一起，猜测反应路径，即一个反应物靠近另一个反应物的过程。可以是键长、键角、二面角等。</p>
+    <title>【AMS】01.基本输入结构</title>
+    <url>/2021/05/11/%E3%80%90AMS%E3%80%9101.%E5%9F%BA%E6%9C%AC%E8%BE%93%E5%85%A5%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<h1 id="主要结构"><a href="#主要结构" class="headerlink" title="主要结构"></a>主要结构</h1><ul>
+<li><code>System</code>，<code>Task</code>和<code>Engine</code>是必须的，其他比如<code>Properties</code>是可选的</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="variable">$AMSBIN</span>/ams -n 8 &lt;&lt; eor 1&gt;<span class="variable">$&#123;0/run/out&#125;</span> 2&gt;<span class="variable">$&#123;0/run/err&#125;</span></span><br><span class="line"></span><br><span class="line">System</span><br><span class="line">	Atoms</span><br><span class="line">		F         0.000000    0.000000    0.760010</span><br><span class="line">		F         0.000000    0.000000   -0.760010</span><br><span class="line">End</span><br><span class="line">charge 0 </span><br><span class="line">End</span><br><span class="line"></span><br><span class="line">Task GeometryOptimization</span><br><span class="line"></span><br><span class="line">Engine ADF</span><br><span class="line">	TITLE UueFn</span><br><span class="line">	basis</span><br><span class="line">	<span class="built_in">	type </span>TZ2P</span><br><span class="line">		core None</span><br><span class="line">		CreateOutput <span class="literal">Yes</span></span><br><span class="line">	end</span><br><span class="line">	xc</span><br><span class="line">		gga PBE </span><br><span class="line">	end</span><br><span class="line">	relativity</span><br><span class="line">		level spin-orbit</span><br><span class="line">		formalism ZORA</span><br><span class="line">	end</span><br><span class="line">EndEngine</span><br></pre></td></tr></table></figure>
+<h2 id="System"><a href="#System" class="headerlink" title="System"></a>System</h2><ul>
+<li>单位默认都是 <code>Angstrom</code>，如果需要更改，可以在将<code>header</code>部分更改为<code>[Bohr]</code></li>
+</ul>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">System</span> <span class="string">header</span></span><br><span class="line">   <span class="attr">Atoms</span> <span class="string">header</span></span><br><span class="line">      <span class="attr">...</span></span><br><span class="line">   <span class="attr">End</span></span><br><span class="line">   <span class="attr">Lattice</span> <span class="string">header</span></span><br><span class="line">      <span class="attr">...</span></span><br><span class="line">   <span class="attr">End</span></span><br><span class="line">   <span class="attr">FractionalCoords</span> <span class="string">Yes/No</span></span><br><span class="line">   <span class="attr">AllowCloseAtoms</span> <span class="string">Yes/No</span></span><br><span class="line">   <span class="attr">GeometryFile</span> <span class="string">string</span></span><br><span class="line">   <span class="attr">Symmetrize</span> <span class="string">Yes/No</span></span><br><span class="line">   <span class="attr">LatticeStrain</span> <span class="string">float_list</span></span><br><span class="line">   <span class="attr">SuperCell</span> <span class="string">integer_list</span></span><br><span class="line">   <span class="attr">Charge</span> <span class="string">float</span></span><br><span class="line">   <span class="attr">BondOrders</span></span><br><span class="line">      <span class="attr">...</span></span><br><span class="line">   <span class="attr">End</span></span><br><span class="line">   <span class="attr">...</span></span><br><span class="line"><span class="attr">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong><code>Atoms</code>：指定原子类型和坐标</strong><ul>
+<li>如果需要给坐标分区，可以在每个原子坐标最后面添加<code>region=name1</code>，<code>region=name2</code>……，一个原子可以在多个区域中，此时命名用<code>,</code>分隔<code>region=name1，name2</code></li>
+<li>可以更改原子的质量成为同位素(in Dalton) ，在每个原子坐标最后面添加<code>mass=number</code>即可</li>
+</ul>
 </li>
-<li><p>设置扫描的范围和点数。</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Task</span> PESScan</span><br><span class="line"><span class="attribute">PESScan</span></span><br><span class="line">    <span class="attribute">ScanCoordinate</span></span><br><span class="line">        <span class="attribute">nPoints</span> <span class="number">10</span></span><br><span class="line">        <span class="attribute">Angle</span> <span class="number">6</span> <span class="number">1</span> <span class="number">7</span> <span class="number">28</span>.<span class="number">9</span>  <span class="number">90</span></span><br><span class="line">    <span class="attribute">End</span></span><br><span class="line"><span class="attribute">End</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>如果是两个参数同时 变化，扫描10个点，则是：</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Task</span> PESScan</span><br><span class="line"><span class="attribute">PESScan</span></span><br><span class="line">    <span class="attribute">ScanCoordinate</span></span><br><span class="line">        <span class="attribute">nPoints</span> <span class="number">10</span></span><br><span class="line">        <span class="attribute">Distance</span>  <span class="number">1</span> <span class="number">2</span>  <span class="number">0</span>.<span class="number">8</span> <span class="number">1</span>.<span class="number">1</span></span><br><span class="line">        <span class="attribute">Distance</span>  <span class="number">1</span> <span class="number">3</span>  <span class="number">0</span>.<span class="number">8</span> <span class="number">1</span>.<span class="number">1</span></span><br><span class="line">    <span class="attribute">End</span></span><br><span class="line"><span class="attribute">End</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>计算完成后，基于能量最高的点再进行单点频率计算。</p>
+<li><code>Lattice</code>：指定最多三个晶格向量</li>
+<li><code>FractionalCoords</code>：原子块中的原子坐标是否以晶格向量的分数坐标给出，默认为<code>No</code>。</li>
+<li><code>GeometryFile</code>：从.xyz文件中读取几何</li>
+<li><code>Symmetrize</code>：是否使输入结构对称，这也会将结构旋转转换为标准方向。默认为<code>No</code>。</li>
+<li><strong><code>Charge</code>：指定非周期体系的电荷，默认为<code>0.0</code></strong></li>
+<li><code>BondOrders</code>：指定原子和原子之间的键级，一般不需要。</li>
+</ul>
+<p>除了通过<code>System</code>指定系统，还可以用<code>Load System</code>读取<code>.rkf</code>文件中的之前的系统：</p>
+<figure class="highlight delphi"><table><tr><td class="code"><pre><span class="line">LoadSystem header</span><br><span class="line">   <span class="keyword">File</span> <span class="keyword">string</span></span><br><span class="line">   Section <span class="keyword">string</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Section</code>：默认是<code>Molecule</code></li>
+</ul>
+<h2 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h2><ul>
+<li><p>Task的可选参数有：</p>
+<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">Task [SinglePoint | <span class="type">GeometryOptimization</span> | <span class="type">TransitionStateSearch</span> | <span class="type">IRC</span> | <span class="type">PESScan</span> | <span class="type">NEB</span> | <span class="type">VibrationalAnalysis</span> | <span class="type">MolecularDynamics</span> | <span class="type">GCMC</span>]</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h1 id="2-频率计算"><a href="#2-频率计算" class="headerlink" title="2. 频率计算"></a>2. 频率计算</h1><figure class="highlight ada"><table><tr><td class="code"><pre><span class="line"><span class="keyword">Task</span> SinglePoint</span><br><span class="line">Properties</span><br><span class="line">  NormalModes YES</span><br><span class="line"><span class="keyword">END</span></span><br></pre></td></tr></table></figure>
-<h1 id="3-过渡态搜索"><a href="#3-过渡态搜索" class="headerlink" title="3. 过渡态搜索"></a>3. 过渡态搜索</h1><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">Task TransitionStateSearch</span><br><span class="line">GeometryOptimization</span><br><span class="line">    InitialHessian</span><br><span class="line">       <span class="built_in"> Type </span>FromFile</span><br><span class="line">        File <span class="built_in">..</span>/2_SinglePoint/XXXX.rkf</span><br><span class="line">    End</span><br><span class="line">End</span><br><span class="line">Properties</span><br><span class="line">    NormalModes <span class="literal">Yes</span></span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<h2 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h2><figure class="highlight gams"><table><tr><td class="code"><pre><span class="line">Properties</span><br><span class="line">   BondOrders <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Charges <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   DipoleGradients <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   DipoleMoment <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   ElasticTensor <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Gradients <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Hessian <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Molecules <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   NormalModes <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Other <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   PESPointCharacter <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Phonons <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Polarizability <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Raman <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   SelectedRegionForHessian string</span><br><span class="line">   StressTensor <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   VCD <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   VROA <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<h1 id="Engine-ADF"><a href="#Engine-ADF" class="headerlink" title="Engine ADF"></a>Engine ADF</h1><h2 id="基组"><a href="#基组" class="headerlink" title="基组"></a>基组</h2><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">Basis</span><br><span class="line">  <span class="built_in"> Type </span>[<span class="built_in">..</span>.]</span><br><span class="line">   Core [None | Small | Large]</span><br><span class="line">   CreateOutput <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">   Path string</span><br><span class="line">   PerAtomType</span><br><span class="line">      Core [None | Small | Large]</span><br><span class="line">      File stringS</span><br><span class="line">      Symbol string</span><br><span class="line">     <span class="built_in"> Type </span>[<span class="built_in">..</span>.]</span><br><span class="line">   End</span><br><span class="line">   PerRegion</span><br><span class="line">      Core [None | Small | Large]</span><br><span class="line">      Region string</span><br><span class="line">     <span class="built_in"> Type </span>[<span class="built_in">..</span>.]</span><br><span class="line">   End</span><br><span class="line">   FitType [<span class="built_in">..</span>.]</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Type</code>：默认<code>DZ</code>，还有一系列：[SZ, DZ, DZP, TZP, TZ2P, QZ4P, TZ2P-J, QZ4P-J, AUG/ASZ, AUG/ADZ, AUG/ADZP, AUG/ATZP, AUG/ATZ2P, ET/ET-pVQZ, ET/ET-QZ3P, ET/ET-QZ3P-1DIFFUSE, ET/ET-QZ3P-2DIFFUSE, ET/ET-QZ3P-3DIFFUSE, POLTDDFT/DZ, POLTDDFT/DZP, POLTDDFT/TZP, POLTDDFT/TZ2P]</li>
+<li><code>Core</code>：默认<code>Large</code>，还可以选择<code>None</code>, <code>Small</code>, <code>Large</code></li>
+<li><code>CreateOutput</code>：默认为<code>No</code>。如果为<code>true</code>，原子创建运行的输出将打印到标准输出。如果为<code>false</code>，它将被保存到CreateAtoms.out文件中。</li>
+<li><code>Path</code>：默认为<code>$AMSRESOURCES/ADF</code>，ADF只在该文件夹中寻找合适的基组</li>
+<li><p><code>PerAtomType</code>：为一类原子指定基组</p>
+<ul>
+<li><code>File</code>：指定基组的位置，可以是相对于<code>$AMSRESOURCES/ADF</code>的相对位置，也可以是绝对位置</li>
+<li><code>Symbol</code>：定义基组的符号</li>
+</ul>
+</li>
+<li><p><code>PerRegion</code>：为一个区域的原子指定基组</p>
+<ul>
+<li><code>Region</code>：指定基组的区域，可以用逻辑运算符，比如<code>R1+R2</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="泛函"><a href="#泛函" class="headerlink" title="泛函"></a>泛函</h2><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">XC</span><br><span class="line">  &#123;LDA LDA &#123;Stoll&#125;&#125;</span><br><span class="line">  &#123;GGA GGA&#125;</span><br><span class="line">  &#123;MetaGGA metagga&#125;</span><br><span class="line">  &#123;Model MODELPOT [IP]&#125;</span><br><span class="line">  &#123;HartreeFock&#125;</span><br><span class="line">  &#123;OEP fitmethod &#123;approximation&#125;&#125;</span><br><span class="line">  &#123;HYBRID hybrid &#123;<span class="attribute">HF</span>=HFpart&#125;&#125;</span><br><span class="line">  &#123;MetaHYBRID metahybrid&#125;</span><br><span class="line">  &#123;DOUBLEHYBRID doublehybrid&#125;</span><br><span class="line">  &#123;RPA&#125;</span><br><span class="line">  &#123;XCFUN&#125;</span><br><span class="line">  &#123;RANGESEP &#123;<span class="attribute">GAMMA</span>=X&#125; &#123;<span class="attribute">ALPHA</span>=a&#125; &#123;<span class="attribute">BETA</span>=b&#125;&#125;</span><br><span class="line">  (LibXC functional&#125;</span><br><span class="line">  &#123;DISPERSION [s6scaling] [<span class="attribute">RSCALE</span>=r0scaling] [Grimme3] [BJDAMP] [<span class="attribute">PAR1</span>=par1]  [<span class="attribute">PAR2</span>=par2]  [<span class="attribute">PAR3</span>=par3]  [<span class="attribute">PAR4</span>=par4] &#125;</span><br><span class="line">  &#123;Dispersion Grimme4 &#123;<span class="attribute">s6</span>=...&#125; &#123;<span class="attribute">s8</span>=...&#125; &#123;<span class="attribute">a1</span>=...&#125; &#123;<span class="attribute">a2</span>=...&#125;&#125;</span><br><span class="line">  &#123;DISPERSION dDsC&#125;</span><br><span class="line">  &#123;DISPERSION UFF&#125;</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h2 id="相对论"><a href="#相对论" class="headerlink" title="相对论"></a>相对论</h2><p>2020版本开始默认使用标量相对论效应：</p>
+<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">Relativity</span><br><span class="line">   Formalism [Pauli | <span class="type">ZORA</span> | <span class="type">X2C</span> | <span class="type">RA</span>-X2C]</span><br><span class="line">   Level [None | <span class="type">Scalar</span> | <span class="type">Spin</span>-Orbit]</span><br><span class="line">   Potential [MAPA | <span class="type">SAPA</span>]</span><br><span class="line">   SpinOrbitMagnetization [NonCollinear | <span class="type">Collinear</span> | <span class="type">CollinearX</span> | <span class="type">CollinearY</span> | <span class="type">CollinearZ</span>]</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Formalism</code>：如果<code>level</code>里是<code>None</code>，则不需要考虑所选择的形式。<ul>
+<li><code>Pauli</code>：泡利哈密顿函数</li>
+<li><code>ZORA</code>：零阶正则近似哈密顿量。默认。</li>
+<li><code>X2C</code>：四分量狄拉克方程到二分量狄拉克方程的精确变换，是Dyall修正的Dirac方程。</li>
+<li><code>RA-X2C</code>：四分量狄拉克方程到二分量狄拉克方程的精确变换，是修正狄拉克方程的正规方法。</li>
+</ul>
+</li>
+<li><code>Level</code>：<ul>
+<li><code>None</code>：非相对论。哈密顿量也就是Kohn-Sham方程的形式。</li>
+<li><code>Scalar</code>：标量相对论，成本较低。默认。</li>
+<li><code>Spin-Orbit</code>：旋轨耦合，最好的理论水平，比普通计算昂贵（4-8倍）</li>
+</ul>
+</li>
+<li><code>Potential</code>：<ul>
+<li><code>MAPA</code>：默认。the Minumium of neutral Atomical potential Approximation 中性原子势近似值的最小值。MAPA优于SAPA的优点是可以降低ZORA的规格依赖性。 除了电子密度非常接近重核外，几乎所有特性的ZORA规范依赖性都很小。 非常接近重核的电子密度可用于解释Mossbauer光谱中的异构体位移。</li>
+<li><code>SAPA</code>：the Sum of neutral Atomical potential Approximation 中性原子势近似值之和。</li>
+</ul>
+</li>
+<li><code>SpinOrbitMagnetization</code>：只与自旋轨道耦合相关，而且在<code>unrestricted</code>下使用。在不受限制的计算中，大多数XC泛函都有自旋极化作为一种成分。通常，自旋量子化轴的方向是任意的，可以方便地选择为z轴。然而，在自旋轨道计算中，方向很重要，将磁化矢量的z分量放入XC函数中是任意的。<ul>
+<li><code>NonCollinear</code>：可以将磁化矢量的大小插入XC函数中。 这称为非共线方法。</li>
+<li><code>CollinearX</code>，<code>CollinearY</code>，<code>CollinearZ</code>：使用x，y或z分量作为XC函数的自旋极化。默认为z。</li>
+<li>：<code>Collinear</code>：同<code>CollinearZ</code></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>2019版及之前的输入格式为：</p>
+<figure class="highlight dust"><table><tr><td class="code"><pre><span class="line"><span class="xml">RELATIVISTIC </span><span class="template-variable">&#123;level&#125;</span><span class="xml"> </span><span class="template-variable">&#123;formalism&#125;</span><span class="xml"> </span><span class="template-variable">&#123;potential&#125;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><blockquote>
+<p>Scalar级别为：<code>RELATIVISTIC Scalar ZORA</code></p>
+</blockquote>
+</li>
+<li><p>SpinOrbit级别为：<code>RELATIVISTIC spinorbit ZORA</code></p>
+<ul>
+<li>注意此时：unrestricted不再适用，解决办法删掉unrestricted或加上collinear/nocollinear，以及nosym关键词</li>
+<li>并且不能同时计算解析freq</li>
+</ul>
+</li>
+</ul>
+</blockquote>
 ]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>AMS</category>
+      </categories>
       <tags>
-        <tag>AMS</tag>
-        <tag>过渡态</tag>
+        <tag>输入</tag>
       </tags>
   </entry>
   <entry>
@@ -769,6 +868,47 @@
 <li><p>提高<code>Engine ADF</code>中<code>NumericalQuality</code>的精度</p>
 </li>
 </ul>
+<h1 id="限制性几何优化Constraints"><a href="#限制性几何优化Constraints" class="headerlink" title="限制性几何优化Constraints"></a>限制性几何优化<code>Constraints</code></h1><blockquote>
+<p>ADF2019中可以直接使用<code>Constraints</code>块</p>
+<figure class="highlight puppet"><table><tr><td class="code"><pre><span class="line">CONSTRAINTS</span><br><span class="line">  ATOM <span class="keyword">Ia1</span> &#123;Xa1 Ya1 Za1&#125;</span><br><span class="line">  <span class="keyword">COORD</span> <span class="keyword">Ia1</span> <span class="keyword">Icoord</span> &#123;valcoord&#125;</span><br><span class="line">  <span class="keyword">DIST</span> <span class="keyword">Ia1</span> <span class="keyword">Ia2</span> <span class="keyword">Ra</span></span><br><span class="line">  <span class="keyword">ANGLE</span> <span class="keyword">Ib1</span> <span class="keyword">Ib2</span> <span class="keyword">Ib3</span> <span class="keyword">Rb</span></span><br><span class="line">  <span class="keyword">DIHED</span> <span class="keyword">Ic1</span> <span class="keyword">Ic2</span> <span class="keyword">Ic3</span> <span class="keyword">Ic4</span> <span class="keyword">Rc</span></span><br><span class="line">  <span class="keyword">SUMDIST</span> <span class="keyword">Ic1</span> <span class="keyword">Ic2</span> <span class="keyword">Ic3</span> <span class="keyword">Ic4</span> <span class="keyword">Rc</span></span><br><span class="line">  <span class="keyword">DIFDIST</span> <span class="keyword">Ic1</span> <span class="keyword">Ic2</span> <span class="keyword">Ic3</span> <span class="keyword">Ic4</span> <span class="keyword">Rc</span></span><br><span class="line">  <span class="keyword">BLOCK</span> <span class="keyword">bname</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<ul>
+<li>在计算开始时，不需要满足约束条件。</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">Constraints</span><br><span class="line">   Atom <span class="built_in">int</span>eger</span><br><span class="line">   AtomList <span class="built_in">int</span>eger_list</span><br><span class="line">   FixedRegion <span class="built_in">string</span></span><br><span class="line">   Coordinate <span class="built_in">int</span>eger [x|y|z] <span class="built_in">float</span>?</span><br><span class="line">   Distance (<span class="built_in">int</span>eger)&#123;<span class="number">2</span>&#125; <span class="built_in">float</span></span><br><span class="line">   All ... [Bonds|Triangles] ...</span><br><span class="line">   Angle (<span class="built_in">int</span>eger)&#123;<span class="number">3</span>&#125; <span class="built_in">float</span></span><br><span class="line">   Dihedral (<span class="built_in">int</span>eger)&#123;<span class="number">4</span>&#125; <span class="built_in">float</span></span><br><span class="line">   SumDist (<span class="built_in">int</span>eger)&#123;<span class="number">4</span>&#125; <span class="built_in">float</span></span><br><span class="line">   DifDist (<span class="built_in">int</span>eger)&#123;<span class="number">4</span>&#125; <span class="built_in">float</span></span><br><span class="line">   BlockAtoms <span class="built_in">int</span>eger_list</span><br><span class="line">   Block <span class="built_in">string</span></span><br><span class="line">   FreezeStrain [xx] [xy] [xz] [yy] [yz] [zz]</span><br><span class="line">   EqualStrain  [xx] [xy] [xz] [yy] [yz] [zz]</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<h2 id="固定原子"><a href="#固定原子" class="headerlink" title="固定原子"></a>固定原子</h2><ul>
+<li><code>Atom atomIdx</code>：用<code>System%Atoms</code>块中给出的索引<code>atomIdx</code>将原子固定在初始位置，如那样</li>
+<li><code>AtomList [atomIdx1 .. atomIdxN]</code>：固定列表中所有原子的初始位置</li>
+<li><code>FixedRegion regionName</code>：通过region的方法来指定固定原子块</li>
+<li><code>Coordinate atomIdx [x|y|z] coordValue</code>：用原子序号固定原子使其具有<code>coordValue</code>的笛卡尔坐标，如果<code>coordValue</code>缺失，就固定为初始值。</li>
+</ul>
+<h2 id="内自由度"><a href="#内自由度" class="headerlink" title="内自由度"></a>内自由度</h2><ul>
+<li><code>Distance atomIdx1 atomIdx2 distValue</code>：键长</li>
+<li><code>Angle atomIdx1 atomIdx2 atomIdx3 angleValue</code>：键角</li>
+<li><code>Dihedral atomIdx1 atomIdx2 atomIdx3 atomIdx4 dihedValue</code>：二面角</li>
+<li><code>SumDist atomIdx1 atomIdx2 atomIdx3 atomIdx4 sumDistValue</code>：限制R(1,2)+R(3,4) 两个键长之和为固定值</li>
+<li><code>DifDist atomIdx1 atomIdx2 atomIdx3 atomIdx4 difDistValue</code>：限制R(1,2)-R(3,4) 两个键长之差为固定值</li>
+</ul>
+<h2 id="All"><a href="#All" class="headerlink" title="All"></a><code>All</code></h2><ul>
+<li><p><code>Distance</code>为特定原子对来设定约束，如果想固定某种键或者键角：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">All</span><span class="meta"> [bondOrder] bonds at1 at2 [to distance]</span></span><br><span class="line"><span class="attribute">All</span> triangles at<span class="number">1</span> at<span class="number">2</span> at<span class="number">3</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>bondOrder</code>可以是 <code>single</code>，<code>double</code>， <code>triple</code> 或者<code>aromatic</code>，如果省略了它，那么任何特定原子之间的键都会受到约束。</li>
+<li>原子名是区分大小写的，它们必须和它们在原子块中的位置一样，或者用星号<code>*</code>表示任何原子。</li>
+<li>如果忽略<code>distance</code>，则使用从初始几何结构开始的键长。</li>
+</ul>
+</li>
+<li><p>eg：将所有碳-碳单键的距离限制在1.4埃，所有氢原子键的距离限制在初始距离</p>
+</li>
+</ul>
+<figure class="highlight mathematica"><table><tr><td class="code"><pre><span class="line">Constraints</span><br><span class="line">   <span class="keyword">All</span> single bonds <span class="keyword">C</span> <span class="keyword">C</span> to <span class="number">1.4</span></span><br><span class="line">   <span class="keyword">All</span> bonds H *</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<h2 id="区域约束"><a href="#区域约束" class="headerlink" title="区域约束"></a>区域约束</h2><ul>
+<li><p><code>BlockAtoms [atomIdx1 ... atomIdxN]</code>：冻结这个原子块的所有内部自由度</p>
+</li>
+<li><p><code>Block regionName</code>：为Sy<code>stem% atoms</code>块中定义的区域中的所有原子创建一个块约束，如：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">System</span></span><br><span class="line">   <span class="attribute">Atoms</span></span><br><span class="line">      <span class="attribute">C</span>  <span class="number">0</span>.<span class="number">0</span>  <span class="number">0</span>.<span class="number">0</span>  <span class="number">0</span>.<span class="number">0</span>    region=myblock</span><br><span class="line">      <span class="attribute">C</span>  <span class="number">0</span>.<span class="number">0</span>  <span class="number">0</span>.<span class="number">0</span>  <span class="number">1</span>.<span class="number">0</span>    region=myblock</span><br><span class="line">      <span class="attribute">C</span>  <span class="number">0</span>.<span class="number">0</span>  <span class="number">1</span>.<span class="number">0</span>  <span class="number">0</span>.<span class="number">0</span></span><br><span class="line">   <span class="attribute">End</span></span><br><span class="line"><span class="attribute">End</span></span><br><span class="line"><span class="attribute">Constraints</span></span><br><span class="line">   <span class="attribute">Block</span> myblock</span><br><span class="line"><span class="attribute">End</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>计算化学</category>
@@ -833,11 +973,15 @@
   <entry>
     <title>【AMS】04.键级</title>
     <url>/2020/06/24/%E3%80%90AMS%E3%80%9104.%E9%94%AE%E7%BA%A7/</url>
-    <content><![CDATA[<p>键级的计算可以通过两种方式。不管用哪种方式，都需要在<code>Engine ADF</code>中指定对称性为<code>NOSYM</code></p>
+    <content><![CDATA[<p>键级的计算要在<code>Engine ADF</code>中指定对称性为<code>NOSYM</code></p>
 <figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">Engine</span> <span class="string">ADF </span></span><br><span class="line">  <span class="attr">symmetry</span> <span class="string">NOSYM</span></span><br><span class="line"><span class="attr">EndEngine</span></span><br></pre></td></tr></table></figure>
-<h1 id="方式1"><a href="#方式1" class="headerlink" title="方式1"></a>方式1</h1><p>在<code>Properties</code>中指定：</p>
+<ol>
+<li>在<code>Properties</code>中指定：</li>
+</ol>
 <figure class="highlight mathematica"><table><tr><td class="code"><pre><span class="line"><span class="keyword">Properties</span></span><br><span class="line">   BondOrders Yes</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
-<h1 id="方式2"><a href="#方式2" class="headerlink" title="方式2"></a>方式2</h1><p>在<code>Engine ADF</code>中指定：</p>
+<ol>
+<li>在<code>Engine ADF</code>中指定：</li>
+</ol>
 <figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">BondOrders</span><br><span class="line">   PrintAll Yes/No</span><br><span class="line">   PrintTolerance float</span><br><span class="line">   TypeForAMS [Nalewajski-Mrozek<span class="number">-1</span> | <span class="type">Nalewajski</span>-Mrozek<span class="number">-2</span> | <span class="type">Nalewajski</span>-Mrozek<span class="number">-3</span> | <span class="type">Mayer</span> | <span class="type">Gopinathan</span>-Jug]</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>PrintAll</code>：默认<code>No</code>，如果为是，将输出所有5种键级</li>
@@ -875,7 +1019,21 @@
   <entry>
     <title>【AMS】05.过渡态</title>
     <url>/2020/06/24/%E3%80%90AMS%E3%80%9105.%E8%BF%87%E6%B8%A1%E6%80%81/</url>
-    <content><![CDATA[<h1 id="通过PESScan计算"><a href="#通过PESScan计算" class="headerlink" title="通过PESScan计算"></a>通过<code>PESScan</code>计算</h1><ol>
+    <content><![CDATA[<h1 id="1-线性扫描"><a href="#1-线性扫描" class="headerlink" title="1. 线性扫描"></a>1. 线性扫描</h1><ul>
+<li><p>将反应物放在一起，猜测反应路径，即一个反应物靠近另一个反应物的过程。可以是键长、键角、二面角等。</p>
+</li>
+<li><p>设置扫描的范围和点数。</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Task</span> PESScan</span><br><span class="line"><span class="attribute">PESScan</span></span><br><span class="line">    <span class="attribute">ScanCoordinate</span></span><br><span class="line">        <span class="attribute">nPoints</span> <span class="number">10</span></span><br><span class="line">        <span class="attribute">Angle</span> <span class="number">6</span> <span class="number">1</span> <span class="number">7</span> <span class="number">28</span>.<span class="number">9</span>  <span class="number">90</span></span><br><span class="line">    <span class="attribute">End</span></span><br><span class="line"><span class="attribute">End</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果是两个参数同时 变化，扫描10个点，则是：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Task</span> PESScan</span><br><span class="line"><span class="attribute">PESScan</span></span><br><span class="line">    <span class="attribute">ScanCoordinate</span></span><br><span class="line">        <span class="attribute">nPoints</span> <span class="number">10</span></span><br><span class="line">        <span class="attribute">Distance</span>  <span class="number">1</span> <span class="number">2</span>  <span class="number">0</span>.<span class="number">8</span> <span class="number">1</span>.<span class="number">1</span></span><br><span class="line">        <span class="attribute">Distance</span>  <span class="number">1</span> <span class="number">3</span>  <span class="number">0</span>.<span class="number">8</span> <span class="number">1</span>.<span class="number">1</span></span><br><span class="line">    <span class="attribute">End</span></span><br><span class="line"><span class="attribute">End</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>计算完成后，基于能量最高的点再进行单点频率计算。</p>
+</li>
+</ul>
+<h1 id="2-频率计算"><a href="#2-频率计算" class="headerlink" title="2. 频率计算"></a>2. 频率计算</h1><figure class="highlight ada"><table><tr><td class="code"><pre><span class="line"><span class="keyword">Task</span> SinglePoint</span><br><span class="line">Properties</span><br><span class="line">  NormalModes YES</span><br><span class="line"><span class="keyword">END</span></span><br></pre></td></tr></table></figure>
+<h1 id="3-过渡态搜索"><a href="#3-过渡态搜索" class="headerlink" title="3. 过渡态搜索"></a>3. 过渡态搜索</h1><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">Task TransitionStateSearch</span><br><span class="line">GeometryOptimization</span><br><span class="line">    InitialHessian</span><br><span class="line">       <span class="built_in"> Type </span>FromFile</span><br><span class="line">        File <span class="built_in">..</span>/2_SinglePoint/XXXX.rkf</span><br><span class="line">    End</span><br><span class="line">End</span><br><span class="line">Properties</span><br><span class="line">    NormalModes <span class="literal">Yes</span></span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<h1 id="通过PESScan计算"><a href="#通过PESScan计算" class="headerlink" title="通过PESScan计算"></a>通过<code>PESScan</code>计算</h1><ol>
 <li><p><strong>优化反应物和产物的结构</strong></p>
 </li>
 <li><p>猜测反应路径进行PESScan扫描计算。</p>
@@ -1507,7 +1665,7 @@
   <entry>
     <title>【Jmol】常见的指令</title>
     <url>/2021/08/13/%E3%80%90Jmol%E3%80%91%E5%B8%B8%E8%A7%81%E7%9A%84%E6%8C%87%E4%BB%A4/</url>
-    <content><![CDATA[<h1 id="background"><a href="#background" class="headerlink" title="background"></a>background</h1><p>设置背景颜色或者图像。用法：</p>
+    <content><![CDATA[<h1 id="background背景"><a href="#background背景" class="headerlink" title="background背景"></a><code>background</code>背景</h1><p>设置背景颜色或者图像。用法：</p>
 <ul>
 <li><p><code>background [RGB-color]</code>：设置窗口的背景颜色。</p>
 </li>
@@ -1526,6 +1684,32 @@
 <li><code>[color-none-CPK]</code>：包含<code>[RGB-color]</code>和<code>none</code></li>
 </ul>
 </blockquote>
+<h1 id="boundbox边界框"><a href="#boundbox边界框" class="headerlink" title="boundbox边界框"></a><code>boundbox</code>边界框</h1><p>边界框设置，与<code>boundingbox</code>含义相同。</p>
+<ul>
+<li><p><code>show BOUNDBOX</code>：中心是模型的几何中心而不是旋转中心（即平均原子位置）。输出格式为：</p>
+<figure class="highlight avrasm"><table><tr><td class="code"><pre><span class="line"><span class="symbol">boundbox:</span> (centerX, centerY, centerZ) (vectorX, vectorY, vectorZ)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>比如边框的长就是2<code>vectorX</code></li>
+</ul>
+</li>
+<li><p>显示边界框：</p>
+<figure class="highlight vhdl"><table><tr><td class="code"><pre><span class="line">boundbox [atom-expression] [<span class="literal">line</span>-<span class="literal">width</span>-<span class="keyword">or</span>-<span class="keyword">type</span>]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>[atom-expression]</code>见<a href="#[atom-expression]原子表达">原子表达</a>。默认是<code>*</code></p>
+</li>
+<li><p><code>[line-width-or-type]</code>：<code>ON/OFF/DOTTED</code>（默认是<code>ON</code>，即实线）或<code>整数(1-19)</code>或者<code>小数(&lt;2.0)</code>（后两者似乎与实线的粗细有关）</p>
+</li>
+</ul>
+</li>
+<li><p>通过中心和向量设定一个边界框：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">boundbox</span> <span class="selector-attr">[atom-expression-or-coordinate]</span> <span class="selector-attr">[xyz-coordinate]</span> <span class="selector-attr">[line-width-or-type]</span>&#123;<span class="attribute">default</span>: unchanged&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过两个角设定一个边界框：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">boundbox</span> <span class="selector-tag">CORNERS</span> <span class="selector-attr">[atom-expression-or-coordinate]</span> <span class="selector-attr">[atom-expression-or-coordinate]</span> <span class="selector-attr">[line-width-or-type]</span>&#123;<span class="attribute">default</span>: unchanged&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>getProperty boundBoxInfo</code>：获取边界框的信息</p>
+</li>
+</ul>
 <h1 id="rotate"><a href="#rotate" class="headerlink" title="rotate"></a>rotate</h1><p>默认为以逆时针方式绕 y（垂直）轴每秒旋转 10 度，即：</p>
 <figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">rotate spin y <span class="number">10</span></span><br></pre></td></tr></table></figure>
 <p>选项：</p>
@@ -1665,25 +1849,44 @@
 </ul>
 <h1 id="measure"><a href="#measure" class="headerlink" title="measure"></a>measure</h1><h2 id="设置标签和线等"><a href="#设置标签和线等" class="headerlink" title="设置标签和线等"></a>设置标签和线等</h2><ul>
 <li><p><code>set measurementUnits (distance unit)</code>：设置测量单位，(distance unit)可以是<code>ANGSTROMS</code>、<code>AU</code>（或 <code>BOHR</code>）、<code>NM</code>（或 <code>NANOMETERS</code>）、（<code>PM</code> 或 <code>PICOMETERS</code>）、<code>VDW</code>、<code>HZ</code> 和 <code>NOE_HZ</code> 之一。</p>
+<figure class="highlight gams"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> measurements <span class="comment">angstroms</span></span><br><span class="line"><span class="keyword">set</span> <span class="comment">measurements nm</span></span><br><span class="line"><span class="keyword">set</span> <span class="comment">measurements pm</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p><code>set measurementLabels ON</code>：设置为<code>FALSE</code>时仅关闭测量标签，保留线条。</p>
 </li>
-<li><code>set showMeasurements TRUE</code>：设置为<code>FALSE</code>时，测量线和标签都关闭。</li>
-<li><code>set measurements DOTTED</code>：设置测量线为虚线。</li>
-<li><code>set justifyMeasurements FALSE</code>：将此参数设为 <code>TRUE</code> 可右对齐测量标签</li>
-<li><code>set measurements 数字</code>：数字带小数时，是以Å为单位；整数时是以像素为单位。</li>
-<li><code>set defaultDistanceLabel &quot;format&quot;</code>、<code>set defaultAngleLabel &quot;format&quot;</code>、<code>set defaultTorsionLabel &quot;format&quot;</code>：分别设置标签的默认格式</li>
-<li>设置<a href="#font">字体</a></li>
+<li><p><code>set showMeasurements TRUE</code>：设置为<code>FALSE</code>时，测量线和标签都关闭。</p>
+</li>
+<li><p><code>set measurements DOTTED</code>：设置测量线为虚线。</p>
+</li>
+<li><p><code>set justifyMeasurements FALSE</code>：将此参数设为 <code>TRUE</code> 可右对齐测量标签</p>
+</li>
+<li><p><code>set measurements 数字</code>：数字带小数时，是以Å为单位；整数时是以像素为单位。</p>
+</li>
+<li><p><code>set defaultDistanceLabel &quot;format&quot;</code>、<code>set defaultAngleLabel &quot;format&quot;</code>、<code>set defaultTorsionLabel &quot;format&quot;</code>：分别设置标签的默认格式</p>
+</li>
+<li><p>设置<a href="#font">字体</a></p>
+</li>
 </ul>
 <p><code>measure</code>的语法：</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">measure RANGE <span class="tag">&lt;<span class="name">minValue</span>&gt;</span> <span class="tag">&lt;<span class="name">maxValue</span>&gt;</span> ALL|ALLCONNECTED|DELETE (<span class="tag">&lt;<span class="name">atom</span> <span class="attr">expression</span>&gt;</span>) (<span class="tag">&lt;<span class="name">atom</span> <span class="attr">expression</span>&gt;</span>) ...</span><br></pre></td></tr></table></figure>
 <ul>
-<li><code>measure ON/OFF</code>：打开和关闭距离、角度、二面角测量标签和测量线。</li>
-<li><code>measure DELETE</code>：删除所有测量</li>
-<li><code>measure &quot;n:labelFormat&quot;</code>：测量对象及其单位，n为2、3、或4，代表键长、……。label format中可为”//unit”，代表测量单位等。</li>
+<li><p><code>measure ON/OFF</code>：打开和关闭距离、角度、二面角测量标签和测量线。</p>
+</li>
+<li><p><code>measure DELETE</code>：删除所有测量</p>
+</li>
+<li><p><code>measure &quot;n:labelFormat&quot;</code>：测量对象及其单位</p>
+<ul>
+<li><code>n:</code>为2、3、或4，代表键长、键角、二面角。</li>
+<li><p><code>n:</code>和<code>labelFormat</code>之间可以放<code>[atom properties]</code>原子属性来表示</p>
+</li>
+<li><p><code>label format</code>默认为<code>&quot;%VALUE %UNITS&quot;</code>，<code>%VALUE</code>可以表示小数位数；<code>//unit</code>，代表测量单位等。<code>//A</code>就是Å，还有<code>//nm</code>，<code>//pm</code>等</p>
+</li>
+<li></li>
+</ul>
+</li>
 </ul>
 <p>例子：</p>
 <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">measure</span> RANGE <span class="number">1</span>.<span class="number">5</span> <span class="number">2</span>.<span class="number">5</span> <span class="literal">ALL</span> (_C) (_U) <span class="string">&quot;2://pm&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">measure 1.4 1.5 all (<span class="emphasis">_C)[<span class="string">65</span>][<span class="symbol">72</span>]  (_</span>C)[<span class="string">65</span>][<span class="symbol">72</span>]  &quot;2:%a1-%a2 %0.3VALUE //A&quot;</span><br></pre></td></tr></table></figure>
 <h1 id="mo"><a href="#mo" class="headerlink" title="mo"></a>mo</h1><p>可以将fchk文件通过Multiwfn转化成molden文件再进行绘图</p>
 <figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="number">100</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">6</span></span><br></pre></td></tr></table></figure>
 <ul>
@@ -1749,6 +1952,12 @@
 <li><code>width</code> 和 <code>height</code> 是可选的，默认为当前帧大小。</li>
 <li>压缩量<code>n</code> 是一个介于 0 和 10 之间的数字（默认为 2）。</li>
 <li>例子：<code>WRITE PNGT xxxx.png</code></li>
+</ul>
+</li>
+<li><p>保存为pov进一步渲染</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">write</span> POVRAY D:<span class="regexp">/desktop/m</span>o/<span class="number">10</span>-.pov</span><br></pre></td></tr></table></figure>
+<ul>
+<li>生成的ini文件可以直接一起拖入到pov-ray中批量渲染</li>
 </ul>
 </li>
 </ul>
@@ -3166,6 +3375,8 @@
 </ul>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ORBPRINT,<span class="built_in">print</span>,<span class="built_in">test</span></span><br></pre></td></tr></table></figure>
 <h1 id="SCF不收敛"><a href="#SCF不收敛" class="headerlink" title="SCF不收敛"></a>SCF不收敛</h1><ul>
+<li><p>看一下波函数的对称性</p>
+</li>
 <li><p>通过能级移动，导致更平滑但更慢的收敛</p>
 <figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">&#123;rhf; shift,<span class="number">-1.0</span>,<span class="number">-0.5</span>&#125;</span><br></pre></td></tr></table></figure>
 </li>
@@ -5478,7 +5689,7 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 </ul>
 <h2 id="ELF"><a href="#ELF" class="headerlink" title="ELF"></a>ELF</h2><p>对于ELF、LOL和电子密度拉普拉斯函数，寻找对应原子内核处的临界点（对应高度定域的1s轨道电子）还是用原子核位置作为初猜。但是对于价层的ELF临界点，由于其分布较难预料，而且数目众多，最好的办法就是直接在每个原子附近都设一大堆初猜点来寻找各个临界点。不过，由于ELF临界点太多而且分布太复杂，想找全所有临界点绝非易事，所以，只要看到化学意义显著的临界点（所有的(3,-3)，以及部分(3,-1)）都已经找到了，临界点的搜索就可以停掉了。除了牛顿法，还有一种基于立方格点的临界点搜索方法，可以通过Multiwfn的盆分析实现，见《使用Multiwfn做电子密度、ELF、静电势、密度差等函数的盆分析》（<a href="http://sobereva.com/179），此方法虽然可以保证把(3,-3)搜索全，但定位精度低（精度取决于格点间距）。">http://sobereva.com/179），此方法虽然可以保证把(3,-3)搜索全，但定位精度低（精度取决于格点间距）。</a></p>
 <h1 id="AIM盆分析"><a href="#AIM盆分析" class="headerlink" title="AIM盆分析"></a>AIM盆分析</h1><p>加载.fch文件后的总体步骤：</p>
-<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">17 </span>//盆分析</span><br><span class="line"><span class="symbol">1 </span> //生成盆并寻找吸引子</span><br><span class="line"><span class="symbol">1 </span> //用电子密度划分盆</span><br><span class="line"><span class="symbol">2 </span> //中等质量格点</span><br><span class="line"><span class="symbol">7 </span> //用混合格点积分AIM盆</span><br><span class="line"><span class="symbol">2 </span> //对边界进行精确修正</span><br><span class="line"><span class="symbol">1 </span> //积分电子密度，得到AIM电荷</span><br><span class="line"><span class="symbol">4 </span>//计算DI和LI</span><br></pre></td></tr></table></figure>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">17 </span>//盆分析</span><br><span class="line"><span class="symbol">1 </span> //生成盆并寻找吸引子</span><br><span class="line"><span class="symbol">1 </span> //用电子密度划分盆</span><br><span class="line"><span class="symbol">2 </span> //中等质量格点</span><br><span class="line"></span><br><span class="line"><span class="symbol">7 </span> //用混合格点积分AIM盆</span><br><span class="line"><span class="symbol">2 </span> //对边界进行精确修正</span><br><span class="line"><span class="symbol">1 </span> //积分电子密度，得到AIM电荷</span><br><span class="line"></span><br><span class="line"><span class="symbol">4 </span>//计算DI和LI</span><br></pre></td></tr></table></figure>
 <h2 id="生成盆"><a href="#生成盆" class="headerlink" title="生成盆"></a>生成盆</h2><p>以HCN为例：</p>
 <ol>
 <li><p><code>17</code>：盆分析</p>
@@ -8803,6 +9014,7 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 <li><code>dG</code>：删除光标所在到最后一行的所有数据</li>
 <li><code>: 1,10d</code>：删除第一行到第十行</li>
 <li><code>dfc</code>：删除从文本中出现字符“c”的位置，一直向前直到下一个该字符所出现的位置（包括该字符）之间的内容 </li>
+<li><code>daw</code>：删除光标所在的一个单词</li>
 </ul>
 </li>
 </ul>
@@ -9304,8 +9516,8 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 <p><img src="clipboard.png" alt="img"></p>
 <p><img src="166a906be971e8d3d3b304cee0da821.png" alt="img" style="zoom: 50%;" /></p>
 <p><img src="ffc0c86714dea564d2a80ceeec2bfc1.png" alt="img" style="zoom:50%;" /></p>
-<p><img src="a91083a05da311f08735a5273b29fd7.png" alt="img" style="zoom:50%;" /></p>
-<p><img src="0178a4c2a265eed33bf7da46e8737d8.png" alt="img" style="zoom:50%;" /></p>
+<p><img src="a91083a05da311f08735a5273b29fd7.png" alt="img" style="zoom:54%;" /></p>
+<p><img src="0178a4c2a265eed33bf7da46e8737d8.png" alt="img" style="zoom:54%;" /></p>
 <ul>
 <li><p>在NAO密度矩阵部分只有alpha，结束之后紧跟的是NAO的Fock矩阵，而第一个beta实际上是NAO密度矩阵的部分，将这部分移动到alpha密度矩阵的后面即可。</p>
 </li>
