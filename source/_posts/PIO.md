@@ -53,7 +53,7 @@ https://github.com/jxzhangcc/PIO
    - 开壳层，通过一下命令检查，会出现SPIN出现的行数，会发现默认顺序是aabb，正确的顺序应该是abab
 
      ```
-     grep -n ‘SPIN’ XXX.49
+     grep -n 'SPIN' XXX.49
      ```
      ![img](clipboard.png)
      
