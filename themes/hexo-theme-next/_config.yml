@@ -921,9 +921,9 @@ vendors:
 # jquery: //cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js
 # fancybox: //cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js
 # fancybox_css: //cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css
-  jquery: //cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js
-  fancybox: //cdn.bootcdn.net/ajax/libs/fancybox/3.5.1/jquery.fancybox.min.js
-  fancybox_css: //cdn.bootcdn.net/ajax/libs/fancybox/3.5.1/jquery.fancybox.min.css
+  jquery: https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js
+  fancybox: https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.1/jquery.fancybox.min.js
+  fancybox_css: https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.1/jquery.fancybox.min.css
 
   # Medium-zoom
   # mediumzoom: //cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js
