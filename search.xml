@@ -498,6 +498,123 @@
       </tags>
   </entry>
   <entry>
+    <title>PIO</title>
+    <url>/2021/08/23/PIO/</url>
+    <content><![CDATA[<h1 id="代码位置"><a href="#代码位置" class="headerlink" title="代码位置"></a>代码位置</h1><p><a href="https://github.com/jxzhangcc/PIO">https://github.com/jxzhangcc/PIO</a></p>
+<h1 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h1><h2 id="Gaussian计算部分"><a href="#Gaussian计算部分" class="headerlink" title="Gaussian计算部分"></a>Gaussian计算部分</h2><ol>
+<li><p>在高斯关键词部分加入pop=nbo6read</p>
+<ul>
+<li>nboread调用的是高斯自带的NBO3，要用NBO6得到.49，否则格式会有问题。格式修改见<a href="https://mp.weixin.qq.com/s?__biz=MzU5NDYxNjc5Ng==&amp;mid=2247485938&amp;idx=1&amp;sn=addcb81d6a9caed028a9ab86e336847d&amp;chksm=fe7fc141c9084857858ebeb9988bd73c70fd631f354a53aeb7768fcd4c6df9f890de7539d583&amp;mpshare=1&amp;scene=1&amp;srcid=&amp;sharer_sharetime=1589122912458&amp;sharer_shareid=f14b465eb222f6bb34657e2c0fafe383&amp;key=64daf1adc09d7c6ecdf51441f0e0e0081ff30416a8c76cafc75ab07809a89ccb0e3a0fde164cf3daa101192f723f9349e88e6622f494e3da3870bf9eaebe22bf9583324d7112cf0072a7c78f482c98d9&amp;ascene=1&amp;uin=MTY5ODAzMzEyNQ%3D%3D&amp;devicetype=Windows+10+x64&amp;version=62090070&amp;lang=zh_CN&amp;exportkey=AdPzWFyVBDaa5HawSncSSzA%3D&amp;pass_ticket=CJnCOXQ4GY3GwKDSPl0mmbvH12dznP%2F%2Bj30sXI1%2BLh1L4wzPIu4fEYHNwnZHTc2M">博文</a>。</li>
+</ul>
+</li>
+<li><p>在高斯输入文件的最后一行加入：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="variable">$NBO</span> <span class="attribute">AONAO</span>=W49 <span class="attribute">FNAO</span>=W49 <span class="attribute">DMNAO</span>=W49 SKIPBO <span class="attribute">file</span>=XXX  <span class="variable">$END</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>中XXX应与之后生成的 .fchk 文件名一致</li>
+<li>PIO_v3可能会报错，需要49文件的名字为大写的</li>
+</ul>
+</li>
+<li><p>通过formchk将chk转换成fchk</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">formchk</span> <span class="selector-tag">xxx</span><span class="selector-class">.chk</span> <span class="selector-tag">xxx</span><span class="selector-class">.fchk</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="pio部分"><a href="#pio部分" class="headerlink" title="pio部分"></a>pio部分</h2><ol>
+<li><p>此时应当有 .fchk 文件以及 NBO 生成的 .49 文件</p>
+</li>
+<li><p>pio命令一般在在/home/scicons/bin下，将其添加至环境变量即可。此时执行</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">pio</span>  <span class="variable">$&#123;FILENAME&#125;</span>.fchk &#123;碎片<span class="number">1</span> 的原子序号&#125; &#123;碎片<span class="number">2</span> 的原子序号&#125; </span><br></pre></td></tr></table></figure>
+<ul>
+<li>碎片可以是<code>xx-xx</code>这样的格式</li>
+</ul>
+</li>
+<li><p>如果报错，看体系是否是开壳层的，如果是开壳层，需要对.49文件进行一点修改</p>
+<ul>
+<li><p>开壳层，通过一下命令检查，会出现SPIN出现的行数，会发现默认顺序是aabb，正确的顺序应该是abab</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">grep</span> -n <span class="string">&#x27;SPIN&#x27;</span> XXX.<span class="number">49</span></span><br></pre></td></tr></table></figure>
+<p><img src="clipboard.png" alt="img"></p>
+<p><img src="166a906be971e8d3d3b304cee0da821.png" alt="img" style="zoom: 50%;" /></p>
+<p><img src="ffc0c86714dea564d2a80ceeec2bfc1.png" alt="img" style="zoom:50%;" /></p>
+<p><img src="a91083a05da311f08735a5273b29fd7.png" alt="img" style="zoom:54%;" /></p>
+<p><img src="0178a4c2a265eed33bf7da46e8737d8.png" alt="img" style="zoom:54%;" /></p>
+<ul>
+<li><p>在NAO密度矩阵部分只有alpha，结束之后紧跟的是NAO的Fock矩阵，而第一个beta实际上是NAO密度矩阵的部分，将这部分移动到alpha密度矩阵的后面即可。</p>
+</li>
+<li><p>利用vim命令进行调换即可，调换方法：</p>
+<figure class="highlight vala"><table><tr><td class="code"><pre><span class="line"><span class="meta">#先删除第一个beta部分</span></span><br><span class="line">:<span class="number">129075</span>,<span class="number">154831</span>d</span><br><span class="line"><span class="meta">#光标停在第一个alpha最后一行，直接p即可</span></span><br><span class="line">p</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="结果分析部分"><a href="#结果分析部分" class="headerlink" title="结果分析部分"></a>结果分析部分</h2><ul>
+<li>pio对结果在生成的txt文件中，pio对的轨道在pio.fchk文件中，而PIMOs的记过在pimo.fchk中</li>
+<li>pio_v3还有raw文件，pio_v4已经删除</li>
+<li>轨道如果通过pio_v4分析得到，用Multiwfn或者Jmol打开转换得到的molden文件，能量都是0，要避免可以用pio_v3</li>
+</ul>
+<h1 id="Windows下运行"><a href="#Windows下运行" class="headerlink" title="Windows下运行"></a>Windows下运行</h1><ul>
+<li><p>需要下载python2和anaconda配置python2的运行环境</p>
+</li>
+<li><p>打开Anaconda的命令行，输入</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">conda</span> activate py<span class="number">27</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行命令：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">python</span> <span class="selector-tag">PIO</span><span class="selector-class">.py</span> <span class="selector-tag">FILENAME</span><span class="selector-class">.FChk</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>输入原子：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span><span class="number">-5</span>,<span class="number">8</span>,<span class="number">13</span> <span class="number">6</span><span class="number">-7</span>,<span class="number">9</span><span class="number">-12</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>PIO</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【ADF】03.精度控制</title>
+    <url>/2021/12/06/%E3%80%90ADF%E3%80%9103.%E7%B2%BE%E5%BA%A6%E6%8E%A7%E5%88%B6/</url>
+    <content><![CDATA[<h1 id="NumericalQuality"><a href="#NumericalQuality" class="headerlink" title="NumericalQuality"></a><code>NumericalQuality</code></h1><ul>
+<li>设置ADF计算的质量，包括BeckeGrid（数值积分）和 ZlmFit（密度拟合）。</li>
+<li>选项有<code>Basic</code>、<code>Normal</code>（默认）、<code>Good</code>、<code>VeryGood</code>、<code>Excellent</code></li>
+</ul>
+<h1 id="BeckeGrid数值积分"><a href="#BeckeGrid数值积分" class="headerlink" title="BeckeGrid数值积分"></a><code>BeckeGrid</code>数值积分</h1><p>数值积分格点的选项。</p>
+<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">BECKEGRID</span><br><span class="line">  Quality [basic|<span class="type">normal</span>|<span class="type">good</span>|<span class="type">verygood</span>|<span class="type">excellent</span>]</span><br><span class="line">  &#123;QualityPerRegion</span><br><span class="line">     Region myregion</span><br><span class="line">     Quality &#123;Basic|<span class="type">Normal</span>|<span class="type">Good</span>|<span class="type">VeryGood</span>|<span class="type">Excellent</span>&#125;</span><br><span class="line">  <span class="keyword">End</span>&#125;</span><br><span class="line">  &#123;qpnear qpnear&#125;</span><br><span class="line">  &#123;RadialGridBoost boost&#125;</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>Quality</code>：选项有<code>auto</code>（默认）、<code>Basic</code>、<code>Normal</code>、<code>Good</code>、<code>VeryGood</code>、<code>Excellent</code>。会覆盖<code>NumericalQuality</code>中的设置。</p>
+</li>
+<li><p><code>QualityPerRegion</code>：设置特定区域的原子的积分格点质量。</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">BeckeGrid</span><br><span class="line">  QualityPerRegion <span class="attribute">Region</span>=Accurate <span class="attribute">Quality</span>=Good</span><br><span class="line">  QualityPerRegion <span class="attribute">Region</span>=Far      <span class="attribute">Quality</span>=Basic</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>qpnear</code>：默认为<code>4</code>Å。当在输入文件中指定了点电荷时，ADF 仅围绕那些接近原子的点电荷生成网格。<code>qpnear</code>指定的是最近的距离。</p>
+</li>
+<li><p><code>RadialGridBoost</code>：默认为<code>1.0</code>。增加径向积分点的数量。一些 XC 泛函需要非常精确的径向积分网格，因此 ADF 会自动将径向网格提升 3 倍用于一些数值敏感泛函。</p>
+</li>
+</ul>
+<h1 id="ZLMFIT密度拟合"><a href="#ZLMFIT密度拟合" class="headerlink" title="ZLMFIT密度拟合"></a><code>ZLMFIT</code>密度拟合</h1><p>总电子密度被分成原子密度（以类似于为贝克网格划分体积的方式）。然后通过径向样条函数和实球谐函数 (Zlm) 的组合来近似这些原子密度。</p>
+<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">ZLMFIT</span><br><span class="line"> Quality &#123;basic|<span class="type">normal</span>|<span class="type">good</span>|<span class="type">verygood</span>|<span class="type">excellent</span>&#125;</span><br><span class="line"> &#123;QualityPerRegion</span><br><span class="line">    Region myregion</span><br><span class="line">    Quality &#123;Basic|<span class="type">Normal</span>|<span class="type">Good</span>|<span class="type">VeryGood</span>|<span class="type">Excellent</span>&#125;</span><br><span class="line"> <span class="keyword">End</span>&#125;</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>Quality</code>：选项有<code>auto</code>（默认）、<code>Basic</code>、<code>Normal</code>、<code>Good</code>、<code>VeryGood</code>、<code>Excellent</code>。会覆盖<code>NumericalQuality</code>中的设置。</p>
+</li>
+<li><p><code>QualityPerRegion</code>：设置特定区域的原子的 Zlm Fit 质量。</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">ZlmFit</span><br><span class="line">   QualityPerRegion <span class="attribute">Region</span>=Accurate <span class="attribute">Quality</span>=Good</span><br><span class="line">   QualityPerRegion <span class="attribute">Region</span>=Far      <span class="attribute">Quality</span>=Basic</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>AMS</tag>
+        <tag>ADF</tag>
+        <tag>精度</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【ADF】02.EDA-NOCV</title>
     <url>/2020/02/07/%E3%80%90ADF%E3%80%9102.EDA-NOCV/</url>
     <content><![CDATA[<h1 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h1><h2 id="碎片"><a href="#碎片" class="headerlink" title="碎片"></a>碎片</h2><ul>
@@ -633,46 +750,6 @@
       <tags>
         <tag>ADF</tag>
         <tag>能量分解</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【ADF】03.精度控制</title>
-    <url>/2021/12/06/%E3%80%90ADF%E3%80%9103.%E7%B2%BE%E5%BA%A6%E6%8E%A7%E5%88%B6/</url>
-    <content><![CDATA[<h1 id="NumericalQuality"><a href="#NumericalQuality" class="headerlink" title="NumericalQuality"></a><code>NumericalQuality</code></h1><ul>
-<li>设置ADF计算的质量，包括BeckeGrid（数值积分）和 ZlmFit（密度拟合）。</li>
-<li>选项有<code>Basic</code>、<code>Normal</code>（默认）、<code>Good</code>、<code>VeryGood</code>、<code>Excellent</code></li>
-</ul>
-<h1 id="BeckeGrid数值积分"><a href="#BeckeGrid数值积分" class="headerlink" title="BeckeGrid数值积分"></a><code>BeckeGrid</code>数值积分</h1><p>数值积分格点的选项。</p>
-<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">BECKEGRID</span><br><span class="line">  Quality [basic|<span class="type">normal</span>|<span class="type">good</span>|<span class="type">verygood</span>|<span class="type">excellent</span>]</span><br><span class="line">  &#123;QualityPerRegion</span><br><span class="line">     Region myregion</span><br><span class="line">     Quality &#123;Basic|<span class="type">Normal</span>|<span class="type">Good</span>|<span class="type">VeryGood</span>|<span class="type">Excellent</span>&#125;</span><br><span class="line">  <span class="keyword">End</span>&#125;</span><br><span class="line">  &#123;qpnear qpnear&#125;</span><br><span class="line">  &#123;RadialGridBoost boost&#125;</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><p><code>Quality</code>：选项有<code>auto</code>（默认）、<code>Basic</code>、<code>Normal</code>、<code>Good</code>、<code>VeryGood</code>、<code>Excellent</code>。会覆盖<code>NumericalQuality</code>中的设置。</p>
-</li>
-<li><p><code>QualityPerRegion</code>：设置特定区域的原子的积分格点质量。</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">BeckeGrid</span><br><span class="line">  QualityPerRegion <span class="attribute">Region</span>=Accurate <span class="attribute">Quality</span>=Good</span><br><span class="line">  QualityPerRegion <span class="attribute">Region</span>=Far      <span class="attribute">Quality</span>=Basic</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>qpnear</code>：默认为<code>4</code>Å。当在输入文件中指定了点电荷时，ADF 仅围绕那些接近原子的点电荷生成网格。<code>qpnear</code>指定的是最近的距离。</p>
-</li>
-<li><p><code>RadialGridBoost</code>：默认为<code>1.0</code>。增加径向积分点的数量。一些 XC 泛函需要非常精确的径向积分网格，因此 ADF 会自动将径向网格提升 3 倍用于一些数值敏感泛函。</p>
-</li>
-</ul>
-<h1 id="ZLMFIT密度拟合"><a href="#ZLMFIT密度拟合" class="headerlink" title="ZLMFIT密度拟合"></a><code>ZLMFIT</code>密度拟合</h1><p>总电子密度被分成原子密度（以类似于为贝克网格划分体积的方式）。然后通过径向样条函数和实球谐函数 (Zlm) 的组合来近似这些原子密度。</p>
-<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">ZLMFIT</span><br><span class="line"> Quality &#123;basic|<span class="type">normal</span>|<span class="type">good</span>|<span class="type">verygood</span>|<span class="type">excellent</span>&#125;</span><br><span class="line"> &#123;QualityPerRegion</span><br><span class="line">    Region myregion</span><br><span class="line">    Quality &#123;Basic|<span class="type">Normal</span>|<span class="type">Good</span>|<span class="type">VeryGood</span>|<span class="type">Excellent</span>&#125;</span><br><span class="line"> <span class="keyword">End</span>&#125;</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><p><code>Quality</code>：选项有<code>auto</code>（默认）、<code>Basic</code>、<code>Normal</code>、<code>Good</code>、<code>VeryGood</code>、<code>Excellent</code>。会覆盖<code>NumericalQuality</code>中的设置。</p>
-</li>
-<li><p><code>QualityPerRegion</code>：设置特定区域的原子的 Zlm Fit 质量。</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">ZlmFit</span><br><span class="line">   QualityPerRegion <span class="attribute">Region</span>=Accurate <span class="attribute">Quality</span>=Good</span><br><span class="line">   QualityPerRegion <span class="attribute">Region</span>=Far      <span class="attribute">Quality</span>=Basic</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
-      <tags>
-        <tag>ADF</tag>
-        <tag>AMS</tag>
-        <tag>精度</tag>
       </tags>
   </entry>
   <entry>
@@ -1204,34 +1281,6 @@
       </tags>
   </entry>
   <entry>
-    <title>【Gaussian】01.基础知识</title>
-    <url>/2019/09/03/%E3%80%90Gaussian%E3%80%9101.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
-    <content><![CDATA[<h1 id="输入文件基本格式"><a href="#输入文件基本格式" class="headerlink" title="输入文件基本格式"></a>输入文件基本格式</h1><h1 id="坐标的输入"><a href="#坐标的输入" class="headerlink" title="坐标的输入"></a>坐标的输入</h1><ul>
-<li><code>geom=check</code>：输入结构从chk中读取，输入文件里此时不能写坐标</li>
-<li><code>geom=allcheck</code>：标题段落、电荷、自旋多重度、坐标都从chk中读取。输入文件里此时不能写坐标多重度等，关键词后面空行直接跟指定的基组或者为空。</li>
-</ul>
-<h1 id="chk文件"><a href="#chk文件" class="headerlink" title="chk文件"></a>chk文件</h1><ul>
-<li><p>在哪个操作系统下得到的chk文件就要在哪个操作系统下转换：</p>
-<ul>
-<li><p>Windows下点击Gaussian图形界面的Utilities-FormChk，选择chk文件</p>
-</li>
-<li><p>Linux使用格式：（直接formchk的前提是已经将formchk添加到环境变量中，否则可以是：相应的路径/formchk）</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">formchk</span> <span class="selector-tag">xxx</span><span class="selector-class">.chk</span> <span class="selector-tag">xxx</span><span class="selector-class">.fchk</span></span><br><span class="line"><span class="selector-tag">formchk</span> <span class="selector-tag">xxx</span><span class="selector-class">.chk</span> <span class="selector-id">#y</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
-      <tags>
-        <tag>Gaussian</tag>
-        <tag>基组</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【Gaussian】02.基组</title>
     <url>/2019/09/03/%E3%80%90Gaussian%E3%80%9102.%E5%9F%BA%E7%BB%84/</url>
     <content><![CDATA[<p><a href="https://gaussian.com/basissets/">https://gaussian.com/basissets/</a></p>
@@ -1344,6 +1393,34 @@
 <li>Y = HF/WB/DF：拟合赝势用的数据的计算级别。HF=Hartree-Fock非相对论（即此赝势不考虑相对论效应），WB=Wood-Boring准相对论，DF=Dirac-Fock全相对论</li>
 </ul>
 <p>每个元素的SDD默认的基组和可用的Stuttgart赝势：<a href="https://gaussian.com/pseudo/">https://gaussian.com/pseudo/</a></p>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>Gaussian</tag>
+        <tag>基组</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Gaussian】01.基础知识</title>
+    <url>/2019/09/03/%E3%80%90Gaussian%E3%80%9101.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
+    <content><![CDATA[<h1 id="输入文件基本格式"><a href="#输入文件基本格式" class="headerlink" title="输入文件基本格式"></a>输入文件基本格式</h1><h1 id="坐标的输入"><a href="#坐标的输入" class="headerlink" title="坐标的输入"></a>坐标的输入</h1><ul>
+<li><code>geom=check</code>：输入结构从chk中读取，输入文件里此时不能写坐标</li>
+<li><code>geom=allcheck</code>：标题段落、电荷、自旋多重度、坐标都从chk中读取。输入文件里此时不能写坐标多重度等，关键词后面空行直接跟指定的基组或者为空。</li>
+</ul>
+<h1 id="chk文件"><a href="#chk文件" class="headerlink" title="chk文件"></a>chk文件</h1><ul>
+<li><p>在哪个操作系统下得到的chk文件就要在哪个操作系统下转换：</p>
+<ul>
+<li><p>Windows下点击Gaussian图形界面的Utilities-FormChk，选择chk文件</p>
+</li>
+<li><p>Linux使用格式：（直接formchk的前提是已经将formchk添加到环境变量中，否则可以是：相应的路径/formchk）</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">formchk</span> <span class="selector-tag">xxx</span><span class="selector-class">.chk</span> <span class="selector-tag">xxx</span><span class="selector-class">.fchk</span></span><br><span class="line"><span class="selector-tag">formchk</span> <span class="selector-tag">xxx</span><span class="selector-class">.chk</span> <span class="selector-id">#y</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>计算化学</category>
@@ -1663,391 +1740,6 @@
       </tags>
   </entry>
   <entry>
-    <title>【Jmol】常见的指令</title>
-    <url>/2021/08/13/%E3%80%90Jmol%E3%80%91%E5%B8%B8%E8%A7%81%E7%9A%84%E6%8C%87%E4%BB%A4/</url>
-    <content><![CDATA[<h1 id="background背景"><a href="#background背景" class="headerlink" title="background背景"></a><code>background</code>背景</h1><p>设置背景颜色或者图像。用法：</p>
-<ul>
-<li><p><code>background [RGB-color]</code>：设置窗口的背景颜色。</p>
-</li>
-<li><p><code>background IMAGE &quot;filename&quot;</code>：将窗口的背景设置为指定的图像文件，该文件可以是BMP、JPG、PNG或GIF格式。图像被拉伸以适应窗口的大小。</p>
-</li>
-<li><code>background LABELS [color-none-CPK]</code>：设置使用“label”命令显示的原子标签的背景颜色。是全局操作，而不是对选定的原子。</li>
-</ul>
-<blockquote>
-<ul>
-<li><code>[RGB-color]</code>：<ul>
-<li>颜色的名字：<code>white</code>、<code>black</code>……</li>
-<li>RGB颜色值：<code>[255, 0, 255]</code>，<code>&#123;255,0,255&#125;</code>，<code>&#123;0.5, 0.5, 1&#125;</code></li>
-<li>十六进制颜色码：<code>[xFF00FF]</code></li>
-</ul>
-</li>
-<li><code>[color-none-CPK]</code>：包含<code>[RGB-color]</code>和<code>none</code></li>
-</ul>
-</blockquote>
-<h1 id="boundbox边界框"><a href="#boundbox边界框" class="headerlink" title="boundbox边界框"></a><code>boundbox</code>边界框</h1><p>边界框设置，与<code>boundingbox</code>含义相同。</p>
-<ul>
-<li><p><code>show BOUNDBOX</code>：中心是模型的几何中心而不是旋转中心（即平均原子位置）。输出格式为：</p>
-<figure class="highlight avrasm"><table><tr><td class="code"><pre><span class="line"><span class="symbol">boundbox:</span> (centerX, centerY, centerZ) (vectorX, vectorY, vectorZ)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>比如边框的长就是2<code>vectorX</code></li>
-</ul>
-</li>
-<li><p>显示边界框：</p>
-<figure class="highlight vhdl"><table><tr><td class="code"><pre><span class="line">boundbox [atom-expression] [<span class="literal">line</span>-<span class="literal">width</span>-<span class="keyword">or</span>-<span class="keyword">type</span>]</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p><code>[atom-expression]</code>见<a href="#[atom-expression]原子表达">原子表达</a>。默认是<code>*</code></p>
-</li>
-<li><p><code>[line-width-or-type]</code>：<code>ON/OFF/DOTTED</code>（默认是<code>ON</code>，即实线）或<code>整数(1-19)</code>或者<code>小数(&lt;2.0)</code>（后两者似乎与实线的粗细有关）</p>
-</li>
-</ul>
-</li>
-<li><p>通过中心和向量设定一个边界框：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">boundbox</span> <span class="selector-attr">[atom-expression-or-coordinate]</span> <span class="selector-attr">[xyz-coordinate]</span> <span class="selector-attr">[line-width-or-type]</span>&#123;<span class="attribute">default</span>: unchanged&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>通过两个角设定一个边界框：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">boundbox</span> <span class="selector-tag">CORNERS</span> <span class="selector-attr">[atom-expression-or-coordinate]</span> <span class="selector-attr">[atom-expression-or-coordinate]</span> <span class="selector-attr">[line-width-or-type]</span>&#123;<span class="attribute">default</span>: unchanged&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>getProperty boundBoxInfo</code>：获取边界框的信息</p>
-</li>
-</ul>
-<h1 id="rotate"><a href="#rotate" class="headerlink" title="rotate"></a>rotate</h1><p>默认为以逆时针方式绕 y（垂直）轴每秒旋转 10 度，即：</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">rotate spin y <span class="number">10</span></span><br></pre></td></tr></table></figure>
-<p>选项：</p>
-<ul>
-<li><code>axis</code>：axis可以是<code>x</code>， <code>y</code>， <code>z</code>，<code>-x</code>， <code>-y</code>，<code>-z</code>，绕六个标准轴中的一个旋转。隐含的轴是窗口的轴，而不是分子的轴。如果需要按分子的轴，则需要<code>MOLECULAR</code>关键词。</li>
-<li><p><code>axis number</code>：绕着某个轴旋转多少度，可以是负的，如果在前面加上<code>spin</code>，表示每秒旋转多少度。</p>
-</li>
-<li><p><code>axis num1 num2</code>：围绕某个轴以num2的速度旋转num1度。</p>
-</li>
-<li><p><code>&#123;atom expression or point&#125; &#123;atom expression or point&#125; number</code>：围绕两个点形成的轴旋转多少度。可以是点，也可以是原子。</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">#rotate x <span class="number">10</span> 等同于</span><br><span class="line">rotate &#123;<span class="number">0</span> <span class="number">0</span> <span class="number">0</span>&#125; &#123;<span class="number">1</span> <span class="number">0</span> <span class="number">0</span>&#125; <span class="number">10</span></span><br><span class="line">spin &#123;atomno=<span class="number">1</span>&#125; &#123;atomno=<span class="number">2</span>&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>INTERNAL</code>等同于<code>MOLECULAR</code>，根据分子的轴旋转。</p>
-</li>
-<li><code>spin</code>：根据给定的速度自旋。</li>
-</ul>
-<h1 id="color"><a href="#color" class="headerlink" title="color"></a>color</h1><p>默认的颜色标准：<a href="http://jmol.sourceforge.net/jscolors/#JavaScript%20colors">http://jmol.sourceforge.net/jscolors/#JavaScript%20colors</a></p>
-<p>可以通过select选中后，再指定颜色 <code>select \*.N?; color green</code>；也可以通过<code>color &#123;*.N?&#125; green</code>，通常的语法为：</p>
-<figure class="highlight qml"><table><tr><td class="code"><pre><span class="line"><span class="built_in">color</span> [object] [translucent/opaque] [<span class="built_in">color</span>, <span class="keyword">property</span><span class="string"></span>, or <span class="built_in">color</span> scheme]</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>[object]</code> ：可以是<code>atoms</code>, <code>bonds</code>, <code>backbone</code>, <code>cartoon</code>, <code>stars</code>, <code>rockets</code>, <code>ribbon</code>, <code>dots</code>, <code>label</code>, <code>echo</code>, <code>hbonds</code>, <code>ssbonds</code>, <code>axes</code>, <code>boundbox</code>, <code>measures</code>, <code>polyhedra</code>, <code>isosurface</code>, <code>pmesh</code>, <code>unitcell</code>。</li>
-</ul>
-<h2 id="透明"><a href="#透明" class="headerlink" title="透明"></a>透明</h2><figure class="highlight dos"><table><tr><td class="code"><pre><span class="line"><span class="built_in">color</span> atoms TRANSLUCENT</span><br></pre></td></tr></table></figure>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">color bonds TRANSLUCENT <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<h1 id="select"><a href="#select" class="headerlink" title="select"></a>select</h1><ul>
-<li><code>select</code>：默认选中所有原子，=<code>select all</code>=<code>select *</code></li>
-<li><code>select none</code>：选中0个原子=<code>select 0</code></li>
-<li><code>select [atom-expression]</code>：基于[atom-expression]选择原子</li>
-<li><code>select add/remove [atom-expression]</code> ：将指定的原子添加/移除到选定的集合中。</li>
-</ul>
-<p>例子：</p>
-<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="section">#选择C元素</span></span><br><span class="line">select <span class="emphasis">_C</span></span><br><span class="line"><span class="emphasis">#选择第一个U元素</span></span><br><span class="line"><span class="emphasis">select (_</span>U)[1]</span><br><span class="line"><span class="section">#选择所有原子中第一个原子</span></span><br><span class="line">select (<span class="emphasis">*)[1]</span></span><br><span class="line"><span class="emphasis">#选择所有原子中第1-6个原子</span></span><br><span class="line"><span class="emphasis">select (*</span>)[<span class="string">1</span>][<span class="symbol">6</span>]</span><br><span class="line"></span><br><span class="line"><span class="section">#选择所有原子中第1，6个原子</span></span><br><span class="line">select (<span class="emphasis">*)[1],(*</span>)[6]</span><br><span class="line"></span><br><span class="line">select (&#123;0 5&#125;)</span><br><span class="line">select (&#123;0 70:74&#125;)</span><br><span class="line"></span><br><span class="line"><span class="section">#选择1-8，65-75原子</span></span><br><span class="line">select (<span class="emphasis">*)[<span class="string">1</span>][<span class="symbol">8</span>], (*</span>)[<span class="string">65</span>][<span class="symbol">75</span>]</span><br><span class="line"></span><br><span class="line"><span class="section">#选择所有成键的原子</span></span><br><span class="line">select bonded</span><br><span class="line"><span class="section">#选择所有连接的原子</span></span><br><span class="line">select connected</span><br><span class="line"><span class="section">#选择已经选择的原子</span></span><br><span class="line">select selected</span><br><span class="line"><span class="section">#选择第1，3，5个原子</span></span><br><span class="line">x = [1,3,5]; select atomno=x</span><br><span class="line"><span class="section">#选择第34、35个原子</span></span><br><span class="line">select @34, @35</span><br><span class="line"><span class="section">#选择元素序号10~110之间的原子</span></span><br><span class="line">select &#123;elemno&gt;=10 and elemno<span class="xml"><span class="tag">&lt;<span class="name">=110&#125;</span></span></span></span><br></pre></td></tr></table></figure>
-<h1 id="label"><a href="#label" class="headerlink" title="label"></a>label</h1><ul>
-<li>原子的标记参见[atom properties]。</li>
-</ul>
-<h2 id="相关设置"><a href="#相关设置" class="headerlink" title="相关设置"></a>相关设置</h2><ul>
-<li><p><code>set fontScaling OFF</code>：当fontScaling设置为ON时，在此之后创建的任何标签都会在模型缩放时进行缩放。</p>
-</li>
-<li><p><code>set fontSize [font-size]</code>：为当前选定的原子设置原子标签的字体大小。</p>
-</li>
-<li><code>set labelOffset [x-offset] [y-offset] [atom-expression]</code>：设置相对于被标记原子的标签偏移量。正数表示原子中心和标签开头之间的像素数。负数表示原子中心和标签末端之间的像素数，整个标签在原子的左侧。任一方向的零表示以该方向为中心。</li>
-<li><code>set labelAlignment position</code>：position可以是<code>LEFT</code>, <code>RIGHT</code>,或<code>CENTER</code>。将多行标签内的标签文本对齐方式设置为左对齐、右对齐或居中对齐。</li>
-<li>设置<a href="#color">颜色</a>：注意无法和背景颜色设置相同颜色。</li>
-</ul>
-<h1 id="font"><a href="#font" class="headerlink" title="font"></a>font</h1><p>语法：</p>
-<figure class="highlight maxima"><table><tr><td class="code"><pre><span class="line"><span class="built_in">font</span> [object-with-text] [<span class="built_in">font</span>-size] [<span class="built_in">font</span>-face] [<span class="built_in">font</span>-<span class="built_in">style</span>] [scaling <span class="built_in">factor</span>]</span><br></pre></td></tr></table></figure>
-<ul>
-<li>[object-with-text]有：<code>axes</code>、<code>ECHO</code>、<code>HOVER</code>、<code>LABEL</code>、<code>measure</code></li>
-<li>[font-size]：6-63之间的整数</li>
-<li>[font-face]字体默认是<code>SansSerif</code>，还有<code>SERIF</code>、<code>monospaced</code></li>
-<li>[font-style]默认是<code>Plain</code>，还有<code>BOLD</code>，<code>italic</code>和<code>BOLDitalic</code></li>
-</ul>
-<h1 id="Spacefill或CPK"><a href="#Spacefill或CPK" class="headerlink" title="Spacefill或CPK"></a>Spacefill或CPK</h1><p>将选定的原子渲染为阴影球体。</p>
-<ul>
-<li><code>spacefill on/OFF</code>：打开或关闭，默认是<code>ON</code>。</li>
-<li><code>spacefill ONLY</code>：关闭其他的渲染，包括标签</li>
-<li><code>spacefill 数字</code>：以埃为单位的特定半径的球体。负数<code>=ONLY</code>。</li>
-</ul>
-<h1 id="键相关"><a href="#键相关" class="headerlink" title="键相关"></a>键相关</h1><h2 id="wireframe"><a href="#wireframe" class="headerlink" title="wireframe"></a>wireframe</h2><ul>
-<li><code>wireframe ON/OFF</code>：打开或关闭，默认是<code>ON</code>。</li>
-<li><code>wireframe ONLY</code>：关闭其他的渲染，包括标签。</li>
-<li><code>wireframe [radius-in-angstroms]</code>：以Å为单位显示给定圆柱体直径的线框，要用小数。负数<code>=ONLY</code>。</li>
-</ul>
-<h2 id="bondorder"><a href="#bondorder" class="headerlink" title="bondorder"></a>bondorder</h2><ul>
-<li><code>bondorder number</code>：数字可以是<code>0.5</code>，<code>1</code>，<code>1.5</code>，<code>2</code>，<code>2.5</code>，<code>3</code>，<code>4</code>， <code>-1</code>，<code>-1.5</code>，<code>-2.5</code>（负数依次是氢键、PARTIALDOUBLE (reverse solid/dash of AROMATIC)，PARTIALTRIPLE2）</li>
-</ul>
-<h2 id="connect"><a href="#connect" class="headerlink" title="connect"></a>connect</h2><p>connect本身删除所有键，然后创建键基于 Jmol 默认键生成算法，全部为单键，不考虑模型文件中可能指示的键合模式。语法：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">connect</span> <span class="selector-attr">[minimum and maximum distances]</span> <span class="selector-attr">[source and target atom sets]</span> <span class="selector-attr">[bond type]</span> <span class="selector-attr">[radius option]</span> <span class="selector-attr">[color option]</span> <span class="selector-attr">[modify/create option]</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>[minimum and maximum distances]</code>：距离以埃为单位，以小数或整数形式给出。如果仅给出一个距离参数，则表示最大距离。如果既没有给出最小距离参数也没有给出最大距离参数，那么两个原子集之间的所有连接都会被建立。可以在距离后使用 % 符号指定基于键合/离子半径百分比范围而不是固定值连接原子的选项。</li>
-<li><code>[source and target atom sets]</code>：表示目标的原子集合。如果没有给出，就选择当前选定的原子。</li>
-<li><p><code>[bond type]</code>：可以是<code>SINGLE</code>、<code>DOUBLE</code>、<code>TRIPLE</code>、<code>QUADRUPLE</code>、<code>QUINTUPLE</code>、<code>SEXTUPLE</code>、<code>AROMATIC</code>、<code>PARTIAL</code>、<code>PARTIALDOUBLE</code>、<code>HBOND</code>、<code>STRUT</code> 或 <code>UNSPECIFIED</code>。</p>
-<ul>
-<li>在外观上，<code>AROMATIC</code> 和 <code>PARTIALDOUBLE</code> 是相同的，只是键的哪一侧用虚线表示。</li>
-<li><code>PARTIAL</code> 和 <code>HBOND</code> 都是虚线，但它们的模式不同，新产生的氢键只是细线。</li>
-<li>其他键类型包括 <code>ATROPISOMER</code>（两个旋转受限的芳环之间的单键）、<code>AROMATICSINGLE</code>、<code>AROMATICDOUBLE</code>、部分数字键顺序（见<code>bondorder</code>）</li>
-</ul>
-</li>
-<li><p><code>partial</code>的语法：<code>connect ... partial N.M</code>，N代表几条线，M为：</p>
-</li>
-</ul>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>M</th>
-<th>binary</th>
-<th>meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>00001</td>
-<td>first line dashed</td>
-</tr>
-<tr>
-<td>2</td>
-<td>00010</td>
-<td>second line dashed</td>
-</tr>
-<tr>
-<td>3</td>
-<td>00011</td>
-<td>first and second lines dashed</td>
-</tr>
-<tr>
-<td>4</td>
-<td>00100</td>
-<td>third line dashed</td>
-</tr>
-<tr>
-<td>…</td>
-<td>…</td>
-<td>…</td>
-</tr>
-<tr>
-<td>31</td>
-<td>11111</td>
-<td>all lines dashed</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>例子：</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">partial</span> <span class="number">1</span>.<span class="number">0</span>	#single</span><br><span class="line"><span class="attribute">partial</span> <span class="number">1</span>.<span class="number">1</span>	#same as <span class="string">&quot;partial&quot;</span></span><br><span class="line"><span class="attribute">partial</span> <span class="number">2</span>.<span class="number">0</span>	#double</span><br><span class="line"><span class="attribute">partial</span> <span class="number">2</span>.<span class="number">1</span>	#same appearance as <span class="string">&quot;aromatic&quot;</span>, though not <span class="string">&quot;aromatic&quot;</span></span><br><span class="line"><span class="attribute">partial</span> <span class="number">2</span>.<span class="number">2</span>	#partialDouble</span><br><span class="line"><span class="attribute">partial</span> <span class="number">3</span>.<span class="number">0</span>	#triple</span><br><span class="line"><span class="attribute">partial</span> <span class="number">3</span>.<span class="number">1</span>	#partialTriple</span><br><span class="line"><span class="attribute">partial</span> <span class="number">3</span>.<span class="number">4</span>	#parialTriple<span class="number">2</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>[radius option]</code>：在<code>radius</code>后跟以Å为单位的数字设定宽度。</li>
-<li><code>[color option]</code>：在<code>color</code>后跟<code>translucent</code>或<code>opaque</code>设定透明度、颜色等。</li>
-<li><code>[modify/create option]</code>：<ul>
-<li><code>Create</code>：只会创建新的键，如果已经存在不会受到影响。</li>
-<li><code>Modify</code>：修改已经存在的键，不会创造新的键。</li>
-<li><code>ModifyOrCreate</code>：符合则会连接。</li>
-<li><code>Delete</code>：删除符合的连接。</li>
-</ul>
-</li>
-</ul>
-<h1 id="measure"><a href="#measure" class="headerlink" title="measure"></a>measure</h1><h2 id="设置标签和线等"><a href="#设置标签和线等" class="headerlink" title="设置标签和线等"></a>设置标签和线等</h2><ul>
-<li><p><code>set measurementUnits (distance unit)</code>：设置测量单位，(distance unit)可以是<code>ANGSTROMS</code>、<code>AU</code>（或 <code>BOHR</code>）、<code>NM</code>（或 <code>NANOMETERS</code>）、（<code>PM</code> 或 <code>PICOMETERS</code>）、<code>VDW</code>、<code>HZ</code> 和 <code>NOE_HZ</code> 之一。</p>
-<figure class="highlight gams"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> measurements <span class="comment">angstroms</span></span><br><span class="line"><span class="keyword">set</span> <span class="comment">measurements nm</span></span><br><span class="line"><span class="keyword">set</span> <span class="comment">measurements pm</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>set measurementLabels ON</code>：设置为<code>FALSE</code>时仅关闭测量标签，保留线条。</p>
-</li>
-<li><p><code>set showMeasurements TRUE</code>：设置为<code>FALSE</code>时，测量线和标签都关闭。</p>
-</li>
-<li><p><code>set measurements DOTTED</code>：设置测量线为虚线。</p>
-</li>
-<li><p><code>set justifyMeasurements FALSE</code>：将此参数设为 <code>TRUE</code> 可右对齐测量标签</p>
-</li>
-<li><p><code>set measurements 数字</code>：数字带小数时，是以Å为单位；整数时是以像素为单位。</p>
-</li>
-<li><p><code>set defaultDistanceLabel &quot;format&quot;</code>、<code>set defaultAngleLabel &quot;format&quot;</code>、<code>set defaultTorsionLabel &quot;format&quot;</code>：分别设置标签的默认格式</p>
-</li>
-<li><p>设置<a href="#font">字体</a></p>
-</li>
-</ul>
-<p><code>measure</code>的语法：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">measure RANGE <span class="tag">&lt;<span class="name">minValue</span>&gt;</span> <span class="tag">&lt;<span class="name">maxValue</span>&gt;</span> ALL|ALLCONNECTED|DELETE (<span class="tag">&lt;<span class="name">atom</span> <span class="attr">expression</span>&gt;</span>) (<span class="tag">&lt;<span class="name">atom</span> <span class="attr">expression</span>&gt;</span>) ...</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p><code>measure ON/OFF</code>：打开和关闭距离、角度、二面角测量标签和测量线。</p>
-</li>
-<li><p><code>measure DELETE</code>：删除所有测量</p>
-</li>
-<li><p><code>measure &quot;n:labelFormat&quot;</code>：测量对象及其单位</p>
-<ul>
-<li><code>n:</code>为2、3、或4，代表键长、键角、二面角。</li>
-<li><p><code>n:</code>和<code>labelFormat</code>之间可以放<code>[atom properties]</code>原子属性来表示</p>
-</li>
-<li><p><code>label format</code>默认为<code>&quot;%VALUE %UNITS&quot;</code>，<code>%VALUE</code>可以表示小数位数；<code>//unit</code>，代表测量单位等。<code>//A</code>就是Å，还有<code>//nm</code>，<code>//pm</code>等</p>
-</li>
-<li></li>
-</ul>
-</li>
-</ul>
-<p>例子：</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">measure</span> RANGE <span class="number">1</span>.<span class="number">5</span> <span class="number">2</span>.<span class="number">5</span> <span class="literal">ALL</span> (_C) (_U) <span class="string">&quot;2://pm&quot;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">measure 1.4 1.5 all (<span class="emphasis">_C)[<span class="string">65</span>][<span class="symbol">72</span>]  (_</span>C)[<span class="string">65</span>][<span class="symbol">72</span>]  &quot;2:%a1-%a2 %0.3VALUE //A&quot;</span><br></pre></td></tr></table></figure>
-<h1 id="mo"><a href="#mo" class="headerlink" title="mo"></a>mo</h1><p>可以将fchk文件通过Multiwfn转化成molden文件再进行绘图</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="number">100</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">6</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>mo ON/OFF</code>：开启或关闭分子轨道，默认是<code>ON</code></li>
-<li><p><code>mo (integer)</code>：显示指定的分子轨道，序号从1开始。</p>
-<ul>
-<li>注意：Jmol中的轨道是按能量排序的，因此可能和一些fchk文件中的轨道不一致，比如NLMO。可以通过将原始的轨道能量作为标签，保留三位小数，通过<code>MO list</code>去查找相应的序号。</li>
-</ul>
-</li>
-<li><p><code>mo COLOR [RGB-color] [RGB-color]</code>：第一个颜色为等值面负的颜色，第二个为正等值面的颜色</p>
-<ul>
-<li><code>mo COLOR [RGB-color]</code>：将等值面设置成某个颜色</li>
-</ul>
-</li>
-<li><code>mo CUTOFF (decimal)</code>：设置等值面的值。默认是0.05。</li>
-<li><code>mo RESOLUTION (decimal)</code>：等值面的精度，一般范围是4-10。分辨率越高，等值面越光滑，但是生成速度更慢。</li>
-</ul>
-<h2 id="显示效果"><a href="#显示效果" class="headerlink" title="显示效果"></a>显示效果</h2><ul>
-<li><code>mo mesh nofill</code>：除了网格，并且填充。默认是<code>mo mesh nofill</code></li>
-<li><code>mo fill nomesh</code>：可以去掉网格线</li>
-<li><code>mo translucent</code>：将等值面设置为透明的，后面可以跟0-1的小数设置透明度。</li>
-<li><p><code>mo nofill nomesh dots</code>：设置为点填充。</p>
-<ul>
-<li><code>mo fill nodots</code>：取消点填充。</li>
-</ul>
-</li>
-<li><p><code>mo fill</code>：</p>
-</li>
-<li><code>mo opaque</code>：</li>
-</ul>
-<h1 id="set-lighting"><a href="#set-lighting" class="headerlink" title="set (lighting)"></a>set (lighting)</h1><ul>
-<li><code>set zShade OFF</code>：是否启用“雾”或“淡入淡出”效果。根据与观察者的距离对对象进行着色，使远处的对象淡入背景中。<ul>
-<li>使用 <code>SLAB</code> 和 <code>DEPTH</code> 设置的值分别确定无效果点和完全效果点（默认为 100 和 0）。当 <code>ZSLAB</code> 不等于 <code>ZDEPTH</code> 时（默认均为0），<code>SLAB</code> 和 <code>DEPTH</code> 的设置被 <code>ZSLAB</code> 和 <code>ZDEPTH</code> 覆盖。</li>
-<li><code>set zDepth (integer)</code>和<code>set zSlab (integer)</code>：<code>zDepth</code>是完全透明的点，<code>zSlab</code>是完全不透明的店。</li>
-<li><code>set zShadePower (integer)</code>：当zShade设置为 <code>ON</code>时，可以调整此参数（通常为 <code>1</code>、<code>2</code> 或 <code>3</code>）以创建更强的雾效果。如果将此值设置为 <code>0</code>，会显示黑白阴影遮罩。</li>
-</ul>
-</li>
-</ul>
-<h1 id="set-perspective-透视"><a href="#set-perspective-透视" class="headerlink" title="set (perspective) 透视"></a>set (perspective) 透视</h1><ul>
-<li><code>set cameraDepth (positive number)</code>：设置透视量。默认设置为 <code>3.0</code>。数字越大，透视的影响就越小。</li>
-<li><code>set perspectiveDepth ON</code>：关闭此参数将关闭透视深度。</li>
-</ul>
-<p>缩放相关：</p>
-<ul>
-<li><code>set zoomEnabled TRUE</code>：当设置为 <code>FALSE</code> 时，禁用缩放。</li>
-<li><code>set zoomHeight FALSE</code>：当此设置为 <code>TRUE</code> 时，Jmol 仅在更改高度时调整缩放。设置 zoomHeight TRUE 会禁用zoomLarge。</li>
-<li><code>set zoomLarge TRUE</code>：当为 <code>TRUE</code>时，Jmol 根据窗口大小调整缩放。</li>
-</ul>
-<h1 id="write"><a href="#write" class="headerlink" title="write"></a>write</h1><ul>
-<li><p>保存为png格式，语法为：</p>
-<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"><span class="built_in">write</span> IMAGE <span class="built_in">width</span> <span class="built_in">height</span> PNG n <span class="string">&quot;fileName&quot;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>width</code> 和 <code>height</code> 是可选的，默认为当前帧大小。</li>
-<li>压缩量<code>n</code> 是一个介于 0 和 10 之间的数字（默认为 2）。</li>
-<li>如果 <code>set imageState TRUE</code>（默认设置），则 Jmol 将其状态附加到 PNG 文件，从而允许使用单个图像文件作为 2D 图像查看和使用脚本命令或通过拖动以 3D Jmol 状态读取并加入 Jmol 应用程序。</li>
-</ul>
-</li>
-<li><p>保存为png格式，背景是透明的，语法为：</p>
-<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"><span class="built_in">write</span> IMAGE <span class="built_in">width</span> <span class="built_in">height</span> PNGT n <span class="string">&quot;fileName&quot;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>最好使用不太寻常的颜色作为背景颜色，比如<code>[x101010]</code>，确保只有背景是透明的。</li>
-<li>最好设置<code>set antialiasImages FALSE</code>，以避免图像周围出现参差不齐的边缘。</li>
-<li><code>width</code> 和 <code>height</code> 是可选的，默认为当前帧大小。</li>
-<li>压缩量<code>n</code> 是一个介于 0 和 10 之间的数字（默认为 2）。</li>
-<li>例子：<code>WRITE PNGT xxxx.png</code></li>
-</ul>
-</li>
-<li><p>保存为pov进一步渲染</p>
-<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">write</span> POVRAY D:<span class="regexp">/desktop/m</span>o/<span class="number">10</span>-.pov</span><br></pre></td></tr></table></figure>
-<ul>
-<li>生成的ini文件可以直接一起拖入到pov-ray中批量渲染</li>
-</ul>
-</li>
-</ul>
-<h1 id="atom-expression-原子表达"><a href="#atom-expression-原子表达" class="headerlink" title="[atom-expression]原子表达"></a>[atom-expression]原子表达</h1><p>相关的表达都可以用关键字<code>NOT</code>开头，由<code>and</code>、<code>OR</code>或<code>XOR</code>连接，由<code>&#123;&#125;</code>包围。还可以用比较符号 <code>&lt;</code>，<code>&lt;=</code>，<code>=</code>，<code>&gt;</code>，<code>&gt;=</code>，<code>!=</code>和<code>LIKE</code> 等关键词，<code>!=</code>和<code>=</code>不区分大小写，如果需要，用<code>LIKE</code>。</p>
-<h2 id="一般表达"><a href="#一般表达" class="headerlink" title="一般表达"></a>一般表达</h2><ul>
-<li><code>all</code>：所有原子，=<code>*</code></li>
-<li><code>bonded</code>：共价键合的</li>
-<li><code>connected</code>：以任何方式成键，包括氢键</li>
-<li><code>none</code>：无原子</li>
-<li><code>selected</code>：已选定的原子，当文件首次加载是，默认为<code>all</code></li>
-</ul>
-<h2 id="化学元素"><a href="#化学元素" class="headerlink" title="化学元素"></a>化学元素</h2><ul>
-<li>元素的英文名，如<code>carbon</code></li>
-<li><code>_元素符号</code>：如<code>_Cu</code>；还可以在符号前面加上数字表示同位素，<code>_31P</code></li>
-<li><code>nonmetal</code>：非金属元素=<code>!metal</code>，即H，He，B，C，N，O，F，Ne，Si，P，S，Cl，Ar，As，Se，Br，Kr，Te，I，Xe，At，Rn</li>
-<li><code>metal</code>：金属元素，=<code>!nonmetal</code></li>
-<li><code>alkaliMetal</code>：碱金属，Li，Na，K，Rb，Sr，Fr</li>
-<li><code>alkalineEarth</code>：碱土金属，Be，Mg，Ca，Sr，Ba，Ra</li>
-<li><code>nobleGas</code>：稀有气体，He，Ne，Ar，Kr，Xe，Rn</li>
-<li><code>metalloid</code>：准金属，B，Si，Ge，As，Sb，Te</li>
-<li><code>transitionmetal</code>：过渡金属，包括La和Ac。</li>
-<li><code>lanthanide</code>：镧系元素，不包括La</li>
-<li><code>actinide</code>：锕系元素，不包括Ac</li>
-</ul>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
-<li><code>isaromatic</code>：与芳香族、芳香族单键或芳香族双键类型相连的原子</li>
-</ul>
-<h2 id="选择原子"><a href="#选择原子" class="headerlink" title="选择原子"></a>选择原子</h2><ul>
-<li><code>(carbon)[3][5]</code>：选择第三到第五个碳原子</li>
-<li><code>(carbon)[3]</code>：选择第三个C原子，[0]表示最后一个原子，负数表示从最后一个原子（0）开始基数。</li>
-</ul>
-<p>如果需要嵌入到其他表达式中，还需要在外面加<code>&#123;&#125;</code>，比如<code>measure &#123;(_O)[1]&#125; &#123;(_O)[2]&#125;</code></p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="comment">#z</span></span><br><span class="line"><span class="attribute">select</span> (&#123;<span class="number">4</span> <span class="number">7</span> <span class="number">8</span> <span class="number">12</span>:<span class="number">16</span> <span class="number">25</span>:<span class="number">29</span> <span class="number">32</span> <span class="number">35</span>:<span class="number">40</span> <span class="number">43</span>:<span class="number">84</span>&#125;)</span><br></pre></td></tr></table></figure>
-<h1 id="atom-properties-原子属性"><a href="#atom-properties-原子属性" class="headerlink" title="[atom properties]原子属性"></a>[atom properties]原子属性</h1><p><a href="https://chemapps.stolaf.edu/jmol/docs/index.htm?ver=14.31#atomproperties">https://chemapps.stolaf.edu/jmol/docs/index.htm?ver=14.31#atomproperties</a></p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center"><strong>property</strong></th>
-<th style="text-align:center"><strong>select xxx=y</strong></th>
-<th style="text-align:center"><strong>label %[xxx]</strong></th>
-<th style="text-align:center"><strong>label %x</strong></th>
-<th style="text-align:center"><strong>print {*}.xxx</strong></th>
-<th style="text-align:center"><strong>{*}.xxx = y</strong></th>
-<th style="text-align:center"><strong>description</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">atomName</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">%a</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">原子的名字</td>
-</tr>
-<tr>
-<td style="text-align:center">atomno</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">%i</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">可以用<code>@</code>替代<code>atomno=</code></td>
-</tr>
-<tr>
-<td style="text-align:center">atomType</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">%B</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">原子类型</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h1 id="getProperty"><a href="#getProperty" class="headerlink" title="getProperty"></a>getProperty</h1><p>查看分子的长宽高</p>
-<p>显示中勾选边界框，在控制台中输入</p>
-<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">getProperty boundBoxInfo</span></span><br></pre></td></tr></table></figure>
-<p>设置边界框的坐标</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">boundbox &#123;<span class="number">0</span> <span class="number">0</span> <span class="number">0</span>&#125;&#123;<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>Jmol</tag>
-        <tag>绘图</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【Linux】Shell脚本</title>
     <url>/2020/11/22/%E3%80%90Linux%E3%80%91Shell%E8%84%9A%E6%9C%AC/</url>
     <content><![CDATA[<h1 id="添加环境变量"><a href="#添加环境变量" class="headerlink" title="添加环境变量"></a>添加环境变量</h1><p>linux命令行下面执行某个命令的时候，首先保证该命令是否存在，若存在，但输入命令的时候若仍提示：command not found，这个时候就需要使用<code>echo $PATH</code>查看PATH环境变量的设置了，当前命令是否存在于PATH环境变量中，如果不存在，设置方法如下：</p>
@@ -2161,9 +1853,14 @@
 </ul>
 </li>
 </ul>
-<h1 id="amp"><a href="#amp" class="headerlink" title="&amp;"></a>&amp;</h1><ul>
+<h2 id="amp"><a href="#amp" class="headerlink" title="&amp;"></a>&amp;</h2><ul>
 <li><code>&amp;</code> 放在启动参数后面表示设置此进程为后台进程。默认情况下，进程是前台进程，这时就把Shell给占据了，我们无法进行其他操作，对于那些没有交互的进程，很多时候，我们希望将其在后台启动，可以在启动参数的时候加一个’&amp;’实现这个目的。</li>
 </ul>
+<h2 id="for-循环"><a href="#for-循环" class="headerlink" title="for 循环"></a>for 循环</h2><figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line">for var in item1 item2 <span class="string">...</span> itemN</span><br><span class="line">do</span><br><span class="line">    <span class="keyword">command</span>1</span><br><span class="line">    <span class="keyword">command</span>2</span><br><span class="line">    <span class="string">...</span></span><br><span class="line">    <span class="keyword">command</span>N</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>例子：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">for</span> loop in <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> <span class="number">5</span></span><br><span class="line"><span class="attribute">do</span></span><br><span class="line">    <span class="attribute">echo</span> <span class="string">&quot;The value is: $loop&quot;</span></span><br><span class="line"><span class="attribute">done</span></span><br></pre></td></tr></table></figure>
+<h3 id="数字类循环"><a href="#数字类循环" class="headerlink" title="数字类循环"></a>数字类循环</h3><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">for</span>((i=<span class="number">1</span>;i&lt;=<span class="number">10</span>;i++));  </span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(seq <span class="number">1</span> <span class="number">10</span>)  </span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> &#123;<span class="number">1.</span><span class="number">.10</span>&#125;  </span><br><span class="line"></span><br><span class="line">#实现<span class="number">1</span>~<span class="number">5</span>之内的数字，按照步数<span class="number">2</span>进行跳跃</span><br><span class="line"><span class="keyword">for</span> variable  <span class="keyword">in</span> &#123;<span class="number">1.</span><span class="number">.5</span>.<span class="number">.2</span>&#125; </span><br><span class="line"><span class="keyword">for</span> variable  <span class="keyword">in</span> $(seq <span class="number">1</span> <span class="number">2</span> <span class="number">5</span>) </span><br></pre></td></tr></table></figure>
+<h3 id="字符类循环"><a href="#字符类循环" class="headerlink" title="字符类循环"></a>字符类循环</h3><figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> in `ls`;  </span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> in $* ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> in f1 f2 f3 ;  </span><br><span class="line"></span><br><span class="line">list=<span class="string">&quot;rootfs usr data data2&quot;</span>  </span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> in $list;  </span><br></pre></td></tr></table></figure>
 <h1 id="字符串截取"><a href="#字符串截取" class="headerlink" title="字符串截取"></a>字符串截取</h1><h2 id="从指定位置开始截取"><a href="#从指定位置开始截取" class="headerlink" title="从指定位置开始截取"></a>从指定位置开始截取</h2><p>指定起始位置和截取长度</p>
 <ul>
 <li><p>从字符串左边开始计数</p>
@@ -2209,6 +1906,176 @@
       <tags>
         <tag>Linux</tag>
         <tag>Shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Linux】Vim编辑器</title>
+    <url>/2019/09/25/%E3%80%90Linux%E3%80%91Vim%E7%BC%96%E8%BE%91%E5%99%A8/</url>
+    <content><![CDATA[<h1 id="一般编辑"><a href="#一般编辑" class="headerlink" title="一般编辑"></a>一般编辑</h1><h2 id="输入或取代"><a href="#输入或取代" class="headerlink" title="输入或取代"></a>输入或取代</h2><ul>
+<li><code>i</code>：从目前光标所在处输入</li>
+<li><code>I</code>：在目前所在行的第一个非空格符处开始输入</li>
+<li><code>a</code>：为光标所在的下一个字符处开始插入</li>
+<li><code>A</code>：行尾插入</li>
+<li><code>o</code>：在目前光标所在的下一行处输入新的一行</li>
+<li><code>O</code>：在目前光标所在处的上一行输入新的一行</li>
+<li><code>&gt;</code>：缩进<ul>
+<li><code>&gt;n</code>：缩进n行</li>
+</ul>
+</li>
+<li><code>&lt;</code>：反缩进</li>
+<li><code>Esc</code>：退出编辑模式，回到一般模式中</li>
+</ul>
+<h2 id="取代或删除输入"><a href="#取代或删除输入" class="headerlink" title="取代或删除输入"></a>取代或删除输入</h2><ul>
+<li><code>r</code>：只会取代光标所在的那一个字符一次</li>
+<li><code>R</code>：会一直取代光标所在的文字，直到按下 <code>ESC</code> 为止</li>
+<li><code>s</code>：删字符插入</li>
+<li><code>S</code>：删行插入</li>
+<li><code>c</code>：和d一样，但是进入编辑模式</li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li><code>crtl+a</code>：光标所在处数字+1</li>
+<li><code>~</code>：转换光标所在字符的大小写</li>
+<li><code>J</code>：将光标所在行与下一行的数据结合成一行</li>
+</ul>
+<h1 id="光标移动"><a href="#光标移动" class="headerlink" title="光标移动"></a>光标移动</h1><h2 id="行内移动"><a href="#行内移动" class="headerlink" title="行内移动"></a>行内移动</h2><ul>
+<li><code>h</code>或<code>←</code>：向左移动一个字符<ul>
+<li><code>2←</code>：向左移动2个字符</li>
+</ul>
+</li>
+<li><code>l</code>或<code>→</code>：向右移动一个字符</li>
+<li><code>0</code>或<code>Home</code>或<code>|</code>或<code>^</code>：行首</li>
+<li><code>$</code>或<code>End</code>：行尾</li>
+</ul>
+<h2 id="词间移动"><a href="#词间移动" class="headerlink" title="词间移动"></a>词间移动</h2><ul>
+<li><code>w</code>：下一个符号分隔的单词词首<ul>
+<li>结合其他指令处理下一个词，比如<code>dw</code>，可以删除单词，<code>yw</code>可以复制单词</li>
+</ul>
+</li>
+<li><code>e</code>：下一个符号分隔的单词词尾</li>
+<li><code>b</code>：上一个符号分隔的单词词首</li>
+<li><code>W</code>：下一个空格分隔的单词词首</li>
+<li><code>E</code>：下一个空格分隔的单词词尾</li>
+<li><code>B</code>：上一个空格分隔的单词词首</li>
+</ul>
+<h2 id="行间移动"><a href="#行间移动" class="headerlink" title="行间移动"></a>行间移动</h2><ul>
+<li><code>space</code>：向右移动一个字符<ul>
+<li><code>n+space</code>，移动n个字符，不限于行内</li>
+</ul>
+</li>
+<li><code>k</code>或<code>↑</code>：向上移动一个字符</li>
+<li><code>j</code>或<code>↓</code>：向下移动一个字符<ul>
+<li><code>30↓</code>或<code>30j</code>：向下移动30行</li>
+</ul>
+</li>
+<li><code>-</code>：上一行行首</li>
+<li><code>enter</code>或<code>+</code>：向下移动至行首<ul>
+<li><code>30enter</code>或<code>30+</code>，向下移动30行行首</li>
+</ul>
+</li>
+<li><code>H</code>：光标移动到该页首行行首</li>
+<li><code>M</code>：光标移动到该页中间行行首</li>
+<li><code>L</code>：光标移动到该页末行行首</li>
+<li><code>G</code>：移动到文件最后一行(常用)<ul>
+<li><code>20G</code>，移动到文件的第20行</li>
+<li><code>gg</code>，移动到第一行=<code>1G</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="段间移动"><a href="#段间移动" class="headerlink" title="段间移动"></a>段间移动</h2><ul>
+<li><code>(</code>：上一段首</li>
+<li><code>)</code>：下一段首</li>
+<li><code>&#123;</code>：上一段首空行</li>
+<li><code>&#125;</code>：下一段首空行</li>
+</ul>
+<h2 id="翻页"><a href="#翻页" class="headerlink" title="翻页"></a>翻页</h2><ul>
+<li><code>ctrl+f</code>或<code>pagedown</code>：屏幕向下移动一页</li>
+<li><code>ctrl+b</code>或<code>pageup</code>：屏幕向上移动一页</li>
+<li><code>ctrk+d</code>：屏幕向下移动半页</li>
+<li><code>ctrl+u</code>：屏幕向上移动半页</li>
+</ul>
+<h1 id="搜索替换"><a href="#搜索替换" class="headerlink" title="搜索替换"></a>搜索替换</h1><ul>
+<li><code>/word</code>：向下寻找word</li>
+<li><code>?word</code>：向上寻找</li>
+<li><code>n</code>：重复查找</li>
+<li><code>N</code>：反向查找</li>
+<li><code>:n1,n2s/word1/word2/g</code>：在第 n1 与 n2 行之间寻找 word1 这个字符串，并将该字符串取代为 word2 <ul>
+<li>n2用<code>$</code>代表结尾，则<code>:1,$s/word1/word2/g</code>代表全文中替换，也可以用<code>:1,%s/word1/word2/g</code></li>
+<li><code>g</code>用<code>gc</code>时可以确认是否取代</li>
+</ul>
+</li>
+</ul>
+<h1 id="删除d"><a href="#删除d" class="headerlink" title="删除d"></a>删除d</h1><ul>
+<li><code>x</code>或者<code>delete</code>：向后删除<ul>
+<li><code>2x</code>：向后删除2个字符</li>
+</ul>
+</li>
+<li><code>X</code>或<code>backspace</code>：向前删除</li>
+<li><code>d</code>：<ul>
+<li><code>dd</code>：删除一行。<code>20dd</code>：删除20行</li>
+<li><code>d$</code>：删除至行尾=<code>D</code></li>
+<li><code>d0</code>：删除至行首</li>
+<li><code>d1G</code>： 删除光标所在到第一行的所有数据</li>
+<li><code>dG</code>：删除光标所在到最后一行的所有数据</li>
+<li><code>: 1,10d</code>：删除第一行到第十行</li>
+<li><code>dfc</code>：删除从文本中出现字符“c”的位置，一直向前直到下一个该字符所出现的位置（包括该字符）之间的内容 </li>
+<li><code>daw</code>：删除光标所在的一个单词</li>
+</ul>
+</li>
+</ul>
+<h1 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a>可视化</h1><ul>
+<li><code>v</code>：可视</li>
+<li><code>V</code>：行可视</li>
+<li><code>ctrl+v</code>：块可视</li>
+</ul>
+<h1 id="复制粘贴"><a href="#复制粘贴" class="headerlink" title="复制粘贴"></a>复制粘贴</h1><h2 id="复制y"><a href="#复制y" class="headerlink" title="复制y"></a>复制y</h2><ul>
+<li><code>yy</code>或<code>Y</code>：复制游标所在的那一行(常用) <ul>
+<li><code>20yy</code>：向下复制20行</li>
+</ul>
+</li>
+<li><code>y$</code>：复制光标所在的那个字符到该行行尾的所有数据</li>
+<li><code>y0</code>：复制光标所在的那个字符到该行行首的所有数据</li>
+<li><code>y1G</code>：复制游标所在行到第一行的所有数据</li>
+<li><code>yG</code>：复制游标所在行到最后一行的所有数据</li>
+</ul>
+<h2 id="粘贴p"><a href="#粘贴p" class="headerlink" title="粘贴p"></a>粘贴p</h2><ul>
+<li><code>p</code>：将已复制的数据贴在光标下一行</li>
+<li><code>P</code>：贴在游标上一行</li>
+</ul>
+<h1 id="其他动作"><a href="#其他动作" class="headerlink" title="其他动作"></a>其他动作</h1><ul>
+<li><code>u</code>：撤销命令</li>
+<li><code>U</code>：撤销行内命令</li>
+<li><code>ctrl+r</code> 重做上一个动作。【与撤销相反】</li>
+<li><code>.</code>：重复前一个动作的意思。 比如重复删除、重复贴上等等动作</li>
+</ul>
+<h1 id="退出Vim"><a href="#退出Vim" class="headerlink" title="退出Vim"></a>退出Vim</h1><ul>
+<li><code>:w</code> ：保存</li>
+<li><code>:w!</code> ：强制保存</li>
+<li><code>:q</code>：退出</li>
+<li><code>:q!</code>：强制退出</li>
+<li><code>:wq</code> 储存后离开</li>
+<li><code>:wq!</code> 为强制储存后离开</li>
+<li><code>ZQ</code>：不保存退出</li>
+<li><code>ZZ</code>：保存退出</li>
+<li><code>:w [filename]</code>：另存为</li>
+<li><code>:r [filename]</code>：读取另一个文档的内容，内容追加到光标所在行之后</li>
+<li><code>:n1,n2 w [filename]</code>：将 n1 到 n2 的内容储存成 filename 这个档案</li>
+<li><code>:! command</code>：暂时离开 vi 到指令行模式下执行 command 的显示结果</li>
+</ul>
+<h1 id="vim-环境的变更境的变更"><a href="#vim-环境的变更境的变更" class="headerlink" title="vim 环境的变更境的变更"></a>vim 环境的变更境的变更</h1><ul>
+<li><code>:set nu</code>：显示行号，设定之后，会在每一行的前缀显示该行的行号</li>
+<li><code>:set nonu</code>：与 set nu 相反，为取消行号</li>
+</ul>
+<h1 id="管理命令"><a href="#管理命令" class="headerlink" title="管理命令"></a>管理命令</h1><ul>
+<li><code>:vs 路径/文件名</code>：同时再打开另外的一个文件，通过<code>ctrl ww</code>使得光标在两个文件间切换；两个文件是左右并排显示的。</li>
+<li><code>:sp 路径/文件名</code>：同时再打开另外的一个文件，通过<code>ctrl ww</code>使得光标在两个文件间切换；两个文件是上下并排显示的。</li>
+</ul>
+<p><img src="vi-vim-cheat-sheet-sch.gif" alt=""></p>
+]]></content>
+      <categories>
+        <category>系统</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -2549,8 +2416,8 @@
         <category>软件</category>
       </categories>
       <tags>
-        <tag>ORCA</tag>
         <tag>输入</tag>
+        <tag>ORCA</tag>
         <tag>内存</tag>
       </tags>
   </entry>
@@ -2978,8 +2845,8 @@
         <category>软件</category>
       </categories>
       <tags>
-        <tag>绘图</tag>
         <tag>VMD</tag>
+        <tag>绘图</tag>
         <tag>分子轨道</tag>
       </tags>
   </entry>
@@ -3205,8 +3072,8 @@
         <category>软件</category>
       </categories>
       <tags>
-        <tag>绘图</tag>
         <tag>VMD</tag>
+        <tag>绘图</tag>
       </tags>
   </entry>
   <entry>
@@ -3739,21 +3606,6 @@
       </tags>
   </entry>
   <entry>
-    <title>【【草稿】】变分法</title>
-    <url>/2021/04/19/%E3%80%90%E3%80%90%E8%8D%89%E7%A8%BF%E3%80%91%E3%80%91%E5%8F%98%E5%88%86%E6%B3%95/</url>
-    <content><![CDATA[<p>微扰理论：构造一个近似的哈密顿算符</p>
-<p>变分法：构造一个近似的波函数</p>
-<h1 id="变分法"><a href="#变分法" class="headerlink" title="变分法"></a>变分法</h1><p>变分原理：</p>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>原理</category>
-      </categories>
-      <tags>
-        <tag>变分法</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【【草稿】】分子振动</title>
     <url>/2022/03/28/%E3%80%90%E3%80%90%E8%8D%89%E7%A8%BF%E3%80%91%E3%80%91%E5%88%86%E5%AD%90%E6%8C%AF%E5%8A%A8/</url>
     <content><![CDATA[<h1 id="振动模式"><a href="#振动模式" class="headerlink" title="振动模式"></a>振动模式</h1><ul>
@@ -3895,6 +3747,21 @@ E_{n}=h\left(n+\frac{1}{2}\right) \nu=h\left(n+\frac{1}{2}\right) \frac{1}{2 \pi
         <category>计算化学</category>
         <category>原理</category>
       </categories>
+  </entry>
+  <entry>
+    <title>【【草稿】】变分法</title>
+    <url>/2021/04/19/%E3%80%90%E3%80%90%E8%8D%89%E7%A8%BF%E3%80%91%E3%80%91%E5%8F%98%E5%88%86%E6%B3%95/</url>
+    <content><![CDATA[<p>微扰理论：构造一个近似的哈密顿算符</p>
+<p>变分法：构造一个近似的波函数</p>
+<h1 id="变分法"><a href="#变分法" class="headerlink" title="变分法"></a>变分法</h1><p>变分原理：</p>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>原理</category>
+      </categories>
+      <tags>
+        <tag>变分法</tag>
+      </tags>
   </entry>
   <entry>
     <title>【【草稿】】姜-泰勒效应</title>
@@ -5028,8 +4895,8 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
         <category>软件</category>
       </categories>
       <tags>
-        <tag>ADF</tag>
         <tag>AMS</tag>
+        <tag>ADF</tag>
         <tag>基组</tag>
         <tag>SCF</tag>
         <tag>对称性</tag>
@@ -5548,6 +5415,391 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
       </tags>
   </entry>
   <entry>
+    <title>【Jmol】常见的指令</title>
+    <url>/2021/08/13/%E3%80%90Jmol%E3%80%91%E5%B8%B8%E8%A7%81%E7%9A%84%E6%8C%87%E4%BB%A4/</url>
+    <content><![CDATA[<h1 id="background背景"><a href="#background背景" class="headerlink" title="background背景"></a><code>background</code>背景</h1><p>设置背景颜色或者图像。用法：</p>
+<ul>
+<li><p><code>background [RGB-color]</code>：设置窗口的背景颜色。</p>
+</li>
+<li><p><code>background IMAGE &quot;filename&quot;</code>：将窗口的背景设置为指定的图像文件，该文件可以是BMP、JPG、PNG或GIF格式。图像被拉伸以适应窗口的大小。</p>
+</li>
+<li><code>background LABELS [color-none-CPK]</code>：设置使用“label”命令显示的原子标签的背景颜色。是全局操作，而不是对选定的原子。</li>
+</ul>
+<blockquote>
+<ul>
+<li><code>[RGB-color]</code>：<ul>
+<li>颜色的名字：<code>white</code>、<code>black</code>……</li>
+<li>RGB颜色值：<code>[255, 0, 255]</code>，<code>&#123;255,0,255&#125;</code>，<code>&#123;0.5, 0.5, 1&#125;</code></li>
+<li>十六进制颜色码：<code>[xFF00FF]</code></li>
+</ul>
+</li>
+<li><code>[color-none-CPK]</code>：包含<code>[RGB-color]</code>和<code>none</code></li>
+</ul>
+</blockquote>
+<h1 id="boundbox边界框"><a href="#boundbox边界框" class="headerlink" title="boundbox边界框"></a><code>boundbox</code>边界框</h1><p>边界框设置，与<code>boundingbox</code>含义相同。</p>
+<ul>
+<li><p><code>show BOUNDBOX</code>：中心是模型的几何中心而不是旋转中心（即平均原子位置）。输出格式为：</p>
+<figure class="highlight avrasm"><table><tr><td class="code"><pre><span class="line"><span class="symbol">boundbox:</span> (centerX, centerY, centerZ) (vectorX, vectorY, vectorZ)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>比如边框的长就是2<code>vectorX</code></li>
+</ul>
+</li>
+<li><p>显示边界框：</p>
+<figure class="highlight vhdl"><table><tr><td class="code"><pre><span class="line">boundbox [atom-expression] [<span class="literal">line</span>-<span class="literal">width</span>-<span class="keyword">or</span>-<span class="keyword">type</span>]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>[atom-expression]</code>见<a href="#[atom-expression]原子表达">原子表达</a>。默认是<code>*</code></p>
+</li>
+<li><p><code>[line-width-or-type]</code>：<code>ON/OFF/DOTTED</code>（默认是<code>ON</code>，即实线）或<code>整数(1-19)</code>或者<code>小数(&lt;2.0)</code>（后两者似乎与实线的粗细有关）</p>
+</li>
+</ul>
+</li>
+<li><p>通过中心和向量设定一个边界框：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">boundbox</span> <span class="selector-attr">[atom-expression-or-coordinate]</span> <span class="selector-attr">[xyz-coordinate]</span> <span class="selector-attr">[line-width-or-type]</span>&#123;<span class="attribute">default</span>: unchanged&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过两个角设定一个边界框：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">boundbox</span> <span class="selector-tag">CORNERS</span> <span class="selector-attr">[atom-expression-or-coordinate]</span> <span class="selector-attr">[atom-expression-or-coordinate]</span> <span class="selector-attr">[line-width-or-type]</span>&#123;<span class="attribute">default</span>: unchanged&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>getProperty boundBoxInfo</code>：获取边界框的信息</p>
+</li>
+</ul>
+<h1 id="rotate"><a href="#rotate" class="headerlink" title="rotate"></a>rotate</h1><p>默认为以逆时针方式绕 y（垂直）轴每秒旋转 10 度，即：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">rotate spin y <span class="number">10</span></span><br></pre></td></tr></table></figure>
+<p>选项：</p>
+<ul>
+<li><code>axis</code>：axis可以是<code>x</code>， <code>y</code>， <code>z</code>，<code>-x</code>， <code>-y</code>，<code>-z</code>，绕六个标准轴中的一个旋转。隐含的轴是窗口的轴，而不是分子的轴。如果需要按分子的轴，则需要<code>MOLECULAR</code>关键词。</li>
+<li><p><code>axis number</code>：绕着某个轴旋转多少度，可以是负的，如果在前面加上<code>spin</code>，表示每秒旋转多少度。</p>
+</li>
+<li><p><code>axis num1 num2</code>：围绕某个轴以num2的速度旋转num1度。</p>
+</li>
+<li><p><code>&#123;atom expression or point&#125; &#123;atom expression or point&#125; number</code>：围绕两个点形成的轴旋转多少度。可以是点，也可以是原子。</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">#rotate x <span class="number">10</span> 等同于</span><br><span class="line">rotate &#123;<span class="number">0</span> <span class="number">0</span> <span class="number">0</span>&#125; &#123;<span class="number">1</span> <span class="number">0</span> <span class="number">0</span>&#125; <span class="number">10</span></span><br><span class="line">spin &#123;atomno=<span class="number">1</span>&#125; &#123;atomno=<span class="number">2</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>INTERNAL</code>等同于<code>MOLECULAR</code>，根据分子的轴旋转。</p>
+</li>
+<li><code>spin</code>：根据给定的速度自旋。</li>
+</ul>
+<h1 id="color"><a href="#color" class="headerlink" title="color"></a>color</h1><p>默认的颜色标准：<a href="http://jmol.sourceforge.net/jscolors/#JavaScript%20colors">http://jmol.sourceforge.net/jscolors/#JavaScript%20colors</a></p>
+<p>可以通过select选中后，再指定颜色 <code>select \*.N?; color green</code>；也可以通过<code>color &#123;*.N?&#125; green</code>，通常的语法为：</p>
+<figure class="highlight qml"><table><tr><td class="code"><pre><span class="line"><span class="built_in">color</span> [object] [translucent/opaque] [<span class="built_in">color</span>, <span class="keyword">property</span><span class="string"></span>, or <span class="built_in">color</span> scheme]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>[object]</code> ：可以是<code>atoms</code>, <code>bonds</code>, <code>backbone</code>, <code>cartoon</code>, <code>stars</code>, <code>rockets</code>, <code>ribbon</code>, <code>dots</code>, <code>label</code>, <code>echo</code>, <code>hbonds</code>, <code>ssbonds</code>, <code>axes</code>, <code>boundbox</code>, <code>measures</code>, <code>polyhedra</code>, <code>isosurface</code>, <code>pmesh</code>, <code>unitcell</code>。</li>
+</ul>
+<h2 id="透明"><a href="#透明" class="headerlink" title="透明"></a>透明</h2><figure class="highlight dos"><table><tr><td class="code"><pre><span class="line"><span class="built_in">color</span> atoms TRANSLUCENT</span><br></pre></td></tr></table></figure>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">color bonds TRANSLUCENT <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h1 id="select"><a href="#select" class="headerlink" title="select"></a>select</h1><ul>
+<li><code>select</code>：默认选中所有原子，=<code>select all</code>=<code>select *</code></li>
+<li><code>select none</code>：选中0个原子=<code>select 0</code></li>
+<li><code>select [atom-expression]</code>：基于[atom-expression]选择原子</li>
+<li><code>select add/remove [atom-expression]</code> ：将指定的原子添加/移除到选定的集合中。</li>
+</ul>
+<p>例子：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="section">#选择C元素</span></span><br><span class="line">select <span class="emphasis">_C</span></span><br><span class="line"><span class="emphasis">#选择第一个U元素</span></span><br><span class="line"><span class="emphasis">select (_</span>U)[1]</span><br><span class="line"><span class="section">#选择所有原子中第一个原子</span></span><br><span class="line">select (<span class="emphasis">*)[1]</span></span><br><span class="line"><span class="emphasis">#选择所有原子中第1-6个原子</span></span><br><span class="line"><span class="emphasis">select (*</span>)[<span class="string">1</span>][<span class="symbol">6</span>]</span><br><span class="line"></span><br><span class="line"><span class="section">#选择所有原子中第1，6个原子</span></span><br><span class="line">select (<span class="emphasis">*)[1],(*</span>)[6]</span><br><span class="line"></span><br><span class="line">select (&#123;0 5&#125;)</span><br><span class="line">select (&#123;0 70:74&#125;)</span><br><span class="line"></span><br><span class="line"><span class="section">#选择1-8，65-75原子</span></span><br><span class="line">select (<span class="emphasis">*)[<span class="string">1</span>][<span class="symbol">8</span>], (*</span>)[<span class="string">65</span>][<span class="symbol">75</span>]</span><br><span class="line"></span><br><span class="line"><span class="section">#选择所有成键的原子</span></span><br><span class="line">select bonded</span><br><span class="line"><span class="section">#选择所有连接的原子</span></span><br><span class="line">select connected</span><br><span class="line"><span class="section">#选择已经选择的原子</span></span><br><span class="line">select selected</span><br><span class="line"><span class="section">#选择第1，3，5个原子</span></span><br><span class="line">x = [1,3,5]; select atomno=x</span><br><span class="line"><span class="section">#选择第34、35个原子</span></span><br><span class="line">select @34, @35</span><br><span class="line"><span class="section">#选择元素序号10~110之间的原子</span></span><br><span class="line">select &#123;elemno&gt;=10 and elemno<span class="xml"><span class="tag">&lt;<span class="name">=110&#125;</span></span></span></span><br></pre></td></tr></table></figure>
+<h1 id="label"><a href="#label" class="headerlink" title="label"></a>label</h1><ul>
+<li>原子的标记参见[atom properties]。</li>
+</ul>
+<h2 id="相关设置"><a href="#相关设置" class="headerlink" title="相关设置"></a>相关设置</h2><ul>
+<li><p><code>set fontScaling OFF</code>：当fontScaling设置为ON时，在此之后创建的任何标签都会在模型缩放时进行缩放。</p>
+</li>
+<li><p><code>set fontSize [font-size]</code>：为当前选定的原子设置原子标签的字体大小。</p>
+</li>
+<li><code>set labelOffset [x-offset] [y-offset] [atom-expression]</code>：设置相对于被标记原子的标签偏移量。正数表示原子中心和标签开头之间的像素数。负数表示原子中心和标签末端之间的像素数，整个标签在原子的左侧。任一方向的零表示以该方向为中心。</li>
+<li><code>set labelAlignment position</code>：position可以是<code>LEFT</code>, <code>RIGHT</code>,或<code>CENTER</code>。将多行标签内的标签文本对齐方式设置为左对齐、右对齐或居中对齐。</li>
+<li>设置<a href="#color">颜色</a>：注意无法和背景颜色设置相同颜色。</li>
+</ul>
+<h1 id="font"><a href="#font" class="headerlink" title="font"></a>font</h1><p>语法：</p>
+<figure class="highlight maxima"><table><tr><td class="code"><pre><span class="line"><span class="built_in">font</span> [object-with-text] [<span class="built_in">font</span>-size] [<span class="built_in">font</span>-face] [<span class="built_in">font</span>-<span class="built_in">style</span>] [scaling <span class="built_in">factor</span>]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>[object-with-text]有：<code>axes</code>、<code>ECHO</code>、<code>HOVER</code>、<code>LABEL</code>、<code>measure</code></li>
+<li>[font-size]：6-63之间的整数</li>
+<li>[font-face]字体默认是<code>SansSerif</code>，还有<code>SERIF</code>、<code>monospaced</code></li>
+<li>[font-style]默认是<code>Plain</code>，还有<code>BOLD</code>，<code>italic</code>和<code>BOLDitalic</code></li>
+</ul>
+<h1 id="Spacefill或CPK"><a href="#Spacefill或CPK" class="headerlink" title="Spacefill或CPK"></a>Spacefill或CPK</h1><p>将选定的原子渲染为阴影球体。</p>
+<ul>
+<li><code>spacefill on/OFF</code>：打开或关闭，默认是<code>ON</code>。</li>
+<li><code>spacefill ONLY</code>：关闭其他的渲染，包括标签</li>
+<li><code>spacefill 数字</code>：以埃为单位的特定半径的球体。负数<code>=ONLY</code>。</li>
+</ul>
+<h1 id="键相关"><a href="#键相关" class="headerlink" title="键相关"></a>键相关</h1><h2 id="wireframe"><a href="#wireframe" class="headerlink" title="wireframe"></a>wireframe</h2><ul>
+<li><code>wireframe ON/OFF</code>：打开或关闭，默认是<code>ON</code>。</li>
+<li><code>wireframe ONLY</code>：关闭其他的渲染，包括标签。</li>
+<li><code>wireframe [radius-in-angstroms]</code>：以Å为单位显示给定圆柱体直径的线框，要用小数。负数<code>=ONLY</code>。</li>
+</ul>
+<h2 id="bondorder"><a href="#bondorder" class="headerlink" title="bondorder"></a>bondorder</h2><ul>
+<li><code>bondorder number</code>：数字可以是<code>0.5</code>，<code>1</code>，<code>1.5</code>，<code>2</code>，<code>2.5</code>，<code>3</code>，<code>4</code>， <code>-1</code>，<code>-1.5</code>，<code>-2.5</code>（负数依次是氢键、PARTIALDOUBLE (reverse solid/dash of AROMATIC)，PARTIALTRIPLE2）</li>
+</ul>
+<h2 id="connect"><a href="#connect" class="headerlink" title="connect"></a>connect</h2><p>connect本身删除所有键，然后创建键基于 Jmol 默认键生成算法，全部为单键，不考虑模型文件中可能指示的键合模式。语法：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">connect</span> <span class="selector-attr">[minimum and maximum distances]</span> <span class="selector-attr">[source and target atom sets]</span> <span class="selector-attr">[bond type]</span> <span class="selector-attr">[radius option]</span> <span class="selector-attr">[color option]</span> <span class="selector-attr">[modify/create option]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>[minimum and maximum distances]</code>：距离以埃为单位，以小数或整数形式给出。如果仅给出一个距离参数，则表示最大距离。如果既没有给出最小距离参数也没有给出最大距离参数，那么两个原子集之间的所有连接都会被建立。可以在距离后使用 % 符号指定基于键合/离子半径百分比范围而不是固定值连接原子的选项。</li>
+<li><code>[source and target atom sets]</code>：表示目标的原子集合。如果没有给出，就选择当前选定的原子。</li>
+<li><p><code>[bond type]</code>：可以是<code>SINGLE</code>、<code>DOUBLE</code>、<code>TRIPLE</code>、<code>QUADRUPLE</code>、<code>QUINTUPLE</code>、<code>SEXTUPLE</code>、<code>AROMATIC</code>、<code>PARTIAL</code>、<code>PARTIALDOUBLE</code>、<code>HBOND</code>、<code>STRUT</code> 或 <code>UNSPECIFIED</code>。</p>
+<ul>
+<li>在外观上，<code>AROMATIC</code> 和 <code>PARTIALDOUBLE</code> 是相同的，只是键的哪一侧用虚线表示。</li>
+<li><code>PARTIAL</code> 和 <code>HBOND</code> 都是虚线，但它们的模式不同，新产生的氢键只是细线。</li>
+<li>其他键类型包括 <code>ATROPISOMER</code>（两个旋转受限的芳环之间的单键）、<code>AROMATICSINGLE</code>、<code>AROMATICDOUBLE</code>、部分数字键顺序（见<code>bondorder</code>）</li>
+</ul>
+</li>
+<li><p><code>partial</code>的语法：<code>connect ... partial N.M</code>，N代表几条线，M为：</p>
+</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>M</th>
+<th>binary</th>
+<th>meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>00001</td>
+<td>first line dashed</td>
+</tr>
+<tr>
+<td>2</td>
+<td>00010</td>
+<td>second line dashed</td>
+</tr>
+<tr>
+<td>3</td>
+<td>00011</td>
+<td>first and second lines dashed</td>
+</tr>
+<tr>
+<td>4</td>
+<td>00100</td>
+<td>third line dashed</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr>
+<td>31</td>
+<td>11111</td>
+<td>all lines dashed</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>例子：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">partial</span> <span class="number">1</span>.<span class="number">0</span>	#single</span><br><span class="line"><span class="attribute">partial</span> <span class="number">1</span>.<span class="number">1</span>	#same as <span class="string">&quot;partial&quot;</span></span><br><span class="line"><span class="attribute">partial</span> <span class="number">2</span>.<span class="number">0</span>	#double</span><br><span class="line"><span class="attribute">partial</span> <span class="number">2</span>.<span class="number">1</span>	#same appearance as <span class="string">&quot;aromatic&quot;</span>, though not <span class="string">&quot;aromatic&quot;</span></span><br><span class="line"><span class="attribute">partial</span> <span class="number">2</span>.<span class="number">2</span>	#partialDouble</span><br><span class="line"><span class="attribute">partial</span> <span class="number">3</span>.<span class="number">0</span>	#triple</span><br><span class="line"><span class="attribute">partial</span> <span class="number">3</span>.<span class="number">1</span>	#partialTriple</span><br><span class="line"><span class="attribute">partial</span> <span class="number">3</span>.<span class="number">4</span>	#parialTriple<span class="number">2</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>[radius option]</code>：在<code>radius</code>后跟以Å为单位的数字设定宽度。</li>
+<li><code>[color option]</code>：在<code>color</code>后跟<code>translucent</code>或<code>opaque</code>设定透明度、颜色等。</li>
+<li><code>[modify/create option]</code>：<ul>
+<li><code>Create</code>：只会创建新的键，如果已经存在不会受到影响。</li>
+<li><code>Modify</code>：修改已经存在的键，不会创造新的键。</li>
+<li><code>ModifyOrCreate</code>：符合则会连接。</li>
+<li><code>Delete</code>：删除符合的连接。</li>
+</ul>
+</li>
+</ul>
+<h1 id="measure"><a href="#measure" class="headerlink" title="measure"></a>measure</h1><h2 id="设置标签和线等"><a href="#设置标签和线等" class="headerlink" title="设置标签和线等"></a>设置标签和线等</h2><ul>
+<li><p><code>set measurementUnits (distance unit)</code>：设置测量单位，(distance unit)可以是<code>ANGSTROMS</code>、<code>AU</code>（或 <code>BOHR</code>）、<code>NM</code>（或 <code>NANOMETERS</code>）、（<code>PM</code> 或 <code>PICOMETERS</code>）、<code>VDW</code>、<code>HZ</code> 和 <code>NOE_HZ</code> 之一。</p>
+<figure class="highlight gams"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> measurements <span class="comment">angstroms</span></span><br><span class="line"><span class="keyword">set</span> <span class="comment">measurements nm</span></span><br><span class="line"><span class="keyword">set</span> <span class="comment">measurements pm</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>set measurementLabels ON</code>：设置为<code>FALSE</code>时仅关闭测量标签，保留线条。</p>
+</li>
+<li><p><code>set showMeasurements TRUE</code>：设置为<code>FALSE</code>时，测量线和标签都关闭。</p>
+</li>
+<li><p><code>set measurements DOTTED</code>：设置测量线为虚线。</p>
+</li>
+<li><p><code>set justifyMeasurements FALSE</code>：将此参数设为 <code>TRUE</code> 可右对齐测量标签</p>
+</li>
+<li><p><code>set measurements 数字</code>：数字带小数时，是以Å为单位；整数时是以像素为单位。</p>
+</li>
+<li><p><code>set defaultDistanceLabel &quot;format&quot;</code>、<code>set defaultAngleLabel &quot;format&quot;</code>、<code>set defaultTorsionLabel &quot;format&quot;</code>：分别设置标签的默认格式</p>
+</li>
+<li><p>设置<a href="#font">字体</a></p>
+</li>
+</ul>
+<p><code>measure</code>的语法：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">measure RANGE <span class="tag">&lt;<span class="name">minValue</span>&gt;</span> <span class="tag">&lt;<span class="name">maxValue</span>&gt;</span> ALL|ALLCONNECTED|DELETE (<span class="tag">&lt;<span class="name">atom</span> <span class="attr">expression</span>&gt;</span>) (<span class="tag">&lt;<span class="name">atom</span> <span class="attr">expression</span>&gt;</span>) ...</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>measure ON/OFF</code>：打开和关闭距离、角度、二面角测量标签和测量线。</p>
+</li>
+<li><p><code>measure DELETE</code>：删除所有测量</p>
+</li>
+<li><p><code>measure &quot;n:labelFormat&quot;</code>：测量对象及其单位</p>
+<ul>
+<li><code>n:</code>为2、3、或4，代表键长、键角、二面角。</li>
+<li><p><code>n:</code>和<code>labelFormat</code>之间可以放<code>[atom properties]</code>原子属性来表示</p>
+</li>
+<li><p><code>label format</code>默认为<code>&quot;%VALUE %UNITS&quot;</code>，<code>%VALUE</code>可以表示小数位数；<code>//unit</code>，代表测量单位等。<code>//A</code>就是Å，还有<code>//nm</code>，<code>//pm</code>等</p>
+</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<p>例子：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">measure</span> RANGE <span class="number">1</span>.<span class="number">5</span> <span class="number">2</span>.<span class="number">5</span> <span class="literal">ALL</span> (_C) (_U) <span class="string">&quot;2://pm&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">measure 1.4 1.5 all (<span class="emphasis">_C)[<span class="string">65</span>][<span class="symbol">72</span>]  (_</span>C)[<span class="string">65</span>][<span class="symbol">72</span>]  &quot;2:%a1-%a2 %0.3VALUE //A&quot;</span><br></pre></td></tr></table></figure>
+<h1 id="mo"><a href="#mo" class="headerlink" title="mo"></a>mo</h1><p>可以将fchk文件通过Multiwfn转化成molden文件再进行绘图</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="number">100</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">6</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>mo ON/OFF</code>：开启或关闭分子轨道，默认是<code>ON</code></li>
+<li><p><code>mo (integer)</code>：显示指定的分子轨道，序号从1开始。</p>
+<ul>
+<li>注意：Jmol中的轨道是按能量排序的，因此可能和一些fchk文件中的轨道不一致，比如NLMO。可以通过将原始的轨道能量作为标签，保留三位小数，通过<code>MO list</code>去查找相应的序号。</li>
+</ul>
+</li>
+<li><p><code>mo COLOR [RGB-color] [RGB-color]</code>：第一个颜色为等值面负的颜色，第二个为正等值面的颜色</p>
+<ul>
+<li><code>mo COLOR [RGB-color]</code>：将等值面设置成某个颜色</li>
+</ul>
+</li>
+<li><code>mo CUTOFF (decimal)</code>：设置等值面的值。默认是0.05。</li>
+<li><code>mo RESOLUTION (decimal)</code>：等值面的精度，一般范围是4-10。分辨率越高，等值面越光滑，但是生成速度更慢。</li>
+</ul>
+<h2 id="显示效果"><a href="#显示效果" class="headerlink" title="显示效果"></a>显示效果</h2><ul>
+<li><code>mo mesh nofill</code>：除了网格，并且填充。默认是<code>mo mesh nofill</code></li>
+<li><code>mo fill nomesh</code>：可以去掉网格线</li>
+<li><code>mo translucent</code>：将等值面设置为透明的，后面可以跟0-1的小数设置透明度。</li>
+<li><p><code>mo nofill nomesh dots</code>：设置为点填充。</p>
+<ul>
+<li><code>mo fill nodots</code>：取消点填充。</li>
+</ul>
+</li>
+<li><p><code>mo fill</code>：</p>
+</li>
+<li><code>mo opaque</code>：</li>
+</ul>
+<h1 id="set-lighting"><a href="#set-lighting" class="headerlink" title="set (lighting)"></a>set (lighting)</h1><ul>
+<li><code>set zShade OFF</code>：是否启用“雾”或“淡入淡出”效果。根据与观察者的距离对对象进行着色，使远处的对象淡入背景中。<ul>
+<li>使用 <code>SLAB</code> 和 <code>DEPTH</code> 设置的值分别确定无效果点和完全效果点（默认为 100 和 0）。当 <code>ZSLAB</code> 不等于 <code>ZDEPTH</code> 时（默认均为0），<code>SLAB</code> 和 <code>DEPTH</code> 的设置被 <code>ZSLAB</code> 和 <code>ZDEPTH</code> 覆盖。</li>
+<li><code>set zDepth (integer)</code>和<code>set zSlab (integer)</code>：<code>zDepth</code>是完全透明的点，<code>zSlab</code>是完全不透明的店。</li>
+<li><code>set zShadePower (integer)</code>：当zShade设置为 <code>ON</code>时，可以调整此参数（通常为 <code>1</code>、<code>2</code> 或 <code>3</code>）以创建更强的雾效果。如果将此值设置为 <code>0</code>，会显示黑白阴影遮罩。</li>
+</ul>
+</li>
+</ul>
+<h1 id="set-perspective-透视"><a href="#set-perspective-透视" class="headerlink" title="set (perspective) 透视"></a>set (perspective) 透视</h1><ul>
+<li><code>set cameraDepth (positive number)</code>：设置透视量。默认设置为 <code>3.0</code>。数字越大，透视的影响就越小。</li>
+<li><code>set perspectiveDepth ON</code>：关闭此参数将关闭透视深度。</li>
+</ul>
+<p>缩放相关：</p>
+<ul>
+<li><code>set zoomEnabled TRUE</code>：当设置为 <code>FALSE</code> 时，禁用缩放。</li>
+<li><code>set zoomHeight FALSE</code>：当此设置为 <code>TRUE</code> 时，Jmol 仅在更改高度时调整缩放。设置 zoomHeight TRUE 会禁用zoomLarge。</li>
+<li><code>set zoomLarge TRUE</code>：当为 <code>TRUE</code>时，Jmol 根据窗口大小调整缩放。</li>
+</ul>
+<h1 id="write"><a href="#write" class="headerlink" title="write"></a>write</h1><ul>
+<li><p>保存为png格式，语法为：</p>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"><span class="built_in">write</span> IMAGE <span class="built_in">width</span> <span class="built_in">height</span> PNG n <span class="string">&quot;fileName&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>width</code> 和 <code>height</code> 是可选的，默认为当前帧大小。</li>
+<li>压缩量<code>n</code> 是一个介于 0 和 10 之间的数字（默认为 2）。</li>
+<li>如果 <code>set imageState TRUE</code>（默认设置），则 Jmol 将其状态附加到 PNG 文件，从而允许使用单个图像文件作为 2D 图像查看和使用脚本命令或通过拖动以 3D Jmol 状态读取并加入 Jmol 应用程序。</li>
+</ul>
+</li>
+<li><p>保存为png格式，背景是透明的，语法为：</p>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"><span class="built_in">write</span> IMAGE <span class="built_in">width</span> <span class="built_in">height</span> PNGT n <span class="string">&quot;fileName&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>最好使用不太寻常的颜色作为背景颜色，比如<code>[x101010]</code>，确保只有背景是透明的。</li>
+<li>最好设置<code>set antialiasImages FALSE</code>，以避免图像周围出现参差不齐的边缘。</li>
+<li><code>width</code> 和 <code>height</code> 是可选的，默认为当前帧大小。</li>
+<li>压缩量<code>n</code> 是一个介于 0 和 10 之间的数字（默认为 2）。</li>
+<li>例子：<code>WRITE PNGT xxxx.png</code></li>
+</ul>
+</li>
+<li><p>保存为pov进一步渲染</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">write</span> POVRAY D:<span class="regexp">/desktop/m</span>o/<span class="number">10</span>-.pov</span><br></pre></td></tr></table></figure>
+<ul>
+<li>生成的ini文件可以直接一起拖入到pov-ray中批量渲染</li>
+</ul>
+</li>
+</ul>
+<h1 id="atom-expression-原子表达"><a href="#atom-expression-原子表达" class="headerlink" title="[atom-expression]原子表达"></a>[atom-expression]原子表达</h1><p>相关的表达都可以用关键字<code>NOT</code>开头，由<code>and</code>、<code>OR</code>或<code>XOR</code>连接，由<code>&#123;&#125;</code>包围。还可以用比较符号 <code>&lt;</code>，<code>&lt;=</code>，<code>=</code>，<code>&gt;</code>，<code>&gt;=</code>，<code>!=</code>和<code>LIKE</code> 等关键词，<code>!=</code>和<code>=</code>不区分大小写，如果需要，用<code>LIKE</code>。</p>
+<h2 id="一般表达"><a href="#一般表达" class="headerlink" title="一般表达"></a>一般表达</h2><ul>
+<li><code>all</code>：所有原子，=<code>*</code></li>
+<li><code>bonded</code>：共价键合的</li>
+<li><code>connected</code>：以任何方式成键，包括氢键</li>
+<li><code>none</code>：无原子</li>
+<li><code>selected</code>：已选定的原子，当文件首次加载是，默认为<code>all</code></li>
+</ul>
+<h2 id="化学元素"><a href="#化学元素" class="headerlink" title="化学元素"></a>化学元素</h2><ul>
+<li>元素的英文名，如<code>carbon</code></li>
+<li><code>_元素符号</code>：如<code>_Cu</code>；还可以在符号前面加上数字表示同位素，<code>_31P</code></li>
+<li><code>nonmetal</code>：非金属元素=<code>!metal</code>，即H，He，B，C，N，O，F，Ne，Si，P，S，Cl，Ar，As，Se，Br，Kr，Te，I，Xe，At，Rn</li>
+<li><code>metal</code>：金属元素，=<code>!nonmetal</code></li>
+<li><code>alkaliMetal</code>：碱金属，Li，Na，K，Rb，Sr，Fr</li>
+<li><code>alkalineEarth</code>：碱土金属，Be，Mg，Ca，Sr，Ba，Ra</li>
+<li><code>nobleGas</code>：稀有气体，He，Ne，Ar，Kr，Xe，Rn</li>
+<li><code>metalloid</code>：准金属，B，Si，Ge，As，Sb，Te</li>
+<li><code>transitionmetal</code>：过渡金属，包括La和Ac。</li>
+<li><code>lanthanide</code>：镧系元素，不包括La</li>
+<li><code>actinide</code>：锕系元素，不包括Ac</li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li><code>isaromatic</code>：与芳香族、芳香族单键或芳香族双键类型相连的原子</li>
+</ul>
+<h2 id="选择原子"><a href="#选择原子" class="headerlink" title="选择原子"></a>选择原子</h2><ul>
+<li><code>(carbon)[3][5]</code>：选择第三到第五个碳原子</li>
+<li><code>(carbon)[3]</code>：选择第三个C原子，[0]表示最后一个原子，负数表示从最后一个原子（0）开始基数。</li>
+</ul>
+<p>如果需要嵌入到其他表达式中，还需要在外面加<code>&#123;&#125;</code>，比如<code>measure &#123;(_O)[1]&#125; &#123;(_O)[2]&#125;</code></p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="comment">#z</span></span><br><span class="line"><span class="attribute">select</span> (&#123;<span class="number">4</span> <span class="number">7</span> <span class="number">8</span> <span class="number">12</span>:<span class="number">16</span> <span class="number">25</span>:<span class="number">29</span> <span class="number">32</span> <span class="number">35</span>:<span class="number">40</span> <span class="number">43</span>:<span class="number">84</span>&#125;)</span><br></pre></td></tr></table></figure>
+<h1 id="atom-properties-原子属性"><a href="#atom-properties-原子属性" class="headerlink" title="[atom properties]原子属性"></a>[atom properties]原子属性</h1><p><a href="https://chemapps.stolaf.edu/jmol/docs/index.htm?ver=14.31#atomproperties">https://chemapps.stolaf.edu/jmol/docs/index.htm?ver=14.31#atomproperties</a></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><strong>property</strong></th>
+<th style="text-align:center"><strong>select xxx=y</strong></th>
+<th style="text-align:center"><strong>label %[xxx]</strong></th>
+<th style="text-align:center"><strong>label %x</strong></th>
+<th style="text-align:center"><strong>print {*}.xxx</strong></th>
+<th style="text-align:center"><strong>{*}.xxx = y</strong></th>
+<th style="text-align:center"><strong>description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">atomName</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">%a</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">原子的名字</td>
+</tr>
+<tr>
+<td style="text-align:center">atomno</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">%i</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">可以用<code>@</code>替代<code>atomno=</code></td>
+</tr>
+<tr>
+<td style="text-align:center">atomType</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">%B</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">原子类型</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="getProperty"><a href="#getProperty" class="headerlink" title="getProperty"></a>getProperty</h1><p>查看分子的长宽高</p>
+<p>显示中勾选边界框，在控制台中输入</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">getProperty boundBoxInfo</span></span><br></pre></td></tr></table></figure>
+<p>设置边界框的坐标</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">boundbox &#123;<span class="number">0</span> <span class="number">0</span> <span class="number">0</span>&#125;&#123;<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>绘图</tag>
+        <tag>Jmol</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【Multiwfn】AIM分析</title>
     <url>/2021/03/02/%E3%80%90Multiwfn%E3%80%91AIM%E5%88%86%E6%9E%90/</url>
     <content><![CDATA[<p><a href="http://bbs.keinsci.com/thread-362-1-1.html">http://bbs.keinsci.com/thread-362-1-1.html</a></p>
@@ -6010,8 +6262,8 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
         <category>软件</category>
       </categories>
       <tags>
-        <tag>ORCA</tag>
         <tag>输入</tag>
+        <tag>ORCA</tag>
         <tag>内存</tag>
       </tags>
   </entry>
@@ -6382,9 +6634,9 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
         <category>软件</category>
       </categories>
       <tags>
+        <tag>输入</tag>
         <tag>基组</tag>
         <tag>ORCA</tag>
-        <tag>输入</tag>
         <tag>辅助基组</tag>
         <tag>RI近似</tag>
         <tag>赝势</tag>
@@ -6953,6 +7205,411 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
       </tags>
   </entry>
   <entry>
+    <title>【molpro】01.基础</title>
+    <url>/2019/11/13/%E3%80%90molpro%E3%80%9101.%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<h1 id="运行molpro"><a href="#运行molpro" class="headerlink" title="运行molpro"></a>运行molpro</h1><h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>在UNIX系统中，MOLPRO通过unix命令molpro访问：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">molpro</span> <span class="selector-attr">[options]</span> <span class="selector-attr">[datafile]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>datafile</code>：输入文件，可以取任何名字，但是要避免使用.out作为后缀，一般用.inp。unix中出现在molpro输入文件中的文件名总是转化为小写。</p>
+</li>
+<li><p>options：大部分选项都有合适的系统默认值，但是也可以在命令行中、环境变量MOLPRO OPTIONS中或文件./molpro.rc，$HOME/.molprorc，和library文件目录下的tuning.rc中（优先级递减）：</p>
+<ul>
+<li><p><code>-d [directory]</code> ：临时文件是临时的，并在作业结束时消失。默认情况下，此目录的位置为<code>/tmp/$USER</code>，或取自环境变量 TMPDIR。可以通过该选项定义放置临时文件的目录，</p>
+</li>
+<li><p><code>-m n_scale</code>：<span id=mm>指定分配给程序的工作内存，单位是word=8byte</span></p>
+<ul>
+<li><code>k</code>，<code>m</code>，<code>g</code>分别为10<sup>3</sup>，10<sup>6</sup>，10<sup>9</sup></li>
+<li><code>K</code>，<code>M</code>，<code>G</code>分别为2<sup>10</sup>，2<sup>20</sup>，2<sup>30</sup> </li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">#需要<span class="number">1000</span>word的内存</span><br><span class="line">-m <span class="number">1</span>k</span><br><span class="line">#需要<span class="number">1024</span>word的内存</span><br><span class="line">-M <span class="number">1</span>K</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>用于并行执行的选项（在使用串行MOLPRO时，将忽略这些选项）：</p>
+<ul>
+<li><p><code>-n</code>：定义设置的并行进程个数</p>
+<p>并行内存计算eg. 为具有4个并行计算过程的作业指定100×10<sup>6</sup>个word：100×10<sup>6</sup>×8×4=3.2×10<sup>9</sup>byte</p>
+</li>
+<li><p><code>-N</code> ：等指定工作节点的主机名</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="输出文件"><a href="#输出文件" class="headerlink" title="输出文件"></a>输出文件</h2><h3 id="out文件"><a href="#out文件" class="headerlink" title="out文件"></a>out文件</h3><p>执行结果会把输出写到一个名称输入文件截掉扩展名并加上<code>.out</code>产生的文件中。如果输出文件已经存在，防止覆盖文件，会把旧文件重命名为后缀为<code>.out_1</code>的文件中。如果命令行没有给出<code>datafile</code>，那么从标准输入读取数据。在命令行中可以有其他方式：</p>
+<ul>
+<li><p><code>-o [outfile]</code> ：自定义输出名</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">molpro</span> <span class="selector-tag">-o</span> <span class="selector-tag">water</span><span class="selector-class">.output</span> <span class="selector-tag">h2o</span><span class="selector-class">.inp</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>-s</code>：不保存旧的输出文件，只是覆盖。</p>
+</li>
+</ul>
+<h3 id="punch文件"><a href="#punch文件" class="headerlink" title="punch文件"></a>punch文件</h3><p>punch文件是output文件的简易形式，它包含了最重要的数据和结果，例如几何结构，能量，偶极矩等。可以用独立的程序readpun处理，它用关键词选择特定的结果，并根据用户提供的格式产生排列好的表格。</p>
+<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PUNCH,</span>filename,[REWIND]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>指定的<code>filename</code>会在unix中转换成小写</p>
+</li>
+<li><p>punch文件如果已经存在，则对其添加内容，如果指定了<code>REWIND</code>或者<code>NEW</code>，punch文件中所有以前的信息都被覆盖。</p>
+</li>
+<li><p>eg.</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">PUNCH</span>,H<span class="number">2</span>O.PUN</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="xml文件"><a href="#xml文件" class="headerlink" title="xml文件"></a>xml文件</h3><p>除了生成.out文件外，还用. XML后缀创建结构化XML文件(实际上是.out文件的父文件)。这个文件可以用于结果的自动处理，例如<a href="http://jmol.sourceforge.net/">Jmol程序</a>（需要下载<a href="https://www.java.com/en/download/manual.jsp">java运行环境JRE</a>）的图形化呈现。</p>
+<ul>
+<li><code>-X</code>或者<code>--xml-output</code>：指定输出文件为格式规范的XML文件，适于自动后期处理。重要的数据如输入，结构，以及结果都被加上标记，通常的大块描述性输出都作为XML注释折叠起来。</li>
+<li><code>--no-xml-output</code>：强制产生纯文本输出。</li>
+<li><code>--xml2txt</code>：将xml文件转换为纯文本文件，此时molpro的输入文件应该是一个xml文件。</li>
+</ul>
+<h3 id="9个二进制文件"><a href="#9个二进制文件" class="headerlink" title="9个二进制文件"></a>9个二进制文件</h3><ul>
+<li><p>程序通过它们的编号（1到9）可以简单地识别它们。</p>
+</li>
+<li><p>默认是临时文件，用<a href="#file卡"><code>FILE</code>命令</a>可以把计算出的数据作为轨道和能量保存到永久文件中，并在以后的阶段使用它们重启计算，默认的保存路径为$HOME/wfu，可以使用<code>-W</code>修改路径：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">molpro</span> -W ./ h<span class="number">2</span>o.inp</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>文件类型：</p>
+<ul>
+<li>文件1：主文件，存有基组，几何结构，以及单电子和双电子积分。</li>
+<li>文件2：默认是转存文件，用于存储波函的信息，即：轨道，轨道能量，可选的CI矢量，以及密度矩阵。</li>
+<li>文件3：辅助文件，和文件2一起用于续算</li>
+<li>文件4~8：草稿文件空间，用来分类积分，存储转换的积分和CI矢量。这些文件通常无需存为永久文件。</li>
+</ul>
+<p>通常文件1和2（以及3）被声明为用于续算的永久文件。文件2对于重新启动计算是必不可少的，而文件1上的积分可以重新启动，也可以重新计算。把波函信息存储在文件2中非常有用的，因为对于每个新的结构，积分文件都会被改写，而一个计算中的轨道和CI因子可以用作下一个相近几何结构计算的初始猜测。</p>
+</li>
+</ul>
+<h3 id="记录文件"><a href="#记录文件" class="headerlink" title="记录文件"></a>记录文件</h3><ul>
+<li>记录文件的名称是正整数，引用格式为record.file，比如2100.2表示命名为2100的2文件。记录文件的名称比较随意，它们的数值与记录在文件中的顺序无关。</li>
+<li><p>不要使用≥2000的记录名字，因为有一些默认的记录为：</p>
+<ul>
+<li><code>2100</code>：RHF转存记录（闭壳层和开壳层）</li>
+<li><code>2200</code>：UHF转存记录</li>
+<li><code>2140</code>：MCSCF转存记录</li>
+<li><code>4100</code>：CPHF续算信息</li>
+<li><code>5000</code>：MCSCF梯度信息</li>
+<li><code>5100</code>：CP-MCSCF梯度信息</li>
+<li><code>5200</code>：MP2梯度信息</li>
+<li><code>5300</code>：Hessian续算信息</li>
+<li><code>5400</code>：频率续算信息</li>
+<li><code>6300</code>：域的续算信息</li>
+</ul>
+</li>
+<li><p>如果一个输入包含同一类型的几个波函计算，例如不同活性空间的几个MCSCF计算，则对同一类型的每个计算，记录编号加1。比如第一个SCF计算的结果存储在转存记录2100.2中，第二个SCF计算存于2101.2记录，第一个MCSCF计算存于2140.2，第二个MCSCF存于2141.2等等。这些数字和输入中出现的顺序有关，而不是按照计算实际执行的顺序。</p>
+</li>
+</ul>
+<h3 id="put输出其他格式"><a href="#put输出其他格式" class="headerlink" title="put输出其他格式"></a>put输出其他格式</h3><figure class="highlight fortran"><table><tr><td class="code"><pre><span class="line">PUT,style,<span class="keyword">file</span>,<span class="keyword">status</span>,info</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>style</code>：</p>
+<ul>
+<li><p><code>GAUSSIAN</code>：写一个完整的GAUSSIAN输入文件，默认为<code># sp</code>计算</p>
+</li>
+<li><p><code>XYZ</code>：输出xyz文件</p>
+</li>
+<li><p><code>XYZGRAD</code>：包含能量梯度的XYZ文件（列依次是：x，y，z，charge，gx，gy，gz，梯度为-1*eV/A）</p>
+</li>
+<li><p><code>CRD</code>：坐标将用CHARMm CRD格式书写</p>
+</li>
+<li><p><code>MOLDEN</code>：将创建用于MOLDEN可视化程序的接口文件</p>
+<ul>
+<li>注意：<font color=red>molden文件不支持含h以上角动量的基组，如果仅需要可视化轨道查看，那么可以将基组中的h删去，输出molden文件，结果差别很小。</font></li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">put</span>,molden,h<span class="number">2</span>o.molden;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>IRSPEC</code>：gnuplot输入文件，该文件可用于绘制IR光谱</p>
+</li>
+<li><p>忽略则写入当前结构的Z矩阵，可能的话还写入梯度。</p>
+</li>
+</ul>
+</li>
+<li>file定义写入数据的文件名；如果为空，数据将写入到输出流中。如果忽略status或设置为NEW，那么文件中所有的旧内容都被清除；否则对文件追加。</li>
+</ul>
+<h1 id="输入文件格式"><a href="#输入文件格式" class="headerlink" title="输入文件格式"></a>输入文件格式</h1><h2 id="一般结构"><a href="#一般结构" class="headerlink" title="一般结构"></a>一般结构</h2><figure class="highlight erlang-repl"><table><tr><td class="code"><pre><span class="line">***,title			! 标题（可选）</span><br><span class="line">memory,<span class="number">4</span>,m 			! 内存指定（可选）</span><br><span class="line">file,<span class="number">1</span>,name.int 	! 命名永久的积分文件（可选）</span><br><span class="line">file,<span class="number">2</span>,name.wfu 	! 命名永久的波函文件（可选）</span><br><span class="line"></span><br><span class="line">gprint,options 		! 全局打印选项（可选）</span><br><span class="line">gthresh,options 	! 全局阈值（可选）</span><br><span class="line">gdirect[,options] 	! 全局直接积分选项（可选）</span><br><span class="line">gexpec,opnames 		! 单电子算符的全局定义（可选）</span><br><span class="line"></span><br><span class="line">basis=basisname 	! 基的定义。如果不出现，使用cc-pVDZ</span><br><span class="line">geometry=&#123;...&#125; 		! 结构定义。</span><br><span class="line"></span><br><span class="line">var1=value,var2=value,... 	! 设定结构和/或波函定义中的变量</span><br><span class="line"></span><br><span class="line">&#123;command,options 		! 程序或流程的名称</span><br><span class="line">directive,data,option 	! 命令的指令（可选）</span><br><span class="line">...</span><br><span class="line">&#125; 				! 结束命令区</span><br><span class="line">--- 			! 结束输入（可选）</span><br></pre></td></tr></table></figure>
+<ul>
+<li>输了memory卡应该是紧随标题的第一个以外，其他basis，geometry，gprint，gdirect，gthresh，gexpec，以及变量定义的顺序是任意的。</li>
+<li>可以在一个程序后调用其它几个程序。在程序的调用之间还可以重新定义基组和/或分子结构；程序将会自动确认是否需要重新计算积分。</li>
+</ul>
+<h2 id="一般规则"><a href="#一般规则" class="headerlink" title="一般规则"></a>一般规则</h2><ul>
+<li><code>,</code>移到下一个制表位，即用来划定输入范围。</li>
+<li><code>;</code>结束记录，开始一个新的记录。用分号隔开的基本命令单位称为卡（card）。一个给定的输入行可以包含多个有效命令（用；隔开），也可以只有一个。</li>
+<li><code>!</code>忽略该输入行后面的内容（用于注释）。</li>
+<li>内容不区分大小写，统一转换为大写处理。引号中的内容会被认为是字符串，不会进行大小写转换。</li>
+<li>整数后面加上<code>.</code>，程序只读取浮点数</li>
+</ul>
+<p>一般只占用一行的命令：</p>
+<ul>
+<li><code>***</code>总是第一个数据行，title可以任选，但是如果文件1用于续算，title必须总是相同。这个卡的作用是重新设置所有程序的计数器等。如果忽略<em>*</em>卡，title假定用默认值，全是空格。</li>
+<li><code>INCLUDE</code>包含其它的输入文件。使用<code>INCLUDE</code>可以打开辅助输入文件。如果遇到了<code>INCLUDE</code>命令，则打开新的输入文件并读取到结束，然后在第一个输入文件中继续INCLUDE卡之后的输入。<code>INCLUDE</code>也可以嵌套。</li>
+<li><code>FILE</code>指定已命名的文件</li>
+<li><code>TEXT</code>打印文本</li>
+<li><code>TITLE</code>定义运行的标题或表格的标题</li>
+<li><code>CON</code>指定轨道组态</li>
+<li><code>---</code>结束文件（忽略之后的输入）</li>
+</ul>
+<h2 id="一般格式"><a href="#一般格式" class="headerlink" title="一般格式"></a>一般格式</h2><p>整体格式一般是：</p>
+<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">COMMAND,</span> options</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight haskell"><table><tr><td class="code"><pre><span class="line">&#123; <span class="type">COMMAND</span>,options</span><br><span class="line"><span class="title">directives</span></span><br><span class="line"><span class="class"><span class="keyword">data</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>命令（COMMAND）比如有<code>HF, MP2, CCSD(T), MCSCF, MRCI</code></li>
+<li>指令（directives）比如有<code>OCC, CLOSED, WF, PRINT</code>等，格式一般<code>DIRECTIVE,data,options</code></li>
+<li>选项（options）的格式一般是<code>NAME[=value]</code><ul>
+<li>多个选项以逗号或空格分隔。</li>
+<li>如果选项在COMMAND一行或命令块内的指令上给出，则它们仅对相应的程序有效。</li>
+</ul>
+</li>
+</ul>
+<h1 id="memory卡"><a href="#memory卡" class="headerlink" title="memory卡"></a>memory卡</h1><figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">MEMORY,</span>n,scale<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="#mm">与命令行中的<code>-m</code>不同</a>，scale中<code>k</code>，<code>m</code>，<code>g</code>不区分大小写，统一按10<sup>3</sup>，10<sup>6</sup>，10<sup>9</sup></li>
+<li>优先于命令行中的<code>-m</code>。两者都省略的话，程序将使用默认的内存大小8mw (64 Mb)。</li>
+</ul>
+<p>MOLPRO可以根据用户的需要动态分配内存。因此不需要保存有不同内存大小的不同版本程序。所需要的内存大小取决于分子的大小、基组、分子的对称性和使用的方法，因此很难提前预测。大多数计算运行在16mw或更少，但在大的情况下，低对称性可能需要更多。一个比较好的选择是64MW（512MB），前提是系统有足够的内存。</p>
+<ul>
+<li>算到一半但是没有报错就停止了，可以将.sub文件中并行核数设大一些，比如24，再将molpro中的并行设置-n中的设置小一些。</li>
+</ul>
+<h1 id="file卡"><a href="#file卡" class="headerlink" title="file卡"></a>file卡</h1><p>对所有的永久文件，默认设置是RESTART。所有的临时文件在需要时通常自动分配。I/O缓存分配到动态内存的顶端，缓存的大小会减少可用的内存。因此MEMORY卡必须出现在第一个FILE卡之前。</p>
+<figure class="highlight fortran"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FILE</span>,<span class="keyword">file</span>,<span class="keyword">name</span>,[<span class="keyword">status</span>]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>file</code>是逻辑MOLPRO文件序号(1-9)</li>
+<li><code>name</code>是文件名（将被转换成小写字母）</li>
+<li><code>status</code>可以是：<ul>
+<li><code>UNKNOWN</code>打开永久文件。如果存在，自动续算。这是默认的。</li>
+<li><code>OLD</code>作用同<code>UNKNOWN</code>。如果该文件不存在，不会发生错误。</li>
+<li><code>NEW</code> 打开永久文件。如果已经存在，则清除，不续算。</li>
+<li><code>ERASE</code> 作用同<code>NEW</code>。</li>
+<li><code>SCRATCH</code> 打开临时文件。如果已经存在，则清除，不续算。任务完成后，文件不<br>再存在。</li>
+<li><code>DELETE</code> 作用同<code>SCRATCH</code>。</li>
+</ul>
+</li>
+</ul>
+<p>例子：</p>
+<ul>
+<li><p>分配永久文件1的名称H2O.INT，如果存在会使用它进行续算。比如第一个输入中只计算了hf和ccsd(t)，使用了该指令，后续计算casscf和MRCI的时候，指定了相同的文件，，MOLPRO将自动恢复保存在给定文件中的所有数据，积分和轨道将被重新启动。</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">FILE</span>,<span class="number">1</span>,H<span class="number">2</span>O.INT</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>分配永久文件2的名称H2O.WFU，即禁用自动重启机制</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">FILE</span>,<span class="number">2</span>,H<span class="number">2</span>O.WFU,NEW</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在大多数情况下，文件1可能非常大(它包含两个电子的积分)，而重新计算积分的成本可能只占总时间的一小部分，因此可以只在输入中只定义文件2，积分会自动重新计算。</p>
+</li>
+</ul>
+<h1 id="print-gprint-全局打印选项"><a href="#print-gprint-全局打印选项" class="headerlink" title="print/gprint 全局打印选项"></a>print/gprint 全局打印选项</h1><p>通常，有两种打印选项：一种是局部的，由print指令指定，仅在一个作业步骤中使用；一种是全局的，在各个程序以外可以用GPRINT命令设置全局打印选项（g可加可不加，加了可以避免与程序特定的PRINT卡相混淆）。局部打印命令是特定方法输入的一部分，因此必须直接遵循相应的命令。全局打印选项作用于所有后续方法。</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">GPRINT</span>,key<span class="number">1</span>[=value<span class="number">1</span>],key<span class="number">2</span>[=value<span class="number">2</span>],. . .</span><br><span class="line"><span class="attribute">NOGPRINT</span>,key<span class="number">1</span>,key<span class="number">2</span>,. . .</span><br></pre></td></tr></table></figure>
+<ul>
+<li>除了<code>DISTANCE</code>，<code>ANGLES</code>，和<code>VARIABLE</code>之外，全部选项默认都不打印。<code>key</code>有：<ul>
+<li><code>BASIS</code>：打印基的信息</li>
+<li><code>DISTANCE</code>：打印键长（默认）</li>
+<li><code>ANGLES</code>：打印键角信息（默认=0）。如果大于0，还打印二面角</li>
+<li><code>ORBITAL(=int)</code>：打印SCF和MCSCF的轨道，打印每个对称性下的占据轨道和int个最低空轨道。</li>
+<li><code>CIVECTOR</code>：打印MCSCF的CI矢量（注意，默认情况下只打印大于0.05的CI系数。）</li>
+<li><code>PAIRS</code>：打印CI和CCSD中的电子对列表</li>
+<li><code>CS</code>：打印CI和CCSD中的单激发信息</li>
+<li><code>CP</code>：打印CI和CCSD中的对激发信息</li>
+<li><code>REF</code>：打印CI中的参考CSF及其因子</li>
+<li><code>PSPACE</code>：打印p-空间组态</li>
+<li><code>MICRO</code>：打印MCSCF和CI中的微迭代</li>
+<li><code>CPU</code>：打印详细的CPU信息</li>
+<li><code>IO</code>：打印详细的I/O信息</li>
+<li><code>VARIABLE</code>：每当变量设置或改变时，就打印变量（默认）</li>
+</ul>
+</li>
+<li>value可以省略，当values，大于0的值可用于调试，在有些情况下会给出更多的信息。</li>
+<li><code>NOGPRINT,key</code>等价于<code>PRINT, key =-1</code>。</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">gprint,basis             !<span class="builtin-name">print</span> basis <span class="builtin-name">set</span> information</span><br><span class="line">gprint,orbitals          !<span class="builtin-name">print</span> occupied orbitals</span><br><span class="line">gprint,<span class="attribute">orbitals</span>=2        !<span class="builtin-name">print</span> occupied <span class="keyword">and</span> the two lowest virtual orbitals</span><br><span class="line">                         !<span class="keyword">in</span> each symmetry</span><br><span class="line">gprint,civector          !<span class="builtin-name">print</span> configuration coefficients</span><br></pre></td></tr></table></figure>
+<h1 id="geometry卡"><a href="#geometry卡" class="headerlink" title="geometry卡"></a>geometry卡</h1><p>定义分子结构可以用标准Z矩阵形式，或XYZ形式。GEOMETRY必须出现在其它修改分子结构的命令之后。</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="string">[SYMMETRY, options ]</span></span><br><span class="line"><span class="string">[ORIENT, options ]</span> </span><br><span class="line"><span class="string">[ANGSTROM]</span> </span><br><span class="line"><span class="string">[BOHR]</span></span><br><span class="line">geometry=&#123; </span><br><span class="line">原子说明 </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>symmetry</code>选项<ul>
+<li><code>SYMMETRY,NOSYM</code>禁止使用对称性，也可以只用<code>NOSYM</code></li>
+<li><code>SYMMETRY,AUTO</code>允许使用对称性</li>
+</ul>
+</li>
+<li><code>orient</code>选项：（也可以用<code>CENTRE=MASS|CHARGE</code>指定对称中心。）<ul>
+<li><code>CHARGE</code>：定位分子，使得电荷中心是原点，轴是四极矩的本征矢。</li>
+<li><code>MASS</code>：定位分子，使得质心是原点，轴是惯性张量的本征矢（对Z矩阵输入是默认的）</li>
+<li><code>NOORIENT</code>：禁止分子重新定位（对XYZ输入是默认的） </li>
+<li><code>SIGNX=±1</code>：强制第一个非零x坐标为正或负。类似地，可以用<code>SIGNY</code>和<code>SIGNZ</code>设置y、 z坐标。这对固定遍及几种不同计算和结构的分子方位非常有用。也可以设定系统变量<code>ZSIGNX</code>，<code>ZSIGNY</code>，<code>ZSIGNZ</code>为正值或负值来获得同样的效果。</li>
+<li><code>PLANEXZ</code>：对于C<sub>2v</sub>和D<sub>2h</sub>点群，强制主平面是xz，而不是默认的yz。结构构建程序尝试交换坐标轴，使尽可能多的原子位于主平面中，因此对于平面分子的特殊情况，这意味着所有原子都会位于主平面。也可以指定<code>PLANEYZ</code>和<code>PLANEXY</code>，但是后者目前对C2v点群会发生错误。</li>
+</ul>
+</li>
+<li><code>geometry</code>也可以通过<code>geometry=file</code>从文件中读取</li>
+</ul>
+<h2 id="xyz输入"><a href="#xyz输入" class="headerlink" title="xyz输入"></a>xyz输入</h2><ul>
+<li>第一行是原子个数，第二行是任意的标题，前两行可以省略。坐标中单位默认为Å。</li>
+<li>元素符号后面可以加序号，用于对于同一类型不同原子使用不同的基组。</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">geometry=&#123;</span><br><span class="line">   <span class="number">4</span></span><br><span class="line">  FORMALDEHYDE</span><br><span class="line">C          <span class="number">0.0000000000</span>        <span class="number">0.0000000000</span>       <span class="number">-0.5265526741</span></span><br><span class="line">O          <span class="number">0.0000000000</span>        <span class="number">0.0000000000</span>        <span class="number">0.6555124750</span></span><br><span class="line">H          <span class="number">0.0000000000</span>       <span class="number">-0.9325664988</span>       <span class="number">-1.1133424527</span></span><br><span class="line">H          <span class="number">0.0000000000</span>        <span class="number">0.9325664988</span>       <span class="number">-1.1133424527</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Z矩阵输入"><a href="#Z矩阵输入" class="headerlink" title="Z矩阵输入"></a>Z矩阵输入</h2><ul>
+<li>坐标默认为玻尔 bohr，可以使用<code>angstrom</code>关键词改变</li>
+</ul>
+<figure class="highlight mathematica"><table><tr><td class="code"><pre><span class="line">angstrom</span><br><span class="line">geometry=&#123;</span><br><span class="line"><span class="keyword">C</span></span><br><span class="line"><span class="keyword">O</span>   <span class="keyword">C</span>  <span class="number">1.182</span></span><br><span class="line">H1  <span class="keyword">C</span>  <span class="number">1.102</span>  <span class="keyword">O</span>  <span class="number">122.1789</span></span><br><span class="line">H2  <span class="keyword">C</span>  <span class="number">1.102</span>  <span class="keyword">O</span>  <span class="number">122.1789</span>  H1  <span class="number">180</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也可以通过Z矩阵输入XYZ形式</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">angstrom</span><br><span class="line">geometry=&#123;</span><br><span class="line">C,,        <span class="number">0.0000000000</span> ,     <span class="number">0.0000000000</span> ,    <span class="number">-0.5265526741</span></span><br><span class="line">O,,        <span class="number">0.0000000000</span> ,     <span class="number">0.0000000000</span> ,     <span class="number">0.6555124750</span></span><br><span class="line">H,,        <span class="number">0.0000000000</span> ,    <span class="number">-0.9325664988</span> ,    <span class="number">-1.1133424527</span></span><br><span class="line">H,,        <span class="number">0.0000000000</span> ,     <span class="number">0.9325664988</span> ,    <span class="number">-1.1133424527</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也可以使用变量</p>
+<figure class="highlight mathematica"><table><tr><td class="code"><pre><span class="line">geometry=&#123;</span><br><span class="line"><span class="keyword">C</span></span><br><span class="line"><span class="keyword">O</span>  , <span class="keyword">C</span> , rco</span><br><span class="line">H1 , <span class="keyword">C</span> , rch , <span class="keyword">O</span> , hco</span><br><span class="line">H2 , <span class="keyword">C</span> , rch , <span class="keyword">O</span> , hco , H1 , <span class="number">180</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">rco=<span class="number">1.182</span> Ang</span><br><span class="line">rch=<span class="number">1.102</span> Ang</span><br><span class="line">hco=<span class="number">122.1789</span> <span class="keyword">Degree</span></span><br></pre></td></tr></table></figure>
+<h1 id="基组"><a href="#基组" class="headerlink" title="基组"></a>基组</h1><h2 id="笛卡尔和球谐基函数"><a href="#笛卡尔和球谐基函数" class="headerlink" title="笛卡尔和球谐基函数"></a>笛卡尔和球谐基函数</h2><p>MOLPRO默认使用球谐基函数(5d，7f等)，即使是对Pople基组，如6-31G**，也是如此。可以用<code>CARTESIAN</code>命令使用笛卡尔函数，随后所有的计算都使用笛卡尔基函数，在续算中也是如此，可以通过<code>SPHERICAL</code>换成球谐基函数，但是要在给基组之前给出相应的命令。</p>
+<h2 id="基组库"><a href="#基组库" class="headerlink" title="基组库"></a>基组库</h2><p>基组库由一组无格式文本文件以及相应的索引构成，组成了通用的基组（原高斯函数和相应的收缩）和有效芯势数据库。这些文件可以在源文件的目录树中找到，分别为lib/*.libmol和lib/libmol.index，但更方便的方法是从数据库里查找：</p>
+<ul>
+<li><a href="https://www.basissetexchange.org/">美国太平洋西北国家实验室（Pacic Northwest NationalLaboratory）的基组数据库</a></li>
+<li><a href="http://www.tc.uni-koeln.de/PP/clickpse.en.html">Stuttgart 有效芯势和基组</a></li>
+<li><a href="https://www.molpro.net/info/basis.php?portal=user&amp;choice=Basis+library">molpro网页的basisi.php脚本</a>，可以本地安装也可以直接在网页中获取</li>
+</ul>
+<h2 id="默认基组及其调用"><a href="#默认基组及其调用" class="headerlink" title="默认基组及其调用"></a>默认基组及其调用</h2><h3 id="指定"><a href="#指定" class="headerlink" title="指定"></a>指定</h3><ul>
+<li><p>对任何对称唯一的原子组都没有定义基组，那么程序假定使用全局默认值（VDZ）</p>
+</li>
+<li><p>通过一下方法指定基组。</p>
+<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">BASIS,</span>basis</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">BASIS</span>=basis</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>默认基组可以在输入文件能量计算前的任何位置定义，并且只能使用一个BASIS卡。默认基组应用于所有类型的原子，但是可以对特定的原子替换成不同的基组。</p>
+</li>
+<li><p><code>BASIS</code>不能作为变量，比如<code>$BASIS=[AVDZ, AVTZ, AVQZ]</code>，使用遍历的方法为：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="variable">$aobases</span>=[AVDZ, AVTZ, AVQZ]</span><br><span class="line"><span class="keyword">do</span> <span class="attribute">i</span>=1,#aobases</span><br><span class="line"><span class="attribute">basis</span>=aobases(i)</span><br><span class="line"><span class="built_in">..</span>.</span><br><span class="line">enddo</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="可调用的基组"><a href="#可调用的基组" class="headerlink" title="可调用的基组"></a>可调用的基组</h3><ul>
+<li><code>basis</code>可以在文件lib/defbas中查找，包含的通用基组有：<ul>
+<li>所有的Dunning关联一致基组，用基组的标准名称（cc-pVXZ，aug-cc-pVXZ）或缩写（VXZ，AVXZ）调用。对于Al-Ar，用标准名称cc-pV(X+d)Z，aug-cc-pV(X+d)Z，或VXZ+d，AVXZ+d，可以得到紧凑的d扩充集。X=D,T,Q,5的基组适用于H-Kr，X=6适用于B-Ne和Al-Ar。</li>
+<li>用于芯关联的关联一致基组cc-pCVXZ，aug-cc-pCVXZ，或CVXZ，ACVXZ（X=D,T,Q,5），以及更新的“加权集”cc-pwCVXZ，aug-cc-pwCVXZ，或WCVXZ，AWCVXZ（X=D,T,Q,5）。这些基组适用于Li-Kr（CVXZ不包括Sc-Zn）。</li>
+<li>Douglas-Kroll-Hess相对论版本的关联一致基组，可以使用加上-DK后缀的标准名称或简称，例如，cc-pVXZ-DK或VXZ-DK。X=D-5适用于H-Kr，X=T适用于YCd和Hf-Hg。三阶DKH收缩集适用于Hf-Hg，需要加上后缀-DK3。</li>
+<li>Peterson等人用于用于显关联计算的F12基组：cc-pVXZ-F12，cc-pCVXZ-F12，或VXZ-F12，CVXZ-F12，其中X=D,T,Q。它们适用于H-Ar。</li>
+<li>Turbomole def2系列基组：SV(P)，SVP，TZVP，TZVPP，QZVP，QZVPP。它们可用于除了f区元素之外的整个周期表。</li>
+<li>对于第一行原子（不是H和He），有旧一些的Dunning/Hay分块收缩双zeta基（DZ和DZP）。</li>
+<li>Roos的ANO基组用于H-Ar（ROOS）。</li>
+<li>Stuttgart ECP和相应基组（例如ECP10MDF），以及Peterson等人基于ECP的关联一致基组：cc-pVXZ-PP，aug-cc-pVXZ-PP，cc-pwCVXZ-PP，aug-cc-pwCVXZ-PP，或VXZ-PP，AVXZ-PP，WCVXZ-PP，AWCVXZ-PP。后者适用于Cu-Kr，Y-Xe，和Hf-<br>Rn（芯关联集目前仅用于过渡金属）。</li>
+<li>Hay ECP和相应基组（ECP1和ECP2）。</li>
+<li>其它一些Karslruhe基组（SV，TZV，以及用于某些元素的TZVPPP）。</li>
+<li>用于Ga-Kr的Binning/Curtiss集（BINNING-SV，BINNING-SVP，BINNING-VTZ和BINNINGVTZP）</li>
+<li>大多数Pople基组使用其标准名称（例如6-31G*，6-311++G(D,P)，等）。在这种情况下需要特别注意，不能使用下面描述的用于限定基组的括弧修饰机制，必须使用被指定的整个标准基组。</li>
+</ul>
+</li>
+<li>此外，还可以使用很多密度拟合和单位分解（resolution of the identity，RI）基组。在密度拟合计算中，对Dunning的关联一致基组自动选择合适的Weigend VXZ/JKFIT，XZ/MP2FIT，或AVXZ/MP2FIT集（还可以用扩充版本的AVXZ/JKFIT 用于拟合Fock矩阵，但默认不使用）。对于def2系列的轨道基组，使用合适的辅助集（例如，TZVPP/JFIT，TZVPP/JKFIT，TZVPP/MP2FIT）。原则上说，这些JKFIT集是通用的，可以与AVXZ基组一起使用。初步结果表明它们也可用于cc-pVXZ-PP和aug-cc-pVXZ-PP系列的基组。</li>
+<li>对于使用cc-pVXZ-F12轨道基组的显关联F12计算，默认用相应的VXZ-F12/OPTRI基组构造附加的辅助轨道基（complementary auxiliary orbital basis；CABS）。对于其它轨道基组，默认使用合适的JKFIT集。</li>
+</ul>
+<h3 id="对于角动量的限制"><a href="#对于角动量的限制" class="headerlink" title="对于角动量的限制"></a>对于角动量的限制</h3><ul>
+<li><p>可以使用一些关于最大角动量函数的限制，或是收缩函数的数量限制，比如减少基组的最大角动量：</p>
+<ul>
+<li>忽略正常情况下出现在VQZ基组中的𝑓和𝑔函数：</li>
+</ul>
+<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">BASIS,</span>VQZ(D)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>指定氢的最大角动量是1，也就是忽略氢的𝑑轨道：</li>
+</ul>
+<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">BASIS,</span>VQZ(D/P)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对于一般收缩基组，可以用扩充的语法直接给出每个角动量收缩函数的数量</p>
+<ul>
+<li>从Roos的ANO数据集产生6-31G*大小的基组：</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">BASIS</span>,ROOS(<span class="number">3</span>s<span class="number">2</span>p<span class="number">1</span>d/<span class="number">2</span>s)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="单个原子的默认基组"><a href="#单个原子的默认基组" class="headerlink" title="单个原子的默认基组"></a>单个原子的默认基组</h2><ul>
+<li><p>只需要在默认基组后加上<code>atom1=name1,atom2=name2,...,</code>，<code>atom</code>即元素符号，<code>name</code>为相应的基组名。<strong>默认基组必须在原子特定基组之前指定</strong>。（<font color=red>此外，基组中有的不是名字定义，而是用的原始集和收缩集文本来定义的，应当先写名字定义的，否则可能出错</font>，当计算中出现了比较奇怪的错误，在检查其他地方没有问题之后，可以尝试更换基组区的ECP、单个原子基组、价电子基组的顺序，或者更换文本定义的基组尝试。）</p>
+<ul>
+<li><p>比如使用cc-pVTZ作为默认的基组，但是对氢原子使用cc-pVDZ：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">basis</span>=vtz,h=vdz</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">basis,vtz,<span class="attribute">h</span>=vdz</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight haskell"><table><tr><td class="code"><pre><span class="line"><span class="title">basis</span>,<span class="keyword">default</span>=vtz,h=vdz</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="基组区"><a href="#基组区" class="headerlink" title="基组区"></a>基组区</h2><p>通过<code>BASIS ... END</code>块或者<code>BASIS=&#123;...&#125;</code>指定，一般形式如下：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">BASIS</span><br><span class="line">	SET,setname1,[options]</span><br><span class="line">		<span class="attribute">DEFAULT</span>=name</span><br><span class="line">		<span class="attribute">atom1</span>=name1</span><br><span class="line">		<span class="attribute">atom2</span>=name2</span><br><span class="line">		原始基组说明</span><br><span class="line">	SET,setname2,[options]</span><br><span class="line">		<span class="built_in">..</span>.</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>可以在基组区给出任何数量的基组。每个基组的定义由SET指令开始，其中可以指定基组名和更多选项。</p>
+</li>
+<li><p>基组区的第一个基组默认是轨道基组，这种情况下可以忽略指令<code>SET,ORBITAL</code></p>
+</li>
+<li><p><code>DEFAULT</code>指定默认基组，与单行基组输入完全相同。之后可以接各个原子的基组说明。默认基组和原子特定基组也可以合并到一行，之间用逗号隔开。</p>
+<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line">!对氧和氢分别用<span class="built_in">AVTZ</span>和VDZ覆盖默认基组VTZ</span><br><span class="line">DEFAULT=VTZ,O=<span class="built_in">AVTZ</span>,H=VDZ</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>SET，DEFAULT，atom=name这些说明都是可选的。如果没有给出DEFAULT，将使用前面最后一个BASIS卡定义的默认基组。</p>
+</li>
+<li><p>可以先后连续出现几个BASIS卡/区。对给定的原子总是使用最后指定的说明和类型（默认类型为<code>ORBITAL</code>）。</p>
+</li>
+<li><p>如果对任何唯一原子组都没有指定基组，程序假定为VDZ。</p>
+</li>
+<li><p>如果<code>setname</code>是<code>JKFIT</code>，这个基在DF- hf或DF- ks中自动使用，除非使用BASIS或DF_BASIS选项进行不同的指定。但是请注意，如果使用了不同的名称(例如<code>JK</code>)，情况就不是这样了。在这种情况下需要给出<code>DF-HF,BASIS=JK</code>以便使用DF-HF中的辅助基。</p>
+</li>
+</ul>
+<h1 id="赝势"><a href="#赝势" class="headerlink" title="赝势"></a>赝势</h1><p>指定方式（<font color=red>最好在<code>basis</code>中首先指定ECP，再指定基组）</font>：</p>
+<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ECP,</span>atom,[ECP specification]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ECP specification说明部分可以包含一个关键词，用于引用基组库中存储的赝势，也可以（连续在几个输入卡中）直接定义。</li>
+<li>注意：目前molpro对ECP的支持到Db，后面的元素不认，因此用相应元素的ECP则需要修改元素符号，比如将Og修改为Rn，但是此时Rn的内层电子数不满足92，需要改成60。</li>
+</ul>
+<h3 id="通过ECP库的输入"><a href="#通过ECP库的输入" class="headerlink" title="通过ECP库的输入"></a>通过ECP库的输入</h3><p>一共有两种：</p>
+<ul>
+<li>Los Alamos小组：<ul>
+<li>校正到一个合适原子参考态的轨道能量和密度</li>
+<li>关键词是<code>ECP1</code>和<code>ECP2</code>；当对给定的原子有一个以上的赝势时，ECP2用于表示小芯ECP的定义。（例如对Cu，<code>ECP1</code>表示类Ar的18电子芯， 而<code>ECP2</code>模拟类Ne的10电子芯，把3s和3p电子放入到价层）对于包含电子关联的精确计算，推荐把主量子数等于价轨道的所有芯轨道放入到价轨道中。 </li>
+</ul>
+</li>
+<li>Stuttgart/Köln小组：<ul>
+<li>用多个原子态的总价电子能量产生。 </li>
+<li>关键词的形式为：<code>ECPnXY</code>：<ul>
+<li>n是用赝势代替的芯电子数量</li>
+<li>X表示用于产生赝势的参考体系（X = S，单价电子离子；X = M，中性原子）</li>
+<li>Y 表示参考数据的理论级别（Y=HF：Hartree-Fock；Y=WB：准相对论；Y=DF：相对论） </li>
+</ul>
+</li>
+<li>对于单个或两个价电子的原子而言，X = S，Y=DF是很好的选择，否则推荐X = M，Y=WB （或Y=DF） 。（对于较轻的原子，或者为了讨论相对论效应，相应的Y=HF赝势也可能会有用。）</li>
+<li>此外还可以使用自旋轨道（SO）势和芯极化势（CPP），用于b)类ECP，但目前不包含在基组库中，因此需要另外输入</li>
+</ul>
+</li>
+</ul>
+<p>在以上两种情况中，<strong>赝势和相应的基组使用相同的关键词</strong>，但对前一种需要使用前缀<code>MBS-</code>…。</p>
+<p>例子：AuH分子在r(exp)的CCSD(T)结合能；使用Stuttgart/Koeln小组的标量相对论19价电子赝势</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">***,AuH</span><br><span class="line">gprint,basis,orbitals;</span><br><span class="line">geometry=&#123;au&#125;</span><br><span class="line">basis=&#123;</span><br><span class="line">ecp,au,ECP60MWB;              ! ECP input</span><br><span class="line">spd,au,ECP60MWB;c,<span class="number">1.2</span>;        ! basis <span class="keyword">set</span></span><br><span class="line">f,au,<span class="number">1.41</span>,<span class="number">0.47</span>,<span class="number">0.15</span>;</span><br><span class="line">g,au,<span class="number">1.2</span>,<span class="number">0.4</span>;</span><br><span class="line">spd,h,avtz;c;</span><br><span class="line">&#125;</span><br><span class="line">rhf;</span><br><span class="line">&#123;rccsd(t);core,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,,<span class="number">1</span>;&#125;</span><br><span class="line">e1=energy</span><br><span class="line">geometry=&#123;h&#125;</span><br><span class="line">rhf</span><br><span class="line">e2=energy;</span><br><span class="line">rAuH=<span class="number">1.524</span> ang                ! molecular calculation</span><br><span class="line">geometry=&#123;au;h,au,rAuH&#125;</span><br><span class="line">hf;</span><br><span class="line">&#123;ccsd(t);core,<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span>;&#125;</span><br><span class="line">e3=energy</span><br><span class="line">de=(e3-e2-e1)*toev            ! binding energy = <span class="number">3.11</span> eV</span><br></pre></td></tr></table></figure>
+<h3 id="直接输入ECP"><a href="#直接输入ECP" class="headerlink" title="直接输入ECP"></a>直接输入ECP</h3><p>对每种赝势，必须提供以下信息：</p>
+<ul>
+<li><p>一个卡，形式为：</p>
+<figure class="highlight maxima"><table><tr><td class="code"><pre><span class="line">ECP,<span class="built_in">atom</span>,ncore,<span class="built_in">lmax</span>,l′<span class="built_in">max</span>;</span><br></pre></td></tr></table></figure>
+<script type="math/tex; mode=display">V_{ps}= -\frac{Z-n_{core}}{r} + V_{l_{max}}
+          +\sum_{l=0}^{l_{max}-1} (V_l-V_{l_{max}}){\cal P}_{l}
+          +\sum_{l=1}^{l'{max}} \Delta V_l {\cal P}_{l} \vec{l}\cdot\vec{s} {\cal P}_{l} ;</script><ul>
+<li><code>ncore</code>是用赝势$V_{ps}$代替的芯电子数量</li>
+<li><code>lmax</code>是$V_{ps}$标量相对论部分的半局域项数量</li>
+<li><code>l′max</code>是相应的SO部分的项个数</li>
+</ul>
+</li>
+<li><p>定义$ V<em>{l</em>{max}}$的一些卡：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">m_1</span>,γ_<span class="number">1</span>,c_<span class="number">1</span>;m_<span class="number">2</span>,γ_<span class="number">2</span>,c_<span class="number">2</span>;...</span><br></pre></td></tr></table></figure>
+<script type="math/tex; mode=display">V_{l_{max}} = \sum_{j=1}^{n_{l_{max}}} c_j r^{m_j-2} e^{-\gamma _j r^2}</script><ul>
+<li>第一个给出展开式长度$n<em>{l</em>{max}}$，接下来的$n<em>{l</em>{max}}$给出参数</li>
+</ul>
+</li>
+<li><p>定义标量相对论半局域项的一些卡:</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">ml_1</span>,γl_<span class="number">1</span>,cl_<span class="number">1</span>; ml_<span class="number">2</span>,γl_<span class="number">2</span>,cl_<span class="number">2</span>;... </span><br></pre></td></tr></table></figure>
+<script type="math/tex; mode=display">V_l -V_{l_{max}}=\sum_{j=1}^{n_l} c_j^l r^{m_j^l-2} e^{-\gamma _j^l r^2}</script><ul>
+<li>顺序是$l=0,1,\ldots , l_{max}-1$</li>
+<li>对每一项，必须给出一个展开长度是$n_l$的卡，后面再接$n_l$个卡</li>
+</ul>
+</li>
+<li><p>类似的，是一些径向势$\Delta V<em>l$因子的卡，定义$V</em>{ps}$的SO部分</p>
+</li>
+</ul>
+<p>例子：Cu原子SCF d10s1→d9s2激发能，使用相对论Ne-芯的赝势和Stuttgart/Koeln小组的基组</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">***,CU</span><br><span class="line">gprint,basis,orbitals</span><br><span class="line">geometry=&#123;cu&#125;</span><br><span class="line">basis</span><br><span class="line">ECP,<span class="number">1</span>,<span class="number">10</span>,<span class="number">3</span>;   	! ECP input</span><br><span class="line"> <span class="number">1</span>; 			! NO LOCAL POTENTIAL</span><br><span class="line"> <span class="number">2</span>,<span class="number">1.</span>,<span class="number">0.</span>;</span><br><span class="line"> <span class="number">2</span>; 			! S POTENTIAL</span><br><span class="line"> <span class="number">2</span>,<span class="number">30.22</span>,<span class="number">355.770158</span>;<span class="number">2</span>,<span class="number">13.19</span>,<span class="number">70.865357</span>;</span><br><span class="line"> <span class="number">2</span>; 			! P POTENTIAL</span><br><span class="line"> <span class="number">2</span>,<span class="number">33.13</span>,<span class="number">233.891976</span>;<span class="number">2</span>,<span class="number">13.22</span>,<span class="number">53.947299</span>;</span><br><span class="line"> <span class="number">2</span>; 			! D POTENTIAL</span><br><span class="line"> <span class="number">2</span>,<span class="number">38.42</span>,<span class="number">-31.272165</span>;<span class="number">2</span>,<span class="number">13.26</span>,<span class="number">-2.741104</span>;</span><br><span class="line">! (<span class="number">8</span>s7p6d)/[<span class="number">6</span>s5p3d] BASIS SET</span><br><span class="line">s,<span class="number">1</span>,<span class="number">27.69632</span>,<span class="number">13.50535</span>,<span class="number">8.815355</span>,<span class="number">2.380805</span>,<span class="number">.952616</span>,<span class="number">.112662</span>,<span class="number">.040486</span>,<span class="number">.01</span>;</span><br><span class="line">c,<span class="number">1.3</span>,<span class="number">.231132</span>,<span class="number">-.656811</span>,<span class="number">-.545875</span>;</span><br><span class="line">p,<span class="number">1</span>,<span class="number">93.504327</span>,<span class="number">16.285464</span>,<span class="number">5.994236</span>,<span class="number">2.536875</span>,<span class="number">.897934</span>,<span class="number">.131729</span>,<span class="number">.030878</span>;</span><br><span class="line">c,<span class="number">1.2</span>,<span class="number">.022829</span>,<span class="number">-1.009513</span>;C,<span class="number">3.4</span>,<span class="number">.24645</span>,<span class="number">.792024</span>;</span><br><span class="line">d,<span class="number">1</span>,<span class="number">41.225006</span>,<span class="number">12.34325</span>,<span class="number">4.20192</span>,<span class="number">1.379825</span>,<span class="number">.383453</span>,<span class="number">.1</span>;</span><br><span class="line">c,<span class="number">1.4</span>,<span class="number">.044694</span>,<span class="number">.212106</span>,<span class="number">.453423</span>,<span class="number">.533465</span>;</span><br><span class="line">end</span><br><span class="line">rhf;</span><br><span class="line">e1=energy</span><br><span class="line">&#123;rhf;occ,<span class="number">4</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>;closed,<span class="number">4</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>;wf,<span class="number">19</span>,<span class="number">7</span>,<span class="number">1</span>;&#125;</span><br><span class="line">e2=energy</span><br><span class="line">de=(e2-e1)*toev  ! Delta E = <span class="number">-0.075</span> eV</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>输入</tag>
+        <tag>基组</tag>
+        <tag>内存</tag>
+        <tag>molpro</tag>
+        <tag>赝势</tag>
+        <tag>输出</tag>
+        <tag>坐标</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【Linux】命令</title>
     <url>/2019/09/25/%E3%80%90Linux%E3%80%91%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h1 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h1><h2 id="awk"><a href="#awk" class="headerlink" title="awk"></a>awk</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">awk [options] &#x27;script&#x27; var=value file(s)</span><br><span class="line">awk [options] -f scriptfile var=value file(s)</span><br></pre></td></tr></table></figure>
@@ -6975,6 +7632,9 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 </li>
 <li><p>awk运算与判断：将变量给igrid，然后将行号为igrid的第五个字段输出：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">awk -v igrid=$igrid &#x27;(NR == igrid)&#123;print $5&#125;&#x27;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>结合管道：</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">uname</span> -a |awk -F <span class="string">&#x27; &#x27;</span> <span class="string">&#x27;&#123;print <span class="variable">$2</span>&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h2 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h2><p>Change mode 修改文件或目录的权限</p>
@@ -7084,11 +7744,11 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 </ul>
 </li>
 <li>-option：<ul>
-<li><code>-name name</code>文件名称符合 name 的文件。<code>-iname</code>会忽略大小写</li>
+<li><strong><code>-name name</code>文件名称符合 name 的文件。<code>-iname</code>会忽略大小写</strong></li>
 <li><code>-path p</code>路径名称符合 p 的文件，<code>-ipath</code>会忽略大小写</li>
 <li>-<code>regex</code>基于正则表达式匹配文件路径，<code>-iregex</code>忽略大小写</li>
 <li></li>
-<li><code>-type x</code>：文件类型是X的文件，X可以是<code>b</code> 块设备，<code>c</code> 字符设备，<code>d</code>目录，<code>f</code>一般文件，<code>l</code> 符号连接，<code>s</code> 套接字，<code>p</code> Fifo</li>
+<li><strong><code>-type x</code>：文件类型是X的文件，X可以是<code>b</code> 块设备，<code>c</code> 字符设备，<code>d</code>目录，<code>f</code>一般文件，<code>l</code> 符号连接，<code>s</code> 套接字，<code>p</code> Fifo</strong></li>
 <li><code>-maxdepth</code>设置最大目录层级；<code>-mindepth</code>设置最小目录层级</li>
 <li></li>
 <li><code>-amin</code>，<code>-atime</code>分别表示在过去 n 分钟或n天内内被读取过。<code>+n</code>，<code>-n</code>，<code>n</code>分别代表大于，小于和等于。</li>
@@ -7187,6 +7847,8 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li><code>-i</code>：交互式操作，覆盖前先行询问用户，如果源文件与目标文件或目标目录中的文件同名，则询问用户是否覆盖目标文件。</li>
 <li><code>-f</code>：若目标文件或目录与现有的文件或目录重复，则直接覆盖现有的文件或目录，不给任何指示</li>
 </ul>
+<p>批量重命名：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="variable">$</span>(<span class="built_in">ls</span>); <span class="keyword">do</span> <span class="built_in">mv</span> <span class="variable">$</span>&#123;i&#125; <span class="number">0</span><span class="variable">$</span>&#123;i&#125;; done</span><br></pre></td></tr></table></figure>
 <h2 id="rename"><a href="#rename" class="headerlink" title="rename"></a>rename</h2><h3 id="语法-6"><a href="#语法-6" class="headerlink" title="语法"></a>语法</h3><p>不同Liunx下的语法不同，CentOS下的是：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rename [options] expression replacement file</span><br></pre></td></tr></table></figure>
 <ul>
@@ -8137,7 +8799,7 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 <p><img src="image-20210619175553336.png" alt="" style="zoom:50%;" /></p>
 <h4 id="收缩方式"><a href="#收缩方式" class="headerlink" title="收缩方式"></a>收缩方式</h4><p><img src="image-20210620141915170.png" alt="" style="zoom:50%;" /></p>
 <h5 id="Segemented-Contracted"><a href="#Segemented-Contracted" class="headerlink" title="Segemented Contracted"></a>Segemented Contracted</h5><ul>
-<li>给定的PGTO只出现在一个CGTO中，比如STO-ng、6-31G*、Dunning DZ等基组。每个原子轨道用单独一组函数来拟合，1s, 2s, 2p等轨道的各自 的基函数都是完全分开的 ，没有关联，每 一个 shell 各自用不同 的 GTO 来表示。不共享任何指数。 程序简单，浪费计算量。</li>
+<li>给定的PGTO只出现在一个CGTO中，比如STO-ng、6-31G*、Dunning DZ等基组。每个原子轨道用单独一组函数来拟合，1s, 2s, 2p等轨道的各自的基函数都是完全分开的（有更好的物理图像） ，没有关联，每一个 shell 各自用不同 的 GTO 来表示。不共享任何指数。 程序简单，浪费计算量。</li>
 </ul>
 <script type="math/tex; mode=display">\left|\chi_{1}(\mathrm{CGTO})\right\rangle=\sum_{i=1}^{6} a_{i}\left|\chi_{i}(\mathrm{PGTO})\right\rangle，\left|\chi_{2}(\mathrm{CGTO})\right\rangle =\sum_{i=7}^{9} a_{i}\left|\chi_{i}(\mathrm{PGTO})\right\rangle，\left|\chi_{3}(\mathrm{CGTO})\right\rangle =\left|\chi_{10}(\mathrm{PGTO})\right\rangle</script><ul>
 <li><p>例子：</p>
@@ -8153,7 +8815,7 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 </li>
 </ul>
 <h5 id="Hybrid-Contracted"><a href="#Hybrid-Contracted" class="headerlink" title="Hybrid Contracted"></a>Hybrid Contracted</h5><ul>
-<li><p>以上两种都有，比如cc-pVDZ。结合上述二者优缺点，内层用广义收缩， 价电子 价轨道用 segmented ，解释起来更便利。</p>
+<li><p>以上两种都有，比如cc-pVDZ。结合上述二者优缺点，内层用广义收缩， 价电子 价轨道用segmented ，解释起来更便利。</p>
 <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="comment"># O的cc-pVDZ基组：(9s,4p,1d)/[3s,2p,1d]</span></span><br><span class="line"><span class="attribute">O</span>	s</span><br><span class="line"><span class="attribute">1</span>.<span class="number">172000</span>D+<span class="number">04</span>	 <span class="number">7</span>.<span class="number">100000</span>D-<span class="number">04</span>	-<span class="number">1</span>.<span class="number">600000</span>D-<span class="number">04</span></span><br><span class="line"><span class="attribute">1</span>.<span class="number">759000</span>D+<span class="number">03</span>	 <span class="number">5</span>.<span class="number">470000</span>D-<span class="number">03</span>	-<span class="number">1</span>.<span class="number">263000</span>D-<span class="number">03</span></span><br><span class="line"><span class="attribute">4</span>.<span class="number">008000</span>D+<span class="number">02</span>	 <span class="number">2</span>.<span class="number">783700</span>D-<span class="number">02</span>	-<span class="number">6</span>.<span class="number">267000</span>D-<span class="number">03</span></span><br><span class="line"><span class="attribute">1</span>.<span class="number">137000</span>D+<span class="number">02</span>	 <span class="number">1</span>.<span class="number">048000</span>D-<span class="number">01</span>	-<span class="number">2</span>.<span class="number">571600</span>D-<span class="number">02</span></span><br><span class="line"><span class="attribute">3</span>.<span class="number">703000</span>D+<span class="number">01</span>	 <span class="number">2</span>.<span class="number">830620</span>D-<span class="number">01</span>	-<span class="number">7</span>.<span class="number">092400</span>D-<span class="number">02</span></span><br><span class="line"><span class="attribute">1</span>.<span class="number">327000</span>D+<span class="number">01</span>	 <span class="number">4</span>.<span class="number">487190</span>D-<span class="number">01</span>	-<span class="number">1</span>.<span class="number">654110</span>D-<span class="number">01</span></span><br><span class="line"><span class="attribute">5</span>.<span class="number">025000</span>D+<span class="number">00</span>	 <span class="number">2</span>.<span class="number">709520</span>D-<span class="number">01</span>	-<span class="number">1</span>.<span class="number">169550</span>D-<span class="number">01</span></span><br><span class="line"><span class="attribute">1</span>.<span class="number">013000</span>D+<span class="number">00</span>	 <span class="number">1</span>.<span class="number">545800</span>D-<span class="number">02</span>	 <span class="number">5</span>.<span class="number">573680</span>D-<span class="number">01</span></span><br><span class="line"><span class="attribute">3</span>.<span class="number">023000</span>D-<span class="number">01</span>	-<span class="number">2</span>.<span class="number">585000</span>D-<span class="number">03</span>	 <span class="number">5</span>.<span class="number">727590</span>D-<span class="number">01</span></span><br><span class="line"><span class="attribute">O</span>	s</span><br><span class="line"><span class="attribute">3</span>.<span class="number">023000</span>D-<span class="number">01</span>	 <span class="number">1</span>.<span class="number">000000</span>D+<span class="number">00</span></span><br><span class="line"><span class="attribute">O</span>	p</span><br><span class="line"><span class="attribute">1</span>.<span class="number">770000</span>D+<span class="number">01</span>	 <span class="number">4</span>.<span class="number">301800</span>D-<span class="number">02</span></span><br><span class="line"><span class="attribute">3</span>.<span class="number">854000</span>D+<span class="number">00</span>	 <span class="number">2</span>.<span class="number">289130</span>D-<span class="number">01</span></span><br><span class="line"><span class="attribute">1</span>.<span class="number">046000</span>D+<span class="number">00</span>	 <span class="number">5</span>.<span class="number">087280</span>D-<span class="number">01</span></span><br><span class="line"><span class="attribute">2</span>.<span class="number">753000</span>D-<span class="number">01</span>	 <span class="number">4</span>.<span class="number">605310</span>D-<span class="number">01</span></span><br><span class="line"><span class="attribute">O</span>	p	         </span><br><span class="line"><span class="attribute">2</span>.<span class="number">753000</span>D-<span class="number">01</span>	 <span class="number">1</span>.<span class="number">000000</span>D+<span class="number">00</span></span><br><span class="line"><span class="attribute">O</span>	d</span><br><span class="line"><span class="attribute">1</span>.<span class="number">185000</span>D+<span class="number">00</span>	<span class="number">1</span>.<span class="number">0000000</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>幂指数较大的对应较内层的轨道，幂指数较小的对应较外层的轨道。通常外层的轨道，α 越小的基函数的贡献 即前面的组合系数绝对值越大，如 2s，3s 轨道相较于 1s 轨道而言， α 值小的 GTO 前的系数会较大，这可以帮助我们区分1s，2s 等不同的轨道。</p>
@@ -8221,9 +8883,9 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 </li>
 </ul>
 <p>例子：</p>
-<p><img src="image-20210620145811319.png" alt="" style="zoom:33%;" /></p>
-<p><img src="image-20210620145819965.png" alt="" style="zoom:33%;" /></p>
-<p><img src="image-20210620145826955.png" alt="" style="zoom:33%;" /></p>
+<p><img src="image-20210620145811319.png" alt="" style="zoom: 50%;" /></p>
+<p><img src="image-20210620145819965.png" alt="" style="zoom: 50%;" /></p>
+<p><img src="image-20210620145826955.png" alt="" style="zoom: 50%;" /></p>
 <h3 id="弥散函数"><a href="#弥散函数" class="headerlink" title="弥散函数"></a><a href="#弥散">弥散函数</a></h3><ul>
 <li><p>弥散函数是指数非常小的基函数，因此能够延展到非常广的空间区域。</p>
 </li>
@@ -8902,658 +9564,6 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
       <tags>
         <tag>hexo</tag>
         <tag>git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【Linux】Vim编辑器</title>
-    <url>/2019/09/25/%E3%80%90Linux%E3%80%91Vim%E7%BC%96%E8%BE%91%E5%99%A8/</url>
-    <content><![CDATA[<h1 id="一般编辑"><a href="#一般编辑" class="headerlink" title="一般编辑"></a>一般编辑</h1><h2 id="输入或取代"><a href="#输入或取代" class="headerlink" title="输入或取代"></a>输入或取代</h2><ul>
-<li><code>i</code>：从目前光标所在处输入</li>
-<li><code>I</code>：在目前所在行的第一个非空格符处开始输入</li>
-<li><code>a</code>：为光标所在的下一个字符处开始插入</li>
-<li><code>A</code>：行尾插入</li>
-<li><code>o</code>：在目前光标所在的下一行处输入新的一行</li>
-<li><code>O</code>：在目前光标所在处的上一行输入新的一行</li>
-<li><code>&gt;</code>：缩进<ul>
-<li><code>&gt;n</code>：缩进n行</li>
-</ul>
-</li>
-<li><code>&lt;</code>：反缩进</li>
-<li><code>Esc</code>：退出编辑模式，回到一般模式中</li>
-</ul>
-<h2 id="取代或删除输入"><a href="#取代或删除输入" class="headerlink" title="取代或删除输入"></a>取代或删除输入</h2><ul>
-<li><code>r</code>：只会取代光标所在的那一个字符一次</li>
-<li><code>R</code>：会一直取代光标所在的文字，直到按下 <code>ESC</code> 为止</li>
-<li><code>s</code>：删字符插入</li>
-<li><code>S</code>：删行插入</li>
-<li><code>c</code>：和d一样，但是进入编辑模式</li>
-</ul>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
-<li><code>crtl+a</code>：光标所在处数字+1</li>
-<li><code>~</code>：转换光标所在字符的大小写</li>
-<li><code>J</code>：将光标所在行与下一行的数据结合成一行</li>
-</ul>
-<h1 id="光标移动"><a href="#光标移动" class="headerlink" title="光标移动"></a>光标移动</h1><h2 id="行内移动"><a href="#行内移动" class="headerlink" title="行内移动"></a>行内移动</h2><ul>
-<li><code>h</code>或<code>←</code>：向左移动一个字符<ul>
-<li><code>2←</code>：向左移动2个字符</li>
-</ul>
-</li>
-<li><code>l</code>或<code>→</code>：向右移动一个字符</li>
-<li><code>0</code>或<code>Home</code>或<code>|</code>或<code>^</code>：行首</li>
-<li><code>$</code>或<code>End</code>：行尾</li>
-</ul>
-<h2 id="词间移动"><a href="#词间移动" class="headerlink" title="词间移动"></a>词间移动</h2><ul>
-<li><code>w</code>：下一个符号分隔的单词词首<ul>
-<li>结合其他指令处理下一个词，比如<code>dw</code>，可以删除单词，<code>yw</code>可以复制单词</li>
-</ul>
-</li>
-<li><code>e</code>：下一个符号分隔的单词词尾</li>
-<li><code>b</code>：上一个符号分隔的单词词首</li>
-<li><code>W</code>：下一个空格分隔的单词词首</li>
-<li><code>E</code>：下一个空格分隔的单词词尾</li>
-<li><code>B</code>：上一个空格分隔的单词词首</li>
-</ul>
-<h2 id="行间移动"><a href="#行间移动" class="headerlink" title="行间移动"></a>行间移动</h2><ul>
-<li><code>space</code>：向右移动一个字符<ul>
-<li><code>n+space</code>，移动n个字符，不限于行内</li>
-</ul>
-</li>
-<li><code>k</code>或<code>↑</code>：向上移动一个字符</li>
-<li><code>j</code>或<code>↓</code>：向下移动一个字符<ul>
-<li><code>30↓</code>或<code>30j</code>：向下移动30行</li>
-</ul>
-</li>
-<li><code>-</code>：上一行行首</li>
-<li><code>enter</code>或<code>+</code>：向下移动至行首<ul>
-<li><code>30enter</code>或<code>30+</code>，向下移动30行行首</li>
-</ul>
-</li>
-<li><code>H</code>：光标移动到该页首行行首</li>
-<li><code>M</code>：光标移动到该页中间行行首</li>
-<li><code>L</code>：光标移动到该页末行行首</li>
-<li><code>G</code>：移动到文件最后一行(常用)<ul>
-<li><code>20G</code>，移动到文件的第20行</li>
-<li><code>gg</code>，移动到第一行=<code>1G</code></li>
-</ul>
-</li>
-</ul>
-<h2 id="段间移动"><a href="#段间移动" class="headerlink" title="段间移动"></a>段间移动</h2><ul>
-<li><code>(</code>：上一段首</li>
-<li><code>)</code>：下一段首</li>
-<li><code>&#123;</code>：上一段首空行</li>
-<li><code>&#125;</code>：下一段首空行</li>
-</ul>
-<h2 id="翻页"><a href="#翻页" class="headerlink" title="翻页"></a>翻页</h2><ul>
-<li><code>ctrl+f</code>或<code>pagedown</code>：屏幕向下移动一页</li>
-<li><code>ctrl+b</code>或<code>pageup</code>：屏幕向上移动一页</li>
-<li><code>ctrk+d</code>：屏幕向下移动半页</li>
-<li><code>ctrl+u</code>：屏幕向上移动半页</li>
-</ul>
-<h1 id="搜索替换"><a href="#搜索替换" class="headerlink" title="搜索替换"></a>搜索替换</h1><ul>
-<li><code>/word</code>：向下寻找word</li>
-<li><code>?word</code>：向上寻找</li>
-<li><code>n</code>：重复查找</li>
-<li><code>N</code>：反向查找</li>
-<li><code>:n1,n2s/word1/word2/g</code>：在第 n1 与 n2 行之间寻找 word1 这个字符串，并将该字符串取代为 word2 <ul>
-<li>n2用<code>$</code>代表结尾，则<code>:1,$s/word1/word2/g</code>代表全文中替换，也可以用<code>:1,%s/word1/word2/g</code></li>
-<li><code>g</code>用<code>gc</code>时可以确认是否取代</li>
-</ul>
-</li>
-</ul>
-<h1 id="删除d"><a href="#删除d" class="headerlink" title="删除d"></a>删除d</h1><ul>
-<li><code>x</code>或者<code>delete</code>：向后删除<ul>
-<li><code>2x</code>：向后删除2个字符</li>
-</ul>
-</li>
-<li><code>X</code>或<code>backspace</code>：向前删除</li>
-<li><code>d</code>：<ul>
-<li><code>dd</code>：删除一行。<code>20dd</code>：删除20行</li>
-<li><code>d$</code>：删除至行尾=<code>D</code></li>
-<li><code>d0</code>：删除至行首</li>
-<li><code>d1G</code>： 删除光标所在到第一行的所有数据</li>
-<li><code>dG</code>：删除光标所在到最后一行的所有数据</li>
-<li><code>: 1,10d</code>：删除第一行到第十行</li>
-<li><code>dfc</code>：删除从文本中出现字符“c”的位置，一直向前直到下一个该字符所出现的位置（包括该字符）之间的内容 </li>
-<li><code>daw</code>：删除光标所在的一个单词</li>
-</ul>
-</li>
-</ul>
-<h1 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a>可视化</h1><ul>
-<li><code>v</code>：可视</li>
-<li><code>V</code>：行可视</li>
-<li><code>ctrl+v</code>：块可视</li>
-</ul>
-<h1 id="复制粘贴"><a href="#复制粘贴" class="headerlink" title="复制粘贴"></a>复制粘贴</h1><h2 id="复制y"><a href="#复制y" class="headerlink" title="复制y"></a>复制y</h2><ul>
-<li><code>yy</code>或<code>Y</code>：复制游标所在的那一行(常用) <ul>
-<li><code>20yy</code>：向下复制20行</li>
-</ul>
-</li>
-<li><code>y$</code>：复制光标所在的那个字符到该行行尾的所有数据</li>
-<li><code>y0</code>：复制光标所在的那个字符到该行行首的所有数据</li>
-<li><code>y1G</code>：复制游标所在行到第一行的所有数据</li>
-<li><code>yG</code>：复制游标所在行到最后一行的所有数据</li>
-</ul>
-<h2 id="粘贴p"><a href="#粘贴p" class="headerlink" title="粘贴p"></a>粘贴p</h2><ul>
-<li><code>p</code>：将已复制的数据贴在光标下一行</li>
-<li><code>P</code>：贴在游标上一行</li>
-</ul>
-<h1 id="其他动作"><a href="#其他动作" class="headerlink" title="其他动作"></a>其他动作</h1><ul>
-<li><code>u</code>：撤销命令</li>
-<li><code>U</code>：撤销行内命令</li>
-<li><code>ctrl+r</code> 重做上一个动作。【与撤销相反】</li>
-<li><code>.</code>：重复前一个动作的意思。 比如重复删除、重复贴上等等动作</li>
-</ul>
-<h1 id="退出Vim"><a href="#退出Vim" class="headerlink" title="退出Vim"></a>退出Vim</h1><ul>
-<li><code>:w</code> ：保存</li>
-<li><code>:w!</code> ：强制保存</li>
-<li><code>:q</code>：退出</li>
-<li><code>:q!</code>：强制退出</li>
-<li><code>:wq</code> 储存后离开</li>
-<li><code>:wq!</code> 为强制储存后离开</li>
-<li><code>ZQ</code>：不保存退出</li>
-<li><code>ZZ</code>：保存退出</li>
-<li><code>:w [filename]</code>：另存为</li>
-<li><code>:r [filename]</code>：读取另一个文档的内容，内容追加到光标所在行之后</li>
-<li><code>:n1,n2 w [filename]</code>：将 n1 到 n2 的内容储存成 filename 这个档案</li>
-<li><code>:! command</code>：暂时离开 vi 到指令行模式下执行 command 的显示结果</li>
-</ul>
-<h1 id="vim-环境的变更境的变更"><a href="#vim-环境的变更境的变更" class="headerlink" title="vim 环境的变更境的变更"></a>vim 环境的变更境的变更</h1><ul>
-<li><code>:set nu</code>：显示行号，设定之后，会在每一行的前缀显示该行的行号</li>
-<li><code>:set nonu</code>：与 set nu 相反，为取消行号</li>
-</ul>
-<h1 id="管理命令"><a href="#管理命令" class="headerlink" title="管理命令"></a>管理命令</h1><ul>
-<li><code>:vs 路径/文件名</code>：同时再打开另外的一个文件，通过<code>ctrl ww</code>使得光标在两个文件间切换；两个文件是左右并排显示的。</li>
-<li><code>:sp 路径/文件名</code>：同时再打开另外的一个文件，通过<code>ctrl ww</code>使得光标在两个文件间切换；两个文件是上下并排显示的。</li>
-</ul>
-<p><img src="vi-vim-cheat-sheet-sch.gif" alt=""></p>
-]]></content>
-      <categories>
-        <category>系统</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【molpro】01.基础</title>
-    <url>/2019/11/13/%E3%80%90molpro%E3%80%9101.%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<h1 id="运行molpro"><a href="#运行molpro" class="headerlink" title="运行molpro"></a>运行molpro</h1><h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>在UNIX系统中，MOLPRO通过unix命令molpro访问：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">molpro</span> <span class="selector-attr">[options]</span> <span class="selector-attr">[datafile]</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><p><code>datafile</code>：输入文件，可以取任何名字，但是要避免使用.out作为后缀，一般用.inp。unix中出现在molpro输入文件中的文件名总是转化为小写。</p>
-</li>
-<li><p>options：大部分选项都有合适的系统默认值，但是也可以在命令行中、环境变量MOLPRO OPTIONS中或文件./molpro.rc，$HOME/.molprorc，和library文件目录下的tuning.rc中（优先级递减）：</p>
-<ul>
-<li><p><code>-d [directory]</code> ：临时文件是临时的，并在作业结束时消失。默认情况下，此目录的位置为<code>/tmp/$USER</code>，或取自环境变量 TMPDIR。可以通过该选项定义放置临时文件的目录，</p>
-</li>
-<li><p><code>-m n_scale</code>：<span id=mm>指定分配给程序的工作内存，单位是word=8byte</span></p>
-<ul>
-<li><code>k</code>，<code>m</code>，<code>g</code>分别为10<sup>3</sup>，10<sup>6</sup>，10<sup>9</sup></li>
-<li><code>K</code>，<code>M</code>，<code>G</code>分别为2<sup>10</sup>，2<sup>20</sup>，2<sup>30</sup> </li>
-</ul>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">#需要<span class="number">1000</span>word的内存</span><br><span class="line">-m <span class="number">1</span>k</span><br><span class="line">#需要<span class="number">1024</span>word的内存</span><br><span class="line">-M <span class="number">1</span>K</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>用于并行执行的选项（在使用串行MOLPRO时，将忽略这些选项）：</p>
-<ul>
-<li><p><code>-n</code>：定义设置的并行进程个数</p>
-<p>并行内存计算eg. 为具有4个并行计算过程的作业指定100×10<sup>6</sup>个word：100×10<sup>6</sup>×8×4=3.2×10<sup>9</sup>byte</p>
-</li>
-<li><p><code>-N</code> ：等指定工作节点的主机名</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="输出文件"><a href="#输出文件" class="headerlink" title="输出文件"></a>输出文件</h2><h3 id="out文件"><a href="#out文件" class="headerlink" title="out文件"></a>out文件</h3><p>执行结果会把输出写到一个名称输入文件截掉扩展名并加上<code>.out</code>产生的文件中。如果输出文件已经存在，防止覆盖文件，会把旧文件重命名为后缀为<code>.out_1</code>的文件中。如果命令行没有给出<code>datafile</code>，那么从标准输入读取数据。在命令行中可以有其他方式：</p>
-<ul>
-<li><p><code>-o [outfile]</code> ：自定义输出名</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">molpro</span> <span class="selector-tag">-o</span> <span class="selector-tag">water</span><span class="selector-class">.output</span> <span class="selector-tag">h2o</span><span class="selector-class">.inp</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>-s</code>：不保存旧的输出文件，只是覆盖。</p>
-</li>
-</ul>
-<h3 id="punch文件"><a href="#punch文件" class="headerlink" title="punch文件"></a>punch文件</h3><p>punch文件是output文件的简易形式，它包含了最重要的数据和结果，例如几何结构，能量，偶极矩等。可以用独立的程序readpun处理，它用关键词选择特定的结果，并根据用户提供的格式产生排列好的表格。</p>
-<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PUNCH,</span>filename,[REWIND]</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>指定的<code>filename</code>会在unix中转换成小写</p>
-</li>
-<li><p>punch文件如果已经存在，则对其添加内容，如果指定了<code>REWIND</code>或者<code>NEW</code>，punch文件中所有以前的信息都被覆盖。</p>
-</li>
-<li><p>eg.</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">PUNCH</span>,H<span class="number">2</span>O.PUN</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="xml文件"><a href="#xml文件" class="headerlink" title="xml文件"></a>xml文件</h3><p>除了生成.out文件外，还用. XML后缀创建结构化XML文件(实际上是.out文件的父文件)。这个文件可以用于结果的自动处理，例如<a href="http://jmol.sourceforge.net/">Jmol程序</a>（需要下载<a href="https://www.java.com/en/download/manual.jsp">java运行环境JRE</a>）的图形化呈现。</p>
-<ul>
-<li><code>-X</code>或者<code>--xml-output</code>：指定输出文件为格式规范的XML文件，适于自动后期处理。重要的数据如输入，结构，以及结果都被加上标记，通常的大块描述性输出都作为XML注释折叠起来。</li>
-<li><code>--no-xml-output</code>：强制产生纯文本输出。</li>
-<li><code>--xml2txt</code>：将xml文件转换为纯文本文件，此时molpro的输入文件应该是一个xml文件。</li>
-</ul>
-<h3 id="9个二进制文件"><a href="#9个二进制文件" class="headerlink" title="9个二进制文件"></a>9个二进制文件</h3><ul>
-<li><p>程序通过它们的编号（1到9）可以简单地识别它们。</p>
-</li>
-<li><p>默认是临时文件，用<a href="#file卡"><code>FILE</code>命令</a>可以把计算出的数据作为轨道和能量保存到永久文件中，并在以后的阶段使用它们重启计算，默认的保存路径为$HOME/wfu，可以使用<code>-W</code>修改路径：</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">molpro</span> -W ./ h<span class="number">2</span>o.inp</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>文件类型：</p>
-<ul>
-<li>文件1：主文件，存有基组，几何结构，以及单电子和双电子积分。</li>
-<li>文件2：默认是转存文件，用于存储波函的信息，即：轨道，轨道能量，可选的CI矢量，以及密度矩阵。</li>
-<li>文件3：辅助文件，和文件2一起用于续算</li>
-<li>文件4~8：草稿文件空间，用来分类积分，存储转换的积分和CI矢量。这些文件通常无需存为永久文件。</li>
-</ul>
-<p>通常文件1和2（以及3）被声明为用于续算的永久文件。文件2对于重新启动计算是必不可少的，而文件1上的积分可以重新启动，也可以重新计算。把波函信息存储在文件2中是非常有用的，因为对于每个新的结构，积分文件都会被改写，而一个计算中的轨道和CI因子可以用作下一个相近几何结构计算的初始猜测。</p>
-</li>
-</ul>
-<h3 id="记录文件"><a href="#记录文件" class="headerlink" title="记录文件"></a>记录文件</h3><ul>
-<li>记录文件的名称是正整数，引用格式为record.file，比如2100.2表示命名为2100的2文件。记录文件的名称比较随意，它们的数值与记录在文件中的顺序无关。</li>
-<li><p>不要使用≥2000的记录名字，因为有一些默认的记录为：</p>
-<ul>
-<li><code>2100</code>：RHF转存记录（闭壳层和开壳层）</li>
-<li><code>2200</code>：UHF转存记录</li>
-<li><code>2140</code>：MCSCF转存记录</li>
-<li><code>4100</code>：CPHF续算信息</li>
-<li><code>5000</code>：MCSCF梯度信息</li>
-<li><code>5100</code>：CP-MCSCF梯度信息</li>
-<li><code>5200</code>：MP2梯度信息</li>
-<li><code>5300</code>：Hessian续算信息</li>
-<li><code>5400</code>：频率续算信息</li>
-<li><code>6300</code>：域的续算信息</li>
-</ul>
-</li>
-<li><p>如果一个输入包含同一类型的几个波函计算，例如不同活性空间的几个MCSCF计算，则对同一类型的每个计算，记录编号加1。比如第一个SCF计算的结果存储在转存记录2100.2中，第二个SCF计算存于2101.2记录，第一个MCSCF计算存于2140.2，第二个MCSCF存于2141.2等等。这些数字和输入中出现的顺序有关，而不是按照计算实际执行的顺序。</p>
-</li>
-</ul>
-<h3 id="put输出其他格式"><a href="#put输出其他格式" class="headerlink" title="put输出其他格式"></a>put输出其他格式</h3><figure class="highlight fortran"><table><tr><td class="code"><pre><span class="line">PUT,style,<span class="keyword">file</span>,<span class="keyword">status</span>,info</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p><code>style</code>：</p>
-<ul>
-<li><p><code>GAUSSIAN</code>：写一个完整的GAUSSIAN输入文件，默认为<code># sp</code>计算</p>
-</li>
-<li><p><code>XYZ</code>：输出xyz文件</p>
-</li>
-<li><p><code>XYZGRAD</code>：包含能量梯度的XYZ文件（列依次是：x，y，z，charge，gx，gy，gz，梯度为-1*eV/A）</p>
-</li>
-<li><p><code>CRD</code>：坐标将用CHARMm CRD格式书写</p>
-</li>
-<li><p><code>MOLDEN</code>：将创建用于MOLDEN可视化程序的接口文件</p>
-<ul>
-<li>注意：<font color=red>molden文件不支持含h以上角动量的基组，如果仅需要可视化轨道查看，那么可以将基组中的h删去，输出molden文件，结果差别很小。</font></li>
-</ul>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">put</span>,molden,h<span class="number">2</span>o.molden;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>IRSPEC</code>：gnuplot输入文件，该文件可用于绘制IR光谱</p>
-</li>
-<li><p>忽略则写入当前结构的Z矩阵，可能的话还写入梯度。</p>
-</li>
-</ul>
-</li>
-<li>file定义写入数据的文件名；如果为空，数据将写入到输出流中。如果忽略status或设置为NEW，那么文件中所有的旧内容都被清除；否则对文件追加。</li>
-</ul>
-<h1 id="输入文件格式"><a href="#输入文件格式" class="headerlink" title="输入文件格式"></a>输入文件格式</h1><h2 id="一般结构"><a href="#一般结构" class="headerlink" title="一般结构"></a>一般结构</h2><figure class="highlight erlang-repl"><table><tr><td class="code"><pre><span class="line">***,title			! 标题（可选）</span><br><span class="line">memory,<span class="number">4</span>,m 			! 内存指定（可选）</span><br><span class="line">file,<span class="number">1</span>,name.int 	! 命名永久的积分文件（可选）</span><br><span class="line">file,<span class="number">2</span>,name.wfu 	! 命名永久的波函文件（可选）</span><br><span class="line"></span><br><span class="line">gprint,options 		! 全局打印选项（可选）</span><br><span class="line">gthresh,options 	! 全局阈值（可选）</span><br><span class="line">gdirect[,options] 	! 全局直接积分选项（可选）</span><br><span class="line">gexpec,opnames 		! 单电子算符的全局定义（可选）</span><br><span class="line"></span><br><span class="line">basis=basisname 	! 基的定义。如果不出现，使用cc-pVDZ</span><br><span class="line">geometry=&#123;...&#125; 		! 结构定义。</span><br><span class="line"></span><br><span class="line">var1=value,var2=value,... 	! 设定结构和/或波函定义中的变量</span><br><span class="line"></span><br><span class="line">&#123;command,options 		! 程序或流程的名称</span><br><span class="line">directive,data,option 	! 命令的指令（可选）</span><br><span class="line">...</span><br><span class="line">&#125; 				! 结束命令区</span><br><span class="line">--- 			! 结束输入（可选）</span><br></pre></td></tr></table></figure>
-<ul>
-<li>输了memory卡应该是紧随标题的第一个以外，其他basis，geometry，gprint，gdirect，gthresh，gexpec，以及变量定义的顺序是任意的。</li>
-<li>可以在一个程序后调用其它几个程序。在程序的调用之间还可以重新定义基组和/或分子结构；程序将会自动确认是否需要重新计算积分。</li>
-</ul>
-<h2 id="一般规则"><a href="#一般规则" class="headerlink" title="一般规则"></a>一般规则</h2><ul>
-<li><code>,</code>移到下一个制表位，即用来划定输入范围。</li>
-<li><code>;</code>结束记录，开始一个新的记录。用分号隔开的基本命令单位称为卡（card）。一个给定的输入行可以包含多个有效命令（用；隔开），也可以只有一个。</li>
-<li><code>!</code>忽略该输入行后面的内容（用于注释）。</li>
-<li>内容不区分大小写，统一转换为大写处理。引号中的内容会被认为是字符串，不会进行大小写转换。</li>
-<li>整数后面加上<code>.</code>，程序只读取浮点数</li>
-</ul>
-<p>一般只占用一行的命令：</p>
-<ul>
-<li><code>***</code>总是第一个数据行，title可以任选，但是如果文件1用于续算，title必须总是相同。这个卡的作用是重新设置所有程序的计数器等。如果忽略<em>*</em>卡，title假定用默认值，全是空格。</li>
-<li><code>INCLUDE</code>包含其它的输入文件。使用<code>INCLUDE</code>可以打开辅助输入文件。如果遇到了<code>INCLUDE</code>命令，则打开新的输入文件并读取到结束，然后在第一个输入文件中继续INCLUDE卡之后的输入。<code>INCLUDE</code>也可以嵌套。</li>
-<li><code>FILE</code>指定已命名的文件</li>
-<li><code>TEXT</code>打印文本</li>
-<li><code>TITLE</code>定义运行的标题或表格的标题</li>
-<li><code>CON</code>指定轨道组态</li>
-<li><code>---</code>结束文件（忽略之后的输入）</li>
-</ul>
-<h2 id="一般格式"><a href="#一般格式" class="headerlink" title="一般格式"></a>一般格式</h2><p>整体格式一般是：</p>
-<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">COMMAND,</span> options</span><br></pre></td></tr></table></figure>
-<p>或者</p>
-<figure class="highlight haskell"><table><tr><td class="code"><pre><span class="line">&#123; <span class="type">COMMAND</span>,options</span><br><span class="line"><span class="title">directives</span></span><br><span class="line"><span class="class"><span class="keyword">data</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>命令（COMMAND）比如有<code>HF, MP2, CCSD(T), MCSCF, MRCI</code></li>
-<li>指令（directives）比如有<code>OCC, CLOSED, WF, PRINT</code>等，格式一般<code>DIRECTIVE,data,options</code></li>
-<li>选项（options）的格式一般是<code>NAME[=value]</code><ul>
-<li>多个选项以逗号或空格分隔。</li>
-<li>如果选项在COMMAND一行或命令块内的指令上给出，则它们仅对相应的程序有效。</li>
-</ul>
-</li>
-</ul>
-<h1 id="memory卡"><a href="#memory卡" class="headerlink" title="memory卡"></a>memory卡</h1><figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">MEMORY,</span>n,scale<span class="comment">;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><a href="#mm">与命令行中的<code>-m</code>不同</a>，scale中<code>k</code>，<code>m</code>，<code>g</code>不区分大小写，统一按10<sup>3</sup>，10<sup>6</sup>，10<sup>9</sup></li>
-<li>优先于命令行中的<code>-m</code>。两者都省略的话，程序将使用默认的内存大小8mw (64 Mb)。</li>
-</ul>
-<p>MOLPRO可以根据用户的需要动态分配内存。因此不需要保存有不同内存大小的不同版本程序。所需要的内存大小取决于分子的大小、基组、分子的对称性和使用的方法，因此很难提前预测。大多数计算运行在16mw或更少，但在大的情况下，低对称性可能需要更多。一个比较好的选择是64MW（512MB），前提是系统有足够的内存。</p>
-<ul>
-<li>算到一半但是没有报错就停止了，可以将.sub文件中并行核数设大一些，比如24，再将molpro中的并行设置-n中的设置小一些。</li>
-</ul>
-<h1 id="file卡"><a href="#file卡" class="headerlink" title="file卡"></a>file卡</h1><p>对所有的永久文件，默认设置是RESTART。所有的临时文件在需要时通常自动分配。I/O缓存分配到动态内存的顶端，缓存的大小会减少可用的内存。因此MEMORY卡必须出现在第一个FILE卡之前。</p>
-<figure class="highlight fortran"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FILE</span>,<span class="keyword">file</span>,<span class="keyword">name</span>,[<span class="keyword">status</span>]</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>file</code>是逻辑MOLPRO文件序号(1-9)</li>
-<li><code>name</code>是文件名（将被转换成小写字母）</li>
-<li><code>status</code>可以是：<ul>
-<li><code>UNKNOWN</code>打开永久文件。如果存在，自动续算。这是默认的。</li>
-<li><code>OLD</code>作用同<code>UNKNOWN</code>。如果该文件不存在，不会发生错误。</li>
-<li><code>NEW</code> 打开永久文件。如果已经存在，则清除，不续算。</li>
-<li><code>ERASE</code> 作用同<code>NEW</code>。</li>
-<li><code>SCRATCH</code> 打开临时文件。如果已经存在，则清除，不续算。任务完成后，文件不<br>再存在。</li>
-<li><code>DELETE</code> 作用同<code>SCRATCH</code>。</li>
-</ul>
-</li>
-</ul>
-<p>例子：</p>
-<ul>
-<li><p>分配永久文件1的名称H2O.INT，如果存在会使用它进行续算。比如第一个输入中只计算了hf和ccsd(t)，使用了该指令，后续计算casscf和MRCI的时候，指定了相同的文件，，MOLPRO将自动恢复保存在给定文件中的所有数据，积分和轨道将被重新启动。</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">FILE</span>,<span class="number">1</span>,H<span class="number">2</span>O.INT</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>分配永久文件2的名称H2O.WFU，即禁用自动重启机制</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">FILE</span>,<span class="number">2</span>,H<span class="number">2</span>O.WFU,NEW</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在大多数情况下，文件1可能非常大(它包含两个电子的积分)，而重新计算积分的成本可能只占总时间的一小部分，因此可以只在输入中只定义文件2，积分会自动重新计算。</p>
-</li>
-</ul>
-<h1 id="print-gprint-全局打印选项"><a href="#print-gprint-全局打印选项" class="headerlink" title="print/gprint 全局打印选项"></a>print/gprint 全局打印选项</h1><p>通常，有两种打印选项：一种是局部的，由print指令指定，仅在一个作业步骤中使用；一种是全局的，在各个程序以外可以用GPRINT命令设置全局打印选项（g可加可不加，加了可以避免与程序特定的PRINT卡相混淆）。局部打印命令是特定方法输入的一部分，因此必须直接遵循相应的命令。全局打印选项作用于所有后续方法。</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">GPRINT</span>,key<span class="number">1</span>[=value<span class="number">1</span>],key<span class="number">2</span>[=value<span class="number">2</span>],. . .</span><br><span class="line"><span class="attribute">NOGPRINT</span>,key<span class="number">1</span>,key<span class="number">2</span>,. . .</span><br></pre></td></tr></table></figure>
-<ul>
-<li>除了<code>DISTANCE</code>，<code>ANGLES</code>，和<code>VARIABLE</code>之外，全部选项默认都不打印。<code>key</code>有：<ul>
-<li><code>BASIS</code>：打印基的信息</li>
-<li><code>DISTANCE</code>：打印键长（默认）</li>
-<li><code>ANGLES</code>：打印键角信息（默认=0）。如果大于0，还打印二面角</li>
-<li><code>ORBITAL(=int)</code>：打印SCF和MCSCF的轨道，打印每个对称性下的占据轨道和int个最低空轨道。</li>
-<li><code>CIVECTOR</code>：打印MCSCF的CI矢量（注意，默认情况下只打印大于0.05的CI系数。）</li>
-<li><code>PAIRS</code>：打印CI和CCSD中的电子对列表</li>
-<li><code>CS</code>：打印CI和CCSD中的单激发信息</li>
-<li><code>CP</code>：打印CI和CCSD中的对激发信息</li>
-<li><code>REF</code>：打印CI中的参考CSF及其因子</li>
-<li><code>PSPACE</code>：打印p-空间组态</li>
-<li><code>MICRO</code>：打印MCSCF和CI中的微迭代</li>
-<li><code>CPU</code>：打印详细的CPU信息</li>
-<li><code>IO</code>：打印详细的I/O信息</li>
-<li><code>VARIABLE</code>：每当变量设置或改变时，就打印变量（默认）</li>
-</ul>
-</li>
-<li>value可以省略，当values，大于0的值可用于调试，在有些情况下会给出更多的信息。</li>
-<li><code>NOGPRINT,key</code>等价于<code>PRINT, key =-1</code>。</li>
-</ul>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">gprint,basis             !<span class="builtin-name">print</span> basis <span class="builtin-name">set</span> information</span><br><span class="line">gprint,orbitals          !<span class="builtin-name">print</span> occupied orbitals</span><br><span class="line">gprint,<span class="attribute">orbitals</span>=2        !<span class="builtin-name">print</span> occupied <span class="keyword">and</span> the two lowest virtual orbitals</span><br><span class="line">                         !<span class="keyword">in</span> each symmetry</span><br><span class="line">gprint,civector          !<span class="builtin-name">print</span> configuration coefficients</span><br></pre></td></tr></table></figure>
-<h1 id="geometry卡"><a href="#geometry卡" class="headerlink" title="geometry卡"></a>geometry卡</h1><p>定义分子结构可以用标准Z矩阵形式，或XYZ形式。GEOMETRY必须出现在其它修改分子结构的命令之后。</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="string">[SYMMETRY, options ]</span></span><br><span class="line"><span class="string">[ORIENT, options ]</span> </span><br><span class="line"><span class="string">[ANGSTROM]</span> </span><br><span class="line"><span class="string">[BOHR]</span></span><br><span class="line">geometry=&#123; </span><br><span class="line">原子说明 </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>symmetry</code>选项<ul>
-<li><code>SYMMETRY,NOSYM</code>禁止使用对称性，也可以只用<code>NOSYM</code></li>
-<li><code>SYMMETRY,AUTO</code>允许使用对称性</li>
-</ul>
-</li>
-<li><code>orient</code>选项：（也可以用<code>CENTRE=MASS|CHARGE</code>指定对称中心。）<ul>
-<li><code>CHARGE</code>：定位分子，使得电荷中心是原点，轴是四极矩的本征矢。</li>
-<li><code>MASS</code>：定位分子，使得质心是原点，轴是惯性张量的本征矢（对Z矩阵输入是默认的）</li>
-<li><code>NOORIENT</code>：禁止分子重新定位（对XYZ输入是默认的） </li>
-<li><code>SIGNX=±1</code>：强制第一个非零x坐标为正或负。类似地，可以用<code>SIGNY</code>和<code>SIGNZ</code>设置y、 z坐标。这对固定遍及几种不同计算和结构的分子方位非常有用。也可以设定系统变量<code>ZSIGNX</code>，<code>ZSIGNY</code>，<code>ZSIGNZ</code>为正值或负值来获得同样的效果。</li>
-<li><code>PLANEXZ</code>：对于C<sub>2v</sub>和D<sub>2h</sub>点群，强制主平面是xz，而不是默认的yz。结构构建程序尝试交换坐标轴，使尽可能多的原子位于主平面中，因此对于平面分子的特殊情况，这意味着所有原子都会位于主平面。也可以指定<code>PLANEYZ</code>和<code>PLANEXY</code>，但是后者目前对C2v点群会发生错误。</li>
-</ul>
-</li>
-<li><code>geometry</code>也可以通过<code>geometry=file</code>从文件中读取</li>
-</ul>
-<h2 id="xyz输入"><a href="#xyz输入" class="headerlink" title="xyz输入"></a>xyz输入</h2><ul>
-<li>第一行是原子个数，第二行是任意的标题，前两行可以省略。坐标中单位默认为Å。</li>
-<li>元素符号后面可以加序号，用于对于同一类型不同原子使用不同的基组。</li>
-</ul>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">geometry=&#123;</span><br><span class="line">   <span class="number">4</span></span><br><span class="line">  FORMALDEHYDE</span><br><span class="line">C          <span class="number">0.0000000000</span>        <span class="number">0.0000000000</span>       <span class="number">-0.5265526741</span></span><br><span class="line">O          <span class="number">0.0000000000</span>        <span class="number">0.0000000000</span>        <span class="number">0.6555124750</span></span><br><span class="line">H          <span class="number">0.0000000000</span>       <span class="number">-0.9325664988</span>       <span class="number">-1.1133424527</span></span><br><span class="line">H          <span class="number">0.0000000000</span>        <span class="number">0.9325664988</span>       <span class="number">-1.1133424527</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Z矩阵输入"><a href="#Z矩阵输入" class="headerlink" title="Z矩阵输入"></a>Z矩阵输入</h2><ul>
-<li>坐标默认为玻尔 bohr，可以使用<code>angstrom</code>关键词改变</li>
-</ul>
-<figure class="highlight mathematica"><table><tr><td class="code"><pre><span class="line">angstrom</span><br><span class="line">geometry=&#123;</span><br><span class="line"><span class="keyword">C</span></span><br><span class="line"><span class="keyword">O</span>   <span class="keyword">C</span>  <span class="number">1.182</span></span><br><span class="line">H1  <span class="keyword">C</span>  <span class="number">1.102</span>  <span class="keyword">O</span>  <span class="number">122.1789</span></span><br><span class="line">H2  <span class="keyword">C</span>  <span class="number">1.102</span>  <span class="keyword">O</span>  <span class="number">122.1789</span>  H1  <span class="number">180</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>也可以通过Z矩阵输入XYZ形式</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">angstrom</span><br><span class="line">geometry=&#123;</span><br><span class="line">C,,        <span class="number">0.0000000000</span> ,     <span class="number">0.0000000000</span> ,    <span class="number">-0.5265526741</span></span><br><span class="line">O,,        <span class="number">0.0000000000</span> ,     <span class="number">0.0000000000</span> ,     <span class="number">0.6555124750</span></span><br><span class="line">H,,        <span class="number">0.0000000000</span> ,    <span class="number">-0.9325664988</span> ,    <span class="number">-1.1133424527</span></span><br><span class="line">H,,        <span class="number">0.0000000000</span> ,     <span class="number">0.9325664988</span> ,    <span class="number">-1.1133424527</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>也可以使用变量</p>
-<figure class="highlight mathematica"><table><tr><td class="code"><pre><span class="line">geometry=&#123;</span><br><span class="line"><span class="keyword">C</span></span><br><span class="line"><span class="keyword">O</span>  , <span class="keyword">C</span> , rco</span><br><span class="line">H1 , <span class="keyword">C</span> , rch , <span class="keyword">O</span> , hco</span><br><span class="line">H2 , <span class="keyword">C</span> , rch , <span class="keyword">O</span> , hco , H1 , <span class="number">180</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">rco=<span class="number">1.182</span> Ang</span><br><span class="line">rch=<span class="number">1.102</span> Ang</span><br><span class="line">hco=<span class="number">122.1789</span> <span class="keyword">Degree</span></span><br></pre></td></tr></table></figure>
-<h1 id="基组"><a href="#基组" class="headerlink" title="基组"></a>基组</h1><h2 id="笛卡尔和球谐基函数"><a href="#笛卡尔和球谐基函数" class="headerlink" title="笛卡尔和球谐基函数"></a>笛卡尔和球谐基函数</h2><p>MOLPRO默认使用球谐基函数(5d，7f等)，即使是对Pople基组，如6-31G**，也是如此。可以用<code>CARTESIAN</code>命令使用笛卡尔函数，随后所有的计算都使用笛卡尔基函数，在续算中也是如此，可以通过<code>SPHERICAL</code>换成球谐基函数，但是要在给基组之前给出相应的命令。</p>
-<h2 id="基组库"><a href="#基组库" class="headerlink" title="基组库"></a>基组库</h2><p>基组库由一组无格式文本文件以及相应的索引构成，组成了通用的基组（原高斯函数和相应的收缩）和有效芯势数据库。这些文件可以在源文件的目录树中找到，分别为lib/*.libmol和lib/libmol.index，但更方便的方法是从数据库里查找：</p>
-<ul>
-<li><a href="https://www.basissetexchange.org/">美国太平洋西北国家实验室（Pacic Northwest NationalLaboratory）的基组数据库</a></li>
-<li><a href="http://www.tc.uni-koeln.de/PP/clickpse.en.html">Stuttgart 有效芯势和基组</a></li>
-<li><a href="https://www.molpro.net/info/basis.php?portal=user&amp;choice=Basis+library">molpro网页的basisi.php脚本</a>，可以本地安装也可以直接在网页中获取</li>
-</ul>
-<h2 id="默认基组及其调用"><a href="#默认基组及其调用" class="headerlink" title="默认基组及其调用"></a>默认基组及其调用</h2><h3 id="指定"><a href="#指定" class="headerlink" title="指定"></a>指定</h3><ul>
-<li><p>对任何对称唯一的原子组都没有定义基组，那么程序假定使用全局默认值（VDZ）</p>
-</li>
-<li><p>通过一下方法指定基组。</p>
-<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">BASIS,</span>basis</span><br></pre></td></tr></table></figure>
-<p>或</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">BASIS</span>=basis</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>默认基组可以在输入文件能量计算前的任何位置定义，并且只能使用一个BASIS卡。默认基组应用于所有类型的原子，但是可以对特定的原子替换成不同的基组。</p>
-</li>
-<li><p><code>BASIS</code>不能作为变量，比如<code>$BASIS=[AVDZ, AVTZ, AVQZ]</code>，使用遍历的方法为：</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="variable">$aobases</span>=[AVDZ, AVTZ, AVQZ]</span><br><span class="line"><span class="keyword">do</span> <span class="attribute">i</span>=1,#aobases</span><br><span class="line"><span class="attribute">basis</span>=aobases(i)</span><br><span class="line"><span class="built_in">..</span>.</span><br><span class="line">enddo</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="可调用的基组"><a href="#可调用的基组" class="headerlink" title="可调用的基组"></a>可调用的基组</h3><ul>
-<li><code>basis</code>可以在文件lib/defbas中查找，包含的通用基组有：<ul>
-<li>所有的Dunning关联一致基组，用基组的标准名称（cc-pVXZ，aug-cc-pVXZ）或缩写（VXZ，AVXZ）调用。对于Al-Ar，用标准名称cc-pV(X+d)Z，aug-cc-pV(X+d)Z，或VXZ+d，AVXZ+d，可以得到紧凑的d扩充集。X=D,T,Q,5的基组适用于H-Kr，X=6适用于B-Ne和Al-Ar。</li>
-<li>用于芯关联的关联一致基组cc-pCVXZ，aug-cc-pCVXZ，或CVXZ，ACVXZ（X=D,T,Q,5），以及更新的“加权集”cc-pwCVXZ，aug-cc-pwCVXZ，或WCVXZ，AWCVXZ（X=D,T,Q,5）。这些基组适用于Li-Kr（CVXZ不包括Sc-Zn）。</li>
-<li>Douglas-Kroll-Hess相对论版本的关联一致基组，可以使用加上-DK后缀的标准名称或简称，例如，cc-pVXZ-DK或VXZ-DK。X=D-5适用于H-Kr，X=T适用于YCd和Hf-Hg。三阶DKH收缩集适用于Hf-Hg，需要加上后缀-DK3。</li>
-<li>Peterson等人用于用于显关联计算的F12基组：cc-pVXZ-F12，cc-pCVXZ-F12，或VXZ-F12，CVXZ-F12，其中X=D,T,Q。它们适用于H-Ar。</li>
-<li>Turbomole def2系列基组：SV(P)，SVP，TZVP，TZVPP，QZVP，QZVPP。它们可用于除了f区元素之外的整个周期表。</li>
-<li>对于第一行原子（不是H和He），有旧一些的Dunning/Hay分块收缩双zeta基（DZ和DZP）。</li>
-<li>Roos的ANO基组用于H-Ar（ROOS）。</li>
-<li>Stuttgart ECP和相应基组（例如ECP10MDF），以及Peterson等人基于ECP的关联一致基组：cc-pVXZ-PP，aug-cc-pVXZ-PP，cc-pwCVXZ-PP，aug-cc-pwCVXZ-PP，或VXZ-PP，AVXZ-PP，WCVXZ-PP，AWCVXZ-PP。后者适用于Cu-Kr，Y-Xe，和Hf-<br>Rn（芯关联集目前仅用于过渡金属）。</li>
-<li>Hay ECP和相应基组（ECP1和ECP2）。</li>
-<li>其它一些Karslruhe基组（SV，TZV，以及用于某些元素的TZVPPP）。</li>
-<li>用于Ga-Kr的Binning/Curtiss集（BINNING-SV，BINNING-SVP，BINNING-VTZ和BINNINGVTZP）</li>
-<li>大多数Pople基组使用其标准名称（例如6-31G*，6-311++G(D,P)，等）。在这种情况下需要特别注意，不能使用下面描述的用于限定基组的括弧修饰机制，必须使用被指定的整个标准基组。</li>
-</ul>
-</li>
-<li>此外，还可以使用很多密度拟合和单位分解（resolution of the identity，RI）基组。在密度拟合计算中，对Dunning的关联一致基组自动选择合适的Weigend VXZ/JKFIT，XZ/MP2FIT，或AVXZ/MP2FIT集（还可以用扩充版本的AVXZ/JKFIT 用于拟合Fock矩阵，但默认不使用）。对于def2系列的轨道基组，使用合适的辅助集（例如，TZVPP/JFIT，TZVPP/JKFIT，TZVPP/MP2FIT）。原则上说，这些JKFIT集是通用的，可以与AVXZ基组一起使用。初步结果表明它们也可用于cc-pVXZ-PP和aug-cc-pVXZ-PP系列的基组。</li>
-<li>对于使用cc-pVXZ-F12轨道基组的显关联F12计算，默认用相应的VXZ-F12/OPTRI基组构造附加的辅助轨道基（complementary auxiliary orbital basis；CABS）。对于其它轨道基组，默认使用合适的JKFIT集。</li>
-</ul>
-<h3 id="对于角动量的限制"><a href="#对于角动量的限制" class="headerlink" title="对于角动量的限制"></a>对于角动量的限制</h3><ul>
-<li><p>可以使用一些关于最大角动量函数的限制，或是收缩函数的数量限制，比如减少基组的最大角动量：</p>
-<ul>
-<li>忽略正常情况下出现在VQZ基组中的𝑓和𝑔函数：</li>
-</ul>
-<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">BASIS,</span>VQZ(D)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>指定氢的最大角动量是1，也就是忽略氢的𝑑轨道：</li>
-</ul>
-<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">BASIS,</span>VQZ(D/P)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>对于一般收缩基组，可以用扩充的语法直接给出每个角动量收缩函数的数量</p>
-<ul>
-<li>从Roos的ANO数据集产生6-31G*大小的基组：</li>
-</ul>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">BASIS</span>,ROOS(<span class="number">3</span>s<span class="number">2</span>p<span class="number">1</span>d/<span class="number">2</span>s)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="单个原子的默认基组"><a href="#单个原子的默认基组" class="headerlink" title="单个原子的默认基组"></a>单个原子的默认基组</h2><ul>
-<li><p>只需要在默认基组后加上<code>atom1=name1,atom2=name2,...,</code>，<code>atom</code>即元素符号，<code>name</code>为相应的基组名。<strong>默认基组必须在原子特定基组之前指定</strong>。（<font color=red>此外，基组中有的不是名字定义，而是用的原始集和收缩集文本来定义的，应当先写名字定义的，否则可能出错</font>，当计算中出现了比较奇怪的错误，在检查其他地方没有问题之后，可以尝试更换基组区的ECP、单个原子基组、价电子基组的顺序，或者更换文本定义的基组尝试。）</p>
-<ul>
-<li><p>比如使用cc-pVTZ作为默认的基组，但是对氢原子使用cc-pVDZ：</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">basis</span>=vtz,h=vdz</span><br></pre></td></tr></table></figure>
-<p>或</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">basis,vtz,<span class="attribute">h</span>=vdz</span><br></pre></td></tr></table></figure>
-<p>或</p>
-<figure class="highlight haskell"><table><tr><td class="code"><pre><span class="line"><span class="title">basis</span>,<span class="keyword">default</span>=vtz,h=vdz</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="基组区"><a href="#基组区" class="headerlink" title="基组区"></a>基组区</h2><p>通过<code>BASIS ... END</code>块或者<code>BASIS=&#123;...&#125;</code>指定，一般形式如下：</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">BASIS</span><br><span class="line">	SET,setname1,[options]</span><br><span class="line">		<span class="attribute">DEFAULT</span>=name</span><br><span class="line">		<span class="attribute">atom1</span>=name1</span><br><span class="line">		<span class="attribute">atom2</span>=name2</span><br><span class="line">		原始基组说明</span><br><span class="line">	SET,setname2,[options]</span><br><span class="line">		<span class="built_in">..</span>.</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>可以在基组区给出任何数量的基组。每个基组的定义由SET指令开始，其中可以指定基组名和更多选项。</p>
-</li>
-<li><p>基组区的第一个基组默认是轨道基组，这种情况下可以忽略指令<code>SET,ORBITAL</code></p>
-</li>
-<li><p><code>DEFAULT</code>指定默认基组，与单行基组输入完全相同。之后可以接各个原子的基组说明。默认基组和原子特定基组也可以合并到一行，之间用逗号隔开。</p>
-<figure class="highlight objectivec"><table><tr><td class="code"><pre><span class="line">!对氧和氢分别用<span class="built_in">AVTZ</span>和VDZ覆盖默认基组VTZ</span><br><span class="line">DEFAULT=VTZ,O=<span class="built_in">AVTZ</span>,H=VDZ</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>SET，DEFAULT，atom=name这些说明都是可选的。如果没有给出DEFAULT，将使用前面最后一个BASIS卡定义的默认基组。</p>
-</li>
-<li><p>可以先后连续出现几个BASIS卡/区。对给定的原子总是使用最后指定的说明和类型（默认类型为<code>ORBITAL</code>）。</p>
-</li>
-<li><p>如果对任何唯一原子组都没有指定基组，程序假定为VDZ。</p>
-</li>
-<li><p>如果<code>setname</code>是<code>JKFIT</code>，这个基在DF- hf或DF- ks中自动使用，除非使用BASIS或DF_BASIS选项进行不同的指定。但是请注意，如果使用了不同的名称(例如<code>JK</code>)，情况就不是这样了。在这种情况下需要给出<code>DF-HF,BASIS=JK</code>以便使用DF-HF中的辅助基。</p>
-</li>
-</ul>
-<h1 id="赝势"><a href="#赝势" class="headerlink" title="赝势"></a>赝势</h1><p>指定方式（<font color=red>最好在<code>basis</code>中首先指定ECP，再指定基组）</font>：</p>
-<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ECP,</span>atom,[ECP specification]</span><br></pre></td></tr></table></figure>
-<ul>
-<li>ECP specification说明部分可以包含一个关键词，用于引用基组库中存储的赝势，也可以（连续在几个输入卡中）直接定义。</li>
-<li>注意：目前molpro对ECP的支持到Db，后面的元素不认，因此用相应元素的ECP则需要修改元素符号，比如将Og修改为Rn，但是此时Rn的内层电子数不满足92，需要改成60。</li>
-</ul>
-<h3 id="通过ECP库的输入"><a href="#通过ECP库的输入" class="headerlink" title="通过ECP库的输入"></a>通过ECP库的输入</h3><p>一共有两种：</p>
-<ul>
-<li>Los Alamos小组：<ul>
-<li>校正到一个合适原子参考态的轨道能量和密度</li>
-<li>关键词是<code>ECP1</code>和<code>ECP2</code>；当对给定的原子有一个以上的赝势时，ECP2用于表示小芯ECP的定义。（例如对Cu，<code>ECP1</code>表示类Ar的18电子芯， 而<code>ECP2</code>模拟类Ne的10电子芯，把3s和3p电子放入到价层）对于包含电子关联的精确计算，推荐把主量子数等于价轨道的所有芯轨道放入到价轨道中。 </li>
-</ul>
-</li>
-<li>Stuttgart/Köln小组：<ul>
-<li>用多个原子态的总价电子能量产生。 </li>
-<li>关键词的形式为：<code>ECPnXY</code>：<ul>
-<li>n是用赝势代替的芯电子数量</li>
-<li>X表示用于产生赝势的参考体系（X = S，单价电子离子；X = M，中性原子）</li>
-<li>Y 表示参考数据的理论级别（Y=HF：Hartree-Fock；Y=WB：准相对论；Y=DF：相对论） </li>
-</ul>
-</li>
-<li>对于单个或两个价电子的原子而言，X = S，Y=DF是很好的选择，否则推荐X = M，Y=WB （或Y=DF） 。（对于较轻的原子，或者为了讨论相对论效应，相应的Y=HF赝势也可能会有用。）</li>
-<li>此外还可以使用自旋轨道（SO）势和芯极化势（CPP），用于b)类ECP，但目前不包含在基组库中，因此需要另外输入</li>
-</ul>
-</li>
-</ul>
-<p>在以上两种情况中，<strong>赝势和相应的基组使用相同的关键词</strong>，但对前一种需要使用前缀<code>MBS-</code>…。</p>
-<p>例子：AuH分子在r(exp)的CCSD(T)结合能；使用Stuttgart/Koeln小组的标量相对论19价电子赝势</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">***,AuH</span><br><span class="line">gprint,basis,orbitals;</span><br><span class="line">geometry=&#123;au&#125;</span><br><span class="line">basis=&#123;</span><br><span class="line">ecp,au,ECP60MWB;              ! ECP input</span><br><span class="line">spd,au,ECP60MWB;c,<span class="number">1.2</span>;        ! basis <span class="keyword">set</span></span><br><span class="line">f,au,<span class="number">1.41</span>,<span class="number">0.47</span>,<span class="number">0.15</span>;</span><br><span class="line">g,au,<span class="number">1.2</span>,<span class="number">0.4</span>;</span><br><span class="line">spd,h,avtz;c;</span><br><span class="line">&#125;</span><br><span class="line">rhf;</span><br><span class="line">&#123;rccsd(t);core,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,,<span class="number">1</span>;&#125;</span><br><span class="line">e1=energy</span><br><span class="line">geometry=&#123;h&#125;</span><br><span class="line">rhf</span><br><span class="line">e2=energy;</span><br><span class="line">rAuH=<span class="number">1.524</span> ang                ! molecular calculation</span><br><span class="line">geometry=&#123;au;h,au,rAuH&#125;</span><br><span class="line">hf;</span><br><span class="line">&#123;ccsd(t);core,<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span>;&#125;</span><br><span class="line">e3=energy</span><br><span class="line">de=(e3-e2-e1)*toev            ! binding energy = <span class="number">3.11</span> eV</span><br></pre></td></tr></table></figure>
-<h3 id="直接输入ECP"><a href="#直接输入ECP" class="headerlink" title="直接输入ECP"></a>直接输入ECP</h3><p>对每种赝势，必须提供以下信息：</p>
-<ul>
-<li><p>一个卡，形式为：</p>
-<figure class="highlight maxima"><table><tr><td class="code"><pre><span class="line">ECP,<span class="built_in">atom</span>,ncore,<span class="built_in">lmax</span>,l′<span class="built_in">max</span>;</span><br></pre></td></tr></table></figure>
-<script type="math/tex; mode=display">V_{ps}= -\frac{Z-n_{core}}{r} + V_{l_{max}}
-          +\sum_{l=0}^{l_{max}-1} (V_l-V_{l_{max}}){\cal P}_{l}
-          +\sum_{l=1}^{l'{max}} \Delta V_l {\cal P}_{l} \vec{l}\cdot\vec{s} {\cal P}_{l} ;</script><ul>
-<li><code>ncore</code>是用赝势$V_{ps}$代替的芯电子数量</li>
-<li><code>lmax</code>是$V_{ps}$标量相对论部分的半局域项数量</li>
-<li><code>l′max</code>是相应的SO部分的项个数</li>
-</ul>
-</li>
-<li><p>定义$ V<em>{l</em>{max}}$的一些卡：</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">m_1</span>,γ_<span class="number">1</span>,c_<span class="number">1</span>;m_<span class="number">2</span>,γ_<span class="number">2</span>,c_<span class="number">2</span>;...</span><br></pre></td></tr></table></figure>
-<script type="math/tex; mode=display">V_{l_{max}} = \sum_{j=1}^{n_{l_{max}}} c_j r^{m_j-2} e^{-\gamma _j r^2}</script><ul>
-<li>第一个给出展开式长度$n<em>{l</em>{max}}$，接下来的$n<em>{l</em>{max}}$给出参数</li>
-</ul>
-</li>
-<li><p>定义标量相对论半局域项的一些卡:</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">ml_1</span>,γl_<span class="number">1</span>,cl_<span class="number">1</span>; ml_<span class="number">2</span>,γl_<span class="number">2</span>,cl_<span class="number">2</span>;... </span><br></pre></td></tr></table></figure>
-<script type="math/tex; mode=display">V_l -V_{l_{max}}=\sum_{j=1}^{n_l} c_j^l r^{m_j^l-2} e^{-\gamma _j^l r^2}</script><ul>
-<li>顺序是$l=0,1,\ldots , l_{max}-1$</li>
-<li>对每一项，必须给出一个展开长度是$n_l$的卡，后面再接$n_l$个卡</li>
-</ul>
-</li>
-<li><p>类似的，是一些径向势$\Delta V<em>l$因子的卡，定义$V</em>{ps}$的SO部分</p>
-</li>
-</ul>
-<p>例子：Cu原子SCF d10s1→d9s2激发能，使用相对论Ne-芯的赝势和Stuttgart/Koeln小组的基组</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">***,CU</span><br><span class="line">gprint,basis,orbitals</span><br><span class="line">geometry=&#123;cu&#125;</span><br><span class="line">basis</span><br><span class="line">ECP,<span class="number">1</span>,<span class="number">10</span>,<span class="number">3</span>;   	! ECP input</span><br><span class="line"> <span class="number">1</span>; 			! NO LOCAL POTENTIAL</span><br><span class="line"> <span class="number">2</span>,<span class="number">1.</span>,<span class="number">0.</span>;</span><br><span class="line"> <span class="number">2</span>; 			! S POTENTIAL</span><br><span class="line"> <span class="number">2</span>,<span class="number">30.22</span>,<span class="number">355.770158</span>;<span class="number">2</span>,<span class="number">13.19</span>,<span class="number">70.865357</span>;</span><br><span class="line"> <span class="number">2</span>; 			! P POTENTIAL</span><br><span class="line"> <span class="number">2</span>,<span class="number">33.13</span>,<span class="number">233.891976</span>;<span class="number">2</span>,<span class="number">13.22</span>,<span class="number">53.947299</span>;</span><br><span class="line"> <span class="number">2</span>; 			! D POTENTIAL</span><br><span class="line"> <span class="number">2</span>,<span class="number">38.42</span>,<span class="number">-31.272165</span>;<span class="number">2</span>,<span class="number">13.26</span>,<span class="number">-2.741104</span>;</span><br><span class="line">! (<span class="number">8</span>s7p6d)/[<span class="number">6</span>s5p3d] BASIS SET</span><br><span class="line">s,<span class="number">1</span>,<span class="number">27.69632</span>,<span class="number">13.50535</span>,<span class="number">8.815355</span>,<span class="number">2.380805</span>,<span class="number">.952616</span>,<span class="number">.112662</span>,<span class="number">.040486</span>,<span class="number">.01</span>;</span><br><span class="line">c,<span class="number">1.3</span>,<span class="number">.231132</span>,<span class="number">-.656811</span>,<span class="number">-.545875</span>;</span><br><span class="line">p,<span class="number">1</span>,<span class="number">93.504327</span>,<span class="number">16.285464</span>,<span class="number">5.994236</span>,<span class="number">2.536875</span>,<span class="number">.897934</span>,<span class="number">.131729</span>,<span class="number">.030878</span>;</span><br><span class="line">c,<span class="number">1.2</span>,<span class="number">.022829</span>,<span class="number">-1.009513</span>;C,<span class="number">3.4</span>,<span class="number">.24645</span>,<span class="number">.792024</span>;</span><br><span class="line">d,<span class="number">1</span>,<span class="number">41.225006</span>,<span class="number">12.34325</span>,<span class="number">4.20192</span>,<span class="number">1.379825</span>,<span class="number">.383453</span>,<span class="number">.1</span>;</span><br><span class="line">c,<span class="number">1.4</span>,<span class="number">.044694</span>,<span class="number">.212106</span>,<span class="number">.453423</span>,<span class="number">.533465</span>;</span><br><span class="line">end</span><br><span class="line">rhf;</span><br><span class="line">e1=energy</span><br><span class="line">&#123;rhf;occ,<span class="number">4</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>;closed,<span class="number">4</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>;wf,<span class="number">19</span>,<span class="number">7</span>,<span class="number">1</span>;&#125;</span><br><span class="line">e2=energy</span><br><span class="line">de=(e2-e1)*toev  ! Delta E = <span class="number">-0.075</span> eV</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
-      <tags>
-        <tag>基组</tag>
-        <tag>输入</tag>
-        <tag>内存</tag>
-        <tag>molpro</tag>
-        <tag>赝势</tag>
-        <tag>输出</tag>
-        <tag>坐标</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>PIO</title>
-    <url>/2021/08/23/PIO/</url>
-    <content><![CDATA[<h1 id="代码位置"><a href="#代码位置" class="headerlink" title="代码位置"></a>代码位置</h1><p><a href="https://github.com/jxzhangcc/PIO">https://github.com/jxzhangcc/PIO</a></p>
-<h1 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h1><h2 id="Gaussian计算部分"><a href="#Gaussian计算部分" class="headerlink" title="Gaussian计算部分"></a>Gaussian计算部分</h2><ol>
-<li><p>在高斯关键词部分加入pop=nbo6read</p>
-<ul>
-<li>nboread调用的是高斯自带的NBO3，要用NBO6得到.49，否则格式会有问题。格式修改见<a href="https://mp.weixin.qq.com/s?__biz=MzU5NDYxNjc5Ng==&amp;mid=2247485938&amp;idx=1&amp;sn=addcb81d6a9caed028a9ab86e336847d&amp;chksm=fe7fc141c9084857858ebeb9988bd73c70fd631f354a53aeb7768fcd4c6df9f890de7539d583&amp;mpshare=1&amp;scene=1&amp;srcid=&amp;sharer_sharetime=1589122912458&amp;sharer_shareid=f14b465eb222f6bb34657e2c0fafe383&amp;key=64daf1adc09d7c6ecdf51441f0e0e0081ff30416a8c76cafc75ab07809a89ccb0e3a0fde164cf3daa101192f723f9349e88e6622f494e3da3870bf9eaebe22bf9583324d7112cf0072a7c78f482c98d9&amp;ascene=1&amp;uin=MTY5ODAzMzEyNQ%3D%3D&amp;devicetype=Windows+10+x64&amp;version=62090070&amp;lang=zh_CN&amp;exportkey=AdPzWFyVBDaa5HawSncSSzA%3D&amp;pass_ticket=CJnCOXQ4GY3GwKDSPl0mmbvH12dznP%2F%2Bj30sXI1%2BLh1L4wzPIu4fEYHNwnZHTc2M">博文</a>。</li>
-</ul>
-</li>
-<li><p>在高斯输入文件的最后一行加入：</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="variable">$NBO</span> <span class="attribute">AONAO</span>=W49 <span class="attribute">FNAO</span>=W49 <span class="attribute">DMNAO</span>=W49 SKIPBO <span class="attribute">file</span>=XXX  <span class="variable">$END</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>中XXX应与之后生成的 .fchk 文件名一致</li>
-<li>PIO_v3可能会报错，需要49文件的名字为大写的</li>
-</ul>
-</li>
-<li><p>通过formchk将chk转换成fchk</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">formchk</span> <span class="selector-tag">xxx</span><span class="selector-class">.chk</span> <span class="selector-tag">xxx</span><span class="selector-class">.fchk</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="pio部分"><a href="#pio部分" class="headerlink" title="pio部分"></a>pio部分</h2><ol>
-<li><p>此时应当有 .fchk 文件以及 NBO 生成的 .49 文件</p>
-</li>
-<li><p>pio命令一般在在/home/scicons/bin下，将其添加至环境变量即可。此时执行</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">pio</span>  <span class="variable">$&#123;FILENAME&#125;</span>.fchk &#123;碎片<span class="number">1</span> 的原子序号&#125; &#123;碎片<span class="number">2</span> 的原子序号&#125; </span><br></pre></td></tr></table></figure>
-<ul>
-<li>碎片可以是<code>xx-xx</code>这样的格式</li>
-</ul>
-</li>
-<li><p>如果报错，看体系是否是开壳层的，如果是开壳层，需要对.49文件进行一点修改</p>
-<ul>
-<li><p>开壳层，通过一下命令检查，会出现SPIN出现的行数，会发现默认顺序是aabb，正确的顺序应该是abab</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">grep -n ‘SPIN’ XXX<span class="number">.49</span></span><br></pre></td></tr></table></figure>
-<p><img src="clipboard.png" alt="img"></p>
-<p><img src="166a906be971e8d3d3b304cee0da821.png" alt="img" style="zoom: 50%;" /></p>
-<p><img src="ffc0c86714dea564d2a80ceeec2bfc1.png" alt="img" style="zoom:50%;" /></p>
-<p><img src="a91083a05da311f08735a5273b29fd7.png" alt="img" style="zoom:54%;" /></p>
-<p><img src="0178a4c2a265eed33bf7da46e8737d8.png" alt="img" style="zoom:54%;" /></p>
-<ul>
-<li><p>在NAO密度矩阵部分只有alpha，结束之后紧跟的是NAO的Fock矩阵，而第一个beta实际上是NAO密度矩阵的部分，将这部分移动到alpha密度矩阵的后面即可。</p>
-</li>
-<li><p>利用vim命令进行调换即可，调换方法：</p>
-<figure class="highlight vala"><table><tr><td class="code"><pre><span class="line"><span class="meta">#先删除第一个beta部分</span></span><br><span class="line">:<span class="number">129075</span>,<span class="number">154831</span>d</span><br><span class="line"><span class="meta">#光标停在第一个alpha最后一行，直接p即可</span></span><br><span class="line">p</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="结果分析部分"><a href="#结果分析部分" class="headerlink" title="结果分析部分"></a>结果分析部分</h2><ul>
-<li>pio对结果在生成的txt文件中，pio对的轨道在pio.fchk文件中，而PIMOs的记过在pimo.fchk中</li>
-<li>pio_v3还有raw文件，pio_v4已经删除</li>
-<li>轨道如果通过pio_v4分析得到，用Multiwfn或者Jmol打开转换得到的molden文件，能量都是0，要避免可以用pio_v3</li>
-</ul>
-<h1 id="Windows下运行"><a href="#Windows下运行" class="headerlink" title="Windows下运行"></a>Windows下运行</h1><ul>
-<li><p>需要下载python2和anaconda配置python2的运行环境</p>
-</li>
-<li><p>打开Anaconda的命令行，输入</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">conda</span> activate py<span class="number">27</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>执行命令：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">python</span> <span class="selector-tag">PIO</span><span class="selector-class">.py</span> <span class="selector-tag">FILENAME</span><span class="selector-class">.FChk</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>输入原子：</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span><span class="number">-5</span>,<span class="number">8</span>,<span class="number">13</span> <span class="number">6</span><span class="number">-7</span>,<span class="number">9</span><span class="number">-12</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
-      <tags>
-        <tag>PIO</tag>
       </tags>
   </entry>
 </search>

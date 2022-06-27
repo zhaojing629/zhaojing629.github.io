@@ -14,7 +14,7 @@
 
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=EB Garamond:300,300italic,400,400italic,700,700italic|Dancing Script:300,300italic,400,400italic,700,700italic|ZCOOL XiaoWei:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.1/jquery.fancybox.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
@@ -29,7 +29,7 @@
 <meta property="og:description" content="常用的一些Linux命令">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-09-24T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-09T14:59:52.907Z">
+<meta property="article:modified_time" content="2022-05-27T12:03:20.004Z">
 <meta property="article:author" content="Zhao Jing">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-09 22:59:52" itemprop="dateModified" datetime="2021-11-09T22:59:52+08:00">2021-11-09</time>
+                <time title="修改时间：2022-05-27 20:03:20" itemprop="dateModified" datetime="2022-05-27T20:03:20+08:00">2022-05-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -302,6 +302,9 @@
 </li>
 <li><p>awk运算与判断：将变量给igrid，然后将行号为igrid的第五个字段输出：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk -v igrid=$igrid &#x27;(NR == igrid)&#123;print $5&#125;&#x27;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>结合管道：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">uname</span> -a |awk -F <span class="string">&#x27; &#x27;</span> <span class="string">&#x27;&#123;print <span class="variable">$2</span>&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h2 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h2><p>Change mode 修改文件或目录的权限</p>
@@ -411,11 +414,11 @@
 </ul>
 </li>
 <li>-option：<ul>
-<li><code>-name name</code>文件名称符合 name 的文件。<code>-iname</code>会忽略大小写</li>
+<li><strong><code>-name name</code>文件名称符合 name 的文件。<code>-iname</code>会忽略大小写</strong></li>
 <li><code>-path p</code>路径名称符合 p 的文件，<code>-ipath</code>会忽略大小写</li>
 <li>-<code>regex</code>基于正则表达式匹配文件路径，<code>-iregex</code>忽略大小写</li>
 <li></li>
-<li><code>-type x</code>：文件类型是X的文件，X可以是<code>b</code> 块设备，<code>c</code> 字符设备，<code>d</code>目录，<code>f</code>一般文件，<code>l</code> 符号连接，<code>s</code> 套接字，<code>p</code> Fifo</li>
+<li><strong><code>-type x</code>：文件类型是X的文件，X可以是<code>b</code> 块设备，<code>c</code> 字符设备，<code>d</code>目录，<code>f</code>一般文件，<code>l</code> 符号连接，<code>s</code> 套接字，<code>p</code> Fifo</strong></li>
 <li><code>-maxdepth</code>设置最大目录层级；<code>-mindepth</code>设置最小目录层级</li>
 <li></li>
 <li><code>-amin</code>，<code>-atime</code>分别表示在过去 n 分钟或n天内内被读取过。<code>+n</code>，<code>-n</code>，<code>n</code>分别代表大于，小于和等于。</li>
@@ -514,6 +517,8 @@
 <li><code>-i</code>：交互式操作，覆盖前先行询问用户，如果源文件与目标文件或目标目录中的文件同名，则询问用户是否覆盖目标文件。</li>
 <li><code>-f</code>：若目标文件或目录与现有的文件或目录重复，则直接覆盖现有的文件或目录，不给任何指示</li>
 </ul>
+<p>批量重命名：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="variable">$</span>(<span class="built_in">ls</span>); <span class="keyword">do</span> <span class="built_in">mv</span> <span class="variable">$</span>&#123;i&#125; <span class="number">0</span><span class="variable">$</span>&#123;i&#125;; done</span><br></pre></td></tr></table></figure>
 <h2 id="rename"><a href="#rename" class="headerlink" title="rename"></a>rename</h2><h3 id="语法-6"><a href="#语法-6" class="headerlink" title="语法"></a>语法</h3><p>不同Liunx下的语法不同，CentOS下的是：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rename [options] expression replacement file</span><br></pre></td></tr></table></figure>
 <ul>
@@ -1149,12 +1154,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/09/25/%E3%80%90Linux%E3%80%91Vim%E7%BC%96%E8%BE%91%E5%99%A8/" rel="prev" title="【Linux】Vim编辑器">
-      <i class="fa fa-chevron-left"></i> 【Linux】Vim编辑器
+    <a href="/2019/09/23/%E3%80%90AMS%E3%80%9102.%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="prev" title="【AMS】02.几何优化">
+      <i class="fa fa-chevron-left"></i> 【AMS】02.几何优化
     </a></div>
       <div class="post-nav-item">
-    <a href="/2019/11/13/%E3%80%90molpro%E3%80%9101.%E5%9F%BA%E7%A1%80/" rel="next" title="【molpro】01.基础">
-      【molpro】01.基础 <i class="fa fa-chevron-right"></i>
+    <a href="/2019/09/25/%E3%80%90Linux%E3%80%91Vim%E7%BC%96%E8%BE%91%E5%99%A8/" rel="next" title="【Linux】Vim编辑器">
+      【Linux】Vim编辑器 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -1311,7 +1316,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">309k</span>
+    <span title="站点总字数">310k</span>
 </div>
 
         
@@ -1350,8 +1355,8 @@
   
   <script color='0,0,0' opacity='0.3' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
   <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.1/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

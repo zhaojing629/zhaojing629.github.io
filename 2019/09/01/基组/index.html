@@ -14,7 +14,7 @@
 
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=EB Garamond:300,300italic,400,400italic,700,700italic|Dancing Script:300,300italic,400,400italic,700,700italic|ZCOOL XiaoWei:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.1/jquery.fancybox.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
@@ -51,7 +51,7 @@
 <meta property="og:image" content="http://example.com/2019/09/01/%E5%9F%BA%E7%BB%84/clipboard-1624181668873.png">
 <meta property="og:image" content="http://example.com/2019/09/01/%E5%9F%BA%E7%BB%84/clipboard-1624181675490.png">
 <meta property="article:published_time" content="2019-09-01T11:33:37.000Z">
-<meta property="article:modified_time" content="2021-10-21T13:42:55.207Z">
+<meta property="article:modified_time" content="2022-06-07T09:02:40.036Z">
 <meta property="article:author" content="Zhao Jing">
 <meta property="article:tag" content="基组">
 <meta name="twitter:card" content="summary">
@@ -244,7 +244,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-21 21:42:55" itemprop="dateModified" datetime="2021-10-21T21:42:55+08:00">2021-10-21</time>
+                <time title="修改时间：2022-06-07 17:02:40" itemprop="dateModified" datetime="2022-06-07T17:02:40+08:00">2022-06-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -664,7 +664,7 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 <p><img src="image-20210619175553336.png" alt="" style="zoom:50%;" /></p>
 <h4 id="收缩方式"><a href="#收缩方式" class="headerlink" title="收缩方式"></a>收缩方式</h4><p><img src="image-20210620141915170.png" alt="" style="zoom:50%;" /></p>
 <h5 id="Segemented-Contracted"><a href="#Segemented-Contracted" class="headerlink" title="Segemented Contracted"></a>Segemented Contracted</h5><ul>
-<li>给定的PGTO只出现在一个CGTO中，比如STO-ng、6-31G*、Dunning DZ等基组。每个原子轨道用单独一组函数来拟合，1s, 2s, 2p等轨道的各自 的基函数都是完全分开的 ，没有关联，每 一个 shell 各自用不同 的 GTO 来表示。不共享任何指数。 程序简单，浪费计算量。</li>
+<li>给定的PGTO只出现在一个CGTO中，比如STO-ng、6-31G*、Dunning DZ等基组。每个原子轨道用单独一组函数来拟合，1s, 2s, 2p等轨道的各自的基函数都是完全分开的（有更好的物理图像） ，没有关联，每一个 shell 各自用不同 的 GTO 来表示。不共享任何指数。 程序简单，浪费计算量。</li>
 </ul>
 <script type="math/tex; mode=display">\left|\chi_{1}(\mathrm{CGTO})\right\rangle=\sum_{i=1}^{6} a_{i}\left|\chi_{i}(\mathrm{PGTO})\right\rangle，\left|\chi_{2}(\mathrm{CGTO})\right\rangle =\sum_{i=7}^{9} a_{i}\left|\chi_{i}(\mathrm{PGTO})\right\rangle，\left|\chi_{3}(\mathrm{CGTO})\right\rangle =\left|\chi_{10}(\mathrm{PGTO})\right\rangle</script><ul>
 <li><p>例子：</p>
@@ -680,7 +680,7 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 </li>
 </ul>
 <h5 id="Hybrid-Contracted"><a href="#Hybrid-Contracted" class="headerlink" title="Hybrid Contracted"></a>Hybrid Contracted</h5><ul>
-<li><p>以上两种都有，比如cc-pVDZ。结合上述二者优缺点，内层用广义收缩， 价电子 价轨道用 segmented ，解释起来更便利。</p>
+<li><p>以上两种都有，比如cc-pVDZ。结合上述二者优缺点，内层用广义收缩， 价电子 价轨道用segmented ，解释起来更便利。</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># O的cc-pVDZ基组：(9s,4p,1d)/[3s,2p,1d]</span></span><br><span class="line"><span class="attribute">O</span>	s</span><br><span class="line"><span class="attribute">1</span>.<span class="number">172000</span>D+<span class="number">04</span>	 <span class="number">7</span>.<span class="number">100000</span>D-<span class="number">04</span>	-<span class="number">1</span>.<span class="number">600000</span>D-<span class="number">04</span></span><br><span class="line"><span class="attribute">1</span>.<span class="number">759000</span>D+<span class="number">03</span>	 <span class="number">5</span>.<span class="number">470000</span>D-<span class="number">03</span>	-<span class="number">1</span>.<span class="number">263000</span>D-<span class="number">03</span></span><br><span class="line"><span class="attribute">4</span>.<span class="number">008000</span>D+<span class="number">02</span>	 <span class="number">2</span>.<span class="number">783700</span>D-<span class="number">02</span>	-<span class="number">6</span>.<span class="number">267000</span>D-<span class="number">03</span></span><br><span class="line"><span class="attribute">1</span>.<span class="number">137000</span>D+<span class="number">02</span>	 <span class="number">1</span>.<span class="number">048000</span>D-<span class="number">01</span>	-<span class="number">2</span>.<span class="number">571600</span>D-<span class="number">02</span></span><br><span class="line"><span class="attribute">3</span>.<span class="number">703000</span>D+<span class="number">01</span>	 <span class="number">2</span>.<span class="number">830620</span>D-<span class="number">01</span>	-<span class="number">7</span>.<span class="number">092400</span>D-<span class="number">02</span></span><br><span class="line"><span class="attribute">1</span>.<span class="number">327000</span>D+<span class="number">01</span>	 <span class="number">4</span>.<span class="number">487190</span>D-<span class="number">01</span>	-<span class="number">1</span>.<span class="number">654110</span>D-<span class="number">01</span></span><br><span class="line"><span class="attribute">5</span>.<span class="number">025000</span>D+<span class="number">00</span>	 <span class="number">2</span>.<span class="number">709520</span>D-<span class="number">01</span>	-<span class="number">1</span>.<span class="number">169550</span>D-<span class="number">01</span></span><br><span class="line"><span class="attribute">1</span>.<span class="number">013000</span>D+<span class="number">00</span>	 <span class="number">1</span>.<span class="number">545800</span>D-<span class="number">02</span>	 <span class="number">5</span>.<span class="number">573680</span>D-<span class="number">01</span></span><br><span class="line"><span class="attribute">3</span>.<span class="number">023000</span>D-<span class="number">01</span>	-<span class="number">2</span>.<span class="number">585000</span>D-<span class="number">03</span>	 <span class="number">5</span>.<span class="number">727590</span>D-<span class="number">01</span></span><br><span class="line"><span class="attribute">O</span>	s</span><br><span class="line"><span class="attribute">3</span>.<span class="number">023000</span>D-<span class="number">01</span>	 <span class="number">1</span>.<span class="number">000000</span>D+<span class="number">00</span></span><br><span class="line"><span class="attribute">O</span>	p</span><br><span class="line"><span class="attribute">1</span>.<span class="number">770000</span>D+<span class="number">01</span>	 <span class="number">4</span>.<span class="number">301800</span>D-<span class="number">02</span></span><br><span class="line"><span class="attribute">3</span>.<span class="number">854000</span>D+<span class="number">00</span>	 <span class="number">2</span>.<span class="number">289130</span>D-<span class="number">01</span></span><br><span class="line"><span class="attribute">1</span>.<span class="number">046000</span>D+<span class="number">00</span>	 <span class="number">5</span>.<span class="number">087280</span>D-<span class="number">01</span></span><br><span class="line"><span class="attribute">2</span>.<span class="number">753000</span>D-<span class="number">01</span>	 <span class="number">4</span>.<span class="number">605310</span>D-<span class="number">01</span></span><br><span class="line"><span class="attribute">O</span>	p	         </span><br><span class="line"><span class="attribute">2</span>.<span class="number">753000</span>D-<span class="number">01</span>	 <span class="number">1</span>.<span class="number">000000</span>D+<span class="number">00</span></span><br><span class="line"><span class="attribute">O</span>	d</span><br><span class="line"><span class="attribute">1</span>.<span class="number">185000</span>D+<span class="number">00</span>	<span class="number">1</span>.<span class="number">0000000</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>幂指数较大的对应较内层的轨道，幂指数较小的对应较外层的轨道。通常外层的轨道，α 越小的基函数的贡献 即前面的组合系数绝对值越大，如 2s，3s 轨道相较于 1s 轨道而言， α 值小的 GTO 前的系数会较大，这可以帮助我们区分1s，2s 等不同的轨道。</p>
@@ -748,9 +748,9 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 </li>
 </ul>
 <p>例子：</p>
-<p><img src="image-20210620145811319.png" alt="" style="zoom:33%;" /></p>
-<p><img src="image-20210620145819965.png" alt="" style="zoom:33%;" /></p>
-<p><img src="image-20210620145826955.png" alt="" style="zoom:33%;" /></p>
+<p><img src="image-20210620145811319.png" alt="" style="zoom: 50%;" /></p>
+<p><img src="image-20210620145819965.png" alt="" style="zoom: 50%;" /></p>
+<p><img src="image-20210620145826955.png" alt="" style="zoom: 50%;" /></p>
 <h3 id="弥散函数"><a href="#弥散函数" class="headerlink" title="弥散函数"></a><a href="#弥散">弥散函数</a></h3><ul>
 <li><p>弥散函数是指数非常小的基函数，因此能够延展到非常广的空间区域。</p>
 </li>
@@ -1039,8 +1039,8 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
     <div class="post-nav">
       <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2019/09/03/%E3%80%90Gaussian%E3%80%9102.%E5%9F%BA%E7%BB%84/" rel="next" title="【Gaussian】02.基组">
-      【Gaussian】02.基组 <i class="fa fa-chevron-right"></i>
+    <a href="/2019/09/03/%E3%80%90Gaussian%E3%80%9101.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="next" title="【Gaussian】01.基础知识">
+      【Gaussian】01.基础知识 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -1197,7 +1197,7 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">309k</span>
+    <span title="站点总字数">310k</span>
 </div>
 
         
@@ -1236,8 +1236,8 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
   
   <script color='0,0,0' opacity='0.3' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
   <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.1/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
