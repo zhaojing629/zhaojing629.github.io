@@ -47,6 +47,12 @@ awk [options] -f scriptfile var=value file(s)
   awk -v igrid=$igrid '(NR == igrid){print $5}'
   ```
 
+- 结合管道：
+
+  ```
+  uname -a |awk -F ' ' '{print $2}'
+  ```
+
 ## chmod
 
 Change mode 修改文件或目录的权限

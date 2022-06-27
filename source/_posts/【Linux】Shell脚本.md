@@ -202,11 +202,64 @@ test expression
   - `-f file`：file 存在并且是一个普通文件
   - 
 
-# &
+## &
 
 - `&` 放在启动参数后面表示设置此进程为后台进程。默认情况下，进程是前台进程，这时就把Shell给占据了，我们无法进行其他操作，对于那些没有交互的进程，很多时候，我们希望将其在后台启动，可以在启动参数的时候加一个'&'实现这个目的。
 
-  
+## for 循环
+
+```
+for var in item1 item2 ... itemN
+do
+    command1
+    command2
+    ...
+    commandN
+done
+```
+
+例子：
+
+```
+for loop in 1 2 3 4 5
+do
+    echo "The value is: $loop"
+done
+```
+
+### 数字类循环
+
+```
+
+for((i=1;i<=10;i++));  
+
+for i in $(seq 1 10)  
+
+for i in {1..10}  
+
+#实现1~5之内的数字，按照步数2进行跳跃
+for variable  in {1..5..2} 
+for variable  in $(seq 1 2 5) 
+```
+
+### 字符类循环
+
+```
+for i in `ls`;  
+
+for i in $* ;
+
+for i in f1 f2 f3 ;  
+
+list="rootfs usr data data2"  
+for i in $list;  
+```
+
+
+
+
+
+
 
 # 字符串截取
 
