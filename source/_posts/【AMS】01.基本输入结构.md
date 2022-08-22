@@ -6,7 +6,7 @@ updated:
 description: ADF2020版本后的输入文件结构大改
 tags: 输入
 mathjax: true
-categories: [计算化学, AMS]
+categories: [计算化学, 软件]
 ---
 
 
