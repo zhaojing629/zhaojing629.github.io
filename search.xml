@@ -866,7 +866,7 @@
 ]]></content>
       <categories>
         <category>计算化学</category>
-        <category>AMS</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>输入</tag>
@@ -9320,7 +9320,7 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 <figure class="highlight armasm"><table><tr><td class="code"><pre><span class="line"><span class="symbol">git</span> <span class="keyword">add</span> .</span><br><span class="line"><span class="symbol">git</span> commit –m <span class="string">&quot;add branch&quot;</span></span><br><span class="line"><span class="symbol">git</span> <span class="keyword">push</span> origin source</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>完成上传后，再将.deploy中的.git1修改回来成.git，就可以对网站进行<code>hexo g -d</code>等操作，操作完成后，重复3~4，即：</p>
-<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">mv .deploy_git<span class="regexp">/.git1/</span> .deploy_git/.git</span><br><span class="line"></span><br><span class="line">hexo g -d</span><br><span class="line"></span><br><span class="line">mv .deploy_git<span class="regexp">/.git/</span> .deploy_git/.git1</span><br><span class="line"></span><br><span class="line">git add .</span><br><span class="line">git commit –m <span class="string">&quot;add branch&quot;</span></span><br><span class="line">git <span class="keyword">push</span> origin <span class="keyword">source</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">mv .deploy_git<span class="regexp">/.git1/</span> .deploy_git/.git</span><br><span class="line"></span><br><span class="line">hexo g -d</span><br><span class="line"></span><br><span class="line">mv .deploy_git<span class="regexp">/.git/</span> .deploy_git/.git1</span><br><span class="line"></span><br><span class="line">git add .</span><br><span class="line">git commit –m <span class="string">&quot;add branch&quot;</span>  #报错的话可以用 git commit --no-verify -m <span class="string">&quot;X&quot;</span></span><br><span class="line">git <span class="keyword">push</span> origin <span class="keyword">source</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h1 id="文章相关"><a href="#文章相关" class="headerlink" title="文章相关"></a>文章相关</h1><h2 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h2><ol>
@@ -9943,6 +9943,103 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
         <tag>焓</tag>
         <tag>内能</tag>
         <tag>零点能</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Multiwfn】CDA分析</title>
+    <url>/2022/08/22/Untitled/</url>
+    <content><![CDATA[<p><a href="http://sobereva.com/166">http://sobereva.com/166</a></p>
+<p><a href="https://pdf.hanspub.org/JAPC20150400000_68741604.pdf">广义化的电荷分解分析(GCDA)方法 (hanspub.org)</a></p>
+<p>电荷分解分析(Charge decomposition analysis, CDA)是基于片段轨道的概念提出的一种将分子片段之间电荷转移分解为轨道的贡献，从而能更深入了解电荷转移本质的方法。</p>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><ul>
+<li>d (Donation)表现的是片段 A 向片段 B 贡献的电子量。它体现的是片段 A 的占据轨道与片段 B 的空轨道的混合。</li>
+<li>b (Back-donation)表现的是片段 B 向片段 A 反馈的电子量。它由片段 B 的占据轨道与片段 A 的空轨道混合而产生。</li>
+<li>d-b可以认为是经由复合物轨道两个片段间的净转移量。</li>
+<li>b+d ，其数值越大说明两个片段间相互作用程度越大，轨道混合越显著。</li>
+<li>r (Charge polarization)表现的是占据轨道的电荷极化，称为电荷极化项。<ul>
+<li>r&gt;0，说明由于第 i 个复合物轨道，两个片段的电子在片段重叠区域的分布量增加，此时两个片段的占据轨道以相位相同方式混合，起到成键效应；</li>
+<li>r&lt;0，表明两个片段的电子在重叠区域分布量减少，此时两个片段的占据轨道间必以相位相反方式混合，对片段间成键起到破坏作用，即反键效应。</li>
+<li>总和值 r 一般为负值，因为占据轨道间的总相互作用是以交换互斥为主导的，是不利于成键的。</li>
+</ul>
+</li>
+</ul>
+<h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><h2 id="准备文件"><a href="#准备文件" class="headerlink" title="准备文件"></a>准备文件</h2><p>Gaussian提供复合物和各个片段的单点任务的fch文件。注意事项：</p>
+<ul>
+<li>坐标必须都用笛卡尔坐标，而且片段的定义顺序，片段内原子顺序、原子坐标必须和复合物中的完全一致。</li>
+<li>片段不需要单独优化。</li>
+<li>为了避免Gaussian自动将坐标调整到标准朝向而使得坐标无法相互对应，要使用<code>nosymm</code>关键词</li>
+<li>不要用弥散函数</li>
+<li>重原子使用赝势基组可能会出现基函数数目不符的问题，可以使用<code>5d</code>关键词。</li>
+<li>如果用后HF方法计算，应当再加上density关键词，并且此时只能用Gaussian输出文件作为输入。对于闭壳层，pop=full应当改为pop=NO；对于开壳层，应改为pop=NOAB。这样才能让自然轨道信息代替HF轨道信息出现在Gaussian输出文件中。</li>
+<li>以开壳层方式做 CDA/GCDA 计算时需要考虑自旋翻转问题。</li>
+<li>片段的参考状态的选择应当尽量接近复合物状态的电子结构。</li>
+</ul>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><h3 id="总体步骤"><a href="#总体步骤" class="headerlink" title="总体步骤"></a>总体步骤</h3><figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line">examples\CDA\COBH3\<span class="module-access"><span class="module"><span class="identifier">COBH3</span>.</span></span>fch  <span class="comment">//复合物的Gaussian输出文件</span></span><br><span class="line"><span class="number">16</span>   <span class="comment">//进入CDA模块</span></span><br><span class="line"><span class="number">2</span>  <span class="comment">//定义两个片段</span></span><br><span class="line">examples\CDA\COBH3\<span class="module-access"><span class="module"><span class="identifier">CO</span>.</span></span>fch  <span class="comment">//片段1的Gaussian输出文件</span></span><br><span class="line">examples\CDA\COBH3\<span class="module-access"><span class="module"><span class="identifier">BH3</span>.</span></span>fch  <span class="comment">//片段2的Gaussian输出文件</span></span><br></pre></td></tr></table></figure>
+<h3 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析"></a>结果分析</h3><p><strong>CDA数据：</strong></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">   <span class="string">Orb.</span>      <span class="string">Occ.</span>          <span class="string">d</span>           <span class="string">b</span>        <span class="string">d</span> <span class="bullet">-</span> <span class="string">b</span>          <span class="string">r</span></span><br><span class="line">      <span class="number">1</span>    <span class="number">2.000000</span>   <span class="number">-0.000004</span>   <span class="number">-0.000000</span>   <span class="number">-0.000004</span>   <span class="number">-0.000001</span></span><br><span class="line">      <span class="number">2</span>    <span class="number">2.000000</span>    <span class="number">0.001119</span>   <span class="number">-0.000023</span>    <span class="number">0.001141</span>    <span class="number">0.000326</span></span><br><span class="line">      <span class="number">3</span>    <span class="number">2.000000</span>   <span class="number">-0.000002</span>   <span class="number">-0.000471</span>    <span class="number">0.000469</span>    <span class="number">0.000313</span></span><br><span class="line">      <span class="number">4</span>    <span class="number">2.000000</span>   <span class="number">-0.013250</span>   <span class="number">-0.000704</span>   <span class="number">-0.012546</span>   <span class="number">-0.005676</span></span><br><span class="line">      <span class="number">5</span>    <span class="number">2.000000</span>    <span class="number">0.041648</span>   <span class="number">-0.003309</span>    <span class="number">0.044957</span>    <span class="number">0.232262</span></span><br><span class="line">      <span class="number">6</span>    <span class="number">2.000000</span>    <span class="number">0.037385</span>   <span class="number">-0.020136</span>    <span class="number">0.057521</span>    <span class="number">0.212422</span></span><br><span class="line">      <span class="number">7</span>    <span class="number">2.000000</span>   <span class="number">-0.000543</span>    <span class="number">0.000647</span>   <span class="number">-0.001190</span>    <span class="number">0.022166</span></span><br><span class="line">      <span class="number">8</span>    <span class="number">2.000000</span>   <span class="number">-0.000543</span>    <span class="number">0.000647</span>   <span class="number">-0.001190</span>    <span class="number">0.022166</span></span><br><span class="line">      <span class="number">9</span>    <span class="number">2.000000</span>    <span class="number">0.171353</span>    <span class="number">0.026952</span>    <span class="number">0.144401</span>   <span class="number">-0.741381</span></span><br><span class="line">     <span class="number">10</span>    <span class="number">2.000000</span>   <span class="number">-0.000569</span>    <span class="number">0.043713</span>   <span class="number">-0.044281</span>   <span class="number">-0.038916</span></span><br><span class="line">     <span class="number">11</span>    <span class="number">2.000000</span>   <span class="number">-0.000569</span>    <span class="number">0.043713</span>   <span class="number">-0.044282</span>   <span class="number">-0.038916</span></span><br><span class="line">     <span class="number">12</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span></span><br><span class="line">     <span class="number">13</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span></span><br><span class="line">     <span class="number">14</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span></span><br><span class="line">     <span class="number">15</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span></span><br><span class="line"> <span class="string">......</span></span><br><span class="line"><span class="string">-------------------------------------------------------------------</span></span><br><span class="line"><span class="attr">Sum:</span>      <span class="number">22.000000</span>    <span class="number">0.236023</span>    <span class="number">0.091027</span>    <span class="number">0.144996</span>   <span class="number">-0.335233</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Orb.就是复合物轨道的编号，Occ.是其占据数。</li>
+<li>前三个复合物轨道的d、b、r项都接近于0，表明它们对于片段间的相互作用没什么用处，这是因为它们分别是O、C、B的<strong>内核轨道</strong>，基本不会参与成键。</li>
+<li><p>所有的<strong>虚轨道</strong>的d、b、r项都为，因为它们的占据数都为0。</p>
+<ul>
+<li>只有对于自然轨道，对应于LUMO及更高阶的复合物轨道由于仍有少量电子占据，其d、b、r项才不是精确为0，但由于自然轨道序号是按照占据数由高到低排的，超过LUMO+5的话由于占据数往往已经很低了，d、b、r项已很小，所以Multiwfn中LUMO+5以上的轨道都不会输出。</li>
+</ul>
+</li>
+<li><p>复合物轨道9的d是最大的，因此表明这个轨道对于CO向BH3的电子转移有最主要的贡献。通过形成这个复合物轨道，CO向BH3贡献了0.171个电子，而BH3向CO反馈了0.0269个电子，故净转移可以估算为0.144（即d-b项）。</p>
+</li>
+<li>BH3对CO反馈电子主要是来自于复合物轨道10和11，它们是简并的轨道，b的数值一致，为0.0437。</li>
+<li>r(9)非常负，这说明复合物轨道9的形成使得CO和BH3的占据的片段轨道的电子很大程度上从二者的交叠区域移走，从而降低了电子互斥，从下面的它的轨道波函数图形中也可见在交叠区域有个明显的节点。</li>
+<li>r(5)和r(6)都是不小的正值，因此它们的形成导致占据片段轨道的电子向交叠区域转移了不少，可以认为体现了片段间成键轨道的特征，从下面的等值面图形中也可看到这两个复合物轨道都较好地覆盖了片段间成键区域，故有利于成键。</li>
+</ul>
+<p><img src="http://sobereva.com/usr/uploads/image/20150610/20150610061643_74552.png" alt="img"></p>
+<hr>
+<p><strong>ECDA数据：</strong></p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line">   <span class="attribute">Contribution</span> to <span class="literal">all</span> occupied complex orbital:</span><br><span class="line"><span class="attribute">Occupied</span>, virtual orbitals of fragment  <span class="number">1</span>:     <span class="number">680</span>.<span class="number">4194</span>%         <span class="number">8</span>.<span class="number">0593</span>%</span><br><span class="line"><span class="attribute">Occupied</span>, virtual orbitals of fragment  <span class="number">2</span>:     <span class="number">390</span>.<span class="number">3988</span>%        <span class="number">21</span>.<span class="number">1226</span>%</span><br><span class="line">  <span class="attribute">Contribution</span> to <span class="literal">all</span> virtual complex orbital:</span><br><span class="line"><span class="attribute">Occupied</span>, virtual orbitals of fragment  <span class="number">1</span>:      <span class="number">19</span>.<span class="number">5806</span>%      <span class="number">2291</span>.<span class="number">9407</span>%</span><br><span class="line"><span class="attribute">Occupied</span>, virtual orbitals of fragment  <span class="number">2</span>:       <span class="number">9</span>.<span class="number">6012</span>%      <span class="number">1678</span>.<span class="number">8774</span>%</span><br><span class="line"><span class="attribute">PL</span>( <span class="number">1</span>) + CT( <span class="number">1</span>-&gt; <span class="number">2</span>) =    <span class="number">0</span>.<span class="number">3916</span>      PL( <span class="number">1</span>) + CT( <span class="number">2</span>-&gt; <span class="number">1</span>) =    <span class="number">0</span>.<span class="number">1612</span></span><br><span class="line"><span class="attribute">PL</span>( <span class="number">2</span>) + CT( <span class="number">1</span>-&gt; <span class="number">2</span>) =    <span class="number">0</span>.<span class="number">4225</span>      PL( <span class="number">2</span>) + CT( <span class="number">2</span>-&gt; <span class="number">1</span>) =    <span class="number">0</span>.<span class="number">1920</span></span><br><span class="line"><span class="attribute">The</span> net electrons obtained by frag. <span class="number">2</span> = CT( <span class="number">1</span>-&gt; <span class="number">2</span>) - CT( <span class="number">2</span>-&gt; <span class="number">1</span>) =    <span class="number">0</span>.<span class="number">2304</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>一般来说只需要关注最后一行数据，它表明了从片段1向片段2总共净转移了多少电子，此例即0.2304。<ul>
+<li>这个数据和CDA的d-b项会有一定出入，因为二者计算方法没有明显关联。ECDA给出的总的净转移量更可靠。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>通过<strong>菜单</strong>可以进一步观看复合物轨道的具体成分，比如选<code>2</code>再输入9。</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"> <span class="attribute">Occupation</span> number of orbital     <span class="number">9</span> of the complex:  <span class="number">2</span>.<span class="number">00000000</span></span><br><span class="line"><span class="attribute">Orbital</span>     <span class="number">7</span> of fragment  <span class="number">1</span>, Occ: <span class="number">2</span>.<span class="number">00000</span>    Contribution:   <span class="number">25</span>.<span class="number">8560</span>%</span><br><span class="line"><span class="attribute">Orbital</span>    <span class="number">13</span> of fragment  <span class="number">1</span>, Occ: <span class="number">0</span>.<span class="number">00000</span>    Contribution:    <span class="number">1</span>.<span class="number">0798</span>%</span><br><span class="line"><span class="attribute">Orbital</span>     <span class="number">2</span> of fragment  <span class="number">2</span>, Occ: <span class="number">2</span>.<span class="number">00000</span>    Contribution:   <span class="number">57</span>.<span class="number">2921</span>%</span><br><span class="line"><span class="attribute">Orbital</span>     <span class="number">5</span> of fragment  <span class="number">2</span>, Occ: <span class="number">0</span>.<span class="number">00000</span>    Contribution:   <span class="number">14</span>.<span class="number">5640</span>%</span><br></pre></td></tr></table></figure>
+<ul>
+<li>从数据中可见，复合物轨道9主体是BH3的轨道2，达57.3%。</li>
+<li>之所以此复合物轨道会导致CO向BH3转移那么多电子，显然是因为CO的占据轨道7与BH3的虚轨道5相混合。</li>
+<li>r(9)很负，是因为CO的占据轨道7与BH3的占据轨道2间的互斥作用所致。</li>
+<li>可以进一步结合轨道图形来看：<ul>
+<li>左边是CO的占据轨道7（展现较明显C的孤对电子特征），右边是BH3的虚轨道5，从形状上看二者比较匹配，因此容易混合，并且混合后会导致不少电子转移。<br><img src="http://sobereva.com/usr/uploads/image/20150610/20150610061657_41127.png" alt="img"></li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>将某个复合物轨道的d,b,r值分解为片段轨道对的贡献：</strong></p>
+<ul>
+<li><p>对复合物轨道9进行分解。输入<code>0</code>返回上一级菜单，选选项<code>6</code>，然后输入<code>9</code>，然后输入0.005，这样对复合物轨道9的d,b,r项任意之一贡献大于0.005的片段轨道对就会被输出出来。</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">FragA</span> Orb(Occ.)  FragB Orb(Occ.)      d           b        d - b          r</span><br><span class="line">    <span class="attribute">4</span>( <span class="number">2</span>.<span class="number">0000</span>)       <span class="number">2</span>( <span class="number">2</span>.<span class="number">0000</span>)    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">000000</span>   -<span class="number">0</span>.<span class="number">009969</span></span><br><span class="line">    <span class="attribute">7</span>( <span class="number">2</span>.<span class="number">0000</span>)       <span class="number">1</span>( <span class="number">2</span>.<span class="number">0000</span>)    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">000000</span>   -<span class="number">0</span>.<span class="number">005759</span></span><br><span class="line">    <span class="attribute">7</span>( <span class="number">2</span>.<span class="number">0000</span>)       <span class="number">2</span>( <span class="number">2</span>.<span class="number">0000</span>)    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">000000</span>   -<span class="number">0</span>.<span class="number">723845</span></span><br><span class="line">    <span class="attribute">7</span>( <span class="number">2</span>.<span class="number">0000</span>)       <span class="number">5</span>( <span class="number">0</span>.<span class="number">0000</span>)    <span class="number">0</span>.<span class="number">176503</span>    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">176503</span>    <span class="number">0</span>.<span class="number">000000</span></span><br><span class="line">    <span class="attribute">7</span>( <span class="number">2</span>.<span class="number">0000</span>)       <span class="number">8</span>( <span class="number">0</span>.<span class="number">0000</span>)    <span class="number">0</span>.<span class="number">006221</span>    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">006221</span>    <span class="number">0</span>.<span class="number">000000</span></span><br><span class="line">    <span class="attribute">7</span>( <span class="number">2</span>.<span class="number">0000</span>)      <span class="number">11</span>( <span class="number">0</span>.<span class="number">0000</span>)    <span class="number">0</span>.<span class="number">005846</span>    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">005846</span>    <span class="number">0</span>.<span class="number">000000</span></span><br><span class="line">    <span class="attribute">7</span>( <span class="number">2</span>.<span class="number">0000</span>)      <span class="number">12</span>( <span class="number">0</span>.<span class="number">0000</span>)   -<span class="number">0</span>.<span class="number">023941</span>    <span class="number">0</span>.<span class="number">000000</span>   -<span class="number">0</span>.<span class="number">023941</span>    <span class="number">0</span>.<span class="number">000000</span></span><br><span class="line">   <span class="attribute">13</span>( <span class="number">0</span>.<span class="number">0000</span>)       <span class="number">2</span>( <span class="number">2</span>.<span class="number">0000</span>)    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">021958</span>   -<span class="number">0</span>.<span class="number">021958</span>    <span class="number">0</span>.<span class="number">000000</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>很清晰地可以看到CO的7号轨道与BH3的5号轨道相互作用导致电子向BH3转移了0.176，这正是9号复合物轨道d项达到0.171的主要因素。</p>
+</li>
+</ul>
+<hr>
+<p><strong>绘制轨道相互作用图</strong></p>
+<ul>
+<li><p>输入<code>0</code>回到上一级菜单，然后选<code>5</code>进入绘制轨道相互作用图的菜单中。</p>
+</li>
+<li><p>选<code>3</code>，输入-30,10把相互作用图能量下限和上限分别设为-30和10eV。</p>
+</li>
+<li>选<code>1</code>，轨道相互作用图立刻会显示。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>Multiwfn</tag>
+        <tag>CDA</tag>
+        <tag>CT</tag>
       </tags>
   </entry>
 </search>
