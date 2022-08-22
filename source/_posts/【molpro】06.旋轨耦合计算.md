@@ -156,3 +156,24 @@ hlsdiag=[ed,ed,es,ed,ed,ed,ep,ep,ep]             !set variable hlsdiag to mrci e
 {ci;hlsmat,ls,3010.1,3040.1,3060.1,3070.1,3042.1,3062.1,3072.1}
 ```
 
+# 结果
+
+- ΔSO在Summary of SO results中，为`E-E0`或者用最后两行中的E1-E0。如果所有态都考虑进去了，这两者是相等的，如果没有，不相等。
+
+```
+Summary of SO results
+=====================
+
+Eigenvalues of the spin-orbit matrix
+....................................
+
+  Nr  Sym         E             E-E0         E-E0           E-E(1)      E-E(1)      E-E(1)
+                (au)            (au)        (cm-1)           (au)       (cm-1)        (eV)
+  1   1   -332.08423469     -0.00013437      -29.49      0.00000000        0.00      0.0000
+  2   1   -332.08422135     -0.00012103      -26.56      0.00001334        2.93      0.0004
+  3   1   -332.08422135     -0.00012103      -26.56      0.00001334        2.93      0.0004
+  ………………
+ E0 =   -332.08410032 is the energy of the lowest zeroth-order state
+ E1 =   -332.08423469 is the energy of the lowest SO-state
+```
+

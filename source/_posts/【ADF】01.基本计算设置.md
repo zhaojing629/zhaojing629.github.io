@@ -293,7 +293,9 @@ End
 ## SCF不收敛
 
 1. 更换SCF[加速收敛的方法](#加速方法)
+
 2. 使用ARH方法
+
 3. 修改DIIS算法的参数
    - `Mixing`高于默认值`0.2`会有更高的加速度，更低会更稳定的迭代
    - `N`默认为`10`，越大用于加速SCF的扩展向量的数量越多，SCF迭代更稳定，最多到25
@@ -308,9 +310,41 @@ End
         Mixing1 0.09
     End
    ```
+   
 4. HOMO-LUMO较为接近的情况（0.02Hatree以内），可能造成HOMO-LUMO的震荡。可以使用`Lshift vshift`方法，比如0.01，不能太大，不适于激发态的计算、**解析频率**、旋轨耦合的计算。
+
 5. 使用Electron smearing设定在允许的能量范围内分数占据。
-6. 其他：[费米维基](https://www.fermitech.com.cn/wiki/doku.php?id=adf:scfnonconvergence)的2、3、5。
+
+6. 指定占据
+
+7. 其他：[费米维基](https://www.fermitech.com.cn/wiki/doku.php?id=adf:scfnonconvergence)的4、7。
+
+   ```
+   OCCUPATIONS keeporbitals=50 freeze 
+   OCCUPATIONS keeporbitals=50
+   ```
+
+   
+
+```
+mkdir 01_listi 02_listb 03_fdiis 04_listf 05_mesa 06_sdiis 07_arh 08_mix 09_shift 
+
+for i in 01 02 03 04 05 06 07 08 09 ;do cp 00*/*run 00*/adf* ${i}*; done
+
+sed -i 's/SCF/SCF\nAccelerationMethod listi/' 01*/*.run 
+sed -i 's/SCF/SCF\nAccelerationMethod listb/' 02*/*.run 
+sed -i 's/SCF/SCF\nAccelerationMethod fdiis/' 03*/*.run 
+sed -i 's/SCF/SCF\nAccelerationMethod listf/' 04*/*.run
+sed -i 's/SCF/SCF\nAccelerationMethod mesa/' 05*/*.run
+sed -i 's/SCF/SCF\nAccelerationMethod sdiis/' 06*/*.run
+sed -i 's/SCF/SCF\narh\nend/' 07*/*.run
+sed -i 's/SCF/SCF\nDIIS\nN 25\nCyc 30\nEnd\nMixing 0.015\n Mixing1 0.09/' 08*/*.run
+sed -i 's/SCF/SCF\nLshift 0.01/' 09*/*.run
+
+for i in 01 02 03 04 05 06 07 08 09;do cd ${i}*; qsub adf*; cd ..; done
+```
+
+
 
 
 

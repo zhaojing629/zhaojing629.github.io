@@ -335,7 +335,6 @@ measure RANGE 1.5 2.5 ALL (_C) (_U) "2://pm"
 - `mo ON/OFF`：开启或关闭分子轨道，默认是`ON`
 - `mo (integer)`：显示指定的分子轨道，序号从1开始。
   - 注意：Jmol中的轨道是按能量排序的，因此可能和一些fchk文件中的轨道不一致，比如NLMO。可以通过将原始的轨道能量作为标签，保留三位小数，通过`MO list`去查找相应的序号。
-
 - ` mo COLOR [RGB-color] [RGB-color]`：第一个颜色为等值面负的颜色，第二个为正等值面的颜色
   - `mo COLOR [RGB-color]`：将等值面设置成某个颜色
 - `mo CUTOFF (decimal)`：设置等值面的值。默认是0.05。
@@ -351,6 +350,29 @@ measure RANGE 1.5 2.5 ALL (_C) (_U) "2://pm"
 
 - `mo fill`：
 - `mo opaque`：
+
+## 标题
+
+默认生成的分子轨道左上角有标题，标题的格式可以通过` mo TITLEFORMAT "format"`控制
+
+- `%E `或者`%0.dE`：能量，可以控制小数位数
+- `%F`：文件名字
+- `%I`：轨道序号
+- `%M`：模型序号
+- `%N`：轨道总数
+- `%O`：占据数
+- `%S`：对称性
+- `%U`：能量单位
+- ` |`：换行
+- `?`：(在行开头)表示如果文件中没有该行的数据，则忽略该行
+
+默认的格式是
+
+```
+mo TITLEFORMAT "%F | Model %M MO %I/%N | Energy = %E %U | ?Symmetry = %S | ?Occupancy = %O"
+```
+
+- 如果想关闭可以使用` mo TITLEFORMAT ""`
 
 # set (lighting)   
 

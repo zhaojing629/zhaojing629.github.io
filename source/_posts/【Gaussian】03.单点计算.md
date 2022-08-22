@@ -13,6 +13,28 @@ description: 单点计算的一些基础和SCF不收敛的一些处理方法
 
 # `Geom`几何相关选项
 
+# `Charge`点电荷
+
+- 为分子添加背景电荷，格式为`x y z charge`，单位默认是Å，可以通过选项`Angstroms`，`Bohrs`控制。
+
+- 选项`Check`从chk文件中读取点电荷
+
+- 例子：
+
+  ```
+  # B3LYP/6=31G(d) Opt=Z-Matrix Charge NoSymm
+   
+  Water with point charges
+   
+  0,1
+  O -0.75 -0.94 0.0
+  H 0.21 -0.94 0.0
+  H-1.07 -0.0 0.0
+   
+  2.0  2.0 2.0 1.2
+  2.0 -2.0 2.0 1.1
+  ```
+
 # `SCF`相关选项
 
 ## 算法相关
@@ -136,61 +158,23 @@ description: 单点计算的一些基础和SCF不收敛的一些处理方法
 #!/bin/bash
 
 
-mkdir 01_novaracc_noincfock 02_vshift300 03_vshift400 04_vshift500 05_huckel 06_INDO 07_QC 08_XQC 09_Fermi 10_NODIIS
+mkdir 01_novaracc_noincfock 02_vshift300 03_vshift400 04_vshift500 05_huckel 06_INDO 07_QC 08_XQC 09_Fermi 10_NODIIS 11_mix
 
-for i in 01 02 03 04 05 06 07 08 09 10
-do
-cp *gjf g16* ${i}*
-done
+for i in 01 02 03 04 05 06 07 08 09 10 11; do cp 00_noconv/*gjf 00_noconv/g16* ${i}* ;done
 
-cd 01_novaracc_noincfock
-fckr SCF SCF\(novaracc,noincfock,maxcyc=300\)
-qsub g16.sub
-cd ..
 
-cd 02_vshift300
-fckr SCF SCF\(vshift=300,maxcyc=300\)
-qsub g16.sub
-cd ..
+sed -i 's/\#/&SCF\(novaracc,noincfock,maxcyc=300\) /' 01_novaracc_noincfock/*gjf
+sed -i 's/\#/&SCF\(vshift=300,maxcyc=300\) /' 02_vshift300/*gjf
+sed -i 's/\#/&SCF\(vshift=400,maxcyc=300\) /' 03_vshift400/*gjf
+sed -i 's/\#/&SCF\(vshift=500,maxcyc=300\) /' 04_vshift500/*gjf
+sed -i 's/\#/&SCF\(maxcyc=300\) guess=huckel /' 05_huckel/*gjf
+sed -i 's/\#/&SCF\(maxcyc=300\) guess=INDO /' 06_INDO/*gjf
+sed -i 's/\#/&SCF=QC /' 07_QC/*gjf
+sed -i 's/\#/&SCF=XQC /' 08_XQC/*gjf
+sed -i 's/\#/&SCF\(maxcyc=300,Fermi\) /' 09_Fermi/*gjf
+sed -i 's/\#/&SCF\(maxcyc=300,NODIIS\) /' 10_NODIIS/*gjf
+sed -i 's/\#/&SCF\(maxcyc=300\) guess=mix /' 11_mix/*gjf
 
-cd 03_vshift400
-fckr SCF SCF\(vshift=400,maxcyc=300\)
-qsub g16.sub
-cd ..
-
-cd 04_vshift500
-fckr SCF SCF\(vshift=500,maxcyc=300\)
-qsub g16.sub
-cd ..
-
-cd 05_huckel
-fckr SCF 'SCF\(maxcyc=300\) guess=huckel'
-qsub g16.sub
-cd ..
-
-cd 06_INDO
-fckr SCF 'SCF\(maxcyc=300\) guess=INDO'
-qsub g16.sub
-cd ..
-
-cd 07_QC
-fckr SCF SCF=QC
-qsub g16.sub
-cd ..
-
-cd 08_XQC
-fckr SCF SCF=XQC
-qsub g16.sub
-cd ..
-
-cd 09_Fermi
-fckr SCF SCF\(maxcyc=300,Fermi\)
-qsub g16.sub
-cd ..
-
-cd 10_NODIIS
-fckr SCF SCF\(maxcyc=300,NODIIS\)
-qsub g16.sub
-cd ..
+for i in 01 02 03 04 05 06 07 08 09 10 11; do cd ${i}* qsub g16*; cd ..; done 
 ```
 

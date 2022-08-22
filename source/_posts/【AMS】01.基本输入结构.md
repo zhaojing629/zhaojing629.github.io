@@ -94,6 +94,41 @@ End
 
 - `Section`：默认是`Molecule`
 
+### 指定均匀电场或多极电荷
+
+- 均匀电场
+
+  ```
+  System
+     ElectrostaticEmbedding
+        ElectricField ex ey ez
+     End
+  End
+  ```
+
+- 点电荷和多极电荷：
+
+  ```
+  System
+     ElectrostaticEmbedding
+        MultipolePotential
+           ChargeModel Point
+           Coordinates
+              x y z   q   py pz px
+              x y z   q   py pz px
+              ...
+           End
+        End
+     End
+  End
+  ```
+
+  - `ChargeModel`：多极子可以由一个点（在其位置具有奇异势能）或球形高斯分布``Gaussian`来表示。默认是`Point`。
+  - `ChargeWidth`：默认是`-1.0`a.u.。高斯电荷模型的宽度。
+  - `Coordinates`：格式为`x y z q`或者`x y z q µx µy µz`。x、y、z 是以 Å 为单位的坐标，q 是电荷（以电荷的原子单位表示），μx、μy、μz 是（可选）偶极矩分量（以原子单位表示，即 e*Bohr）。
+
+
+
 ## Task
 
 - Task的可选参数有：
@@ -196,7 +231,7 @@ end
 ```
 Relativity
    Formalism [Pauli | ZORA | X2C | RA-X2C]
-   Level [None | Scalar | Spin-Orbit]
+   Level [None | A | Spin-Orbit]
    Potential [MAPA | SAPA]
    SpinOrbitMagnetization [NonCollinear | Collinear | CollinearX | CollinearY | CollinearZ]
 End
