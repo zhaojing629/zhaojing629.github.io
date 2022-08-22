@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=EB Garamond:300,300italic,400,400italic,700,700italic|Dancing Script:300,300italic,400,400italic,700,700italic|ZCOOL XiaoWei:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.1/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="热力学量相关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【【草稿】】热力学相关">
+<meta property="og:url" content="http://example.com/2022/06/28/%E3%80%90%E3%80%90%E8%8D%89%E7%A8%BF%E3%80%91%E3%80%91%E7%83%AD%E5%8A%9B%E5%AD%A6%E7%9B%B8%E5%85%B3/index.html">
+<meta property="og:site_name" content="Jing&#39;s Notes">
+<meta property="og:description" content="热力学量相关">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/image-20220628202457869.png">
+<meta property="article:published_time" content="2022-06-28T11:18:16.000Z">
+<meta property="article:modified_time" content="2022-06-30T07:50:13.144Z">
+<meta property="article:author" content="Zhao Jing">
+<meta property="article:tag" content="熵">
+<meta property="article:tag" content="焓">
+<meta property="article:tag" content="内能">
+<meta property="article:tag" content="零点能">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/image-20220628202457869.png">
+
+<link rel="canonical" href="http://example.com/2022/06/28/%E3%80%90%E3%80%90%E8%8D%89%E7%A8%BF%E3%80%91%E3%80%91%E7%83%AD%E5%8A%9B%E5%AD%A6%E7%9B%B8%E5%85%B3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+  <title>【【草稿】】热力学相关 | Jing's Notes</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d23c6dd5b34ecbaba18b829b9084946";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jing's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/28/%E3%80%90%E3%80%90%E8%8D%89%E7%A8%BF%E3%80%91%E3%80%91%E7%83%AD%E5%8A%9B%E5%AD%A6%E7%9B%B8%E5%85%B3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="Zhao Jing">
+      <meta itemprop="description" content="做一棵树，只为岁月而生长。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jing's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【【草稿】】热力学相关
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-06-28 19:18:16" itemprop="dateCreated datePublished" datetime="2022-06-28T19:18:16+08:00">2022-06-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-06-30 15:50:13" itemprop="dateModified" datetime="2022-06-30T15:50:13+08:00">2022-06-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">计算化学</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">原理</span></a>
+                </span>
+            </span>
+
+          
+            <br>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/06/28/%E3%80%90%E3%80%90%E8%8D%89%E7%A8%BF%E3%80%91%E3%80%91%E7%83%AD%E5%8A%9B%E5%AD%A6%E7%9B%B8%E5%85%B3/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/06/28/%E3%80%90%E3%80%90%E8%8D%89%E7%A8%BF%E3%80%91%E3%80%91%E7%83%AD%E5%8A%9B%E5%AD%A6%E7%9B%B8%E5%85%B3/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+            <div class="post-description">热力学量相关</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ul>
+<li>热力学常数：<script type="math/tex">R=8.314J/(mol*K)</script></li>
+</ul>
+<h1 id="常见热力学量"><a href="#常见热力学量" class="headerlink" title="常见热力学量"></a>常见热力学量</h1><ul>
+<li>内能（Internal energy）：<script type="math/tex">U</script><ul>
+<li>内能不是电子能量，还包括核运动的能量</li>
+</ul>
+</li>
+<li>熵（Entropy）：<script type="math/tex">S</script><ul>
+<li>熵体现粒子的扩散度</li>
+</ul>
+</li>
+<li>亥姆霍兹自由能（Helmholtz free eneryg）：<script type="math/tex">A=U-TS</script><ul>
+<li>A用于等容过程</li>
+</ul>
+</li>
+<li>焓（Enthalpy）：<script type="math/tex">H=U+PV</script></li>
+<li>吉布斯自由能（Gibbs free energy）：<script type="math/tex">G=H-TS=A+PV</script><ul>
+<li>G用于等压过程</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li>等容热容：<script type="math/tex">C_{V}=\left(\frac{\partial U}{\partial T}\right)_{V}</script></li>
+<li>等压热容：<script type="math/tex">C_{P}=\left(\frac{\partial H}{\partial T}\right)_{P}</script></li>
+<li>升温造成的内能增加：<script type="math/tex">\Delta U_{0 \rightarrow T}=U(T)-U(0)=\int_{0}^{T} C_{V} d T</script></li>
+<li>升温造成的焓增加：<script type="math/tex">\Delta H_{0 \rightarrow T}=H(T)-H(0)=\int_{0}^{T} C_{P} d T</script></li>
+</ul>
+<h1 id="理想气体假设"><a href="#理想气体假设" class="headerlink" title="理想气体假设"></a>理想气体假设</h1><ul>
+<li>理想气体状态下系综内的分子之间不存在任何相互作用，此时满足：<script type="math/tex">PV=nRT</script></li>
+<li><p>Gaussian等量化程序对分子做振动分折时给出热力学数据的时候<strong>都是把体系当成理想气体对待的</strong>。给出每mol的热力学量，此时<script type="math/tex">PV=RT</script>，可明确写为:</p>
+<ul>
+<li><script type="math/tex; mode=display">G=A+RT</script></li>
+<li><script type="math/tex; mode=display">H=U+RT</script></li>
+<li><script type="math/tex; mode=display">C_{P}=C_V+R</script></li>
+</ul>
+</li>
+<li><p>热力学性质由体系的平动、转动、振动、电子一起贡献：</p>
+<ul>
+<li><script type="math/tex; mode=display">U_{\text {tot }}=U_{\text {trans }}+U_{\text {rot }}+U_{\text {vib }}+U_{\text {ele }}</script></li>
+<li><script type="math/tex; mode=display">S_{\text {tot }}=S_{\text {trans }}+S_{\text {rot }}+S_{\text {vib }}+S_{\text {ele }}</script></li>
+<li><script type="math/tex; mode=display">C_{\mathrm{v}, \text { tot }}=C_{\mathrm{V}, \text { trans }}+C_{\mathrm{V}, \text { rot }}+C_{\mathrm{V}, \mathrm{vib}}+C_{\mathrm{V}, \mathrm{de}}</script></li>
+</ul>
+</li>
+<li><p>H的RT和C的R项是由平动贡献的：</p>
+<ul>
+<li><script type="math/tex; mode=display">H_{\text {trans }}=U_{\text {trans }}+R T</script></li>
+<li><script type="math/tex; mode=display">C_{\mathrm{P}, \text { trans }}=C_{\mathrm{V}, \text { trans }}+R</script></li>
+</ul>
+</li>
+</ul>
+<h1 id="0K时的热力学数据"><a href="#0K时的热力学数据" class="headerlink" title="0K时的热力学数据"></a>0K时的热力学数据</h1><ul>
+<li>0K时平动和转动能量都为零。但是分子振动有零点振动能（ZPE或ZPVE），对应0K下（振动基态）时核振动的能量。</li>
+<li>在谐振近似下考察分子振动时（每个振动的能量的加合）：<script type="math/tex">\mathrm{ZPE}=\frac{1}{2} \sum_{i} h v_{i}</script></li>
+<li>几何优化得到的不是0K下的结构，而是虚构的没有核振动时的能重极小结构。哪怕是0K时核也在动，只要考虑核运动，就没有确切的核坐标，至多只能说振动平均结构。即：几何优化是忽略了核运动得到的势能曲线。</li>
+<li>电子基态能量（单点能）加上ZPE就是0K下体系的内能：<script type="math/tex">U(0)=\varepsilon_{\mathrm{ele}}+\mathrm{ZPE}</script><ul>
+<li>由<script type="math/tex">H=U+PV</script>，<script type="math/tex">G=H-TS</script>，当T=0时，<script type="math/tex">H(0)= G(0)= U(0)</script></li>
+</ul>
+</li>
+</ul>
+<h1 id="gt-0K时的热力学数据"><a href="#gt-0K时的热力学数据" class="headerlink" title="&gt;0K时的热力学数据"></a>&gt;0K时的热力学数据</h1><ul>
+<li><p>由于自由能、内能、 熵、焓等热力学量都是温度的函数，因此温度设定会影响它们的数值。另外压力设定也会产生影响，但影响的仅是平动贡献。</p>
+</li>
+<li><p>有限温度时，比如般计算的标况 (298.15K、1atm)，热力学数据写为电子基态能量与热贡献的加和。</p>
+<ul>
+<li><script type="math/tex; mode=display">U(T)=U(0)+[U(T)-U(0)]=\varepsilon_{\text {ele }}+\mathrm{ZPE}+\Delta U_{0 \rightarrow T}=\varepsilon_{\text {ele }}+U_{corr}(T)</script></li>
+<li><script type="math/tex; mode=display">H(T)=H(0)+[H(T)-H(0)]=\varepsilon_{\text {ele }}+\mathrm{ZPE}+\Delta H_{0 \rightarrow T}= \varepsilon_{\text {ele }}+H_{corr}(T)</script></li>
+<li><script type="math/tex; mode=display">G(T)=G(0)+[G(T)-G(0)]=\varepsilon_{\text {ele }}+\mathrm{ZPE}+\Delta G_{0 \rightarrow T}=\varepsilon_{\text {ele }}+G_{corr}(T)</script><ul>
+<li><script type="math/tex">\Delta U_{0 \rightarrow T}</script>，<script type="math/tex">\Delta H_{0 \rightarrow T}</script>，<script type="math/tex">\Delta G_{0 \rightarrow T}</script>是指从0K升温对热力学量产生的贡献，</li>
+<li><script type="math/tex">U/H/G_{corr}(T)</script>是对电子能量的热力学校正量，Gaussian会输出，热力学校正量加到电子能量上<script type="math/tex">\varepsilon_{\text {ele }}</script>就得到了体系的各种能量</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>单个原子的热力学校正量<script type="math/tex">H_{corr}(T)=\frac{5}{2}RT</script></p>
+</li>
+</ul>
+<h1 id="量化计算过程注意事项"><a href="#量化计算过程注意事项" class="headerlink" title="量化计算过程注意事项"></a>量化计算过程注意事项</h1><ul>
+<li>量化程序计算热力学数据的时候都是把体系当成理想气体分子来考虑的：<ul>
+<li>不要误认为在量子化学程序中不同温度、压力设定下得到的就是物质在相应状态下的实际性质。</li>
+<li>量化程序在计算平动、转动贡献时，并没有考虑凝聚相（或非理想气体）状况下分子间相互作用，分子是当成能够自由地平动和转动的。</li>
+</ul>
+</li>
+<li>由于自由能、内能、 熵、焓等热力学量都是温度的函数，因此<strong>温度设定</strong>会影响它们的数值。</li>
+<li><strong>压力设定</strong>也会产生影响，但影响的仅是平动贡献。</li>
+<li><strong>不同位素设定</strong>下由于原子质量不同热力学量计算结果也有所不同。（依赖于原子质量）</li>
+<li><p>在给定结构下，由于计算平动、转动不需要任何耗时。耗时都在频率计算上，所以一般量子化学程序做振动分析任务时就会顺便给出热力学数据。</p>
+</li>
+<li><p>由于热力学量涉及电子能量，振动频率，几何结构（影响转转动贡献)，所以热力学数据计算<strong>精度</strong>依赖于计算级别。</p>
+<ul>
+<li>热力学校正量的数量级远远低于电子能量。对两个体系进行比较时(如计算化学反应能)，热力学校正量的计算误差一般也明显低于电子能量计算误差，所以算准热力学数据最重要的是算准电子能量，所用计算级别应该尽可能高。而热力学校正量在廉价计算级别如B3LYP/6-31G<em>下就足矣算将很好，且频率计算耗时量远大于单点，因此计算<em>*热力学校正量时不需要也不宜用太高级别</em></em>。</li>
+<li>注意做振动分析计算热力学数据时坐标一定要在同级别优化过，而振动分析结来和几何优化对计算级别的敏感度又都显著低于能量，因此计算热力学数据的合理略是先用中成低级别优化结构并计算热力学校正量，然后再用高级别方法在此结构下算一次单点并和热力学校正相加。</li>
+</ul>
+</li>
+</ul>
+<h1 id="用哪种热力学量"><a href="#用哪种热力学量" class="headerlink" title="用哪种热力学量"></a>用哪种热力学量</h1><p>0K下内能、焓、自由能相同。有限温度下用哪种热力学量讨论问题分情况：</p>
+<ul>
+<li>化学平衡【求平衡常数，用自由能差】、构象分布【不同构象出现比例，玻尔兹曼分布】、反应快慢【过渡态理论，自由能垒】、稳定性【可能分很多稳定性】：自由能</li>
+<li>吸热/放热量：焓(如果化学过程前后气态分子摩尔数没有变化，【等容过程】亦可用内能变讨论，此时与始变相同)</li>
+<li>键能、电离能、电子亲和能：焓</li>
+<li>其它情况、纯理论研究问题或只需简单粗略讨论上述问题：电子能量</li>
+</ul>
+<h2 id="得到H-T-G-T-的步骤"><a href="#得到H-T-G-T-的步骤" class="headerlink" title="得到H(T)/G(T)的步骤"></a>得到H(T)/G(T)的步骤</h2><p>对于Gaussian：</p>
+<ul>
+<li>粗糙做法：直接用中低级别诸如B3LYP16-31G*做opt req任务，取输出的<code>Sum of electronic and themal Enthalples=</code>后面的值H(T)或<code>Sum of electronic and thermal Free Enerpies=后面的值</code>G(T)</li>
+<li><p>一般做法：用中低级别诸如B3LYP/6-31G*做opt freq任务，取焓的热校正量（<code>Thermal correction to Enthalpy=</code>后面的值）或自由能的热校正量（<code>Thermal correction to Gibbs Free Energy=</code>后面的值）。然后在这优化得到的结构下用诸如B2PLYP-D3/def2-TZVPP等较高级别计算单点能。最后把二者相加</p>
+</li>
+<li><p>对于小体系，直接用恰当的热力学组合方法，从输出文件末尾读取焓</p>
+</li>
+</ul>
+<h1 id="不同量化软件输出"><a href="#不同量化软件输出" class="headerlink" title="不同量化软件输出"></a>不同量化软件输出</h1><h2 id="Gaussian"><a href="#Gaussian" class="headerlink" title="Gaussian"></a>Gaussian</h2><ul>
+<li>两种单位的<script type="math/tex">\mathrm{ZPE}</script></li>
+</ul>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Zero-point vibrational energy     <span class="number">210889.5</span> (<span class="name">Joules/Mol</span>)</span><br><span class="line">                                   <span class="number">50.40379</span> (<span class="name">Kcal/Mol</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Zero-point correction：零点能，<script type="math/tex">\mathrm{ZPE}</script>，单位应该是hartree，而不是Hartree/Particle</li>
+<li>Thermal correction to Energy：内能的热力学校正量<script type="math/tex">U_{corr}(T)</script></li>
+<li>Thermal correction to Enthalpy：焓热校正量<script type="math/tex">H_{corr}(T)</script></li>
+<li>Thermal correction to Gibbs Free Energy：吉布斯自由能校正量<script type="math/tex">G_{corr}(T)</script></li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Zero</span>-point correction=                           <span class="number">0</span>.<span class="number">080324</span> (Hartree/Particle)</span><br><span class="line"> <span class="attribute">Thermal</span> correction to Energy=                    <span class="number">0</span>.<span class="number">084586</span></span><br><span class="line"> <span class="attribute">Thermal</span> correction to Enthalpy=                  <span class="number">0</span>.<span class="number">085530</span></span><br><span class="line"> <span class="attribute">Thermal</span> correction to Gibbs Free Energy=         <span class="number">0</span>.<span class="number">054960</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>上面四项加到电子能量上后就得到了其他能量。Gaussian也会自动加和输出当前级别下的其他能量，但是电子能量并不准确，要得到比较准确的，应当手动把校正量加到（更高级别）单点能上：</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Sum</span> of electronic and zero-point Energies=           -<span class="number">154</span>.<span class="number">953482</span></span><br><span class="line"> <span class="attribute">Sum</span> of electronic and thermal Energies=              -<span class="number">154</span>.<span class="number">949219</span></span><br><span class="line"> <span class="attribute">Sum</span> of electronic and thermal Enthalpies=            -<span class="number">154</span>.<span class="number">948275</span></span><br><span class="line"> <span class="attribute">Sum</span> of electronic and thermal Free Energies=         -<span class="number">154</span>.<span class="number">978845</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>其他输出：<ul>
+<li>E (Thermal)表示内能热校正量，电子、平动、转动、振动的贡献etc，振动占大部分</li>
+<li>G(T)还可以通过<script type="math/tex">G=H-TS</script>得到，通过温度和输出的熵变计算。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">                    <span class="attribute">E</span> (Thermal)             CV                S</span><br><span class="line">                     <span class="attribute">KCal</span>/Mol        Cal/Mol-Kelvin    Cal/Mol-Kelvin</span><br><span class="line"><span class="attribute">Total</span>                   <span class="number">53</span>.<span class="number">079</span>             <span class="number">13</span>.<span class="number">372</span>             <span class="number">64</span>.<span class="number">340</span></span><br><span class="line"><span class="attribute">Electronic</span>               <span class="number">0</span>.<span class="number">000</span>              <span class="number">0</span>.<span class="number">000</span>              <span class="number">0</span>.<span class="number">000</span></span><br><span class="line"><span class="attribute">Translational</span>            <span class="number">0</span>.<span class="number">889</span>              <span class="number">2</span>.<span class="number">981</span>             <span class="number">37</span>.<span class="number">406</span></span><br><span class="line"><span class="attribute">Rotational</span>               <span class="number">0</span>.<span class="number">889</span>              <span class="number">2</span>.<span class="number">981</span>             <span class="number">22</span>.<span class="number">318</span></span><br><span class="line"><span class="attribute">Vibrational</span>             <span class="number">51</span>.<span class="number">301</span>              <span class="number">7</span>.<span class="number">410</span>              <span class="number">4</span>.<span class="number">616</span></span><br><span class="line"><span class="attribute">Vibration</span>     <span class="number">1</span>          <span class="number">0</span>.<span class="number">664</span>              <span class="number">1</span>.<span class="number">758</span>              <span class="number">1</span>.<span class="number">711</span></span><br><span class="line"><span class="attribute">Vibration</span>     <span class="number">2</span>          <span class="number">0</span>.<span class="number">694</span>              <span class="number">1</span>.<span class="number">668</span>              <span class="number">1</span>.<span class="number">400</span></span><br><span class="line"><span class="attribute">Vibration</span>     <span class="number">3</span>          <span class="number">0</span>.<span class="number">781</span>              <span class="number">1</span>.<span class="number">430</span>              <span class="number">0</span>.<span class="number">897</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>Q配分函数，各种热力学量都可以通过配分函数得到</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">                      <span class="attribute">Q</span>            Log<span class="number">10</span>(Q)             Ln(Q)</span><br><span class="line"><span class="attribute">Total</span> Bot       <span class="number">0</span>.<span class="number">524878</span>D-<span class="number">25</span>        -<span class="number">25</span>.<span class="number">279942</span>        -<span class="number">58</span>.<span class="number">209218</span></span><br><span class="line"><span class="attribute">Total</span> V=<span class="number">0</span>       <span class="number">0</span>.<span class="number">463716</span>D+<span class="number">12</span>         <span class="number">11</span>.<span class="number">666252</span>         <span class="number">26</span>.<span class="number">862537</span></span><br><span class="line"><span class="attribute">Vib</span> (Bot)       <span class="number">0</span>.<span class="number">253966</span>D-<span class="number">36</span>        -<span class="number">36</span>.<span class="number">595224</span>        -<span class="number">84</span>.<span class="number">263617</span></span><br><span class="line"><span class="attribute">Vib</span> (Bot)    <span class="number">1</span>  <span class="number">0</span>.<span class="number">771265</span>D+<span class="number">00</span>         -<span class="number">0</span>.<span class="number">112796</span>         -<span class="number">0</span>.<span class="number">259723</span></span><br><span class="line"><span class="attribute">Vib</span> (Bot)    <span class="number">2</span>  <span class="number">0</span>.<span class="number">626499</span>D+<span class="number">00</span>         -<span class="number">0</span>.<span class="number">203080</span>         -<span class="number">0</span>.<span class="number">467609</span></span><br><span class="line"><span class="attribute">Vib</span> (Bot)    <span class="number">3</span>  <span class="number">0</span>.<span class="number">420158</span>D+<span class="number">00</span>         -<span class="number">0</span>.<span class="number">376588</span>         -<span class="number">0</span>.<span class="number">867125</span></span><br><span class="line"><span class="attribute">Vib</span> (V=<span class="number">0</span>)       <span class="number">0</span>.<span class="number">224373</span>D+<span class="number">01</span>          <span class="number">0</span>.<span class="number">350970</span>          <span class="number">0</span>.<span class="number">808138</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="例子1：计算0K和298-15K下HF生成焓"><a href="#例子1：计算0K和298-15K下HF生成焓" class="headerlink" title="例子1：计算0K和298.15K下HF生成焓"></a>例子1：计算0K和298.15K下HF生成焓</h3><ul>
+<li><script type="math/tex; mode=display">\frac{1}{2} \mathrm{H}_{2}(\mathrm{~g})+\frac{1}{2}\mathrm{~F}_{2}(\mathrm{~g}) \rightarrow \mathrm{HF}(\mathrm{g})</script></li>
+<li>0K下实验生成焓变-272.5±0.8kJ/mol，298.15K下为-273.3kJ/mol。</li>
+<li>先通过B3LYP/6-31G*优化和振动分析得到ZPE和298.15K时的焓的热校正量，加到CCSDT/cc-pVQZ得到的单点能上来分别获得0K和298.15K时的焓值，并计算生成焓。</li>
+</ul>
+<p><img src="/image-20220628202457869.png" alt="image-20220628202457869"></p>
+<h2 id="ADF"><a href="#ADF" class="headerlink" title="ADF"></a>ADF</h2><ul>
+<li><p>零点能：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Zero</span>-point energy (Hartree):     <span class="number">0</span>.<span class="number">0032</span></span><br></pre></td></tr></table></figure>
+</li>
+<li></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>有用可戳(●ˇ∀ˇ●)</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="Zhao Jing 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Zhao Jing
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2022/06/28/%E3%80%90%E3%80%90%E8%8D%89%E7%A8%BF%E3%80%91%E3%80%91%E7%83%AD%E5%8A%9B%E5%AD%A6%E7%9B%B8%E5%85%B3/" title="【【草稿】】热力学相关">http://example.com/2022/06/28/【【草稿】】热力学相关/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E7%86%B5/" rel="tag"><i class="fa fa-tag"></i> 熵</a>
+              <a href="/tags/%E7%84%93/" rel="tag"><i class="fa fa-tag"></i> 焓</a>
+              <a href="/tags/%E5%86%85%E8%83%BD/" rel="tag"><i class="fa fa-tag"></i> 内能</a>
+              <a href="/tags/%E9%9B%B6%E7%82%B9%E8%83%BD/" rel="tag"><i class="fa fa-tag"></i> 零点能</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/28/%E3%80%90%E3%80%90%E8%8D%89%E7%A8%BF%E3%80%91%E3%80%91%E5%88%86%E5%AD%90%E6%8C%AF%E5%8A%A8/" rel="prev" title="【【草稿】】分子振动">
+      <i class="fa fa-chevron-left"></i> 【【草稿】】分子振动
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%83%AD%E5%8A%9B%E5%AD%A6%E9%87%8F"><span class="nav-number">1.</span> <span class="nav-text">常见热力学量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%90%86%E6%83%B3%E6%B0%94%E4%BD%93%E5%81%87%E8%AE%BE"><span class="nav-number">2.</span> <span class="nav-text">理想气体假设</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0K%E6%97%B6%E7%9A%84%E7%83%AD%E5%8A%9B%E5%AD%A6%E6%95%B0%E6%8D%AE"><span class="nav-number">3.</span> <span class="nav-text">0K时的热力学数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gt-0K%E6%97%B6%E7%9A%84%E7%83%AD%E5%8A%9B%E5%AD%A6%E6%95%B0%E6%8D%AE"><span class="nav-number">4.</span> <span class="nav-text">&gt;0K时的热力学数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8F%E5%8C%96%E8%AE%A1%E7%AE%97%E8%BF%87%E7%A8%8B%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">5.</span> <span class="nav-text">量化计算过程注意事项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%A8%E5%93%AA%E7%A7%8D%E7%83%AD%E5%8A%9B%E5%AD%A6%E9%87%8F"><span class="nav-number">6.</span> <span class="nav-text">用哪种热力学量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%97%E5%88%B0H-T-G-T-%E7%9A%84%E6%AD%A5%E9%AA%A4"><span class="nav-number">6.1.</span> <span class="nav-text">得到H(T)&#x2F;G(T)的步骤</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C%E9%87%8F%E5%8C%96%E8%BD%AF%E4%BB%B6%E8%BE%93%E5%87%BA"><span class="nav-number">7.</span> <span class="nav-text">不同量化软件输出</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Gaussian"><span class="nav-number">7.1.</span> <span class="nav-text">Gaussian</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E5%AD%901%EF%BC%9A%E8%AE%A1%E7%AE%970K%E5%92%8C298-15K%E4%B8%8BHF%E7%94%9F%E6%88%90%E7%84%93"><span class="nav-number">7.1.1.</span> <span class="nav-text">例子1：计算0K和298.15K下HF生成焓</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ADF"><span class="nav-number">7.2.</span> <span class="nav-text">ADF</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhao Jing"
+      src="/images/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">Zhao Jing</p>
+  <div class="site-description" itemprop="description">做一棵树，只为岁月而生长。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaojing629" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaojing629" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:295483858@qq.com" title="E-Mail → mailto:295483858@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+<div class="sidebar-categories" p align="left">
+  <font size="2">
+  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/">计算化学</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/%E8%BD%AF%E4%BB%B6/">软件</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/%E5%8E%9F%E7%90%86/">原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/AMS/">AMS</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%AB%99/">网站</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F/">系统</a></li></ul>
+  </font>
+  </p /div>
+
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title"></h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ADF/" rel="tag">ADF</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AIM/" rel="tag">AIM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AMS/" rel="tag">AMS</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASPT2/" rel="tag">CASPT2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASSCF/" rel="tag">CASSCF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDA/" rel="tag">CDA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CP2K/" rel="tag">CP2K</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CT/" rel="tag">CT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DLPNO/" rel="tag">DLPNO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gaussian/" rel="tag">Gaussian</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HF/" rel="tag">HF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jahn-Teller/" rel="tag">Jahn-Teller</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jmol/" rel="tag">Jmol</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LmodeA/" rel="tag">LmodeA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCSCF/" rel="tag">MCSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MOKIT/" rel="tag">MOKIT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Multiwfn/" rel="tag">Multiwfn</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NBO/" rel="tag">NBO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NICS/" rel="tag">NICS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORCA/" rel="tag">ORCA</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PIO/" rel="tag">PIO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pyscf/" rel="tag">Pyscf</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RI%E8%BF%91%E4%BC%BC/" rel="tag">RI近似</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SO/" rel="tag">SO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMD/" rel="tag">VMD</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/compliance/" rel="tag">compliance</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/molpro/" rel="tag">molpro</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%B4%E7%95%8C%E7%82%B9/" rel="tag">临界点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98/" rel="tag">内存</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E8%83%BD/" rel="tag">内能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="tag">几何优化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%AD%90%E8%BD%A8%E9%81%93/" rel="tag">分子轨道</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%9D%E7%8C%9C/" rel="tag">初猜</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%9B%E5%B8%B8%E6%95%B0/" rel="tag">力常数</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%82%B9/" rel="tag">单点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag">占据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/" rel="tag">变分法</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%90%E6%A0%87/" rel="tag">坐标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%BB%84/" rel="tag">基组</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BB%84%E6%80%81/" rel="tag">多组态</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A7%9C-%E6%B3%B0%E5%8B%92%E6%95%88%E5%BA%94/" rel="tag">姜-泰勒效应</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag">对称性</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E6%89%B0%E7%90%86%E8%AE%BA/" rel="tag">微扰理论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%93%E6%89%91%E5%88%86%E6%9E%90/" rel="tag">拓扑分析</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%94%B6%E6%95%9B/" rel="tag">收敛</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%8B%E8%BD%A8%E8%80%A6%E5%90%88/" rel="tag">旋轨耦合</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag">波函</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BF%80%E5%8F%91/" rel="tag">激发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag">点群</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%84%93/" rel="tag">焓</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%86%B5/" rel="tag">熵</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E8%8D%B7/" rel="tag">电荷</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA/" rel="tag">相对论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%9F%BA%E7%BB%84/" rel="tag">相对论基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B2%BE%E5%BA%A6/" rel="tag">精度</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%98%E5%9B%BE/" rel="tag">绘图</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%8A%B3%E9%A6%99%E6%80%A7/" rel="tag">芳香性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%9D%E5%8A%BF/" rel="tag">赝势</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%85%E5%8A%A9%E5%9F%BA%E7%BB%84/" rel="tag">辅助基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5/" rel="tag">输入</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%87%BA/" rel="tag">输出</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%87%E6%B8%A1%E6%80%81/" rel="tag">过渡态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E5%BE%84/" rel="tag">键径</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E7%BA%A7/" rel="tag">键级</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%B6%E7%82%B9%E8%83%BD/" rel="tag">零点能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%91%E7%8E%87/" rel="tag">频率</a><span class="tag-list-count">2</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-flask"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhao Jing</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">323k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='0,0,0' opacity='0.3' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.1/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : '3L90wCaNUKa1MzSQcAhzkLtk-gzGzoHsz',
+      appKey     : 'fQ4t73jXnb71Y9zQWfXj5bIP',
+      placeholder: "可以输入您发现文中的错误或建议~(。・∀・)ノ",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

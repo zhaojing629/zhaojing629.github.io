@@ -692,7 +692,7 @@
 <p>CN</p>
 <figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> N       <span class="number">0.000000000004</span>      <span class="number">-0.000000000003</span>       <span class="number">0.176266511365</span>    </span><br><span class="line"><span class="number">2</span> C      <span class="number">-0.000000000009</span>       <span class="number">0.000000000010</span>       <span class="number">1.330166878460</span>    </span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
 <p>HCN</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> H       <span class="number">0.000000000013</span>      <span class="number">-0.000000000021</span>       <span class="number">2.374453386206</span>  f=f1</span><br><span class="line"><span class="number">2</span> C      <span class="number">-0.000000000009</span>       <span class="number">0.000000000010</span>       <span class="number">1.330166878460</span>  f=f2 </span><br><span class="line"><span class="number">3</span> N       <span class="number">0.000000000004</span>      <span class="number">-0.000000000003</span>       <span class="number">0.176266511365</span>  f=f2</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line"></span><br><span class="line">FRAGOCCUPATIONS</span><br><span class="line">Region_1</span><br><span class="line">A <span class="number">1</span><span class="comment">//0</span></span><br><span class="line">SUBEND</span><br><span class="line">Region_2</span><br><span class="line">A <span class="number">4</span><span class="comment">//5</span></span><br><span class="line">SUBEND</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">Fragments</span><br><span class="line">    f1 H.t21 </span><br><span class="line">    f2 CN.t21 </span><br><span class="line">end</span><br><span class="line">ETSNOCV</span><br><span class="line">PRINT ETSLOWDIN-UNRESTRICTED</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">……</span><br><span class="line">ATOMS</span><br><span class="line"><span class="number">1</span> H       <span class="number">0.000000000013</span>      <span class="number">-0.000000000021</span>       <span class="number">2.374453386206</span>  f=f1</span><br><span class="line"><span class="number">2</span> C      <span class="number">-0.000000000009</span>       <span class="number">0.000000000010</span>       <span class="number">1.330166878460</span>  f=f2 </span><br><span class="line"><span class="number">3</span> N       <span class="number">0.000000000004</span>      <span class="number">-0.000000000003</span>       <span class="number">0.176266511365</span>  f=f2</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">SYMMETRY NOSYM</span><br><span class="line"></span><br><span class="line">FRAGOCCUPATIONS</span><br><span class="line">Region_1</span><br><span class="line">A <span class="number">1</span><span class="comment">//0</span></span><br><span class="line">SUBEND</span><br><span class="line">Region_2</span><br><span class="line">A <span class="number">4</span><span class="comment">//5</span></span><br><span class="line">SUBEND</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line">Fragments</span><br><span class="line">    f1 H.t21 </span><br><span class="line">    f2 CN.t21 </span><br><span class="line">end</span><br><span class="line">ETSNOCV</span><br><span class="line"></span><br><span class="line">PRINT ETSLOWDIN-UNRESTRICTED</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
 <h1 id="EDA分解结果"><a href="#EDA分解结果" class="headerlink" title="EDA分解结果"></a>EDA分解结果</h1><ul>
 <li><font color=red>总的能量</font><script type="math/tex">ΔE_{total}＝ΔE_{elstat}＋ΔE_{Pauli}＋ΔE_{orb}+ΔE_{prep}+(ΔE_{disp})</script> 分为以下几项：<ul>
 <li>泡利排斥$ΔE_{Pauli}$：两个片段占据轨道之间的排斥作用，会导致能量升高（＞0），电子和电子之间的泡利排斥大概在1玻尔的范围内。</li>
@@ -781,6 +781,19 @@
 <ul>
 <li><code>Section</code>：默认是<code>Molecule</code></li>
 </ul>
+<h3 id="指定均匀电场或多极电荷"><a href="#指定均匀电场或多极电荷" class="headerlink" title="指定均匀电场或多极电荷"></a>指定均匀电场或多极电荷</h3><ul>
+<li><p>均匀电场</p>
+<figure class="highlight gauss"><table><tr><td class="code"><pre><span class="line"><span class="keyword">System</span></span><br><span class="line">   ElectrostaticEmbedding</span><br><span class="line">      ElectricField ex ey ez</span><br><span class="line">   <span class="keyword">End</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>点电荷和多极电荷：</p>
+<figure class="highlight sas"><table><tr><td class="code"><pre><span class="line">System</span><br><span class="line">   ElectrostaticEmbedding</span><br><span class="line">      MultipolePotential</span><br><span class="line">         ChargeModel Point</span><br><span class="line">         Coordinates</span><br><span class="line">            <span class="meta">x</span> y z   q   py pz px</span><br><span class="line">            <span class="meta">x</span> y z   q   py pz px</span><br><span class="line">            ...</span><br><span class="line">         <span class="meta">End</span></span><br><span class="line">      <span class="meta">End</span></span><br><span class="line">   <span class="meta">End</span></span><br><span class="line"><span class="meta">End</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>ChargeModel</code>：多极子可以由一个点（在其位置具有奇异势能）或球形高斯分布<code>`Gaussian</code>来表示。默认是<code>Point</code>。</li>
+<li><code>ChargeWidth</code>：默认是<code>-1.0</code>a.u.。高斯电荷模型的宽度。</li>
+<li><code>Coordinates</code>：格式为<code>x y z q</code>或者<code>x y z q µx µy µz</code>。x、y、z 是以 Å 为单位的坐标，q 是电荷（以电荷的原子单位表示），μx、μy、μz 是（可选）偶极矩分量（以原子单位表示，即 e*Bohr）。</li>
+</ul>
+</li>
+</ul>
 <h2 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h2><ul>
 <li><p>Task的可选参数有：</p>
 <figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">Task [SinglePoint | <span class="type">GeometryOptimization</span> | <span class="type">TransitionStateSearch</span> | <span class="type">IRC</span> | <span class="type">PESScan</span> | <span class="type">NEB</span> | <span class="type">VibrationalAnalysis</span> | <span class="type">MolecularDynamics</span> | <span class="type">GCMC</span>]</span><br></pre></td></tr></table></figure>
@@ -807,7 +820,7 @@
 </ul>
 <h2 id="泛函"><a href="#泛函" class="headerlink" title="泛函"></a>泛函</h2><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">XC</span><br><span class="line">  &#123;LDA LDA &#123;Stoll&#125;&#125;</span><br><span class="line">  &#123;GGA GGA&#125;</span><br><span class="line">  &#123;MetaGGA metagga&#125;</span><br><span class="line">  &#123;Model MODELPOT [IP]&#125;</span><br><span class="line">  &#123;HartreeFock&#125;</span><br><span class="line">  &#123;OEP fitmethod &#123;approximation&#125;&#125;</span><br><span class="line">  &#123;HYBRID hybrid &#123;<span class="attribute">HF</span>=HFpart&#125;&#125;</span><br><span class="line">  &#123;MetaHYBRID metahybrid&#125;</span><br><span class="line">  &#123;DOUBLEHYBRID doublehybrid&#125;</span><br><span class="line">  &#123;RPA&#125;</span><br><span class="line">  &#123;XCFUN&#125;</span><br><span class="line">  &#123;RANGESEP &#123;<span class="attribute">GAMMA</span>=X&#125; &#123;<span class="attribute">ALPHA</span>=a&#125; &#123;<span class="attribute">BETA</span>=b&#125;&#125;</span><br><span class="line">  (LibXC functional&#125;</span><br><span class="line">  &#123;DISPERSION [s6scaling] [<span class="attribute">RSCALE</span>=r0scaling] [Grimme3] [BJDAMP] [<span class="attribute">PAR1</span>=par1]  [<span class="attribute">PAR2</span>=par2]  [<span class="attribute">PAR3</span>=par3]  [<span class="attribute">PAR4</span>=par4] &#125;</span><br><span class="line">  &#123;Dispersion Grimme4 &#123;<span class="attribute">s6</span>=...&#125; &#123;<span class="attribute">s8</span>=...&#125; &#123;<span class="attribute">a1</span>=...&#125; &#123;<span class="attribute">a2</span>=...&#125;&#125;</span><br><span class="line">  &#123;DISPERSION dDsC&#125;</span><br><span class="line">  &#123;DISPERSION UFF&#125;</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 <h2 id="相对论"><a href="#相对论" class="headerlink" title="相对论"></a>相对论</h2><p>2020版本开始默认使用标量相对论效应：</p>
-<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">Relativity</span><br><span class="line">   Formalism [Pauli | <span class="type">ZORA</span> | <span class="type">X2C</span> | <span class="type">RA</span>-X2C]</span><br><span class="line">   Level [None | <span class="type">Scalar</span> | <span class="type">Spin</span>-Orbit]</span><br><span class="line">   Potential [MAPA | <span class="type">SAPA</span>]</span><br><span class="line">   SpinOrbitMagnetization [NonCollinear | <span class="type">Collinear</span> | <span class="type">CollinearX</span> | <span class="type">CollinearY</span> | <span class="type">CollinearZ</span>]</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">Relativity</span><br><span class="line">   Formalism [Pauli | <span class="type">ZORA</span> | <span class="type">X2C</span> | <span class="type">RA</span>-X2C]</span><br><span class="line">   Level [None | <span class="type">A</span> | <span class="type">Spin</span>-Orbit]</span><br><span class="line">   Potential [MAPA | <span class="type">SAPA</span>]</span><br><span class="line">   SpinOrbitMagnetization [NonCollinear | <span class="type">Collinear</span> | <span class="type">CollinearX</span> | <span class="type">CollinearY</span> | <span class="type">CollinearZ</span>]</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>Formalism</code>：如果<code>level</code>里是<code>None</code>，则不需要考虑所选择的形式。<ul>
 <li><code>Pauli</code>：泡利哈密顿函数</li>
@@ -1410,7 +1423,7 @@
 <li><code>geom=check</code>：输入结构从chk中读取，输入文件里此时不能写坐标</li>
 <li><code>geom=allcheck</code>：标题段落、电荷、自旋多重度、坐标都从chk中读取。输入文件里此时不能写坐标多重度等，关键词后面空行直接跟指定的基组或者为空。</li>
 </ul>
-<h1 id="chk文件"><a href="#chk文件" class="headerlink" title="chk文件"></a>chk文件</h1><ul>
+<h1 id="chk文件相关"><a href="#chk文件相关" class="headerlink" title="chk文件相关"></a>chk文件相关</h1><ul>
 <li><p>在哪个操作系统下得到的chk文件就要在哪个操作系统下转换：</p>
 <ul>
 <li><p>Windows下点击Gaussian图形界面的Utilities-FormChk，选择chk文件</p>
@@ -1421,6 +1434,68 @@
 </ul>
 </li>
 </ul>
+<h1 id="电子能量读取"><a href="#电子能量读取" class="headerlink" title="电子能量读取"></a>电子能量读取</h1><ul>
+<li>Hartree-Fock（HF）方法&amp;普通泛函的DFT计算：<ul>
+<li>SCF Done</li>
+<li>archive段落HF=后面的数值和之前输出的SCF Done后面显示的完全相同</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>以下的方法中，SCF Done以及archive段落的HF=后面的值，基本都是HF级别的电子能量。</p>
+<ul>
+<li><p>MP2后HF方法：</p>
+<ul>
+<li>输出文件里EUMP2 =后面的值</li>
+<li>archive段落的MP2=后面的值</li>
+</ul>
+</li>
+<li><p>双杂化泛函：</p>
+<ul>
+<li>比如用的是B2PLYP双杂化泛函，则最终双杂化泛函的能量就是输出文件中E(B2PLYP) =后面的值</li>
+<li>直接从archive段落里读MP2=后头的值</li>
+</ul>
+</li>
+<li><p>CCSD(T)：</p>
+<ul>
+<li>输出文件中CCSD(T)=后面的值</li>
+<li>archive段落里读取CCSD(T)=后面的值</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p>CASSCF方法：</p>
+<ul>
+<li>直接搜EIGENVALUES AND  EIGENVECTORS OF CI MATRIX，下面的EIGENVALUE后面的值就是相应的电子态的电子能量</li>
+<li>archive段落的HF=后面的值也是CASSCF的电子能量，如果同时算了多个态的话，这个值是序号最高的那个态的值。</li>
+</ul>
+</li>
+<li><p>TDDFT计算</p>
+<ul>
+<li>在输出激发态信息的段落中，第几激发态下面就会有一行Total Energy, E(TD-HF/TD-DFT) =，后面的值就是这个激发态的电子能量，相当于基态电子能量加上这个态的激发能。</li>
+<li>archive段落里HF=后面的值是基态的电子能量，当前激发态的电子能量在archive段落里并没有输出</li>
+</ul>
+</li>
+</ul>
+<p>其他：</p>
+<ul>
+<li>半经验方法：<ul>
+<li>SCF Done的值就是半经验方法的能量</li>
+<li>archive段落里依然是以HF=作为标签来输出</li>
+</ul>
+</li>
+</ul>
+<p>​        特别要注意的是，半经验方法在原作者拟合参数的时候大多都是朝着生成焓来拟合的，因此Gaussian做半经验方法计算给出的能量并不是一般意义的电子能量，而是当前体系在标况下的生成焓。由于生成焓是个相对能量，这也是为什么半经验方法计算得到的能量比起用前面那些方法的数量级都要小得多得多。</p>
+<ul>
+<li>分子力学计算<ul>
+<li>从输出文件中搜Energy=，后面的值就是分子力学能量</li>
+<li>在archive段落以HF=标签来输出</li>
+</ul>
+</li>
+</ul>
+<p>​        注意分子力学计算给出的能量也不是一般意义的电子能量，分子力学计算时根本都没有把原子核与电子单独进行描述，而是每个原子被整个当做一个质点考虑。分子力学的能量零点是每个几何变量都恰处于分子力场定义的能量最低位置。</p>
+<p>​        由于半经验方法和分子力学方法给出的能量都不是体系的绝对能量，虽然你说成“电子能量”别人也知道你指的是什么，但是说成“单点能”或简单说成“能量”从语义上更合适。</p>
 ]]></content>
       <categories>
         <category>计算化学</category>
@@ -1434,7 +1509,16 @@
   <entry>
     <title>【Gaussian】03.单点计算</title>
     <url>/2019/09/09/%E3%80%90Gaussian%E3%80%9103.%E5%8D%95%E7%82%B9%E8%AE%A1%E7%AE%97/</url>
-    <content><![CDATA[<h1 id="Geom几何相关选项"><a href="#Geom几何相关选项" class="headerlink" title="Geom几何相关选项"></a><code>Geom</code>几何相关选项</h1><h1 id="SCF相关选项"><a href="#SCF相关选项" class="headerlink" title="SCF相关选项"></a><code>SCF</code>相关选项</h1><h2 id="算法相关"><a href="#算法相关" class="headerlink" title="算法相关"></a>算法相关</h2><ul>
+    <content><![CDATA[<h1 id="Geom几何相关选项"><a href="#Geom几何相关选项" class="headerlink" title="Geom几何相关选项"></a><code>Geom</code>几何相关选项</h1><h1 id="Charge点电荷"><a href="#Charge点电荷" class="headerlink" title="Charge点电荷"></a><code>Charge</code>点电荷</h1><ul>
+<li><p>为分子添加背景电荷，格式为<code>x y z charge</code>，单位默认是Å，可以通过选项<code>Angstroms</code>，<code>Bohrs</code>控制。</p>
+</li>
+<li><p>选项<code>Check</code>从chk文件中读取点电荷</p>
+</li>
+<li><p>例子：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="comment"># B3LYP/6=31G(d) Opt=Z-Matrix Charge NoSymm</span></span><br><span class="line"> </span><br><span class="line"><span class="attribute">Water</span> with point charges</span><br><span class="line"> </span><br><span class="line"><span class="attribute">0</span>,<span class="number">1</span></span><br><span class="line"><span class="attribute">O</span> -<span class="number">0</span>.<span class="number">75</span> -<span class="number">0</span>.<span class="number">94</span> <span class="number">0</span>.<span class="number">0</span></span><br><span class="line"><span class="attribute">H</span> <span class="number">0</span>.<span class="number">21</span> -<span class="number">0</span>.<span class="number">94</span> <span class="number">0</span>.<span class="number">0</span></span><br><span class="line"><span class="attribute">H</span>-<span class="number">1</span>.<span class="number">07</span> -<span class="number">0</span>.<span class="number">0</span> <span class="number">0</span>.<span class="number">0</span></span><br><span class="line"> </span><br><span class="line"><span class="attribute">2</span>.<span class="number">0</span>  <span class="number">2</span>.<span class="number">0</span> <span class="number">2</span>.<span class="number">0</span> <span class="number">1</span>.<span class="number">2</span></span><br><span class="line"><span class="attribute">2</span>.<span class="number">0</span> -<span class="number">2</span>.<span class="number">0</span> <span class="number">2</span>.<span class="number">0</span> <span class="number">1</span>.<span class="number">1</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="SCF相关选项"><a href="#SCF相关选项" class="headerlink" title="SCF相关选项"></a><code>SCF</code>相关选项</h1><h2 id="算法相关"><a href="#算法相关" class="headerlink" title="算法相关"></a>算法相关</h2><ul>
 <li><code>DIIS</code>：迭代子空间中直接求逆。在迭代子空间 (DIIS) 外推方法中使用 Pulay 的直接反演 。默认的加速SCF收敛的方法。使用<code>NoDIIS</code>关闭。</li>
 <li><code>Fermi</code>：默认是<code>NoFermi</code>关闭。使用Fermi展宽时，此时默认也会择情自动使用能级移动和阻尼。</li>
 </ul>
@@ -1561,7 +1645,7 @@
 </li>
 </ul>
 <h2 id="批量脚本"><a href="#批量脚本" class="headerlink" title="批量脚本"></a>批量脚本</h2><p>将上述方法都试一下的脚本，先新建一个文件夹，在其中存在.gjf和.sub文件，.gjf部分写入<code># SCF</code></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mkdir 01_novaracc_noincfock 02_vshift300 03_vshift400 04_vshift500 05_huckel 06_INDO 07_QC 08_XQC 09_Fermi 10_NODIIS</span><br><span class="line"></span><br><span class="line">for i in 01 02 03 04 05 06 07 08 09 10</span><br><span class="line">do</span><br><span class="line">cp *gjf g16* $&#123;i&#125;*</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">cd 01_novaracc_noincfock</span><br><span class="line">fckr SCF SCF\(novaracc,noincfock,maxcyc=300\)</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 02_vshift300</span><br><span class="line">fckr SCF SCF\(vshift=300,maxcyc=300\)</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 03_vshift400</span><br><span class="line">fckr SCF SCF\(vshift=400,maxcyc=300\)</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 04_vshift500</span><br><span class="line">fckr SCF SCF\(vshift=500,maxcyc=300\)</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 05_huckel</span><br><span class="line">fckr SCF &#x27;SCF\(maxcyc=300\) guess=huckel&#x27;</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 06_INDO</span><br><span class="line">fckr SCF &#x27;SCF\(maxcyc=300\) guess=INDO&#x27;</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 07_QC</span><br><span class="line">fckr SCF SCF=QC</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 08_XQC</span><br><span class="line">fckr SCF SCF=XQC</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 09_Fermi</span><br><span class="line">fckr SCF SCF\(maxcyc=300,Fermi\)</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd 10_NODIIS</span><br><span class="line">fckr SCF SCF\(maxcyc=300,NODIIS\)</span><br><span class="line">qsub g16.sub</span><br><span class="line">cd ..</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mkdir 01_novaracc_noincfock 02_vshift300 03_vshift400 04_vshift500 05_huckel 06_INDO 07_QC 08_XQC 09_Fermi 10_NODIIS 11_mix</span><br><span class="line"></span><br><span class="line">for i in 01 02 03 04 05 06 07 08 09 10 11; do cp 00_noconv/*gjf 00_noconv/g16* $&#123;i&#125;* ;done</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(novaracc,noincfock,maxcyc=300\) /&#x27; 01_novaracc_noincfock/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(vshift=300,maxcyc=300\) /&#x27; 02_vshift300/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(vshift=400,maxcyc=300\) /&#x27; 03_vshift400/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(vshift=500,maxcyc=300\) /&#x27; 04_vshift500/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300\) guess=huckel /&#x27; 05_huckel/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300\) guess=INDO /&#x27; 06_INDO/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF=QC /&#x27; 07_QC/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF=XQC /&#x27; 08_XQC/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300,Fermi\) /&#x27; 09_Fermi/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300,NODIIS\) /&#x27; 10_NODIIS/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300\) guess=mix /&#x27; 11_mix/*gjf</span><br><span class="line"></span><br><span class="line">for i in 01 02 03 04 05 06 07 08 09 10 11; do cd $&#123;i&#125;* qsub g16*; cd ..; done </span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>计算化学</category>
@@ -3575,6 +3659,10 @@
 <figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">***,Br</span><br><span class="line">dkroll=<span class="number">1</span></span><br><span class="line">geometry=&#123;br&#125;</span><br><span class="line">basis=vtz-dk</span><br><span class="line">&#123;rhf;wf,sym=<span class="number">5</span>&#125;</span><br><span class="line">&#123;multi;wf,sym=<span class="number">2</span>;wf,sym=<span class="number">3</span>;wf,sym=<span class="number">5</span>&#125;  !<span class="number">2</span>P states, <span class="section">state</span> averaged</span><br><span class="line">&#123;lsint&#125;                             !Compute spin-orbit <span class="number">2</span>-electron integrals</span><br><span class="line">&#123;ci;wf,sym=<span class="number">2</span>;save,<span class="number">6101.2</span>&#125;           !<span class="number">2</span>Px <span class="section">state</span></span><br><span class="line">&#123;ci;wf,sym=<span class="number">3</span>;save,<span class="number">6102.2</span>&#125;           !<span class="number">2</span>Py <span class="section">state</span></span><br><span class="line">&#123;ci;wf,sym=<span class="number">5</span>;save,<span class="number">6103.2</span>&#125;           !<span class="number">2</span>Pz <span class="section">state</span></span><br><span class="line">&#123;ci;hlsmat,ls,<span class="number">6101.2</span>,<span class="number">6102.2</span>,<span class="number">6103.2</span>&#125; !compute and diagonalize SO matrix</span><br></pre></td></tr></table></figure>
 <p>S的例子：</p>
 <figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">***,SO calculation for the S-atom</span><br><span class="line">geometry=&#123;s&#125;</span><br><span class="line">basis=&#123;spd,s,vtz&#125;                                 !use uncontracted basis</span><br><span class="line"></span><br><span class="line">&#123;rhf;occ,<span class="number">3</span>,<span class="number">2</span>,<span class="number">2</span>,,<span class="number">2</span>;wf,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span>&#125;                      !rhf for <span class="number">3</span>P <span class="section">state</span></span><br><span class="line"></span><br><span class="line">&#123;multi                                            !casscf</span><br><span class="line">wf,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span>;wf,<span class="number">16</span>,<span class="number">6</span>,<span class="number">2</span>;wf,<span class="number">16</span>,<span class="number">7</span>,<span class="number">2</span>;                    !<span class="number">3</span>P states</span><br><span class="line">wf,<span class="number">16</span>,<span class="number">1</span>,<span class="number">0</span>;<span class="section">state</span>,<span class="number">3</span>;wf,<span class="number">16</span>,<span class="number">4</span>,<span class="number">0</span>;wf,<span class="number">16</span>,<span class="number">6</span>,<span class="number">0</span>;wf,<span class="number">16</span>,<span class="number">7</span>,<span class="number">0</span>&#125;  !<span class="number">1</span>D and <span class="number">1</span>S states</span><br><span class="line"></span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">1</span>,<span class="number">0</span>;save,<span class="number">3010.1</span>;<span class="section">state</span>,<span class="number">3</span>;noexc&#125;          !save casscf wavefunctions using mrci</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">4</span>,<span class="number">0</span>;save,<span class="number">3040.1</span>;noexc&#125;</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">6</span>,<span class="number">0</span>;save,<span class="number">3060.1</span>;noexc&#125;</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">7</span>,<span class="number">0</span>;save,<span class="number">3070.1</span>;noexc&#125;</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span>;save,<span class="number">3042.1</span>;noexc&#125;</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">6</span>,<span class="number">2</span>;save,<span class="number">3062.1</span>;noexc&#125;</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">7</span>,<span class="number">2</span>;save,<span class="number">3072.1</span>;noexc&#125;</span><br><span class="line"></span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">1</span>,<span class="number">0</span>;save,<span class="number">4010.1</span>;<span class="section">state</span>,<span class="number">3</span>&#125;                !mrci calculations for <span class="number">1</span>D, <span class="number">1</span>S states</span><br><span class="line">ed=energy(<span class="number">1</span>)                                      !save energy for <span class="number">1</span>D <span class="section">state</span> in variable ed</span><br><span class="line">es=energy(<span class="number">3</span>)                                      !save energy for <span class="number">1</span>S <span class="section">state</span> in variable es</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">4</span>,<span class="number">2</span>;save,<span class="number">4042.1</span>&#125;                        !mrci calculations for <span class="number">3</span>P states</span><br><span class="line">ep=energy                                         !save energy for <span class="number">3</span>P <span class="section">state</span> in variable ep</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">6</span>,<span class="number">2</span>;save,<span class="number">4062.1</span>&#125;                        !mrci calculations for <span class="number">3</span>P states</span><br><span class="line">&#123;ci;wf,<span class="number">16</span>,<span class="number">7</span>,<span class="number">2</span>;save,<span class="number">4072.1</span>&#125;                        !mrci calculations for <span class="number">3</span>P states</span><br><span class="line">text,only triplet states, casscf</span><br><span class="line"></span><br><span class="line">lsint                                             !compute so integrals</span><br><span class="line"></span><br><span class="line">text,<span class="number">3</span>P states, casscf</span><br><span class="line">&#123;ci;hlsmat,ls,<span class="number">3042.1</span>,<span class="number">3062.1</span>,<span class="number">3072.1</span>&#125;               !Only triplet states, casscf</span><br><span class="line"></span><br><span class="line">text,<span class="number">3</span>P states, mrci</span><br><span class="line">&#123;ci;hlsmat,ls,<span class="number">4042.1</span>,<span class="number">4062.1</span>,<span class="number">4072.1</span>&#125;               !Only triplet states, mrci</span><br><span class="line"></span><br><span class="line">text,<span class="number">3</span>P, <span class="number">1</span>D, <span class="number">1</span>S states, casscf</span><br><span class="line">&#123;ci;hlsmat,ls,<span class="number">3010.1</span>,<span class="number">3040.1</span>,<span class="number">3060.1</span>,<span class="number">3070.1</span>,<span class="number">3042.1</span>,<span class="number">3062.1</span>,<span class="number">3072.1</span>&#125;       !All states, casscf</span><br><span class="line"></span><br><span class="line">text,only triplet states, use mrci energies and casscf SO-matrix elements</span><br><span class="line">hlsdiag=[ed,ed,es,ed,ed,ed,ep,ep,ep]             !set variable hlsdiag to mrci energies</span><br><span class="line">&#123;ci;hlsmat,ls,<span class="number">3010.1</span>,<span class="number">3040.1</span>,<span class="number">3060.1</span>,<span class="number">3070.1</span>,<span class="number">3042.1</span>,<span class="number">3062.1</span>,<span class="number">3072.1</span>&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h1><ul>
+<li>ΔSO在Summary of SO results中，为<code>E-E0</code>或者用最后两行中的E1-E0。如果所有态都考虑进去了，这两者是相等的，如果没有，不相等。</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">Summary of SO results</span><br><span class="line">=====================</span><br><span class="line"></span><br><span class="line">Eigenvalues of the spin-orbit matrix</span><br><span class="line">....................................</span><br><span class="line"></span><br><span class="line">  Nr  Sym         E             E-E0         E-E0           E-E(<span class="number">1</span>)      E-E(<span class="number">1</span>)      E-E(<span class="number">1</span>)</span><br><span class="line">                (au)            (au)        (cm<span class="number">-1</span>)           (au)       (cm<span class="number">-1</span>)        (eV)</span><br><span class="line">  <span class="number">1</span>   <span class="number">1</span>   <span class="number">-332.08423469</span>     <span class="number">-0.00013437</span>      <span class="number">-29.49</span>      <span class="number">0.00000000</span>        <span class="number">0.00</span>      <span class="number">0.0000</span></span><br><span class="line">  <span class="number">2</span>   <span class="number">1</span>   <span class="number">-332.08422135</span>     <span class="number">-0.00012103</span>      <span class="number">-26.56</span>      <span class="number">0.00001334</span>        <span class="number">2.93</span>      <span class="number">0.0004</span></span><br><span class="line">  <span class="number">3</span>   <span class="number">1</span>   <span class="number">-332.08422135</span>     <span class="number">-0.00012103</span>      <span class="number">-26.56</span>      <span class="number">0.00001334</span>        <span class="number">2.93</span>      <span class="number">0.0004</span></span><br><span class="line">  ………………</span><br><span class="line"> E0 =   <span class="number">-332.08410032</span> <span class="keyword">is</span> the energy of the lowest zeroth-order state</span><br><span class="line"> E1 =   <span class="number">-332.08423469</span> <span class="keyword">is</span> the energy of the lowest SO-state</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>计算化学</category>
@@ -3584,25 +3672,6 @@
         <tag>molpro</tag>
         <tag>旋轨耦合</tag>
         <tag>SO</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【【草稿】】价键理论（VB）</title>
-    <url>/2021/04/16/%E3%80%90%E3%80%90%E8%8D%89%E7%A8%BF%E3%80%91%E3%80%91%E4%BB%B7%E9%94%AE%E7%90%86%E8%AE%BA%EF%BC%88VB%EF%BC%89%E4%BB%B7%E9%94%AE%E7%90%86%E8%AE%BA%EF%BC%88VB%EF%BC%89/</url>
-    <content><![CDATA[<p>价键理论是多电子波函数</p>
-<p>分子轨道不区分电子在哪个原子核上</p>
-<h1 id="价键理论（VB）"><a href="#价键理论（VB）" class="headerlink" title="价键理论（VB）"></a>价键理论（VB）</h1><h2 id="Heitler-London价键理论对H2的求解"><a href="#Heitler-London价键理论对H2的求解" class="headerlink" title="Heitler-London价键理论对H2的求解"></a>Heitler-London价键理论对H<sub>2</sub>的求解</h2><ol>
-<li>首先假定1号电子与2号原子核之间的吸引可以省略</li>
-<li>其次电子是不可区分的</li>
-<li>加上自旋的反对称</li>
-</ol>
-<script type="math/tex; mode=display">\Psi_{VB}=[\phi_a(1)\phi_b(2)+\phi_a(2)\phi_b(1)][\alpha(1)\beta(2)-\alpha(2)\beta(1)]\\=\\=|a\bar{b}|+|b\bar{a}|</script><script type="math/tex; mode=display">E=<\Psi_{VB}|\hat{H}|\Psi_{VB}>=<|a\bar{b}|+|b\bar{a}||\hat{H}||a\bar{b}|+|b\bar{a}|></script><h3 id="离子项"><a href="#离子项" class="headerlink" title="离子项"></a>离子项</h3><h3 id="三重态"><a href="#三重态" class="headerlink" title="三重态"></a>三重态</h3><h2 id="现代VB理论"><a href="#现代VB理论" class="headerlink" title="现代VB理论"></a>现代VB理论</h2><h3 id="Coulson-Fischer-VB-Model-1949"><a href="#Coulson-Fischer-VB-Model-1949" class="headerlink" title="Coulson-Fischer VB Model (1949)"></a>Coulson-Fischer VB Model (1949)</h3><h3 id="Goddard-GVB-model-1973"><a href="#Goddard-GVB-model-1973" class="headerlink" title="Goddard GVB model (1973)"></a>Goddard GVB model (1973)</h3><h3 id="Spin-Coupled-VB-Model"><a href="#Spin-Coupled-VB-Model" class="headerlink" title="Spin-Coupled VB Model"></a>Spin-Coupled VB Model</h3><h1 id="分子轨道理论（MO）"><a href="#分子轨道理论（MO）" class="headerlink" title="分子轨道理论（MO）"></a>分子轨道理论（MO）</h1>]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>原理</category>
-      </categories>
-      <tags>
-        <tag>变分法</tag>
       </tags>
   </entry>
   <entry>
@@ -4817,18 +4886,29 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 </li>
 </ul>
 <h2 id="SCF不收敛"><a href="#SCF不收敛" class="headerlink" title="SCF不收敛"></a>SCF不收敛</h2><ol>
-<li>更换SCF<a href="#加速方法">加速收敛的方法</a></li>
-<li>使用ARH方法</li>
-<li>修改DIIS算法的参数<ul>
+<li><p>更换SCF<a href="#加速方法">加速收敛的方法</a></p>
+</li>
+<li><p>使用ARH方法</p>
+</li>
+<li><p>修改DIIS算法的参数</p>
+<ul>
 <li><code>Mixing</code>高于默认值<code>0.2</code>会有更高的加速度，更低会更稳定的迭代</li>
 <li><code>N</code>默认为<code>10</code>，越大用于加速SCF的扩展向量的数量越多，SCF迭代更稳定，最多到25</li>
-<li><code>Cyc</code>是SDIIS启动的初始SCF迭代步数，默认值为<code>5</code>，更高计算越稳定，比如使用如下参数：<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">SCF</span></span><br><span class="line">    <span class="attribute">DIIS</span></span><br><span class="line">      <span class="attribute">N</span> <span class="number">25</span></span><br><span class="line">      <span class="attribute">Cyc</span> <span class="number">30</span></span><br><span class="line">    <span class="attribute">End</span></span><br><span class="line">    <span class="attribute">Mixing</span> <span class="number">0</span>.<span class="number">015</span></span><br><span class="line">    <span class="attribute">Mixing1</span> <span class="number">0</span>.<span class="number">09</span></span><br><span class="line"><span class="attribute">End</span></span><br></pre></td></tr></table></figure></li>
+<li><code>Cyc</code>是SDIIS启动的初始SCF迭代步数，默认值为<code>5</code>，更高计算越稳定，比如使用如下参数：<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">SCF</span></span><br><span class="line">    <span class="attribute">DIIS</span></span><br><span class="line">      <span class="attribute">N</span> <span class="number">25</span></span><br><span class="line">      <span class="attribute">Cyc</span> <span class="number">30</span></span><br><span class="line">    <span class="attribute">End</span></span><br><span class="line">    <span class="attribute">Mixing</span> <span class="number">0</span>.<span class="number">015</span></span><br><span class="line">    <span class="attribute">Mixing1</span> <span class="number">0</span>.<span class="number">09</span></span><br><span class="line"><span class="attribute">End</span></span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 </li>
-<li>HOMO-LUMO较为接近的情况（0.02Hatree以内），可能造成HOMO-LUMO的震荡。可以使用<code>Lshift vshift</code>方法，比如0.01，不能太大，不适于激发态的计算、<strong>解析频率</strong>、旋轨耦合的计算。</li>
-<li>使用Electron smearing设定在允许的能量范围内分数占据。</li>
-<li>其他：<a href="https://www.fermitech.com.cn/wiki/doku.php?id=adf:scfnonconvergence">费米维基</a>的2、3、5。</li>
+<li><p>HOMO-LUMO较为接近的情况（0.02Hatree以内），可能造成HOMO-LUMO的震荡。可以使用<code>Lshift vshift</code>方法，比如0.01，不能太大，不适于激发态的计算、<strong>解析频率</strong>、旋轨耦合的计算。</p>
+</li>
+<li><p>使用Electron smearing设定在允许的能量范围内分数占据。</p>
+</li>
+<li><p>指定占据</p>
+</li>
+<li><p>其他：<a href="https://www.fermitech.com.cn/wiki/doku.php?id=adf:scfnonconvergence">费米维基</a>的4、7。</p>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">OCCUPATIONS keeporbitals=<span class="number">50</span> <span class="keyword">freeze</span> </span><br><span class="line">OCCUPATIONS keeporbitals=<span class="number">50</span></span><br></pre></td></tr></table></figure>
+</li>
 </ol>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">mkdir</span> <span class="number">01</span>_listi <span class="number">02</span>_listb <span class="number">03</span>_fdiis <span class="number">04</span>_listf <span class="number">05</span>_mesa <span class="number">06</span>_sdiis <span class="number">07</span>_arh <span class="number">08</span>_mix <span class="number">09</span>_shift </span><br><span class="line"></span><br><span class="line"><span class="attribute">for</span> i in <span class="number">01</span> <span class="number">02</span> <span class="number">03</span> <span class="number">04</span> <span class="number">05</span> <span class="number">06</span> <span class="number">07</span> <span class="number">08</span> <span class="number">09</span> ;do cp <span class="number">00</span>*/*run <span class="number">00</span>*/adf* <span class="variable">$&#123;i&#125;</span>*; done</span><br><span class="line"></span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nAccelerationMethod listi/&#x27; <span class="number">01</span>*/*.run </span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nAccelerationMethod listb/&#x27; <span class="number">02</span>*/*.run </span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nAccelerationMethod fdiis/&#x27; <span class="number">03</span>*/*.run </span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nAccelerationMethod listf/&#x27; <span class="number">04</span>*/*.run</span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nAccelerationMethod mesa/&#x27; <span class="number">05</span>*/*.run</span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nAccelerationMethod sdiis/&#x27; <span class="number">06</span>*/*.run</span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\narh\nend/&#x27; <span class="number">07</span>*/*.run</span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nDIIS\nN <span class="number">25</span>\nCyc <span class="number">30</span>\nEnd\nMixing <span class="number">0</span>.<span class="number">015</span>\n Mixing<span class="number">1</span> <span class="number">0</span>.<span class="number">09</span>/&#x27; <span class="number">08</span>*/*.run</span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nLshift <span class="number">0</span>.<span class="number">01</span>/&#x27; <span class="number">09</span>*/*.run</span><br><span class="line"></span><br><span class="line"><span class="attribute">for</span> i in <span class="number">01</span> <span class="number">02</span> <span class="number">03</span> <span class="number">04</span> <span class="number">05</span> <span class="number">06</span> <span class="number">07</span> <span class="number">08</span> <span class="number">09</span>;do cd <span class="variable">$&#123;i&#125;</span>*; qsub adf*; cd ..; done</span><br></pre></td></tr></table></figure>
 <h1 id="对称性的设置"><a href="#对称性的设置" class="headerlink" title="对称性的设置"></a>对称性的设置</h1><p>除了在AMS中<code>System</code>块中指定，<code>Engine ADF</code>中也可以设置对称性：</p>
 <ul>
 <li><code>Symmetry</code>：默认是<code>AUTO</code>，默认为<code>auto</code>，可以通过<code>nosym</code>、<code>C(LIN)</code>……等来指定对称性</li>
@@ -5643,13 +5723,11 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="number">100</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">6</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>mo ON/OFF</code>：开启或关闭分子轨道，默认是<code>ON</code></li>
-<li><p><code>mo (integer)</code>：显示指定的分子轨道，序号从1开始。</p>
-<ul>
+<li><code>mo (integer)</code>：显示指定的分子轨道，序号从1开始。<ul>
 <li>注意：Jmol中的轨道是按能量排序的，因此可能和一些fchk文件中的轨道不一致，比如NLMO。可以通过将原始的轨道能量作为标签，保留三位小数，通过<code>MO list</code>去查找相应的序号。</li>
 </ul>
 </li>
-<li><p><code>mo COLOR [RGB-color] [RGB-color]</code>：第一个颜色为等值面负的颜色，第二个为正等值面的颜色</p>
-<ul>
+<li><code>mo COLOR [RGB-color] [RGB-color]</code>：第一个颜色为等值面负的颜色，第二个为正等值面的颜色<ul>
 <li><code>mo COLOR [RGB-color]</code>：将等值面设置成某个颜色</li>
 </ul>
 </li>
@@ -5668,6 +5746,24 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <li><p><code>mo fill</code>：</p>
 </li>
 <li><code>mo opaque</code>：</li>
+</ul>
+<h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><p>默认生成的分子轨道左上角有标题，标题的格式可以通过<code>mo TITLEFORMAT &quot;format&quot;</code>控制</p>
+<ul>
+<li><code>%E</code>或者<code>%0.dE</code>：能量，可以控制小数位数</li>
+<li><code>%F</code>：文件名字</li>
+<li><code>%I</code>：轨道序号</li>
+<li><code>%M</code>：模型序号</li>
+<li><code>%N</code>：轨道总数</li>
+<li><code>%O</code>：占据数</li>
+<li><code>%S</code>：对称性</li>
+<li><code>%U</code>：能量单位</li>
+<li><code>|</code>：换行</li>
+<li><code>?</code>：(在行开头)表示如果文件中没有该行的数据，则忽略该行</li>
+</ul>
+<p>默认的格式是</p>
+<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">mo TITLEFORMAT <span class="string">&quot;%F | Model %M MO %I/%N | Energy = %E %U | ?Symmetry = %S | ?Occupancy = %O&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果想关闭可以使用<code>mo TITLEFORMAT &quot;&quot;</code></li>
 </ul>
 <h1 id="set-lighting"><a href="#set-lighting" class="headerlink" title="set (lighting)"></a>set (lighting)</h1><ul>
 <li><code>set zShade OFF</code>：是否启用“雾”或“淡入淡出”效果。根据与观察者的距离对对象进行着色，使远处的对象淡入背景中。<ul>
@@ -5966,7 +6062,7 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 </ul>
 </li>
 </ul>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Attractor</span>       X,Y,Z coordinate (Angstrom)                Value</span><br><span class="line">     <span class="attribute">1</span>   -<span class="number">0</span>.<span class="number">02645886</span>   -<span class="number">0</span>.<span class="number">02645886</span>   -<span class="number">1</span>.<span class="number">52058663</span>          <span class="number">0</span>.<span class="number">33959944</span></span><br><span class="line">     <span class="attribute">2</span>    <span class="number">0</span>.<span class="number">02645886</span>    <span class="number">0</span>.<span class="number">02645886</span>   -<span class="number">0</span>.<span class="number">51514986</span>         <span class="number">49</span>.<span class="number">48609717</span></span><br><span class="line">     <span class="attribute">3</span>   -<span class="number">0</span>.<span class="number">02645886</span>   -<span class="number">0</span>.<span class="number">02645886</span>    <span class="number">0</span>.<span class="number">64904009</span>         <span class="number">76</span>.<span class="number">55832377</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">DD</span>	Attractor       X,Y,Z coordinate (Angstrom)                Value</span><br><span class="line">      <span class="attribute">1</span>   -<span class="number">0</span>.<span class="number">02645886</span>   -<span class="number">0</span>.<span class="number">02645886</span>   -<span class="number">1</span>.<span class="number">52058663</span>          <span class="number">0</span>.<span class="number">33959944</span></span><br><span class="line">      <span class="attribute">2</span>    <span class="number">0</span>.<span class="number">02645886</span>    <span class="number">0</span>.<span class="number">02645886</span>   -<span class="number">0</span>.<span class="number">51514986</span>         <span class="number">49</span>.<span class="number">48609717</span></span><br><span class="line">      <span class="attribute">3</span>   -<span class="number">0</span>.<span class="number">02645886</span>   -<span class="number">0</span>.<span class="number">02645886</span>    <span class="number">0</span>.<span class="number">64904009</span>         <span class="number">76</span>.<span class="number">55832377</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h2 id="观看盆和吸引子"><a href="#观看盆和吸引子" class="headerlink" title="观看盆和吸引子"></a>观看盆和吸引子</h2><p>选<code>0</code>来可视化刚找出来的吸引子和生成的盆。</p>
@@ -8159,6 +8255,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li>若目录名称省略，则变换至使用者的home directory。<code>~</code>也表示为home directory的意思</li>
 <li><code>.</code>则是表示目前所在的目录</li>
 <li><code>..</code>则表示目前目录位置的上一层目录。</li>
+<li><code>-</code>表示上一次打开的目录，并且会附带<code>pwd</code>。</li>
 </ul>
 <h2 id="df"><a href="#df" class="headerlink" title="df"></a>df</h2><p>检查磁盘空间占用情况(并不能查看某个目录占用的磁盘大小)。</p>
 <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">df</span><span class="meta"> [option]</span></span><br></pre></td></tr></table></figure>
@@ -9564,6 +9661,288 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
       <tags>
         <tag>hexo</tag>
         <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Multiwfn】CDA分析</title>
+    <url>/2021/08/22/%E3%80%90Multiwfn%E3%80%91CDA%E5%88%86%E6%9E%90/</url>
+    <content><![CDATA[<p><a href="http://sobereva.com/166">http://sobereva.com/166</a></p>
+<p><a href="https://pdf.hanspub.org/JAPC20150400000_68741604.pdf">广义化的电荷分解分析(GCDA)方法 (hanspub.org)</a></p>
+<p>电荷分解分析(Charge decomposition analysis, CDA)是基于片段轨道的概念提出的一种将分子片段之间电荷转移分解为轨道的贡献，从而能更深入了解电荷转移本质的方法。</p>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><ul>
+<li>d (Donation)表现的是片段 A 向片段 B 贡献的电子量。它体现的是片段 A 的占据轨道与片段 B 的空轨道的混合。</li>
+<li>b (Back-donation)表现的是片段 B 向片段 A 反馈的电子量。它由片段 B 的占据轨道与片段 A 的空轨道混合而产生。</li>
+<li>d-b可以认为是经由复合物轨道两个片段间的净转移量。</li>
+<li>b+d ，其数值越大说明两个片段间相互作用程度越大，轨道混合越显著。</li>
+<li>r (Charge polarization)表现的是占据轨道的电荷极化，称为电荷极化项。<ul>
+<li>r&gt;0，说明由于第 i 个复合物轨道，两个片段的电子在片段重叠区域的分布量增加，此时两个片段的占据轨道以相位相同方式混合，起到成键效应；</li>
+<li>r&lt;0，表明两个片段的电子在重叠区域分布量减少，此时两个片段的占据轨道间必以相位相反方式混合，对片段间成键起到破坏作用，即反键效应。</li>
+<li>总和值 r 一般为负值，因为占据轨道间的总相互作用是以交换互斥为主导的，是不利于成键的。</li>
+</ul>
+</li>
+</ul>
+<h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><h2 id="准备文件"><a href="#准备文件" class="headerlink" title="准备文件"></a>准备文件</h2><p>Gaussian提供复合物和各个片段的单点任务的fch文件。注意事项：</p>
+<ul>
+<li>坐标必须都用笛卡尔坐标，而且片段的定义顺序，片段内原子顺序、原子坐标必须和复合物中的完全一致。</li>
+<li>片段不需要单独优化。</li>
+<li>为了避免Gaussian自动将坐标调整到标准朝向而使得坐标无法相互对应，要使用<code>nosymm</code>关键词</li>
+<li>不要用弥散函数</li>
+<li>重原子使用赝势基组可能会出现基函数数目不符的问题，可以使用<code>5d</code>关键词。</li>
+<li>如果用后HF方法计算，应当再加上density关键词，并且此时只能用Gaussian输出文件作为输入。对于闭壳层，pop=full应当改为pop=NO；对于开壳层，应改为pop=NOAB。这样才能让自然轨道信息代替HF轨道信息出现在Gaussian输出文件中。</li>
+<li>以开壳层方式做 CDA/GCDA 计算时需要考虑自旋翻转问题。</li>
+<li>片段的参考状态的选择应当尽量接近复合物状态的电子结构。</li>
+</ul>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><h3 id="总体步骤"><a href="#总体步骤" class="headerlink" title="总体步骤"></a>总体步骤</h3><figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line">examples\CDA\COBH3\<span class="module-access"><span class="module"><span class="identifier">COBH3</span>.</span></span>fch  <span class="comment">//复合物的Gaussian输出文件</span></span><br><span class="line"><span class="number">16</span>   <span class="comment">//进入CDA模块</span></span><br><span class="line"><span class="number">2</span>  <span class="comment">//定义两个片段</span></span><br><span class="line">examples\CDA\COBH3\<span class="module-access"><span class="module"><span class="identifier">CO</span>.</span></span>fch  <span class="comment">//片段1的Gaussian输出文件</span></span><br><span class="line">examples\CDA\COBH3\<span class="module-access"><span class="module"><span class="identifier">BH3</span>.</span></span>fch  <span class="comment">//片段2的Gaussian输出文件</span></span><br></pre></td></tr></table></figure>
+<h3 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析"></a>结果分析</h3><p><strong>CDA数据：</strong></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">   <span class="string">Orb.</span>      <span class="string">Occ.</span>          <span class="string">d</span>           <span class="string">b</span>        <span class="string">d</span> <span class="bullet">-</span> <span class="string">b</span>          <span class="string">r</span></span><br><span class="line">      <span class="number">1</span>    <span class="number">2.000000</span>   <span class="number">-0.000004</span>   <span class="number">-0.000000</span>   <span class="number">-0.000004</span>   <span class="number">-0.000001</span></span><br><span class="line">      <span class="number">2</span>    <span class="number">2.000000</span>    <span class="number">0.001119</span>   <span class="number">-0.000023</span>    <span class="number">0.001141</span>    <span class="number">0.000326</span></span><br><span class="line">      <span class="number">3</span>    <span class="number">2.000000</span>   <span class="number">-0.000002</span>   <span class="number">-0.000471</span>    <span class="number">0.000469</span>    <span class="number">0.000313</span></span><br><span class="line">      <span class="number">4</span>    <span class="number">2.000000</span>   <span class="number">-0.013250</span>   <span class="number">-0.000704</span>   <span class="number">-0.012546</span>   <span class="number">-0.005676</span></span><br><span class="line">      <span class="number">5</span>    <span class="number">2.000000</span>    <span class="number">0.041648</span>   <span class="number">-0.003309</span>    <span class="number">0.044957</span>    <span class="number">0.232262</span></span><br><span class="line">      <span class="number">6</span>    <span class="number">2.000000</span>    <span class="number">0.037385</span>   <span class="number">-0.020136</span>    <span class="number">0.057521</span>    <span class="number">0.212422</span></span><br><span class="line">      <span class="number">7</span>    <span class="number">2.000000</span>   <span class="number">-0.000543</span>    <span class="number">0.000647</span>   <span class="number">-0.001190</span>    <span class="number">0.022166</span></span><br><span class="line">      <span class="number">8</span>    <span class="number">2.000000</span>   <span class="number">-0.000543</span>    <span class="number">0.000647</span>   <span class="number">-0.001190</span>    <span class="number">0.022166</span></span><br><span class="line">      <span class="number">9</span>    <span class="number">2.000000</span>    <span class="number">0.171353</span>    <span class="number">0.026952</span>    <span class="number">0.144401</span>   <span class="number">-0.741381</span></span><br><span class="line">     <span class="number">10</span>    <span class="number">2.000000</span>   <span class="number">-0.000569</span>    <span class="number">0.043713</span>   <span class="number">-0.044281</span>   <span class="number">-0.038916</span></span><br><span class="line">     <span class="number">11</span>    <span class="number">2.000000</span>   <span class="number">-0.000569</span>    <span class="number">0.043713</span>   <span class="number">-0.044282</span>   <span class="number">-0.038916</span></span><br><span class="line">     <span class="number">12</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span></span><br><span class="line">     <span class="number">13</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span></span><br><span class="line">     <span class="number">14</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span></span><br><span class="line">     <span class="number">15</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span></span><br><span class="line"> <span class="string">......</span></span><br><span class="line"><span class="string">-------------------------------------------------------------------</span></span><br><span class="line"><span class="attr">Sum:</span>      <span class="number">22.000000</span>    <span class="number">0.236023</span>    <span class="number">0.091027</span>    <span class="number">0.144996</span>   <span class="number">-0.335233</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Orb.就是复合物轨道的编号，Occ.是其占据数。</li>
+<li>前三个复合物轨道的d、b、r项都接近于0，表明它们对于片段间的相互作用没什么用处，这是因为它们分别是O、C、B的<strong>内核轨道</strong>，基本不会参与成键。</li>
+<li><p>所有的<strong>虚轨道</strong>的d、b、r项都为，因为它们的占据数都为0。</p>
+<ul>
+<li>只有对于自然轨道，对应于LUMO及更高阶的复合物轨道由于仍有少量电子占据，其d、b、r项才不是精确为0，但由于自然轨道序号是按照占据数由高到低排的，超过LUMO+5的话由于占据数往往已经很低了，d、b、r项已很小，所以Multiwfn中LUMO+5以上的轨道都不会输出。</li>
+</ul>
+</li>
+<li><p>复合物轨道9的d是最大的，因此表明这个轨道对于CO向BH3的电子转移有最主要的贡献。通过形成这个复合物轨道，CO向BH3贡献了0.171个电子，而BH3向CO反馈了0.0269个电子，故净转移可以估算为0.144（即d-b项）。</p>
+</li>
+<li>BH3对CO反馈电子主要是来自于复合物轨道10和11，它们是简并的轨道，b的数值一致，为0.0437。</li>
+<li>r(9)非常负，这说明复合物轨道9的形成使得CO和BH3的占据的片段轨道的电子很大程度上从二者的交叠区域移走，从而降低了电子互斥，从下面的它的轨道波函数图形中也可见在交叠区域有个明显的节点。</li>
+<li>r(5)和r(6)都是不小的正值，因此它们的形成导致占据片段轨道的电子向交叠区域转移了不少，可以认为体现了片段间成键轨道的特征，从下面的等值面图形中也可看到这两个复合物轨道都较好地覆盖了片段间成键区域，故有利于成键。</li>
+</ul>
+<p><img src="http://sobereva.com/usr/uploads/image/20150610/20150610061643_74552.png" alt="img"></p>
+<hr>
+<p><strong>ECDA数据：</strong></p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line">   <span class="attribute">Contribution</span> to <span class="literal">all</span> occupied complex orbital:</span><br><span class="line"><span class="attribute">Occupied</span>, virtual orbitals of fragment  <span class="number">1</span>:     <span class="number">680</span>.<span class="number">4194</span>%         <span class="number">8</span>.<span class="number">0593</span>%</span><br><span class="line"><span class="attribute">Occupied</span>, virtual orbitals of fragment  <span class="number">2</span>:     <span class="number">390</span>.<span class="number">3988</span>%        <span class="number">21</span>.<span class="number">1226</span>%</span><br><span class="line">  <span class="attribute">Contribution</span> to <span class="literal">all</span> virtual complex orbital:</span><br><span class="line"><span class="attribute">Occupied</span>, virtual orbitals of fragment  <span class="number">1</span>:      <span class="number">19</span>.<span class="number">5806</span>%      <span class="number">2291</span>.<span class="number">9407</span>%</span><br><span class="line"><span class="attribute">Occupied</span>, virtual orbitals of fragment  <span class="number">2</span>:       <span class="number">9</span>.<span class="number">6012</span>%      <span class="number">1678</span>.<span class="number">8774</span>%</span><br><span class="line"><span class="attribute">PL</span>( <span class="number">1</span>) + CT( <span class="number">1</span>-&gt; <span class="number">2</span>) =    <span class="number">0</span>.<span class="number">3916</span>      PL( <span class="number">1</span>) + CT( <span class="number">2</span>-&gt; <span class="number">1</span>) =    <span class="number">0</span>.<span class="number">1612</span></span><br><span class="line"><span class="attribute">PL</span>( <span class="number">2</span>) + CT( <span class="number">1</span>-&gt; <span class="number">2</span>) =    <span class="number">0</span>.<span class="number">4225</span>      PL( <span class="number">2</span>) + CT( <span class="number">2</span>-&gt; <span class="number">1</span>) =    <span class="number">0</span>.<span class="number">1920</span></span><br><span class="line"><span class="attribute">The</span> net electrons obtained by frag. <span class="number">2</span> = CT( <span class="number">1</span>-&gt; <span class="number">2</span>) - CT( <span class="number">2</span>-&gt; <span class="number">1</span>) =    <span class="number">0</span>.<span class="number">2304</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>一般来说只需要关注最后一行数据，它表明了从片段1向片段2总共净转移了多少电子，此例即0.2304。<ul>
+<li>这个数据和CDA的d-b项会有一定出入，因为二者计算方法没有明显关联。ECDA给出的总的净转移量更可靠。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>通过<strong>菜单</strong>可以进一步观看复合物轨道的具体成分，比如选<code>2</code>再输入9。</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"> <span class="attribute">Occupation</span> number of orbital     <span class="number">9</span> of the complex:  <span class="number">2</span>.<span class="number">00000000</span></span><br><span class="line"><span class="attribute">Orbital</span>     <span class="number">7</span> of fragment  <span class="number">1</span>, Occ: <span class="number">2</span>.<span class="number">00000</span>    Contribution:   <span class="number">25</span>.<span class="number">8560</span>%</span><br><span class="line"><span class="attribute">Orbital</span>    <span class="number">13</span> of fragment  <span class="number">1</span>, Occ: <span class="number">0</span>.<span class="number">00000</span>    Contribution:    <span class="number">1</span>.<span class="number">0798</span>%</span><br><span class="line"><span class="attribute">Orbital</span>     <span class="number">2</span> of fragment  <span class="number">2</span>, Occ: <span class="number">2</span>.<span class="number">00000</span>    Contribution:   <span class="number">57</span>.<span class="number">2921</span>%</span><br><span class="line"><span class="attribute">Orbital</span>     <span class="number">5</span> of fragment  <span class="number">2</span>, Occ: <span class="number">0</span>.<span class="number">00000</span>    Contribution:   <span class="number">14</span>.<span class="number">5640</span>%</span><br></pre></td></tr></table></figure>
+<ul>
+<li>从数据中可见，复合物轨道9主体是BH3的轨道2，达57.3%。</li>
+<li>之所以此复合物轨道会导致CO向BH3转移那么多电子，显然是因为CO的占据轨道7与BH3的虚轨道5相混合。</li>
+<li>r(9)很负，是因为CO的占据轨道7与BH3的占据轨道2间的互斥作用所致。</li>
+<li>可以进一步结合轨道图形来看：<ul>
+<li>左边是CO的占据轨道7（展现较明显C的孤对电子特征），右边是BH3的虚轨道5，从形状上看二者比较匹配，因此容易混合，并且混合后会导致不少电子转移。<br><img src="http://sobereva.com/usr/uploads/image/20150610/20150610061657_41127.png" alt="img"></li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>将某个复合物轨道的d,b,r值分解为片段轨道对的贡献：</strong></p>
+<ul>
+<li><p>对复合物轨道9进行分解。输入<code>0</code>返回上一级菜单，选选项<code>6</code>，然后输入<code>9</code>，然后输入0.005，这样对复合物轨道9的d,b,r项任意之一贡献大于0.005的片段轨道对就会被输出出来。</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">FragA</span> Orb(Occ.)  FragB Orb(Occ.)      d           b        d - b          r</span><br><span class="line">    <span class="attribute">4</span>( <span class="number">2</span>.<span class="number">0000</span>)       <span class="number">2</span>( <span class="number">2</span>.<span class="number">0000</span>)    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">000000</span>   -<span class="number">0</span>.<span class="number">009969</span></span><br><span class="line">    <span class="attribute">7</span>( <span class="number">2</span>.<span class="number">0000</span>)       <span class="number">1</span>( <span class="number">2</span>.<span class="number">0000</span>)    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">000000</span>   -<span class="number">0</span>.<span class="number">005759</span></span><br><span class="line">    <span class="attribute">7</span>( <span class="number">2</span>.<span class="number">0000</span>)       <span class="number">2</span>( <span class="number">2</span>.<span class="number">0000</span>)    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">000000</span>   -<span class="number">0</span>.<span class="number">723845</span></span><br><span class="line">    <span class="attribute">7</span>( <span class="number">2</span>.<span class="number">0000</span>)       <span class="number">5</span>( <span class="number">0</span>.<span class="number">0000</span>)    <span class="number">0</span>.<span class="number">176503</span>    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">176503</span>    <span class="number">0</span>.<span class="number">000000</span></span><br><span class="line">    <span class="attribute">7</span>( <span class="number">2</span>.<span class="number">0000</span>)       <span class="number">8</span>( <span class="number">0</span>.<span class="number">0000</span>)    <span class="number">0</span>.<span class="number">006221</span>    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">006221</span>    <span class="number">0</span>.<span class="number">000000</span></span><br><span class="line">    <span class="attribute">7</span>( <span class="number">2</span>.<span class="number">0000</span>)      <span class="number">11</span>( <span class="number">0</span>.<span class="number">0000</span>)    <span class="number">0</span>.<span class="number">005846</span>    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">005846</span>    <span class="number">0</span>.<span class="number">000000</span></span><br><span class="line">    <span class="attribute">7</span>( <span class="number">2</span>.<span class="number">0000</span>)      <span class="number">12</span>( <span class="number">0</span>.<span class="number">0000</span>)   -<span class="number">0</span>.<span class="number">023941</span>    <span class="number">0</span>.<span class="number">000000</span>   -<span class="number">0</span>.<span class="number">023941</span>    <span class="number">0</span>.<span class="number">000000</span></span><br><span class="line">   <span class="attribute">13</span>( <span class="number">0</span>.<span class="number">0000</span>)       <span class="number">2</span>( <span class="number">2</span>.<span class="number">0000</span>)    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">021958</span>   -<span class="number">0</span>.<span class="number">021958</span>    <span class="number">0</span>.<span class="number">000000</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>很清晰地可以看到CO的7号轨道与BH3的5号轨道相互作用导致电子向BH3转移了0.176，这正是9号复合物轨道d项达到0.171的主要因素。</p>
+</li>
+</ul>
+<hr>
+<p><strong>绘制轨道相互作用图</strong></p>
+<ul>
+<li><p>输入<code>0</code>回到上一级菜单，然后选<code>5</code>进入绘制轨道相互作用图的菜单中。</p>
+</li>
+<li><p>选<code>3</code>，输入-30,10把相互作用图能量下限和上限分别设为-30和10eV。</p>
+</li>
+<li>选<code>1</code>，轨道相互作用图立刻会显示。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>Multiwfn</tag>
+        <tag>CDA</tag>
+        <tag>CT</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【【草稿】】价键理论（VB）</title>
+    <url>/2021/04/16/%E3%80%90%E3%80%90%E8%8D%89%E7%A8%BF%E3%80%91%E3%80%91%E4%BB%B7%E9%94%AE%E7%90%86%E8%AE%BA%EF%BC%88VB%EF%BC%89/</url>
+    <content><![CDATA[<p>价键理论是多电子波函数</p>
+<p>分子轨道不区分电子在哪个原子核上</p>
+<h1 id="价键理论（VB）"><a href="#价键理论（VB）" class="headerlink" title="价键理论（VB）"></a>价键理论（VB）</h1><h2 id="Heitler-London价键理论对H2的求解"><a href="#Heitler-London价键理论对H2的求解" class="headerlink" title="Heitler-London价键理论对H2的求解"></a>Heitler-London价键理论对H<sub>2</sub>的求解</h2><ol>
+<li>首先假定1号电子与2号原子核之间的吸引可以省略</li>
+<li>其次电子是不可区分的</li>
+<li>加上自旋的反对称</li>
+</ol>
+<script type="math/tex; mode=display">\Psi_{VB}=[\phi_a(1)\phi_b(2)+\phi_a(2)\phi_b(1)][\alpha(1)\beta(2)-\alpha(2)\beta(1)]\\=\\=|a\bar{b}|+|b\bar{a}|</script><script type="math/tex; mode=display">E=<\Psi_{VB}|\hat{H}|\Psi_{VB}>=<|a\bar{b}|+|b\bar{a}||\hat{H}||a\bar{b}|+|b\bar{a}|></script><h3 id="离子项"><a href="#离子项" class="headerlink" title="离子项"></a>离子项</h3><h3 id="三重态"><a href="#三重态" class="headerlink" title="三重态"></a>三重态</h3><h2 id="现代VB理论"><a href="#现代VB理论" class="headerlink" title="现代VB理论"></a>现代VB理论</h2><h3 id="Coulson-Fischer-VB-Model-1949"><a href="#Coulson-Fischer-VB-Model-1949" class="headerlink" title="Coulson-Fischer VB Model (1949)"></a>Coulson-Fischer VB Model (1949)</h3><h3 id="Goddard-GVB-model-1973"><a href="#Goddard-GVB-model-1973" class="headerlink" title="Goddard GVB model (1973)"></a>Goddard GVB model (1973)</h3><h3 id="Spin-Coupled-VB-Model"><a href="#Spin-Coupled-VB-Model" class="headerlink" title="Spin-Coupled VB Model"></a>Spin-Coupled VB Model</h3><h1 id="分子轨道理论（MO）"><a href="#分子轨道理论（MO）" class="headerlink" title="分子轨道理论（MO）"></a>分子轨道理论（MO）</h1>]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>原理</category>
+      </categories>
+      <tags>
+        <tag>变分法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【【草稿】】热力学相关</title>
+    <url>/2022/06/28/%E3%80%90%E3%80%90%E8%8D%89%E7%A8%BF%E3%80%91%E3%80%91%E7%83%AD%E5%8A%9B%E5%AD%A6%E7%9B%B8%E5%85%B3/</url>
+    <content><![CDATA[<ul>
+<li>热力学常数：<script type="math/tex">R=8.314J/(mol*K)</script></li>
+</ul>
+<h1 id="常见热力学量"><a href="#常见热力学量" class="headerlink" title="常见热力学量"></a>常见热力学量</h1><ul>
+<li>内能（Internal energy）：<script type="math/tex">U</script><ul>
+<li>内能不是电子能量，还包括核运动的能量</li>
+</ul>
+</li>
+<li>熵（Entropy）：<script type="math/tex">S</script><ul>
+<li>熵体现粒子的扩散度</li>
+</ul>
+</li>
+<li>亥姆霍兹自由能（Helmholtz free eneryg）：<script type="math/tex">A=U-TS</script><ul>
+<li>A用于等容过程</li>
+</ul>
+</li>
+<li>焓（Enthalpy）：<script type="math/tex">H=U+PV</script></li>
+<li>吉布斯自由能（Gibbs free energy）：<script type="math/tex">G=H-TS=A+PV</script><ul>
+<li>G用于等压过程</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li>等容热容：<script type="math/tex">C_{V}=\left(\frac{\partial U}{\partial T}\right)_{V}</script></li>
+<li>等压热容：<script type="math/tex">C_{P}=\left(\frac{\partial H}{\partial T}\right)_{P}</script></li>
+<li>升温造成的内能增加：<script type="math/tex">\Delta U_{0 \rightarrow T}=U(T)-U(0)=\int_{0}^{T} C_{V} d T</script></li>
+<li>升温造成的焓增加：<script type="math/tex">\Delta H_{0 \rightarrow T}=H(T)-H(0)=\int_{0}^{T} C_{P} d T</script></li>
+</ul>
+<h1 id="理想气体假设"><a href="#理想气体假设" class="headerlink" title="理想气体假设"></a>理想气体假设</h1><ul>
+<li>理想气体状态下系综内的分子之间不存在任何相互作用，此时满足：<script type="math/tex">PV=nRT</script></li>
+<li><p>Gaussian等量化程序对分子做振动分折时给出热力学数据的时候<strong>都是把体系当成理想气体对待的</strong>。给出每mol的热力学量，此时<script type="math/tex">PV=RT</script>，可明确写为:</p>
+<ul>
+<li><script type="math/tex; mode=display">G=A+RT</script></li>
+<li><script type="math/tex; mode=display">H=U+RT</script></li>
+<li><script type="math/tex; mode=display">C_{P}=C_V+R</script></li>
+</ul>
+</li>
+<li><p>热力学性质由体系的平动、转动、振动、电子一起贡献：</p>
+<ul>
+<li><script type="math/tex; mode=display">U_{\text {tot }}=U_{\text {trans }}+U_{\text {rot }}+U_{\text {vib }}+U_{\text {ele }}</script></li>
+<li><script type="math/tex; mode=display">S_{\text {tot }}=S_{\text {trans }}+S_{\text {rot }}+S_{\text {vib }}+S_{\text {ele }}</script></li>
+<li><script type="math/tex; mode=display">C_{\mathrm{v}, \text { tot }}=C_{\mathrm{V}, \text { trans }}+C_{\mathrm{V}, \text { rot }}+C_{\mathrm{V}, \mathrm{vib}}+C_{\mathrm{V}, \mathrm{de}}</script></li>
+</ul>
+</li>
+<li><p>H的RT和C的R项是由平动贡献的：</p>
+<ul>
+<li><script type="math/tex; mode=display">H_{\text {trans }}=U_{\text {trans }}+R T</script></li>
+<li><script type="math/tex; mode=display">C_{\mathrm{P}, \text { trans }}=C_{\mathrm{V}, \text { trans }}+R</script></li>
+</ul>
+</li>
+</ul>
+<h1 id="0K时的热力学数据"><a href="#0K时的热力学数据" class="headerlink" title="0K时的热力学数据"></a>0K时的热力学数据</h1><ul>
+<li>0K时平动和转动能量都为零。但是分子振动有零点振动能（ZPE或ZPVE），对应0K下（振动基态）时核振动的能量。</li>
+<li>在谐振近似下考察分子振动时（每个振动的能量的加合）：<script type="math/tex">\mathrm{ZPE}=\frac{1}{2} \sum_{i} h v_{i}</script></li>
+<li>几何优化得到的不是0K下的结构，而是虚构的没有核振动时的能重极小结构。哪怕是0K时核也在动，只要考虑核运动，就没有确切的核坐标，至多只能说振动平均结构。即：几何优化是忽略了核运动得到的势能曲线。</li>
+<li>电子基态能量（单点能）加上ZPE就是0K下体系的内能：<script type="math/tex">U(0)=\varepsilon_{\mathrm{ele}}+\mathrm{ZPE}</script><ul>
+<li>由<script type="math/tex">H=U+PV</script>，<script type="math/tex">G=H-TS</script>，当T=0时，<script type="math/tex">H(0)= G(0)= U(0)</script></li>
+</ul>
+</li>
+</ul>
+<h1 id="gt-0K时的热力学数据"><a href="#gt-0K时的热力学数据" class="headerlink" title="&gt;0K时的热力学数据"></a>&gt;0K时的热力学数据</h1><ul>
+<li><p>由于自由能、内能、 熵、焓等热力学量都是温度的函数，因此温度设定会影响它们的数值。另外压力设定也会产生影响，但影响的仅是平动贡献。</p>
+</li>
+<li><p>有限温度时，比如般计算的标况 (298.15K、1atm)，热力学数据写为电子基态能量与热贡献的加和。</p>
+<ul>
+<li><script type="math/tex; mode=display">U(T)=U(0)+[U(T)-U(0)]=\varepsilon_{\text {ele }}+\mathrm{ZPE}+\Delta U_{0 \rightarrow T}=\varepsilon_{\text {ele }}+U_{corr}(T)</script></li>
+<li><script type="math/tex; mode=display">H(T)=H(0)+[H(T)-H(0)]=\varepsilon_{\text {ele }}+\mathrm{ZPE}+\Delta H_{0 \rightarrow T}= \varepsilon_{\text {ele }}+H_{corr}(T)</script></li>
+<li><script type="math/tex; mode=display">G(T)=G(0)+[G(T)-G(0)]=\varepsilon_{\text {ele }}+\mathrm{ZPE}+\Delta G_{0 \rightarrow T}=\varepsilon_{\text {ele }}+G_{corr}(T)</script><ul>
+<li><script type="math/tex">\Delta U_{0 \rightarrow T}</script>，<script type="math/tex">\Delta H_{0 \rightarrow T}</script>，<script type="math/tex">\Delta G_{0 \rightarrow T}</script>是指从0K升温对热力学量产生的贡献，</li>
+<li><script type="math/tex">U/H/G_{corr}(T)</script>是对电子能量的热力学校正量，Gaussian会输出，热力学校正量加到电子能量上<script type="math/tex">\varepsilon_{\text {ele }}</script>就得到了体系的各种能量</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>单个原子的热力学校正量<script type="math/tex">H_{corr}(T)=\frac{5}{2}RT</script></p>
+</li>
+</ul>
+<h1 id="量化计算过程注意事项"><a href="#量化计算过程注意事项" class="headerlink" title="量化计算过程注意事项"></a>量化计算过程注意事项</h1><ul>
+<li>量化程序计算热力学数据的时候都是把体系当成理想气体分子来考虑的：<ul>
+<li>不要误认为在量子化学程序中不同温度、压力设定下得到的就是物质在相应状态下的实际性质。</li>
+<li>量化程序在计算平动、转动贡献时，并没有考虑凝聚相（或非理想气体）状况下分子间相互作用，分子是当成能够自由地平动和转动的。</li>
+</ul>
+</li>
+<li>由于自由能、内能、 熵、焓等热力学量都是温度的函数，因此<strong>温度设定</strong>会影响它们的数值。</li>
+<li><strong>压力设定</strong>也会产生影响，但影响的仅是平动贡献。</li>
+<li><strong>不同位素设定</strong>下由于原子质量不同热力学量计算结果也有所不同。（依赖于原子质量）</li>
+<li><p>在给定结构下，由于计算平动、转动不需要任何耗时。耗时都在频率计算上，所以一般量子化学程序做振动分析任务时就会顺便给出热力学数据。</p>
+</li>
+<li><p>由于热力学量涉及电子能量，振动频率，几何结构（影响转转动贡献)，所以热力学数据计算<strong>精度</strong>依赖于计算级别。</p>
+<ul>
+<li>热力学校正量的数量级远远低于电子能量。对两个体系进行比较时(如计算化学反应能)，热力学校正量的计算误差一般也明显低于电子能量计算误差，所以算准热力学数据最重要的是算准电子能量，所用计算级别应该尽可能高。而热力学校正量在廉价计算级别如B3LYP/6-31G<em>下就足矣算将很好，且频率计算耗时量远大于单点，因此计算<em>*热力学校正量时不需要也不宜用太高级别</em></em>。</li>
+<li>注意做振动分析计算热力学数据时坐标一定要在同级别优化过，而振动分析结来和几何优化对计算级别的敏感度又都显著低于能量，因此计算热力学数据的合理略是先用中成低级别优化结构并计算热力学校正量，然后再用高级别方法在此结构下算一次单点并和热力学校正相加。</li>
+</ul>
+</li>
+</ul>
+<h1 id="用哪种热力学量"><a href="#用哪种热力学量" class="headerlink" title="用哪种热力学量"></a>用哪种热力学量</h1><p>0K下内能、焓、自由能相同。有限温度下用哪种热力学量讨论问题分情况：</p>
+<ul>
+<li>化学平衡【求平衡常数，用自由能差】、构象分布【不同构象出现比例，玻尔兹曼分布】、反应快慢【过渡态理论，自由能垒】、稳定性【可能分很多稳定性】：自由能</li>
+<li>吸热/放热量：焓(如果化学过程前后气态分子摩尔数没有变化，【等容过程】亦可用内能变讨论，此时与始变相同)</li>
+<li>键能、电离能、电子亲和能：焓</li>
+<li>其它情况、纯理论研究问题或只需简单粗略讨论上述问题：电子能量</li>
+</ul>
+<h2 id="得到H-T-G-T-的步骤"><a href="#得到H-T-G-T-的步骤" class="headerlink" title="得到H(T)/G(T)的步骤"></a>得到H(T)/G(T)的步骤</h2><p>对于Gaussian：</p>
+<ul>
+<li>粗糙做法：直接用中低级别诸如B3LYP16-31G*做opt req任务，取输出的<code>Sum of electronic and themal Enthalples=</code>后面的值H(T)或<code>Sum of electronic and thermal Free Enerpies=后面的值</code>G(T)</li>
+<li><p>一般做法：用中低级别诸如B3LYP/6-31G*做opt freq任务，取焓的热校正量（<code>Thermal correction to Enthalpy=</code>后面的值）或自由能的热校正量（<code>Thermal correction to Gibbs Free Energy=</code>后面的值）。然后在这优化得到的结构下用诸如B2PLYP-D3/def2-TZVPP等较高级别计算单点能。最后把二者相加</p>
+</li>
+<li><p>对于小体系，直接用恰当的热力学组合方法，从输出文件末尾读取焓</p>
+</li>
+</ul>
+<h1 id="不同量化软件输出"><a href="#不同量化软件输出" class="headerlink" title="不同量化软件输出"></a>不同量化软件输出</h1><h2 id="Gaussian"><a href="#Gaussian" class="headerlink" title="Gaussian"></a>Gaussian</h2><ul>
+<li>两种单位的<script type="math/tex">\mathrm{ZPE}</script></li>
+</ul>
+<figure class="highlight lisp"><table><tr><td class="code"><pre><span class="line">Zero-point vibrational energy     <span class="number">210889.5</span> (<span class="name">Joules/Mol</span>)</span><br><span class="line">                                   <span class="number">50.40379</span> (<span class="name">Kcal/Mol</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Zero-point correction：零点能，<script type="math/tex">\mathrm{ZPE}</script>，单位应该是hartree，而不是Hartree/Particle</li>
+<li>Thermal correction to Energy：内能的热力学校正量<script type="math/tex">U_{corr}(T)</script></li>
+<li>Thermal correction to Enthalpy：焓热校正量<script type="math/tex">H_{corr}(T)</script></li>
+<li>Thermal correction to Gibbs Free Energy：吉布斯自由能校正量<script type="math/tex">G_{corr}(T)</script></li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Zero</span>-point correction=                           <span class="number">0</span>.<span class="number">080324</span> (Hartree/Particle)</span><br><span class="line"> <span class="attribute">Thermal</span> correction to Energy=                    <span class="number">0</span>.<span class="number">084586</span></span><br><span class="line"> <span class="attribute">Thermal</span> correction to Enthalpy=                  <span class="number">0</span>.<span class="number">085530</span></span><br><span class="line"> <span class="attribute">Thermal</span> correction to Gibbs Free Energy=         <span class="number">0</span>.<span class="number">054960</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>上面四项加到电子能量上后就得到了其他能量。Gaussian也会自动加和输出当前级别下的其他能量，但是电子能量并不准确，要得到比较准确的，应当手动把校正量加到（更高级别）单点能上：</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Sum</span> of electronic and zero-point Energies=           -<span class="number">154</span>.<span class="number">953482</span></span><br><span class="line"> <span class="attribute">Sum</span> of electronic and thermal Energies=              -<span class="number">154</span>.<span class="number">949219</span></span><br><span class="line"> <span class="attribute">Sum</span> of electronic and thermal Enthalpies=            -<span class="number">154</span>.<span class="number">948275</span></span><br><span class="line"> <span class="attribute">Sum</span> of electronic and thermal Free Energies=         -<span class="number">154</span>.<span class="number">978845</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>其他输出：<ul>
+<li>E (Thermal)表示内能热校正量，电子、平动、转动、振动的贡献etc，振动占大部分</li>
+<li>G(T)还可以通过<script type="math/tex">G=H-TS</script>得到，通过温度和输出的熵变计算。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line">                    <span class="attribute">E</span> (Thermal)             CV                S</span><br><span class="line">                     <span class="attribute">KCal</span>/Mol        Cal/Mol-Kelvin    Cal/Mol-Kelvin</span><br><span class="line"><span class="attribute">Total</span>                   <span class="number">53</span>.<span class="number">079</span>             <span class="number">13</span>.<span class="number">372</span>             <span class="number">64</span>.<span class="number">340</span></span><br><span class="line"><span class="attribute">Electronic</span>               <span class="number">0</span>.<span class="number">000</span>              <span class="number">0</span>.<span class="number">000</span>              <span class="number">0</span>.<span class="number">000</span></span><br><span class="line"><span class="attribute">Translational</span>            <span class="number">0</span>.<span class="number">889</span>              <span class="number">2</span>.<span class="number">981</span>             <span class="number">37</span>.<span class="number">406</span></span><br><span class="line"><span class="attribute">Rotational</span>               <span class="number">0</span>.<span class="number">889</span>              <span class="number">2</span>.<span class="number">981</span>             <span class="number">22</span>.<span class="number">318</span></span><br><span class="line"><span class="attribute">Vibrational</span>             <span class="number">51</span>.<span class="number">301</span>              <span class="number">7</span>.<span class="number">410</span>              <span class="number">4</span>.<span class="number">616</span></span><br><span class="line"><span class="attribute">Vibration</span>     <span class="number">1</span>          <span class="number">0</span>.<span class="number">664</span>              <span class="number">1</span>.<span class="number">758</span>              <span class="number">1</span>.<span class="number">711</span></span><br><span class="line"><span class="attribute">Vibration</span>     <span class="number">2</span>          <span class="number">0</span>.<span class="number">694</span>              <span class="number">1</span>.<span class="number">668</span>              <span class="number">1</span>.<span class="number">400</span></span><br><span class="line"><span class="attribute">Vibration</span>     <span class="number">3</span>          <span class="number">0</span>.<span class="number">781</span>              <span class="number">1</span>.<span class="number">430</span>              <span class="number">0</span>.<span class="number">897</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>Q配分函数，各种热力学量都可以通过配分函数得到</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line">                      <span class="attribute">Q</span>            Log<span class="number">10</span>(Q)             Ln(Q)</span><br><span class="line"><span class="attribute">Total</span> Bot       <span class="number">0</span>.<span class="number">524878</span>D-<span class="number">25</span>        -<span class="number">25</span>.<span class="number">279942</span>        -<span class="number">58</span>.<span class="number">209218</span></span><br><span class="line"><span class="attribute">Total</span> V=<span class="number">0</span>       <span class="number">0</span>.<span class="number">463716</span>D+<span class="number">12</span>         <span class="number">11</span>.<span class="number">666252</span>         <span class="number">26</span>.<span class="number">862537</span></span><br><span class="line"><span class="attribute">Vib</span> (Bot)       <span class="number">0</span>.<span class="number">253966</span>D-<span class="number">36</span>        -<span class="number">36</span>.<span class="number">595224</span>        -<span class="number">84</span>.<span class="number">263617</span></span><br><span class="line"><span class="attribute">Vib</span> (Bot)    <span class="number">1</span>  <span class="number">0</span>.<span class="number">771265</span>D+<span class="number">00</span>         -<span class="number">0</span>.<span class="number">112796</span>         -<span class="number">0</span>.<span class="number">259723</span></span><br><span class="line"><span class="attribute">Vib</span> (Bot)    <span class="number">2</span>  <span class="number">0</span>.<span class="number">626499</span>D+<span class="number">00</span>         -<span class="number">0</span>.<span class="number">203080</span>         -<span class="number">0</span>.<span class="number">467609</span></span><br><span class="line"><span class="attribute">Vib</span> (Bot)    <span class="number">3</span>  <span class="number">0</span>.<span class="number">420158</span>D+<span class="number">00</span>         -<span class="number">0</span>.<span class="number">376588</span>         -<span class="number">0</span>.<span class="number">867125</span></span><br><span class="line"><span class="attribute">Vib</span> (V=<span class="number">0</span>)       <span class="number">0</span>.<span class="number">224373</span>D+<span class="number">01</span>          <span class="number">0</span>.<span class="number">350970</span>          <span class="number">0</span>.<span class="number">808138</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="例子1：计算0K和298-15K下HF生成焓"><a href="#例子1：计算0K和298-15K下HF生成焓" class="headerlink" title="例子1：计算0K和298.15K下HF生成焓"></a>例子1：计算0K和298.15K下HF生成焓</h3><ul>
+<li><script type="math/tex; mode=display">\frac{1}{2} \mathrm{H}_{2}(\mathrm{~g})+\frac{1}{2}\mathrm{~F}_{2}(\mathrm{~g}) \rightarrow \mathrm{HF}(\mathrm{g})</script></li>
+<li>0K下实验生成焓变-272.5±0.8kJ/mol，298.15K下为-273.3kJ/mol。</li>
+<li>先通过B3LYP/6-31G*优化和振动分析得到ZPE和298.15K时的焓的热校正量，加到CCSDT/cc-pVQZ得到的单点能上来分别获得0K和298.15K时的焓值，并计算生成焓。</li>
+</ul>
+<p><img src="/image-20220628202457869.png" alt="image-20220628202457869"></p>
+<h2 id="ADF"><a href="#ADF" class="headerlink" title="ADF"></a>ADF</h2><ul>
+<li><p>零点能：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Zero</span>-point energy (Hartree):     <span class="number">0</span>.<span class="number">0032</span></span><br></pre></td></tr></table></figure>
+</li>
+<li></li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>原理</category>
+      </categories>
+      <tags>
+        <tag>熵</tag>
+        <tag>焓</tag>
+        <tag>内能</tag>
+        <tag>零点能</tag>
       </tags>
   </entry>
 </search>
