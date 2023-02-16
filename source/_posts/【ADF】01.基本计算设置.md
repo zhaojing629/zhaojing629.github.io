@@ -341,7 +341,7 @@ sed -i 's/SCF/SCF\narh\nend/' 07*/*.run
 sed -i 's/SCF/SCF\nDIIS\nN 25\nCyc 30\nEnd\nMixing 0.015\n Mixing1 0.09/' 08*/*.run
 sed -i 's/SCF/SCF\nLshift 0.01/' 09*/*.run
 
-for i in 01 02 03 04 05 06 07 08 09;do cd ${i}*; qsub adf*; cd ..; done
+for i in {1..9};do echo 0${i}*/;cd 0${i}*; qsub adf*; cd ..; done
 ```
 
 

@@ -121,8 +121,16 @@ end
 
 - 先用高斯进行计算：
   - 确保Gaussian里用的基组和ORCA里精确一致。
+    - Gaussian里用6-31G系列基组时，默认是用笛卡尔型d基函数，而ORCA总是用球谐型基函数，因此Gaussian计算时要写`5d`关键词
+    
   - Gaussian计算时候加上`nosymm`关键词避免摆到标准朝向下
+  
   - `int=NoBasisTransform`关键词避免去掉任何primitive GTF，即基组原始怎么定义的就怎么用。
+  
+    ```
+    # 5d nosymm int=NoBasisTransform 
+    ```
+  
 - 用formchk将chk转换为fch，载入Multiwfn后依次输入
 
 ```shell

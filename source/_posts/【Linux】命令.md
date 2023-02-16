@@ -590,6 +590,8 @@ scp [可选参数] file_source file_target
   grep "5" -A 3
   grep "5" -B 3
   grep "5" -C 3
+  
+  for i in XXXX; do qnodes | qnodes | grep /${i} -B 8| grep "cu" ; done
   ```
 
 - 输出除之外的所有行 -v 选项：
@@ -1061,7 +1063,13 @@ du [-abcDhHklmsSx][-L <符号连接>][-X <文件>][--block-size][--exclude=<目�
   du -hs ./*
   ```
 
+- 
 
+- ```
+  du -h --max-depth=1
+  ```
+
+  
 
 
 

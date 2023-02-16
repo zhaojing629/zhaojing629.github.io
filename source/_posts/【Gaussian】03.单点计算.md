@@ -44,7 +44,7 @@ description: 单点计算的一些基础和SCF不收敛的一些处理方法
 
 # 初猜`guess=`
 
-## 算法相关
+## 算法相关选项
 
 - `Harris`：使用Harris泛函的DFT方法的结果作为初猜。是所有HF和DFT的默认方法。通过自由原子密度叠加作为分子电子密度来构建KS算符，然后将变分得到的轨道用做后续计算的初猜，这步只做一次而不像普通DFT方法继续做迭代。
 - `Huckel`：扩展Huckel方法，也不需要迭代。是一些半经验方法（CNDO、INDO、MNDO 和 MINDO3 ）的初猜默认设置。对于涉及许多第二行原子的 PM6 计算，应考虑 Huckel 猜测。 
@@ -52,6 +52,14 @@ description: 单点计算的一些基础和SCF不收敛的一些处理方法
   - 是迭代的方法，给高等级计算提供初猜波函数之前自身也需要初猜（扩展Huckel方法），本身亦有不收敛的可能。
 - `Core`：将核哈密顿量对角化以形成初始猜测。是一些半经验方法（AM1、PM3、PM3MM、PM6 和 PDDG ）计算的默认设置。初始的Fock矩阵元只含单电子项而不含双电子项，即密度矩阵用空矩阵，比较粗糙。
 - `AM1`：进行AM1计算作为初猜。一般不能直接使用。
+
+## 轨道相关选项
+
+- `Mix`：HOMO和LUMO混合，以破坏α-β和空间对称性。只有在产生复杂的初始猜测时，才默认进行。`NoMix`指不混合。
+
+## 程序选项
+
+- `Only`：在计算和打印初始猜测后终止计算。
 
 ## 读取波函数作为初猜
 
@@ -160,7 +168,7 @@ description: 单点计算的一些基础和SCF不收敛的一些处理方法
 
 mkdir 01_novaracc_noincfock 02_vshift300 03_vshift400 04_vshift500 05_huckel 06_INDO 07_QC 08_XQC 09_Fermi 10_NODIIS 11_mix
 
-for i in 01 02 03 04 05 06 07 08 09 10 11; do cp 00_noconv/*gjf 00_noconv/g16* ${i}* ;done
+for i in 01 02 03 04 05 06 07 08 09 10 11; do cp 00_*/*gjf 00_*/g16* ${i}* ;done
 
 
 sed -i 's/\#/&SCF\(novaracc,noincfock,maxcyc=300\) /' 01_novaracc_noincfock/*gjf
@@ -175,6 +183,6 @@ sed -i 's/\#/&SCF\(maxcyc=300,Fermi\) /' 09_Fermi/*gjf
 sed -i 's/\#/&SCF\(maxcyc=300,NODIIS\) /' 10_NODIIS/*gjf
 sed -i 's/\#/&SCF\(maxcyc=300\) guess=mix /' 11_mix/*gjf
 
-for i in 01 02 03 04 05 06 07 08 09 10 11; do cd ${i}* qsub g16*; cd ..; done 
+for i in 01 02 03 04 05 06 07 08 09 10 11; do cd ${i}*; qsub g16*; cd ..; done 
 ```
 

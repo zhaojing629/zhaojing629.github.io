@@ -11,6 +11,29 @@ description: NBO的一些使用方法
 
 
 
+
+
+
+
+# 安装方式
+
+## Linux下NBO6.0
+
+1. 将NBO6压缩包解压到xxx目录下
+
+2. 在~/.bashrc中加入：
+
+   ```
+   export PATH=XXX/nbo6/bin/:$PATH
+   ```
+
+3. 把xxx/nbo6/bin/gaunbo6中
+
+   - `steenv GAUNBO`后面的内容改成`g09nbo`或者`g16nbo`
+   - `steenv BINDIR`改成XXX/nbo6/bin/
+
+4. 重新进入终端即可
+
 # 运行方式
 
 ## 在Gaussian软件中运行
@@ -42,7 +65,7 @@ description: NBO的一些使用方法
 
 ###  常用
 
-- 计算NBO中的WBI键级，产生输出文件，计算AdNDP所需要的log文件，保存NLMO轨道：
+- 计算NBO中的**WBI键级**，产生输出文件，计算**AdNDP**所需要的log文件，保存**NLMO**轨道：
 
   ```
    # pop(nbo6read,savenlmos)
@@ -69,7 +92,7 @@ description: NBO的一些使用方法
   ```
   #pop=nbo6read
   
-  $NBO AONAO=W49 FNAO=W49 DMNAO=W49 SKIPBO file=UCCe@C72_b3lyp_pio_C2_0_res  $END
+  $NBO AONAO=W49 FNAO=W49 DMNAO=W49 SKIPBO file=XXXX  $END
   ```
 
   

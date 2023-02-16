@@ -16,6 +16,8 @@ description: 进行Linux下MOKIT编译过程和gamess的编译，OpenMolcas的�
 
 # MOKIT编译
 
+## 方式1
+
 1. [下载](https://gitlab.com/jxzou/mokit)MOKIT整个源码压缩包，在Linux系统下的安装目录解压，重命名
 
    ```shell
@@ -74,7 +76,31 @@ description: 进行Linux下MOKIT编译过程和gamess的编译，OpenMolcas的�
    mokit.sub xxxx.gjf
    ```
 
-   
+
+## 方式2 conda 联网安装
+
+```
+conda create -n mokit-py37 python=3.7 # 3.8, 3.9 are also available
+conda activate mokit-py37
+conda install mokit -c mokit
+```
+
+可能会报错
+
+```
+Solving environment: failed
+
+PackagesNotFoundError: The following packages are not available from current channels:
+```
+
+额外使用一句
+
+```
+conda config --append channels conda-forge
+conda install mokit -c mokit
+```
+
+
 
 # GAMESS编译
 

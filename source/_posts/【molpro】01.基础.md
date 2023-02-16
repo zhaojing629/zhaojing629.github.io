@@ -35,6 +35,8 @@ molpro [options] [datafile]
     -m 1k
     #需要1024word的内存
     -M 1K
+    
+    eg. 一个核1000m对应于7.5G RAM
     ```
 
   用于并行执行的选项（在使用串行MOLPRO时，将忽略这些选项）：
@@ -42,7 +44,7 @@ molpro [options] [datafile]
   - `-n`：定义设置的并行进程个数
 
     并行内存计算eg. 为具有4个并行计算过程的作业指定100×10<sup>6</sup>个word：100×10<sup>6</sup>×8×4=3.2×10<sup>9</sup>byte
-
+  
   - `-N` ：等指定工作节点的主机名
 
 ## 输出文件
@@ -92,7 +94,8 @@ PUNCH,filename,[REWIND]
 - 默认是临时文件，用[`FILE`命令](#file卡)可以把计算出的数据作为轨道和能量保存到永久文件中，并在以后的阶段使用它们重启计算，默认的保存路径为$HOME/wfu，可以使用`-W`修改路径：
 
   ```
-  molpro -W ./ h2o.inp
+  molpro -W ./ h2o.inp #-W指定2-4文件
+  molpro -I ./ h2o.inp #-I指定1积分文件
   ```
 
 - 文件类型：
@@ -234,7 +237,7 @@ MOLPRO可以根据用户的需要动态分配内存。因此不需要保存有�
 
 # file卡
 
-对所有的永久文件，默认设置是RESTART。所有的临时文件在需要时通常自动分配。I/O缓存分配到动态内存的顶端，缓存的大小会减少可用的内存。因此MEMORY卡必须出现在第一个FILE卡之前。
+对所有的永久文件，默认设置是RESTART。所有的临时文件在需要时通常自动分配。I/O缓存分配到动态内存的顶端，缓存的大小会减少可用的内存。**因此MEMORY卡必须出现在第一个FILE卡之前。**
 
 ```
 FILE,file,name,[status]
@@ -266,6 +269,20 @@ FILE,file,name,[status]
   ```
 
 - 在大多数情况下，文件1可能非常大(它包含两个电子的积分)，而重新计算积分的成本可能只占总时间的一小部分，因此可以只在输入中只定义文件2，积分会自动重新计算。
+
+## 重启计算
+
+
+
+```
+RESTART;  	# 默认，重启所有跟File卡有关的文件
+RESTART,1; 		#will restart file 1 only
+RESTART,2; 		#will restart file 2 only
+RESTART,1,2,3; 	#will restart files 1-3
+RESTART,2000.1;	#will restart file 1 and truncate before record 2000.
+```
+
+
 
 # print/gprint 全局打印选项
 

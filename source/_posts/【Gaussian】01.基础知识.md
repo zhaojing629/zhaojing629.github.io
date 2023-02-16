@@ -19,6 +19,13 @@ description: Gaussian中的常见问题
 
 
 
+# 闭壳层与开壳层体系SCF计算
+
+![image-20221107191726335](/image-20221107191726335.png)
+
+- 在Gaussian中，对于多重度不为1的体系，即使在关键词中只写hf，程序也会自动进行UHF计算。
+- 如果在关键词一行只写上uhf，则往往这时候的结果会与RHF相同，最终给出的`<S**2>`和S值均为0，没有自旋污染，说明此时得到的就是RHF解。解决方法是加入guess=mix关键词，用以强制混合HOMO和LUMO，以破坏α-β和空间对称性。
+
 # 坐标的输入
 
 - `geom=check`：输入结构从chk中读取，输入文件里此时不能写坐标
@@ -41,7 +48,14 @@ description: Gaussian中的常见问题
     formchk xxx.chk #y
     ```
 
-    
+
+- 将修改后的fchk转回chk文件
+
+  ```
+  unfchk h2_uhf_only.fchk h2_uhf_only.chk
+  ```
+
+  
 
 
 

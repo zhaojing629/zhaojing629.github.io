@@ -1,5 +1,5 @@
 ---
-title: 【Jmol】常见的指令
+ntitle: 【Jmol】常见的指令
 typora-root-url: 【Jmol】常见的指令
 date: 2021-08-13 19:33:37
 updated:

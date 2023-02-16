@@ -224,20 +224,67 @@ End
 
 # 限制性几何优化`Constraints`
 
-> ADF2019中可以直接使用`Constraints`块
->
-> ```
-> CONSTRAINTS
->   ATOM Ia1 {Xa1 Ya1 Za1}
->   COORD Ia1 Icoord {valcoord}
->   DIST Ia1 Ia2 Ra
->   ANGLE Ib1 Ib2 Ib3 Rb
->   DIHED Ic1 Ic2 Ic3 Ic4 Rc
->   SUMDIST Ic1 Ic2 Ic3 Ic4 Rc
->   DIFDIST Ic1 Ic2 Ic3 Ic4 Rc
->   BLOCK bname
-> end
-> ```
+## ADF19
+
+- `RESTRAINT `：在约束条件下，为了满足约束条件，势能中加入了一个势能，这意味着约束条件不一定要完全满足。例如，我们可以从几何优化运行中的一个几何体开始，其中的约束不被满足。
+
+- `Constraints`：在几何优化的每一步，受限坐标的值应该与预定的固定值完全匹配。
+
+  - ATOM、COORD、DIST、ANGLE和DIHED约束不需要在几何优化开始时满足。ATOM和COORD约束只能在直角坐标优化中使用，而所有其他约束只能用于离域坐标。
+
+    ```
+    GEOMETRY
+     OPTIM CARTESIAN
+    END
+    ```
+
+### RESTRAINT 
+
+```
+RESTRAINT
+  DIST Ia1 Ia2 Ra {[Aa] [Ba]}
+  ANGLE Ib1 Ib2 Ib3 Rb {[Ab] [Bb]}
+  DIHED Ic1 Ic2 Ic3 Ic4 Rc {[Ac] [Bc]}
+  DD Id1 Id2 Id3 Id4 R0 [{Ad} {Bd}]
+end
+```
+
+### Constraints
+
+```
+CONSTRAINTS
+  ATOM Ia1 {Xa1 Ya1 Za1}
+  COORD Ia1 Icoord {valcoord}
+  DIST Ia1 Ia2 Ra
+  ANGLE Ib1 Ib2 Ib3 Rb
+  DIHED Ic1 Ic2 Ic3 Ic4 Rc
+  SUMDIST Ic1 Ic2 Ic3 Ic4 Rc
+  DIFDIST Ic1 Ic2 Ic3 Ic4 Rc
+  BLOCK bname
+end
+```
+
+- block用法：
+
+  ```
+  ATOMS
+    1.C        -0.004115   -0.000021    0.000023 b=b1
+    2.C         1.535711    0.000022    0.000008 b=b2
+    3.H        -0.399693    1.027812   -0.000082 b=b1
+    4.H        -0.399745   -0.513934    0.890139 b=b1
+    5.H        -0.399612   -0.513952   -0.890156 b=b1
+    6.H         1.931188    0.514066    0.890140 b=b2
+    7.H         1.931432    0.513819   -0.890121 b=b2
+    8.H         1.931281   -1.027824    0.000244 b=b2
+  END
+  
+  CONSTRAINTS
+    BLOCK b1
+    BLOCK b2
+  END
+  ```
+
+## AMS
 
 - 在计算开始时，不需要满足约束条件。
 
@@ -260,14 +307,14 @@ Constraints
 End
 ```
 
-## 固定原子
+### 固定原子
 
 - `Atom atomIdx`：用`System%Atoms`块中给出的索引`atomIdx`将原子固定在初始位置，如那样
 - `AtomList [atomIdx1 .. atomIdxN]`：固定列表中所有原子的初始位置
 - `FixedRegion regionName`：通过region的方法来指定固定原子块
 - `Coordinate atomIdx [x|y|z] coordValue`：用原子序号固定原子使其具有`coordValue`的笛卡尔坐标，如果`coordValue`缺失，就固定为初始值。
 
-## 内自由度
+### 内自由度
 
 - `Distance atomIdx1 atomIdx2 distValue`：键长
 - `Angle atomIdx1 atomIdx2 atomIdx3 angleValue`：键角
@@ -275,7 +322,7 @@ End
 - `SumDist atomIdx1 atomIdx2 atomIdx3 atomIdx4 sumDistValue`：限制R(1,2)+R(3,4) 两个键长之和为固定值
 - `DifDist atomIdx1 atomIdx2 atomIdx3 atomIdx4 difDistValue`：限制R(1,2)-R(3,4) 两个键长之差为固定值
 
-## `All`
+### `All`
 
 - `Distance`为特定原子对来设定约束，如果想固定某种键或者键角：
 
@@ -297,7 +344,7 @@ Constraints
 End
 ```
 
-## 区域约束
+### 区域约束
 
 - `BlockAtoms [atomIdx1 ... atomIdxN]`：冻结这个原子块的所有内部自由度
 

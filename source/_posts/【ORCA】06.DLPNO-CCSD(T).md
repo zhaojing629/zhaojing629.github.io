@@ -1,7 +1,7 @@
 ---
-title: 【ORCA】DLPNO-CCSD(T)
+title: 【ORCA】06.DLPNO-CCSD(T)
 date: 2020-05-29 16:20:02
-typora-root-url: 【ORCA】DLPNO-CCSD(T)
+typora-root-url: 【ORCA】06.DLPNO-CCSD(T)
 mathjax: true
 updated:
 tags: [ORCA, DLPNO]
