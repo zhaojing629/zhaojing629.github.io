@@ -305,7 +305,22 @@
   <entry>
     <title>NBO</title>
     <url>/2020/11/27/NBO/</url>
-    <content><![CDATA[<h1 id="运行方式"><a href="#运行方式" class="headerlink" title="运行方式"></a>运行方式</h1><h2 id="在Gaussian软件中运行"><a href="#在Gaussian软件中运行" class="headerlink" title="在Gaussian软件中运行"></a>在Gaussian软件中运行</h2><h3 id="Gaussian内置的NBO3-1"><a href="#Gaussian内置的NBO3-1" class="headerlink" title="Gaussian内置的NBO3.1"></a>Gaussian内置的NBO3.1</h3><p>在高斯关键词部分写入：</p>
+    <content><![CDATA[<h1 id="安装方式"><a href="#安装方式" class="headerlink" title="安装方式"></a>安装方式</h1><h2 id="Linux下NBO6-0"><a href="#Linux下NBO6-0" class="headerlink" title="Linux下NBO6.0"></a>Linux下NBO6.0</h2><ol>
+<li><p>将NBO6压缩包解压到xxx目录下</p>
+</li>
+<li><p>在~/.bashrc中加入：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">PATH</span>=XXX/nbo6/bin/:$PATH</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>把xxx/nbo6/bin/gaunbo6中</p>
+<ul>
+<li><code>steenv GAUNBO</code>后面的内容改成<code>g09nbo</code>或者<code>g16nbo</code></li>
+<li><code>steenv BINDIR</code>改成XXX/nbo6/bin/</li>
+</ul>
+</li>
+<li><p>重新进入终端即可</p>
+</li>
+</ol>
+<h1 id="运行方式"><a href="#运行方式" class="headerlink" title="运行方式"></a>运行方式</h1><h2 id="在Gaussian软件中运行"><a href="#在Gaussian软件中运行" class="headerlink" title="在Gaussian软件中运行"></a>在Gaussian软件中运行</h2><h3 id="Gaussian内置的NBO3-1"><a href="#Gaussian内置的NBO3-1" class="headerlink" title="Gaussian内置的NBO3.1"></a>Gaussian内置的NBO3.1</h3><p>在高斯关键词部分写入：</p>
 <ul>
 <li><code>pop=NPA</code>：做Natural Population Analysis （NPA）分析</li>
 <li><code>pop=NBO</code>：做NPA和NBO分析</li>
@@ -332,7 +347,7 @@
 <li>然后直接在Gaussian输入文件中使用诸如<code>Pop=NPA6</code>，<code>Pop=NBO6</code>， <code>Pop=NBO6Read</code>和<code>Pop=NBO6Delete</code>，<code>pop=(nbo6,savenlmos)</code>，<code>pop=(nbo6,savenbos)</code>等关键词调用（如果是NBO7，将6改成7即可）</li>
 </ul>
 <h3 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h3><ul>
-<li><p>计算NBO中的WBI键级，产生输出文件，计算AdNDP所需要的log文件，保存NLMO轨道：</p>
+<li><p>计算NBO中的<strong>WBI键级</strong>，产生输出文件，计算<strong>AdNDP</strong>所需要的log文件，保存<strong>NLMO</strong>轨道：</p>
 <figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="comment"># pop(nbo6read,savenlmos)</span></span><br><span class="line"></span><br><span class="line"><span class="variable">$NBO</span> bndidx archive DMNAO AONAO <span class="attribute">File</span>=XXX  <span class="variable">$END</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>计算AdNDP所需要的log文件：</p>
@@ -342,7 +357,7 @@
 <figure class="highlight lisp"><table><tr><td class="code"><pre><span class="line"># pop=(<span class="name">nbo6</span>,savenlmos)</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>PIO中需要的：</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="comment">#pop=nbo6read</span></span><br><span class="line"></span><br><span class="line"><span class="variable">$NBO</span> <span class="attribute">AONAO</span>=W49 <span class="attribute">FNAO</span>=W49 <span class="attribute">DMNAO</span>=W49 SKIPBO <span class="attribute">file</span>=UCCe@C72_b3lyp_pio_C2_0_res  <span class="variable">$END</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="comment">#pop=nbo6read</span></span><br><span class="line"></span><br><span class="line"><span class="variable">$NBO</span> <span class="attribute">AONAO</span>=W49 <span class="attribute">FNAO</span>=W49 <span class="attribute">DMNAO</span>=W49 SKIPBO <span class="attribute">file</span>=XXXX  <span class="variable">$END</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h2 id="orca中的NBO"><a href="#orca中的NBO" class="headerlink" title="orca中的NBO"></a>orca中的NBO</h2><ul>
@@ -532,7 +547,7 @@
 <li><p>开壳层，通过一下命令检查，会出现SPIN出现的行数，会发现默认顺序是aabb，正确的顺序应该是abab</p>
 <figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">grep</span> -n <span class="string">&#x27;SPIN&#x27;</span> XXX.<span class="number">49</span></span><br></pre></td></tr></table></figure>
 <p><img src="clipboard.png" alt="img"></p>
-<p><img src="166a906be971e8d3d3b304cee0da821.png" alt="img" style="zoom: 50%;" /></p>
+<p><img src="PI166a906be971e8d3d3b304cee0da821.png" alt="img" style="zoom: 50%;" /></p>
 <p><img src="ffc0c86714dea564d2a80ceeec2bfc1.png" alt="img" style="zoom:50%;" /></p>
 <p><img src="a91083a05da311f08735a5273b29fd7.png" alt="img" style="zoom:54%;" /></p>
 <p><img src="0178a4c2a265eed33bf7da46e8737d8.png" alt="img" style="zoom:54%;" /></p>
@@ -958,28 +973,42 @@
 <li><p>提高<code>Engine ADF</code>中<code>NumericalQuality</code>的精度</p>
 </li>
 </ul>
-<h1 id="限制性几何优化Constraints"><a href="#限制性几何优化Constraints" class="headerlink" title="限制性几何优化Constraints"></a>限制性几何优化<code>Constraints</code></h1><blockquote>
-<p>ADF2019中可以直接使用<code>Constraints</code>块</p>
-<figure class="highlight puppet"><table><tr><td class="code"><pre><span class="line">CONSTRAINTS</span><br><span class="line">  ATOM <span class="keyword">Ia1</span> &#123;Xa1 Ya1 Za1&#125;</span><br><span class="line">  <span class="keyword">COORD</span> <span class="keyword">Ia1</span> <span class="keyword">Icoord</span> &#123;valcoord&#125;</span><br><span class="line">  <span class="keyword">DIST</span> <span class="keyword">Ia1</span> <span class="keyword">Ia2</span> <span class="keyword">Ra</span></span><br><span class="line">  <span class="keyword">ANGLE</span> <span class="keyword">Ib1</span> <span class="keyword">Ib2</span> <span class="keyword">Ib3</span> <span class="keyword">Rb</span></span><br><span class="line">  <span class="keyword">DIHED</span> <span class="keyword">Ic1</span> <span class="keyword">Ic2</span> <span class="keyword">Ic3</span> <span class="keyword">Ic4</span> <span class="keyword">Rc</span></span><br><span class="line">  <span class="keyword">SUMDIST</span> <span class="keyword">Ic1</span> <span class="keyword">Ic2</span> <span class="keyword">Ic3</span> <span class="keyword">Ic4</span> <span class="keyword">Rc</span></span><br><span class="line">  <span class="keyword">DIFDIST</span> <span class="keyword">Ic1</span> <span class="keyword">Ic2</span> <span class="keyword">Ic3</span> <span class="keyword">Ic4</span> <span class="keyword">Rc</span></span><br><span class="line">  <span class="keyword">BLOCK</span> <span class="keyword">bname</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-</blockquote>
+<h1 id="限制性几何优化Constraints"><a href="#限制性几何优化Constraints" class="headerlink" title="限制性几何优化Constraints"></a>限制性几何优化<code>Constraints</code></h1><h2 id="ADF19"><a href="#ADF19" class="headerlink" title="ADF19"></a>ADF19</h2><ul>
+<li><p><code>RESTRAINT</code>：在约束条件下，为了满足约束条件，势能中加入了一个势能，这意味着约束条件不一定要完全满足。例如，我们可以从几何优化运行中的一个几何体开始，其中的约束不被满足。</p>
+</li>
+<li><p><code>Constraints</code>：在几何优化的每一步，受限坐标的值应该与预定的固定值完全匹配。</p>
 <ul>
+<li><p>ATOM、COORD、DIST、ANGLE和DIHED约束不需要在几何优化开始时满足。ATOM和COORD约束只能在直角坐标优化中使用，而所有其他约束只能用于离域坐标。</p>
+<figure class="highlight ada"><table><tr><td class="code"><pre><span class="line">GEOMETRY</span><br><span class="line"> OPTIM CARTESIAN</span><br><span class="line"><span class="keyword">END</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="RESTRAINT"><a href="#RESTRAINT" class="headerlink" title="RESTRAINT"></a>RESTRAINT</h3><figure class="highlight puppet"><table><tr><td class="code"><pre><span class="line">RESTRAINT</span><br><span class="line">  DIST Ia1 Ia2 <span class="keyword">Ra</span> &#123;[Aa] [Ba]&#125;</span><br><span class="line">  <span class="keyword">ANGLE</span> <span class="keyword">Ib1</span> <span class="keyword">Ib2</span> <span class="keyword">Ib3</span> <span class="keyword">Rb</span> &#123;[Ab] [Bb]&#125;</span><br><span class="line">  <span class="keyword">DIHED</span> <span class="keyword">Ic1</span> <span class="keyword">Ic2</span> <span class="keyword">Ic3</span> <span class="keyword">Ic4</span> <span class="keyword">Rc</span> &#123;[Ac] [Bc]&#125;</span><br><span class="line">  <span class="keyword">DD</span> <span class="keyword">Id1</span> <span class="keyword">Id2</span> <span class="keyword">Id3</span> <span class="keyword">Id4</span> <span class="keyword">R0</span> [&#123;Ad&#125; &#123;Bd&#125;]</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h3 id="Constraints"><a href="#Constraints" class="headerlink" title="Constraints"></a>Constraints</h3><figure class="highlight puppet"><table><tr><td class="code"><pre><span class="line">CONSTRAINTS</span><br><span class="line">  ATOM <span class="keyword">Ia1</span> &#123;Xa1 Ya1 Za1&#125;</span><br><span class="line">  <span class="keyword">COORD</span> <span class="keyword">Ia1</span> <span class="keyword">Icoord</span> &#123;valcoord&#125;</span><br><span class="line">  <span class="keyword">DIST</span> <span class="keyword">Ia1</span> <span class="keyword">Ia2</span> <span class="keyword">Ra</span></span><br><span class="line">  <span class="keyword">ANGLE</span> <span class="keyword">Ib1</span> <span class="keyword">Ib2</span> <span class="keyword">Ib3</span> <span class="keyword">Rb</span></span><br><span class="line">  <span class="keyword">DIHED</span> <span class="keyword">Ic1</span> <span class="keyword">Ic2</span> <span class="keyword">Ic3</span> <span class="keyword">Ic4</span> <span class="keyword">Rc</span></span><br><span class="line">  <span class="keyword">SUMDIST</span> <span class="keyword">Ic1</span> <span class="keyword">Ic2</span> <span class="keyword">Ic3</span> <span class="keyword">Ic4</span> <span class="keyword">Rc</span></span><br><span class="line">  <span class="keyword">DIFDIST</span> <span class="keyword">Ic1</span> <span class="keyword">Ic2</span> <span class="keyword">Ic3</span> <span class="keyword">Ic4</span> <span class="keyword">Rc</span></span><br><span class="line">  <span class="keyword">BLOCK</span> <span class="keyword">bname</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>block用法：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">ATOMS</span></span><br><span class="line">  <span class="attribute">1</span>.C        -<span class="number">0</span>.<span class="number">004115</span>   -<span class="number">0</span>.<span class="number">000021</span>    <span class="number">0</span>.<span class="number">000023</span> b=b<span class="number">1</span></span><br><span class="line">  <span class="attribute">2</span>.C         <span class="number">1</span>.<span class="number">535711</span>    <span class="number">0</span>.<span class="number">000022</span>    <span class="number">0</span>.<span class="number">000008</span> b=b<span class="number">2</span></span><br><span class="line">  <span class="attribute">3</span>.H        -<span class="number">0</span>.<span class="number">399693</span>    <span class="number">1</span>.<span class="number">027812</span>   -<span class="number">0</span>.<span class="number">000082</span> b=b<span class="number">1</span></span><br><span class="line">  <span class="attribute">4</span>.H        -<span class="number">0</span>.<span class="number">399745</span>   -<span class="number">0</span>.<span class="number">513934</span>    <span class="number">0</span>.<span class="number">890139</span> b=b<span class="number">1</span></span><br><span class="line">  <span class="attribute">5</span>.H        -<span class="number">0</span>.<span class="number">399612</span>   -<span class="number">0</span>.<span class="number">513952</span>   -<span class="number">0</span>.<span class="number">890156</span> b=b<span class="number">1</span></span><br><span class="line">  <span class="attribute">6</span>.H         <span class="number">1</span>.<span class="number">931188</span>    <span class="number">0</span>.<span class="number">514066</span>    <span class="number">0</span>.<span class="number">890140</span> b=b<span class="number">2</span></span><br><span class="line">  <span class="attribute">7</span>.H         <span class="number">1</span>.<span class="number">931432</span>    <span class="number">0</span>.<span class="number">513819</span>   -<span class="number">0</span>.<span class="number">890121</span> b=b<span class="number">2</span></span><br><span class="line">  <span class="attribute">8</span>.H         <span class="number">1</span>.<span class="number">931281</span>   -<span class="number">1</span>.<span class="number">027824</span>    <span class="number">0</span>.<span class="number">000244</span> b=b<span class="number">2</span></span><br><span class="line"><span class="attribute">END</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">CONSTRAINTS</span></span><br><span class="line">  <span class="attribute">BLOCK</span> b<span class="number">1</span></span><br><span class="line">  <span class="attribute">BLOCK</span> b<span class="number">2</span></span><br><span class="line"><span class="attribute">END</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="AMS"><a href="#AMS" class="headerlink" title="AMS"></a>AMS</h2><ul>
 <li>在计算开始时，不需要满足约束条件。</li>
 </ul>
 <figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">Constraints</span><br><span class="line">   Atom <span class="built_in">int</span>eger</span><br><span class="line">   AtomList <span class="built_in">int</span>eger_list</span><br><span class="line">   FixedRegion <span class="built_in">string</span></span><br><span class="line">   Coordinate <span class="built_in">int</span>eger [x|y|z] <span class="built_in">float</span>?</span><br><span class="line">   Distance (<span class="built_in">int</span>eger)&#123;<span class="number">2</span>&#125; <span class="built_in">float</span></span><br><span class="line">   All ... [Bonds|Triangles] ...</span><br><span class="line">   Angle (<span class="built_in">int</span>eger)&#123;<span class="number">3</span>&#125; <span class="built_in">float</span></span><br><span class="line">   Dihedral (<span class="built_in">int</span>eger)&#123;<span class="number">4</span>&#125; <span class="built_in">float</span></span><br><span class="line">   SumDist (<span class="built_in">int</span>eger)&#123;<span class="number">4</span>&#125; <span class="built_in">float</span></span><br><span class="line">   DifDist (<span class="built_in">int</span>eger)&#123;<span class="number">4</span>&#125; <span class="built_in">float</span></span><br><span class="line">   BlockAtoms <span class="built_in">int</span>eger_list</span><br><span class="line">   Block <span class="built_in">string</span></span><br><span class="line">   FreezeStrain [xx] [xy] [xz] [yy] [yz] [zz]</span><br><span class="line">   EqualStrain  [xx] [xy] [xz] [yy] [yz] [zz]</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
-<h2 id="固定原子"><a href="#固定原子" class="headerlink" title="固定原子"></a>固定原子</h2><ul>
+<h3 id="固定原子"><a href="#固定原子" class="headerlink" title="固定原子"></a>固定原子</h3><ul>
 <li><code>Atom atomIdx</code>：用<code>System%Atoms</code>块中给出的索引<code>atomIdx</code>将原子固定在初始位置，如那样</li>
 <li><code>AtomList [atomIdx1 .. atomIdxN]</code>：固定列表中所有原子的初始位置</li>
 <li><code>FixedRegion regionName</code>：通过region的方法来指定固定原子块</li>
 <li><code>Coordinate atomIdx [x|y|z] coordValue</code>：用原子序号固定原子使其具有<code>coordValue</code>的笛卡尔坐标，如果<code>coordValue</code>缺失，就固定为初始值。</li>
 </ul>
-<h2 id="内自由度"><a href="#内自由度" class="headerlink" title="内自由度"></a>内自由度</h2><ul>
+<h3 id="内自由度"><a href="#内自由度" class="headerlink" title="内自由度"></a>内自由度</h3><ul>
 <li><code>Distance atomIdx1 atomIdx2 distValue</code>：键长</li>
 <li><code>Angle atomIdx1 atomIdx2 atomIdx3 angleValue</code>：键角</li>
 <li><code>Dihedral atomIdx1 atomIdx2 atomIdx3 atomIdx4 dihedValue</code>：二面角</li>
 <li><code>SumDist atomIdx1 atomIdx2 atomIdx3 atomIdx4 sumDistValue</code>：限制R(1,2)+R(3,4) 两个键长之和为固定值</li>
 <li><code>DifDist atomIdx1 atomIdx2 atomIdx3 atomIdx4 difDistValue</code>：限制R(1,2)-R(3,4) 两个键长之差为固定值</li>
 </ul>
-<h2 id="All"><a href="#All" class="headerlink" title="All"></a><code>All</code></h2><ul>
+<h3 id="All"><a href="#All" class="headerlink" title="All"></a><code>All</code></h3><ul>
 <li><p><code>Distance</code>为特定原子对来设定约束，如果想固定某种键或者键角：</p>
 <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">All</span><span class="meta"> [bondOrder] bonds at1 at2 [to distance]</span></span><br><span class="line"><span class="attribute">All</span> triangles at<span class="number">1</span> at<span class="number">2</span> at<span class="number">3</span></span><br></pre></td></tr></table></figure>
 <ul>
@@ -992,7 +1021,7 @@
 </li>
 </ul>
 <figure class="highlight mathematica"><table><tr><td class="code"><pre><span class="line">Constraints</span><br><span class="line">   <span class="keyword">All</span> single bonds <span class="keyword">C</span> <span class="keyword">C</span> to <span class="number">1.4</span></span><br><span class="line">   <span class="keyword">All</span> bonds H *</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
-<h2 id="区域约束"><a href="#区域约束" class="headerlink" title="区域约束"></a>区域约束</h2><ul>
+<h3 id="区域约束"><a href="#区域约束" class="headerlink" title="区域约束"></a>区域约束</h3><ul>
 <li><p><code>BlockAtoms [atomIdx1 ... atomIdxN]</code>：冻结这个原子块的所有内部自由度</p>
 </li>
 <li><p><code>Block regionName</code>：为Sy<code>stem% atoms</code>块中定义的区域中的所有原子创建一个块约束，如：</p>
@@ -1419,7 +1448,12 @@
   <entry>
     <title>【Gaussian】01.基础知识</title>
     <url>/2019/09/03/%E3%80%90Gaussian%E3%80%9101.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
-    <content><![CDATA[<h1 id="输入文件基本格式"><a href="#输入文件基本格式" class="headerlink" title="输入文件基本格式"></a>输入文件基本格式</h1><h1 id="坐标的输入"><a href="#坐标的输入" class="headerlink" title="坐标的输入"></a>坐标的输入</h1><ul>
+    <content><![CDATA[<h1 id="输入文件基本格式"><a href="#输入文件基本格式" class="headerlink" title="输入文件基本格式"></a>输入文件基本格式</h1><h1 id="闭壳层与开壳层体系SCF计算"><a href="#闭壳层与开壳层体系SCF计算" class="headerlink" title="闭壳层与开壳层体系SCF计算"></a>闭壳层与开壳层体系SCF计算</h1><p><img src="/image-20221107191726335.png" alt="image-20221107191726335"></p>
+<ul>
+<li>在Gaussian中，对于多重度不为1的体系，即使在关键词中只写hf，程序也会自动进行UHF计算。</li>
+<li>如果在关键词一行只写上uhf，则往往这时候的结果会与RHF相同，最终给出的<code>&lt;S**2&gt;</code>和S值均为0，没有自旋污染，说明此时得到的就是RHF解。解决方法是加入guess=mix关键词，用以强制混合HOMO和LUMO，以破坏α-β和空间对称性。</li>
+</ul>
+<h1 id="坐标的输入"><a href="#坐标的输入" class="headerlink" title="坐标的输入"></a>坐标的输入</h1><ul>
 <li><code>geom=check</code>：输入结构从chk中读取，输入文件里此时不能写坐标</li>
 <li><code>geom=allcheck</code>：标题段落、电荷、自旋多重度、坐标都从chk中读取。输入文件里此时不能写坐标多重度等，关键词后面空行直接跟指定的基组或者为空。</li>
 </ul>
@@ -1432,6 +1466,11 @@
 <figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">formchk</span> <span class="selector-tag">xxx</span><span class="selector-class">.chk</span> <span class="selector-tag">xxx</span><span class="selector-class">.fchk</span></span><br><span class="line"><span class="selector-tag">formchk</span> <span class="selector-tag">xxx</span><span class="selector-class">.chk</span> <span class="selector-id">#y</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+</li>
+</ul>
+<ul>
+<li><p>将修改后的fchk转回chk文件</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">unfchk</span> h<span class="number">2</span>_uhf_only.fchk h<span class="number">2</span>_uhf_only.chk</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h1 id="电子能量读取"><a href="#电子能量读取" class="headerlink" title="电子能量读取"></a>电子能量读取</h1><ul>
@@ -1522,7 +1561,7 @@
 <li><code>DIIS</code>：迭代子空间中直接求逆。在迭代子空间 (DIIS) 外推方法中使用 Pulay 的直接反演 。默认的加速SCF收敛的方法。使用<code>NoDIIS</code>关闭。</li>
 <li><code>Fermi</code>：默认是<code>NoFermi</code>关闭。使用Fermi展宽时，此时默认也会择情自动使用能级移动和阻尼。</li>
 </ul>
-<h1 id="初猜guess"><a href="#初猜guess" class="headerlink" title="初猜guess="></a>初猜<code>guess=</code></h1><h2 id="算法相关-1"><a href="#算法相关-1" class="headerlink" title="算法相关"></a>算法相关</h2><ul>
+<h1 id="初猜guess"><a href="#初猜guess" class="headerlink" title="初猜guess="></a>初猜<code>guess=</code></h1><h2 id="算法相关选项"><a href="#算法相关选项" class="headerlink" title="算法相关选项"></a>算法相关选项</h2><ul>
 <li><code>Harris</code>：使用Harris泛函的DFT方法的结果作为初猜。是所有HF和DFT的默认方法。通过自由原子密度叠加作为分子电子密度来构建KS算符，然后将变分得到的轨道用做后续计算的初猜，这步只做一次而不像普通DFT方法继续做迭代。</li>
 <li><code>Huckel</code>：扩展Huckel方法，也不需要迭代。是一些半经验方法（CNDO、INDO、MNDO 和 MINDO3 ）的初猜默认设置。对于涉及许多第二行原子的 PM6 计算，应考虑 Huckel 猜测。 </li>
 <li><code>INDO</code>：实指INDO、CNDO、Huckel的混合。第一行为INDO，第二行为CNDO，第三行及以上为Huckel。<ul>
@@ -1531,6 +1570,12 @@
 </li>
 <li><code>Core</code>：将核哈密顿量对角化以形成初始猜测。是一些半经验方法（AM1、PM3、PM3MM、PM6 和 PDDG ）计算的默认设置。初始的Fock矩阵元只含单电子项而不含双电子项，即密度矩阵用空矩阵，比较粗糙。</li>
 <li><code>AM1</code>：进行AM1计算作为初猜。一般不能直接使用。</li>
+</ul>
+<h2 id="轨道相关选项"><a href="#轨道相关选项" class="headerlink" title="轨道相关选项"></a>轨道相关选项</h2><ul>
+<li><code>Mix</code>：HOMO和LUMO混合，以破坏α-β和空间对称性。只有在产生复杂的初始猜测时，才默认进行。<code>NoMix</code>指不混合。</li>
+</ul>
+<h2 id="程序选项"><a href="#程序选项" class="headerlink" title="程序选项"></a>程序选项</h2><ul>
+<li><code>Only</code>：在计算和打印初始猜测后终止计算。</li>
 </ul>
 <h2 id="读取波函数作为初猜"><a href="#读取波函数作为初猜" class="headerlink" title="读取波函数作为初猜"></a>读取波函数作为初猜</h2><p><code>guess=read</code>可以从chk文件中读取波函数作为初猜。</p>
 <ul>
@@ -1645,7 +1690,7 @@
 </li>
 </ul>
 <h2 id="批量脚本"><a href="#批量脚本" class="headerlink" title="批量脚本"></a>批量脚本</h2><p>将上述方法都试一下的脚本，先新建一个文件夹，在其中存在.gjf和.sub文件，.gjf部分写入<code># SCF</code></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mkdir 01_novaracc_noincfock 02_vshift300 03_vshift400 04_vshift500 05_huckel 06_INDO 07_QC 08_XQC 09_Fermi 10_NODIIS 11_mix</span><br><span class="line"></span><br><span class="line">for i in 01 02 03 04 05 06 07 08 09 10 11; do cp 00_noconv/*gjf 00_noconv/g16* $&#123;i&#125;* ;done</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(novaracc,noincfock,maxcyc=300\) /&#x27; 01_novaracc_noincfock/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(vshift=300,maxcyc=300\) /&#x27; 02_vshift300/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(vshift=400,maxcyc=300\) /&#x27; 03_vshift400/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(vshift=500,maxcyc=300\) /&#x27; 04_vshift500/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300\) guess=huckel /&#x27; 05_huckel/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300\) guess=INDO /&#x27; 06_INDO/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF=QC /&#x27; 07_QC/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF=XQC /&#x27; 08_XQC/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300,Fermi\) /&#x27; 09_Fermi/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300,NODIIS\) /&#x27; 10_NODIIS/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300\) guess=mix /&#x27; 11_mix/*gjf</span><br><span class="line"></span><br><span class="line">for i in 01 02 03 04 05 06 07 08 09 10 11; do cd $&#123;i&#125;* qsub g16*; cd ..; done </span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mkdir 01_novaracc_noincfock 02_vshift300 03_vshift400 04_vshift500 05_huckel 06_INDO 07_QC 08_XQC 09_Fermi 10_NODIIS 11_mix</span><br><span class="line"></span><br><span class="line">for i in 01 02 03 04 05 06 07 08 09 10 11; do cp 00_*/*gjf 00_*/g16* $&#123;i&#125;* ;done</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(novaracc,noincfock,maxcyc=300\) /&#x27; 01_novaracc_noincfock/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(vshift=300,maxcyc=300\) /&#x27; 02_vshift300/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(vshift=400,maxcyc=300\) /&#x27; 03_vshift400/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(vshift=500,maxcyc=300\) /&#x27; 04_vshift500/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300\) guess=huckel /&#x27; 05_huckel/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300\) guess=INDO /&#x27; 06_INDO/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF=QC /&#x27; 07_QC/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF=XQC /&#x27; 08_XQC/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300,Fermi\) /&#x27; 09_Fermi/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300,NODIIS\) /&#x27; 10_NODIIS/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300\) guess=mix /&#x27; 11_mix/*gjf</span><br><span class="line"></span><br><span class="line">for i in 01 02 03 04 05 06 07 08 09 10 11; do cd $&#123;i&#125;*; qsub g16*; cd ..; done </span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>计算化学</category>
@@ -2311,7 +2356,7 @@
 <li><a href="https://mp.weixin.qq.com/s/bM244EiyhsYKwW5i8wq0TQ">自动做多参考态计算的程序MOKIT</a></li>
 <li><a href="https://mp.weixin.qq.com/s?__biz=MzU5NjMxNjkzMw==&amp;mid=2247483886&amp;idx=1&amp;sn=c06c747a0c473e0f1928b6f10f139051&amp;chksm=fe65c784c9124e92d52b88b122acbec5439fe155ad6cbe2b7a902223387502dbbdae663e19aa&amp;scene=21#wechat_redirect">GAMESS编译教程</a></li>
 </ul>
-<h1 id="MOKIT编译"><a href="#MOKIT编译" class="headerlink" title="MOKIT编译"></a>MOKIT编译</h1><ol>
+<h1 id="MOKIT编译"><a href="#MOKIT编译" class="headerlink" title="MOKIT编译"></a>MOKIT编译</h1><h2 id="方式1"><a href="#方式1" class="headerlink" title="方式1"></a>方式1</h2><ol>
 <li><p><a href="https://gitlab.com/jxzou/mokit">下载</a>MOKIT整个源码压缩包，在Linux系统下的安装目录解压，重命名</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">unzip mokit-master.zip</span><br><span class="line">mv mokit-master mokit</span><br></pre></td></tr></table></figure>
 </li>
@@ -2339,6 +2384,11 @@
 <figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">chmod</span> +<span class="selector-tag">x</span> <span class="selector-tag">mokit</span><span class="selector-class">.sub</span></span><br><span class="line"><span class="selector-tag">mokit</span><span class="selector-class">.sub</span> <span class="selector-tag">xxxx</span><span class="selector-class">.gjf</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
+<h2 id="方式2-conda-联网安装"><a href="#方式2-conda-联网安装" class="headerlink" title="方式2 conda 联网安装"></a>方式2 conda 联网安装</h2><figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">conda</span> create -n mokit-py<span class="number">37</span> python=<span class="number">3</span>.<span class="number">7</span> # <span class="number">3</span>.<span class="number">8</span>, <span class="number">3</span>.<span class="number">9</span> are also available</span><br><span class="line"><span class="attribute">conda</span> activate mokit-py<span class="number">37</span></span><br><span class="line"><span class="attribute">conda</span> install mokit -c mokit</span><br></pre></td></tr></table></figure>
+<p>可能会报错</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">Solving <span class="attr">environment:</span> failed</span><br><span class="line"></span><br><span class="line"><span class="attr">PackagesNotFoundError:</span> The following packages are not available from current <span class="attr">channels:</span></span><br></pre></td></tr></table></figure>
+<p>额外使用一句</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">conda<span class="built_in"> config </span>--append channels conda-forge</span><br><span class="line">conda install mokit -c mokit</span><br></pre></td></tr></table></figure>
 <h1 id="GAMESS编译"><a href="#GAMESS编译" class="headerlink" title="GAMESS编译"></a>GAMESS编译</h1><ol>
 <li><p><a href="http://bbs.keinsci.com/thread-727-1-1.html">下载gamess的安装包</a>，解压到安装目录文件下</p>
 <figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">tar</span> <span class="selector-tag">-zxvf</span> <span class="selector-tag">gamess-current</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></span><br></pre></td></tr></table></figure>
@@ -2589,13 +2639,22 @@
 </li>
 </ul>
 <h1 id="用Gaussian的输出转换为初猜文件gbw"><a href="#用Gaussian的输出转换为初猜文件gbw" class="headerlink" title="用Gaussian的输出转换为初猜文件gbw"></a>用Gaussian的输出转换为初猜文件gbw</h1><ul>
-<li>先用高斯进行计算：<ul>
-<li>确保Gaussian里用的基组和ORCA里精确一致。</li>
-<li>Gaussian计算时候加上<code>nosymm</code>关键词避免摆到标准朝向下</li>
-<li><code>int=NoBasisTransform</code>关键词避免去掉任何primitive GTF，即基组原始怎么定义的就怎么用。</li>
+<li><p>先用高斯进行计算：</p>
+<ul>
+<li><p>确保Gaussian里用的基组和ORCA里精确一致。</p>
+<ul>
+<li>Gaussian里用6-31G系列基组时，默认是用笛卡尔型d基函数，而ORCA总是用球谐型基函数，因此Gaussian计算时要写<code>5d</code>关键词</li>
 </ul>
 </li>
-<li>用formchk将chk转换为fch，载入Multiwfn后依次输入</li>
+<li><p>Gaussian计算时候加上<code>nosymm</code>关键词避免摆到标准朝向下</p>
+</li>
+<li><p><code>int=NoBasisTransform</code>关键词避免去掉任何primitive GTF，即基组原始怎么定义的就怎么用。</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"># <span class="number">5</span>d nosymm <span class="built_in">int</span>=NoBasisTransform </span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>用formchk将chk转换为fch，载入Multiwfn后依次输入</p>
+</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">100  //其它功能 Part 1</span><br><span class="line">2   //导出文件</span><br><span class="line">9   //导出mkl文件</span><br><span class="line">y   //表明产生的mkl文件是给ORCA当初猜用，程序会做特殊处理</span><br><span class="line">XXX.mkl</span><br></pre></td></tr></table></figure>
 <ul>
@@ -2623,70 +2682,6 @@
       <tags>
         <tag>ORCA</tag>
         <tag>初猜</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【ORCA】DLPNO-CCSD(T)</title>
-    <url>/2020/05/29/%E3%80%90ORCA%E3%80%91DLPNO-CCSD(T)/</url>
-    <content><![CDATA[<ul>
-<li>DLPNO-CCSD(T)是一种基于局域轨道的近似CCSD(T)方法，其所得相关能与标准CCSD(T)的相关能比值可达99.9%以上，误差可控制在1 kcal/mol。在平时的计算中，需要用高精度方法的电子能量时，如果体系较大，无法做标准CCSD(T)计算，可以考虑使用ORCA的DLPNO-CCSD(T)方法。</li>
-</ul>
-<p>输入文件例子：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">%pal nprocs <span class="number">16</span> end</span><br><span class="line">%maxcore <span class="number">28000</span></span><br><span class="line">! def2-TZVP def2-TZVP/C DLPNO-CCSD(T) TightSCF tightPNO</span><br><span class="line">* xyz <span class="number">0</span> <span class="number">1</span></span><br><span class="line">体系xyz坐标</span><br><span class="line">*</span><br></pre></td></tr></table></figure>
-<h1 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h1><ul>
-<li>一般使用的核数比较小，因为DLPNO-CCSD(T)比较消耗内存</li>
-<li><code>%maxcore</code>×<code>%pal</code>要小于总内存（大约是orca.sub中指定的节点数*4）</li>
-<li>对硬盘的空间大小要求不是很高，但是对硬盘的读写性能要求很高，如果用SSD就会提升很多计算速度</li>
-</ul>
-<h1 id="基组"><a href="#基组" class="headerlink" title="基组"></a>基组</h1><ul>
-<li><p>LPNO必须使用RI近似，因此必须提供<strong>相关拟合</strong>的基组。比如：def2-SVP/C, def2-TZVP/C, def2-TZVPP/C, def2-QZVPP/C, cc-pVnZ/C, aug-cc-pVnZ/C (n=D,T,Q,5,6) </p>
-</li>
-<li><p>DLPNO-CCSD(T)的HF计算部分可以用RIJK或者RIJCOSX方法来加速，并指定辅助基组</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">RIJK def2/JK</span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">RIJCOSX def2/J</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="精度控制选项"><a href="#精度控制选项" class="headerlink" title="精度控制选项"></a>精度控制选项</h1><h2 id="tightpno"><a href="#tightpno" class="headerlink" title="tightpno"></a>tightpno</h2><p><code>tightPNO</code>为控制CCSD(T)精度的参数，对应的可选值有<code>LoosePNO</code>、<code>NormalPNO</code>（默认）、<code>TightPNO</code>，一般来说LoosePNO精度不高，尽量选择后两个：</p>
-<ul>
-<li>用NormalPNO的时候精度就已经显著超过PWPB95-D3(BJ)了，相对于CCSD(T)的误差通常在1kcal/mol以内。</li>
-<li>DLPNO-CCSD(T)结合tightPNO的时候，根据J. Chem. Theory Comput., 11, 4054 (2015)的测试（注意此文里有很多在耗时方面的严重误导性说法），与CCSD(T)的误差在1 kJ/mol的程度，几乎可认为没有差别。tightPNO的耗时比NormalPNO通常高几倍。在笔者的Intel 36核机子上，用当前级别计算66个原子的有机体系耗时约8小时，耗硬盘最多时候为120GB。如果你还想要更好的精度，建议将基组提升至cc-pVQZ，但也会贵非常多。如果不用RIJK，即去掉RIJK cc-pVTZ/JK关键词，精度会有所改进，但对较大的体系，SCF部分的耗时会增加许多。</li>
-</ul>
-<h2 id="ccsd-t1"><a href="#ccsd-t1" class="headerlink" title="ccsd(t1)"></a>ccsd(t1)</h2><ul>
-<li>在ORCA 4.2版中，需要注意直接在关键词中写DLPNO-CCSD(T)实际做的是<code>DLPNO-CCSD(T0)</code>计算。所谓T0是指在进行(T)计算时使用semi-canonical (SC) 近似。在局域轨道表象下，分子轨道基的Fock矩阵的非对角元不为0，此时(T)的计算需要迭代求解。<strong>在SC近似下，忽略Fock矩阵的非对角元，不进行迭代求解。</strong></li>
-<li><strong>而不使用SC近似，对(T)部分进行迭代求解</strong>，这部分功能在ORCA中应该写为<code>DLPNO-CCSD(T1)</code>，这样结果与标准CCSD(T)更为接近。在J. Chem. Phys. 148, 011101 (2018)一文中，作者提到，一般在研究相对能量的问题时，使用T0便可以得到很好的结果，而对gap比较小的体系，可能需要T1才能得到准确的结果。</li>
-</ul>
-<h2 id="tcutpno"><a href="#tcutpno" class="headerlink" title="tcutpno"></a>tcutpno</h2><ul>
-<li><p>如果还需要更准，可以修改<code>TCutPNO</code>的具体值。(<code>TCutPNO 3.33e-7</code> 默认)</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">%mdci</span><br><span class="line">	TCutPNO <span class="number">0.0</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>更高精度的话，比如追求CCSD(T)的精度，可以把cutoff都设置为0：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">%mdci</span><br><span class="line">	TCutPNO <span class="number">0.0</span></span><br><span class="line">	TCutDo <span class="number">0.0</span></span><br><span class="line">	TCutTNO <span class="number">0.0</span></span><br><span class="line">	TCutPairs <span class="number">0.0</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-<ul>
-<li>在此基础上还需要用比较大的辅助基组，否则RI对 四个virtual的积分会有比较大的误差。比如用DLPNO-CCSD（T1）/cc-pvdz 希望得到和标准CCSD(T) 一模一样的结果（小数点后第六位一样，单位hartree），除了把cutoff设置为0，还要用cc-pv5z/c作为cc-pvdz的辅助基组</li>
-</ul>
-</li>
-</ul>
-<p>20210130 8核 cc-pvtz 测试B<sub>9</sub><sup>-</sup>结果</p>
-<p><img src="image-20210205164601861.png" alt=""></p>
-<h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><ul>
-<li>通常只拿来算单点</li>
-<li>ccsd(t)没有解析梯度，因此要加上</li>
-</ul>
-<figure class="highlight armasm"><table><tr><td class="code"><pre><span class="line">!<span class="meta">opt</span> numgrad</span><br></pre></td></tr></table></figure>
-<p><img src="clipboard.png" alt=""></p>
-<ul>
-<li><p>计算开壳层时，最好使用UCO</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">! UCO</span><br><span class="line">#是用于绘制UHF波函数的自然轨道，同UNO。</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
-      <tags>
-        <tag>ORCA</tag>
-        <tag>DLPNO</tag>
       </tags>
   </entry>
   <entry>
@@ -4908,7 +4903,7 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">OCCUPATIONS keeporbitals=<span class="number">50</span> <span class="keyword">freeze</span> </span><br><span class="line">OCCUPATIONS keeporbitals=<span class="number">50</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">mkdir</span> <span class="number">01</span>_listi <span class="number">02</span>_listb <span class="number">03</span>_fdiis <span class="number">04</span>_listf <span class="number">05</span>_mesa <span class="number">06</span>_sdiis <span class="number">07</span>_arh <span class="number">08</span>_mix <span class="number">09</span>_shift </span><br><span class="line"></span><br><span class="line"><span class="attribute">for</span> i in <span class="number">01</span> <span class="number">02</span> <span class="number">03</span> <span class="number">04</span> <span class="number">05</span> <span class="number">06</span> <span class="number">07</span> <span class="number">08</span> <span class="number">09</span> ;do cp <span class="number">00</span>*/*run <span class="number">00</span>*/adf* <span class="variable">$&#123;i&#125;</span>*; done</span><br><span class="line"></span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nAccelerationMethod listi/&#x27; <span class="number">01</span>*/*.run </span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nAccelerationMethod listb/&#x27; <span class="number">02</span>*/*.run </span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nAccelerationMethod fdiis/&#x27; <span class="number">03</span>*/*.run </span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nAccelerationMethod listf/&#x27; <span class="number">04</span>*/*.run</span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nAccelerationMethod mesa/&#x27; <span class="number">05</span>*/*.run</span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nAccelerationMethod sdiis/&#x27; <span class="number">06</span>*/*.run</span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\narh\nend/&#x27; <span class="number">07</span>*/*.run</span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nDIIS\nN <span class="number">25</span>\nCyc <span class="number">30</span>\nEnd\nMixing <span class="number">0</span>.<span class="number">015</span>\n Mixing<span class="number">1</span> <span class="number">0</span>.<span class="number">09</span>/&#x27; <span class="number">08</span>*/*.run</span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nLshift <span class="number">0</span>.<span class="number">01</span>/&#x27; <span class="number">09</span>*/*.run</span><br><span class="line"></span><br><span class="line"><span class="attribute">for</span> i in <span class="number">01</span> <span class="number">02</span> <span class="number">03</span> <span class="number">04</span> <span class="number">05</span> <span class="number">06</span> <span class="number">07</span> <span class="number">08</span> <span class="number">09</span>;do cd <span class="variable">$&#123;i&#125;</span>*; qsub adf*; cd ..; done</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">mkdir</span> <span class="number">01</span>_listi <span class="number">02</span>_listb <span class="number">03</span>_fdiis <span class="number">04</span>_listf <span class="number">05</span>_mesa <span class="number">06</span>_sdiis <span class="number">07</span>_arh <span class="number">08</span>_mix <span class="number">09</span>_shift </span><br><span class="line"></span><br><span class="line"><span class="attribute">for</span> i in <span class="number">01</span> <span class="number">02</span> <span class="number">03</span> <span class="number">04</span> <span class="number">05</span> <span class="number">06</span> <span class="number">07</span> <span class="number">08</span> <span class="number">09</span> ;do cp <span class="number">00</span>*/*run <span class="number">00</span>*/adf* <span class="variable">$&#123;i&#125;</span>*; done</span><br><span class="line"></span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nAccelerationMethod listi/&#x27; <span class="number">01</span>*/*.run </span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nAccelerationMethod listb/&#x27; <span class="number">02</span>*/*.run </span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nAccelerationMethod fdiis/&#x27; <span class="number">03</span>*/*.run </span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nAccelerationMethod listf/&#x27; <span class="number">04</span>*/*.run</span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nAccelerationMethod mesa/&#x27; <span class="number">05</span>*/*.run</span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nAccelerationMethod sdiis/&#x27; <span class="number">06</span>*/*.run</span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\narh\nend/&#x27; <span class="number">07</span>*/*.run</span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nDIIS\nN <span class="number">25</span>\nCyc <span class="number">30</span>\nEnd\nMixing <span class="number">0</span>.<span class="number">015</span>\n Mixing<span class="number">1</span> <span class="number">0</span>.<span class="number">09</span>/&#x27; <span class="number">08</span>*/*.run</span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nLshift <span class="number">0</span>.<span class="number">01</span>/&#x27; <span class="number">09</span>*/*.run</span><br><span class="line"></span><br><span class="line"><span class="attribute">for</span> i in &#123;<span class="number">1</span>..<span class="number">9</span>&#125;;do echo <span class="number">0</span><span class="variable">$&#123;i&#125;</span>*/;cd <span class="number">0</span><span class="variable">$&#123;i&#125;</span>*; qsub adf*; cd ..; done</span><br></pre></td></tr></table></figure>
 <h1 id="对称性的设置"><a href="#对称性的设置" class="headerlink" title="对称性的设置"></a>对称性的设置</h1><p>除了在AMS中<code>System</code>块中指定，<code>Engine ADF</code>中也可以设置对称性：</p>
 <ul>
 <li><code>Symmetry</code>：默认是<code>AUTO</code>，默认为<code>auto</code>，可以通过<code>nosym</code>、<code>C(LIN)</code>……等来指定对称性</li>
@@ -5495,7 +5490,7 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
       </tags>
   </entry>
   <entry>
-    <title>【Jmol】常见的指令</title>
+    <title></title>
     <url>/2021/08/13/%E3%80%90Jmol%E3%80%91%E5%B8%B8%E8%A7%81%E7%9A%84%E6%8C%87%E4%BB%A4/</url>
     <content><![CDATA[<h1 id="background背景"><a href="#background背景" class="headerlink" title="background背景"></a><code>background</code>背景</h1><p>设置背景颜色或者图像。用法：</p>
 <ul>
@@ -7317,7 +7312,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li><code>k</code>，<code>m</code>，<code>g</code>分别为10<sup>3</sup>，10<sup>6</sup>，10<sup>9</sup></li>
 <li><code>K</code>，<code>M</code>，<code>G</code>分别为2<sup>10</sup>，2<sup>20</sup>，2<sup>30</sup> </li>
 </ul>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">#需要<span class="number">1000</span>word的内存</span><br><span class="line">-m <span class="number">1</span>k</span><br><span class="line">#需要<span class="number">1024</span>word的内存</span><br><span class="line">-M <span class="number">1</span>K</span><br></pre></td></tr></table></figure>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">#需要<span class="number">1000</span>word的内存</span><br><span class="line">-m <span class="number">1</span>k</span><br><span class="line">#需要<span class="number">1024</span>word的内存</span><br><span class="line">-M <span class="number">1</span>K</span><br><span class="line"></span><br><span class="line">eg. 一个核<span class="number">1000</span>m对应于<span class="number">7.5</span>G RAM</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <p>用于并行执行的选项（在使用串行MOLPRO时，将忽略这些选项）：</p>
@@ -7359,7 +7354,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li><p>程序通过它们的编号（1到9）可以简单地识别它们。</p>
 </li>
 <li><p>默认是临时文件，用<a href="#file卡"><code>FILE</code>命令</a>可以把计算出的数据作为轨道和能量保存到永久文件中，并在以后的阶段使用它们重启计算，默认的保存路径为$HOME/wfu，可以使用<code>-W</code>修改路径：</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">molpro</span> -W ./ h<span class="number">2</span>o.inp</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">molpro</span> -W ./ h<span class="number">2</span>o.inp #-W指定<span class="number">2</span>-<span class="number">4</span>文件</span><br><span class="line"><span class="attribute">molpro</span> -I ./ h<span class="number">2</span>o.inp #-I指定<span class="number">1</span>积分文件</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>文件类型：</p>
 <ul>
@@ -7460,7 +7455,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <ul>
 <li>算到一半但是没有报错就停止了，可以将.sub文件中并行核数设大一些，比如24，再将molpro中的并行设置-n中的设置小一些。</li>
 </ul>
-<h1 id="file卡"><a href="#file卡" class="headerlink" title="file卡"></a>file卡</h1><p>对所有的永久文件，默认设置是RESTART。所有的临时文件在需要时通常自动分配。I/O缓存分配到动态内存的顶端，缓存的大小会减少可用的内存。因此MEMORY卡必须出现在第一个FILE卡之前。</p>
+<h1 id="file卡"><a href="#file卡" class="headerlink" title="file卡"></a>file卡</h1><p>对所有的永久文件，默认设置是RESTART。所有的临时文件在需要时通常自动分配。I/O缓存分配到动态内存的顶端，缓存的大小会减少可用的内存。<strong>因此MEMORY卡必须出现在第一个FILE卡之前。</strong></p>
 <figure class="highlight fortran"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FILE</span>,<span class="keyword">file</span>,<span class="keyword">name</span>,[<span class="keyword">status</span>]</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>file</code>是逻辑MOLPRO文件序号(1-9)</li>
@@ -7486,6 +7481,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li><p>在大多数情况下，文件1可能非常大(它包含两个电子的积分)，而重新计算积分的成本可能只占总时间的一小部分，因此可以只在输入中只定义文件2，积分会自动重新计算。</p>
 </li>
 </ul>
+<h2 id="重启计算"><a href="#重启计算" class="headerlink" title="重启计算"></a>重启计算</h2><figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">RESTART</span>;  	# 默认，重启所有跟File卡有关的文件</span><br><span class="line"><span class="keyword">RESTART</span>,<span class="number">1</span>; 		#will <span class="keyword">restart</span> file <span class="number">1</span> <span class="keyword">only</span></span><br><span class="line"><span class="keyword">RESTART</span>,<span class="number">2</span>; 		#will <span class="keyword">restart</span> file <span class="number">2</span> <span class="keyword">only</span></span><br><span class="line"><span class="keyword">RESTART</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>; 	#will <span class="keyword">restart</span> files <span class="number">1</span><span class="number">-3</span></span><br><span class="line"><span class="keyword">RESTART</span>,<span class="number">2000.1</span>;	#will <span class="keyword">restart</span> file <span class="number">1</span> <span class="keyword">and</span> <span class="keyword">truncate</span> <span class="keyword">before</span> <span class="type">record</span> <span class="number">2000.</span></span><br></pre></td></tr></table></figure>
 <h1 id="print-gprint-全局打印选项"><a href="#print-gprint-全局打印选项" class="headerlink" title="print/gprint 全局打印选项"></a>print/gprint 全局打印选项</h1><p>通常，有两种打印选项：一种是局部的，由print指令指定，仅在一个作业步骤中使用；一种是全局的，在各个程序以外可以用GPRINT命令设置全局打印选项（g可加可不加，加了可以避免与程序特定的PRINT卡相混淆）。局部打印命令是特定方法输入的一部分，因此必须直接遵循相应的命令。全局打印选项作用于所有后续方法。</p>
 <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">GPRINT</span>,key<span class="number">1</span>[=value<span class="number">1</span>],key<span class="number">2</span>[=value<span class="number">2</span>],. . .</span><br><span class="line"><span class="attribute">NOGPRINT</span>,key<span class="number">1</span>,key<span class="number">2</span>,. . .</span><br></pre></td></tr></table></figure>
 <ul>
@@ -8025,7 +8021,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <figure class="highlight excel"><table><tr><td class="code"><pre><span class="line">grep <span class="string">&quot;text&quot;</span> -<span class="built_in">n</span> file_name</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>显示匹配某个结果之后、之前、前后的3行</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">grep</span> <span class="string">&quot;5&quot;</span> -A <span class="number">3</span></span><br><span class="line"><span class="attribute">grep</span> <span class="string">&quot;5&quot;</span> -B <span class="number">3</span></span><br><span class="line"><span class="attribute">grep</span> <span class="string">&quot;5&quot;</span> -C <span class="number">3</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">grep</span> <span class="string">&quot;5&quot;</span> -A <span class="number">3</span></span><br><span class="line"><span class="keyword">grep</span> <span class="string">&quot;5&quot;</span> -B <span class="number">3</span></span><br><span class="line"><span class="keyword">grep</span> <span class="string">&quot;5&quot;</span> -C <span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i in XXXX; <span class="keyword">do</span> qnodes | qnodes | <span class="keyword">grep</span> /$&#123;i&#125; -B <span class="number">8</span>| <span class="keyword">grep</span> <span class="string">&quot;cu&quot;</span> ; done</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>输出除之外的所有行 -v 选项：</p>
 <figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">grep</span> -v <span class="string">&quot;match_pattern&quot;</span> file_name</span><br></pre></td></tr></table></figure>
@@ -8281,180 +8277,72 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li><p>显示某个目录或文件的大小：</p>
 <figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">du</span> <span class="string">-hs nodedemo/</span></span><br><span class="line"><span class="attr">du</span> <span class="string">-hs ./*</span></span><br></pre></td></tr></table></figure>
 </li>
-</ul>
-<h2 id="ll"><a href="#ll" class="headerlink" title="ll"></a>ll</h2><p>用法与ls相同，但列出信息更详细，包括文件的创建时间、所属对象、权限等等信息</p>
-<h2 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h2><p>List files 于显示指定工作目录下之内容（列出目前工作目录所含之文件及子目录)。</p>
-<h3 id="语法-13"><a href="#语法-13" class="headerlink" title="语法"></a>语法</h3><figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ls</span>（选项）（参数）</span><br></pre></td></tr></table></figure>
-<p>选项：</p>
-<ul>
-<li><code>-l</code>：以长格式显示目录下的内容列表。输出的信息从左到右依次包括文件名，文件类型、权限模式、硬连接数、所有者、组、文件大小和文件的最后修改时间等；</li>
-<li><code>-t</code>：用文件和目录的更改时间排序；</li>
-<li><code>-r</code>：以文件名反序排列并输出目录内容列表；</li>
-<li><code>-R</code>：递归处理，将指定目录下的所有文件及子目录一并处理；</li>
-<li><code>-a</code>：显示所有档案及目录，包括隐藏文件；</li>
-<li><code>-A</code>：显示除影藏文件“.”和“..”以外的所有文件列表；</li>
-<li><code>-F</code>：在每个输出项后追加文件的类型标识符，具体含义：“*”表示具有可执行权限的普通文件，“/”表示目录，“@”表示符号链接，“|”表示命令管道FIFO，“=”表示sockets套接字。当文件为普通文件时，不输出任何标识符；</li>
-<li><code>-m</code>：用“,”号区隔每个文件和目录的名称；</li>
-</ul>
-<h3 id="例子-10"><a href="#例子-10" class="headerlink" title="例子"></a>例子</h3><ul>
-<li><p>列出目前工作目录下所有名称是 s 开头的文件，越新的排越后面 :</p>
-<figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ls</span> -ltr s*</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>将 /bin 目录以下所有目录及文件详细资料列出 :</p>
-<figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ls</span> -lR <span class="string">/bin</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>列出目前工作目录下所有文件及目录；目录于名称后加 “/“, 可执行档于名称后加 “*” :</p>
-<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">ls -AF</span>   </span><br></pre></td></tr></table></figure>
-</li>
-<li><p>水平输出文件列表</p>
-<figure class="highlight crystal"><table><tr><td class="code"><pre><span class="line">$ ls -m</span><br><span class="line">bin, boot, data, dev, etc, home, <span class="class"><span class="keyword">lib</span>, <span class="title">lost</span>+<span class="title">found</span>, <span class="title">media</span>, <span class="title">misc</span>, <span class="title">mnt</span>, <span class="title">opt</span>, <span class="title">proc</span>, <span class="title">root</span>, <span class="title">sbin</span>, <span class="title">selinux</span>, <span class="title">srv</span>, <span class="title">sys</span>, <span class="title">tmp</span>, <span class="title">usr</span>, <span class="title">vark</span></span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>只列出文件夹</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> <span class="operator">-F</span> | grep <span class="string">&#x27;/$&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">ls</span> <span class="literal">-d</span> */</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h2><p>make directory用于创建目录。</p>
-<h3 id="语法-14"><a href="#语法-14" class="headerlink" title="语法"></a>语法</h3><figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">mkdir</span> <span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
-<p>选项：</p>
-<ul>
-<li><p><code>-p</code>：确保目录名称存在，不存在的就建一个。</p>
-</li>
-<li><p><code>-m&lt;目标属性&gt;</code>或<code>--mode&lt;目标属性&gt;</code>建立目录的同时设置目录的权限；</p>
-</li>
-</ul>
-<h3 id="例子-11"><a href="#例子-11" class="headerlink" title="例子"></a>例子</h3><p>在目录<code>/usr/meng</code>下建立子目录<a href="http://man.linuxde.net/test">test</a>，并且只有文件主有读、写和执行权限，其他人无权访问：</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">mkdir -m <span class="number">700</span> <span class="regexp">/usr/m</span>eng/test</span><br></pre></td></tr></table></figure>
-<h2 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h2><p>print work directory 显示出当前工作目录的绝对路径</p>
-<h3 id="语法-15"><a href="#语法-15" class="headerlink" title="语法"></a>语法</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">pwd [<span class="string">--help</span>][<span class="symbol">--version</span>]</span><br></pre></td></tr></table></figure>
-<p>选项：</p>
-<ul>
-<li><code>--help</code> 在线帮助。</li>
-<li><code>--version</code> 显示版本信息。</li>
-</ul>
-<h2 id="rmdir"><a href="#rmdir" class="headerlink" title="rmdir"></a>rmdir</h2><p>Remove Directory从一个目录中删除一个或多个空的子目录</p>
-<h3 id="语法-16"><a href="#语法-16" class="headerlink" title="语法"></a>语法</h3><figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rmdir</span> [-p] dirName</span><br></pre></td></tr></table></figure>
-<p>选项：</p>
-<ul>
-<li><code>-p</code> ：当子目录被删除后使它也成为空目录的话，则顺便一并删除。</li>
-<li><code>-rf</code> ：强制删除</li>
-</ul>
-<h3 id="例子-12"><a href="#例子-12" class="headerlink" title="例子"></a>例子</h3><p>在工作目录下的 BBB 目录中，删除名为 Test 的子目录。若 Test 删除后，BBB 目录成为空目录，则 BBB 亦予删除。</p>
-<figure class="highlight stata"><table><tr><td class="code"><pre><span class="line"><span class="keyword">rmdir</span> -p BBB/<span class="keyword">Test</span></span><br></pre></td></tr></table></figure>
-<h1 id="磁盘维护"><a href="#磁盘维护" class="headerlink" title="磁盘维护"></a>磁盘维护</h1><h1 id="网络通讯"><a href="#网络通讯" class="headerlink" title="网络通讯"></a>网络通讯</h1><h1 id="系统管理"><a href="#系统管理" class="headerlink" title="系统管理"></a>系统管理</h1><h2 id="top"><a href="#top" class="headerlink" title="top"></a>top</h2><p>用于实时显示 process 的动态。更强大的是htop命令。</p>
-<h3 id="语法-17"><a href="#语法-17" class="headerlink" title="语法"></a>语法</h3><figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="attribute">top</span> <span class="selector-attr">[-]</span> <span class="selector-attr">[d delay]</span> <span class="selector-attr">[q]</span> <span class="selector-attr">[c]</span> <span class="selector-attr">[S]</span> <span class="selector-attr">[s]</span> <span class="selector-attr">[i]</span> <span class="selector-attr">[n]</span> <span class="selector-attr">[b]</span></span><br></pre></td></tr></table></figure>
-<p>选项：</p>
-<ul>
-<li><code>-n</code> : 更新的次数，完成后将会退出 top</li>
-<li><code>-d</code>：改变显示的更新速度</li>
-<li><code>-p&lt;进程号&gt;</code>：指定进程；</li>
-<li><code>-u&lt;用户名&gt;</code>：指定用户名；</li>
-</ul>
-<p>交互命令：</p>
-<ul>
-<li><p><code>q</code> ：退出程序</p>
-</li>
-<li><p><code>1</code>：可监控每个逻辑CPU的状况</p>
-</li>
-<li><code>b</code>：高亮显示当前运行进程</li>
-</ul>
-<h3 id="例子-13"><a href="#例子-13" class="headerlink" title="例子"></a>例子</h3><ul>
-<li><p>显示进程信息，查看该服务器当前有哪些计算进程，CPU占用率多大等等，按ctrl c退出。</p>
-<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line"><span class="built_in">top</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>会显示：<ul>
-<li><code>top - 13:54:36</code>：当前时间；<code>363 days</code>：系统运行时间；<code>13 users</code>：登陆的用户数目；<code>load average:1.89, 2.12, 2.57</code>：系统负载，即任务队列的平均长度</li>
-<li><code>Tasks: 528 total</code>：总进程数；<code>1 running</code>：正在运行的进程数；<code>507 sleeping</code>：睡眠的进程数；<code>20 stopped</code>：停止的进程数；<code>0 zombie</code>：冻结进程数</li>
-<li><code>%Cpu(s):  0.5 us</code>：用户空间占用CPU百分比；<code>1.2 sy</code>  ：内核空间占用CPU百分比<code>0.0 ni</code>：用户进程空间内改变过优先级的进程占用CPU百分比；<code>94.4 id</code>：空闲CPU百分比；<code>3.9 wa</code>：等待输入输出的CPU时间百分比</li>
-<li><code>KiB Mem : 19649531+total</code>：物理内存总量；<code>2547788 free</code>：空闲内存总量；<code>9682144 used</code>：使用的物理内存总量；<code>18426537+buff/cache</code>：用作内核缓存的内存量；<code>KiB Swap: 32767996 total</code>：交换区总量<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">top</span> <span class="bullet">-</span> <span class="number">13</span><span class="string">:54:36</span> <span class="string">up</span> <span class="number">363</span> <span class="string">days,</span>  <span class="number">1</span><span class="string">:51,</span> <span class="number">13</span> <span class="string">users,</span>  <span class="attr">load average:</span> <span class="number">1.89</span><span class="string">,</span> <span class="number">2.12</span><span class="string">,</span> <span class="number">2.57</span></span><br><span class="line"><span class="attr">Tasks:</span> <span class="number">528</span> <span class="string">total,</span>   <span class="number">1</span> <span class="string">running,</span> <span class="number">507</span> <span class="string">sleeping,</span>  <span class="number">20</span> <span class="string">stopped,</span>   <span class="number">0</span> <span class="string">zombie</span></span><br><span class="line"><span class="string">%Cpu(s):</span>  <span class="number">0.5</span> <span class="string">us,</span>  <span class="number">1.2</span> <span class="string">sy,</span>  <span class="number">0.0</span> <span class="string">ni,</span> <span class="number">94.4</span> <span class="string">id,</span>  <span class="number">3.9</span> <span class="string">wa,</span>  <span class="number">0.0</span> <span class="string">hi,</span>  <span class="number">0.1</span> <span class="string">si,</span>  <span class="number">0.0</span> <span class="string">st</span></span><br><span class="line"><span class="attr">KiB Mem :</span> <span class="number">19649531</span><span class="string">+total,</span>  <span class="number">2547788</span> <span class="string">free,</span>  <span class="number">9682144</span> <span class="string">used,</span> <span class="number">18426537</span><span class="string">+buff/cache</span></span><br><span class="line"><span class="attr">KiB Swap:</span> <span class="number">32767996</span> <span class="string">total,</span> <span class="number">28063200</span> <span class="string">free,</span>  <span class="number">4704796</span> <span class="string">used.</span> <span class="number">18375868</span><span class="string">+avail</span> <span class="string">Mem</span></span><br></pre></td></tr></table></figure>
+<li></li>
+<li><p>```<br>du -h —max-depth=1</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## ll</span><br><span class="line"></span><br><span class="line">用法与ls相同，但列出信息更详细，包括文件的创建时间、所属对象、权限等等信息</span><br><span class="line"></span><br><span class="line">## ls</span><br><span class="line"></span><br><span class="line">List files 于显示指定工作目录下之内容（列出目前工作目录所含之文件及子目录)。</span><br><span class="line"></span><br><span class="line">### 语法</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>ls（选项）（参数）</p>
+<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">选项：</span><br><span class="line"></span><br><span class="line">- `-l`：以长格式显示目录下的内容列表。输出的信息从左到右依次包括文件名，文件类型、权限模式、硬连接数、所有者、组、文件大小和文件的最后修改时间等；</span><br><span class="line">- `-t`：用文件和目录的更改时间排序；</span><br><span class="line">- `-r`：以文件名反序排列并输出目录内容列表；</span><br><span class="line">- `-R`：递归处理，将指定目录下的所有文件及子目录一并处理；</span><br><span class="line">- `-a`：显示所有档案及目录，包括隐藏文件；</span><br><span class="line">- `-A`：显示除影藏文件“.”和“..”以外的所有文件列表；</span><br><span class="line">- `-F`：在每个输出项后追加文件的类型标识符，具体含义：“*”表示具有可执行权限的普通文件，“/”表示目录，“@”表示符号链接，“|”表示命令管道FIFO，“=”表示sockets套接字。当文件为普通文件时，不输出任何标识符；</span><br><span class="line">- `-m`：用“,”号区隔每个文件和目录的名称；</span><br><span class="line"></span><br><span class="line">### 例子</span><br><span class="line"></span><br><span class="line"><span class="title">- 列出目前工作目录下所有名称是 s 开头的文件，越新的排越后面 :</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>ls -ltr s*</p>
+<figure class="highlight ada"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">- 将 /bin 目录以下所有目录及文件详细资料列出 :</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>ls -lR /bin</p>
+<figure class="highlight ada"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">- 列出目前工作目录下所有文件及目录；目录于名称后加 <span class="string">&quot;/&quot;</span>, 可执行档于名称后加 <span class="string">&quot;*&quot;</span> :</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>ls -AF   </p>
+<figure class="highlight asciidoc"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="bullet">- </span>水平输出文件列表</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>$ ls -m<br>bin, boot, data, dev, etc, home, lib, lost+found, media, misc, mnt, opt, proc, root, sbin, selinux, srv, sys, tmp, usr, vark</p>
+<figure class="highlight asciidoc"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="bullet">- </span>只列出文件夹</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>ls -F | grep ‘/$’</p>
+<p>ls -d */</p>
+<figure class="highlight clean"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">## mkdir</span><br><span class="line"></span><br><span class="line">make directory用于创建目录。</span><br><span class="line"></span><br><span class="line">### 语法</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>mkdir (选项)(参数)</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">选项：</span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="code">`-p`</span>：确保目录名称存在，不存在的就建一个。</span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="code">`-m&lt;目标属性&gt;`</span>或<span class="code">`--mode&lt;目标属性&gt;`</span>建立目录的同时设置目录的权限；</span><br><span class="line"></span><br><span class="line"><span class="section">### 例子</span></span><br><span class="line"></span><br><span class="line">在目录<span class="code">`/usr/meng`</span>下建立子目录[<span class="string">test</span>](<span class="link">http://man.linuxde.net/test</span>)，并且只有文件主有读、写和执行权限，其他人无权访问：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>mkdir -m 700 /usr/meng/test</p>
+<figure class="highlight clean"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">## pwd</span><br><span class="line"></span><br><span class="line">print work directory 显示出当前工作目录的绝对路径</span><br><span class="line"></span><br><span class="line">### 语法</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>pwd [—help][—version]</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">选项：</span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="code">`--help`</span> 在线帮助。</span><br><span class="line"><span class="bullet">-</span> <span class="code">`--version`</span> 显示版本信息。</span><br><span class="line"></span><br><span class="line"><span class="section">## rmdir</span></span><br><span class="line"></span><br><span class="line">Remove Directory从一个目录中删除一个或多个空的子目录</span><br><span class="line"></span><br><span class="line"><span class="section">### 语法</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>rmdir [-p] dirName</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">选项：</span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="code">`-p`</span> ：当子目录被删除后使它也成为空目录的话，则顺便一并删除。</span><br><span class="line"><span class="bullet">-</span> <span class="code">`-rf`</span> ：强制删除</span><br><span class="line"></span><br><span class="line"><span class="section">### 例子</span></span><br><span class="line"></span><br><span class="line">在工作目录下的 BBB 目录中，删除名为 Test 的子目录。若 Test 删除后，BBB 目录成为空目录，则 BBB 亦予删除。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>rmdir -p BBB/Test</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 磁盘维护</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 网络通讯</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 系统管理</span><br><span class="line"></span><br><span class="line">## top</span><br><span class="line"></span><br><span class="line">用于实时显示 process 的动态。更强大的是htop命令。</span><br><span class="line"></span><br><span class="line">### 语法</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>top [-] [d delay] [q] [c] [S] [s] [i] [n] [b]</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">选项：</span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="code">`-n`</span> : 更新的次数，完成后将会退出 top</span><br><span class="line"><span class="bullet">-</span> <span class="code">`-d`</span>：改变显示的更新速度</span><br><span class="line"><span class="bullet">-</span> <span class="code">`-p&lt;进程号&gt;`</span>：指定进程；</span><br><span class="line"><span class="bullet">-</span> <span class="code">`-u&lt;用户名&gt;`</span>：指定用户名；</span><br><span class="line"></span><br><span class="line">交互命令：</span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="code">`q`</span> ：退出程序</span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="code">`1`</span>：可监控每个逻辑CPU的状况</span><br><span class="line"><span class="bullet">-</span> <span class="code">`b`</span>：高亮显示当前运行进程</span><br><span class="line"></span><br><span class="line"><span class="section">### 例子</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> 显示进程信息，查看该服务器当前有哪些计算进程，CPU占用率多大等等，按ctrl c退出。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>top</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> 会显示：</span><br><span class="line"><span class="bullet">  -</span> <span class="code">`top - 13:54:36`</span>：当前时间；<span class="code">`363 days`</span>：系统运行时间；<span class="code">`13 users`</span>：登陆的用户数目；<span class="code">`load average:1.89, 2.12, 2.57`</span>：系统负载，即任务队列的平均长度</span><br><span class="line"><span class="bullet">  -</span> <span class="code">`Tasks: 528 total`</span>：总进程数；<span class="code">`1 running`</span>：正在运行的进程数；<span class="code">`507 sleeping`</span>：睡眠的进程数；<span class="code">`20 stopped`</span>：停止的进程数；<span class="code">`0 zombie`</span>：冻结进程数</span><br><span class="line"><span class="bullet">  -</span> <span class="code">`%Cpu(s):  0.5 us`</span>：用户空间占用CPU百分比；<span class="code">`1.2 sy`</span>  ：内核空间占用CPU百分比<span class="code">`0.0 ni`</span>：用户进程空间内改变过优先级的进程占用CPU百分比；<span class="code">`94.4 id`</span>：空闲CPU百分比；<span class="code">`3.9 wa`</span>：等待输入输出的CPU时间百分比</span><br><span class="line"><span class="bullet">  -</span> <span class="code">`KiB Mem : 19649531+total`</span>：物理内存总量；<span class="code">`2547788 free`</span>：空闲内存总量；<span class="code">`9682144 used`</span>：使用的物理内存总量；<span class="code">`18426537+buff/cache`</span>：用作内核缓存的内存量；<span class="code">`KiB Swap: 32767996 total`</span>：交换区总量</span><br></pre></td></tr></table></figure>
+<p>top - 13:54:36 up 363 days,  1:51, 13 users,  load average: 1.89, 2.12, 2.57<br>Tasks: 528 total,   1 running, 507 sleeping,  20 stopped,   0 zombie<br>%Cpu(s):  0.5 us,  1.2 sy,  0.0 ni, 94.4 id,  3.9 wa,  0.0 hi,  0.1 si,  0.0 st<br>KiB Mem : 19649531+total,  2547788 free,  9682144 used, 18426537+buff/cache<br>KiB Swap: 32767996 total, 28063200 free,  4704796 used. 18375868+avail Mem</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">- 更新两次后终止更新显示</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>top -n 2</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">- 更新周期为<span class="number">3</span>秒</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>top -d 3</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">- 显示进程号为<span class="number">139</span>的进程信息，CPU、内存占用率等</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>top -p 139</p>
+<figure class="highlight vala"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta"># 系统设置</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta"># 备份压缩</span></span><br><span class="line"></span><br><span class="line"><span class="meta">## tar</span></span><br><span class="line"></span><br><span class="line">Tape archive （磁带档案）。tar是用来建立，还原备份文件的工具程序，它可以加入，解开备份文件内的文件。</span><br><span class="line"></span><br><span class="line">- 打包是指将一大堆文件或目录变成一个总的文件；压缩则是将一个大的文件通过一些压缩算法变成一个小文件。</span><br><span class="line">- 利用tar命令，可以把一大堆的文件和目录全部打包成一个文件，这对于备份文件或将几个文件组合成为一个文件以便于网络传输是非常有用的。</span><br><span class="line">- 打包成一个包后，再用压缩程序进行压缩（gzip bzip2命令）等。</span><br><span class="line"></span><br><span class="line"><span class="meta">### 语法</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>tar(选项)(参数)</p>
+<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">选项：</span><br><span class="line"></span><br><span class="line">- `-c`或`--create`：建立新的备份文件；</span><br><span class="line">- `-f`：&lt;备份文件&gt;或--file=&lt;备份文件&gt; 指定备份文件。</span><br><span class="line">- `-j`：支持bzip2解压文件；</span><br><span class="line">- `-N&lt;日期格式&gt;`或`--newer=&lt;日期时间&gt;`：只将较指定日期更新的文件保存到备份文件里。</span><br><span class="line">- `-p`或`--same-permissions`：用原来的文件权限还原文件；</span><br><span class="line">- `-t`或`--list`：列出备份文件的内容。</span><br><span class="line">- `-v`或`--verbose`：显示指令执行过程。</span><br><span class="line">- `-x`或`--extract`或`--get`：从备份文件中还原文件；</span><br><span class="line">- `-z`或`--gzip`或`--ungzip` ：通过gzip指令处理备份文件。</span><br><span class="line">- `--exclude=&lt;范本样式&gt;`：排除符合范本样式的文件。</span><br><span class="line"></span><br><span class="line">### 例子</span><br><span class="line"></span><br><span class="line">#### 将文件全部打包成tar包</span><br><span class="line"></span><br><span class="line">- 仅打包，不压缩。在选项`f`之后的文件档名是自己取的，习惯上都用 .tar 来作为辨识。 </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>tar -cvf log.tar log2012.log</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">- <span class="xml"><span class="tag">&lt;<span class="name">font</span> <span class="attr">color</span>=<span class="string">red</span>&gt;</span>打包后，以 gzip 压缩 <span class="tag">&lt;/<span class="name">font</span>&gt;</span></span>。如果加<span class="string">`z`</span>选项，则以.tar.gz或.tgz来代表gzip压缩过的tar包</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>tar -czvf log.tar.gz log2012.log</p>
+<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">- 打包后，以 bzip2 压缩 ，如果加`j`选项，则以.tar.bz2来作为tar包名。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>tar -jcvf log.tar.bz2 log2012.log</p>
+<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">- 文件备份下来，并且保存其权限：当要保留原本文件的属性，需要用`-P`</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>tar -zcvpf log31.tar.gz log2014.log log2015.log log2016.log</p>
+<figure class="highlight asciidoc"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="bullet">- </span>在文件夹当中，比某个日期新的文件才备份</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>tar -N “2012/11/13” -zcvf log17.tar.gz test</p>
+<figure class="highlight asciidoc"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="bullet">- </span>备份文件夹内容是排除部分文件</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>tar —exclude scf/service -zcvf scf.tar.gz scf/*</p>
+<figure class="highlight maxima"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">#### 查阅tar包内有哪些文件</span><br><span class="line"></span><br><span class="line">- &lt;<span class="built_in">font</span> <span class="built_in">color</span>=red&gt;查询&lt;/<span class="built_in">font</span>&gt;：使用gzip压缩的<span class="built_in">log</span>.tar.gz，在查阅<span class="built_in">log</span>.tar.gz包内的文件时，要加上`z`这个选项</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>tar -tzvf log.tar.gz</p>
+<figure class="highlight clean"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">#### 将tar包解压缩</span><br><span class="line"></span><br><span class="line">- &lt;font color=red&gt;全部解压&lt;/font&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>tar -xzvf /opt/soft/test/log.tar.gz</p>
+<figure class="highlight asciidoc"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="bullet">- </span>只将tar内的部分文件解压出来</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>tar -xzvf /opt/soft/test/log30.tar.gz log2013.log</p>
+<figure class="highlight vala"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta"># 设备管理</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta"># 其他命令</span></span><br><span class="line"></span><br><span class="line"><span class="meta">## bc</span></span><br><span class="line"></span><br><span class="line">任意精度计算器语言。bash内置了对整数四则运算的支持，但是并不支持浮点运算，而bc可以。</span><br><span class="line"></span><br><span class="line"><span class="meta">### 语法</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>bc(选项)(参数)</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">通常和管道符一起使用</span><br><span class="line"></span><br><span class="line"><span class="section">### 例子</span></span><br><span class="line"></span><br><span class="line"><span class="section">#### 运算</span></span><br><span class="line"></span><br><span class="line">常用的运算</span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="code">`+`</span>加法</span><br><span class="line"><span class="bullet">-</span> <span class="code">`-`</span> 减法</span><br><span class="line"><span class="bullet">-</span> <span class="code">`*`</span> 乘法</span><br><span class="line"><span class="bullet">-</span> <span class="code">`/`</span> 除法</span><br><span class="line"><span class="bullet">-</span> <span class="code">`^`</span> 指数</span><br><span class="line"><span class="bullet">-</span> <span class="code">`%`</span> 余数</span><br><span class="line"></span><br><span class="line">乘法：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>$ echo “1.212*3” | bc<br>3.636</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">计算平方和平方根：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>echo “10^10” | bc<br>echo “sqrt(100)” | bc</p>
+<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">#### 设定小数精度（数值范围）</span><br><span class="line"></span><br><span class="line">参数`scale=<span class="number">2</span>`是将bc输出结果的小数位设置为<span class="number">2</span>位。</span><br><span class="line"></span><br><span class="line">```shell</span><br><span class="line">$ echo <span class="string">&quot;scale=2;3/8&quot;</span> | bc</span><br><span class="line"><span class="number">0.37</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>更新两次后终止更新显示</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">top -n <span class="number">2</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>更新周期为3秒</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">top -d <span class="number">3</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>显示进程号为139的进程信息，CPU、内存占用率等</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">top -p <span class="number">139</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="系统设置"><a href="#系统设置" class="headerlink" title="系统设置"></a>系统设置</h1><h1 id="备份压缩"><a href="#备份压缩" class="headerlink" title="备份压缩"></a>备份压缩</h1><h2 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h2><p>Tape archive （磁带档案）。tar是用来建立，还原备份文件的工具程序，它可以加入，解开备份文件内的文件。</p>
-<ul>
-<li>打包是指将一大堆文件或目录变成一个总的文件；压缩则是将一个大的文件通过一些压缩算法变成一个小文件。</li>
-<li>利用tar命令，可以把一大堆的文件和目录全部打包成一个文件，这对于备份文件或将几个文件组合成为一个文件以便于网络传输是非常有用的。</li>
-<li>打包成一个包后，再用压缩程序进行压缩（gzip bzip2命令）等。</li>
-</ul>
-<h3 id="语法-18"><a href="#语法-18" class="headerlink" title="语法"></a>语法</h3><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">tar</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
-<p>选项：</p>
-<ul>
-<li><code>-c</code>或<code>--create</code>：建立新的备份文件；</li>
-<li><code>-f</code>：&lt;备份文件&gt;或—file=&lt;备份文件&gt; 指定备份文件。</li>
-<li><code>-j</code>：支持bzip2解压文件；</li>
-<li><code>-N&lt;日期格式&gt;</code>或<code>--newer=&lt;日期时间&gt;</code>：只将较指定日期更新的文件保存到备份文件里。</li>
-<li><code>-p</code>或<code>--same-permissions</code>：用原来的文件权限还原文件；</li>
-<li><code>-t</code>或<code>--list</code>：列出备份文件的内容。</li>
-<li><code>-v</code>或<code>--verbose</code>：显示指令执行过程。</li>
-<li><code>-x</code>或<code>--extract</code>或<code>--get</code>：从备份文件中还原文件；</li>
-<li><code>-z</code>或<code>--gzip</code>或<code>--ungzip</code> ：通过gzip指令处理备份文件。</li>
-<li><code>--exclude=&lt;范本样式&gt;</code>：排除符合范本样式的文件。</li>
-</ul>
-<h3 id="例子-14"><a href="#例子-14" class="headerlink" title="例子"></a>例子</h3><h4 id="将文件全部打包成tar包"><a href="#将文件全部打包成tar包" class="headerlink" title="将文件全部打包成tar包"></a>将文件全部打包成tar包</h4><ul>
-<li><p>仅打包，不压缩。在选项<code>f</code>之后的文件档名是自己取的，习惯上都用 .tar 来作为辨识。 </p>
-<figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line">tar -cvf <span class="built_in">log</span>.tar log2012.<span class="built_in">log</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><font color=red>打包后，以 gzip 压缩 </font>。如果加<code>z</code>选项，则以.tar.gz或.tgz来代表gzip压缩过的tar包</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">tar</span> <span class="selector-tag">-czvf</span> <span class="selector-tag">log</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span> <span class="selector-tag">log2012</span><span class="selector-class">.log</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>打包后，以 bzip2 压缩 ，如果加<code>j</code>选项，则以.tar.bz2来作为tar包名。</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">tar</span> <span class="selector-tag">-jcvf</span> <span class="selector-tag">log</span><span class="selector-class">.tar</span><span class="selector-class">.bz2</span> <span class="selector-tag">log2012</span><span class="selector-class">.log</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>文件备份下来，并且保存其权限：当要保留原本文件的属性，需要用<code>-P</code></p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">tar</span> <span class="selector-tag">-zcvpf</span> <span class="selector-tag">log31</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span> <span class="selector-tag">log2014</span><span class="selector-class">.log</span> <span class="selector-tag">log2015</span><span class="selector-class">.log</span> <span class="selector-tag">log2016</span><span class="selector-class">.log</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在文件夹当中，比某个日期新的文件才备份</p>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">tar -N <span class="string">&quot;2012/11/13&quot;</span> -zcvf log17<span class="selector-class">.tar</span><span class="selector-class">.gz</span> test</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>备份文件夹内容是排除部分文件</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">tar --exclude scf<span class="built_in">/service </span>-zcvf scf.tar.gz scf/*</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="查阅tar包内有哪些文件"><a href="#查阅tar包内有哪些文件" class="headerlink" title="查阅tar包内有哪些文件"></a>查阅tar包内有哪些文件</h4><ul>
-<li><p><font color=red>查询</font>：使用gzip压缩的log.tar.gz，在查阅log.tar.gz包内的文件时，要加上<code>z</code>这个选项</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">tar</span> <span class="selector-tag">-tzvf</span> <span class="selector-tag">log</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="将tar包解压缩"><a href="#将tar包解压缩" class="headerlink" title="将tar包解压缩"></a>将tar包解压缩</h4><ul>
-<li><font color=red>全部解压</font>
-
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">tar -xzvf <span class="regexp">/opt/</span>soft<span class="regexp">/test/</span>log.tar.gz</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>只将tar内的部分文件解压出来</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">tar -xzvf <span class="regexp">/opt/</span>soft<span class="regexp">/test/</span>log30.tar.gz log2013.log</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="设备管理"><a href="#设备管理" class="headerlink" title="设备管理"></a>设备管理</h1><h1 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h1><h2 id="bc"><a href="#bc" class="headerlink" title="bc"></a>bc</h2><p>任意精度计算器语言。bash内置了对整数四则运算的支持，但是并不支持浮点运算，而bc可以。</p>
-<h3 id="语法-19"><a href="#语法-19" class="headerlink" title="语法"></a>语法</h3><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">bc</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
-<p>通常和管道符一起使用</p>
-<h3 id="例子-15"><a href="#例子-15" class="headerlink" title="例子"></a>例子</h3><h4 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h4><p>常用的运算</p>
-<ul>
-<li><code>+</code>加法</li>
-<li><code>-</code> 减法</li>
-<li><code>*</code> 乘法</li>
-<li><code>/</code> 除法</li>
-<li><code>^</code> 指数</li>
-<li><code>%</code> 余数</li>
-</ul>
-<p>乘法：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">&quot;1.212*3&quot;</span> | bc </span></span><br><span class="line">3.636</span><br></pre></td></tr></table></figure>
-<p>计算平方和平方根：</p>
-<figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line">echo <span class="string">&quot;10^10&quot;</span> <span class="string">| bc</span></span><br><span class="line">echo <span class="string">&quot;sqrt(100)&quot;</span> <span class="string">| bc</span></span><br></pre></td></tr></table></figure>
-<h4 id="设定小数精度（数值范围）"><a href="#设定小数精度（数值范围）" class="headerlink" title="设定小数精度（数值范围）"></a>设定小数精度（数值范围）</h4><p>参数<code>scale=2</code>是将bc输出结果的小数位设置为2位。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">&quot;scale=2;3/8&quot;</span> | bc</span></span><br><span class="line">0.37</span><br></pre></td></tr></table></figure>
 <h4 id="进制转换："><a href="#进制转换：" class="headerlink" title="进制转换："></a>进制转换：</h4><ul>
 <li><p>将十进制转换成二进制：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">abc=192</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;obase=2;<span class="variable">$abc</span>&quot;</span> | bc</span><br></pre></td></tr></table></figure>
@@ -8464,7 +8352,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 </li>
 </ul>
 <h2 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h2><p>用于查看输入文件中的尾部内容。tail命令默认在屏幕上显示指定文件的末尾10行。</p>
-<h3 id="语法-20"><a href="#语法-20" class="headerlink" title="语法"></a>语法</h3><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">tail</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="语法-13"><a href="#语法-13" class="headerlink" title="语法"></a>语法</h3><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">tail</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
 <p>参数：</p>
 <ul>
 <li><code>-f</code> ：循环读取</li>
@@ -8475,7 +8363,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li><code>-n&lt;行数&gt;</code> 或<code>——line=&lt;N&gt;</code>：显示文件的尾部 n 行内容</li>
 <li><code>-s&lt;秒数&gt;</code>, <code>——sleep-interal=&lt;秒数&gt;</code> 与<code>-f</code>合用，指定监视文件变化时间隔的秒数。</li>
 </ul>
-<h3 id="例子-16"><a href="#例子-16" class="headerlink" title="例子"></a>例子</h3><ul>
+<h3 id="例子-10"><a href="#例子-10" class="headerlink" title="例子"></a>例子</h3><ul>
 <li><p>显示 notes.log 文件的最后 10 行：</p>
 <figure class="highlight stan"><table><tr><td class="code"><pre><span class="line"><span class="built_in">tail</span> notes.<span class="built_in">log</span></span><br></pre></td></tr></table></figure>
 </li>
@@ -8493,14 +8381,14 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li>eXtended ARGuments，是给命令传递参数的一个过滤器，也是组合多个命令的一个工具。</li>
 <li>它能够捕获一个命令的输出，然后传递给另外一个命令。</li>
 </ul>
-<h3 id="语法-21"><a href="#语法-21" class="headerlink" title="语法"></a>语法</h3><ul>
+<h3 id="语法-14"><a href="#语法-14" class="headerlink" title="语法"></a>语法</h3><ul>
 <li>一般是和管道一起使用。</li>
 </ul>
 <figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line">somecommand |xargs -<span class="keyword">item</span>  <span class="keyword">command</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>xargs的默认命令是<code>echo</code>，空格是默认定界符。</li>
 </ul>
-<h3 id="例子-17"><a href="#例子-17" class="headerlink" title="例子"></a>例子</h3><h4 id="格式化输入"><a href="#格式化输入" class="headerlink" title="格式化输入"></a>格式化输入</h4><ul>
+<h3 id="例子-11"><a href="#例子-11" class="headerlink" title="例子"></a>例子</h3><h4 id="格式化输入"><a href="#格式化输入" class="headerlink" title="格式化输入"></a>格式化输入</h4><ul>
 <li><p>将test文件中的多行变成一行：</p>
 <figure class="highlight stata"><table><tr><td class="code"><pre><span class="line"><span class="keyword">cat</span> <span class="keyword">test</span>.txt | xargs</span><br></pre></td></tr></table></figure>
 </li>
@@ -9946,90 +9834,48 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
       </tags>
   </entry>
   <entry>
-    <title>【Multiwfn】CDA分析</title>
-    <url>/2022/08/22/Untitled/</url>
-    <content><![CDATA[<p><a href="http://sobereva.com/166">http://sobereva.com/166</a></p>
-<p><a href="https://pdf.hanspub.org/JAPC20150400000_68741604.pdf">广义化的电荷分解分析(GCDA)方法 (hanspub.org)</a></p>
-<p>电荷分解分析(Charge decomposition analysis, CDA)是基于片段轨道的概念提出的一种将分子片段之间电荷转移分解为轨道的贡献，从而能更深入了解电荷转移本质的方法。</p>
-<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><ul>
-<li>d (Donation)表现的是片段 A 向片段 B 贡献的电子量。它体现的是片段 A 的占据轨道与片段 B 的空轨道的混合。</li>
-<li>b (Back-donation)表现的是片段 B 向片段 A 反馈的电子量。它由片段 B 的占据轨道与片段 A 的空轨道混合而产生。</li>
-<li>d-b可以认为是经由复合物轨道两个片段间的净转移量。</li>
-<li>b+d ，其数值越大说明两个片段间相互作用程度越大，轨道混合越显著。</li>
-<li>r (Charge polarization)表现的是占据轨道的电荷极化，称为电荷极化项。<ul>
-<li>r&gt;0，说明由于第 i 个复合物轨道，两个片段的电子在片段重叠区域的分布量增加，此时两个片段的占据轨道以相位相同方式混合，起到成键效应；</li>
-<li>r&lt;0，表明两个片段的电子在重叠区域分布量减少，此时两个片段的占据轨道间必以相位相反方式混合，对片段间成键起到破坏作用，即反键效应。</li>
-<li>总和值 r 一般为负值，因为占据轨道间的总相互作用是以交换互斥为主导的，是不利于成键的。</li>
+    <title>【ADF】04.画图相关</title>
+    <url>/2022/11/28/%E3%80%90ADF%E3%80%9104.%E7%94%BB%E5%9B%BE%E7%9B%B8%E5%85%B3/</url>
+    <content><![CDATA[<h1 id="静电势"><a href="#静电势" class="headerlink" title="静电势"></a>静电势</h1><ol>
+<li>SCM LOGO → View → Add → Isosurface:colored</li>
+<li>Density SCF，指电子云密度，0.001即该曲面为电子云密度值为0.001 a.u.的曲面<ul>
+<li>范德华表面的定义，如果参考文献（J. Am. Chem. Soc. 1987, 109,7968-7979）的定义，则可以选为电子云密度等值面的值为0.001的曲面。</li>
 </ul>
 </li>
-</ul>
-<h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><h2 id="准备文件"><a href="#准备文件" class="headerlink" title="准备文件"></a>准备文件</h2><p>Gaussian提供复合物和各个片段的单点任务的fch文件。注意事项：</p>
+<li>Culoumb potential SCF即静电势，后面两个方框内的值为值的范围，为程序自动计算得出，为了显示更对称，用户可以将数值改为±对称，这样白色的位置即静电势为0</li>
+<li>勾选最右侧的Bar，则显示色条</li>
+</ol>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>AMS</tag>
+        <tag>ADF</tag>
+        <tag>画图</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Gaussian】04.激发态计算.md</title>
+    <url>/2022/11/14/%E3%80%90Gaussian%E3%80%9104.%E6%BF%80%E5%8F%91%E6%80%81%E8%AE%A1%E7%AE%97/</url>
+    <content><![CDATA[<h1 id="TDDFT"><a href="#TDDFT" class="headerlink" title="TDDFT"></a>TDDFT</h1><h2 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h2><ul>
+<li>Gaussian中做TDDFT计算的关键词基本格式是<code># 泛函/基组 TD(选项)</code>。激发态优化、振动分析、找过渡态、产生IRC、势能面扫描等依赖于势能面的任务对于激发态也照样可以做，关键词和基态时完全一致，比如要优化激发态就加个opt，要算激发态频率就加个freq。</li>
+<li><p><code>TD</code>的常用选项：</p>
 <ul>
-<li>坐标必须都用笛卡尔坐标，而且片段的定义顺序，片段内原子顺序、原子坐标必须和复合物中的完全一致。</li>
-<li>片段不需要单独优化。</li>
-<li>为了避免Gaussian自动将坐标调整到标准朝向而使得坐标无法相互对应，要使用<code>nosymm</code>关键词</li>
-<li>不要用弥散函数</li>
-<li>重原子使用赝势基组可能会出现基函数数目不符的问题，可以使用<code>5d</code>关键词。</li>
-<li>如果用后HF方法计算，应当再加上density关键词，并且此时只能用Gaussian输出文件作为输入。对于闭壳层，pop=full应当改为pop=NO；对于开壳层，应改为pop=NOAB。这样才能让自然轨道信息代替HF轨道信息出现在Gaussian输出文件中。</li>
-<li>以开壳层方式做 CDA/GCDA 计算时需要考虑自旋翻转问题。</li>
-<li>片段的参考状态的选择应当尽量接近复合物状态的电子结构。</li>
-</ul>
-<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><h3 id="总体步骤"><a href="#总体步骤" class="headerlink" title="总体步骤"></a>总体步骤</h3><figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line">examples\CDA\COBH3\<span class="module-access"><span class="module"><span class="identifier">COBH3</span>.</span></span>fch  <span class="comment">//复合物的Gaussian输出文件</span></span><br><span class="line"><span class="number">16</span>   <span class="comment">//进入CDA模块</span></span><br><span class="line"><span class="number">2</span>  <span class="comment">//定义两个片段</span></span><br><span class="line">examples\CDA\COBH3\<span class="module-access"><span class="module"><span class="identifier">CO</span>.</span></span>fch  <span class="comment">//片段1的Gaussian输出文件</span></span><br><span class="line">examples\CDA\COBH3\<span class="module-access"><span class="module"><span class="identifier">BH3</span>.</span></span>fch  <span class="comment">//片段2的Gaussian输出文件</span></span><br></pre></td></tr></table></figure>
-<h3 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析"></a>结果分析</h3><p><strong>CDA数据：</strong></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">   <span class="string">Orb.</span>      <span class="string">Occ.</span>          <span class="string">d</span>           <span class="string">b</span>        <span class="string">d</span> <span class="bullet">-</span> <span class="string">b</span>          <span class="string">r</span></span><br><span class="line">      <span class="number">1</span>    <span class="number">2.000000</span>   <span class="number">-0.000004</span>   <span class="number">-0.000000</span>   <span class="number">-0.000004</span>   <span class="number">-0.000001</span></span><br><span class="line">      <span class="number">2</span>    <span class="number">2.000000</span>    <span class="number">0.001119</span>   <span class="number">-0.000023</span>    <span class="number">0.001141</span>    <span class="number">0.000326</span></span><br><span class="line">      <span class="number">3</span>    <span class="number">2.000000</span>   <span class="number">-0.000002</span>   <span class="number">-0.000471</span>    <span class="number">0.000469</span>    <span class="number">0.000313</span></span><br><span class="line">      <span class="number">4</span>    <span class="number">2.000000</span>   <span class="number">-0.013250</span>   <span class="number">-0.000704</span>   <span class="number">-0.012546</span>   <span class="number">-0.005676</span></span><br><span class="line">      <span class="number">5</span>    <span class="number">2.000000</span>    <span class="number">0.041648</span>   <span class="number">-0.003309</span>    <span class="number">0.044957</span>    <span class="number">0.232262</span></span><br><span class="line">      <span class="number">6</span>    <span class="number">2.000000</span>    <span class="number">0.037385</span>   <span class="number">-0.020136</span>    <span class="number">0.057521</span>    <span class="number">0.212422</span></span><br><span class="line">      <span class="number">7</span>    <span class="number">2.000000</span>   <span class="number">-0.000543</span>    <span class="number">0.000647</span>   <span class="number">-0.001190</span>    <span class="number">0.022166</span></span><br><span class="line">      <span class="number">8</span>    <span class="number">2.000000</span>   <span class="number">-0.000543</span>    <span class="number">0.000647</span>   <span class="number">-0.001190</span>    <span class="number">0.022166</span></span><br><span class="line">      <span class="number">9</span>    <span class="number">2.000000</span>    <span class="number">0.171353</span>    <span class="number">0.026952</span>    <span class="number">0.144401</span>   <span class="number">-0.741381</span></span><br><span class="line">     <span class="number">10</span>    <span class="number">2.000000</span>   <span class="number">-0.000569</span>    <span class="number">0.043713</span>   <span class="number">-0.044281</span>   <span class="number">-0.038916</span></span><br><span class="line">     <span class="number">11</span>    <span class="number">2.000000</span>   <span class="number">-0.000569</span>    <span class="number">0.043713</span>   <span class="number">-0.044282</span>   <span class="number">-0.038916</span></span><br><span class="line">     <span class="number">12</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span></span><br><span class="line">     <span class="number">13</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span></span><br><span class="line">     <span class="number">14</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span></span><br><span class="line">     <span class="number">15</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.000000</span></span><br><span class="line"> <span class="string">......</span></span><br><span class="line"><span class="string">-------------------------------------------------------------------</span></span><br><span class="line"><span class="attr">Sum:</span>      <span class="number">22.000000</span>    <span class="number">0.236023</span>    <span class="number">0.091027</span>    <span class="number">0.144996</span>   <span class="number">-0.335233</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>Orb.就是复合物轨道的编号，Occ.是其占据数。</li>
-<li>前三个复合物轨道的d、b、r项都接近于0，表明它们对于片段间的相互作用没什么用处，这是因为它们分别是O、C、B的<strong>内核轨道</strong>，基本不会参与成键。</li>
-<li><p>所有的<strong>虚轨道</strong>的d、b、r项都为，因为它们的占据数都为0。</p>
-<ul>
-<li>只有对于自然轨道，对应于LUMO及更高阶的复合物轨道由于仍有少量电子占据，其d、b、r项才不是精确为0，但由于自然轨道序号是按照占据数由高到低排的，超过LUMO+5的话由于占据数往往已经很低了，d、b、r项已很小，所以Multiwfn中LUMO+5以上的轨道都不会输出。</li>
-</ul>
-</li>
-<li><p>复合物轨道9的d是最大的，因此表明这个轨道对于CO向BH3的电子转移有最主要的贡献。通过形成这个复合物轨道，CO向BH3贡献了0.171个电子，而BH3向CO反馈了0.0269个电子，故净转移可以估算为0.144（即d-b项）。</p>
-</li>
-<li>BH3对CO反馈电子主要是来自于复合物轨道10和11，它们是简并的轨道，b的数值一致，为0.0437。</li>
-<li>r(9)非常负，这说明复合物轨道9的形成使得CO和BH3的占据的片段轨道的电子很大程度上从二者的交叠区域移走，从而降低了电子互斥，从下面的它的轨道波函数图形中也可见在交叠区域有个明显的节点。</li>
-<li>r(5)和r(6)都是不小的正值，因此它们的形成导致占据片段轨道的电子向交叠区域转移了不少，可以认为体现了片段间成键轨道的特征，从下面的等值面图形中也可看到这两个复合物轨道都较好地覆盖了片段间成键区域，故有利于成键。</li>
-</ul>
-<p><img src="http://sobereva.com/usr/uploads/image/20150610/20150610061643_74552.png" alt="img"></p>
-<hr>
-<p><strong>ECDA数据：</strong></p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line">   <span class="attribute">Contribution</span> to <span class="literal">all</span> occupied complex orbital:</span><br><span class="line"><span class="attribute">Occupied</span>, virtual orbitals of fragment  <span class="number">1</span>:     <span class="number">680</span>.<span class="number">4194</span>%         <span class="number">8</span>.<span class="number">0593</span>%</span><br><span class="line"><span class="attribute">Occupied</span>, virtual orbitals of fragment  <span class="number">2</span>:     <span class="number">390</span>.<span class="number">3988</span>%        <span class="number">21</span>.<span class="number">1226</span>%</span><br><span class="line">  <span class="attribute">Contribution</span> to <span class="literal">all</span> virtual complex orbital:</span><br><span class="line"><span class="attribute">Occupied</span>, virtual orbitals of fragment  <span class="number">1</span>:      <span class="number">19</span>.<span class="number">5806</span>%      <span class="number">2291</span>.<span class="number">9407</span>%</span><br><span class="line"><span class="attribute">Occupied</span>, virtual orbitals of fragment  <span class="number">2</span>:       <span class="number">9</span>.<span class="number">6012</span>%      <span class="number">1678</span>.<span class="number">8774</span>%</span><br><span class="line"><span class="attribute">PL</span>( <span class="number">1</span>) + CT( <span class="number">1</span>-&gt; <span class="number">2</span>) =    <span class="number">0</span>.<span class="number">3916</span>      PL( <span class="number">1</span>) + CT( <span class="number">2</span>-&gt; <span class="number">1</span>) =    <span class="number">0</span>.<span class="number">1612</span></span><br><span class="line"><span class="attribute">PL</span>( <span class="number">2</span>) + CT( <span class="number">1</span>-&gt; <span class="number">2</span>) =    <span class="number">0</span>.<span class="number">4225</span>      PL( <span class="number">2</span>) + CT( <span class="number">2</span>-&gt; <span class="number">1</span>) =    <span class="number">0</span>.<span class="number">1920</span></span><br><span class="line"><span class="attribute">The</span> net electrons obtained by frag. <span class="number">2</span> = CT( <span class="number">1</span>-&gt; <span class="number">2</span>) - CT( <span class="number">2</span>-&gt; <span class="number">1</span>) =    <span class="number">0</span>.<span class="number">2304</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>一般来说只需要关注最后一行数据，它表明了从片段1向片段2总共净转移了多少电子，此例即0.2304。<ul>
-<li>这个数据和CDA的d-b项会有一定出入，因为二者计算方法没有明显关联。ECDA给出的总的净转移量更可靠。</li>
+<li><code>nstates=N</code>：表明总共算能量最低的N个激发态的信息，如激发能、跃迁电/磁偶极矩、振子强度、组态系数等。默认为3。</li>
+<li><code>root=i</code>：选择感兴趣的态。如果当前任务是与某个激发态有关的，比如几何优化、振动分析、获得偶极矩等，则表明是对第i个激发态做的。只是计算激发态信息则不需要管此设定。默认为<code>1</code>。</li>
+<li>singlet：要求计算的N个激发态都为单重态，此为默认。</li>
+<li>triplet：要求计算的N个激发态都为三重态。</li>
+<li>50-50：要求同时计算N个单重态和N个三重态。</li>
+<li>注意singlet、triplet、50-50关键词只对基态是闭壳层有效，基态是开壳层的话，没法指定激发态的自旋多重度，而只能是算出什么态就是什么态，得根据激发态的<code>&lt;S**2&gt;</code>来判断激发态的自旋多重度。<code>&lt;S**2&gt;</code>的理想值为S(S+1)，S是体系的自旋量子数。<ul>
+<li>单重态=0.0、二重态=0.75、三重态=2.0、四重态=3.75、五重态=6.0</li>
 </ul>
 </li>
 </ul>
-<hr>
-<p>通过<strong>菜单</strong>可以进一步观看复合物轨道的具体成分，比如选<code>2</code>再输入9。</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"> <span class="attribute">Occupation</span> number of orbital     <span class="number">9</span> of the complex:  <span class="number">2</span>.<span class="number">00000000</span></span><br><span class="line"><span class="attribute">Orbital</span>     <span class="number">7</span> of fragment  <span class="number">1</span>, Occ: <span class="number">2</span>.<span class="number">00000</span>    Contribution:   <span class="number">25</span>.<span class="number">8560</span>%</span><br><span class="line"><span class="attribute">Orbital</span>    <span class="number">13</span> of fragment  <span class="number">1</span>, Occ: <span class="number">0</span>.<span class="number">00000</span>    Contribution:    <span class="number">1</span>.<span class="number">0798</span>%</span><br><span class="line"><span class="attribute">Orbital</span>     <span class="number">2</span> of fragment  <span class="number">2</span>, Occ: <span class="number">2</span>.<span class="number">00000</span>    Contribution:   <span class="number">57</span>.<span class="number">2921</span>%</span><br><span class="line"><span class="attribute">Orbital</span>     <span class="number">5</span> of fragment  <span class="number">2</span>, Occ: <span class="number">0</span>.<span class="number">00000</span>    Contribution:   <span class="number">14</span>.<span class="number">5640</span>%</span><br></pre></td></tr></table></figure>
-<ul>
-<li>从数据中可见，复合物轨道9主体是BH3的轨道2，达57.3%。</li>
-<li>之所以此复合物轨道会导致CO向BH3转移那么多电子，显然是因为CO的占据轨道7与BH3的虚轨道5相混合。</li>
-<li>r(9)很负，是因为CO的占据轨道7与BH3的占据轨道2间的互斥作用所致。</li>
-<li>可以进一步结合轨道图形来看：<ul>
-<li>左边是CO的占据轨道7（展现较明显C的孤对电子特征），右边是BH3的虚轨道5，从形状上看二者比较匹配，因此容易混合，并且混合后会导致不少电子转移。<br><img src="http://sobereva.com/usr/uploads/image/20150610/20150610061657_41127.png" alt="img"></li>
-</ul>
 </li>
-</ul>
-<hr>
-<p><strong>将某个复合物轨道的d,b,r值分解为片段轨道对的贡献：</strong></p>
-<ul>
-<li><p>对复合物轨道9进行分解。输入<code>0</code>返回上一级菜单，选选项<code>6</code>，然后输入<code>9</code>，然后输入0.005，这样对复合物轨道9的d,b,r项任意之一贡献大于0.005的片段轨道对就会被输出出来。</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">FragA</span> Orb(Occ.)  FragB Orb(Occ.)      d           b        d - b          r</span><br><span class="line">    <span class="attribute">4</span>( <span class="number">2</span>.<span class="number">0000</span>)       <span class="number">2</span>( <span class="number">2</span>.<span class="number">0000</span>)    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">000000</span>   -<span class="number">0</span>.<span class="number">009969</span></span><br><span class="line">    <span class="attribute">7</span>( <span class="number">2</span>.<span class="number">0000</span>)       <span class="number">1</span>( <span class="number">2</span>.<span class="number">0000</span>)    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">000000</span>   -<span class="number">0</span>.<span class="number">005759</span></span><br><span class="line">    <span class="attribute">7</span>( <span class="number">2</span>.<span class="number">0000</span>)       <span class="number">2</span>( <span class="number">2</span>.<span class="number">0000</span>)    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">000000</span>   -<span class="number">0</span>.<span class="number">723845</span></span><br><span class="line">    <span class="attribute">7</span>( <span class="number">2</span>.<span class="number">0000</span>)       <span class="number">5</span>( <span class="number">0</span>.<span class="number">0000</span>)    <span class="number">0</span>.<span class="number">176503</span>    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">176503</span>    <span class="number">0</span>.<span class="number">000000</span></span><br><span class="line">    <span class="attribute">7</span>( <span class="number">2</span>.<span class="number">0000</span>)       <span class="number">8</span>( <span class="number">0</span>.<span class="number">0000</span>)    <span class="number">0</span>.<span class="number">006221</span>    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">006221</span>    <span class="number">0</span>.<span class="number">000000</span></span><br><span class="line">    <span class="attribute">7</span>( <span class="number">2</span>.<span class="number">0000</span>)      <span class="number">11</span>( <span class="number">0</span>.<span class="number">0000</span>)    <span class="number">0</span>.<span class="number">005846</span>    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">005846</span>    <span class="number">0</span>.<span class="number">000000</span></span><br><span class="line">    <span class="attribute">7</span>( <span class="number">2</span>.<span class="number">0000</span>)      <span class="number">12</span>( <span class="number">0</span>.<span class="number">0000</span>)   -<span class="number">0</span>.<span class="number">023941</span>    <span class="number">0</span>.<span class="number">000000</span>   -<span class="number">0</span>.<span class="number">023941</span>    <span class="number">0</span>.<span class="number">000000</span></span><br><span class="line">   <span class="attribute">13</span>( <span class="number">0</span>.<span class="number">0000</span>)       <span class="number">2</span>( <span class="number">2</span>.<span class="number">0000</span>)    <span class="number">0</span>.<span class="number">000000</span>    <span class="number">0</span>.<span class="number">021958</span>   -<span class="number">0</span>.<span class="number">021958</span>    <span class="number">0</span>.<span class="number">000000</span></span><br></pre></td></tr></table></figure>
+<li><p><code>density</code>：产生当前级别的密度，即root指定的激发态密度。这样多极矩、NBO分析、原子电荷等等都是对root指定的激发态计算的，输出的.wfn/.wfx文件里记录的也将是第root激发态的自然轨道。但此时chk里记录的轨道依然是基态的DFT轨道</p>
 </li>
-<li><p>很清晰地可以看到CO的7号轨道与BH3的5号轨道相互作用导致电子向BH3转移了0.176，这正是9号复合物轨道d项达到0.171的主要因素。</p>
-</li>
-</ul>
-<hr>
-<p><strong>绘制轨道相互作用图</strong></p>
-<ul>
-<li><p>输入<code>0</code>回到上一级菜单，然后选<code>5</code>进入绘制轨道相互作用图的菜单中。</p>
-</li>
-<li><p>选<code>3</code>，输入-30,10把相互作用图能量下限和上限分别设为-30和10eV。</p>
-</li>
-<li>选<code>1</code>，轨道相互作用图立刻会显示。</li>
 </ul>
 ]]></content>
       <categories>
@@ -10037,9 +9883,187 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
         <category>软件</category>
       </categories>
       <tags>
-        <tag>Multiwfn</tag>
-        <tag>CDA</tag>
-        <tag>CT</tag>
+        <tag>Gaussian</tag>
+        <tag>激发态</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Gaussian】对称性破缺</title>
+    <url>/2022/11/07/%E3%80%90Gaussian%E3%80%91%E5%AF%B9%E7%A7%B0%E6%80%A7%E7%A0%B4%E7%BC%BA/</url>
+    <content><![CDATA[<ul>
+<li>自旋极化单重态也经常叫对称破缺态，这是因为对称破缺态是指波函数对称性低于当前分子结构的对称性，自旋极化单重态总伴随对称破缺的出现，而出现对称破缺又必然存在自旋极化，所以除了个例，二者指的是同一种态。</li>
+</ul>
+<h1 id="方法1-stable-opt"><a href="#方法1-stable-opt" class="headerlink" title="方法1 stable=opt"></a>方法1 stable=opt</h1><ul>
+<li>可以在限制性方法计算后进行波函数优化，程序会寻找能量更低的态，包括尝试破坏对称性<ul>
+<li>如果找到了（称存在RHF-&gt;UHF不稳定性），说明自旋极化态才是基态</li>
+<li>如果没找到，也不能说非自旋极化态一定就是基态，波函数优化并不能保证获得参数空间最小点，有可能通过调整初猜后能得到能量比非自旋极化态更低的自旋极化态。</li>
+</ul>
+</li>
+</ul>
+<h1 id="方法2-guess-mix"><a href="#方法2-guess-mix" class="headerlink" title="方法2 guess=mix"></a>方法2 guess=mix</h1><ul>
+<li><p><code>guess=mix</code>只在自旋极化单重态（即使用UHF方法在单重态下做计算，发现有严重自旋污染）时需要考虑加，其他情况（如二重态、三重态）等无需考虑这个问题；</p>
+</li>
+<li><p>always表示在结构优化的每一步中都执行guess=mix。顾名思义，这只在结构优化中可能有用，而在单点计算中无需加、加了也没用。</p>
+<figure class="highlight lisp"><table><tr><td class="code"><pre><span class="line"># guess=(<span class="name">mix</span>,always)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>通常使用：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"># UB3LYP/<span class="number">6</span><span class="number">-31</span>G* guess=mix nosymm stable=opt</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="mix具体的含义"><a href="#mix具体的含义" class="headerlink" title="mix具体的含义"></a>mix具体的含义</h2><ul>
+<li><p>可以是只混合alpha列的HOMO与LUMO轨道，也可以是alpha、beta两列的HOMO与LUMO轨道各自混合、但混合方式不一样。比如Gaussian采用后者中对1.5Å的H2计算（<a href="http://sobereva.com/82）是（注意还要乘归一化系数）：">http://sobereva.com/82）是（注意还要乘归一化系数）：</a></p>
+<p>$ψα<em>{HOMO}=ψ</em>{HOMO}+ψ<em>{LUMO}$<br>$ψα</em>{LUMO}=ψ<em>{LUMO}-ψ</em>{HOMO}$<br>$ψβ<em>{HOMO}=-(ψ</em>{LUMO}-ψ<em>{HOMO})$<br>$ψβ</em>{LUMO}=-(ψ<em>{HOMO}+ψ</em>{LUMO})$</p>
+</li>
+<li><p>还可以手动修改比例（<a href="https://mp.weixin.qq.com/s/ZB6gkRtfZQ8yuh3u0FNbOw）">https://mp.weixin.qq.com/s/ZB6gkRtfZQ8yuh3u0FNbOw）</a></p>
+</li>
+</ul>
+<h1 id="方法3-片段组合波函数"><a href="#方法3-片段组合波函数" class="headerlink" title="方法3 片段组合波函数"></a>方法3 片段组合波函数</h1><h2 id="例子：N2的解离"><a href="#例子：N2的解离" class="headerlink" title="例子：N2的解离"></a>例子：N2的解离</h2><p>普通计算：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">%chk=N2_cc-pVDZ_2<span class="number">.0</span>.chk</span><br><span class="line">%mem=<span class="number">4</span>GB</span><br><span class="line">%nprocshared=<span class="number">4</span></span><br><span class="line">#p UHF/cc-pVDZ nosymm guess=mix stable=opt</span><br><span class="line"></span><br><span class="line">title</span><br><span class="line"></span><br><span class="line"><span class="number">0</span> <span class="number">1</span></span><br><span class="line">N   <span class="number">0.0</span>   <span class="number">0.0</span>   <span class="number">0.0</span></span><br><span class="line">N   <span class="number">0.0</span>   <span class="number">0.0</span>   <span class="number">2.0</span></span><br></pre></td></tr></table></figure>
+<p>得到的结果：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"> <span class="attr">SCF Done:</span>  <span class="string">E(UHF)</span> <span class="string">=</span>  <span class="number">-108.616833307</span>     <span class="string">A.U.</span> <span class="string">after</span>   <span class="number">16</span> <span class="string">cycles</span></span><br><span class="line"> <span class="attr">SCF Done:</span>  <span class="string">E(UHF)</span> <span class="string">=</span>  <span class="number">-108.659688488</span>     <span class="string">a.u.</span> <span class="string">after</span>    <span class="number">6</span> <span class="string">cycles</span></span><br><span class="line"><span class="string">……</span></span><br><span class="line"><span class="string">……</span></span><br><span class="line"><span class="attr">Mulliken charges and spin densities:</span></span><br><span class="line">               <span class="number">1</span>          <span class="number">2</span></span><br><span class="line">     <span class="number">1</span>  <span class="string">N</span>    <span class="number">0.000000</span>  <span class="number">-0.861075</span></span><br><span class="line">     <span class="number">2</span>  <span class="string">N</span>   <span class="number">-0.000000</span>   <span class="number">0.861075</span></span><br></pre></td></tr></table></figure>
+<p>可以看到每个N原子只有接近1个电子的净自旋，这不太符合基本知识和化学直觉。因为N2平衡结构是N≡N三键，而解离时左右各自都应该像孤立N原子，所以无论是看平衡结构还是看解离极限，每个原子应各提供3个单电子。</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">%chk=N2_cc-pVDZ_2<span class="number">.0</span>_frag.chk</span><br><span class="line">%mem=<span class="number">4</span>GB</span><br><span class="line">%nprocshared=<span class="number">4</span></span><br><span class="line">#p UHF/cc-pVDZ nosymm guess(fragment=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">title</span><br><span class="line"></span><br><span class="line"><span class="number">0</span> <span class="number">1</span> <span class="number">0</span> <span class="number">4</span> <span class="number">0</span> <span class="number">-4</span></span><br><span class="line">N(fragment=<span class="number">1</span>)   <span class="number">0.0</span>   <span class="number">0.0</span>   <span class="number">0.0</span></span><br><span class="line">N(fragment=<span class="number">2</span>)   <span class="number">0.0</span>   <span class="number">0.0</span>   <span class="number">2.0</span></span><br><span class="line"></span><br><span class="line">--Link1--</span><br><span class="line">%chk=N2_cc-pVDZ_2<span class="number">.0</span>_frag.chk</span><br><span class="line">%mem=<span class="number">4</span>GB</span><br><span class="line">%nprocshared=<span class="number">4</span></span><br><span class="line">#p UHF chkbasis nosymm guess=read geom=allcheck stable=opt</span><br></pre></td></tr></table></figure>
+<p>得到：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">Mulliken</span> charges and spin densities:</span><br><span class="line">               <span class="attribute">1</span>          <span class="number">2</span></span><br><span class="line">     <span class="attribute">1</span>  N   -<span class="number">0</span>.<span class="number">000000</span>   <span class="number">2</span>.<span class="number">901523</span></span><br><span class="line">     <span class="attribute">2</span>  N   -<span class="number">0</span>.<span class="number">000000</span>  -<span class="number">2</span>.<span class="number">901523</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>Gaussian</tag>
+        <tag>对称性破缺</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【ORCA】06.DLPNO-CCSD(T)</title>
+    <url>/2020/05/29/%E3%80%90ORCA%E3%80%9106.DLPNO-CCSD(T)/</url>
+    <content><![CDATA[<ul>
+<li>DLPNO-CCSD(T)是一种基于局域轨道的近似CCSD(T)方法，其所得相关能与标准CCSD(T)的相关能比值可达99.9%以上，误差可控制在1 kcal/mol。在平时的计算中，需要用高精度方法的电子能量时，如果体系较大，无法做标准CCSD(T)计算，可以考虑使用ORCA的DLPNO-CCSD(T)方法。</li>
+</ul>
+<p>输入文件例子：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">%pal nprocs <span class="number">16</span> end</span><br><span class="line">%maxcore <span class="number">28000</span></span><br><span class="line">! def2-TZVP def2-TZVP/C DLPNO-CCSD(T) TightSCF tightPNO</span><br><span class="line">* xyz <span class="number">0</span> <span class="number">1</span></span><br><span class="line">体系xyz坐标</span><br><span class="line">*</span><br></pre></td></tr></table></figure>
+<h1 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h1><ul>
+<li>一般使用的核数比较小，因为DLPNO-CCSD(T)比较消耗内存</li>
+<li><code>%maxcore</code>×<code>%pal</code>要小于总内存（大约是orca.sub中指定的节点数*4）</li>
+<li>对硬盘的空间大小要求不是很高，但是对硬盘的读写性能要求很高，如果用SSD就会提升很多计算速度</li>
+</ul>
+<h1 id="基组"><a href="#基组" class="headerlink" title="基组"></a>基组</h1><ul>
+<li><p>LPNO必须使用RI近似，因此必须提供<strong>相关拟合</strong>的基组。比如：def2-SVP/C, def2-TZVP/C, def2-TZVPP/C, def2-QZVPP/C, cc-pVnZ/C, aug-cc-pVnZ/C (n=D,T,Q,5,6) </p>
+</li>
+<li><p>DLPNO-CCSD(T)的HF计算部分可以用RIJK或者RIJCOSX方法来加速，并指定辅助基组</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">RIJK def2/JK</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">RIJCOSX def2/J</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="精度控制选项"><a href="#精度控制选项" class="headerlink" title="精度控制选项"></a>精度控制选项</h1><h2 id="tightpno"><a href="#tightpno" class="headerlink" title="tightpno"></a>tightpno</h2><p><code>tightPNO</code>为控制CCSD(T)精度的参数，对应的可选值有<code>LoosePNO</code>、<code>NormalPNO</code>（默认）、<code>TightPNO</code>，一般来说LoosePNO精度不高，尽量选择后两个：</p>
+<ul>
+<li>用NormalPNO的时候精度就已经显著超过PWPB95-D3(BJ)了，相对于CCSD(T)的误差通常在1kcal/mol以内。</li>
+<li>DLPNO-CCSD(T)结合tightPNO的时候，根据J. Chem. Theory Comput., 11, 4054 (2015)的测试（注意此文里有很多在耗时方面的严重误导性说法），与CCSD(T)的误差在1 kJ/mol的程度，几乎可认为没有差别。tightPNO的耗时比NormalPNO通常高几倍。在笔者的Intel 36核机子上，用当前级别计算66个原子的有机体系耗时约8小时，耗硬盘最多时候为120GB。如果你还想要更好的精度，建议将基组提升至cc-pVQZ，但也会贵非常多。如果不用RIJK，即去掉RIJK cc-pVTZ/JK关键词，精度会有所改进，但对较大的体系，SCF部分的耗时会增加许多。</li>
+</ul>
+<h2 id="ccsd-t1"><a href="#ccsd-t1" class="headerlink" title="ccsd(t1)"></a>ccsd(t1)</h2><ul>
+<li>在ORCA 4.2版中，需要注意直接在关键词中写DLPNO-CCSD(T)实际做的是<code>DLPNO-CCSD(T0)</code>计算。所谓T0是指在进行(T)计算时使用semi-canonical (SC) 近似。在局域轨道表象下，分子轨道基的Fock矩阵的非对角元不为0，此时(T)的计算需要迭代求解。<strong>在SC近似下，忽略Fock矩阵的非对角元，不进行迭代求解。</strong></li>
+<li><strong>而不使用SC近似，对(T)部分进行迭代求解</strong>，这部分功能在ORCA中应该写为<code>DLPNO-CCSD(T1)</code>，这样结果与标准CCSD(T)更为接近。在J. Chem. Phys. 148, 011101 (2018)一文中，作者提到，一般在研究相对能量的问题时，使用T0便可以得到很好的结果，而对gap比较小的体系，可能需要T1才能得到准确的结果。</li>
+</ul>
+<h2 id="tcutpno"><a href="#tcutpno" class="headerlink" title="tcutpno"></a>tcutpno</h2><ul>
+<li><p>如果还需要更准，可以修改<code>TCutPNO</code>的具体值。(<code>TCutPNO 3.33e-7</code> 默认)</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">%mdci</span><br><span class="line">	TCutPNO <span class="number">0.0</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更高精度的话，比如追求CCSD(T)的精度，可以把cutoff都设置为0：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">%mdci</span><br><span class="line">	TCutPNO <span class="number">0.0</span></span><br><span class="line">	TCutDo <span class="number">0.0</span></span><br><span class="line">	TCutTNO <span class="number">0.0</span></span><br><span class="line">	TCutPairs <span class="number">0.0</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在此基础上还需要用比较大的辅助基组，否则RI对 四个virtual的积分会有比较大的误差。比如用DLPNO-CCSD（T1）/cc-pvdz 希望得到和标准CCSD(T) 一模一样的结果（小数点后第六位一样，单位hartree），除了把cutoff设置为0，还要用cc-pv5z/c作为cc-pvdz的辅助基组</li>
+</ul>
+</li>
+</ul>
+<p>20210130 8核 cc-pvtz 测试B<sub>9</sub><sup>-</sup>结果</p>
+<p><img src="image-20210205164601861.png" alt=""></p>
+<h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><ul>
+<li>通常只拿来算单点</li>
+<li>ccsd(t)没有解析梯度，因此要加上</li>
+</ul>
+<figure class="highlight armasm"><table><tr><td class="code"><pre><span class="line">!<span class="meta">opt</span> numgrad</span><br></pre></td></tr></table></figure>
+<p><img src="clipboard.png" alt=""></p>
+<ul>
+<li><p>计算开壳层时，最好使用UCO</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">! UCO</span><br><span class="line">#是用于绘制UHF波函数的自然轨道，同UNO。</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>ORCA</tag>
+        <tag>DLPNO</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【ORCA】05.HF&amp;SCF部分</title>
+    <url>/2020/09/04/%E3%80%90ORCA%E3%80%9107.%E8%BE%93%E5%87%BA/</url>
+    <content><![CDATA[<h1 id="导出molden"><a href="#导出molden" class="headerlink" title="导出molden"></a>导出molden</h1><figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">orca_2mkl </span><span class="keyword">basename </span>-molden</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>ORCA</tag>
+        <tag>轨道</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【linux】Slurm队列系统</title>
+    <url>/2022/11/07/%E3%80%90linux%E3%80%91Slurm%E9%98%9F%E5%88%97%E7%B3%BB%E7%BB%9F/</url>
+    <content><![CDATA[<h1 id="查看队列设定和节点状态"><a href="#查看队列设定和节点状态" class="headerlink" title="查看队列设定和节点状态"></a>查看队列设定和节点状态</h1><ul>
+<li><code>sinfo</code>：显示队列或节点状态，具有非常多过滤、排序和格式化等选项。</li>
+</ul>
+<p>主要参数：</p>
+<ul>
+<li><code>-l</code>、<code>--long</code>：显示详细信息。</li>
+</ul>
+<h1 id="提交任务"><a href="#提交任务" class="headerlink" title="提交任务"></a>提交任务</h1><p>三种模式：</p>
+<ul>
+<li>批处理作业（采用<code>sbatch</code>命令提交，最常用方式）</li>
+<li>交互式作业提交（采用<code>srun</code>命令提交）</li>
+<li>实时分配模式作业（采用<code>salloc</code>命令提交）</li>
+</ul>
+<p>常用参数：</p>
+<ul>
+<li><code>--exclusive[=user|mcs]</code>：设定排它性运行，不允许该节点有它人或某user用户或mcs的作业同时运行。</li>
+<li><code>-N</code>：采用特定节点数运行作业。注意，这里是节点数，不是CPU核数。</li>
+<li><code>-n</code>：设定所需要的任务总数。默认是每个节点1个任务，注意是节点，不是CPU核。</li>
+<li><code>-p</code>：使用<partition_names>队列</li>
+<li><code>-t</code>：作业最大运行总时间，到时间后将被终止掉。</li>
+</ul>
+<h2 id="sbatch"><a href="#sbatch" class="headerlink" title="sbatch"></a>sbatch</h2><p>sbatch提交一个批处理作业脚本到Slurm。脚本文件基本格式：</p>
+<ul>
+<li>第一行以#!/bin/sh等指定该脚本的解释程序，/bin/sh可以变为/bin/bash、/bin/csh等。</li>
+<li>在可执行命令之前的每行“#SBATCH”前缀后跟的参数作为作业调度系统参数。在任何非注释及空白之后的“#SBATCH”将不再作为Slurm参数处理。</li>
+<li>默认，标准输出和标准出错都定向到同一个文件slurm­%j.out，“%j”将被作业号代替。</li>
+</ul>
+<h1 id="取消任务"><a href="#取消任务" class="headerlink" title="取消任务"></a>取消任务</h1><ul>
+<li><code>scancel</code>：取消排队或运行中的作业或作业步，还可用于发送任意信号到运行中的作业或作业步中的所有进程。</li>
+</ul>
+<h1 id="查看任务"><a href="#查看任务" class="headerlink" title="查看任务"></a>查看任务</h1><h2 id="squeue"><a href="#squeue" class="headerlink" title="squeue"></a>squeue</h2><ul>
+<li><code>squeue</code>：显示队列中的作业及作业步状态，含非常多过滤、排序和格式化等选项。</li>
+</ul>
+<p>主要参数：</p>
+<ul>
+<li><code>-u &lt;user_list&gt;</code>：显示特定用户的作业信息</li>
+</ul>
+<h2 id="scontrol"><a href="#scontrol" class="headerlink" title="scontrol"></a>scontrol</h2><ul>
+<li><code>scontrol show job &lt;jobid&gt;</code>：显示作业号为JOBID的作业信息</li>
+</ul>
+]]></content>
+      <categories>
+        <category>系统</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
 </search>
