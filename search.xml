@@ -9215,7 +9215,7 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 </li>
 </ol>
 <ul>
-<li><code>-m</code>总是乱码？？后面不空格直接<code>-m“XXX”</code></li>
+<li><code>-m</code>总是乱码？？后面不空格直接<code>-m“XXX”</code>。</li>
 </ul>
 <h1 id="文章相关"><a href="#文章相关" class="headerlink" title="文章相关"></a>文章相关</h1><h2 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h2><ol>
 <li>在根目录下右键并GIt Bash here，然后输入<code>hexo new post &quot;article title&quot;</code>，新建一篇文章，此时在~/source_posts下就出现了<code>article title.md</code>文件，进行编辑即可。</li>
