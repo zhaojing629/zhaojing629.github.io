@@ -1232,7 +1232,13 @@
   <entry>
     <title>【CP2K】01.基础</title>
     <url>/2020/11/20/%E3%80%90CP2K%E3%80%9101.%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<h1 id="安装vim插件规范-inp文件"><a href="#安装vim插件规范-inp文件" class="headerlink" title="安装vim插件规范.inp文件"></a>安装vim插件规范.inp文件</h1><ol>
+    <content><![CDATA[<h1 id="运行cp2k"><a href="#运行cp2k" class="headerlink" title="运行cp2k"></a>运行cp2k</h1><p>使用MPI运行cp2k：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">mpirun</span> -n <span class="number">2</span> cp<span class="number">2</span>k.popt -i argon.inp -o out_ex<span class="number">0</span>.out</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-i &lt;input_file&gt;</code>：如果是最后一个参数，<code>-i</code>可以省略</li>
+<li><code>-o &lt;output_file&gt;</code>：输出文件名</li>
+</ul>
+<h1 id="安装vim插件规范-inp文件"><a href="#安装vim插件规范-inp文件" class="headerlink" title="安装vim插件规范.inp文件"></a>安装vim插件规范.inp文件</h1><ol>
 <li><p>如果下载失败，可以直接从<a href="http://manual.cp2k.org/trunk/cp2k.vim下载到">http://manual.cp2k.org/trunk/cp2k.vim下载到</a> ~/.vim/syntax中</p>
 <figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">mkdir -p ~<span class="regexp">/.vim/</span>syntax</span><br><span class="line">wget -O ~<span class="regexp">/.vim/</span>syntax<span class="regexp">/cp2k.vim http:/</span><span class="regexp">/manual.cp2k.org/</span>trunk/cp2k.vim</span><br></pre></td></tr></table></figure>
 </li>
@@ -1263,7 +1269,7 @@
 </li>
 <li><p>语法</p>
 <ul>
-<li><code>@INCLUDE ’filename’</code>：从文件中读取文本</li>
+<li><code>@INCLUDE ’filename’</code>：从文件中读取文本:q</li>
 <li><code>@SET VAR value</code>：定义变量</li>
 <li><code>@VAR</code>：变量</li>
 <li><code>@IF</code>/<code>@ENDIF</code>：简单的逻辑</li>
@@ -1274,9 +1280,9 @@
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#默认是angstrom，也可以设置bohr等等</span></span><br><span class="line"><span class="string">ABC</span> [<span class="string">nm</span>] <span class="number">100</span> <span class="number">100</span> <span class="number">100</span></span><br><span class="line"><span class="comment">#默认是hatree，设置Ry等等</span></span><br><span class="line"><span class="string">EMAX_SPLINE</span> [<span class="string">eV</span>] <span class="number">50</span></span><br><span class="line"><span class="comment">#也可以一起用</span></span><br><span class="line">[<span class="string">hatree*bohr^2</span>]</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h2 id="GLOBAL"><a href="#GLOBAL" class="headerlink" title="GLOBAL"></a>GLOBAL</h2><figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">&amp;GLOBAL</span></span><br><span class="line">	<span class="attr">PROJECT</span> <span class="string">H2O-32</span></span><br><span class="line">	<span class="attr">RUN_TYPE</span> <span class="string">MD</span></span><br><span class="line">	<span class="attr">PRINT_LEVEL</span> <span class="string">HIGH</span></span><br><span class="line">	<span class="attr">&amp;TIMINGS</span></span><br><span class="line">		<span class="attr">THRESHOLD</span> <span class="string">0.000001</span></span><br><span class="line">	<span class="attr">&amp;END</span></span><br><span class="line">	<span class="attr">WALLTIME</span> <span class="string">3600</span></span><br><span class="line"><span class="meta">&amp;END</span> <span class="string">GLOBAL</span></span><br></pre></td></tr></table></figure>
+<h2 id="amp-GLOBAL"><a href="#amp-GLOBAL" class="headerlink" title="&amp;GLOBAL"></a>&amp;GLOBAL</h2><figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">&amp;GLOBAL</span></span><br><span class="line">	<span class="attr">PROJECT</span> <span class="string">H2O-32</span></span><br><span class="line">	<span class="attr">RUN_TYPE</span> <span class="string">MD</span></span><br><span class="line">	<span class="attr">PRINT_LEVEL</span> <span class="string">HIGH</span></span><br><span class="line">	<span class="attr">&amp;TIMINGS</span></span><br><span class="line">		<span class="attr">THRESHOLD</span> <span class="string">0.000001</span></span><br><span class="line">	<span class="attr">&amp;END</span></span><br><span class="line">	<span class="attr">WALLTIME</span> <span class="string">3600</span></span><br><span class="line"><span class="meta">&amp;END</span> <span class="string">GLOBAL</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li><code>PROJECT</code>：任务名称，等同于<code>PROJECT_NAME</code></li>
+<li><code>PROJECT</code>：任务名称，等同于<code>PROJECT_NAME</code>，CP2K自动生成的所有输出文件都将以这个名称开头。</li>
 <li><code>RUN_TYPE</code>：任务类型<ul>
 <li><code>ENERGY</code>：计算当前结构的能量。对于DFT 来说，就是一个SCF 计算。</li>
 <li><code>ENERGY_FORCE</code>：计算当前结构的能量，同时计算出每个原子上的梯度（即受力）。</li>
@@ -1287,14 +1293,14 @@
 <li><code>VIBRATIONAL_ANALYSIS</code>：对当前结构进行振动分析。频率计算可以计算部分原子的频率（INVOLVED_ATOMS），也可以计算某一频率范围内的频率计算（MODE_SELECTIVE）。</li>
 </ul>
 </li>
-<li><code>PRINT_LEVEL</code>：输出内容级别，可以是<code>SILENT</code>、<code>MEDIUM</code>（默认）、<code>LOW</code>、<code>HIGH</code>等。</li>
+<li><code>PRINT_LEVEL</code>：输出内容级别，可以是<code>SILENT</code>、<code>MEDIUM</code>（默认）、<code>LOW</code>、<code>HIGH</code>等。还可以在输入文件中的每个小节来控制单独的输出级别。</li>
 <li><code>&amp;TIMINGS</code>：在CP2K执行结束时控制时序报告的打印<ul>
 <li><code>THRESHOLD</code>：阈值</li>
 </ul>
 </li>
 <li><code>WALLTIME</code>：此运行的最大执行时间。时间以秒为单位或以HH：MM：SS为单位。</li>
 </ul>
-<h2 id="FORCE-EVAL"><a href="#FORCE-EVAL" class="headerlink" title="FORCE_EVAL"></a>FORCE_EVAL</h2><p>计算能量和力并描述您要分析的系统所需的参数。</p>
+<h2 id="amp-FORCE-EVAL"><a href="#amp-FORCE-EVAL" class="headerlink" title="&amp;FORCE_EVAL"></a>&amp;FORCE_EVAL</h2><p>计算能量和力并描述您要分析的系统所需的参数。</p>
 <figure class="highlight oxygene"><table><tr><td class="code"><pre><span class="line">&amp;FORCE_EVAL</span><br><span class="line">	<span class="function"><span class="keyword">METHOD</span> <span class="title">QS</span></span></span><br><span class="line"><span class="function">	&amp;<span class="title">DFT</span></span></span><br><span class="line"><span class="function">		...</span></span><br><span class="line"><span class="function">	&amp;<span class="title">END</span> <span class="title">DFT</span></span></span><br><span class="line"><span class="function">	&amp;<span class="title">SUBSYS</span></span></span><br><span class="line"><span class="function">		...</span></span><br><span class="line"><span class="function">	&amp;<span class="title">END</span> <span class="title">SUBSYS</span></span></span><br><span class="line"><span class="function">&amp;<span class="title">END</span> <span class="title">FORCE_EVAL</span></span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>METHOD</code>：使用哪种方法来计算力<ul>
@@ -1304,7 +1310,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="MOTION"><a href="#MOTION" class="headerlink" title="MOTION"></a>MOTION</h2><p>定义了一组与原子核运动有关的工具。</p>
+<h2 id="amp-MOTION"><a href="#amp-MOTION" class="headerlink" title="&amp;MOTION"></a>&amp;MOTION</h2><p>定义了一组与原子核运动有关的工具。</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;MOTION</span></span><br><span class="line">	<span class="meta">&amp;MD</span></span><br><span class="line">		<span class="string">ENSEMBLE</span> <span class="string">NVE</span></span><br><span class="line">		<span class="string">STEPS</span> <span class="number">10</span></span><br><span class="line">		<span class="string">TIMESTEP</span> <span class="number">0.5</span></span><br><span class="line">		<span class="string">TEMPERATURE</span> <span class="number">300.0</span></span><br><span class="line">	<span class="string">&amp;END</span> <span class="string">MD</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">MOTION</span></span><br></pre></td></tr></table></figure>
 <h1 id="输出文件"><a href="#输出文件" class="headerlink" title="输出文件"></a>输出文件</h1><ul>
 <li><code>PROGJECT-1.restart</code>：重启计算的输入文件</li>
@@ -4987,16 +4993,11 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <li>BASIS_SET和GTH_POTENTIALS：该文件包含CP2K可用于此计算的基组和赝势的参数，在cp2k/data/中有相应的基组和赝势，它们包含大多数常用的元素，用户需要针对给定的计算选择自己需要的文件</li>
 <li>Si_bulk8.inp中主要包含<code>&amp;GLOBAL</code>和<code>&amp;FORCE_EVAL</code>两部分：·</li>
 </ul>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;GLOBAL</span></span><br><span class="line">  <span class="string">PROJECT</span> <span class="string">Si_bulk8</span></span><br><span class="line">  <span class="string">RUN_TYPE</span> <span class="string">ENERGY_FORCE</span></span><br><span class="line">  <span class="string">PRINT_LEVEL</span> <span class="string">LOW</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">GLOBAL</span></span><br><span class="line"><span class="meta">&amp;FORCE_EVAL</span></span><br><span class="line">  <span class="string">METHOD</span> <span class="string">Quickstep</span></span><br><span class="line">  <span class="meta">&amp;SUBSYS</span></span><br><span class="line">    <span class="string">&amp;KIND</span> <span class="string">Si</span></span><br><span class="line">      <span class="string">ELEMENT</span> <span class="string">Si</span></span><br><span class="line">      <span class="string">BASIS_SET</span> <span class="string">DZVP-GTH-PADE</span></span><br><span class="line">      <span class="string">POTENTIAL</span> <span class="string">GTH-PADE-q4</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">KIND</span></span><br><span class="line">    <span class="meta">&amp;CELL</span></span><br><span class="line">      <span class="string">A</span>     <span class="number">5.430697500</span>    <span class="number">0.000000000</span>    <span class="number">0.000000000</span></span><br><span class="line">      <span class="string">B</span>     <span class="number">0.000000000</span>    <span class="number">5.430697500</span>    <span class="number">0.000000000</span></span><br><span class="line">      <span class="string">C</span>     <span class="number">0.000000000</span>    <span class="number">0.000000000</span>    <span class="number">5.430697500</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">CELL</span></span><br><span class="line">    <span class="meta">&amp;COORD</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">0.000000000</span>    <span class="number">0.000000000</span>    <span class="number">0.000000000</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">0.000000000</span>    <span class="number">2.715348700</span>    <span class="number">2.715348700</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">2.715348700</span>    <span class="number">2.715348700</span>    <span class="number">0.000000000</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">2.715348700</span>    <span class="number">0.000000000</span>    <span class="number">2.715348700</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">4.073023100</span>    <span class="number">1.357674400</span>    <span class="number">4.073023100</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">1.357674400</span>    <span class="number">1.357674400</span>    <span class="number">1.357674400</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">1.357674400</span>    <span class="number">4.073023100</span>    <span class="number">4.073023100</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">4.073023100</span>    <span class="number">4.073023100</span>    <span class="number">1.357674400</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">COORD</span></span><br><span class="line">  <span class="string">&amp;END</span> <span class="string">SUBSYS</span></span><br><span class="line">  <span class="meta">&amp;DFT</span></span><br><span class="line">    <span class="string">BASIS_SET_FILE_NAME</span>  <span class="string">BASIS_SET</span></span><br><span class="line">    <span class="string">POTENTIAL_FILE_NAME</span>  <span class="string">GTH_POTENTIALS</span></span><br><span class="line">    <span class="meta">&amp;QS</span></span><br><span class="line">      <span class="string">EPS_DEFAULT</span> <span class="number">1.0E-10</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">QS</span></span><br><span class="line">    <span class="meta">&amp;MGRID</span></span><br><span class="line">      <span class="string">NGRIDS</span> <span class="number">4</span></span><br><span class="line">      <span class="string">CUTOFF</span> <span class="number">300</span></span><br><span class="line">      <span class="string">REL_CUTOFF</span> <span class="number">60</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">MGRID</span></span><br><span class="line">    <span class="meta">&amp;XC</span></span><br><span class="line">      <span class="string">&amp;XC_FUNCTIONAL</span> <span class="string">PADE</span></span><br><span class="line">      <span class="string">&amp;END</span> <span class="string">XC_FUNCTIONAL</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">XC</span></span><br><span class="line">    <span class="meta">&amp;SCF</span></span><br><span class="line">      <span class="string">SCF_GUESS</span> <span class="string">ATOMIC</span></span><br><span class="line">      <span class="string">EPS_SCF</span> <span class="number">1.0E-7</span></span><br><span class="line">      <span class="string">MAX_SCF</span> <span class="number">300</span></span><br><span class="line">      <span class="string">&amp;DIAGONALIZATION</span>  <span class="string">ON</span></span><br><span class="line">        <span class="string">ALGORITHM</span> <span class="string">STANDARD</span></span><br><span class="line">      <span class="string">&amp;END</span> <span class="string">DIAGONALIZATION</span></span><br><span class="line">      <span class="string">&amp;MIXING</span>  <span class="string">T</span></span><br><span class="line">        <span class="string">METHOD</span> <span class="string">BROYDEN_MIXING</span></span><br><span class="line">        <span class="string">ALPHA</span> <span class="number">0.4</span></span><br><span class="line">        <span class="string">NBROYDEN</span> <span class="number">8</span></span><br><span class="line">      <span class="string">&amp;END</span> <span class="string">MIXING</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">SCF</span></span><br><span class="line">  <span class="string">&amp;END</span> <span class="string">DFT</span></span><br><span class="line">  <span class="meta">&amp;PRINT</span></span><br><span class="line">    <span class="string">&amp;FORCES</span> <span class="string">ON</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">FORCES</span></span><br><span class="line">  <span class="string">&amp;END</span> <span class="string">PRINT</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">FORCE_EVAL</span></span><br></pre></td></tr></table></figure>
-<h2 id="amp-GLOBAL-修改任务类型"><a href="#amp-GLOBAL-修改任务类型" class="headerlink" title="&amp;GLOBAL 修改任务类型"></a>&amp;GLOBAL 修改任务类型</h2><figure class="highlight armasm"><table><tr><td class="code"><pre><span class="line">&amp;<span class="meta">GLOBAL</span></span><br><span class="line">  PROJECT Si_bulk8</span><br><span class="line">  RUN_TYPE ENERGY_FORCE</span><br><span class="line">  PRINT_LEVEL LOW</span><br><span class="line">&amp;<span class="meta">END</span> <span class="meta">GLOBAL</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>PROJECT</code>：任务名称，等同于<code>PROJECT_NAME</code>，CP2K自动生成的所有输出文件都将以这个名称开头。</li>
-<li><code>RUN_TYPE</code>：任务类型，<code>ENERGY_FORCE</code>进行静态能量和力的计算</li>
-<li><code>PRINT_LEVEL</code>：全局的输出内容级别，可以是<code>SILENT</code>、<code>MEDIUM</code>（默认）、<code>LOW</code>、<code>HIGH</code>等。还可以在输入文件中的每个小节来控制单独的输出级别。</li>
-</ul>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;GLOBAL</span></span><br><span class="line">  <span class="string">PROJECT</span> <span class="string">Si_bulk8</span>			<span class="comment">#修改任务名字</span></span><br><span class="line">  <span class="string">RUN_TYPE</span> <span class="string">ENERGY_FORCE</span>		<span class="comment">#修改任务类型</span></span><br><span class="line">  <span class="string">PRINT_LEVEL</span> <span class="string">LOW</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">GLOBAL</span></span><br><span class="line"><span class="meta">&amp;FORCE_EVAL</span></span><br><span class="line">  <span class="string">METHOD</span> <span class="string">Quickstep</span></span><br><span class="line">  <span class="meta">&amp;SUBSYS</span></span><br><span class="line">    <span class="string">&amp;KIND</span> <span class="string">Si</span></span><br><span class="line">      <span class="string">ELEMENT</span> <span class="string">Si</span></span><br><span class="line">      <span class="string">BASIS_SET</span> <span class="string">DZVP-GTH-PADE</span></span><br><span class="line">      <span class="string">POTENTIAL</span> <span class="string">GTH-PADE-q4</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">KIND</span></span><br><span class="line">    <span class="meta">&amp;CELL</span></span><br><span class="line">      <span class="string">A</span>     <span class="number">5.430697500</span>    <span class="number">0.000000000</span>    <span class="number">0.000000000</span></span><br><span class="line">      <span class="string">B</span>     <span class="number">0.000000000</span>    <span class="number">5.430697500</span>    <span class="number">0.000000000</span></span><br><span class="line">      <span class="string">C</span>     <span class="number">0.000000000</span>    <span class="number">0.000000000</span>    <span class="number">5.430697500</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">CELL</span></span><br><span class="line">    <span class="meta">&amp;COORD</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">0.000000000</span>    <span class="number">0.000000000</span>    <span class="number">0.000000000</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">0.000000000</span>    <span class="number">2.715348700</span>    <span class="number">2.715348700</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">2.715348700</span>    <span class="number">2.715348700</span>    <span class="number">0.000000000</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">2.715348700</span>    <span class="number">0.000000000</span>    <span class="number">2.715348700</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">4.073023100</span>    <span class="number">1.357674400</span>    <span class="number">4.073023100</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">1.357674400</span>    <span class="number">1.357674400</span>    <span class="number">1.357674400</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">1.357674400</span>    <span class="number">4.073023100</span>    <span class="number">4.073023100</span></span><br><span class="line">      <span class="string">Si</span>    <span class="number">4.073023100</span>    <span class="number">4.073023100</span>    <span class="number">1.357674400</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">COORD</span></span><br><span class="line">  <span class="string">&amp;END</span> <span class="string">SUBSYS</span></span><br><span class="line">  <span class="meta">&amp;DFT</span></span><br><span class="line">    <span class="string">BASIS_SET_FILE_NAME</span>  <span class="string">BASIS_SET</span></span><br><span class="line">    <span class="string">POTENTIAL_FILE_NAME</span>  <span class="string">GTH_POTENTIALS</span></span><br><span class="line">    <span class="meta">&amp;QS</span></span><br><span class="line">      <span class="string">EPS_DEFAULT</span> <span class="number">1.0E-10</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">QS</span></span><br><span class="line">    <span class="meta">&amp;MGRID</span></span><br><span class="line">      <span class="string">NGRIDS</span> <span class="number">4</span></span><br><span class="line">      <span class="string">CUTOFF</span> <span class="number">300</span></span><br><span class="line">      <span class="string">REL_CUTOFF</span> <span class="number">60</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">MGRID</span></span><br><span class="line">    <span class="meta">&amp;XC</span></span><br><span class="line">      <span class="string">&amp;XC_FUNCTIONAL</span> <span class="string">PADE</span></span><br><span class="line">      <span class="string">&amp;END</span> <span class="string">XC_FUNCTIONAL</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">XC</span></span><br><span class="line">    <span class="meta">&amp;SCF</span></span><br><span class="line">      <span class="string">SCF_GUESS</span> <span class="string">ATOMIC</span></span><br><span class="line">      <span class="string">EPS_SCF</span> <span class="number">1.0E-7</span></span><br><span class="line">      <span class="string">MAX_SCF</span> <span class="number">300</span></span><br><span class="line">      <span class="string">&amp;DIAGONALIZATION</span>  <span class="string">ON</span></span><br><span class="line">        <span class="string">ALGORITHM</span> <span class="string">STANDARD</span></span><br><span class="line">      <span class="string">&amp;END</span> <span class="string">DIAGONALIZATION</span></span><br><span class="line">      <span class="string">&amp;MIXING</span>  <span class="string">T</span></span><br><span class="line">        <span class="string">METHOD</span> <span class="string">BROYDEN_MIXING</span></span><br><span class="line">        <span class="string">ALPHA</span> <span class="number">0.4</span></span><br><span class="line">        <span class="string">NBROYDEN</span> <span class="number">8</span></span><br><span class="line">      <span class="string">&amp;END</span> <span class="string">MIXING</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">SCF</span></span><br><span class="line">  <span class="string">&amp;END</span> <span class="string">DFT</span></span><br><span class="line">  <span class="meta">&amp;PRINT</span></span><br><span class="line">    <span class="string">&amp;FORCES</span> <span class="string">ON</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">FORCES</span></span><br><span class="line">  <span class="string">&amp;END</span> <span class="string">PRINT</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">FORCE_EVAL</span></span><br></pre></td></tr></table></figure>
 <h2 id="amp-FORCE-EVAL"><a href="#amp-FORCE-EVAL" class="headerlink" title="&amp;FORCE_EVAL"></a>&amp;FORCE_EVAL</h2><ul>
 <li><code>METHOD</code>：使用哪种方法来计算力<ul>
 <li><code>QS</code>：默认，同<code>QUICKSTEP</code>，即使用高斯和平面波（GPW）方法的密度泛函理论。与<code>&amp;DFT</code>一起使用。</li>
+<li><code>FIST</code>：分子力学</li>
 </ul>
 </li>
 </ul>
@@ -5030,11 +5031,11 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <li><p><code>UNIT</code>：更改笛卡尔坐标的单位，默认是 <code>ANGSTROM</code></p>
 </li>
 </ul>
+<p>可以用<code>@INCLUDE &#39;coord.inc&#39;</code>读取文件简化输出：</p>
+<figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;COORD</span></span><br><span class="line">  		@INCLUDE &#x27;coord.inc&#x27;</span><br><span class="line"><span class="meta">&amp;END COORD</span></span><br></pre></td></tr></table></figure>
 <h4 id="amp-TOPOLOGY"><a href="#amp-TOPOLOGY" class="headerlink" title="&amp;TOPOLOGY"></a>&amp;TOPOLOGY</h4><ul>
-<li><p><code>COORD_FILE_NAME</code>：指定包含坐标的文件名。</p>
-</li>
-<li><p><code>COORDINATE</code>：等同于<code>COORD_FILE_FORMAT</code>，设置读取坐标的方式:</p>
-<ul>
+<li><code>COORD_FILE_NAME</code>：指定包含坐标的文件名。</li>
+<li><code>COORDINATE</code>：等同于<code>COORD_FILE_FORMAT</code>，设置读取坐标的方式:<ul>
 <li><code>off</code>：在输入文件的＆COORD部分中读取的坐标</li>
 <li><code>XYZ</code>：通过XYZ文件格式提供的坐标</li>
 <li><code>PDB</code>：通过PDB文件格式提供的坐标</li>
@@ -5048,6 +5049,7 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 </li>
 <li><code>MULTIPLE_UNIT_CELL</code>：指定已定义单元格在空间（X，Y，Z）中的重复次数（假设其为单位晶胞）。此关键字仅影响坐标规范。默认为<code>1 1 1</code></li>
 </ul>
+<h4 id="amp-PRINT"><a href="#amp-PRINT" class="headerlink" title="&amp;PRINT"></a>&amp;PRINT</h4><figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;PRINT</span></span><br><span class="line">   <span class="meta">&amp;ATOMIC_COORDINATES</span></span><br><span class="line">      <span class="meta">&amp;EACH</span></span><br><span class="line">         JUST_ENERGY <span class="number">1</span></span><br><span class="line">         GEO_OPT <span class="number">1</span></span><br><span class="line">      <span class="meta">&amp;END EACH</span></span><br><span class="line">   <span class="meta">&amp;END ATOMIC_COORDINATES</span></span><br><span class="line"><span class="meta">&amp;END PRINT</span></span><br></pre></td></tr></table></figure>
 <h3 id="amp-DFT"><a href="#amp-DFT" class="headerlink" title="&amp;DFT"></a>&amp;DFT</h3><figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;DFT</span></span><br><span class="line">  BASIS_SET_FILE_NAME  BASIS_SET</span><br><span class="line">  POTENTIAL_FILE_NAME  GTH_POTENTIALS</span><br><span class="line">  ……</span><br><span class="line"><span class="meta">&amp;END DFT</span></span><br></pre></td></tr></table></figure>
 <p>该部分控制自洽的Kohn-Sham密度泛函理论计算的所有方面。仅当且仅当<code>FORCE_EVAL</code>中的<code>METHOD</code>关键字设置为<code>QUICKSTEP</code>时，<code>&amp;DFT</code>才有意义。</p>
 <ul>
@@ -5074,9 +5076,11 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <li><code>GBW</code>：默认。高斯和平面波方法。</li>
 </ul>
 </li>
+<li><code>EXTRAPOLATION</code>：默认是<code>ASPC</code>。波函数的外推策略，并非所有的选项都适用于所有的模拟方法。推荐使用<code>PS</code>和<code>ASPC</code>，参见<code>EXTRAPOLATION_ORDER</code>。</li>
+<li><code>EXTRAPOLATION_ORDER</code>：默认是3。PS或ASPC推断的阶数（通常是2-4）。更高的阶数可能带来更多的精度，但对于大型系统来说，也要付出一定的代价。在某些情况下，高阶外推法并不稳定，需要降低阶数。</li>
 </ul>
 <h4 id="amp-MGRID"><a href="#amp-MGRID" class="headerlink" title="&amp;MGRID"></a>&amp;MGRID</h4><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;MGRID</span></span><br><span class="line">  <span class="string">NGRIDS</span> <span class="number">4</span></span><br><span class="line">  <span class="string">CUTOFF</span> <span class="number">300</span></span><br><span class="line">  <span class="string">REL_CUTOFF</span> <span class="number">60</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">MGRID</span></span><br></pre></td></tr></table></figure>
-<p>定义了QUICKSTEP计算中使用的积分网格。设置4个级别的多重网格。</p>
+<p>定义了QUICKSTEP计算中使用的积分网格。设置4个级别的多重网格。详见【CP2K】03.&amp;MGRID中的CUTOFF和RELEL_CUTOFF</p>
 <h4 id="amp-XC-修改泛函"><a href="#amp-XC-修改泛函" class="headerlink" title="&amp;XC 修改泛函"></a>&amp;XC 修改泛函</h4><p>使用的交换相关密度泛函的参数</p>
 <figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;XC</span></span><br><span class="line">……</span><br><span class="line"><span class="meta">&amp;END XC</span></span><br></pre></td></tr></table></figure>
 <h5 id="amp-XC-FUNCTIONAL"><a href="#amp-XC-FUNCTIONAL" class="headerlink" title="&amp;XC_FUNCTIONAL"></a>&amp;XC_FUNCTIONAL</h5><p>注意选择的泛函要与所选择的基组和赝势一致</p>
@@ -5089,6 +5093,22 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <h5 id="amp-XC-GRID"><a href="#amp-XC-GRID" class="headerlink" title="&amp;XC_GRID"></a>&amp;XC_GRID</h5><ul>
 <li><code>XC_SMOOTH_RHO</code>：用于xc计算的密度平滑，默认为<code>NONE</code>。还有<code>NN10</code>、<code>NN4</code>、<code>NN50</code>、<code>NN6</code>、<code>SPLINE2</code>、<code>SPLINE3</code></li>
 <li><code>XC_DERIV</code>：用于计算导数的方法。默认为<code>PW</code>，还有<code>COLLOCATE</code>、<code>NN10_SMOOTH</code>、<code>NN4_SMOOTH</code>、<code>NN50_SMOOTH</code>、<code>NN6_SMOOTH</code>、<code>SPLINE2</code>、<code>SPLINE2_SMOOTH</code>、<code>SPLINE3</code>、<code>SPLINE3_SMOOTH</code></li>
+</ul>
+<h5 id="amp-VDW-POTENTIAL-色散校正"><a href="#amp-VDW-POTENTIAL-色散校正" class="headerlink" title="&amp;VDW_POTENTIAL 色散校正"></a>&amp;VDW_POTENTIAL 色散校正</h5><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">&amp;VDW_POTENTIAL</span><br><span class="line">   POTENTIAL_TYPE PAIR_POTENTIAL</span><br><span class="line">   &amp;PAIR_POTENTIAL</span><br><span class="line">      PARAMETER_FILE_NAME dftd3.dat</span><br><span class="line">     <span class="built_in"> TYPE </span>DFTD3</span><br><span class="line">      REFERENCE_FUNCTIONAL PBE</span><br><span class="line">      R_CUTOFF 15</span><br><span class="line">   &amp;END PAIR_POTENTIAL</span><br><span class="line">&amp;END VDW_POTENTIAL</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>POTENTIAL_TYPE</code>：同名<code>DISPERSION_FUNCTIONAL</code><ul>
+<li><code>NONE</code>：默认，不使用色散</li>
+<li><code>NON_LOCAL</code>：非局域范德华密度泛函</li>
+<li><code>PAIR_POTENTIAL</code>：对势范德华密度泛函</li>
+</ul>
+</li>
+<li><code>&amp;PAIR_POTENTIAL</code>：关于计算色散的对电势的信息：<ul>
+<li><code>PARAMETER_FILE_NAME</code>：参数文件的名称，可能包括一个路径，默认是<code>DISPERSION_PARAMETERS</code></li>
+<li><code>TYPE</code>：类型，有<code>DFTD2</code>Grimme D2 方法、<code>DFTD3</code>Grimme D3 (zero damping) 方法和<code>DFTD3(BJ)</code>Grimme D3 (Becke-Johnson damping)方法。</li>
+<li><code>REFERENCE_FUNCTIONAL</code>：使用这个特定密度泛函的参数。</li>
+<li><code>R_CUTOFF</code>：势的范围。cutoff是这个值的2倍，默认是10.5835442Å。</li>
+</ul>
+</li>
 </ul>
 <h4 id="amp-SCF"><a href="#amp-SCF" class="headerlink" title="&amp;SCF"></a>&amp;SCF</h4><p>定义自洽场方法的设置</p>
 <figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">&amp;SCF</span></span><br><span class="line">  <span class="attr">SCF_GUESS</span> <span class="string">ATOMIC</span></span><br><span class="line">  <span class="attr">EPS_SCF</span> <span class="string">1.0E-7</span></span><br><span class="line">  <span class="attr">MAX_SCF</span> <span class="string">300</span></span><br><span class="line">  <span class="attr">……</span></span><br><span class="line"><span class="meta">&amp;END</span> <span class="string">SCF</span></span><br></pre></td></tr></table></figure>
@@ -5139,11 +5159,12 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 </ul>
 </li>
 </ul>
-<h5 id="amp-PRINT"><a href="#amp-PRINT" class="headerlink" title="&amp;PRINT"></a>&amp;PRINT</h5><p>在SCF期间打印信息：</p>
+<h5 id="amp-PRINT-1"><a href="#amp-PRINT-1" class="headerlink" title="&amp;PRINT"></a>&amp;PRINT</h5><p>在SCF期间打印信息：</p>
 <ul>
 <li><code>&amp;RESTART</code>在SCF期间控制MO重新启动文件的转储。默认情况下，保留简短的三次重新启动的历史记录。</li>
 </ul>
-<h5 id="amp-OT"><a href="#amp-OT" class="headerlink" title="&amp;OT"></a>&amp;OT</h5><p>如果体系有较大带隙的，如为半导体或者绝缘体等，推荐使用OT 算法，收敛速度比较快。但是对预处理敏感。好的预处理器可能很昂贵。不能<code>smearing</code>或进行高级<code>SCF mixing</code> ，HOMO-LUMO 带隙很小或者几乎没有的系统，如金属系统，收敛性较差（此时应该使用<code>&amp;DIAGONALIZATION</code>和<code>&amp;Smear</code>）。设置轨道变换（OT）方法的各种选项：</p>
+<h5 id="amp-OT"><a href="#amp-OT" class="headerlink" title="&amp;OT"></a>&amp;OT</h5><figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;OT T</span></span><br><span class="line">   MINIMIZER DIIS</span><br><span class="line">   <span class="meta">#MINIMIZER CG</span></span><br><span class="line">   <span class="meta">#LINESEARCH  2PNT</span></span><br><span class="line">   PRECONDITIONER  FULL_SINGL</span><br><span class="line"><span class="meta">&amp;END OT</span></span><br></pre></td></tr></table></figure>
+<p>如果体系有较大带隙的，如为半导体或者绝缘体等，推荐使用OT 算法，收敛速度比较快。但是对预处理敏感。好的预处理器可能很昂贵。不能<code>smearing</code>或进行高级<code>SCF mixing</code> ，HOMO-LUMO 带隙很小或者几乎没有的系统，如金属系统，收敛性较差（此时应该使用<code>&amp;DIAGONALIZATION</code>和<code>&amp;Smear</code>）。设置轨道变换（OT）方法的各种选项：</p>
 <ul>
 <li><code>PRECONDITIONER</code>：<ul>
 <li><code>FULL_KINETIC</code>：默认。S和T的Cholesky反转，快速构建，强大且相对较好，可用于超大型系统。</li>
@@ -5157,16 +5178,18 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 </ul>
 </li>
 <li><code>ENERGY_GAP</code>：默认是-1。应该是能隙[a.u.]（HOMO-LUMO）的估计值，并应在预处理中使用，尤其是对<code>FULL_ALL</code>预处理器有效，在这种情况下，它应该比能隙小。（可以为小数，例如0.002） 。 <code>FULL_SINGLE_INVERSE</code>将其作为下限（值小于0.05可能会导致稳定性问题）。通常，在初始猜测很差的情况下，heigher值会驯服预处理器。负值将取决于预调节器的类型，使选择留给CP2K。</li>
-<li></li>
 </ul>
-<h5 id="amp-OUTER-SCF"><a href="#amp-OUTER-SCF" class="headerlink" title="&amp;OUTER_SCF"></a>&amp;OUTER_SCF</h5><p><code>OUTER_SCF</code> 为加速收敛的一种方法，如果SCF 经过100 次优化依然没有收敛，则进入OUTER_SCF 过程，对前一次计算的波函数进行调整，重新进行SCF 迭代。每次OUTER_SCF 中优化的次数依然是100 次，比如最多可以进行5次OUTER_SCF，那么最多可以进行500 次SCF 计算。</p>
+<h5 id="amp-OUTER-SCF"><a href="#amp-OUTER-SCF" class="headerlink" title="&amp;OUTER_SCF"></a>&amp;OUTER_SCF</h5><figure class="highlight sas"><table><tr><td class="code"><pre><span class="line"><span class="variable">&amp;OUTER_SCF</span> <span class="meta">ON</span></span><br><span class="line">   MAX_SCF 10</span><br><span class="line">   EPS_SCF    1.0E-05</span><br><span class="line"><span class="variable">&amp;END</span> OUTER_SCF</span><br></pre></td></tr></table></figure>
+<p><code>OUTER_SCF</code> 为加速收敛的一种方法，如果SCF 经过100 次优化依然没有收敛，则进入OUTER_SCF 过程，对前一次计算的波函数进行调整，重新进行SCF 迭代。每次OUTER_SCF 中优化的次数依然是100 次，比如最多可以进行5次OUTER_SCF，那么最多可以进行500 次SCF 计算。</p>
 <ul>
 <li><code>EPS_SCF</code>： outer SCF变量的目标梯度。默认为<script type="math/tex">10^{-5}</script>。内部循环的<code>EPS_SCF</code>还确定了外部循环可以达到的值，通常，外部循环的<code>EPS_SCF</code>必须小于或等于内部循环的EPS_SCF。</li>
 <li><code>MAX_SCF</code>：最大循环数</li>
 </ul>
-<h3 id="amp-PRINT-1"><a href="#amp-PRINT-1" class="headerlink" title="&amp;PRINT"></a>&amp;PRINT</h3><ul>
-<li><code>&amp;FORCES</code>，在主要的输出中输出原子受力。<code>GLOBAL</code> 部分的<code>RUN_TYPE</code> 必须设置为<code>ENERGY_FORCE</code> 或者<code>GEO_OPT</code>。如果要将受力信息存储到文件中，则需要设定文件的名称；否则受力信息将会打印到out 文件中。</li>
-<li></li>
+<h3 id="amp-PRINT-2"><a href="#amp-PRINT-2" class="headerlink" title="&amp;PRINT"></a>&amp;PRINT</h3><ul>
+<li><p><code>&amp;FORCES</code>，在主要的输出中输出原子受力。<code>GLOBAL</code> 部分的<code>RUN_TYPE</code> 必须设置为<code>ENERGY_FORCE</code> 或者<code>GEO_OPT</code>。如果要将受力信息存储到文件中，则需要设定文件的名称；否则受力信息将会打印到out 文件中。</p>
+</li>
+<li><p><code>&amp;TOTAL_NUMBERS</code>：控制打印的原子总数，种类……</p>
+</li>
 </ul>
 <h1 id="输出文件"><a href="#输出文件" class="headerlink" title="输出文件"></a>输出文件</h1><h2 id="out"><a href="#out" class="headerlink" title=".out"></a>.out</h2><p>主要的输出文件</p>
 <ul>
@@ -5337,34 +5360,7 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
   <entry>
     <title>【CP2K】04.几何优化</title>
     <url>/2020/12/02/%E3%80%90CP2K%E3%80%9104.%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/</url>
-    <content><![CDATA[<h1 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h1><figure class="highlight sas"><table><tr><td class="code"><pre><span class="line"><span class="variable">&amp;GLOBAL</span></span><br><span class="line">  PROJECT H2O</span><br><span class="line">  RUN_TYPE GEO_OPT</span><br><span class="line">  PRINT_LEVEL LOW</span><br><span class="line"><span class="variable">&amp;END</span> GLOBAL</span><br><span class="line"><span class="variable">&amp;FORCE_EVAL</span></span><br><span class="line">  METHOD QS</span><br><span class="line">  <span class="variable">&amp;SUBSYS</span></span><br><span class="line">    <span class="variable">&amp;CELL</span></span><br><span class="line">      ABC 12.4138 12.4138 12.4138</span><br><span class="line">    <span class="variable">&amp;END</span> CELL</span><br><span class="line">    <span class="variable">&amp;COORD</span></span><br><span class="line">      O      12.235322       1.376642      10.869880</span><br><span class="line">      H      12.415139       2.233125      11.257611</span><br><span class="line">      H      11.922476       1.573799       9.986994</span><br><span class="line">    <span class="variable">&amp;END</span> COORD</span><br><span class="line">    <span class="variable">&amp;KIND</span> H</span><br><span class="line">      BASIS_SET DZVP-GTH-PADE</span><br><span class="line">      POTENTIAL GTH-PADE-q1</span><br><span class="line">    <span class="variable">&amp;END</span> KIND</span><br><span class="line">    <span class="variable">&amp;KIND</span> O</span><br><span class="line">      BASIS_SET DZVP-GTH-PADE</span><br><span class="line">      POTENTIAL GTH-PADE-q6</span><br><span class="line">    <span class="variable">&amp;END</span> KIND</span><br><span class="line">  <span class="variable">&amp;END</span> SUBSYS</span><br><span class="line">  <span class="variable">&amp;DFT</span></span><br><span class="line">    BASIS_SET_FILE_NAME ./BASIS_SET</span><br><span class="line">    POTENTIAL_FILE_NAME ./POTENTIAL</span><br><span class="line">    <span class="variable">&amp;QS</span></span><br><span class="line">      EPS_DEFAULT 1.0E-7</span><br><span class="line">    <span class="variable">&amp;END</span> QS</span><br><span class="line">    <span class="variable">&amp;MGRID</span></span><br><span class="line">      CUTOFF 200</span><br><span class="line">      NGRIDS 4</span><br><span class="line">      REL_CUTOFF 30</span><br><span class="line">    <span class="variable">&amp;END</span> MGRID</span><br><span class="line">    <span class="variable">&amp;SCF</span></span><br><span class="line">      SCF_GUESS ATOMIC</span><br><span class="line">      EPS_SCF 1.0E-05</span><br><span class="line">      MAX_SCF 200</span><br><span class="line">      <span class="variable">&amp;DIAGONALIZATION</span> T</span><br><span class="line">        ALGORITHM STANDARD</span><br><span class="line">      <span class="variable">&amp;END</span> DIAGONALIZATION</span><br><span class="line">      <span class="variable">&amp;MIXING</span> T</span><br><span class="line">        ALPHA 0.5</span><br><span class="line">        METHOD PULAY_MIXING</span><br><span class="line">        NPULAY 5</span><br><span class="line">      <span class="variable">&amp;END</span> MIXING</span><br><span class="line">      <span class="variable">&amp;PRINT</span></span><br><span class="line">        <span class="variable">&amp;RESTART</span> OFF</span><br><span class="line">        <span class="variable">&amp;END</span> RESTART</span><br><span class="line">      <span class="variable">&amp;END</span> PRINT</span><br><span class="line">    <span class="variable">&amp;END</span> SCF</span><br><span class="line">    <span class="variable">&amp;XC</span></span><br><span class="line">      <span class="variable">&amp;XC_FUNCTIONAL</span> PADE</span><br><span class="line">      <span class="variable">&amp;END</span> XC_FUNCTIONAL</span><br><span class="line">    <span class="variable">&amp;END</span> XC</span><br><span class="line">  <span class="variable">&amp;END</span> DFT</span><br><span class="line"><span class="variable">&amp;END</span> FORCE_EVAL</span><br><span class="line"><span class="variable">&amp;MOTION</span></span><br><span class="line">  <span class="variable">&amp;GEO_OPT</span></span><br><span class="line">    TYPE MINIMIZATION</span><br><span class="line">    MAX_DR    1.0E-03</span><br><span class="line">    MAX_FORCE 1.0E-03</span><br><span class="line">    RMS_DR    1.0E-03</span><br><span class="line">    RMS_FORCE 1.0E-03</span><br><span class="line">    MAX_ITER 200</span><br><span class="line">    OPTIMIZER CG</span><br><span class="line">    <span class="variable">&amp;CG</span></span><br><span class="line">      MAX_STEEP_STEPS  0</span><br><span class="line">      RESTART_LIMIT 9.0E-01</span><br><span class="line">    <span class="variable">&amp;END</span> CG</span><br><span class="line">  <span class="variable">&amp;END</span> GEO_OPT</span><br><span class="line">  <span class="variable">&amp;CONSTRAINT</span></span><br><span class="line">    <span class="variable">&amp;FIXED_ATOMS</span></span><br><span class="line">      COMPONENTS_TO_FIX XYZ</span><br><span class="line">      <span class="meta">LIST</span> 1</span><br><span class="line">    <span class="variable">&amp;END</span> FIXED_ATOMS</span><br><span class="line">  <span class="variable">&amp;END</span> CONSTRAINT</span><br><span class="line"><span class="variable">&amp;END</span> MOTION</span><br></pre></td></tr></table></figure>
-<h2 id="amp-GLOBAL-修改任务类型"><a href="#amp-GLOBAL-修改任务类型" class="headerlink" title="&amp;GLOBAL 修改任务类型"></a>&amp;GLOBAL 修改任务类型</h2><ul>
-<li>将<code>RUN_TYPE</code>修改为<code>GEO_OPT</code></li>
-</ul>
-<figure class="highlight armasm"><table><tr><td class="code"><pre><span class="line">&amp;<span class="meta">GLOBAL</span></span><br><span class="line">  PROJECT H2O</span><br><span class="line">  RUN_TYPE GEO_OPT</span><br><span class="line">  PRINT_LEVEL LOW</span><br><span class="line">&amp;<span class="meta">END</span> <span class="meta">GLOBAL</span></span><br></pre></td></tr></table></figure>
-<h2 id="其他改动"><a href="#其他改动" class="headerlink" title="其他改动"></a>其他改动</h2><p>相比于计算能量和力的Si例子中的改动：</p>
-<ul>
-<li><code>&amp;SUBSYS</code>：<ul>
-<li><code>&amp;KIND</code>设定H和O的基组</li>
-<li><code>&amp;CELL</code>修改晶格向量单位</li>
-<li><code>&amp;COORD</code>修改坐标</li>
-</ul>
-</li>
-<li><code>&amp;FORCE_EVAL</code>：<ul>
-<li><code>&amp;DFT</code>：<ul>
-<li><code>&amp;QS</code>中的<code>EPS_DEFAULT</code>增大为<code>1.0E-7</code></li>
-<li><code>&amp;MGRID</code>中修改为<code>CUTOFF 200</code>和<code>REL_CUTOFF 30</code></li>
-<li><code>&amp;SCF</code>中：<ul>
-<li><code>EPS_SCF</code>增大为<code>1.0E-05</code>，<code>MAX_SCF</code>修改为<code>200</code></li>
-<li><code>&amp;MIXING</code>使用Pulay混合法<code>PULAY_MIXING</code>和相应的<code>ALPHA</code>、<code>NBUFFER</code></li>
-<li><code>&amp;PRINT</code>中关闭<code>&amp;RESTART</code></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+    <content><![CDATA[<h1 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h1><figure class="highlight dts"><table><tr><td class="code"><pre><span class="line"><span class="variable">&amp;</span>GLOBAL</span><br><span class="line">  PROJECT H2O</span><br><span class="line">  RUN_TYPE GEO_OPT	<span class="meta">#修改任务类型</span></span><br><span class="line">  PRINT_LEVEL LOW</span><br><span class="line"><span class="variable">&amp;</span>END GLOBAL</span><br><span class="line"><span class="variable">&amp;</span>FORCE_EVAL</span><br><span class="line">  METHOD QS</span><br><span class="line">  <span class="variable">&amp;</span>SUBSYS</span><br><span class="line">    <span class="variable">&amp;</span>CELL							<span class="meta">#修改晶格向量单位</span></span><br><span class="line">      ABC <span class="number">12.4138</span> <span class="number">12.4138</span> <span class="number">12.4138</span></span><br><span class="line">    <span class="variable">&amp;</span>END CELL</span><br><span class="line">    <span class="variable">&amp;</span>COORD							<span class="meta">#修改坐标</span></span><br><span class="line">      O      <span class="number">12.235322</span>       <span class="number">1.376642</span>      <span class="number">10.869880</span></span><br><span class="line">      H      <span class="number">12.415139</span>       <span class="number">2.233125</span>      <span class="number">11.257611</span></span><br><span class="line">      H      <span class="number">11.922476</span>       <span class="number">1.573799</span>       <span class="number">9.986994</span></span><br><span class="line">    <span class="variable">&amp;</span>END COORD</span><br><span class="line">    <span class="variable">&amp;</span>KIND H							<span class="meta">#设定基组</span></span><br><span class="line">      BASIS_SET DZVP-GTH-PADE</span><br><span class="line">      POTENTIAL GTH-PADE-q1</span><br><span class="line">    <span class="variable">&amp;</span>END KIND</span><br><span class="line">    <span class="variable">&amp;</span>KIND O							<span class="meta">#设定基组</span></span><br><span class="line">      BASIS_SET DZVP-GTH-PADE</span><br><span class="line">      POTENTIAL GTH-PADE-q6</span><br><span class="line">    <span class="variable">&amp;</span>END KIND</span><br><span class="line">  <span class="variable">&amp;</span>END SUBSYS</span><br><span class="line">  <span class="variable">&amp;</span>DFT</span><br><span class="line">    BASIS_SET_FILE_NAME ./BASIS_SET</span><br><span class="line">    POTENTIAL_FILE_NAME ./POTENTIAL</span><br><span class="line">    <span class="variable">&amp;</span>QS</span><br><span class="line">      EPS_DEFAULT <span class="number">1.0E-7</span>		<span class="meta">#相比计算单点可以增大</span></span><br><span class="line">    <span class="variable">&amp;</span>END QS</span><br><span class="line">    <span class="variable">&amp;</span>MGRID						<span class="meta">#修改MGRID</span></span><br><span class="line">      CUTOFF <span class="number">200</span>			</span><br><span class="line">      NGRIDS <span class="number">4</span>				</span><br><span class="line">      REL_CUTOFF <span class="number">30</span></span><br><span class="line">    <span class="variable">&amp;</span>END MGRID</span><br><span class="line">    <span class="variable">&amp;</span>SCF</span><br><span class="line">      SCF_GUESS ATOMIC</span><br><span class="line">      EPS_SCF <span class="number">1.0E-05</span>		<span class="meta">#修改EPS_SCF</span></span><br><span class="line">      MAX_SCF <span class="number">200</span>			<span class="meta">#修改MAX_SCF</span></span><br><span class="line">      <span class="variable">&amp;</span>DIAGONALIZATION T</span><br><span class="line">        ALGORITHM STANDARD</span><br><span class="line">      <span class="variable">&amp;</span>END DIAGONALIZATION</span><br><span class="line">      <span class="variable">&amp;</span>MIXING T</span><br><span class="line">        ALPHA <span class="number">0.5</span></span><br><span class="line">        METHOD PULAY_MIXING		<span class="meta">#用Pulay混合法</span></span><br><span class="line">        NPULAY <span class="number">5</span></span><br><span class="line">      <span class="variable">&amp;</span>END MIXING</span><br><span class="line">      <span class="variable">&amp;</span>PRINT					<span class="meta">#不重启SCF</span></span><br><span class="line">        <span class="variable">&amp;</span>RESTART OFF</span><br><span class="line">        <span class="variable">&amp;</span>END RESTART</span><br><span class="line">      <span class="variable">&amp;</span>END PRINT</span><br><span class="line">    <span class="variable">&amp;</span>END SCF</span><br><span class="line">    <span class="variable">&amp;</span>XC</span><br><span class="line">      <span class="variable">&amp;</span>XC_FUNCTIONAL PADE</span><br><span class="line">      <span class="variable">&amp;</span>END XC_FUNCTIONAL</span><br><span class="line">    <span class="variable">&amp;</span>END XC</span><br><span class="line">  <span class="variable">&amp;</span>END DFT</span><br><span class="line"><span class="variable">&amp;</span>END FORCE_EVAL</span><br><span class="line"><span class="variable">&amp;</span>MOTION</span><br><span class="line">  <span class="variable">&amp;</span>GEO_OPT</span><br><span class="line">    TYPE MINIMIZATION</span><br><span class="line">    MAX_DR    <span class="number">1.0E-03</span></span><br><span class="line">    MAX_FORCE <span class="number">1.0E-03</span></span><br><span class="line">    RMS_DR    <span class="number">1.0E-03</span></span><br><span class="line">    RMS_FORCE <span class="number">1.0E-03</span></span><br><span class="line">    MAX_ITER <span class="number">200</span></span><br><span class="line">    OPTIMIZER CG</span><br><span class="line">    <span class="variable">&amp;</span>CG</span><br><span class="line">      MAX_STEEP_STEPS  <span class="number">0</span></span><br><span class="line">      RESTART_LIMIT <span class="number">9.0E-01</span></span><br><span class="line">    <span class="variable">&amp;</span>END CG</span><br><span class="line">  <span class="variable">&amp;</span>END GEO_OPT</span><br><span class="line">  <span class="variable">&amp;</span>CONSTRAINT</span><br><span class="line">    <span class="variable">&amp;</span>FIXED_ATOMS</span><br><span class="line">      COMPONENTS_TO_FIX XYZ</span><br><span class="line">      LIST <span class="number">1</span></span><br><span class="line">    <span class="variable">&amp;</span>END FIXED_ATOMS</span><br><span class="line">  <span class="variable">&amp;</span>END CONSTRAINT</span><br><span class="line"><span class="variable">&amp;</span>END MOTION</span><br></pre></td></tr></table></figure>
 <h2 id="amp-MOTION"><a href="#amp-MOTION" class="headerlink" title="&amp;MOTION"></a>&amp;MOTION</h2><p>定义了一组与原子核运动有关的工具</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;MOTION</span></span><br><span class="line">  <span class="meta">&amp;GEO_OPT</span></span><br><span class="line">    <span class="string">TYPE</span> <span class="string">MINIMIZATION</span></span><br><span class="line">    <span class="string">MAX_DR</span>    <span class="number">1.0E-03</span></span><br><span class="line">    <span class="string">MAX_FORCE</span> <span class="number">1.0E-03</span></span><br><span class="line">    <span class="string">RMS_DR</span>    <span class="number">1.0E-03</span></span><br><span class="line">    <span class="string">RMS_FORCE</span> <span class="number">1.0E-03</span></span><br><span class="line">    <span class="string">MAX_ITER</span> <span class="number">200</span></span><br><span class="line">    <span class="string">OPTIMIZER</span> <span class="string">CG</span></span><br><span class="line">    <span class="meta">&amp;CG</span></span><br><span class="line">      <span class="string">MAX_STEEP_STEPS</span>  <span class="number">0</span></span><br><span class="line">      <span class="string">RESTART_LIMIT</span> <span class="number">9.0E-01</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">CG</span></span><br><span class="line">  <span class="string">&amp;END</span> <span class="string">GEO_OPT</span></span><br><span class="line">  <span class="meta">&amp;CONSTRAINT</span></span><br><span class="line">    <span class="meta">&amp;FIXED_ATOMS</span></span><br><span class="line">      <span class="string">COMPONENTS_TO_FIX</span> <span class="string">XYZ</span></span><br><span class="line">      <span class="string">LIST</span> <span class="number">1</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">FIXED_ATOMS</span></span><br><span class="line">  <span class="string">&amp;END</span> <span class="string">CONSTRAINT</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">MOTION</span></span><br></pre></td></tr></table></figure>
 <h3 id="amp-GEO-OPT"><a href="#amp-GEO-OPT" class="headerlink" title="&amp;GEO_OPT"></a>&amp;GEO_OPT</h3><p> <code>GEO_OPT</code>小节仅适用于晶格尺寸不变的计算：</p>
@@ -5456,6 +5452,13 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <li><code>ATOMS</code>：定义BMHFT非键势涉及的原子种类</li>
 <li><code>RCUT</code>：定义BMHFT电位的截止参数，默认是4.12758223 angstrom。</li>
 </ul>
+<h6 id="amp-LENNARD-JONES"><a href="#amp-LENNARD-JONES" class="headerlink" title="&amp;LENNARD-JONES"></a>&amp;LENNARD-JONES</h6><p>指定LENNARD-JONES是能类型的输入参数。函数形式:<script type="math/tex">V(r) = 4.0 \times  \epsilon \times  [(\sigma/r)^{12}-(\sigma/r)^6]</script>。</p>
+<ul>
+<li><code>ATOMS</code>：定义涉及非成键势的原子类型</li>
+<li><code>EPSILON</code>：定义LJ势的EPSILON参数，单位为是K_e</li>
+<li><code>SIGMA</code>：定义LJ电位的SIGMA参数，单位是Å</li>
+<li><code>RCUT</code>：定义LJ电位的截止参数，默认是10Å</li>
+</ul>
 <h4 id="amp-POISSON"><a href="#amp-POISSON" class="headerlink" title="&amp;POISSON"></a>&amp;POISSON</h4><p>设置泊松解析器。</p>
 <h5 id="amp-EWALD"><a href="#amp-EWALD" class="headerlink" title="&amp;EWALD"></a>&amp;EWALD</h5><p>控制CLASSICAL MM静电。</p>
 <ul>
@@ -5537,7 +5540,7 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <li><p><code>getProperty boundBoxInfo</code>：获取边界框的信息</p>
 </li>
 </ul>
-<h1 id="rotate"><a href="#rotate" class="headerlink" title="rotate"></a>rotate</h1><p>默认为以逆时针方式绕 y（垂直）轴每秒旋转 10 度，即：</p>
+<h1 id="Draw绘图"><a href="#Draw绘图" class="headerlink" title="Draw绘图"></a><code>Draw</code>绘图</h1><h1 id="rotate"><a href="#rotate" class="headerlink" title="rotate"></a>rotate</h1><p>默认为以逆时针方式绕 y（垂直）轴每秒旋转 10 度，即：</p>
 <figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">rotate spin y <span class="number">10</span></span><br></pre></td></tr></table></figure>
 <p>选项：</p>
 <ul>
@@ -10064,6 +10067,120 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
       </categories>
       <tags>
         <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【CP2K】05.MD</title>
+    <url>/2023/03/07/%E3%80%90CP2K%E3%80%9105.MD/</url>
+    <content><![CDATA[<h1 id="输入文件例子"><a href="#输入文件例子" class="headerlink" title="输入文件例子"></a>输入文件例子</h1><figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;GLOBAL</span></span><br><span class="line">  PROJECT ar108		<span class="meta">#修改任务名字</span></span><br><span class="line">  RUN_TYPE md		<span class="meta">#修改任务类型</span></span><br><span class="line"><span class="meta">&amp;END GLOBAL</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&amp;MOTION</span></span><br><span class="line">  <span class="meta">&amp;MD</span></span><br><span class="line">    ENSEMBLE NVE          </span><br><span class="line">    STEPS <span class="number">100</span>            </span><br><span class="line">    TIMESTEP <span class="number">5</span>.           </span><br><span class="line">    TEMPERATURE <span class="number">85.0</span>     </span><br><span class="line">  <span class="meta">&amp;END MD</span></span><br><span class="line"><span class="meta">&amp;END MOTION</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&amp;FORCE_EVAL</span></span><br><span class="line">  METHOD FIST            </span><br><span class="line">  <span class="meta">&amp;MM</span></span><br><span class="line">    <span class="meta">&amp;FORCEFIELD</span></span><br><span class="line">      <span class="meta">&amp;CHARGE            </span></span><br><span class="line">        ATOM Ar          </span><br><span class="line">        CHARGE <span class="number">0.0</span>      </span><br><span class="line">      <span class="meta">&amp;END</span></span><br><span class="line">      <span class="meta">&amp;NONBONDED</span></span><br><span class="line">        <span class="meta">&amp;LENNARD-JONES    </span></span><br><span class="line">          atoms Ar Ar     </span><br><span class="line">          EPSILON <span class="number">119.8</span>  </span><br><span class="line">          SIGMA <span class="number">3.405</span>    </span><br><span class="line">          RCUT <span class="number">8.4</span>       </span><br><span class="line">        <span class="meta">&amp;END LENNARD-JONES</span></span><br><span class="line">      <span class="meta">&amp;END NONBONDED</span></span><br><span class="line">    <span class="meta">&amp;END FORCEFIELD</span></span><br><span class="line">    <span class="meta">&amp;POISSON         </span></span><br><span class="line">      <span class="meta">&amp;EWALD</span></span><br><span class="line">        EWALD_TYPE none</span><br><span class="line">      <span class="meta">&amp;END EWALD</span></span><br><span class="line">    <span class="meta">&amp;END POISSON</span></span><br><span class="line">  <span class="meta">&amp;END MM</span></span><br><span class="line">  <span class="meta">&amp;SUBSYS</span></span><br><span class="line">    <span class="meta">&amp;CELL</span></span><br><span class="line">      ABC <span class="number">17.1580</span> <span class="number">17.158</span> <span class="number">17.158</span>    </span><br><span class="line">    <span class="meta">&amp;END CELL</span></span><br><span class="line">    <span class="meta">&amp;COORD</span></span><br><span class="line">		@INCLUDE &#x27;coord.inc&#x27;</span><br><span class="line">    <span class="meta">&amp;END COORD</span></span><br><span class="line">    <span class="meta">&amp;TOPOLOGY</span></span><br><span class="line">    <span class="meta">&amp;END TOPOLOGY</span></span><br><span class="line">  <span class="meta">&amp;END SUBSYS</span></span><br><span class="line"><span class="meta">&amp;END FORCE_EVAL</span></span><br></pre></td></tr></table></figure>
+<h2 id="amp-MOTION"><a href="#amp-MOTION" class="headerlink" title="&amp;MOTION"></a>&amp;MOTION</h2><h3 id="amp-MD"><a href="#amp-MD" class="headerlink" title="&amp;MD"></a>&amp;MD</h3><h4 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h4><p><code>ENSEMBLE</code>要用于MD传播的集成/积分器</p>
+<ul>
+<li><code>NVE</code>：恒能(微正则)</li>
+<li><code>NVT</code>：恒定的温度和体积(标准)</li>
+<li><code>NPT_I</code>：恒定的温度和压力使用各向同性电池</li>
+</ul>
+<p><code>STEPS</code>要执行的MD步骤数</p>
+<ul>
+<li>默认是<code>3</code></li>
+</ul>
+<p><code>TIMESTEP</code>集成步骤的长度(如果RESPA是大的TIMESTEP)</p>
+<ul>
+<li>默认是0.5fs</li>
+</ul>
+<p><code>TEMPERATURE</code>：温度K用于初始化速度与init和pos重启，以及在NPT/NVT模拟</p>
+<ul>
+<li>默认是300K</li>
+</ul>
+<h4 id="amp-THERMOSTAT"><a href="#amp-THERMOSTAT" class="headerlink" title="&amp;THERMOSTAT"></a>&amp;THERMOSTAT</h4><p>指定恒温器类型和控制恒温器的参数。</p>
+<ul>
+<li><p><code>TYPE</code>：指定用于恒温集成的恒温器。</p>
+<ul>
+<li><code>NOSE</code>：默认，使用Nose-Hoover恒温器。</li>
+</ul>
+</li>
+<li><p><code>REGION</code>：确定每个恒温器连接的区域</p>
+<ul>
+<li><code>MASSIVE</code>：</li>
+</ul>
+</li>
+<li><p><code>&amp;NOSE</code>：Nose-Hoover恒温器链的参数</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;MD</span></span><br><span class="line">  <span class="string">ENSEMBLE</span> <span class="string">NVT</span></span><br><span class="line">  <span class="string">STEPS</span> <span class="number">3000</span></span><br><span class="line">  <span class="string">TIMESTEP</span> <span class="number">5</span></span><br><span class="line">  <span class="string">TEMPERATURE</span> <span class="number">298</span></span><br><span class="line">  <span class="meta">&amp;THERMOSTAT</span></span><br><span class="line">    <span class="string">REGION</span> <span class="string">MASSIVE</span></span><br><span class="line">    <span class="string">&amp;NOSE</span>                   </span><br><span class="line">      <span class="string">TIMECON</span> <span class="number">100</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">NOSE</span></span><br><span class="line">  <span class="meta">&amp;END</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">MD</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>LENGTH</code>：默认是3，Nose-Hoover链的长度</li>
+<li><code>YOSHIDA</code>：默认是3，用于恒温yoshida 积分的阶数</li>
+<li><code>MTS</code>：默认是2，用于NoseHoover链的多个时间步数</li>
+<li><code>TIMECON</code>：默认是1000fs，恒温器链的时间常数</li>
+</ul>
+</li>
+<li><p><code>&amp;CSVR</code>：通过速度调整温控器的标准采样参数。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;MD</span></span><br><span class="line">  <span class="string">ENSEMBLE</span> <span class="string">NVT</span></span><br><span class="line">  <span class="string">STEPS</span> <span class="number">3000</span></span><br><span class="line">  <span class="string">TIMESTEP</span> <span class="number">5</span></span><br><span class="line">  <span class="string">TEMPERATURE</span> <span class="number">298</span></span><br><span class="line">  <span class="meta">&amp;THERMOSTAT</span></span><br><span class="line">    <span class="string">&amp;CSVR</span>                    </span><br><span class="line">      <span class="string">TIMECON</span> <span class="number">100</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">CSVR</span></span><br><span class="line">  <span class="meta">&amp;END</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">MD</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>TIMECON</code>：默认是1000fs。CSVR恒温器的时间常数。较小的时间常数会产生较强的恒温作用(对初始平衡有用)，而较大的时间常数则足以在生产运行中产生较弱的恒温作用。</li>
+</ul>
+</li>
+</ul>
+<h4 id="amp-BAROSTAT"><a href="#amp-BAROSTAT" class="headerlink" title="&amp;BAROSTAT"></a>&amp;BAROSTAT</h4><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#NPTx</span></span><br><span class="line"><span class="meta">&amp;MD</span></span><br><span class="line">  <span class="string">ENSEMBLE</span> <span class="string">NPT_I</span>                <span class="comment">#constant temperature and pressure using an isotropic cell</span></span><br><span class="line">  <span class="string">STEPS</span> <span class="number">3000</span></span><br><span class="line">  <span class="string">TIMESTEP</span> <span class="number">5</span><span class="string">.</span></span><br><span class="line">  <span class="string">TEMPERATURE</span> <span class="number">85.0</span></span><br><span class="line">  <span class="meta">&amp;BAROSTAT</span></span><br><span class="line">    <span class="string">PRESSURE</span> <span class="number">0</span><span class="string">.</span>                 <span class="comment"># PRESSURE, unit[bar]</span></span><br><span class="line">    <span class="string">TIMECON</span> <span class="number">1000</span></span><br><span class="line">  <span class="string">&amp;END</span> <span class="string">BAROSTAT</span></span><br><span class="line">  <span class="meta">&amp;THERMOSTAT</span></span><br><span class="line">    <span class="meta">&amp;NOSE</span></span><br><span class="line">      <span class="string">TIMECON</span> <span class="number">1000</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">NOSE</span></span><br><span class="line">  <span class="string">&amp;END</span> <span class="string">THERMOSTAT</span></span><br><span class="line"> <span class="string">&amp;END</span> <span class="string">MD</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>PRESSURE</code>：初始压力，默认是0 bar</li>
+<li><code>TIMECON</code>：气压时间常数，默认是1000fs</li>
+</ul>
+<h4 id="amp-PRINT"><a href="#amp-PRINT" class="headerlink" title="&amp;PRINT"></a>&amp;PRINT</h4><ul>
+<li><code>&amp;Energy</code>：控制ener文件的输出<ul>
+<li><code>&amp;EACH</code>：本节指定了该属性的打印频率。本节中的每个关键字都映射到一个特定的迭代级别，这些关键字的值在计算时与迭代级别相匹配。如何处理最后一次迭代在ADD_LAST中单独处理（这意味着每个迭代级别（MD，GEO_OPT，等等），虽然等于0，但可能打印最后一次迭代）。如果指定了一个在计算流程中不存在的迭代级别，它就会被忽略。<ul>
+<li><code>MD</code>：MD步骤的迭代级别。默认是1。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>PROGRAM_RUN_INFO</code>：在分子动力学过程中控制基本和摘要信息的打印</p>
+<ul>
+<li><code>&amp;EACH</code>：<ul>
+<li><code>MD</code>：MD步骤的迭代级别。默认是1。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>FORCE_LAST</code>：如果超时或给出外部EXIT命令，则打印输出并重新启动文件。对于特定的打印键，它仍然需要关键字LAST(以防最后一步不与print_key迭代号匹配)。默认是 <code>.FALSE.</code></p>
+</li>
+</ul>
+<h3 id="amp-PRINT-1"><a href="#amp-PRINT-1" class="headerlink" title="&amp;PRINT"></a>&amp;PRINT</h3><h4 id="amp-TRAJECTORY"><a href="#amp-TRAJECTORY" class="headerlink" title="&amp;TRAJECTORY"></a>&amp;TRAJECTORY</h4><ul>
+<li><code>&amp;EACH</code>：<ul>
+<li><code>MD</code>：MD步骤的迭代级别。默认是1。</li>
+</ul>
+</li>
+</ul>
+<h4 id="amp-VELOCITIES"><a href="#amp-VELOCITIES" class="headerlink" title="&amp;VELOCITIES"></a>&amp;VELOCITIES</h4><ul>
+<li><code>&amp;EACH</code>：<ul>
+<li><code>MD</code>：MD步骤的迭代级别。默认是1。</li>
+</ul>
+</li>
+</ul>
+<h4 id="amp-RESTART"><a href="#amp-RESTART" class="headerlink" title="&amp;RESTART"></a>&amp;RESTART</h4><ul>
+<li><p><code>&amp;EACH</code>：</p>
+<ul>
+<li><code>MD</code>：MD步骤的迭代级别。默认是20。</li>
+</ul>
+</li>
+<li><p><code>ADD_LAST</code>：如果应该添加最后一个迭代，并且应该象征性地(用小写字母l)标记它或用迭代号标记它。并不是每个迭代级别都能够尽早识别上一次迭代以便能够输出。当此关键字被激活时，将为最后一个迭代步骤检查所有迭代级别。</p>
+<ul>
+<li><code>NUMERIC</code>：用迭代号标记上一次迭代</li>
+</ul>
+</li>
+</ul>
+<h4 id="amp-RESTART-HISTORY"><a href="#amp-RESTART-HISTORY" class="headerlink" title="&amp;RESTART_HISTORY"></a>&amp;RESTART_HISTORY</h4><ul>
+<li><code>&amp;EACH</code>：<ul>
+<li><code>MD</code>：MD步骤的迭代级别。默认是500。</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>CP2K</tag>
+        <tag>MD</tag>
       </tags>
   </entry>
 </search>
