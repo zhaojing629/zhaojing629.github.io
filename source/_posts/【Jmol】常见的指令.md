@@ -67,6 +67,14 @@ description: Jmol常见的指令
 
 - ` getProperty boundBoxInfo`：获取边界框的信息
 
+# `Draw`绘图
+
+
+
+
+
+
+
 # rotate
 
 默认为以逆时针方式绕 y（垂直）轴每秒旋转 10 度，即：

@@ -1,5 +1,5 @@
 ---
-title: 【Linux】命令
+ title: 【Linux】命令
 typora-root-url: 【Linux】命令
 date: 2019-09-25 
 updated:
@@ -509,43 +509,6 @@ rm [options] name...
   rm -i test example
   ```
 
-## scp
-
-用于 Linux 之间复制文件和目录。
-
-### 语法
-
-```
-scp [可选参数] file_source file_target 
-```
-
-- `-P port`：注意是大写的P, port是指定数据传输用到的端口号
-- `-r`：以递归方式复制。
-
-### 例子
-
-- 从远处复制文件到本地目录
-
-  ```
-  scp root@10.10.10.10:/opt/soft/nginx-0.5.38.tar.gz /opt/soft/
-  ```
-
-- 上传本地文件到远程机器指定目录
-
-  ```
-  scp -r（文件夹/）文件名 （用户名@）节点名:目录
-  scp /opt/soft/nginx-0.5.38.tar.gz root@10.10.10.10:/opt/soft/scptest
-  
-  #表示将/home/Fermi/Test.xyz拷贝到Fermi2用户在node124节点的home目录下面
-  scp -r /home/Fermi/Test.xyz Fermi2@node124
-  ```
-
-- 如果远程服务器防火墙有为scp命令设置了指定的端口，我们需要使用 -P 参数来设置命令的端口号:
-
-  ```
-  scp -P 4588 remote@www.runoob.com:/usr/local/sin.sh /home/administrator
-  ```
-
 # 文档编辑
 
 ## grep
@@ -995,7 +958,72 @@ sed [options] -f scriptfile file(s)
 
 # 文件传输
 
+## scp
 
+用于 Linux 之间复制文件和目录。
+
+### 语法
+
+```
+scp [可选参数] file_source file_target 
+```
+
+- `-P port`：注意是大写的P, port是指定数据传输用到的端口号
+- `-r`：以递归方式复制。
+
+### 例子
+
+- 从远处复制文件到本地目录
+
+  ```
+  scp root@10.10.10.10:/opt/soft/nginx-0.5.38.tar.gz /opt/soft/
+  ```
+
+- 上传本地文件到远程机器指定目录
+
+  ```
+  scp -r（文件夹/）文件名 （用户名@）节点名:目录
+  scp /opt/soft/nginx-0.5.38.tar.gz root@10.10.10.10:/opt/soft/scptest
+  
+  #表示将/home/Fermi/Test.xyz拷贝到Fermi2用户在node124节点的home目录下面
+  scp -r /home/Fermi/Test.xyz Fermi2@node124
+  ```
+
+- 如果远程服务器防火墙有为scp命令设置了指定的端口，我们需要使用 -P 参数来设置命令的端口号:
+
+  ```
+  scp -P 4588 remote@www.runoob.com:/usr/local/sin.sh /home/administrator
+  ```
+
+## wget
+
+### 语法
+
+```
+wget [参数] [URL地址]
+```
+
+- `-b`：启动后转入后台执行
+- `-t`：设定最大尝试链接次数(0 表示无限制).
+- `–limit-rate=RATE` ：限定下载输率
+
+### 例子
+
+- 对于下载非常大的文件的时候，我们可以使用参数-b进行后台下载。
+
+  ```
+  wget -b http://www.minjieren.com/wordpress-3.1-zh_CN.zip
+  
+  Continuing in background, pid 1840.
+  
+  Output will be written to `wget-log'.
+  
+  #你可以使用以下命令来察看下载进度：
+  
+  tail -f wget-log
+  ```
+
+  
 
 
 
