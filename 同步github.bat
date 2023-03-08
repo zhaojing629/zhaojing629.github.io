@@ -3,4 +3,4 @@ ren .deploy_git\.git .git1
 git add .
 git commit -m"3"
 git push origin source
-pause
+cmd /k
