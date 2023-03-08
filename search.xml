@@ -9210,7 +9210,7 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 <li><p>将该目录下的所有.git文件修改成.git1，上传</p>
 <figure class="highlight armasm"><table><tr><td class="code"><pre><span class="line"><span class="symbol">git</span> <span class="keyword">add</span> .</span><br><span class="line"><span class="symbol">git</span> commit –m <span class="string">&quot;add branch&quot;</span></span><br><span class="line"><span class="symbol">git</span> <span class="keyword">push</span> origin source</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>完成上传后，再将.deploy中的.git1修改回来成.git，就可以对网站进行<code>hexo g -d</code>等操作，操作完成后，重复3~4，即：s</p>
+<li><p>完成上传后，再将.deploy中的.git1修改回来成.git，就可以对网站进行<code>hexo g -d</code>等操作，操作完成后，重复3~4，即：</p>
 <figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">mv .deploy_git<span class="regexp">/.git1/</span> .deploy_git/.git</span><br><span class="line"></span><br><span class="line">hexo g -d</span><br><span class="line"></span><br><span class="line">mv .deploy_git<span class="regexp">/.git/</span> .deploy_git/.git1</span><br><span class="line"></span><br><span class="line">git add .</span><br><span class="line">git commit –m <span class="string">&quot;add branch&quot;</span>  #报错的话可以用 git commit --no-verify -m <span class="string">&quot;X&quot;</span></span><br><span class="line">git <span class="keyword">push</span> origin <span class="keyword">source</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
