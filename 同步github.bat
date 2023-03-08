@@ -4,5 +4,5 @@ git add .
 git commit -m"3"
 git push origin source
 set MESSEGE=%date%
-mkdir %MESSEGE%
+mkdir "%MESSEGE%"
 cmd /k
