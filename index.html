@@ -218,7 +218,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-08 10:49:31" itemprop="dateModified" datetime="2023-03-08T10:49:31+08:00">2023-03-08</time>
+                <time title="修改时间：2023-03-08 11:22:57" itemprop="dateModified" datetime="2023-03-08T11:22:57+08:00">2023-03-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -274,108 +274,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="输入文件例子"><a href="#输入文件例子" class="headerlink" title="输入文件例子"></a>输入文件例子</h1><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&amp;GLOBAL</span></span><br><span class="line">  PROJECT ar108		<span class="meta">#修改任务名字</span></span><br><span class="line">  RUN_TYPE md		<span class="meta">#修改任务类型</span></span><br><span class="line"><span class="meta">&amp;END GLOBAL</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&amp;MOTION</span></span><br><span class="line">  <span class="meta">&amp;MD</span></span><br><span class="line">    ENSEMBLE NVE          </span><br><span class="line">    STEPS <span class="number">100</span>            </span><br><span class="line">    TIMESTEP <span class="number">5</span>.           </span><br><span class="line">    TEMPERATURE <span class="number">85.0</span>     </span><br><span class="line">  <span class="meta">&amp;END MD</span></span><br><span class="line"><span class="meta">&amp;END MOTION</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&amp;FORCE_EVAL</span></span><br><span class="line">  METHOD FIST            </span><br><span class="line">  <span class="meta">&amp;MM</span></span><br><span class="line">    <span class="meta">&amp;FORCEFIELD</span></span><br><span class="line">      <span class="meta">&amp;CHARGE            </span></span><br><span class="line">        ATOM Ar          </span><br><span class="line">        CHARGE <span class="number">0.0</span>      </span><br><span class="line">      <span class="meta">&amp;END</span></span><br><span class="line">      <span class="meta">&amp;NONBONDED</span></span><br><span class="line">        <span class="meta">&amp;LENNARD-JONES    </span></span><br><span class="line">          atoms Ar Ar     </span><br><span class="line">          EPSILON <span class="number">119.8</span>  </span><br><span class="line">          SIGMA <span class="number">3.405</span>    </span><br><span class="line">          RCUT <span class="number">8.4</span>       </span><br><span class="line">        <span class="meta">&amp;END LENNARD-JONES</span></span><br><span class="line">      <span class="meta">&amp;END NONBONDED</span></span><br><span class="line">    <span class="meta">&amp;END FORCEFIELD</span></span><br><span class="line">    <span class="meta">&amp;POISSON         </span></span><br><span class="line">      <span class="meta">&amp;EWALD</span></span><br><span class="line">        EWALD_TYPE none</span><br><span class="line">      <span class="meta">&amp;END EWALD</span></span><br><span class="line">    <span class="meta">&amp;END POISSON</span></span><br><span class="line">  <span class="meta">&amp;END MM</span></span><br><span class="line">  <span class="meta">&amp;SUBSYS</span></span><br><span class="line">    <span class="meta">&amp;CELL</span></span><br><span class="line">      ABC <span class="number">17.1580</span> <span class="number">17.158</span> <span class="number">17.158</span>    </span><br><span class="line">    <span class="meta">&amp;END CELL</span></span><br><span class="line">    <span class="meta">&amp;COORD</span></span><br><span class="line">		@INCLUDE &#x27;coord.inc&#x27;</span><br><span class="line">    <span class="meta">&amp;END COORD</span></span><br><span class="line">    <span class="meta">&amp;TOPOLOGY</span></span><br><span class="line">    <span class="meta">&amp;END TOPOLOGY</span></span><br><span class="line">  <span class="meta">&amp;END SUBSYS</span></span><br><span class="line"><span class="meta">&amp;END FORCE_EVAL</span></span><br></pre></td></tr></table></figure>
-<h2 id="amp-MOTION"><a href="#amp-MOTION" class="headerlink" title="&amp;MOTION"></a>&amp;MOTION</h2><h3 id="amp-MD"><a href="#amp-MD" class="headerlink" title="&amp;MD"></a>&amp;MD</h3><h4 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h4><p><code>ENSEMBLE</code>要用于MD传播的集成/积分器</p>
-<ul>
-<li><code>NVE</code>：恒能(微正则)</li>
-<li><code>NVT</code>：恒定的温度和体积(标准)</li>
-<li><code>NPT_I</code>：恒定的温度和压力使用各向同性电池</li>
-</ul>
-<p><code>STEPS</code>要执行的MD步骤数</p>
-<ul>
-<li>默认是<code>3</code></li>
-</ul>
-<p><code>TIMESTEP</code>集成步骤的长度(如果RESPA是大的TIMESTEP)</p>
-<ul>
-<li>默认是0.5fs</li>
-</ul>
-<p><code>TEMPERATURE</code>：温度K用于初始化速度与init和pos重启，以及在NPT/NVT模拟</p>
-<ul>
-<li>默认是300K</li>
-</ul>
-<h4 id="amp-THERMOSTAT"><a href="#amp-THERMOSTAT" class="headerlink" title="&amp;THERMOSTAT"></a>&amp;THERMOSTAT</h4><p>指定恒温器类型和控制恒温器的参数。</p>
-<ul>
-<li><p><code>TYPE</code>：指定用于恒温集成的恒温器。</p>
-<ul>
-<li><code>NOSE</code>：默认，使用Nose-Hoover恒温器。</li>
-</ul>
-</li>
-<li><p><code>REGION</code>：确定每个恒温器连接的区域</p>
-<ul>
-<li><code>MASSIVE</code>：</li>
-</ul>
-</li>
-<li><p><code>&amp;NOSE</code>：Nose-Hoover恒温器链的参数</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&amp;MD</span></span><br><span class="line">  <span class="string">ENSEMBLE</span> <span class="string">NVT</span></span><br><span class="line">  <span class="string">STEPS</span> <span class="number">3000</span></span><br><span class="line">  <span class="string">TIMESTEP</span> <span class="number">5</span></span><br><span class="line">  <span class="string">TEMPERATURE</span> <span class="number">298</span></span><br><span class="line">  <span class="meta">&amp;THERMOSTAT</span></span><br><span class="line">    <span class="string">REGION</span> <span class="string">MASSIVE</span></span><br><span class="line">    <span class="string">&amp;NOSE</span>                   </span><br><span class="line">      <span class="string">TIMECON</span> <span class="number">100</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">NOSE</span></span><br><span class="line">  <span class="meta">&amp;END</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">MD</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>LENGTH</code>：默认是3，Nose-Hoover链的长度</li>
-<li><code>YOSHIDA</code>：默认是3，用于恒温yoshida 积分的阶数</li>
-<li><code>MTS</code>：默认是2，用于NoseHoover链的多个时间步数</li>
-<li><code>TIMECON</code>：默认是1000fs，恒温器链的时间常数</li>
-</ul>
-</li>
-<li><p><code>&amp;CSVR</code>：通过速度调整温控器的标准采样参数。</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&amp;MD</span></span><br><span class="line">  <span class="string">ENSEMBLE</span> <span class="string">NVT</span></span><br><span class="line">  <span class="string">STEPS</span> <span class="number">3000</span></span><br><span class="line">  <span class="string">TIMESTEP</span> <span class="number">5</span></span><br><span class="line">  <span class="string">TEMPERATURE</span> <span class="number">298</span></span><br><span class="line">  <span class="meta">&amp;THERMOSTAT</span></span><br><span class="line">    <span class="string">&amp;CSVR</span>                    </span><br><span class="line">      <span class="string">TIMECON</span> <span class="number">100</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">CSVR</span></span><br><span class="line">  <span class="meta">&amp;END</span></span><br><span class="line"><span class="string">&amp;END</span> <span class="string">MD</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>TIMECON</code>：默认是1000fs。CSVR恒温器的时间常数。较小的时间常数会产生较强的恒温作用(对初始平衡有用)，而较大的时间常数则足以在生产运行中产生较弱的恒温作用。</li>
-</ul>
-</li>
-</ul>
-<h4 id="amp-BAROSTAT"><a href="#amp-BAROSTAT" class="headerlink" title="&amp;BAROSTAT"></a>&amp;BAROSTAT</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#NPTx</span></span><br><span class="line"><span class="meta">&amp;MD</span></span><br><span class="line">  <span class="string">ENSEMBLE</span> <span class="string">NPT_I</span>                <span class="comment">#constant temperature and pressure using an isotropic cell</span></span><br><span class="line">  <span class="string">STEPS</span> <span class="number">3000</span></span><br><span class="line">  <span class="string">TIMESTEP</span> <span class="number">5</span><span class="string">.</span></span><br><span class="line">  <span class="string">TEMPERATURE</span> <span class="number">85.0</span></span><br><span class="line">  <span class="meta">&amp;BAROSTAT</span></span><br><span class="line">    <span class="string">PRESSURE</span> <span class="number">0</span><span class="string">.</span>                 <span class="comment"># PRESSURE, unit[bar]</span></span><br><span class="line">    <span class="string">TIMECON</span> <span class="number">1000</span></span><br><span class="line">  <span class="string">&amp;END</span> <span class="string">BAROSTAT</span></span><br><span class="line">  <span class="meta">&amp;THERMOSTAT</span></span><br><span class="line">    <span class="meta">&amp;NOSE</span></span><br><span class="line">      <span class="string">TIMECON</span> <span class="number">1000</span></span><br><span class="line">    <span class="string">&amp;END</span> <span class="string">NOSE</span></span><br><span class="line">  <span class="string">&amp;END</span> <span class="string">THERMOSTAT</span></span><br><span class="line"> <span class="string">&amp;END</span> <span class="string">MD</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>PRESSURE</code>：初始压力，默认是0 bar</li>
-<li><code>TIMECON</code>：气压时间常数，默认是1000fs</li>
-</ul>
-<h4 id="amp-PRINT"><a href="#amp-PRINT" class="headerlink" title="&amp;PRINT"></a>&amp;PRINT</h4><ul>
-<li><code>&amp;Energy</code>：控制ener文件的输出<ul>
-<li><code>&amp;EACH</code>：本节指定了该属性的打印频率。本节中的每个关键字都映射到一个特定的迭代级别，这些关键字的值在计算时与迭代级别相匹配。如何处理最后一次迭代在ADD_LAST中单独处理（这意味着每个迭代级别（MD，GEO_OPT，等等），虽然等于0，但可能打印最后一次迭代）。如果指定了一个在计算流程中不存在的迭代级别，它就会被忽略。<ul>
-<li><code>MD</code>：MD步骤的迭代级别。默认是1。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><code>PROGRAM_RUN_INFO</code>：在分子动力学过程中控制基本和摘要信息的打印</p>
-<ul>
-<li><code>&amp;EACH</code>：<ul>
-<li><code>MD</code>：MD步骤的迭代级别。默认是1。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><code>FORCE_LAST</code>：如果超时或给出外部EXIT命令，则打印输出并重新启动文件。对于特定的打印键，它仍然需要关键字LAST(以防最后一步不与print_key迭代号匹配)。默认是 <code>.FALSE.</code></p>
-</li>
-</ul>
-<h3 id="amp-PRINT-1"><a href="#amp-PRINT-1" class="headerlink" title="&amp;PRINT"></a>&amp;PRINT</h3><h4 id="amp-TRAJECTORY"><a href="#amp-TRAJECTORY" class="headerlink" title="&amp;TRAJECTORY"></a>&amp;TRAJECTORY</h4><ul>
-<li><code>&amp;EACH</code>：<ul>
-<li><code>MD</code>：MD步骤的迭代级别。默认是1。</li>
-</ul>
-</li>
-</ul>
-<h4 id="amp-VELOCITIES"><a href="#amp-VELOCITIES" class="headerlink" title="&amp;VELOCITIES"></a>&amp;VELOCITIES</h4><ul>
-<li><code>&amp;EACH</code>：<ul>
-<li><code>MD</code>：MD步骤的迭代级别。默认是1。</li>
-</ul>
-</li>
-</ul>
-<h4 id="amp-RESTART"><a href="#amp-RESTART" class="headerlink" title="&amp;RESTART"></a>&amp;RESTART</h4><ul>
-<li><p><code>&amp;EACH</code>：</p>
-<ul>
-<li><code>MD</code>：MD步骤的迭代级别。默认是20。</li>
-</ul>
-</li>
-<li><p><code>ADD_LAST</code>：如果应该添加最后一个迭代，并且应该象征性地(用小写字母l)标记它或用迭代号标记它。并不是每个迭代级别都能够尽早识别上一次迭代以便能够输出。当此关键字被激活时，将为最后一个迭代步骤检查所有迭代级别。</p>
-<ul>
-<li><code>NUMERIC</code>：用迭代号标记上一次迭代</li>
-</ul>
-</li>
-</ul>
-<h4 id="amp-RESTART-HISTORY"><a href="#amp-RESTART-HISTORY" class="headerlink" title="&amp;RESTART_HISTORY"></a>&amp;RESTART_HISTORY</h4><ul>
-<li><code>&amp;EACH</code>：<ul>
-<li><code>MD</code>：MD步骤的迭代级别。默认是500。</li>
-</ul>
-</li>
-</ul>
-
+          <p>主要是&MOTION（&MD模块、&PRINT模块）</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/03/07/%E3%80%90CP2K%E3%80%9105.MD/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
