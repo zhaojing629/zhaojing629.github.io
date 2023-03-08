@@ -3,6 +3,6 @@ ren .deploy_git\.git .git1
 git add .
 git commit -m"3"
 git push origin source
-set MESSEGE=%date%
+set MESSEGE=%date:~0,4%%date:~5,2%%date:~8,2%
 mkdir "%MESSEGE%"
 cmd /k
