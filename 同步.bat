@@ -3,6 +3,6 @@ ren .deploy_git\.git1 .git
 hexo g -d
 ren .deploy_git\.git .git1
 git add .
-git commit -message
+git commit -m"更新"
 git push origin source
 pause
