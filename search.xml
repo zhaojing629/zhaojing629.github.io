@@ -10008,7 +10008,7 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
       </tags>
   </entry>
   <entry>
-    <title>【ORCA】05.HF&amp;SCF部分</title>
+    <title>【ORCA】07.输出</title>
     <url>/2020/09/04/%E3%80%90ORCA%E3%80%9107.%E8%BE%93%E5%87%BA/</url>
     <content><![CDATA[<h1 id="导出molden"><a href="#导出molden" class="headerlink" title="导出molden"></a>导出molden</h1><figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">orca_2mkl </span><span class="keyword">basename </span>-molden</span><br></pre></td></tr></table></figure>
 ]]></content>
