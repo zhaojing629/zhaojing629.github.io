@@ -338,7 +338,7 @@
 </ul>
 <h3 id="Gaussian结合更高版本的NBO"><a href="#Gaussian结合更高版本的NBO" class="headerlink" title="Gaussian结合更高版本的NBO"></a>Gaussian结合更高版本的NBO</h3><ul>
 <li>Linux下：<ol>
-<li>将Linux版NBO6压缩包解压到某目录XXX下</li>
+<li>me将Linux版NBO6压缩包解压到某目录XXX下</li>
 <li>在~/.bashrc文件中加入<code>export PATH=$PATH:XXX/bin</code></li>
 <li>将XXX/bin/gaunbo6中的setenv GAUNBO后面的内容改成g09nbo或g16nbo；将setenv BINDIR后面的内容改为XXX/bin目录</li>
 <li>重新进入终端即可。</li>
@@ -362,7 +362,7 @@
 </ul>
 <h2 id="orca中的NBO"><a href="#orca中的NBO" class="headerlink" title="orca中的NBO"></a>orca中的NBO</h2><ul>
 <li><p>修改环境变量，即在~/.bashrc中加入</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">export GENEXE XXX<span class="regexp">/bin/g</span>ennbo.i4.exe</span><br><span class="line">export NBOEXE XXX<span class="regexp">/bin/</span>nbo6.i4.exe</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">export GENEXE XXX<span class="regexp">/bin/g</span>ennbo.i4.exe</span><br><span class="line">export NBOEXE XXX<span class="regexp">/bin/</span>nbo6.i4.exe</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">export  GENEXE=<span class="regexp">/home/</span>zhaoxk<span class="regexp">/apps/</span>nbo6<span class="regexp">/bin/g</span>ennbo.i4.exe</span><br><span class="line">export  NBOEXE=<span class="regexp">/home/</span>zhaoxk<span class="regexp">/apps/</span>nbo6<span class="regexp">/bin/</span>nbo6.i4.exe</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>在ORCA的输入文件中写入<code>NBO</code>关键词，ORCA会调用BO6做NPA和NBO分析</p>
 <ul>
@@ -407,7 +407,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="绘图plot"><a href="#绘图plot" class="headerlink" title="绘图plot"></a>绘图<code>plot</code></h2><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="variable">$NBO</span> plot <span class="attribute">file</span>=XXXXX <span class="variable">$END</span></span><br></pre></td></tr></table></figure>
+<h2 id="绘图plot"><a href="#绘图plot" class="headerlink" title="绘图plot"></a>绘图<code>plot</code></h2><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="variable">$NBO</span> plot <span class="attribute">file</span>=XXXXX <span class="attribute">AOINFO</span>=W <span class="variable">$END</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>运行后就会有一批NBO plot文件*.31、*.32 … *.41在c:\ltwd下面生成:<ul>
 <li><em>.31文件储存的是基函数信息，\</em>.41是密度矩阵信息，对绘制轨道没直接用处。</li>
@@ -835,7 +835,7 @@
 </ul>
 <h2 id="泛函"><a href="#泛函" class="headerlink" title="泛函"></a>泛函</h2><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">XC</span><br><span class="line">  &#123;LDA LDA &#123;Stoll&#125;&#125;</span><br><span class="line">  &#123;GGA GGA&#125;</span><br><span class="line">  &#123;MetaGGA metagga&#125;</span><br><span class="line">  &#123;Model MODELPOT [IP]&#125;</span><br><span class="line">  &#123;HartreeFock&#125;</span><br><span class="line">  &#123;OEP fitmethod &#123;approximation&#125;&#125;</span><br><span class="line">  &#123;HYBRID hybrid &#123;<span class="attribute">HF</span>=HFpart&#125;&#125;</span><br><span class="line">  &#123;MetaHYBRID metahybrid&#125;</span><br><span class="line">  &#123;DOUBLEHYBRID doublehybrid&#125;</span><br><span class="line">  &#123;RPA&#125;</span><br><span class="line">  &#123;XCFUN&#125;</span><br><span class="line">  &#123;RANGESEP &#123;<span class="attribute">GAMMA</span>=X&#125; &#123;<span class="attribute">ALPHA</span>=a&#125; &#123;<span class="attribute">BETA</span>=b&#125;&#125;</span><br><span class="line">  (LibXC functional&#125;</span><br><span class="line">  &#123;DISPERSION [s6scaling] [<span class="attribute">RSCALE</span>=r0scaling] [Grimme3] [BJDAMP] [<span class="attribute">PAR1</span>=par1]  [<span class="attribute">PAR2</span>=par2]  [<span class="attribute">PAR3</span>=par3]  [<span class="attribute">PAR4</span>=par4] &#125;</span><br><span class="line">  &#123;Dispersion Grimme4 &#123;<span class="attribute">s6</span>=...&#125; &#123;<span class="attribute">s8</span>=...&#125; &#123;<span class="attribute">a1</span>=...&#125; &#123;<span class="attribute">a2</span>=...&#125;&#125;</span><br><span class="line">  &#123;DISPERSION dDsC&#125;</span><br><span class="line">  &#123;DISPERSION UFF&#125;</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 <h2 id="相对论"><a href="#相对论" class="headerlink" title="相对论"></a>相对论</h2><p>2020版本开始默认使用标量相对论效应：</p>
-<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">Relativity</span><br><span class="line">   Formalism [Pauli | <span class="type">ZORA</span> | <span class="type">X2C</span> | <span class="type">RA</span>-X2C]</span><br><span class="line">   Level [None | <span class="type">A</span> | <span class="type">Spin</span>-Orbit]</span><br><span class="line">   Potential [MAPA | <span class="type">SAPA</span>]</span><br><span class="line">   SpinOrbitMagnetization [NonCollinear | <span class="type">Collinear</span> | <span class="type">CollinearX</span> | <span class="type">CollinearY</span> | <span class="type">CollinearZ</span>]</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">Relativity</span><br><span class="line">   Formalism [Pauli | <span class="type">ZORA</span> | <span class="type">X2C</span> | <span class="type">RA</span>-X2C]</span><br><span class="line">   Level [None | <span class="type">Scalar</span> | <span class="type">Spin</span>-Orbit]</span><br><span class="line">   Potential [MAPA | <span class="type">SAPA</span>]</span><br><span class="line">   SpinOrbitMagnetization [NonCollinear | <span class="type">Collinear</span> | <span class="type">CollinearX</span> | <span class="type">CollinearY</span> | <span class="type">CollinearZ</span>]</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>Formalism</code>：如果<code>level</code>里是<code>None</code>，则不需要考虑所选择的形式。<ul>
 <li><code>Pauli</code>：泡利哈密顿函数</li>
@@ -2129,14 +2129,22 @@
 <li><code>ctrl+u</code>：屏幕向上移动半页</li>
 </ul>
 <h1 id="搜索替换"><a href="#搜索替换" class="headerlink" title="搜索替换"></a>搜索替换</h1><ul>
-<li><code>/word</code>：向下寻找word</li>
-<li><code>?word</code>：向上寻找</li>
-<li><code>n</code>：重复查找</li>
-<li><code>N</code>：反向查找</li>
-<li><code>:n1,n2s/word1/word2/g</code>：在第 n1 与 n2 行之间寻找 word1 这个字符串，并将该字符串取代为 word2 <ul>
+<li><p><code>/word</code>：向下寻找word</p>
+</li>
+<li><p><code>?word</code>：向上寻找</p>
+</li>
+<li><p><code>n</code>：重复查找</p>
+</li>
+<li><p><code>N</code>：反向查找</p>
+</li>
+<li><p><code>:n1,n2s/word1/word2/g</code>：在第 n1 与 n2 行之间寻找 word1 这个字符串，并将该字符串取代为 word2 </p>
+<ul>
 <li>n2用<code>$</code>代表结尾，则<code>:1,$s/word1/word2/g</code>代表全文中替换，也可以用<code>:1,%s/word1/word2/g</code></li>
 <li><code>g</code>用<code>gc</code>时可以确认是否取代</li>
 </ul>
+</li>
+<li><p>同时查找多个关键词</p>
+<figure class="highlight taggerscript"><table><tr><td class="code"><pre><span class="line">?<span class="symbol">\&lt;</span>Ce<span class="symbol">\&gt;</span><span class="symbol">\|</span><span class="symbol">\&lt;</span>C.f1<span class="symbol">\&gt;</span><span class="symbol">\|</span><span class="symbol">\&lt;</span>Sc<span class="symbol">\&gt;</span>  </span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h1 id="删除d"><a href="#删除d" class="headerlink" title="删除d"></a>删除d</h1><ul>
@@ -2670,6 +2678,21 @@
 <li><p>如果传递给orca后，没有1圈就结束迭代，需要仔细对比二者的基函数是否有区别，高斯中可以使用<code>GFPrint</code>打印基函数，orca用<code>printbasis</code>打印基函数。</p>
 </li>
 </ul>
+<h2 id="利用MOkit"><a href="#利用MOkit" class="headerlink" title="利用MOkit"></a>利用MOkit</h2><ul>
+<li>Gaussian计算完后，直接用mokit转换chk文件为gbw文件。</li>
+</ul>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">chk2gbw</span> *chk </span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>还可以直接利用mokit转换算出来的chk文件为inp文件，基本完全一致</p>
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line">%fchk *chk</span><br><span class="line">fch2mkl *fchk 	#会得到*<span class="module-access"><span class="module"><span class="identifier">_o</span>.</span></span>inp和*<span class="module-access"><span class="module"><span class="identifier">_o</span>.</span></span>mkl文件</span><br><span class="line">				#然后再用上诉转换得到的*.gbw文件进行计算</span><br><span class="line">				#如果直接修改*.gbw为*<span class="module-access"><span class="module"><span class="identifier">_o</span>.</span></span>gbw则不用在orca中写入% moinp <span class="string">&quot;*.gbw&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attribute">inp文件关键词部分如下</span></span><br><span class="line">! UKS PBE0 defgrid3 TightSCF noTRAH noRI SOSCF</span><br><span class="line">%scf</span><br><span class="line"> Thresh 1e-12</span><br><span class="line"> Tcut 1e-14</span><br><span class="line"> CNVDamp False</span><br><span class="line"> CNVShift False</span><br><span class="line"> DirectResetFreq 1</span><br><span class="line"><span class="attribute">end</span></span><br><span class="line"><span class="attribute"></span></span><br><span class="line"><span class="attribute"></span></span><br><span class="line"><span class="attribute">我后面会考虑把</span></span><br><span class="line"> CNVDamp False</span><br><span class="line"> CNVShift False</span><br><span class="line"> DirectResetFreq 1</span><br><span class="line">这三行作为fch2mkl的默认选项，产生inp文件时默认就写在里面</span><br><span class="line">这三行是给一个比较普通的SCF初始（即程序默认初始轨道和密度矩阵）用的。若用户提供接近收敛的初始轨道，这三行的默认设置反倒是累赘，所以我全给它关了。</span><br></pre></td></tr></table></figure>
+<ul>
+<li>或者先转换chk文件为fchk文件，<code>fch2mkl</code>会得到自动生成的*_o.inp文件</li>
+</ul>
+<p>检验稳定性</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">读取收敛的轨道，在%scf中加入以下5行</span></span><br><span class="line"><span class="string">STABPerform</span> <span class="literal">true</span></span><br><span class="line"><span class="string">STABRestartUHFifUnstable</span> <span class="literal">true</span></span><br><span class="line"><span class="string">STABMaxIter</span> <span class="number">500</span></span><br><span class="line"><span class="string">STABDTol</span> <span class="number">1e-5</span></span><br><span class="line"><span class="string">STABRTol</span> <span class="number">1e-5</span></span><br></pre></td></tr></table></figure>
 <h1 id="几何优化的重启"><a href="#几何优化的重启" class="headerlink" title="几何优化的重启"></a>几何优化的重启</h1><ul>
 <li>迭代圈数耗尽或者意外崩溃，最简单的办法是最后一组坐标并从那里开始新的计算</li>
 <li>从底部搜“<code>CARTESIAN COORDINATES</code>”或者直接从 jobname.xyz中读取</li>
@@ -2847,7 +2870,7 @@
 </ul>
 </li>
 <li><p>进一步渲染，6中是使用的默认方法，可以调用VMD自带的tachyon_WIN32.exe渲染器进一步在当前目录下使用*dat文件渲染出*.bmp图像文件，在命令行中输入：</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">tachyon_WIN32</span>.exe XXXX.dat -format BMP -o XXXX.bmp -trans_raster<span class="number">3</span>d -res <span class="number">2000</span> <span class="number">1500</span> -fullshade -numthreads <span class="number">4</span> -aasamples <span class="number">24</span> -shadow_filter_off</span><br></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">tachyon_WIN32.exe XXXX.dat -format BMP -o X.bmp -trans_raster3d -res <span class="number">2000</span> <span class="number">1500</span> -fullshade -numthreads <span class="number">4</span> -aasamples <span class="number">24</span> -shadow_filter_off</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;C:\VMD<span class="subst">\\</span>tachyon_WIN32.exe&quot;</span> -aasamples <span class="number">12</span> %s -format BMP -o %s.bmp</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h1 id="批量处理多个轨道文件"><a href="#批量处理多个轨道文件" class="headerlink" title="批量处理多个轨道文件"></a>批量处理多个轨道文件</h1><h2 id="1-生成cube文件"><a href="#1-生成cube文件" class="headerlink" title="1. 生成cube文件"></a>1. 生成cube文件</h2><h3 id="打开Multiwfn生成"><a href="#打开Multiwfn生成" class="headerlink" title="打开Multiwfn生成"></a>打开Multiwfn生成</h3><ol>
@@ -3272,7 +3295,8 @@
 <ul>
 <li><code>OCC</code>定义每个对称性的占据轨道数，轨道的总数必须等于(总电子数+spin)/2</li>
 <li><code>CLOSED</code>定义闭壳层轨道，可用于开壳层计算，指定每个对称性中闭壳层轨道的数量。</li>
-<li><code>OPEN</code>指定开壳层轨道，即指定单占据轨道，单占据轨道的数量必须等于spin，其对称性乘<br>积必须等于sym，如果<code>orbi.sym</code>为负，这个轨道将用负自旋占据（仅允许在UHF中）。<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">OPEN</span>,<span class="selector-tag">orb1</span><span class="selector-class">.sym1</span>,<span class="selector-tag">orb</span><span class="selector-class">.sym2</span>,..<span class="selector-class">.orbn</span><span class="selector-class">.symn</span></span><br></pre></td></tr></table></figure>
+<li><p><code>OPEN</code>指定开壳层轨道，即指定单占据轨道，单占据轨道的数量必须等于spin，其对称性乘<br>积必须等于sym，如果<code>orbi.sym</code>为负，这个轨道将用负自旋占据（仅允许在UHF中）。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">OPEN</span>,<span class="selector-tag">orb1</span><span class="selector-class">.sym1</span>,<span class="selector-tag">orb</span><span class="selector-class">.sym2</span>,..<span class="selector-class">.orbn</span><span class="selector-class">.symn</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>O<sub>2</sub></p>
@@ -3318,7 +3342,7 @@
 </ul>
 <figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ACCU,</span>accu</span><br></pre></td></tr></table></figure>
 <h2 id="能量的合理性检查"><a href="#能量的合理性检查" class="headerlink" title="能量的合理性检查"></a>能量的合理性检查</h2><ul>
-<li>禁止能量的合理性检查，即使是能量值不合理时。否则，默认自动检查能<br>量。</li>
+<li>禁止能量的合理性检查，即使是能量值不合理时。否则，默认自动检查能量。</li>
 </ul>
 <figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">NOENEST</span></span><br></pre></td></tr></table></figure>
 <h2 id="打印"><a href="#打印" class="headerlink" title="打印"></a>打印</h2><ul>
@@ -3571,7 +3595,7 @@
 </li>
 <li><p><code>SHIFT=value</code>：能级移动（(Chem. Phys. Lett. 245, 215 (1995)).）典型的移动是0.1 − 0.3。在小数点之后只考虑两位数字。打印的能量以及ENERGY 变量包含了Roos和Andersson对能级移动建议的能量修正。收敛后还打印未修正的能量用于比较。</p>
 </li>
-<li><p><code>IPEA=value</code>：IPEA 能级移动。（G. Ghigo, B. O. Roos, and P.A. Malmqvist, Chem. Phys. Lett. 396, 142 (2004））</p>
+<li><p><code>IPEA=value</code>：IPEA 能级移动。（G. Ghigo, B. O. Roos, and P.A. Malmqvist, Chem. Phys. Lett. 396, 142 (2004）） A value of 0.20-0.25 is recommended. </p>
 </li>
 <li>可以同时使用<code>SHIFT</code>和<code>IPEA</code>，但<code>Gn</code>选项不能和<code>IPEA</code>一起使用。</li>
 </ul>
@@ -4909,7 +4933,9 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">OCCUPATIONS keeporbitals=<span class="number">50</span> <span class="keyword">freeze</span> </span><br><span class="line">OCCUPATIONS keeporbitals=<span class="number">50</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">mkdir</span> <span class="number">01</span>_listi <span class="number">02</span>_listb <span class="number">03</span>_fdiis <span class="number">04</span>_listf <span class="number">05</span>_mesa <span class="number">06</span>_sdiis <span class="number">07</span>_arh <span class="number">08</span>_mix <span class="number">09</span>_shift </span><br><span class="line"></span><br><span class="line"><span class="attribute">for</span> i in <span class="number">01</span> <span class="number">02</span> <span class="number">03</span> <span class="number">04</span> <span class="number">05</span> <span class="number">06</span> <span class="number">07</span> <span class="number">08</span> <span class="number">09</span> ;do cp <span class="number">00</span>*/*run <span class="number">00</span>*/adf* <span class="variable">$&#123;i&#125;</span>*; done</span><br><span class="line"></span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nAccelerationMethod listi/&#x27; <span class="number">01</span>*/*.run </span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nAccelerationMethod listb/&#x27; <span class="number">02</span>*/*.run </span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nAccelerationMethod fdiis/&#x27; <span class="number">03</span>*/*.run </span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nAccelerationMethod listf/&#x27; <span class="number">04</span>*/*.run</span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nAccelerationMethod mesa/&#x27; <span class="number">05</span>*/*.run</span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nAccelerationMethod sdiis/&#x27; <span class="number">06</span>*/*.run</span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\narh\nend/&#x27; <span class="number">07</span>*/*.run</span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nDIIS\nN <span class="number">25</span>\nCyc <span class="number">30</span>\nEnd\nMixing <span class="number">0</span>.<span class="number">015</span>\n Mixing<span class="number">1</span> <span class="number">0</span>.<span class="number">09</span>/&#x27; <span class="number">08</span>*/*.run</span><br><span class="line"><span class="attribute">sed</span> -i &#x27;s/SCF/SCF\nLshift <span class="number">0</span>.<span class="number">01</span>/&#x27; <span class="number">09</span>*/*.run</span><br><span class="line"></span><br><span class="line"><span class="attribute">for</span> i in &#123;<span class="number">1</span>..<span class="number">9</span>&#125;;do echo <span class="number">0</span><span class="variable">$&#123;i&#125;</span>*/;cd <span class="number">0</span><span class="variable">$&#123;i&#125;</span>*; qsub adf*; cd ..; done</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir 01_listi 02_listb 03_fdiis 04_listf 05_mesa 06_sdiis 07_arh 08_mix 09_shift </span><br><span class="line"></span><br><span class="line">for i in 01 02 03 04 05 06 07 08 09 ;do cp 00*/*run 00*/a* $&#123;i&#125;*; done</span><br><span class="line"></span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod listi/&#x27; 01*/*.run </span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod listb/&#x27; 02*/*.run </span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod fdiis/&#x27; 03*/*.run </span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod listf/&#x27; 04*/*.run</span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod mesa/&#x27; 05*/*.run</span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod sdiis/&#x27; 06*/*.run</span><br><span class="line">sed -i &#x27;s/SCF/SCF\narh\nend/&#x27; 07*/*.run</span><br><span class="line">sed -i &#x27;s/SCF/SCF\nDIIS\nN 25\nCyc 30\nEnd\nMixing 0.015\n Mixing1 0.09/&#x27; 08*/*.run</span><br><span class="line">sed -i &#x27;s/SCF/SCF\nLshift 0.01/&#x27; 09*/*.run</span><br><span class="line"></span><br><span class="line">for i in &#123;1..9&#125;;do echo 0$&#123;i&#125;*/;cd 0$&#123;i&#125;*; zjsub am*; cd ..; done</span><br></pre></td></tr></table></figure>
+<p>看收敛没有</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> `ls`; <span class="keyword">do</span> <span class="built_in">echo</span> <span class="variable">$i</span>; tail <span class="variable">$i</span>/*out; <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
 <h1 id="对称性的设置"><a href="#对称性的设置" class="headerlink" title="对称性的设置"></a>对称性的设置</h1><p>除了在AMS中<code>System</code>块中指定，<code>Engine ADF</code>中也可以设置对称性：</p>
 <ul>
 <li><code>Symmetry</code>：默认是<code>AUTO</code>，默认为<code>auto</code>，可以通过<code>nosym</code>、<code>C(LIN)</code>……等来指定对称性</li>
@@ -5687,6 +5713,8 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 </li>
 <li><p><code>set measurements DOTTED</code>：设置测量线为虚线。</p>
 </li>
+<li><p><code>set measurements [linewidth-pixels]</code>：设置线宽</p>
+</li>
 <li><p><code>set justifyMeasurements FALSE</code>：将此参数设为 <code>TRUE</code> 可右对齐测量标签</p>
 </li>
 <li><p><code>set measurements 数字</code>：数字带小数时，是以Å为单位；整数时是以像素为单位。</p>
@@ -5701,7 +5729,7 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <ul>
 <li><p><code>measure ON/OFF</code>：打开和关闭距离、角度、二面角测量标签和测量线。</p>
 </li>
-<li><p><code>measure DELETE</code>：删除所有测量</p>
+<li><p><code>measure DELETE</code>：删除所有测量3</p>
 </li>
 <li><p><code>measure &quot;n:labelFormat&quot;</code>：测量对象及其单位</p>
 <ul>
@@ -5720,17 +5748,23 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <h1 id="mo"><a href="#mo" class="headerlink" title="mo"></a>mo</h1><p>可以将fchk文件通过Multiwfn转化成molden文件再进行绘图</p>
 <figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="number">100</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">6</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li><code>mo ON/OFF</code>：开启或关闭分子轨道，默认是<code>ON</code></li>
-<li><code>mo (integer)</code>：显示指定的分子轨道，序号从1开始。<ul>
+<li><p><code>mo ON/OFF</code>：开启或关闭分子轨道，默认是<code>ON</code></p>
+</li>
+<li><p><code>mo (integer)</code>：显示指定的分子轨道，序号从1开始。</p>
+<ul>
 <li>注意：Jmol中的轨道是按能量排序的，因此可能和一些fchk文件中的轨道不一致，比如NLMO。可以通过将原始的轨道能量作为标签，保留三位小数，通过<code>MO list</code>去查找相应的序号。</li>
 </ul>
 </li>
-<li><code>mo COLOR [RGB-color] [RGB-color]</code>：第一个颜色为等值面负的颜色，第二个为正等值面的颜色<ul>
+<li><p><code>mo COLOR [RGB-color] [RGB-color]</code>：第一个颜色为等值面负的颜色，第二个为正等值面的颜色</p>
+<ul>
 <li><code>mo COLOR [RGB-color]</code>：将等值面设置成某个颜色</li>
 </ul>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line">mo <span class="attribute">color</span> yellow purple;</span><br><span class="line">mo <span class="attribute">color</span> <span class="selector-attr">[xFF00FF]</span> <span class="selector-attr">[xFFFF00]</span>;</span><br></pre></td></tr></table></figure>
 </li>
-<li><code>mo CUTOFF (decimal)</code>：设置等值面的值。默认是0.05。</li>
-<li><code>mo RESOLUTION (decimal)</code>：等值面的精度，一般范围是4-10。分辨率越高，等值面越光滑，但是生成速度更慢。</li>
+<li><p><code>mo CUTOFF (decimal)</code>：设置等值面的值。默认是0.05。</p>
+</li>
+<li><p><code>mo RESOLUTION (decimal)</code>：等值面的精度，一般范围是4-10。分辨率越高，等值面越光滑，但是生成速度更慢。</p>
+</li>
 </ul>
 <h2 id="显示效果"><a href="#显示效果" class="headerlink" title="显示效果"></a>显示效果</h2><ul>
 <li><code>mo mesh nofill</code>：除了网格，并且填充。默认是<code>mo mesh nofill</code></li>
@@ -5848,7 +5882,6 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <th style="text-align:center"><strong>label %x</strong></th>
 <th style="text-align:center"><strong>print {*}.xxx</strong></th>
 <th style="text-align:center"><strong>{*}.xxx = y</strong></th>
-<th style="text-align:center"><strong>description</strong></th>
 </tr>
 </thead>
 <tbody>
@@ -5859,7 +5892,6 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <td style="text-align:center">%a</td>
 <td style="text-align:center">√</td>
 <td style="text-align:center">√</td>
-<td style="text-align:center">原子的名字</td>
 </tr>
 <tr>
 <td style="text-align:center">atomno</td>
@@ -5868,7 +5900,6 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <td style="text-align:center">%i</td>
 <td style="text-align:center">√</td>
 <td style="text-align:center">√</td>
-<td style="text-align:center">可以用<code>@</code>替代<code>atomno=</code></td>
 </tr>
 <tr>
 <td style="text-align:center">atomType</td>
@@ -5877,7 +5908,13 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <td style="text-align:center">%B</td>
 <td style="text-align:center">√</td>
 <td style="text-align:center">√</td>
-<td style="text-align:center">原子类型</td>
+</tr>
+<tr>
+<td style="text-align:center">element</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">%e</td>
+<td style="text-align:center"></td>
 </tr>
 </tbody>
 </table>
@@ -6032,6 +6069,18 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 </li>
 <li><code>-4</code>：导入导出已找到的临界点、删除或人为地增加临界点。</li>
 <li><code>-5</code>：显示拓扑路径的详细信息（路径轨迹的坐标、路径长度等）并进行编辑和导入、导出，还能绘制各种实空间函数沿着键径上的变化图</li>
+</ul>
+<h4 id="相关结果的意义"><a href="#相关结果的意义" class="headerlink" title="相关结果的意义"></a>相关结果的意义</h4><p><img src="/image-20240108213705211.png" alt="image-20240108213705211"></p>
+<ul>
+<li>• <strong>ρ(BCP)和V(BCP)</strong><br>BCP位置的电子密度ρ(r)和势能密度V(r)与化学键的强度有密切关系，以下简称ρ(BCP)和V(BCP)，后者体现在BCP位置处的电子感受到的外势，必为负值。<strong>对于同类化学键，通常ρ(BCP)越大、V(BCP)越负，则化学键强度越大。</strong>（这里说的“同类化学键”指的是特定两种元素组成的化学键，后同。比如A体系的某个C-O键和B体系的某个C-O键可以这么对比，而C-O键和C-F键就不叫同类化学键，不能靠ρ(BCP)和V(BCP)对比强度）</li>
+<li>• <strong>▽2ρ(BCP)</strong><br>电子密度的拉普拉斯（Laplacian）函数，即▽2ρ(r)，定义是这个位置的电子密度Hessian矩阵的三个对角元的加和。负值区域对应电子凝聚区域，<strong>如果是成键区域出现了▽2ρ&lt;0的现象，一般可以认为形成了共价键。</strong>这个函数在BCP的位置，即▽2ρ(BCP)，常被用来判断化学键的类型。<strong>很多文章将▽2ρ(BCP)&gt;0作为化学键是非共价相互作用（也叫闭壳层相互作用）的判据，而将▽2ρ(BCP)小于0作为这个键是共价键的判据。</strong>这个判据往往是对的，但反例非常多，所以并不可靠。比如对于一氧化碳里的C-O键，明显这是极性共价键，但它的▽2ρ(BCP)为正。这关键在于往往BCP的出现位置不那么合理，不能真正作为化学键作用区域最有代表性的点，关于这一点笔者之前专门写过文章讨论：《AIM键临界点处电子密度拉普拉斯值符号判断相互作用类型失败原因的图形分析》（<a href="http://sobereva.com/161）。如果用Multiwfn绘制▽2ρ的图像而不是仅着眼于BCP这一个点的话，就可以避免被▽2ρ(BCP)的符号给坑了。另外，即便是BCP的出现位置有意义的情况，把▽2ρ(BCP">http://sobereva.com/161）。如果用Multiwfn绘制▽2ρ的图像而不是仅着眼于BCP这一个点的话，就可以避免被▽2ρ(BCP)的符号给坑了。另外，即便是BCP的出现位置有意义的情况，把▽2ρ(BCP</a>)<0当做是共价键的判断标准往往也太严了，特别是对于含有很重（也因此半径很大）的原子根本不适用，这是因为这些原子的成键区域涉及的空间范围很广，导致电子凝聚现象被过度“稀释”了。比如对于I2，虽然I-I是共价键，但两个I之间▽2ρ函数也完全为正值，因此▽2ρ(BCP)>0。在笔者来看，▽2ρ(BCP)&lt;0算是共价键的充分非必要条件。</li>
+<li>• <strong>H(BCP)</strong><br>能量密度(energy density)体现的是某个点上电子的能量，是动能密度与势能密度之和，文献中常用H(r)或者E(r)表示。在Angew. Chem. Int. Ed. Engl., 23, 627 (17</li>
+<li>984)中，作者提出<strong>H(BCP)<0时这个键可以被认为是共价作用，而>0则是非共价作用。</strong>根据笔者的经验，这个标准虽然不错，但往往有点过于宽松了，比如CaO的Ca-O键的H(BCP)&lt;0，但实际上Ca-O理应被认为是离子键。碰到一个凭直觉模棱两可的情况，如果你倾向于把它说成是共价作用为主，那就用H(BCP)当判断标准吧。在我来看H(BCP)&lt;0适合作为共价键的必要而非充分条件。</li>
+<li>• <strong>eta指数</strong><br>J. Phys. Chem. A, 114, 552 (2010)提出了eta指数，在Angew. Chem. Int. Ed., 53, 2766 (2014)等文中也做了进一步讨论。eta指数是个函数，定义为η(r)=|λ1(r)|/λ3(r)。λ1、λ2、λ3是当前位置的电子密度Hessian矩阵的本征值，由小到大排序，后同。<strong>BCP位置的eta指数，即η(BCP)，小于1的时候被认为对应闭壳层相互作用，大于1的时候被认为是共价作用为主，而且数值越大共价性越强。</strong>不过这也不是完全靠谱的判断标准，比如Ni(CO)4中Ni-C和C-O对应的η(BCP)都小于1，但是它们都应当认为是极性共价作用。</li>
+<li>通常关注ELF&gt;0.5，较高的ELF出现在共价键、孤对电子、内核和原子壳层区域</li>
+<li>动能密度G任何都是正的</li>
+<li>势能密度V总是负的</li>
+<li>能量密度H=G+V</li>
 </ul>
 <h2 id="ELF"><a href="#ELF" class="headerlink" title="ELF"></a>ELF</h2><p>对于ELF、LOL和电子密度拉普拉斯函数，寻找对应原子内核处的临界点（对应高度定域的1s轨道电子）还是用原子核位置作为初猜。但是对于价层的ELF临界点，由于其分布较难预料，而且数目众多，最好的办法就是直接在每个原子附近都设一大堆初猜点来寻找各个临界点。不过，由于ELF临界点太多而且分布太复杂，想找全所有临界点绝非易事，所以，只要看到化学意义显著的临界点（所有的(3,-3)，以及部分(3,-1)）都已经找到了，临界点的搜索就可以停掉了。除了牛顿法，还有一种基于立方格点的临界点搜索方法，可以通过Multiwfn的盆分析实现，见《使用Multiwfn做电子密度、ELF、静电势、密度差等函数的盆分析》（<a href="http://sobereva.com/179），此方法虽然可以保证把(3,-3)搜索全，但定位精度低（精度取决于格点间距）。">http://sobereva.com/179），此方法虽然可以保证把(3,-3)搜索全，但定位精度低（精度取决于格点间距）。</a></p>
 <h1 id="AIM盆分析"><a href="#AIM盆分析" class="headerlink" title="AIM盆分析"></a>AIM盆分析</h1><p>加载.fch文件后的总体步骤：</p>
@@ -7485,6 +7534,12 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 </li>
 </ul>
 <h2 id="重启计算"><a href="#重启计算" class="headerlink" title="重启计算"></a>重启计算</h2><figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">RESTART</span>;  	# 默认，重启所有跟File卡有关的文件</span><br><span class="line"><span class="keyword">RESTART</span>,<span class="number">1</span>; 		#will <span class="keyword">restart</span> file <span class="number">1</span> <span class="keyword">only</span></span><br><span class="line"><span class="keyword">RESTART</span>,<span class="number">2</span>; 		#will <span class="keyword">restart</span> file <span class="number">2</span> <span class="keyword">only</span></span><br><span class="line"><span class="keyword">RESTART</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>; 	#will <span class="keyword">restart</span> files <span class="number">1</span><span class="number">-3</span></span><br><span class="line"><span class="keyword">RESTART</span>,<span class="number">2000.1</span>;	#will <span class="keyword">restart</span> file <span class="number">1</span> <span class="keyword">and</span> <span class="keyword">truncate</span> <span class="keyword">before</span> <span class="type">record</span> <span class="number">2000.</span></span><br></pre></td></tr></table></figure>
+<p>2022molpro测试重启计算结果</p>
+<ol>
+<li>计算1得到a.wfu、a.int</li>
+<li>计算2时，重命名a.wfu，a.int为b.<em>（注意小写），然后file卡中写<code>FILE,1,b.int</code>和<code>FILE,2,b.wfu</code>，会自动重启计算，不需要再写<code>restart</code>关键词，并且覆盖原来的`b.</em>`文件</li>
+<li>下一次重启是以此类推</li>
+</ol>
 <h1 id="print-gprint-全局打印选项"><a href="#print-gprint-全局打印选项" class="headerlink" title="print/gprint 全局打印选项"></a>print/gprint 全局打印选项</h1><p>通常，有两种打印选项：一种是局部的，由print指令指定，仅在一个作业步骤中使用；一种是全局的，在各个程序以外可以用GPRINT命令设置全局打印选项（g可加可不加，加了可以避免与程序特定的PRINT卡相混淆）。局部打印命令是特定方法输入的一部分，因此必须直接遵循相应的命令。全局打印选项作用于所有后续方法。</p>
 <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">GPRINT</span>,key<span class="number">1</span>[=value<span class="number">1</span>],key<span class="number">2</span>[=value<span class="number">2</span>],. . .</span><br><span class="line"><span class="attribute">NOGPRINT</span>,key<span class="number">1</span>,key<span class="number">2</span>,. . .</span><br></pre></td></tr></table></figure>
 <ul>
@@ -10184,6 +10239,185 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
       <tags>
         <tag>CP2K</tag>
         <tag>MD</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【ORCA】08.CASSCF教程</title>
+    <url>/2023/10/07/%E3%80%90ORCA%E3%80%9108.CASSCF%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<h1 id="CASPT2"><a href="#CASPT2" class="headerlink" title="CASPT2"></a>CASPT2</h1><ul>
+<li><p>CASSCF收敛的结果是考虑动态相关多参考的起点，常用的MRCI和MRPT</p>
+</li>
+<li><p>internally contracted N-Electron valence state perturbation theory<br>N个电子价层微扰(NEVPT2) 是动态相关的首选，只需要一个关键词：</p>
+<figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">%casscf</span><br><span class="line">...</span><br><span class="line">PTMethod SC_NEVPT2 <span class="comment"># for the strongly contracted NEVPT2</span></span><br><span class="line"><span class="comment"># Other options: FIC-NEVPT2, DLPNO-NEVPT2, FIC CASPT2</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>NEVPT2</code>就是NEVPT2方法的strongly contracted” 版本</li>
+<li><code>PC-NEVPT2</code>是in the canonical and in the DLPNO methodology</li>
+<li><code>FIC-NEVPT2</code>是fully internally contracted (FIC)版</li>
+<li></li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>ORCA</tag>
+        <tag>CASSCF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Office】Word</title>
+    <url>/2024/02/28/%E3%80%90Office%E3%80%91Word/</url>
+    <content><![CDATA[<h1 id="公式编号及引用"><a href="#公式编号及引用" class="headerlink" title="公式编号及引用"></a>公式编号及引用</h1><p>编号：</p>
+<ol>
+<li><p><code>alt+fn+f9</code>进入域代码模式</p>
+</li>
+<li><p>在章节标题处<code>ctrl+fn+f9</code>输入域代码的大括号（shift是切换当前域代码），插入如下</p>
+<figure class="highlight dust"><table><tr><td class="code"><pre><span class="line"><span class="template-variable">&#123; SEQ seq \h&#125;</span><span class="template-variable">&#123; SEQ <span class="keyword">eq</span> \r \h&#125;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>SEQ</code> 是关键词</li>
+<li><code>seq</code> 是变量名字，可以是其他的，比如chart等</li>
+<li><code>\h</code> 表示隐藏域的结果</li>
+<li><code>\r</code>自此之后重置序号计数器为1 </li>
+</ul>
+</li>
+<li><p>复制2中的代码到每一个章节的标题后面</p>
+</li>
+<li><p>公式编号：输入完公式后输入<code>#(&#123; SEQ seq \c&#125;-&#123; SEQ eq &#125;)</code>，再回车。连接符号是<code>-</code>，也可以是<code>.</code>等自定义</p>
+</li>
+<li><p><code>alt+fn+f9</code>退出域代码模式</p>
+</li>
+<li><p><code>alt+shift+u</code>更新域代码，或者直接打印预览一下</p>
+</li>
+</ol>
+<p>引用：</p>
+<ol>
+<li>选中公式编号，插入书签，输入名称</li>
+<li>引用的时候用交叉引用就可以了</li>
+</ol>
+]]></content>
+      <categories>
+        <category>办公</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>Office</tag>
+        <tag>Word</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【【草稿】】Hatree-Forck方法</title>
+    <url>/2023/07/07/%E3%80%90%E3%80%90%E8%8D%89%E7%A8%BF%E3%80%91%E3%80%91Hatree-Forck%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="光的波粒二象性"><a href="#光的波粒二象性" class="headerlink" title="光的波粒二象性"></a>光的波粒二象性</h1><p>光：<script type="math/tex">\lambda \nu = c</script>（$\nu$是光的频率，$\lambda$波长，$c$既是光的传播速度，又是光子的运动速度）</p>
+<p>Einstein 提出光子学说：$E=h\nu$（$h$是普朗克常数，即$6.626 \times 10^{-34} J\cdot s$)</p>
+<p>通过$E=mc^2$，得到：$m=\frac{E}{c^2} =\frac{h\nu}{c^2}$</p>
+<p>通过动量公式$p=mc$，得到$p=\frac{h}{\lambda}$</p>
+<h1 id="德布罗意关系式"><a href="#德布罗意关系式" class="headerlink" title="德布罗意关系式"></a>德布罗意关系式</h1><p>1924 年de Broglie( 德布罗意）受到光的波粒二象性理论的启发，提出实物微粒也有波性：</p>
+<script type="math/tex; mode=display">
+E=h\nu \\
+p=\frac{h}{\lambda}</script><p>联立得到实物的波长为：$\lambda=\frac{h}{p}=\frac{h}{mv}$</p>
+<h1 id="波动方程"><a href="#波动方程" class="headerlink" title="波动方程"></a>波动方程</h1><ul>
+<li><p>原点的振动方程：（$A$是振幅、$\omega$是角频率，${\varphi}_0$是初相）</p>
+<p>$y_0(t)=A\cos(\omega t + {\varphi}_0)$</p>
+</li>
+<li><p>x点的振动方程：（$v$是波的传播速度）</p>
+<p>$y(x,t)=A \cos \left [ \omega(t-\frac{x}{v}) + {\varphi}_0\right ]$</p>
+<blockquote>
+<p>以上也可以通过弹簧简谐振动求解微分方程$F=m \frac{\mathrm{d}^{2} x}{\mathrm{~d} t^{2}}=-kx $得到</p>
+</blockquote>
+</li>
+</ul>
+<p>扩展到三维波函数，设初相为0，振幅1：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\Psi(\vec{r}，t) &=\cos \left[ \omega t- \omega\frac{\vec{r}}{\vec{v}}\right] \\
+&= \cos \left[ 2\pi\nu t - \frac{2\pi\nu}{\lambda \nu} \vec{r} \right] \\
+&=\cos \left[\frac{2\pi}{h}Et - \frac{2\pi}{h} \vec{p} \cdot \vec{r} \right] \\
+&=\cos \left[\frac{E}{\hbar}t-\frac{\vec{p}}{\hbar}\vec{r}\right]
+\end{aligned}</script><p>通过欧拉公式$e^{-ix} = \cos x - i \sin x$，得到</p>
+<script type="math/tex; mode=display">
+\Psi(\vec{r}，t) = e^{-\frac{i}{\hbar}(Et-\vec{p} \vec{r})}</script><h1 id="含时薛定谔方程"><a href="#含时薛定谔方程" class="headerlink" title="含时薛定谔方程"></a>含时薛定谔方程</h1><p>对时间$t$求导，得到$\frac{\partial \Psi}{\partial t}=\frac{-iE} {\hbar}\Psi$，则$E\Psi=i\hbar\frac{\partial\Psi}{\partial t}$，即得到了<strong>含时薛定谔方程</strong>：$\hat{H}\Psi=i\hbar\frac{\partial}{\partial t}\Psi$</p>
+<p>算符：</p>
+<ul>
+<li>对位置$x$求导得到：$\frac{\partial \Psi}{\partial x}=\frac{ip_x} {\hbar}\Psi$，则$\vec{p_x}\Psi=-i\hbar\frac{\partial\Psi}{\partial \vec{x}}$，即<strong>动量算符</strong>为$\hat{p_x}=-i\hbar\frac{\partial}{\partial x}$。</li>
+<li>对位置$\vec{x}$求二阶导，得到$\frac{\partial ^2}{\partial x^2}=-\frac{p_x^2}{ \hbar^2}\Psi$</li>
+<li><p>动能为：$T=\frac{1}{2}mv^2=\frac{\vec{p}^2}{2m}=\frac{1}{2m}(p_x^2+p_y^2+p_z^2)=-\frac{\hbar^2}{2m}(\frac{\partial ^2}{\partial x^2}+\frac{\partial ^2}{\partial y^2}+\frac{\partial ^2}{\partial z^2})\Psi$</p>
+</li>
+<li><p>Laplace算符$\nabla^{2}=\left(\frac{\partial^{2}}{\partial x^{2}}+\frac{\partial^{2}}{\partial y^{2}}+\frac{\partial^{2}}{\partial z^{2}}\right)$</p>
+</li>
+<li><p>即<strong>动能算符</strong>为$\hat{T}=-\frac{\hbar^2}{2m}\nabla^{2}$</p>
+</li>
+<li><p><strong>势能算符</strong>就是$\hat{V}= V$</p>
+</li>
+<li>总能量=动能+势能，Hamilton<strong>哈密顿算符</strong>$\hat{H}=-\frac{\hbar^2}{2m}\nabla^{2}+ V$</li>
+</ul>
+<p><strong>含时薛定谔方程的广义形式</strong>的表达为$-\frac{\hbar^2}{2m}\nabla^{2}\Psi(\vec{r},t)+V(\vec{r},t)\Psi(\vec{r},t)=i \hbar \frac{\partial }{\partial  t} \Psi(\vec{r},t)$</p>
+<h1 id="不含时薛定谔方程"><a href="#不含时薛定谔方程" class="headerlink" title="不含时薛定谔方程"></a>不含时薛定谔方程</h1><p>假设外势与时间无关，则可以将一维的薛定谔方程写为$\Psi(x,t)=f(t)\psi(x)$</p>
+<p>分别对t求导和对x求二阶导，得到：$\frac{\partial \Psi(x, t)}{\partial t}=\frac{d f(t)}{d t} \psi(x)$和$\frac{\partial^{2} \Psi(x, t)}{\partial x^{2}}=f(t) \frac{d^{2} \psi(x)}{d x^{2}}$</p>
+<p>带入含时薛定谔方程的广义形式得到：</p>
+<p>$i\hbar \times \frac{d f(t)}{d t} \psi(x)=-\frac{\hbar^2}{2m} \times f(t) \frac{d^{2} \psi(x)}{d x^{2}} + V(x)f(t)\psi(x)$</p>
+<p>把含有t和x的分别移动到两边：</p>
+<p>$i\hbar \frac{1}{f(t)} \frac{d f(t)}{d t} = -\frac{\hbar^2}{2m} \frac{1}{\psi(x)} \frac{d^{2} \psi(x)}{d x^{2}}+V(x)  $</p>
+<ul>
+<li><p>左侧与t有关，右侧与x有关，等式成立，说明左右同时等于一个常量， 设常量为能量E，则$i\hbar \frac{1}{f(t)} \frac{d f(t)}{d t} =E$，$\frac{d f(t)}{f(t)}=-\frac{i E}{\hbar} d t$求解得到：</p>
+<p>$\ln f(t)=-i E t / \hbar+C$，$f(t)=e^Ce^{iEt/\hbar}=Ae^{iEt/\hbar}$</p>
+<p>把常数项归于$\psi(x)$，取$f(t)=e^{iEt/\hbar}$</p>
+<p>则$\Psi(x,t)=e^{iEt/\hbar}\psi(x)$</p>
+</li>
+<li><p>右侧也等于E，则：</p>
+<p>$-\frac{\hbar^2}{2m} \frac{d^{2}}{d x^{2}} \psi(x)+V(x)\psi(x)=E\psi(x)$</p>
+<p>三维的即为$(-\frac{\hbar^2}{2m}\nabla^{2}+ V(\vec{r}))\psi(\vec{r})=E\psi(\vec{r})$</p>
+</li>
+</ul>
+<p>得到<strong>不含时的薛定谔方程</strong>$\hat{H}\psi=E\psi$，即：$\frac{\hbar^2}{2m}\nabla^{2}\psi+ (E-V)\psi=0$</p>
+<p><a href="https://journals.aps.org/pr/abstract/10.1103/PhysRev.28.1049">薛定谔于1926年假设了薛定谔方程</a>。</p>
+<h1 id="多原子分子的哈密顿量"><a href="#多原子分子的哈密顿量" class="headerlink" title="多原子分子的哈密顿量"></a>多原子分子的哈密顿量</h1><p>对于一个多原子分子，其哈密顿算符为：</p>
+<script type="math/tex; mode=display">
+\hat{H}=-\sum_{p} \frac{\hbar^{2}}{2 M_{p}} \nabla_{p}^{2}-\sum_{i} \frac{\hbar^{2}}{2 m_e} \nabla_{i}^{2}-\sum_i\sum_{p} \frac{\kappa Z_{p} e^{2}}{r_{p i}}+\sum_i\sum_{j<i} \frac{\kappa e^{2}}{r_{i j}}+\sum_{p}\sum_{p<q} \frac{ \kappa Z_{p} Z_{q} e^{2}}{R_{p q}}</script><p>其中，$p$和$q$表示原子核，$i$和$j$表示电子。</p>
+<p>$r<em>{pi}$代表电子与原子序数为$Z_p$的核$p$之间的距离，$r</em>{ij}$代表电子之间的距离，$R<em>{pq}$代表原子序数为$Z</em>{p}$和$Z_{q}$的核$p$和$q$之间的距离。</p>
+<p>因此，这五项分别代表核的动能算符$\hat{T<em>n}$，电子的动能算符$\hat{T_e}$，电子和核之间的吸引能$\hat{V}</em>{ne}$，核之间的排斥能$\hat{V}<em>{nn}$，电子之间的排斥能$\hat{V}</em>{ee}$。</p>
+<p>通过原子单位，即电子质量$m_e$，电子的基本电荷$e$，约化普朗克常数$\hbar$，库伦常数$\kappa=\frac{1}{4\pi \varepsilon}$均为1a.u.，可以将该式简化为：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\hat{H} &=-\sum_{p} \frac{1}{2 M_{p}} \nabla_{p}^{2}-\sum_{i} \frac{1}{2} \nabla_{i}^{2}-\sum_{p, i} \frac{Z_{p} }{r_{p i}}+\sum_{j<i} \frac{1}{r_{i j}}+\sum_{p<q} \frac{Z_{p} Z_{q}}{R_{p q}} \\
+&= \left[ -\sum_{i} \frac{1}{2} \nabla_{i}^{2} -\sum_i \sum_p \frac{Z_{p} }{r_{p i}}+ \frac{1}{2}\sum_i \sum_{j \ne i} \frac{1}{r_{i j}} \right] + \left[ -\sum_{p} \frac{1}{2 M_{p}} \nabla_{p}^{2} +\sum_{p}\sum_{p<q} \frac{Z_{p} Z_{q}}{R_{p q}} \right] \\
+&= \hat{H}_{el} + \hat{H}_{nuc}
+\end{align}</script><h1 id="非相对论近似"><a href="#非相对论近似" class="headerlink" title="非相对论近似"></a>非相对论近似</h1><p>根据爱因斯坦提出的广义相对论，可以推得粒子的质量为$m=\frac{m_0}{\sqrt{1-\frac{v^2}{c^2}}}$</p>
+<p>在较轻的原子中，电子的运动速度引起的相对论效应较小，因此可以将电子质量当作常数，但是在重元素的体系下会引起严重的误差。</p>
+<h1 id="核独立近似"><a href="#核独立近似" class="headerlink" title="核独立近似"></a>核独立近似</h1><p>由于原子核的质量$ M_{p}$远大于电子质量$m_e$，电子的运动也比核快得多。</p>
+<p>因此$\frac{1}{2m<em>e} \nabla</em>{i}^{2}$远大于$\frac{1}{2M<em>p} \nabla</em>{p}^{2}$，$\frac{1}{2M<em>p} \nabla</em>{p}^{2}$可以近似为0。</p>
+<p>因此，在电子运动时，我们可以把核看作是固定的，原子核之间的排斥也可以近似为常数，因此只需要独立地考虑电子运动。这个将电子和核的的运动分开的近似是<a href="https://onlinelibrary.wiley.com/doi/10.1002/andp.19273892002">玻恩-奥本海默近似（Born-Oppenheimer Approximation），</a>则对于电子的哈密顿算符为：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\hat{H}_{el} =\sum_{i}\left[ \hat{h}_i+ \frac{1}{2} \sum_{j\ne i}\hat{g}_{ij}  \right] 
+\end{align}</script><p>其中，$\hat{h}<em>i$为单电子哈密顿算符， $\hat{g}</em>{ij} $为双电子哈密顿算符。</p>
+<h1 id="平均场近似-Hatree-方法"><a href="#平均场近似-Hatree-方法" class="headerlink" title="平均场近似 Hatree 方法"></a>平均场近似 Hatree 方法</h1><p>将电子间的库仑排斥作用平均化，每个电子均视为在核库仑场与其它电子对该电子作用的平均势相叠加而成的势场中运动，从而单个电子的运动特性只取决于其它电子的平均密度分布〈即电子云〉而与后者的瞬时位置无关。因此：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\hat{H}_{el} &=\sum_{i}\left[ -\frac{1}{2} \nabla_{i}^{2} - \sum_{p} \frac{Z_{p} }{r_{p i}} +\sum_{j<i} \frac{1}{r_{i j}} \right] \\
+&=\sum_{i}\left[ -\frac{1}{2} \nabla_{i}^{2} - \sum_{p} \frac{Z_{p} }{r_{p i}}+  V_i(r_i)   \right] \\
+&=\sum_i \hat{h}_i^{eff}
+
+\end{align}</script><p>其中第i个电子受到的势能看作：$ V<em>{i}\left(r</em>{i}\right)=\sum<em>{j \neq i} V</em>{i j}\left(r<em>{i}\right)=\sum</em>{j \neq i} \int \frac{q<em>i q_j}{r</em>{ij}}=\sum<em>{j \neq i} \int \frac{e \times e |\psi</em>{j}|^2}{r<em>{ij}} d^3r_j=\sum</em>{j \neq i}\left\langle\psi<em>{j}\left|r</em>{i j}^{-1}\right| \psi_{j}\right\rangle $</p>
+<p>N电子体系的波函数可写成N个单电子波函数的乘积：</p>
+<script type="math/tex; mode=display">
+\Psi\left(\vec{x}_{1}, \vec{x}_{2}, \cdots, \vec{x}_{N}\right)=\psi_{1}\left(\vec{x}_{1}\right) \psi_{2}\left(\vec{x}_{2}\right) \cdots \psi_{N}\left(\vec{x}_{N}\right)</script><p>由于$\hat{h}_i^{eff}=\varepsilon_i\psi_i$，则$(\sum_i \hat{h}_i^{eff})(\psi_1 \psi_2 \cdots \psi_i \cdots \psi_n)=(\sum_i \varepsilon_i)(\psi_1 \psi_2 \cdots \psi_i \cdots \psi_n)$</p>
+<h1 id="Hatree-Fock方法"><a href="#Hatree-Fock方法" class="headerlink" title="Hatree-Fock方法"></a>Hatree-Fock方法</h1><p>独立粒子近似不满足费米子全同粒子的反对称要求，</p>
+<p>1929年引入Slater行列式的形式，只要交换两个电子的坐标，符号就会改变，当有两条相同的占据轨道存在时，行列式为0，也体现了Pauli不相容原理。</p>
+<script type="math/tex; mode=display">
+\Psi\left(\vec{x}_{1}, \vec{x}_{2}, \cdots, \vec{x}_{N}\right)=\frac{1}{\sqrt{N!} }\begin{vmatrix}  \psi_1(x_1)&   \psi_1(x_1) &   \dots &   \psi_N(x_1)\\  \psi_1(x_2)&  \psi_1(x_2)& \dots &\psi_N(x_2) \\ \vdots  & \vdots & \ddots  & \vdots\\  \psi_1(x_N)&  \psi_1(x_N)& \dots & \psi_N(x_N)\end{vmatrix}</script><p>$E(\Psi)=&lt;\Psi|\hat{H}|\Psi&gt;=\sum<em>{i}\left[ &lt;\Psi|\hat{h}_i|\Psi&gt;  + \frac{1}{2}\sum</em>{j \ne i}&lt;\Psi|\hat{g}_{ij}|\Psi&gt;  \right]$</p>
+<p>平均场中：</p>
+<p>$\Psi=\hat{A}||$</p>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>原理</category>
+      </categories>
+      <tags>
+        <tag>薛定谔方程</tag>
+        <tag>Hatree-Fock</tag>
       </tags>
   </entry>
 </search>
