@@ -42,7 +42,7 @@ RS3,options
 
   - `SHIFT=value`：能级移动（(Chem. Phys. Lett. 245, 215 (1995)).）典型的移动是0.1 − 0.3。在小数点之后只考虑两位数字。打印的能量以及ENERGY 变量包含了Roos和Andersson对能级移动建议的能量修正。收敛后还打印未修正的能量用于比较。
 
-  - `IPEA=value`：IPEA 能级移动。（G. Ghigo, B. O. Roos, and P.A. Malmqvist, Chem. Phys. Lett. 396, 142 (2004））
+  - `IPEA=value`：IPEA 能级移动。（G. Ghigo, B. O. Roos, and P.A. Malmqvist, Chem. Phys. Lett. 396, 142 (2004）） A value of 0.20-0.25 is recommended. 
   - 可以同时使用`SHIFT`和`IPEA`，但`Gn`选项不能和`IPEA`一起使用。
 
 - `MIX=nstates`：调用nstates个态的多态（MS-CASPT2）处理。

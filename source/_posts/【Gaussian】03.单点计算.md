@@ -1,4 +1,5 @@
 ---
+：:：q:ls
 title: 【Gaussian】03.单点计算
 typora-root-url: 【Gaussian】03.单点计算
 mathjax: true
@@ -55,7 +56,14 @@ description: 单点计算的一些基础和SCF不收敛的一些处理方法
 
 ## 轨道相关选项
 
+### guess=mix
+
 - `Mix`：HOMO和LUMO混合，以破坏α-β和空间对称性。只有在产生复杂的初始猜测时，才默认进行。`NoMix`指不混合。
+
+1. `guess=mix`只在自旋极化单重态（即使用UHF方法在单重态下做计算，发现有严重自旋污染）时需要考虑加，其他情况（如二重态、三重态）等无需考虑这个问题；
+2. `always`表示在结构优化的每一步中都执行`guess=mix`。顾名思义，这只在结构优化中可能有用，而在单点计算中无需加、加了也没用。
+
+
 
 ## 程序选项
 
@@ -82,13 +90,42 @@ description: 单点计算的一些基础和SCF不收敛的一些处理方法
 # 检测波函数的稳定性`stable`
 
 - `stable`只检查波函数稳定性
-- `stable=opt`如果检查到不稳定就找到一个最近的稳定点
+- `stable=opt`如果检查到不稳定就找到一个最近的稳定点，不能与结构优化，限制性优化或IRC等一起使用
 
 提示结果有：
 
 - `The wavefunction is stable under the perturbations considered.` 表示当前的波函数是最稳定的
 - `The wavefunction has an RHF -> UHF instability`表示对闭壳层计算，但是基态是开壳层，被当成了闭壳层计算
 - `The wavefunction has an internal instability`说明可能是其他情况。
+
+
+
+# 片段组合波函数例子
+
+```
+%chk=N2_cc-pVDZ_2.0_frag.chk
+%mem=4GB
+%nprocshared=4
+#p UHF/cc-pVDZ nosymm guess(fragment=2)
+
+title
+
+0 1 0 4 0 -4
+N(fragment=1)   0.0   0.0   0.0
+N(fragment=2)   0.0   0.0   2.0
+
+--Link1--
+%chk=N2_cc-pVDZ_2.0_frag.chk
+%mem=4GB
+%nprocshared=4
+#p UHF chkbasis nosymm guess=read geom=allcheck stable=opt
+```
+
+
+
+
+
+
 
 
 
@@ -158,6 +195,8 @@ description: 单点计算的一些基础和SCF不收敛的一些处理方法
 - 改用其它方法或基组，或尝试其它程序来计算当前体系。通过转换结果文件来作为Gaussian的初猜。
   - 用Multiwfn载入那个程序产生的含有基函数信息的文件（如.molden），进入主功能100的子功能2，选择导出波函数为fch文件，之后再用Gaussian的unfchk工具将之转换成chk文件，然后Gaussian计算时用`guess=read`从中读取波函数作为初猜
 
+- `IOp(5/37=N)`：：默认情况下，默认情况下，SCF 迭代每 20 个周期，高斯将完整重建 Fock 矩阵。可以选择 N<20，并加入 IOp（5/37=N） 选项，每 N 个 SCF 周期形成 Fock 矩阵。
+
 ## 批量脚本
 
 将上述方法都试一下的脚本，先新建一个文件夹，在其中存在.gjf和.sub文件，.gjf部分写入`# SCF`
@@ -165,7 +204,8 @@ description: 单点计算的一些基础和SCF不收敛的一些处理方法
 ```shell
 #!/bin/bash
 
-
+mkdir 00_NoConv
+mv * 00*
 mkdir 01_novaracc_noincfock 02_vshift300 03_vshift400 04_vshift500 05_huckel 06_INDO 07_QC 08_XQC 09_Fermi 10_NODIIS 11_mix
 
 for i in 01 02 03 04 05 06 07 08 09 10 11; do cp 00_*/*gjf 00_*/g16* ${i}* ;done
@@ -183,6 +223,6 @@ sed -i 's/\#/&SCF\(maxcyc=300,Fermi\) /' 09_Fermi/*gjf
 sed -i 's/\#/&SCF\(maxcyc=300,NODIIS\) /' 10_NODIIS/*gjf
 sed -i 's/\#/&SCF\(maxcyc=300\) guess=mix /' 11_mix/*gjf
 
-for i in 01 02 03 04 05 06 07 08 09 10 11; do cd ${i}*; qsub g16*; cd ..; done 
+for i in 01 02 03 04 07 08 09 10 11; do cd ${i}*; zsub g16*; cd ..; done 
 ```
 

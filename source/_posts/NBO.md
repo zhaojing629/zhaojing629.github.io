@@ -57,7 +57,7 @@ description: NBO的一些使用方法
 ### Gaussian结合更高版本的NBO
 
 - Linux下：
-  1. 将Linux版NBO6压缩包解压到某目录XXX下
+  1. me将Linux版NBO6压缩包解压到某目录XXX下
   2. 在~/.bashrc文件中加入`export PATH=$PATH:XXX/bin`
   3. 将XXX/bin/gaunbo6中的setenv GAUNBO后面的内容改成g09nbo或g16nbo；将setenv BINDIR后面的内容改为XXX/bin目录
   4. 重新进入终端即可。
@@ -104,6 +104,10 @@ description: NBO的一些使用方法
   ```
   export GENEXE XXX/bin/gennbo.i4.exe
   export NBOEXE XXX/bin/nbo6.i4.exe
+  
+  
+  export  GENEXE=/home/zhaoxk/apps/nbo6/bin/gennbo.i4.exe
+  export  NBOEXE=/home/zhaoxk/apps/nbo6/bin/nbo6.i4.exe
   ```
 
 - 在ORCA的输入文件中写入`NBO`关键词，ORCA会调用BO6做NPA和NBO分析
@@ -180,7 +184,7 @@ MEMORY=1gb
 ## 绘图`plot`
 
 ```
-$NBO plot file=XXXXX $END
+$NBO plot file=XXXXX AOINFO=W $END
 ```
 
 - 运行后就会有一批NBO plot文件\*.31、\*.32 ... \*.41在c:\ltwd下面生成:

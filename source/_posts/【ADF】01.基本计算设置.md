@@ -326,10 +326,10 @@ End
 
    
 
-```
+```shell
 mkdir 01_listi 02_listb 03_fdiis 04_listf 05_mesa 06_sdiis 07_arh 08_mix 09_shift 
 
-for i in 01 02 03 04 05 06 07 08 09 ;do cp 00*/*run 00*/adf* ${i}*; done
+for i in 01 02 03 04 05 06 07 08 09 ;do cp 00*/*run 00*/a* ${i}*; done
 
 sed -i 's/SCF/SCF\nAccelerationMethod listi/' 01*/*.run 
 sed -i 's/SCF/SCF\nAccelerationMethod listb/' 02*/*.run 
@@ -341,10 +341,14 @@ sed -i 's/SCF/SCF\narh\nend/' 07*/*.run
 sed -i 's/SCF/SCF\nDIIS\nN 25\nCyc 30\nEnd\nMixing 0.015\n Mixing1 0.09/' 08*/*.run
 sed -i 's/SCF/SCF\nLshift 0.01/' 09*/*.run
 
-for i in {1..9};do echo 0${i}*/;cd 0${i}*; qsub adf*; cd ..; done
+for i in {1..9};do echo 0${i}*/;cd 0${i}*; zjsub am*; cd ..; done
 ```
 
+看收敛没有
 
+```
+for i in `ls`; do echo $i; tail $i/*out; done
+```
 
 
 

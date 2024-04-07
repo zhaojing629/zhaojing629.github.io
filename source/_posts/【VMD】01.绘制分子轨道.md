@@ -46,7 +46,10 @@ description: 通过VMD绘制轨道的基本操作
 7. 进一步渲染，6中是使用的默认方法，可以调用VMD自带的tachyon_WIN32.exe渲染器进一步在当前目录下使用\*dat文件渲染出\*.bmp图像文件，在命令行中输入：
 
    ```
-   tachyon_WIN32.exe XXXX.dat -format BMP -o XXXX.bmp -trans_raster3d -res 2000 1500 -fullshade -numthreads 4 -aasamples 24 -shadow_filter_off
+   tachyon_WIN32.exe XXXX.dat -format BMP -o X.bmp -trans_raster3d -res 2000 1500 -fullshade -numthreads 4 -aasamples 24 -shadow_filter_off
+   
+   
+   "C:\VMD\\tachyon_WIN32.exe" -aasamples 12 %s -format BMP -o %s.bmp
    ```
 
 

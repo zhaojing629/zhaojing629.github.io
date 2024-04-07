@@ -231,7 +231,7 @@ end
 ```
 Relativity
    Formalism [Pauli | ZORA | X2C | RA-X2C]
-   Level [None | A | Spin-Orbit]
+   Level [None | Scalar | Spin-Orbit]
    Potential [MAPA | SAPA]
    SpinOrbitMagnetization [NonCollinear | Collinear | CollinearX | CollinearY | CollinearZ]
 End

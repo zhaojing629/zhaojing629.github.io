@@ -1,6 +1,6 @@
 ---
-title: 【ORCA】05.HF&SCF部分
-typora-root-url: 【ORCA】05.HF&SCF部分
+title: 【ORCA】07.输出
+typora-root-url: 【ORCA】07.输出
 mathjax: true
 date: 2020-09-04
 updated:

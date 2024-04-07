@@ -149,6 +149,66 @@ XXX.mkl
 
 - 如果传递给orca后，没有1圈就结束迭代，需要仔细对比二者的基函数是否有区别，高斯中可以使用`GFPrint`打印基函数，orca用`printbasis`打印基函数。
 
+## 利用MOkit
+
+- Gaussian计算完后，直接用mokit转换chk文件为gbw文件。
+
+```
+chk2gbw *chk 
+```
+
+- 还可以直接利用mokit转换算出来的chk文件为inp文件，基本完全一致
+
+  ```
+  %fchk *chk
+  fch2mkl *fchk 	#会得到*_o.inp和*_o.mkl文件
+  				#然后再用上诉转换得到的*.gbw文件进行计算
+  				#如果直接修改*.gbw为*_o.gbw则不用在orca中写入% moinp "*.gbw"
+  ```
+
+  
+
+```
+
+
+
+
+inp文件关键词部分如下
+! UKS PBE0 defgrid3 TightSCF noTRAH noRI SOSCF
+%scf
+ Thresh 1e-12
+ Tcut 1e-14
+ CNVDamp False
+ CNVShift False
+ DirectResetFreq 1
+end
+
+
+我后面会考虑把
+ CNVDamp False
+ CNVShift False
+ DirectResetFreq 1
+这三行作为fch2mkl的默认选项，产生inp文件时默认就写在里面
+这三行是给一个比较普通的SCF初始（即程序默认初始轨道和密度矩阵）用的。若用户提供接近收敛的初始轨道，这三行的默认设置反倒是累赘，所以我全给它关了。
+```
+
+- 或者先转换chk文件为fchk文件，`fch2mkl`会得到自动生成的*_o.inp文件
+
+
+
+检验稳定性
+
+```
+读取收敛的轨道，在%scf中加入以下5行
+STABPerform true
+STABRestartUHFifUnstable true
+STABMaxIter 500
+STABDTol 1e-5
+STABRTol 1e-5
+```
+
+
+
 # 几何优化的重启
 
 - 迭代圈数耗尽或者意外崩溃，最简单的办法是最后一组坐标并从那里开始新的计算

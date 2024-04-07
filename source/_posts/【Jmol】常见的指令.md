@@ -290,6 +290,8 @@ partial 3.4	#parialTriple2
 
 - `set measurements DOTTED`：设置测量线为虚线。
 
+- ` set measurements [linewidth-pixels]`：设置线宽
+
 - `set justifyMeasurements FALSE`：将此参数设为 `TRUE` 可右对齐测量标签
 
 - `set measurements 数字`：数字带小数时，是以Å为单位；整数时是以像素为单位。
@@ -306,13 +308,12 @@ measure RANGE <minValue> <maxValue> ALL|ALLCONNECTED|DELETE (<atom expression>) 
 
 - `measure ON/OFF`：打开和关闭距离、角度、二面角测量标签和测量线。
 
-- `measure DELETE`：删除所有测量
+- `measure DELETE`：删除所有测量3
 
 - `measure "n:labelFormat"`：测量对象及其单位
-
   - `n:`为2、3、或4，代表键长、键角、二面角。
   - `n:`和`labelFormat`之间可以放`[atom properties]`原子属性来表示
-
+  
   - `label format`默认为`"%VALUE %UNITS"`，`%VALUE`可以表示小数位数；`//unit`，代表测量单位等。` //A`就是Å，还有`//nm`，`//pm`等
   - 
 
@@ -341,11 +342,20 @@ measure RANGE 1.5 2.5 ALL (_C) (_U) "2://pm"
 
 
 - `mo ON/OFF`：开启或关闭分子轨道，默认是`ON`
+
 - `mo (integer)`：显示指定的分子轨道，序号从1开始。
   - 注意：Jmol中的轨道是按能量排序的，因此可能和一些fchk文件中的轨道不一致，比如NLMO。可以通过将原始的轨道能量作为标签，保留三位小数，通过`MO list`去查找相应的序号。
+  
 - ` mo COLOR [RGB-color] [RGB-color]`：第一个颜色为等值面负的颜色，第二个为正等值面的颜色
   - `mo COLOR [RGB-color]`：将等值面设置成某个颜色
+  
+  ```
+  mo color yellow purple;
+  mo color [xFF00FF] [xFFFF00];
+  ```
+  
 - `mo CUTOFF (decimal)`：设置等值面的值。默认是0.05。
+
 - `mo RESOLUTION (decimal)`：等值面的精度，一般范围是4-10。分辨率越高，等值面越光滑，但是生成速度更慢。
 
 ## 显示效果
@@ -484,11 +494,12 @@ select ({4 7 8 12:16 25:29 32 35:40 43:84})
 
 https://chemapps.stolaf.edu/jmol/docs/index.htm?ver=14.31#atomproperties
 
-| **property** | **select xxx=y** | **label %[xxx]** | **label %x** | **print {\*}.xxx** | **{\*}.xxx = y** |    **description**     |
-| :----------: | :--------------: | :--------------: | :----------: | :----------------: | :--------------: | :--------------------: |
-|   atomName   |        √         |        √         |      %a      |         √          |        √         |       原子的名字       |
-|    atomno    |        √         |        √         |      %i      |         √          |        √         | 可以用`@`替代`atomno=` |
-|   atomType   |        √         |        √         |      %B      |         √          |        √         |        原子类型        |
+| **property** | **select xxx=y** | **label %[xxx]** | **label %x** | **print {\*}.xxx** | **{\*}.xxx = y** |
+| :----------: | :--------------: | :--------------: | :----------: | :----------------: | :--------------: |
+|   atomName   |        √         |        √         |      %a      |         √          |        √         |
+|    atomno    |        √         |        √         |      %i      |         √          |        √         |
+|   atomType   |        √         |        √         |      %B      |         √          |        √         |
+|   element    |                  |                  |      %e      |                    |                  |
 
 
 
