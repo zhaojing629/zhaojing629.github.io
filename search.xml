@@ -9162,9 +9162,11 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 <h3 id="aug-cc-pVnZ-PP-n-D-T-Q-5-系列赝势基组"><a href="#aug-cc-pVnZ-PP-n-D-T-Q-5-系列赝势基组" class="headerlink" title="(aug-)cc-pVnZ-PP (n=D,T,Q,5)系列赝势基组"></a>(aug-)cc-pVnZ-PP (n=D,T,Q,5)系列赝势基组</h3><p>是2003年开始陆续提出的最适合后HF计算的赝势基组，搭配Stuttgart小核赝势。很适合对轻原子结合(aug-)cc-pVnZ使用。特征和构建思想类似(aug-)cc-pVnZ系列，由于高角动量函数多，收缩度高，用在DFT计算上比较亏</p>
 <h2 id="赝势基组的选用"><a href="#赝势基组的选用" class="headerlink" title="赝势基组的选用"></a>赝势基组的选用</h2><p>使用的前提是对要算的元素有定义。镧系可以用Stuttgart赝势+标配基组或档次合适的def2系列赝势基组【对锕系没有定义】。锕系可以用Stuttgart赝势+标配基组或def-TZVP赝势基组。<br>DFT计算<br>计算条件差：Lanl2DZ【6-31G*】<br>计算条件一般：过渡金属用Lanl2TZ，主族用Lanl08或SDD<br>计算条件不错：过渡金属用Lanl2TZ(f)或SDD，主族用Lanl08(d)<br>计算条件很好：def2-TZVB<br>计算条件无限好：def2-QZVP（DFT计算用QZ级别其实很浪费）<br>后HF<br>计算条件奇差无比：cc-pVDZ-PP或def2-SVP<br>计算条件一般：过渡金属用SDD，主族用Lanl08(d)<br>计算条件不错：cc-pVTZ-PP或def2-TZVPP<br>计算条件很好：cc-pVQZ-PP或def2-QZVPP<br>def2对第四周期还是全电子基组，cc-pVnZ-PP对K以及从Cu开始的元素才有定义【Fe、Co、Ni等就用不了】。因此后HF计算时非要对除K以外的Cu之前的元素用赝势基组的话就只能靠Lanl或SDD了。</p>
 <p>赝势基组使用的注意事项<br>对于前三周期都不要用赝势基组，一方面没必要(内层电子不多，相对论效应不明显)，另一方面比起用恰当的全电子基组会损失精度<br>赝势下计算时程序输出的能量只是价电子能量<br>涉及到内核电子的研究时，如NMR，对被研究的原子切不可用赝势。但可以给其它原子用赝势【比如计算过渡金属配合物，算配体的核化学位移，过渡金属可以用赝势】</p>
-<ul>
-<li></li>
-</ul>
+<h1 id="常用赝势笔记"><a href="#常用赝势笔记" class="headerlink" title="常用赝势笔记"></a>常用赝势笔记</h1><p>1、<a href="https://www.tc.uni-koeln.de/PP/clickpse.en.html">https://www.tc.uni-koeln.de/PP/clickpse.en.html</a> 简称Stuttgart/Cologne Group</p>
+<p>2、<a href="https://www.basissetexchange.org/">https://www.basissetexchange.org/</a> 简称basissetexchange</p>
+<p>3、Gaussain简称SDD</p>
+<h2 id="关于U"><a href="#关于U" class="headerlink" title="关于U"></a>关于U</h2><p>赝势部分 1（ECP60MWB）、2（Stuttgart RSC 1997 ECP）、3（SDD）是相同的</p>
+<p>基组部分：1中配套的基组和2（Stuttgart RSC 1997 ECP）、3中的都不一样</p>
 ]]></content>
       <categories>
         <category>计算化学</category>
