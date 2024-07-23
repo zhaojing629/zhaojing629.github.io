@@ -313,3 +313,7 @@ PRINT ETSLOWDIN-UNRESTRICTED
   因此NOCV def Densities表示电子的流向，负值表示失去电子，正值表示得到电子。只有NOCV def Density能够可靠地、直观地、明确无误地表征成键作用，文献中一般也只讨论NOCV def Density。
 - 开壳层体系中NOCV def Density会分成α和β两组，如果需要看整体的，则需要Fields→Calculated，在Select Fields中选择配对的α和β轨道，中间的符号换成+，然后在SCM→View→Add→Isosurface:with phase→Select Field选择C-1。
 
+
+
+
+
