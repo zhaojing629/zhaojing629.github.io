@@ -995,7 +995,7 @@
 </li>
 </ul>
 <h1 id="红外光谱"><a href="#红外光谱" class="headerlink" title="红外光谱"></a>红外光谱</h1><figure class="highlight mathematica"><table><tr><td class="code"><pre><span class="line"><span class="keyword">Properties</span></span><br><span class="line">  NormalModes Yes</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
-<font color=red size=5>`ADF`块中也有<a href="">相应的设置</a>。比如设置`Max_CPKS_Iterations`等</font>
+<font color=red size=5>`ADF`块中也有<a href="#红外光谱">相应的设置</a>。比如设置`Max_CPKS_Iterations`等</font>
 
 <h2 id="重新扫描虚频"><a href="#重新扫描虚频" class="headerlink" title="重新扫描虚频"></a>重新扫描虚频</h2><p>主要用于识别虚频，因此是默认开启的</p>
 <figure class="highlight gams"><table><tr><td class="code"><pre><span class="line">NormalModes</span><br><span class="line">   ReScanModes <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   ReScanFreqRange float_list</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
