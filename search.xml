@@ -995,12 +995,8 @@
 </li>
 </ul>
 <h1 id="红外光谱"><a href="#红外光谱" class="headerlink" title="红外光谱"></a>红外光谱</h1><figure class="highlight mathematica"><table><tr><td class="code"><pre><span class="line"><span class="keyword">Properties</span></span><br><span class="line">  NormalModes Yes</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
-<font color=red size=5>`ADF`块中也有<a href="/2019/09/23/%E3%80%90ADF%E3%80%9101.%E5%9F%BA%E6%9C%AC%E8%AE%A1%E7%AE%97%E8%AE%BE%E7%BD%AE/">相应的设置</a>。比如设置`Max_CPKS_Iterations`等</font>
+<font color=red size=5>`ADF`块中也有<a href="/2019/09/23/%E3%80%90ADF%E3%80%9101.%E5%9F%BA%E6%9C%AC%E8%AE%A1%E7%AE%97%E8%AE%BE%E7%BD%AE/#红外光谱">相应的设置</a>。比如设置`Max_CPKS_Iterations`等</font>
 
-
-
-<p><a href="#红外光谱"><a href="/2019/09/23/%E3%80%90ADF%E3%80%9101.%E5%9F%BA%E6%9C%AC%E8%AE%A1%E7%AE%97%E8%AE%BE%E7%BD%AE/">相应的</a></a></p>
-<p><a href="/2019/09/23/%E3%80%90ADF%E3%80%9101.%E5%9F%BA%E6%9C%AC%E8%AE%A1%E7%AE%97%E8%AE%BE%E7%BD%AE/#红外光谱">相应的</a></p>
 <h2 id="重新扫描虚频"><a href="#重新扫描虚频" class="headerlink" title="重新扫描虚频"></a>重新扫描虚频</h2><p>主要用于识别虚频，因此是默认开启的</p>
 <figure class="highlight gams"><table><tr><td class="code"><pre><span class="line">NormalModes</span><br><span class="line">   ReScanModes <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   ReScanFreqRange float_list</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
 <ul>
@@ -9234,6 +9230,11 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 <li>如果想要跳转的地方是标题，则直接使用<code>[描述](#id)</code>即可，<code>id</code>为目录名称</li>
 <li>如果想自定义跳转的地方，则可以在需要跳转的地方，通过html语法定义一个锚，比如<code>&lt;span id=”表1”&gt;描述&lt;/span&gt;</code>，然后<code>[描述](#表1)</code></li>
 </ul>
+<h2 id="在文章间跳转"><a href="#在文章间跳转" class="headerlink" title="在文章间跳转"></a>在文章间跳转</h2><figure class="highlight gcode"><table><tr><td class="code"><pre><span class="line">&#123;<span class="meta">%</span> post_path <span class="string">&#x27;文章标题&#x27;</span> <span class="meta">%</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>例子：</p>
+<figure class="highlight django"><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;</span></span></span><span class="template-tag">&#123;% <span class="name">post_path</span> &#x27;XXXXXX&#x27; %&#125;</span><span class="xml"><span class="tag"><span class="string">&quot;</span>&gt;</span>相应的描述<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>定位到其他文章的某个标题部分：</p>
+<figure class="highlight django"><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;</span></span></span><span class="template-tag">&#123;% <span class="name">post_path</span> &#x27;【ADF】01.基本计算设置&#x27; %&#125;</span><span class="xml"><span class="tag"><span class="string">#红外光谱&quot;</span>&gt;</span>相应的描述<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
 <h2 id="创建分类页面"><a href="#创建分类页面" class="headerlink" title="创建分类页面"></a>创建分类页面</h2><ol>
 <li>在根目录下右键并GIt Bash here，然后输入<code>hexo new page categories</code>，在<code>~/source/categories/</code>出现了<code>index.md</code>，打开在Front-matter部分增加<code>type: &quot;categories&quot;</code><br>可以通过修改<code>Title</code>来修改页面中显示的标题。</li>
 <li>在文章中的ront-matter中的categories后增加相应分类即可<ol>
