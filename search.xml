@@ -999,7 +999,7 @@
 
 
 
-<p><a href="">相应的设置</a></p>
+<p><a href="/2019/09/23/%E3%80%90ADF%E3%80%9101.%E5%9F%BA%E6%9C%AC%E8%AE%A1%E7%AE%97%E8%AE%BE%E7%BD%AE/">相应</a></p>
 <h2 id="重新扫描虚频"><a href="#重新扫描虚频" class="headerlink" title="重新扫描虚频"></a>重新扫描虚频</h2><p>主要用于识别虚频，因此是默认开启的</p>
 <figure class="highlight gams"><table><tr><td class="code"><pre><span class="line">NormalModes</span><br><span class="line">   ReScanModes <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   ReScanFreqRange float_list</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
 <ul>
