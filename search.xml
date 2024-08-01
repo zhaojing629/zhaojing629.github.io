@@ -815,69 +815,6 @@
 </li>
 </ul>
 <h2 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h2><figure class="highlight gams"><table><tr><td class="code"><pre><span class="line">Properties</span><br><span class="line">   BondOrders <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Charges <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   DipoleGradients <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   DipoleMoment <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   ElasticTensor <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Gradients <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Hessian <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Molecules <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   NormalModes <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Other <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   PESPointCharacter <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Phonons <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Polarizability <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   Raman <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   SelectedRegionForHessian string</span><br><span class="line">   StressTensor <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   VCD <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   VROA <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">End</span><br></pre></td></tr></table></figure>
-<h1 id="Engine-ADF"><a href="#Engine-ADF" class="headerlink" title="Engine ADF"></a>Engine ADF</h1><h2 id="基组"><a href="#基组" class="headerlink" title="基组"></a>基组</h2><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">Basis</span><br><span class="line">  <span class="built_in"> Type </span>[<span class="built_in">..</span>.]</span><br><span class="line">   Core [None | Small | Large]</span><br><span class="line">   CreateOutput <span class="literal">Yes</span>/<span class="literal">No</span></span><br><span class="line">   Path string</span><br><span class="line">   PerAtomType</span><br><span class="line">      Core [None | Small | Large]</span><br><span class="line">      File stringS</span><br><span class="line">      Symbol string</span><br><span class="line">     <span class="built_in"> Type </span>[<span class="built_in">..</span>.]</span><br><span class="line">   End</span><br><span class="line">   PerRegion</span><br><span class="line">      Core [None | Small | Large]</span><br><span class="line">      Region string</span><br><span class="line">     <span class="built_in"> Type </span>[<span class="built_in">..</span>.]</span><br><span class="line">   End</span><br><span class="line">   FitType [<span class="built_in">..</span>.]</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>Type</code>：默认<code>DZ</code>，还有一系列：[SZ, DZ, DZP, TZP, TZ2P, QZ4P, TZ2P-J, QZ4P-J, AUG/ASZ, AUG/ADZ, AUG/ADZP, AUG/ATZP, AUG/ATZ2P, ET/ET-pVQZ, ET/ET-QZ3P, ET/ET-QZ3P-1DIFFUSE, ET/ET-QZ3P-2DIFFUSE, ET/ET-QZ3P-3DIFFUSE, POLTDDFT/DZ, POLTDDFT/DZP, POLTDDFT/TZP, POLTDDFT/TZ2P]</li>
-<li><code>Core</code>：默认<code>Large</code>，还可以选择<code>None</code>, <code>Small</code>, <code>Large</code></li>
-<li><code>CreateOutput</code>：默认为<code>No</code>。如果为<code>true</code>，原子创建运行的输出将打印到标准输出。如果为<code>false</code>，它将被保存到CreateAtoms.out文件中。</li>
-<li><code>Path</code>：默认为<code>$AMSRESOURCES/ADF</code>，ADF只在该文件夹中寻找合适的基组</li>
-<li><p><code>PerAtomType</code>：为一类原子指定基组</p>
-<ul>
-<li><code>File</code>：指定基组的位置，可以是相对于<code>$AMSRESOURCES/ADF</code>的相对位置，也可以是绝对位置</li>
-<li><code>Symbol</code>：定义基组的符号</li>
-</ul>
-</li>
-<li><p><code>PerRegion</code>：为一个区域的原子指定基组</p>
-<ul>
-<li><code>Region</code>：指定基组的区域，可以用逻辑运算符，比如<code>R1+R2</code></li>
-</ul>
-</li>
-</ul>
-<h2 id="泛函"><a href="#泛函" class="headerlink" title="泛函"></a>泛函</h2><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">XC</span><br><span class="line">  &#123;LDA LDA &#123;Stoll&#125;&#125;</span><br><span class="line">  &#123;GGA GGA&#125;</span><br><span class="line">  &#123;MetaGGA metagga&#125;</span><br><span class="line">  &#123;Model MODELPOT [IP]&#125;</span><br><span class="line">  &#123;HartreeFock&#125;</span><br><span class="line">  &#123;OEP fitmethod &#123;approximation&#125;&#125;</span><br><span class="line">  &#123;HYBRID hybrid &#123;<span class="attribute">HF</span>=HFpart&#125;&#125;</span><br><span class="line">  &#123;MetaHYBRID metahybrid&#125;</span><br><span class="line">  &#123;DOUBLEHYBRID doublehybrid&#125;</span><br><span class="line">  &#123;RPA&#125;</span><br><span class="line">  &#123;XCFUN&#125;</span><br><span class="line">  &#123;RANGESEP &#123;<span class="attribute">GAMMA</span>=X&#125; &#123;<span class="attribute">ALPHA</span>=a&#125; &#123;<span class="attribute">BETA</span>=b&#125;&#125;</span><br><span class="line">  (LibXC functional&#125;</span><br><span class="line">  &#123;DISPERSION [s6scaling] [<span class="attribute">RSCALE</span>=r0scaling] [Grimme3] [BJDAMP] [<span class="attribute">PAR1</span>=par1]  [<span class="attribute">PAR2</span>=par2]  [<span class="attribute">PAR3</span>=par3]  [<span class="attribute">PAR4</span>=par4] &#125;</span><br><span class="line">  &#123;Dispersion Grimme4 &#123;<span class="attribute">s6</span>=...&#125; &#123;<span class="attribute">s8</span>=...&#125; &#123;<span class="attribute">a1</span>=...&#125; &#123;<span class="attribute">a2</span>=...&#125;&#125;</span><br><span class="line">  &#123;DISPERSION dDsC&#125;</span><br><span class="line">  &#123;DISPERSION UFF&#125;</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-<h2 id="相对论"><a href="#相对论" class="headerlink" title="相对论"></a>相对论</h2><p>2020版本开始默认使用标量相对论效应：</p>
-<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">Relativity</span><br><span class="line">   Formalism [Pauli | <span class="type">ZORA</span> | <span class="type">X2C</span> | <span class="type">RA</span>-X2C]</span><br><span class="line">   Level [None | <span class="type">Scalar</span> | <span class="type">Spin</span>-Orbit]</span><br><span class="line">   Potential [MAPA | <span class="type">SAPA</span>]</span><br><span class="line">   SpinOrbitMagnetization [NonCollinear | <span class="type">Collinear</span> | <span class="type">CollinearX</span> | <span class="type">CollinearY</span> | <span class="type">CollinearZ</span>]</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>Formalism</code>：如果<code>level</code>里是<code>None</code>，则不需要考虑所选择的形式。<ul>
-<li><code>Pauli</code>：泡利哈密顿函数</li>
-<li><code>ZORA</code>：零阶正则近似哈密顿量。默认。</li>
-<li><code>X2C</code>：四分量狄拉克方程到二分量狄拉克方程的精确变换，是Dyall修正的Dirac方程。</li>
-<li><code>RA-X2C</code>：四分量狄拉克方程到二分量狄拉克方程的精确变换，是修正狄拉克方程的正规方法。</li>
-</ul>
-</li>
-<li><code>Level</code>：<ul>
-<li><code>None</code>：非相对论。哈密顿量也就是Kohn-Sham方程的形式。</li>
-<li><code>Scalar</code>：标量相对论，成本较低。默认。</li>
-<li><code>Spin-Orbit</code>：旋轨耦合，最好的理论水平，比普通计算昂贵（4-8倍）</li>
-</ul>
-</li>
-<li><code>Potential</code>：<ul>
-<li><code>MAPA</code>：默认。the Minumium of neutral Atomical potential Approximation 中性原子势近似值的最小值。MAPA优于SAPA的优点是可以降低ZORA的规格依赖性。 除了电子密度非常接近重核外，几乎所有特性的ZORA规范依赖性都很小。 非常接近重核的电子密度可用于解释Mossbauer光谱中的异构体位移。</li>
-<li><code>SAPA</code>：the Sum of neutral Atomical potential Approximation 中性原子势近似值之和。</li>
-</ul>
-</li>
-<li><code>SpinOrbitMagnetization</code>：只与自旋轨道耦合相关，而且在<code>unrestricted</code>下使用。在不受限制的计算中，大多数XC泛函都有自旋极化作为一种成分。通常，自旋量子化轴的方向是任意的，可以方便地选择为z轴。然而，在自旋轨道计算中，方向很重要，将磁化矢量的z分量放入XC函数中是任意的。<ul>
-<li><code>NonCollinear</code>：可以将磁化矢量的大小插入XC函数中。 这称为非共线方法。</li>
-<li><code>CollinearX</code>，<code>CollinearY</code>，<code>CollinearZ</code>：使用x，y或z分量作为XC函数的自旋极化。默认为z。</li>
-<li>：<code>Collinear</code>：同<code>CollinearZ</code></li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p>2019版及之前的输入格式为：</p>
-<figure class="highlight dust"><table><tr><td class="code"><pre><span class="line"><span class="xml">RELATIVISTIC </span><span class="template-variable">&#123;level&#125;</span><span class="xml"> </span><span class="template-variable">&#123;formalism&#125;</span><span class="xml"> </span><span class="template-variable">&#123;potential&#125;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><blockquote>
-<p>Scalar级别为：<code>RELATIVISTIC Scalar ZORA</code></p>
-</blockquote>
-</li>
-<li><p>SpinOrbit级别为：<code>RELATIVISTIC spinorbit ZORA</code></p>
-<ul>
-<li>注意此时：unrestricted不再适用，解决办法删掉unrestricted或加上collinear/nocollinear，以及nosym关键词</li>
-<li>并且不能同时计算解析freq</li>
-</ul>
-</li>
-</ul>
-</blockquote>
 ]]></content>
       <categories>
         <category>计算化学</category>
@@ -1058,7 +995,8 @@
 </li>
 </ul>
 <h1 id="红外光谱"><a href="#红外光谱" class="headerlink" title="红外光谱"></a>红外光谱</h1><figure class="highlight mathematica"><table><tr><td class="code"><pre><span class="line"><span class="keyword">Properties</span></span><br><span class="line">  NormalModes Yes</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
-<p><code>ADF</code>块中也有相应的设置。</p>
+<font color=red size=5>`ADF`块中也有<a href="#红外光谱">相应的设置</a>。比如设置`Max_CPKS_Iterations`等</font>
+
 <h2 id="重新扫描虚频"><a href="#重新扫描虚频" class="headerlink" title="重新扫描虚频"></a>重新扫描虚频</h2><p>主要用于识别虚频，因此是默认开启的</p>
 <figure class="highlight gams"><table><tr><td class="code"><pre><span class="line">NormalModes</span><br><span class="line">   ReScanModes <span class="keyword">Yes</span>/<span class="keyword">No</span></span><br><span class="line">   ReScanFreqRange float_list</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
 <ul>
@@ -4944,7 +4882,7 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <blockquote>
 <p>即使在<code>System</code>中设置了 <code>Symmetry nosym</code>，ADF中也可能会检测出对称性。因此要在ADF中也设置<code>nosym</code>。</p>
 </blockquote>
-<h1 id="指定占据IrrepOccupations"><a href="#指定占据IrrepOccupations" class="headerlink" title="指定占据IrrepOccupations"></a>指定占据<code>IrrepOccupations</code></h1><figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line">IrrepOccupations</span><br><span class="line">  irrep <span class="keyword">orbitalnumbers</span></span><br><span class="line"><span class="keyword"> </span> irrep <span class="keyword">orbitalnumbers</span></span><br><span class="line"><span class="keyword"> </span> ...</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<h1 id="电子构型"><a href="#电子构型" class="headerlink" title="电子构型"></a>电子构型</h1><h2 id="指定占据IrrepOccupations"><a href="#指定占据IrrepOccupations" class="headerlink" title="指定占据IrrepOccupations"></a>指定占据<code>IrrepOccupations</code></h2><figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line">IrrepOccupations</span><br><span class="line">  irrep <span class="keyword">orbitalnumbers</span></span><br><span class="line"><span class="keyword"> </span> irrep <span class="keyword">orbitalnumbers</span></span><br><span class="line"><span class="keyword"> </span> ...</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p><code>irrep</code>是不可约表示</p>
 </li>
@@ -4967,22 +4905,19 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <li>可以用分数占据</li>
 <li>在数值频率计算中，程序内部默认使用nosym，因此只能识别不可约表示A。</li>
 </ul>
-<h1 id="NumericalQuality"><a href="#NumericalQuality" class="headerlink" title="NumericalQuality"></a><code>NumericalQuality</code></h1><ul>
-<li>设置ADF计算的质量，包括BeckeGrid（数值积分）和 ZlmFit（密度拟合）。</li>
-<li>选项有<code>Basic</code>、<code>Normal</code>（默认）、<code>Good</code>、<code>VeryGood</code>、<code>Excellent</code></li>
-</ul>
-<h1 id="BeckeGrid"><a href="#BeckeGrid" class="headerlink" title="BeckeGrid"></a><code>BeckeGrid</code></h1><p>数值积分格点的选项。</p>
-<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">BECKEGRID</span><br><span class="line">  Quality [basic|<span class="type">normal</span>|<span class="type">good</span>|<span class="type">verygood</span>|<span class="type">excellent</span>]</span><br><span class="line">  &#123;QualityPerRegion</span><br><span class="line">     Region myregion</span><br><span class="line">     Quality &#123;Basic|<span class="type">Normal</span>|<span class="type">Good</span>|<span class="type">VeryGood</span>|<span class="type">Excellent</span>&#125;</span><br><span class="line">  <span class="keyword">End</span>&#125;</span><br><span class="line">  &#123;qpnear qpnear&#125;</span><br><span class="line">  &#123;RadialGridBoost boost&#125;</span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
+<h2 id="spin-flip"><a href="#spin-flip" class="headerlink" title="spin flip"></a>spin flip</h2><p>先计算高自旋的态，然后重起计算，通过<code>spinflip</code>关键词翻转某些原子上面的电子。</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">EngineRestart</span> <span class="string">restartfile</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Engine</span> <span class="string">ADF</span></span><br><span class="line">	<span class="attr">SpinFlip</span> <span class="string"></span></span><br><span class="line"><span class="attr">EndEngine</span></span><br></pre></td></tr></table></figure>
+<p>也可以通过<code>ModifyStartPotential</code>进行。</p>
+<h2 id="OCCUPATIONS"><a href="#OCCUPATIONS" class="headerlink" title="OCCUPATIONS"></a>OCCUPATIONS</h2><p>可以通过<code>OCCUPATIONS</code>指定电子的占据方式</p>
 <ul>
-<li><p><code>Quality</code>：选项有<code>auto</code>（默认）、<code>Basic</code>、<code>Normal</code>、<code>Good</code>、<code>VeryGood</code>、<code>Excellent</code>。会覆盖<code>NumericalQuality</code>中的设置。</p>
-</li>
-<li><p><code>QualityPerRegion</code>：设置特定区域的原子的积分格点质量。</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">BeckeGrid</span><br><span class="line">  QualityPerRegion <span class="attribute">Region</span>=Accurate <span class="attribute">Quality</span>=Good</span><br><span class="line">  QualityPerRegion <span class="attribute">Region</span>=Far      <span class="attribute">Quality</span>=Basic</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>qpnear</code>：默认为<code>4</code>Å。当在输入文件中指定了点电荷时，ADF 仅围绕那些接近原子的点电荷生成网格。<code>qpnear</code>指定的是最近的距离。</p>
-</li>
-<li><p><code>RadialGridBoost</code>：默认为<code>1.0</code>。增加径向积分点的数量。一些 XC 泛函需要非常精确的径向积分网格，因此 ADF 会自动将径向网格提升 3 倍用于一些数值敏感泛函。</p>
-</li>
+<li><code>IntegerAufbau</code>：根据 Aufbau 原理，电子被分配给 MO，尝试使用整数占领，在费米级简并的情况下也是如此。</li>
+<li><code>Keeporbitals=NKeep</code>：</li>
+<li><code>Freeze</code>：</li>
+<li><code>ElectronicTemperature=T</code>：</li>
+<li><code>Smear=Smear1[,Smear2,Smear3,...,Smear10]</code>：</li>
+<li><code>Steep=Lambda[,Nmax]</code>：</li>
+<li><code>OptimizeSpin=Delta</code>，<code>OptimizeSpinRound=Delta</code>：</li>
+<li></li>
 </ul>
 <h1 id="红外光谱"><a href="#红外光谱" class="headerlink" title="红外光谱"></a>红外光谱</h1><p>所需的 Hessian 可以通过数值计算或解析计算。这可以在输入的 AMS 部分设置。</p>
 <h2 id="解析频率"><a href="#解析频率" class="headerlink" title="解析频率"></a>解析频率</h2><p>对于相同的积分精度，解析 Hessian 与数值 Hessian 一样准确，但计算速度最多可提高 3 到 5 倍，具体取决于分子、积分网格参数和基组选择。但是解析Hessian目前只支持（包括 PW91 和 Hartree-Fock都不支持）：</p>
@@ -5009,6 +4944,7 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
         <tag>对称性</tag>
         <tag>占据</tag>
         <tag>相对论</tag>
+        <tag>电子态</tag>
       </tags>
   </entry>
   <entry>
