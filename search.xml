@@ -2146,6 +2146,7 @@
 <li><code>:set nu</code>：显示行号，设定之后，会在每一行的前缀显示该行的行号</li>
 <li><code>:set nonu</code>：与 set nu 相反，为取消行号</li>
 </ul>
+<p>可以直接<code>vim ~/.vimrc</code>，然后添加<code>set nu</code>，默认是有行号的</p>
 <h1 id="管理命令"><a href="#管理命令" class="headerlink" title="管理命令"></a>管理命令</h1><ul>
 <li><code>:vs 路径/文件名</code>：同时再打开另外的一个文件，通过<code>ctrl ww</code>使得光标在两个文件间切换；两个文件是左右并排显示的。</li>
 <li><code>:sp 路径/文件名</code>：同时再打开另外的一个文件，通过<code>ctrl ww</code>使得光标在两个文件间切换；两个文件是上下并排显示的。</li>
@@ -2418,7 +2419,7 @@
 <li><p>也可以数组的形式输入变量，例如</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">Array[<span class="number">1</span>]  Value1</span><br><span class="line">Array[<span class="number">1</span>]  Value1,Value2,Value3</span><br><span class="line">Array  Value1,Value2</span><br></pre></td></tr></table></figure>
 <ul>
-<li>由于ORCA是用C++写的，因此数组从0开始。上面第一行表示A[1]的值为V1，实际为该数组的第二个数；第二行表示A[1]的值为V1，A[2]的值为V2，A[3]的值为V3；第三行表示A[0]的值为V1，A[1]的值为V2。</li>
+<li><font color=red><strong>由于ORCA是用C++写的，因此数组从0开始。</strong></font>上面第一行表示A[1]的值为V1，实际为该数组的第二个数；第二行表示A[1]的值为V1，A[2]的值为V2，A[3]的值为V3；第三行表示A[0]的值为V1，A[1]的值为V2。</li>
 <li><p>字符型的数值（例如文件名）用双引号封装，如</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">MOInp <span class="string">&quot;Myfile.gbw&quot;</span></span><br></pre></td></tr></table></figure>
 <p>注意，在Unix系统中，引号中的内容是区分大小写的，MYFILE.GBW和MyFile.gbw是不同的文件，而在Windows系统中是不区分大小写的。</p>
@@ -2510,7 +2511,14 @@
   <entry>
     <title>【ORCA】04.重启计算&amp;初猜</title>
     <url>/2020/09/04/%E3%80%90ORCA%E3%80%9104.%E9%87%8D%E5%90%AF%E8%AE%A1%E7%AE%97&amp;%E5%88%9D%E7%8C%9C/</url>
-    <content><![CDATA[<h1 id="初猜"><a href="#初猜" class="headerlink" title="初猜"></a>初猜</h1><p><code>%scf</code>中有<code>Guess</code>、<code>MOInp</code>和<code>GuessMode</code>三个变量：</p>
+    <content><![CDATA[<blockquote>
+<p>参考文献：</p>
+<ol>
+<li>邹竞祥在qq中的解答</li>
+<li>《ORCA 6.0》手册</li>
+</ol>
+</blockquote>
+<h1 id="初猜"><a href="#初猜" class="headerlink" title="初猜"></a>初猜</h1><p><code>%scf</code>中有<code>Guess</code>、<code>MOInp</code>和<code>GuessMode</code>三个变量：</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">%scf </span><br><span class="line">    Guess HCore </span><br><span class="line">    MOInp <span class="string">&quot;Name.gbw&quot;</span></span><br><span class="line">    GuessMode FMatrix </span><br><span class="line">    AutoStart <span class="literal">true</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 <h2 id="Guess"><a href="#Guess" class="headerlink" title="Guess"></a>Guess</h2><p>Guess可以用<code>HCore</code>、<code>Hueckel</code>、<code>PAtom</code>、<code>PModel</code> 【默认】、<code>MORead</code>：</p>
 <ul>
@@ -2534,9 +2542,11 @@
 </ul>
 </li>
 </ul>
-<h2 id="MOInp-amp-AutoStart-重启SCF计算"><a href="#MOInp-amp-AutoStart-重启SCF计算" class="headerlink" title="MOInp&amp;AutoStart 重启SCF计算"></a>MOInp&amp;AutoStart 重启SCF计算</h2><p>每一圈SCF都会自动储存当前的轨道，覆盖前面的gbw文件（因此要注意初猜是否需要重命名以免被覆盖），因此可以通过当前gbw文件重启计算。只有HF和数值频率可以重启（不包括post HF、分子性质、光谱等）。</p>
+<h2 id="MOInp-amp-AutoStart-重启SCF计算"><a href="#MOInp-amp-AutoStart-重启SCF计算" class="headerlink" title="MOInp&amp;AutoStart 重启SCF计算"></a><code>MOInp</code>&amp;<code>AutoStart</code> 重启SCF计算</h2><p>每一圈SCF都会自动储存当前的轨道，覆盖前面的gbw文件（因此要注意初猜是否需要重命名以免被覆盖），因此可以通过当前gbw文件重启计算。只有HF和数值频率可以重启（不包括post HF、分子性质、光谱等）。</p>
 <ul>
-<li><p><code>Autostart</code>默认是<code>true</code> ：从找是否存在存在的的同名.gbw文件，然后读取轨道和重启所需的所有其他信息，<code>Guess</code>也会被设置为<code>MORead</code>，并且该gbw文件会被重名为BaseName.ges，<code>Moinp</code>就会指向这个文件。如果不需要，则使用用<code>false</code>或者使用<code>!NoAutoStart</code>则关闭。</p>
+<li><p><code>Autostart</code>默认是<code>true</code> ：程序会自动检查是否存在同名的<code>.gbw</code>文件，如果存在，程序会检查它是否含有轨道和其他重启需要的信息。如果存在，<code>Guess</code>就会设置为<code>MORead</code>，已存在的<code>.gbw</code>文件会重命名为<code>.ges</code>文件。如果不需要的话，就在<code>%SCF</code>中将<code>AutoStart</code>设置为<code>false</code>，或者使用<code>!NoAutoStart</code></p>
+</li>
+<li><p>几何优化时不会自动重启，需要设置<code>MORead</code>和<code>MOInp</code>。</p>
 </li>
 <li><p>如果需要另外读取轨道，可以：</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">! moread</span><br><span class="line">% moinp <span class="string">&quot;name.gbw&quot;</span></span><br></pre></td></tr></table></figure>
@@ -2570,12 +2580,12 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">%scf</span><br><span class="line">    Rotate</span><br><span class="line">        &#123;MO1, MO2, Angle&#125; </span><br><span class="line">        &#123;MO1, MO2, Angle, Operator1, Operator2&#125;</span><br><span class="line">        &#123;MO1, MO2&#125;</span><br><span class="line">    end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 <ul>
-<li>MO1和MO2是两个轨道的序号。<strong>注意ORCA的轨道序号是从0开始的。</strong></li>
+<li>MO1和MO2是两个轨道的序号。<font color=red><strong>注意ORCA的轨道序号是从0开始的。</strong></font></li>
 <li>Angle是旋转的角度。<code>90</code>度是翻转两个轨道，<code>45</code>是1:1混合两个轨道，180度导致相变。</li>
 <li><code>Operator1</code> and <code>Operator2</code>是轨道设置。对于UHF来说，alpha是<code>0</code>，beta是<code>1</code>。但是RHF和ROHF只有一个轨道设置，即<code>0</code></li>
 </ul>
 <p><code>Rotate</code>可以用来在过渡金属二聚体中产生对称性破缺的解。首先做一个高自旋的计算，然后找到相互对称和反对称组合的MOs对，让这些轨道作为初猜，然后对每一对用45的旋转。</p>
-<h2 id="GuessMode"><a href="#GuessMode" class="headerlink" title="GuessMode"></a>GuessMode</h2><p>其余的猜测(可能)需要将最初的猜测轨道投影到实际的基组上，有两种方法：</p>
+<h2 id="GuessMode-基组投影"><a href="#GuessMode-基组投影" class="headerlink" title="GuessMode 基组投影"></a><code>GuessMode</code> 基组投影</h2><p>其余的猜测(可能)需要将最初的猜测轨道投影到实际的基组上，有两种方法：</p>
 <ul>
 <li><code>FMatrix</code> ：FMatrix projection</li>
 <li><code>CMatrix</code> ：Corresponding orbital projection</li>
@@ -2587,9 +2597,14 @@
 <li>这个和是初猜轨道集中的所有轨道，<script type="math/tex">a_{i}^{\dagger}</script>是一个猜测MO<em>i的电子生成算符，$$a</em>{i}<script type="math/tex">是相应的湮灭算符，</script>ε_i$$是轨道能量。这个有效的单电子算符在实际基组中被对角化，特征向量是在目标基础上的初始猜测轨道。对于大多数波函数，这产生了一个相当合理的猜测。</li>
 </ul>
 </li>
-<li><p>CMatrix更加复杂，它用了Corresponding orbital去分别拟合每个MO的子空间（占据、部分占据、alpha、beta占据）。拟合已占据轨道后，在已占据轨道的正交补中选择虚起始轨道。在某些情况下，特别是重新启动ROHF计算时，这可能是一个优势。</p>
+<li><p>CMatrix更加复杂，它用了Corresponding orbital去分别拟合每个MO的子空间（占据、部分占据、alpha、beta占据）。拟合已占据轨道后，在已占据轨道的正交补中选择虚起始轨道。在某些情况下，特别是重新启动ROHF计算时，这可能是一个优势。在大多数情况下，CMatrix 不会明显优于 FMatrix。</p>
 </li>
 </ul>
+<h2 id="guessmix"><a href="#guessmix" class="headerlink" title="guessmix"></a><code>guessmix</code></h2><ul>
+<li>使用<code>! guessmix</code>会自动将 50% 的 alpha LUMO 混合到 alpha HOMO 中。这相当于上面所做的 45 度旋转</li>
+<li>或者：</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">%scf </span><br><span class="line">	guessmix 75 # angle <span class="keyword">in</span> degrees,<span class="built_in"> default </span>is 45 </span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 <h1 id="用Gaussian的输出转换为初猜文件gbw"><a href="#用Gaussian的输出转换为初猜文件gbw" class="headerlink" title="用Gaussian的输出转换为初猜文件gbw"></a>用Gaussian的输出转换为初猜文件gbw</h1><ul>
 <li><p>先用高斯进行计算：</p>
 <ul>

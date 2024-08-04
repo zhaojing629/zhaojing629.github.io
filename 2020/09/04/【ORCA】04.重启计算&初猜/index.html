@@ -29,7 +29,7 @@
 <meta property="og:description" content="ORCA的SCF计算比较糟糕，因此通常最好使用初猜，能加快计算速度">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-09-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-15T01:18:25.077Z">
+<meta property="article:modified_time" content="2024-08-04T10:05:57.954Z">
 <meta property="article:author" content="Zhao Jing">
 <meta property="article:tag" content="ORCA">
 <meta property="article:tag" content="初猜">
@@ -222,7 +222,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-15 09:18:25" itemprop="dateModified" datetime="2024-01-15T09:18:25+08:00">2024-01-15</time>
+                <time title="修改时间：2024-08-04 18:05:57" itemprop="dateModified" datetime="2024-08-04T18:05:57+08:00">2024-08-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -267,7 +267,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.5k</span>
+              <span>4.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -287,7 +287,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="初猜"><a href="#初猜" class="headerlink" title="初猜"></a>初猜</h1><p><code>%scf</code>中有<code>Guess</code>、<code>MOInp</code>和<code>GuessMode</code>三个变量：</p>
+        <blockquote>
+<p>参考文献：</p>
+<ol>
+<li>邹竞祥在qq中的解答</li>
+<li>《ORCA 6.0》手册</li>
+</ol>
+</blockquote>
+<h1 id="初猜"><a href="#初猜" class="headerlink" title="初猜"></a>初猜</h1><p><code>%scf</code>中有<code>Guess</code>、<code>MOInp</code>和<code>GuessMode</code>三个变量：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">%scf </span><br><span class="line">    Guess HCore </span><br><span class="line">    MOInp <span class="string">&quot;Name.gbw&quot;</span></span><br><span class="line">    GuessMode FMatrix </span><br><span class="line">    AutoStart <span class="literal">true</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 <h2 id="Guess"><a href="#Guess" class="headerlink" title="Guess"></a>Guess</h2><p>Guess可以用<code>HCore</code>、<code>Hueckel</code>、<code>PAtom</code>、<code>PModel</code> 【默认】、<code>MORead</code>：</p>
 <ul>
@@ -311,9 +318,11 @@
 </ul>
 </li>
 </ul>
-<h2 id="MOInp-amp-AutoStart-重启SCF计算"><a href="#MOInp-amp-AutoStart-重启SCF计算" class="headerlink" title="MOInp&amp;AutoStart 重启SCF计算"></a>MOInp&amp;AutoStart 重启SCF计算</h2><p>每一圈SCF都会自动储存当前的轨道，覆盖前面的gbw文件（因此要注意初猜是否需要重命名以免被覆盖），因此可以通过当前gbw文件重启计算。只有HF和数值频率可以重启（不包括post HF、分子性质、光谱等）。</p>
+<h2 id="MOInp-amp-AutoStart-重启SCF计算"><a href="#MOInp-amp-AutoStart-重启SCF计算" class="headerlink" title="MOInp&amp;AutoStart 重启SCF计算"></a><code>MOInp</code>&amp;<code>AutoStart</code> 重启SCF计算</h2><p>每一圈SCF都会自动储存当前的轨道，覆盖前面的gbw文件（因此要注意初猜是否需要重命名以免被覆盖），因此可以通过当前gbw文件重启计算。只有HF和数值频率可以重启（不包括post HF、分子性质、光谱等）。</p>
 <ul>
-<li><p><code>Autostart</code>默认是<code>true</code> ：从找是否存在存在的的同名.gbw文件，然后读取轨道和重启所需的所有其他信息，<code>Guess</code>也会被设置为<code>MORead</code>，并且该gbw文件会被重名为BaseName.ges，<code>Moinp</code>就会指向这个文件。如果不需要，则使用用<code>false</code>或者使用<code>!NoAutoStart</code>则关闭。</p>
+<li><p><code>Autostart</code>默认是<code>true</code> ：程序会自动检查是否存在同名的<code>.gbw</code>文件，如果存在，程序会检查它是否含有轨道和其他重启需要的信息。如果存在，<code>Guess</code>就会设置为<code>MORead</code>，已存在的<code>.gbw</code>文件会重命名为<code>.ges</code>文件。如果不需要的话，就在<code>%SCF</code>中将<code>AutoStart</code>设置为<code>false</code>，或者使用<code>!NoAutoStart</code></p>
+</li>
+<li><p>几何优化时不会自动重启，需要设置<code>MORead</code>和<code>MOInp</code>。</p>
 </li>
 <li><p>如果需要另外读取轨道，可以：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">! moread</span><br><span class="line">% moinp <span class="string">&quot;name.gbw&quot;</span></span><br></pre></td></tr></table></figure>
@@ -347,12 +356,12 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">%scf</span><br><span class="line">    Rotate</span><br><span class="line">        &#123;MO1, MO2, Angle&#125; </span><br><span class="line">        &#123;MO1, MO2, Angle, Operator1, Operator2&#125;</span><br><span class="line">        &#123;MO1, MO2&#125;</span><br><span class="line">    end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 <ul>
-<li>MO1和MO2是两个轨道的序号。<strong>注意ORCA的轨道序号是从0开始的。</strong></li>
+<li>MO1和MO2是两个轨道的序号。<font color=red><strong>注意ORCA的轨道序号是从0开始的。</strong></font></li>
 <li>Angle是旋转的角度。<code>90</code>度是翻转两个轨道，<code>45</code>是1:1混合两个轨道，180度导致相变。</li>
 <li><code>Operator1</code> and <code>Operator2</code>是轨道设置。对于UHF来说，alpha是<code>0</code>，beta是<code>1</code>。但是RHF和ROHF只有一个轨道设置，即<code>0</code></li>
 </ul>
 <p><code>Rotate</code>可以用来在过渡金属二聚体中产生对称性破缺的解。首先做一个高自旋的计算，然后找到相互对称和反对称组合的MOs对，让这些轨道作为初猜，然后对每一对用45的旋转。</p>
-<h2 id="GuessMode"><a href="#GuessMode" class="headerlink" title="GuessMode"></a>GuessMode</h2><p>其余的猜测(可能)需要将最初的猜测轨道投影到实际的基组上，有两种方法：</p>
+<h2 id="GuessMode-基组投影"><a href="#GuessMode-基组投影" class="headerlink" title="GuessMode 基组投影"></a><code>GuessMode</code> 基组投影</h2><p>其余的猜测(可能)需要将最初的猜测轨道投影到实际的基组上，有两种方法：</p>
 <ul>
 <li><code>FMatrix</code> ：FMatrix projection</li>
 <li><code>CMatrix</code> ：Corresponding orbital projection</li>
@@ -364,9 +373,14 @@
 <li>这个和是初猜轨道集中的所有轨道，<script type="math/tex">a_{i}^{\dagger}</script>是一个猜测MO<em>i的电子生成算符，$$a</em>{i}<script type="math/tex">是相应的湮灭算符，</script>ε_i$$是轨道能量。这个有效的单电子算符在实际基组中被对角化，特征向量是在目标基础上的初始猜测轨道。对于大多数波函数，这产生了一个相当合理的猜测。</li>
 </ul>
 </li>
-<li><p>CMatrix更加复杂，它用了Corresponding orbital去分别拟合每个MO的子空间（占据、部分占据、alpha、beta占据）。拟合已占据轨道后，在已占据轨道的正交补中选择虚起始轨道。在某些情况下，特别是重新启动ROHF计算时，这可能是一个优势。</p>
+<li><p>CMatrix更加复杂，它用了Corresponding orbital去分别拟合每个MO的子空间（占据、部分占据、alpha、beta占据）。拟合已占据轨道后，在已占据轨道的正交补中选择虚起始轨道。在某些情况下，特别是重新启动ROHF计算时，这可能是一个优势。在大多数情况下，CMatrix 不会明显优于 FMatrix。</p>
 </li>
 </ul>
+<h2 id="guessmix"><a href="#guessmix" class="headerlink" title="guessmix"></a><code>guessmix</code></h2><ul>
+<li>使用<code>! guessmix</code>会自动将 50% 的 alpha LUMO 混合到 alpha HOMO 中。这相当于上面所做的 45 度旋转</li>
+<li>或者：</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">%scf </span><br><span class="line">	guessmix 75 # angle <span class="keyword">in</span> degrees,<span class="built_in"> default </span>is 45 </span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 <h1 id="用Gaussian的输出转换为初猜文件gbw"><a href="#用Gaussian的输出转换为初猜文件gbw" class="headerlink" title="用Gaussian的输出转换为初猜文件gbw"></a>用Gaussian的输出转换为初猜文件gbw</h1><ul>
 <li><p>先用高斯进行计算：</p>
 <ul>
@@ -536,7 +550,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9D%E7%8C%9C"><span class="nav-number">1.</span> <span class="nav-text">初猜</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Guess"><span class="nav-number">1.1.</span> <span class="nav-text">Guess</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MOInp-amp-AutoStart-%E9%87%8D%E5%90%AFSCF%E8%AE%A1%E7%AE%97"><span class="nav-number">1.2.</span> <span class="nav-text">MOInp&amp;AutoStart 重启SCF计算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B9%E5%8F%98%E5%88%9D%E7%8C%9CMO%E7%9A%84%E8%BD%A8%E9%81%93%E9%A1%BA%E5%BA%8F%E6%88%96%E6%89%93%E7%A0%B4%E5%88%9D%E7%8C%9C%E7%9A%84%E5%AF%B9%E7%A7%B0%E6%80%A7"><span class="nav-number">1.2.1.</span> <span class="nav-text">改变初猜MO的轨道顺序或打破初猜的对称性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GuessMode"><span class="nav-number">1.3.</span> <span class="nav-text">GuessMode</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%A8Gaussian%E7%9A%84%E8%BE%93%E5%87%BA%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%88%9D%E7%8C%9C%E6%96%87%E4%BB%B6gbw"><span class="nav-number">2.</span> <span class="nav-text">用Gaussian的输出转换为初猜文件gbw</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8MOkit"><span class="nav-number">2.1.</span> <span class="nav-text">利用MOkit</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96%E7%9A%84%E9%87%8D%E5%90%AF"><span class="nav-number">3.</span> <span class="nav-text">几何优化的重启</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%91%E7%8E%87%E7%9A%84%E9%87%8D%E5%90%AF"><span class="nav-number">4.</span> <span class="nav-text">频率的重启</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9D%E7%8C%9C"><span class="nav-number">1.</span> <span class="nav-text">初猜</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Guess"><span class="nav-number">1.1.</span> <span class="nav-text">Guess</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MOInp-amp-AutoStart-%E9%87%8D%E5%90%AFSCF%E8%AE%A1%E7%AE%97"><span class="nav-number">1.2.</span> <span class="nav-text">MOInp&amp;AutoStart 重启SCF计算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B9%E5%8F%98%E5%88%9D%E7%8C%9CMO%E7%9A%84%E8%BD%A8%E9%81%93%E9%A1%BA%E5%BA%8F%E6%88%96%E6%89%93%E7%A0%B4%E5%88%9D%E7%8C%9C%E7%9A%84%E5%AF%B9%E7%A7%B0%E6%80%A7"><span class="nav-number">1.2.1.</span> <span class="nav-text">改变初猜MO的轨道顺序或打破初猜的对称性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GuessMode-%E5%9F%BA%E7%BB%84%E6%8A%95%E5%BD%B1"><span class="nav-number">1.3.</span> <span class="nav-text">GuessMode 基组投影</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#guessmix"><span class="nav-number">1.4.</span> <span class="nav-text">guessmix</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%A8Gaussian%E7%9A%84%E8%BE%93%E5%87%BA%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%88%9D%E7%8C%9C%E6%96%87%E4%BB%B6gbw"><span class="nav-number">2.</span> <span class="nav-text">用Gaussian的输出转换为初猜文件gbw</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8MOkit"><span class="nav-number">2.1.</span> <span class="nav-text">利用MOkit</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96%E7%9A%84%E9%87%8D%E5%90%AF"><span class="nav-number">3.</span> <span class="nav-text">几何优化的重启</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%91%E7%8E%87%E7%9A%84%E9%87%8D%E5%90%AF"><span class="nav-number">4.</span> <span class="nav-text">频率的重启</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
