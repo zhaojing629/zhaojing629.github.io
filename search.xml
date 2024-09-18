@@ -10534,4 +10534,50 @@ p=\frac{h}{\lambda}</script><p>联立得到实物的波长为：$\lambda=\frac{h
         <tag>molcas</tag>
       </tags>
   </entry>
+  <entry>
+    <title>【ORCA】09.对称性破缺计算</title>
+    <url>/2024/08/04/%E3%80%90ORCA%E3%80%9109.%E5%AF%B9%E7%A7%B0%E6%80%A7%E7%A0%B4%E7%BC%BA%E8%AE%A1%E7%AE%97/</url>
+    <content><![CDATA[<blockquote>
+<p>参考文献：</p>
+<ol>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU5NjMxNjkzMw==&amp;mid=2247486753&amp;idx=1&amp;sn=f72b07524a8e7e3a4e1abdaf64416dd6&amp;chksm=fe65cb4bc912425d12a3eb0ba263ee36908dbafb6b7660a25464ff16e9a4479d888e66c68748&amp;scene=21#wechat_redirect">双金属中心化合物的磁交换耦合常数的计算 (qq.com)</a></li>
+<li><a href="https://sites.google.com/site/orcainputlibrary/dft-calculations/broken-symmetry-dft">ORCA Input Library - Broken-symmetry DFT (google.com)</a></li>
+<li>《ORCA 6.0.0手册》</li>
+</ol>
+</blockquote>
+<h1 id="Broken-Symmetry"><a href="#Broken-Symmetry" class="headerlink" title="Broken Symmetry"></a>Broken Symmetry</h1><figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line"><span class="comment">%scf </span></span><br><span class="line">BrokenSym NA,NB </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>要保证A点位的未成对电子数更大</li>
+<li>会自动打印UCO</li>
+</ul>
+<p>例子：对于两个Fe<sup>3+</sup>，S=5/2 (d<sup>5</sup>)</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">! BP def2-SVP def2/J UKS</span><br><span class="line">%scf</span><br><span class="line">Brokensym <span class="number">5</span>,<span class="number">5</span> # A和B两个点位未成对电子</span><br><span class="line">end</span><br><span class="line">*xyz <span class="number">6</span> <span class="number">11</span>  # 高自旋态的自选多重度，<span class="number">10</span>个单电子，S=<span class="number">5</span>，<span class="number">11</span>重态</span><br><span class="line">Fe <span class="number">0.0</span> <span class="number">0.0</span> <span class="number">0.0</span></span><br><span class="line">Fe <span class="number">0.0</span> <span class="number">0.0</span> <span class="number">3.0</span></span><br><span class="line">*</span><br></pre></td></tr></table></figure>
+<h2 id="磁交换耦合常数的计算"><a href="#磁交换耦合常数的计算" class="headerlink" title="磁交换耦合常数的计算"></a>磁交换耦合常数的计算</h2><p>ORCA在计算完Broken Symmetry之后会自动输出，比如：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">------------------------------------------</span><br><span class="line">BROKEN SYMMETRY MAGNETIC COUPLING ANALYSIS</span><br><span class="line">------------------------------------------</span><br><span class="line"> </span><br><span class="line">S(High-Spin)      =   <span class="number">1.0</span></span><br><span class="line">&lt;S**<span class="number">2</span>&gt;(High-Spin) =   <span class="number">2.0058</span></span><br><span class="line">&lt;S**<span class="number">2</span>&gt;(BrokenSym) =   <span class="number">0.9816</span></span><br><span class="line">E(High-Spin)      = <span class="number">-4542.777216</span> Eh</span><br><span class="line">E(BrokenSym)      = <span class="number">-4542.778211</span> Eh</span><br><span class="line">E(High-Spin)-E(BrokenSym)= <span class="number">0.0271</span> eV    <span class="number">218.386</span> cm**<span class="number">-1</span> (ANTIFERROMAGNETIC coupling)</span><br><span class="line"> </span><br><span class="line">          ---------------------------------------------------------</span><br><span class="line">          | Spin-Hamiltonian Analysis based on H(HDvV)= <span class="number">-2</span>J*SA*SB |</span><br><span class="line">    -------                                                       -----------</span><br><span class="line">    | J(<span class="number">1</span>) =    <span class="number">-218.39</span> cm**<span class="number">-1</span>    (<span class="keyword">from</span> -(E[HS]-E[BS])/Smax**<span class="number">2</span>)             |</span><br><span class="line">    | J(<span class="number">2</span>) =    <span class="number">-109.19</span> cm**<span class="number">-1</span>    (<span class="keyword">from</span> -(E[HS]-E[BS])/(Smax*(Smax+<span class="number">1</span>))      |</span><br><span class="line">    | J(<span class="number">3</span>) =    <span class="number">-213.21</span> cm**<span class="number">-1</span>    (<span class="keyword">from</span> -(E[HS]-E[BS])/(&lt;S**<span class="number">2</span>&gt;HS-&lt;S**<span class="number">2</span>&gt;BS)) |</span><br><span class="line">    -------------------------------------------------------------------------</span><br></pre></td></tr></table></figure>
+<p>这三个公式分别为：</p>
+<script type="math/tex; mode=display">
+J_{\mathrm{AB}}=-\frac{\left(E_{\mathrm{HS}}-E_{\mathrm{BS}}\right)}{\left(S_{\mathrm{A}}+S_{\mathrm{B}}\right)^{2}} \\
+
+J_{\mathrm{AB}}=-\frac{\left(E_{\mathrm{HS}}-E_{\mathrm{BS}}\right)}{\left(S_{\mathrm{A}}+S_{\mathrm{B}}\right)\left(S_{\mathrm{A}}+S_{\mathrm{B}}+1\right)} \\
+
+J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{\mathrm{HS}}-\left\langle\hat{S}^{2}\right\rangle_{\mathrm{BS}}}</script><ul>
+<li>更加推荐最后一个定义，因为它在整个耦合强度范围内近似有效，而第一个方程意味着弱耦合极限，第二个方程意味着强耦合极限。<ul>
+<li>上式中，HS表示高自旋态（high-spin），BS表示对称破缺态（broken-symmetry）</li>
+<li>对应UDFT计算中的低自旋状态。由于<script type="math/tex">\left\langle\hat{S}^{2}\right\rangle_{\mathrm{HS}}</script>大于<script type="math/tex">\left\langle\hat{S}^{2}\right\rangle_{\mathrm{BS}}</script>，因此，若<script type="math/tex">J</script>为正值，则高自旋态的能量低，称为铁磁耦合；反之，低自旋态的能量更低，称为反铁磁耦合。由上式可知，要计算磁交换耦合常数，需要计算体系的高自旋态和对称破缺态。</li>
+<li>也可以通过高斯分别计算两个态的能量和<script type="math/tex">\left\langle\hat{S}^{2}\right\rangle</script>，手动计算</li>
+</ul>
+</li>
+</ul>
+<h1 id="Spin-flip"><a href="#Spin-flip" class="headerlink" title="Spin flip"></a>Spin flip</h1><p>还可以先计算高自旋态，然后通过<code>Flipspin</code>来计算：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">! BP def2-SVP def2/J </span><br><span class="line">%scf</span><br><span class="line">Flipspin <span class="number">0</span> # 原子<span class="number">0</span>被翻转</span><br><span class="line">FinalMs <span class="number">0.0</span> # 最终的对称性破缺收敛的自旋量子数的值 即(Nα-Nβ)/<span class="number">2</span></span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">*xyz <span class="number">6</span> <span class="number">11</span>  # 高自旋态的自选多重度，<span class="number">10</span>个单电子，S=<span class="number">5</span>，<span class="number">11</span>重态</span><br><span class="line">Fe <span class="number">0.0</span> <span class="number">0.0</span> <span class="number">0.0</span></span><br><span class="line">Fe <span class="number">0.0</span> <span class="number">0.0</span> <span class="number">3.0</span></span><br><span class="line">*</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>ORCA</tag>
+        <tag>对称性破缺</tag>
+      </tags>
+  </entry>
 </search>
