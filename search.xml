@@ -516,7 +516,22 @@
     <title>PIO</title>
     <url>/2021/08/23/PIO/</url>
     <content><![CDATA[<h1 id="代码位置"><a href="#代码位置" class="headerlink" title="代码位置"></a>代码位置</h1><p><a href="https://github.com/jxzhangcc/PIO">https://github.com/jxzhangcc/PIO</a></p>
-<h1 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h1><h2 id="Gaussian计算部分"><a href="#Gaussian计算部分" class="headerlink" title="Gaussian计算部分"></a>Gaussian计算部分</h2><ol>
+<h1 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h1><p>对于PIO3</p>
+<h2 id="Gaussian计算部分"><a href="#Gaussian计算部分" class="headerlink" title="Gaussian计算部分"></a>Gaussian计算部分</h2><ol>
+<li><p>在高斯关键词部分加入pop=nbo6read</p>
+</li>
+<li><p>在高斯输入文件的最后一行加入：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="variable">$nbo</span> <span class="attribute">FILENAME</span>=CH4  <span class="attribute">AONAO</span>=W33 <span class="attribute">FNAO</span>=W61 <span class="attribute">DMNAO</span>=W71 <span class="variable">$end</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过formchk将chk转换成fchk，然后</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">formchk xx.chk xx.fchk</span><br><span class="line">cat *<span class="number">33</span> *<span class="number">61</span> *<span class="number">71</span> &gt; *<span class="number">49</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="PIO部分"><a href="#PIO部分" class="headerlink" title="PIO部分"></a>PIO部分</h2><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">conda activate</span><br><span class="line">python    /home/zhaoxk/apps/PIO-py3-main/PIO/PIO.py     CH4.fchk</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$ Please input the atom ID of two fragments: (e.g. <span class="number">1</span><span class="number">-5</span>,<span class="number">8</span>,<span class="number">13</span> <span class="number">6</span><span class="number">-7</span>,<span class="number">9</span><span class="number">-12</span>)</span><br><span class="line">$片段一  片段二（片段之间用空格分开，片段内部用逗号,或连接符-进行分开）</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>注意：如果计算的是开壳层，需要手动将输出的pio和pimo中的fchk文件中泛函部分的ROXXXX改成UXXXX，这样Multiwfn和Jmol等软件才能有两套轨道。</p>
+<blockquote>
+<p>以下内容主要是基于之前的pio</p>
+<h2 id="Gaussian计算部分-1"><a href="#Gaussian计算部分-1" class="headerlink" title="Gaussian计算部分"></a>Gaussian计算部分</h2><ol>
 <li><p>在高斯关键词部分加入pop=nbo6read</p>
 <ul>
 <li>nboread调用的是高斯自带的NBO3，要用NBO6得到.49，否则格式会有问题。格式修改见<a href="https://mp.weixin.qq.com/s?__biz=MzU5NDYxNjc5Ng==&amp;mid=2247485938&amp;idx=1&amp;sn=addcb81d6a9caed028a9ab86e336847d&amp;chksm=fe7fc141c9084857858ebeb9988bd73c70fd631f354a53aeb7768fcd4c6df9f890de7539d583&amp;mpshare=1&amp;scene=1&amp;srcid=&amp;sharer_sharetime=1589122912458&amp;sharer_shareid=f14b465eb222f6bb34657e2c0fafe383&amp;key=64daf1adc09d7c6ecdf51441f0e0e0081ff30416a8c76cafc75ab07809a89ccb0e3a0fde164cf3daa101192f723f9349e88e6622f494e3da3870bf9eaebe22bf9583324d7112cf0072a7c78f482c98d9&amp;ascene=1&amp;uin=MTY5ODAzMzEyNQ%3D%3D&amp;devicetype=Windows+10+x64&amp;version=62090070&amp;lang=zh_CN&amp;exportkey=AdPzWFyVBDaa5HawSncSSzA%3D&amp;pass_ticket=CJnCOXQ4GY3GwKDSPl0mmbvH12dznP%2F%2Bj30sXI1%2BLh1L4wzPIu4fEYHNwnZHTc2M">博文</a>。</li>
@@ -562,6 +577,7 @@
 </ul>
 </li>
 </ol>
+</blockquote>
 <h2 id="结果分析部分"><a href="#结果分析部分" class="headerlink" title="结果分析部分"></a>结果分析部分</h2><ul>
 <li>pio对结果在生成的txt文件中，pio对的轨道在pio.fchk文件中，而PIMOs的记过在pimo.fchk中</li>
 <li>pio_v3还有raw文件，pio_v4已经删除</li>
@@ -4886,7 +4902,7 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">OCCUPATIONS keeporbitals=<span class="number">50</span> <span class="keyword">freeze</span> </span><br><span class="line">OCCUPATIONS keeporbitals=<span class="number">50</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir 01_listi 02_listb 03_fdiis 04_listf 05_mesa 06_sdiis 07_arh 08_mix 09_shift </span><br><span class="line"></span><br><span class="line">for i in 01 02 03 04 05 06 07 08 09 ;do cp 00*/*run 00*/a* $&#123;i&#125;*; done</span><br><span class="line"></span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod listi/&#x27; 01*/*.run </span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod listb/&#x27; 02*/*.run </span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod fdiis/&#x27; 03*/*.run </span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod listf/&#x27; 04*/*.run</span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod mesa/&#x27; 05*/*.run</span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod sdiis/&#x27; 06*/*.run</span><br><span class="line">sed -i &#x27;s/SCF/SCF\narh\nend/&#x27; 07*/*.run</span><br><span class="line">sed -i &#x27;s/SCF/SCF\nDIIS\nN 25\nCyc 30\nEnd\nMixing 0.015\n Mixing1 0.09/&#x27; 08*/*.run</span><br><span class="line">sed -i &#x27;s/SCF/SCF\nLshift 0.01/&#x27; 09*/*.run</span><br><span class="line"></span><br><span class="line">for i in &#123;1..9&#125;;do echo 0$&#123;i&#125;*/;cd 0$&#123;i&#125;*; zjsub am*; cd ..; done</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir 01_listi 02_listb 03_fdiis 04_listf 05_mesa 06_sdiis 07_arh 08_mix 09_shift </span><br><span class="line"></span><br><span class="line">for i in 01 02 03 04 05 06 07 08 09 ;do cp 00*/*run 00*/am* $&#123;i&#125;*; done</span><br><span class="line"></span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod listi/&#x27; 01*/*.run </span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod listb/&#x27; 02*/*.run </span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod fdiis/&#x27; 03*/*.run </span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod listf/&#x27; 04*/*.run</span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod mesa/&#x27; 05*/*.run</span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod sdiis/&#x27; 06*/*.run</span><br><span class="line">sed -i &#x27;s/SCF/SCF\narh\nend/&#x27; 07*/*.run</span><br><span class="line">sed -i &#x27;s/SCF/SCF\nDIIS\nN 25\nCyc 30\nEnd\nMixing 0.015\n Mixing1 0.09/&#x27; 08*/*.run</span><br><span class="line">sed -i &#x27;s/SCF/SCF\nLshift 0.01/&#x27; 09*/*.run</span><br><span class="line"></span><br><span class="line">for i in &#123;1..9&#125;;do echo 0$&#123;i&#125;*/;cd 0$&#123;i&#125;*; zjsub am*; cd ..; done</span><br></pre></td></tr></table></figure>
 <p>看收敛没有</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> `ls`; <span class="keyword">do</span> <span class="built_in">echo</span> <span class="variable">$i</span>; tail <span class="variable">$i</span>/*out; <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
 <h1 id="对称性的设置"><a href="#对称性的设置" class="headerlink" title="对称性的设置"></a>对称性的设置</h1><p>除了在AMS中<code>System</code>块中指定，<code>Engine ADF</code>中也可以设置对称性：</p>
@@ -5716,7 +5732,10 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 </li>
 <li><p><code>mo RESOLUTION (decimal)</code>：等值面的精度，一般范围是4-10。分辨率越高，等值面越光滑，但是生成速度更慢。</p>
 </li>
+<li><p><code>mo next</code>或<code>mo previous</code>（或者<code>mo prev</code>）：显示下一个或者上一个分子轨道</p>
+</li>
 </ul>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">mo translucent <span class="number">1</span></span><br></pre></td></tr></table></figure>
 <h2 id="显示效果"><a href="#显示效果" class="headerlink" title="显示效果"></a>显示效果</h2><ul>
 <li><code>mo mesh nofill</code>：除了网格，并且填充。默认是<code>mo mesh nofill</code></li>
 <li><code>mo fill nomesh</code>：可以去掉网格线</li>
@@ -6013,7 +6032,68 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 </ul>
 <h3 id="分析、编辑结果"><a href="#分析、编辑结果" class="headerlink" title="分析、编辑结果"></a>分析、编辑结果</h3><ul>
 <li><p><code>7 Show real space function values at specific CP or all CPs</code>并且输入临界点的编号：可以获知这个临界点的一切信息，包括Multiwfn支持的各种实空间函数的数值（如电子密度、拉普拉斯值、动能密度、势能密度等）和电子密度的梯度以及Hessian矩阵，输出信息例如：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">CP Position:</span>   <span class="number">-1.54802279321209</span>    <span class="number">1.64407933432874</span>   <span class="number">-0.36311758584834</span></span><br><span class="line"><span class="attr">CP type:</span> <span class="string">(3,-1)</span></span><br><span class="line"><span class="attr">Density of all electrons:</span>  <span class="number">0.3333962073E+00</span></span><br><span class="line"><span class="attr">Density of Alpha electrons:</span>  <span class="number">0.1666981037E+00</span></span><br><span class="line"><span class="attr">Density of Beta electrons:</span>  <span class="number">0.1666981037E+00</span></span><br><span class="line"><span class="attr">Spin density of electrons:</span>  <span class="number">0.0000000000E+00</span></span><br><span class="line"><span class="string">Lagrangian</span> <span class="string">kinetic</span> <span class="string">energy</span> <span class="string">G(r):</span>  <span class="number">0.1055976596E+00</span></span><br><span class="line"><span class="string">Hamiltonian</span> <span class="string">kinetic</span> <span class="string">energy</span> <span class="string">K(r):</span>  <span class="number">0.3702940096E+00</span></span><br><span class="line"><span class="string">Potential</span> <span class="string">energy</span> <span class="string">density</span> <span class="string">V(r):</span> <span class="number">-0.4758916692E+00</span></span><br><span class="line"><span class="attr">Energy density:</span> <span class="number">-0.3702940096E+00</span></span><br><span class="line"><span class="attr">Laplacian of electron density:</span> <span class="number">-0.1058785400E+01</span></span><br><span class="line"><span class="string">Electron</span> <span class="string">localization</span> <span class="string">function</span> <span class="string">(ELF):</span>  <span class="number">0.9499848594E+00</span></span><br><span class="line"><span class="string">Localized</span> <span class="string">orbital</span> <span class="string">locator</span> <span class="string">(LOL):</span>  <span class="number">0.8133846890E+00</span></span><br><span class="line"><span class="string">...略</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>184</p>
+<p> Note: Unless otherwise specified, all units are in a.u.</p>
+<p> Position (Bohr):    1.118511204465  -0.001806202187  0.017663742600</p>
+<p> Position (Angstrom):  0.591890639542  -0.000955801036  0.009347250043</p>
+<p> CP type: (3,-1)</p>
+<font color=red> Density of all electrons: 0.1563742424E+00        #电子密度ρ  ρ(BCP)越大  则化学键强度越大 </font>
+
+<p> Density of Alpha electrons: 0.7818712122E-01</p>
+<p> Density of Beta electrons: 0.7818712122E-01</p>
+<p> Spin density of electrons: 0.0000000000E+00</p>
+ <font color=red>Lagrangian kinetic energy G(r): 0.1106221438E+00     #=动能密度G</font>    
+
+<p> G(r) in X,Y,Z: 0.5382807204E-01 0.2985514476E-01 0.2693892700E-01</p>
+<p> Hamiltonian kinetic energy K(r): 0.9139442265E-01</p>
+ <font color=red>Potential energy density V(r): -0.2020165664E+00        #势能密度V   V(BCP)越负 则化学键强度越大 </font>
+
+<font color=red> Energy density E(r) or H(r): -0.9139442265E-01        #电子能量密度H    H(BCP)<0时这个键可以被认为是共价作用</font>
+
+<font color=red> Laplacian of electron density: 0.7691096976E-01        #拉普拉斯电子密度▽2ρ     ▽2ρ<0可以认为形成了共价键</font>
+
+<p> Electron localization function (ELF): 0.5811661727E+00</p>
+<p> Localized orbital locator (LOL): 0.5408764749E+00</p>
+<p> Local information entropy: 0.2366936838E-02</p>
+<p> Interaction region indicator (IRI): 0.3836068920E-15</p>
+<p> Reduced density gradient (RDG): 0.1000000000E+03</p>
+<p> Reduced density gradient with promolecular approximation: 0.1000000000E+03</p>
+<p> Sign(lambda2)*rho: -0.1563742424E+00</p>
+<p> Sign(lambda2)*rho with promolecular approximation: -0.1181402003E+00</p>
+<p> Corr. hole for alpha, ref.:  0.00000  0.00000  0.00000 : -0.3342036582E-01</p>
+<p> Source function, ref.:  0.00000  0.00000  0.00000 : -0.5471209817E-02</p>
+<p> Wavefunction value for orbital    1 : -0.5236335577E-03</p>
+<p> Average local ionization energy (ALIE): 0.6114079535E+00</p>
+<p> van der Waals potential (probe atom: C ): 0.4818156536E+07 kcal/mol</p>
+<p> Delta-g (under promolecular approximation): 0.2210101312E+00</p>
+<p> Delta-g (under Hirshfeld partition): 0.3342702235E+00</p>
+<p> User-defined real space function: 0.1000000000E+01</p>
+<p> ESP from nuclear charges: 0.8328363540E+02</p>
+<p> ESP from electrons: -0.8270491826E+02</p>
+<p> Total ESP: 0.5787171379E+00 a.u. ( 0.1574769E+02 eV, 0.3631508E+03 kcal/mol)</p>
+<p> Note: Below information are for electron density</p>
+<p> Components of gradient in x/y/z are:</p>
+<p> -0.3986278498E-16 0.2588083169E-16 -0.1496361425E-16</p>
+<p> Norm of gradient is: 0.4982739032E-16</p>
+<p> Components of Laplacian in x/y/z are:</p>
+<p> 0.4543665012E+00 -0.1777568276E+00 -0.1996987038E+00</p>
+<p> Total: 0.7691096976E-01</p>
+<p> Hessian matrix:</p>
+<p> 0.4543665012E+00 0.1480273892E-02 -0.8797682026E-02</p>
+<p> 0.1480273892E-02 -0.1777568276E+00 -0.1372600462E-02</p>
+<p> -0.8797682026E-02 -0.1372600462E-02 -0.1996987038E+00</p>
+<p> Eigenvalues of Hessian: -0.1998996512E+00 -0.1776777465E+00 0.4544883675E+00</p>
+<p> Eigenvectors (columns) of Hessian:</p>
+<p> -0.1328246209E-01 0.3185960576E-02 0.9999067086E+00</p>
+<p> -0.6097971468E-01 -0.9981361912E+00 0.2370282933E-02</p>
+<p> -0.9980506253E+00 0.6094254260E-01 -0.1345198509E-01</p>
+<p> Determinant of Hessian: 0.1614239038E-01</p>
+ <font color=red>Ellipticity of electron density:  0.125069        #椭率 ε  椭率越大，π特征越大 三重键和单键接近0 </font>
+
+<font color=red> eta index:  0.439834        #η指数 大于1的时候被认为是共价作用为主</font> 
+
+</blockquote>
 <p>Multiwfn还可以将临界点上的各种函数分解为各个轨道的贡献（可以是分子轨道、定域化轨道等）</p>
 </li>
 <li><p><code>-9</code>：计算临界点间、原子间的距离、角度。</p>
@@ -6286,7 +6366,7 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <h1 id="对称性和取向"><a href="#对称性和取向" class="headerlink" title="对称性和取向"></a>对称性和取向</h1><ul>
 <li><p>需要将分子摆成某个取向计算，可以先在其他软件中摆好了再计算。但是几何优化中这个取向会发生变化（因为笛卡尔坐标到内坐标信息会丢失），因此最好是几何优化完后导出结构，摆成某个朝向再算单点。</p>
 </li>
-<li><p>ORCA对分子对称性的利用有限，主要用于SCF/CASSCF中的轨道和状态分析，以及MRCI代码中的计算优势。使用<code>UseSym</code>关键字，可以让ORCA检测点群，对坐标进行对称化，改变原点，并产生适合于对称的轨道，用于SCF/CASSCF计算。目前只支持D2h和较低点群。</p>
+<li><p>【<font color=red><strong>ORCA默认不使用对称性，使用对称性的计算需加!UseSym。</strong></font>】ORCA对分子对称性的利用有限，主要用于SCF/CASSCF中的轨道和状态分析，以及MRCI代码中的计算优势。使用<code>UseSym</code>关键字，可以让ORCA检测点群，对坐标进行对称化，改变原点，并产生适合于对称的轨道，用于SCF/CASSCF计算。目前只支持D2h和较低点群。</p>
 </li>
 <li><p>为了使自动点群检测工作，分子需要被正确地对称，也可以更改点组检测的<code>treshold</code>，但是阈值过高可能会出现问题</p>
 <figure class="highlight oxygene"><table><tr><td class="code"><pre><span class="line">! Usesym</span><br><span class="line">%<span class="function"><span class="keyword">method</span> <span class="title">SymThresh</span> 5.0<span class="title">e</span>-2 <span class="title">end</span></span></span><br></pre></td></tr></table></figure>
@@ -6470,7 +6550,7 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <li>如果不想使用RI近似，可以先计算一个RI-J近似计算，再使用该轨道作为初猜去计算精确的库伦项，SCF也会很快收敛，比直接精确计算库伦项耗时会更短。</li>
 </ul>
 <h2 id="只存在库仑积分的RI-J近似"><a href="#只存在库仑积分的RI-J近似" class="headerlink" title="只存在库仑积分的RI-J近似"></a>只存在库仑积分的RI-J近似</h2><ul>
-<li>RI-J近似用于近似库仑积分（J）。因为在所有计算中都存在库仑积分时，通常可以始终使用RI-J近似。纯泛函应该用RI加速而不是RIJCOSX。GGA-DFT计算默认情况下启用RI-J近似，因此不需要再指定。<code>NORI</code>关键字可用于关闭近似。</li>
+<li>RI-J近似用于近似库仑积分（J）。因为<strong>在所有计算中都存在库仑积分时，通常可以始终使用RI-J近似</strong>。纯泛函应该用RI加速而不是RIJCOSX。GGA-DFT计算默认情况下启用RI-J近似，因此不需要再指定。<code>NORI</code>关键字可用于关闭近似。</li>
 <li><p>Split-RI-J算法是RI-J算法的改进版本，通常更快，对内存的需求仅稍微多一点。仅用于SCF过程（不用于梯度，耦合的扰动方程式和TD-DFT）。要关闭<code>!NoSplit-RI-J</code>。</p>
 </li>
 <li><p>指定辅助基组：</p>
@@ -10024,6 +10104,29 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
     <title>【ORCA】07.输出</title>
     <url>/2020/09/04/%E3%80%90ORCA%E3%80%9107.%E8%BE%93%E5%87%BA/</url>
     <content><![CDATA[<h1 id="导出molden"><a href="#导出molden" class="headerlink" title="导出molden"></a>导出molden</h1><figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">orca_2mkl </span><span class="keyword">basename </span>-molden</span><br></pre></td></tr></table></figure>
+<h1 id="自然轨道"><a href="#自然轨道" class="headerlink" title="自然轨道"></a>自然轨道</h1><ul>
+<li><p>在<code>%scf</code>里写上<code>UHFNO true</code>，或者直接<code>! UNO</code>。</p>
+<figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line"><span class="comment">%scf </span></span><br><span class="line">	UHFNO <span class="literal">true</span> </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>结果在<code>.uno</code>文件中，这实际上也是一个<code>gbw</code>文件，可以重命名为<code>.gbw</code>后缀后再通过ORCA自带的<code>orca_2mkl</code>小程序生成<code>mkl</code>和<code>molden</code>文件。</li>
+<li>其他文件：</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>UNO: unrestricted HF/DFT natural orbitals，这是总密度产生的自然轨道，只有1列，总密度=alpha密度+beta密度<br>UNSO: unrestricted HF/DFT natural spin orbitals，这个轨道有2列，是分别用alpha/beta密度产生的自然轨道<br>UCO: unrestricted HF/DFT corresponding orbitals，这个轨道有2列<br>QRO: quasi-restricted orbitals，这个轨道只有1列</p>
+</blockquote>
+<ul>
+<li><p>使用<code>! UCO</code>可以输出中打印 UCO 重叠，这可以提供有关系统中自旋耦合的非常清晰的信息。</p>
+<ul>
+<li><p>重叠对应的值通常小于 0.85，表示自旋耦合对。而接近 1.00 和 0.00 的值分别指双占据和单占据轨道。</p>
+</li>
+<li><p>例如：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">***UHF Corresponding Orbitals were saved <span class="keyword">in</span> MyJob.uco***</span><br><span class="line"></span><br><span class="line">----------------------</span><br><span class="line">Orbital    Overlap(*)</span><br><span class="line">----------------------</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line"><span class="number">96</span>:       <span class="number">0.99968</span></span><br><span class="line"><span class="number">97</span>:       <span class="number">0.99955</span></span><br><span class="line"><span class="number">98</span>:       <span class="number">0.99947</span></span><br><span class="line"><span class="number">99</span>:       <span class="number">0.99910</span></span><br><span class="line"><span class="number">100</span>:      <span class="number">0.99873</span></span><br><span class="line"><span class="number">101</span>:      <span class="number">0.99563</span></span><br><span class="line"><span class="number">102</span>:      <span class="number">0.74329</span></span><br><span class="line"><span class="number">103</span>:      <span class="number">0.00000</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>计算化学</category>
@@ -10202,7 +10305,25 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
   <entry>
     <title>【ORCA】08.CASSCF教程</title>
     <url>/2023/10/07/%E3%80%90ORCA%E3%80%9108.CASSCF%E6%95%99%E7%A8%8B/</url>
-    <content><![CDATA[<h1 id="CASPT2"><a href="#CASPT2" class="headerlink" title="CASPT2"></a>CASPT2</h1><ul>
+    <content><![CDATA[<h1 id="CASSCF"><a href="#CASSCF" class="headerlink" title="CASSCF"></a>CASSCF</h1><p>步骤：</p>
+<ul>
+<li>做ROHF计算，构造初始猜测轨道：</li>
+<li>将计算产生的.gbw文件转换成molden，找出要选进活性空间及其编号</li>
+</ul>
+<hr>
+<p>例子：苯的CAS(6,6)计算的输入文件如下：（苯的π轨道为17,20-23,30，需要交换轨道）</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="type">!cc</span><span class="string">-pvtz</span> <span class="string">UseSym</span> <span class="string">pal8</span></span><br><span class="line"><span class="type">!moread</span></span><br><span class="line"><span class="string">%moinp</span> <span class="string">&quot;benzene-rhf.gbw&quot;</span></span><br><span class="line"><span class="string">%scf</span></span><br><span class="line">	<span class="string">rotate</span> &#123;<span class="number">16</span>,<span class="number">18</span>,<span class="number">90</span>&#125; &#123;<span class="number">23</span>,<span class="number">29</span>,<span class="number">90</span>&#125; <span class="string">end</span></span><br><span class="line"><span class="string">end</span></span><br><span class="line"><span class="string">%casscf</span></span><br><span class="line">	<span class="string">nel</span> <span class="number">6</span></span><br><span class="line">	<span class="string">norb</span> <span class="number">6</span></span><br><span class="line">	<span class="string">mult</span> <span class="number">1</span></span><br><span class="line">	<span class="string">irrep</span> <span class="number">0</span></span><br><span class="line">	<span class="string">end</span></span><br><span class="line"><span class="string">*xyzfile</span> <span class="number">0</span> <span class="number">1</span> <span class="string">benzene.xyz</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p>例子：使用MP2的自然轨道作为初猜:</p>
+<figure class="highlight llvm"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="title">!MP2</span> <span class="keyword">cc</span>-pvtz NoFrozenCore UseSym pal<span class="number">4</span></span><br><span class="line"><span class="symbol">%mp2</span> Density unrelaxed</span><br><span class="line">NatOrbs <span class="keyword">true</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">*xyzfile <span class="number">0</span> <span class="number">1</span> benzene.xyz</span><br></pre></td></tr></table></figure>
+<ul>
+<li>可以在casscf 模块使用actorbs locorbs关键词，对活性轨道做局域化<ul>
+<li>在判断计算得到的是否为开壳层单重态时，不能只通过占据数来判断，要结合轨道图像一起判断。ORCA做CAS默认得到的是自然活性轨道，不一定能够直接通过组态信息确定所得到的电子态</li>
+<li>因为CASSCF的能量对活性轨道的旋转是酉不变的，因此，如果要更直观地展现单电子，可以使用actorbs locorbs关键词得到局域化的活性轨道。使用局域活性轨道，易于通过组态信息确定电子态。</li>
+</ul>
+</li>
+</ul>
+<h1 id="CASPT2"><a href="#CASPT2" class="headerlink" title="CASPT2"></a>CASPT2</h1><ul>
 <li><p>CASSCF收敛的结果是考虑动态相关多参考的起点，常用的MRCI和MRPT</p>
 </li>
 <li><p>internally contracted N-Electron valence state perturbation theory<br>N个电子价层微扰(NEVPT2) 是动态相关的首选，只需要一个关键词：</p>
@@ -10211,10 +10332,11 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 <li><code>NEVPT2</code>就是NEVPT2方法的strongly contracted” 版本</li>
 <li><code>PC-NEVPT2</code>是in the canonical and in the DLPNO methodology</li>
 <li><code>FIC-NEVPT2</code>是fully internally contracted (FIC)版</li>
-<li></li>
 </ul>
 </li>
 </ul>
+<p>例子：</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="attr">%casscf</span></span><br><span class="line"> <span class="attr">nel</span>          <span class="string">10</span></span><br><span class="line"> <span class="attr">norb</span>        <span class="string">8</span></span><br><span class="line"> <span class="attr">irrep</span>       <span class="string">0</span></span><br><span class="line"> <span class="attr">mult</span>       <span class="string">1</span></span><br><span class="line"> <span class="attr">NRoots</span>     <span class="string">6</span></span><br><span class="line"> <span class="attr">Maxiter</span>    <span class="string">200</span></span><br><span class="line"> <span class="attr">PTMethod</span>   <span class="string">FIC_CASPT2</span></span><br><span class="line"> <span class="attr">PTsettings</span> <span class="string"></span></span><br><span class="line">  <span class="attr">CASPT2_IPEAshift</span>    <span class="string">0.25</span></span><br><span class="line">  <span class="attr">CASPT2_rshift</span>       <span class="string">0.10</span></span><br><span class="line"> <span class="attr">end</span></span><br><span class="line"><span class="attr">end</span></span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>计算化学</category>
@@ -10376,6 +10498,19 @@ p=\frac{h}{\lambda}</script><p>联立得到实物的波长为：$\lambda=\frac{h
       <tags>
         <tag>薛定谔方程</tag>
         <tag>Hatree-Fock</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Molcas】01.基本输入</title>
+    <url>/2024/09/13/%E3%80%90Molcas%E3%80%9101.%E5%9F%BA%E6%9C%AC%E8%BE%93%E5%85%A5/</url>
+    <content><![CDATA[<h1 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h1>]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>输入</tag>
+        <tag>molcas</tag>
       </tags>
   </entry>
 </search>
