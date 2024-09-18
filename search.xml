@@ -8009,6 +8009,16 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li>将目录下所有一般文件中某一句后面加上一句<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">for i in `find ./$path -type f`</span><br><span class="line">do</span><br><span class="line"> sed -i &#x27;/NUCLEARMODEL gaussian/arelativistic scalar zora&#x27; $i</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<h2 id="ln"><a href="#ln" class="headerlink" title="ln"></a>ln</h2><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">ln</span> <span class="selector-tag">-s</span> <span class="selector-attr">[源文件或目录]</span> <span class="selector-attr">[目标文件目录]</span></span><br></pre></td></tr></table></figure>
+<p>比如现在在1文件夹，想要通过1访问2，则</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">ln -s <span class="number">2</span> </span><br></pre></td></tr></table></figure>
+<p>使用ls -il检查是否链接成功</p>
+<p>取消链接</p>
+<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="keyword">unlink</span> 软链接名称（注意不要在后面加”/”）</span><br></pre></td></tr></table></figure>
+<p>和删除普通的文件是一眼的，删除都是使用rm来进行操作</p>
+<p>rm –rf 软链接名称（注意不要在后面加”/”）</p>
+<p>硬链接删除原文件，不会影响访问，因为是复制了原文件。软链接，又叫符号链接，删除原文件会使所有的软连接失效</p>
+<p>取下</p>
 <h2 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h2><p>move file用来为文件或目录改名、或将文件或目录移入其它位置。</p>
 <h3 id="语法-5"><a href="#语法-5" class="headerlink" title="语法"></a>语法</h3><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">mv</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
 <p>三种模式</p>
@@ -8067,25 +8077,8 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <figure class="highlight stata"><table><tr><td class="code"><pre><span class="line"><span class="keyword">rm</span> -i <span class="keyword">test</span> example</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h2 id="scp"><a href="#scp" class="headerlink" title="scp"></a>scp</h2><p>用于 Linux 之间复制文件和目录。</p>
-<h3 id="语法-8"><a href="#语法-8" class="headerlink" title="语法"></a>语法</h3><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">scp</span> <span class="selector-attr">[可选参数]</span> <span class="selector-tag">file_source</span> <span class="selector-tag">file_target</span> </span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>-P port</code>：注意是大写的P, port是指定数据传输用到的端口号</li>
-<li><code>-r</code>：以递归方式复制。</li>
-</ul>
-<h3 id="例子-5"><a href="#例子-5" class="headerlink" title="例子"></a>例子</h3><ul>
-<li><p>从远处复制文件到本地目录</p>
-<figure class="highlight elixir"><table><tr><td class="code"><pre><span class="line">scp root<span class="variable">@10</span>.<span class="number">10.10</span>.<span class="number">10</span><span class="symbol">:/opt/soft/nginx-</span>0.<span class="number">5.38</span>.tar.gz /opt/soft/</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>上传本地文件到远程机器指定目录</p>
-<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">scp -r（文件夹/）文件名 （用户名@）节点名:目录</span><br><span class="line">scp <span class="regexp">/opt/</span>soft<span class="regexp">/nginx-0.5.38.tar.gz root@10.10.10.10:/</span>opt<span class="regexp">/soft/</span>scptest</span><br><span class="line"></span><br><span class="line">#表示将<span class="regexp">/home/</span>Fermi/Test.xyz拷贝到Fermi2用户在node124节点的home目录下面</span><br><span class="line">scp -r <span class="regexp">/home/</span>Fermi/Test.xyz Fermi2@node124</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>如果远程服务器防火墙有为scp命令设置了指定的端口，我们需要使用 -P 参数来设置命令的端口号:</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">scp -P <span class="number">4588</span> remote@www.runoob.com:<span class="regexp">/usr/</span>local<span class="regexp">/sin.sh /</span>home/administrator</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
 <h1 id="文档编辑"><a href="#文档编辑" class="headerlink" title="文档编辑"></a>文档编辑</h1><h2 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h2><p>用于查找文件里符合条件的字符串。</p>
-<h3 id="语法-9"><a href="#语法-9" class="headerlink" title="语法"></a>语法</h3><ul>
+<h3 id="语法-8"><a href="#语法-8" class="headerlink" title="语法"></a>语法</h3><ul>
 <li><code>-A&lt;显示行数&gt;</code> 或 <code>--after-context=&lt;显示行数&gt;</code> : 除了显示符合范本样式的那一列之外，并显示该行之后的内容。 </li>
 <li><code>-B&lt;显示行数&gt;</code> 或 <code>--before-context=&lt;显示行数&gt;</code> : 除了显示符合样式的那一行之外，并显示该行之前的内容。 </li>
 <li><code>-C&lt;显示行数&gt;</code> 或 <code>--context=&lt;显示行数&gt;或-&lt;显示行数&gt;</code> : 除了显示符合样式的那一行之外，并显示该行之前后的内容。 </li>
@@ -8102,7 +8095,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li><code>-L</code> 或 <code>--files-without-match</code> : 列出文件内容不符合指定的样式的文件名称。 </li>
 <li><code>-e&lt;范本样式&gt;</code> 或 <code>--regexp=&lt;范本样式&gt;</code> : 指定字符串做为查找文件内容的样式。 </li>
 </ul>
-<h3 id="例子-6"><a href="#例子-6" class="headerlink" title="例子"></a>例子</h3><ul>
+<h3 id="例子-5"><a href="#例子-5" class="headerlink" title="例子"></a>例子</h3><ul>
 <li><p>在“路径”下，查找包含“xyz123”字段的文件，其中<code>-r</code>表示子文件夹也要搜索，<code>-i</code>表示不区分xyz的大小写</p>
 <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">grep</span> -Ri xyz<span class="number">123</span> 路径</span><br></pre></td></tr></table></figure>
 </li>
@@ -8138,7 +8131,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 </li>
 </ul>
 <h2 id="sed"><a href="#sed" class="headerlink" title="sed"></a>sed</h2><p>Stream Editor利用脚本来处理文本文件。主要用来自动编辑一个或多个文件、简化对文件的反复操作、编写转换程序等。</p>
-<h3 id="语法-10"><a href="#语法-10" class="headerlink" title="语法"></a>语法</h3><figure class="highlight gams"><table><tr><td class="code"><pre><span class="line">sed [<span class="keyword">options</span>] <span class="string">&#x27;command&#x27;</span> <span class="keyword">file</span>(s)</span><br><span class="line">sed [<span class="keyword">options</span>] -f scriptfile <span class="keyword">file</span>(s)</span><br></pre></td></tr></table></figure>
+<h3 id="语法-9"><a href="#语法-9" class="headerlink" title="语法"></a>语法</h3><figure class="highlight gams"><table><tr><td class="code"><pre><span class="line">sed [<span class="keyword">options</span>] <span class="string">&#x27;command&#x27;</span> <span class="keyword">file</span>(s)</span><br><span class="line">sed [<span class="keyword">options</span>] -f scriptfile <span class="keyword">file</span>(s)</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>sed表达式可以使用单引号来引用，但是如果表达式内部包含变量字符串，就需要使用双引号。</p>
 </li>
@@ -8187,7 +8180,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li><code>w file</code>：写并追加模板块到file末尾。  </li>
 <li><code>n</code> ：读取下一个输入行，用下一个命令处理新的行而不是用第一个命令。</li>
 </ul>
-<h3 id="例子-7"><a href="#例子-7" class="headerlink" title="例子"></a>例子</h3><h4 id="替换操作"><a href="#替换操作" class="headerlink" title="替换操作"></a>替换操作</h4><ul>
+<h3 id="例子-6"><a href="#例子-6" class="headerlink" title="例子"></a>例子</h3><h4 id="替换操作"><a href="#替换操作" class="headerlink" title="替换操作"></a>替换操作</h4><ul>
 <li><p>替换：</p>
 <figure class="highlight delphi"><table><tr><td class="code"><pre><span class="line">sed <span class="string">&#x27;s/book/books/&#x27;</span> <span class="keyword">file</span></span><br></pre></td></tr></table></figure>
 </li>
@@ -8303,7 +8296,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li><code>-p</code>：这个和-n类似，但是会打印<code>$_</code>。</li>
 <li><code>-e</code>：指定字符串用作脚本执行；通常后跟单引号，把需要执行的语句封装在其中。</li>
 </ul>
-<h3 id="例子-8"><a href="#例子-8" class="headerlink" title="例子"></a>例子</h3><ul>
+<h3 id="例子-7"><a href="#例子-7" class="headerlink" title="例子"></a>例子</h3><ul>
 <li><p>替换A为B</p>
 <figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">perl</span>  -i  -<span class="keyword">pe</span> ‘s/old_str/new_str/g’  <span class="keyword">files</span></span><br></pre></td></tr></table></figure>
 </li>
@@ -8332,8 +8325,36 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">perl  -i  -pe ‘<span class="variable">$_</span> = <span class="variable">$_</span> . “string\n”  <span class="keyword">if</span> <span class="regexp">/condition/</span>’  files</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h1 id="文件传输"><a href="#文件传输" class="headerlink" title="文件传输"></a>文件传输</h1><h1 id="磁盘管理"><a href="#磁盘管理" class="headerlink" title="磁盘管理"></a>磁盘管理</h1><h2 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h2><p>Change directory，用于切换当前工作目录至</p>
-<h3 id="语法-11"><a href="#语法-11" class="headerlink" title="语法"></a>语法</h3><figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">cd</span><span class="meta"> [dirName]</span></span><br></pre></td></tr></table></figure>
+<h1 id="文件传输"><a href="#文件传输" class="headerlink" title="文件传输"></a>文件传输</h1><h2 id="scp"><a href="#scp" class="headerlink" title="scp"></a>scp</h2><p>用于 Linux 之间复制文件和目录。</p>
+<h3 id="语法-10"><a href="#语法-10" class="headerlink" title="语法"></a>语法</h3><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">scp</span> <span class="selector-attr">[可选参数]</span> <span class="selector-tag">file_source</span> <span class="selector-tag">file_target</span> </span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-P port</code>：注意是大写的P, port是指定数据传输用到的端口号</li>
+<li><code>-r</code>：以递归方式复制。</li>
+</ul>
+<h3 id="例子-8"><a href="#例子-8" class="headerlink" title="例子"></a>例子</h3><ul>
+<li><p>从远处复制文件到本地目录</p>
+<figure class="highlight elixir"><table><tr><td class="code"><pre><span class="line">scp root<span class="variable">@10</span>.<span class="number">10.10</span>.<span class="number">10</span><span class="symbol">:/opt/soft/nginx-</span>0.<span class="number">5.38</span>.tar.gz /opt/soft/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>上传本地文件到远程机器指定目录</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">scp -r（文件夹/）文件名 （用户名@）节点名:目录</span><br><span class="line">scp <span class="regexp">/opt/</span>soft<span class="regexp">/nginx-0.5.38.tar.gz root@10.10.10.10:/</span>opt<span class="regexp">/soft/</span>scptest</span><br><span class="line"></span><br><span class="line">#表示将<span class="regexp">/home/</span>Fermi/Test.xyz拷贝到Fermi2用户在node124节点的home目录下面</span><br><span class="line">scp -r <span class="regexp">/home/</span>Fermi/Test.xyz Fermi2@node124</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果远程服务器防火墙有为scp命令设置了指定的端口，我们需要使用 -P 参数来设置命令的端口号:</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">scp -P <span class="number">4588</span> remote@www.runoob.com:<span class="regexp">/usr/</span>local<span class="regexp">/sin.sh /</span>home/administrator</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="wget"><a href="#wget" class="headerlink" title="wget"></a>wget</h2><h3 id="语法-11"><a href="#语法-11" class="headerlink" title="语法"></a>语法</h3><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">wget</span> <span class="selector-attr">[参数]</span> <span class="selector-attr">[URL地址]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-b</code>：启动后转入后台执行</li>
+<li><code>-t</code>：设定最大尝试链接次数(0 表示无限制).</li>
+<li><code>–limit-rate=RATE</code> ：限定下载输率</li>
+</ul>
+<h3 id="例子-9"><a href="#例子-9" class="headerlink" title="例子"></a>例子</h3><ul>
+<li><p>对于下载非常大的文件的时候，我们可以使用参数-b进行后台下载。</p>
+<figure class="highlight gauss"><table><tr><td class="code"><pre><span class="line">wget -b http:<span class="comment">//www.minjieren.com/wordpress-3.1-zh_CN.zip</span></span><br><span class="line"></span><br><span class="line">Continuing in background, pid <span class="number">1840.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Output</span> will be written to `wget-<span class="built_in">log</span>&#x27;.</span><br><span class="line"></span><br><span class="line"><span class="meta">#你可以使用以下命令来察看下载进度：</span></span><br><span class="line"></span><br><span class="line">tail -f wget-<span class="built_in">log</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="磁盘管理"><a href="#磁盘管理" class="headerlink" title="磁盘管理"></a>磁盘管理</h1><h2 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h2><p>Change directory，用于切换当前工作目录至</p>
+<h3 id="语法-12"><a href="#语法-12" class="headerlink" title="语法"></a>语法</h3><figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">cd</span><span class="meta"> [dirName]</span></span><br></pre></td></tr></table></figure>
 <p>dirName：</p>
 <ul>
 <li>可为绝对路径或相对路径。</li>
@@ -8352,14 +8373,14 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li><code>-T</code>：显示磁盘分区的文件系统类型。</li>
 </ul>
 <h2 id="du"><a href="#du" class="headerlink" title="du"></a>du</h2><p>用于显示目录或文件的大小。</p>
-<h3 id="语法-12"><a href="#语法-12" class="headerlink" title="语法"></a>语法</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">du [<span class="string">-abcDhHklmsSx</span>][<span class="symbol">-L &lt;符号连接&gt;</span>][<span class="string">-X &lt;文件&gt;</span>][<span class="symbol">--block-size</span>][<span class="string">--exclude=&lt;目录或文件&gt;</span>][<span class="symbol">--max-depth=&lt;目录层数&gt;</span>][<span class="string">--help</span>][<span class="symbol">--version</span>][<span class="string">目录或文件</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="语法-13"><a href="#语法-13" class="headerlink" title="语法"></a>语法</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">du [<span class="string">-abcDhHklmsSx</span>][<span class="symbol">-L &lt;符号连接&gt;</span>][<span class="string">-X &lt;文件&gt;</span>][<span class="symbol">--block-size</span>][<span class="string">--exclude=&lt;目录或文件&gt;</span>][<span class="symbol">--max-depth=&lt;目录层数&gt;</span>][<span class="string">--help</span>][<span class="symbol">--version</span>][<span class="string">目录或文件</span>]</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>--max-depth=&lt;目录层数&gt;</code>： 超过指定层数的目录后，予以忽略。</li>
 <li><code>-h</code>或<code>--human-readable</code>：以K，M，G为单位，提高信息的可读性。</li>
 <li><code>-s</code>或<code>--summarize</code>：显示文件或整个目录的大小，默认单位为 kB。</li>
 <li><code>--block-size=k</code>：以K，M或者G为单位</li>
 </ul>
-<h3 id="例子-9"><a href="#例子-9" class="headerlink" title="例子"></a>例子</h3><ul>
+<h3 id="例子-10"><a href="#例子-10" class="headerlink" title="例子"></a>例子</h3><ul>
 <li><p>显示当前目录的大小：</p>
 <figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">du -hs</span></span><br></pre></td></tr></table></figure>
 </li>
@@ -8405,7 +8426,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <p>top -p 139</p>
 <figure class="highlight vala"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta"># 系统设置</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta"># 备份压缩</span></span><br><span class="line"></span><br><span class="line"><span class="meta">## tar</span></span><br><span class="line"></span><br><span class="line">Tape archive （磁带档案）。tar是用来建立，还原备份文件的工具程序，它可以加入，解开备份文件内的文件。</span><br><span class="line"></span><br><span class="line">- 打包是指将一大堆文件或目录变成一个总的文件；压缩则是将一个大的文件通过一些压缩算法变成一个小文件。</span><br><span class="line">- 利用tar命令，可以把一大堆的文件和目录全部打包成一个文件，这对于备份文件或将几个文件组合成为一个文件以便于网络传输是非常有用的。</span><br><span class="line">- 打包成一个包后，再用压缩程序进行压缩（gzip bzip2命令）等。</span><br><span class="line"></span><br><span class="line"><span class="meta">### 语法</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>tar(选项)(参数)</p>
-<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">选项：</span><br><span class="line"></span><br><span class="line">- `-c`或`--create`：建立新的备份文件；</span><br><span class="line">- `-f`：&lt;备份文件&gt;或--file=&lt;备份文件&gt; 指定备份文件。</span><br><span class="line">- `-j`：支持bzip2解压文件；</span><br><span class="line">- `-N&lt;日期格式&gt;`或`--newer=&lt;日期时间&gt;`：只将较指定日期更新的文件保存到备份文件里。</span><br><span class="line">- `-p`或`--same-permissions`：用原来的文件权限还原文件；</span><br><span class="line">- `-t`或`--list`：列出备份文件的内容。</span><br><span class="line">- `-v`或`--verbose`：显示指令执行过程。</span><br><span class="line">- `-x`或`--extract`或`--get`：从备份文件中还原文件；</span><br><span class="line">- `-z`或`--gzip`或`--ungzip` ：通过gzip指令处理备份文件。</span><br><span class="line">- `--exclude=&lt;范本样式&gt;`：排除符合范本样式的文件。</span><br><span class="line"></span><br><span class="line">### 例子</span><br><span class="line"></span><br><span class="line">#### 将文件全部打包成tar包</span><br><span class="line"></span><br><span class="line">- 仅打包，不压缩。在选项`f`之后的文件档名是自己取的，习惯上都用 .tar 来作为辨识。 </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">选项：</span><br><span class="line"></span><br><span class="line">- `-c`或`--create`：建立新的备份文件；</span><br><span class="line">- `-f`：&lt;备份文件&gt;或--file=&lt;备份文件&gt; 指定备份文件。</span><br><span class="line">- `-j`：支持bzip2解压文件；</span><br><span class="line">- `-N&lt;日期格式&gt;`或`--newer=&lt;日期时间&gt;`：只将较指定日期更新的文件保存到备份文件里。</span><br><span class="line">- `-p`或`--same-permissions`：用原来的文件权限还原文件；</span><br><span class="line">  - `-t`或`--list`：列出<span class="number">1</span></span><br><span class="line">  - d备份文件的内容。</span><br><span class="line"></span><br><span class="line">- `-v`或`--verbose`：显示指令执行过程。</span><br><span class="line">- `-x`或`--extract`或`--get`：从备份文件中还原文件；</span><br><span class="line">- `-z`或`--gzip`或`--ungzip` ：通过gzip指令处理备份文件。</span><br><span class="line">- `--exclude=&lt;范本样式&gt;`：排除符合范本样式的文件。</span><br><span class="line"></span><br><span class="line">### 例子</span><br><span class="line"></span><br><span class="line">#### 将文件全部打包成tar包</span><br><span class="line"></span><br><span class="line">- 仅打包，不压缩。在选项`f`之后的文件档名是自己取的，习惯上都用 .tar 来作为辨识。 </span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>tar -cvf log.tar log2012.log</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">- <span class="xml"><span class="tag">&lt;<span class="name">font</span> <span class="attr">color</span>=<span class="string">red</span>&gt;</span>打包后，以 gzip 压缩 <span class="tag">&lt;/<span class="name">font</span>&gt;</span></span>。如果加<span class="string">`z`</span>选项，则以.tar.gz或.tgz来代表gzip压缩过的tar包</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>tar -czvf log.tar.gz log2012.log</p>
@@ -8441,7 +8462,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 </li>
 </ul>
 <h2 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h2><p>用于查看输入文件中的尾部内容。tail命令默认在屏幕上显示指定文件的末尾10行。</p>
-<h3 id="语法-13"><a href="#语法-13" class="headerlink" title="语法"></a>语法</h3><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">tail</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="语法-14"><a href="#语法-14" class="headerlink" title="语法"></a>语法</h3><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">tail</span><span class="params">(选项)</span><span class="params">(参数)</span></span></span><br></pre></td></tr></table></figure>
 <p>参数：</p>
 <ul>
 <li><code>-f</code> ：循环读取</li>
@@ -8452,7 +8473,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li><code>-n&lt;行数&gt;</code> 或<code>——line=&lt;N&gt;</code>：显示文件的尾部 n 行内容</li>
 <li><code>-s&lt;秒数&gt;</code>, <code>——sleep-interal=&lt;秒数&gt;</code> 与<code>-f</code>合用，指定监视文件变化时间隔的秒数。</li>
 </ul>
-<h3 id="例子-10"><a href="#例子-10" class="headerlink" title="例子"></a>例子</h3><ul>
+<h3 id="例子-11"><a href="#例子-11" class="headerlink" title="例子"></a>例子</h3><ul>
 <li><p>显示 notes.log 文件的最后 10 行：</p>
 <figure class="highlight stan"><table><tr><td class="code"><pre><span class="line"><span class="built_in">tail</span> notes.<span class="built_in">log</span></span><br></pre></td></tr></table></figure>
 </li>
@@ -8470,14 +8491,14 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li>eXtended ARGuments，是给命令传递参数的一个过滤器，也是组合多个命令的一个工具。</li>
 <li>它能够捕获一个命令的输出，然后传递给另外一个命令。</li>
 </ul>
-<h3 id="语法-14"><a href="#语法-14" class="headerlink" title="语法"></a>语法</h3><ul>
+<h3 id="语法-15"><a href="#语法-15" class="headerlink" title="语法"></a>语法</h3><ul>
 <li>一般是和管道一起使用。</li>
 </ul>
 <figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line">somecommand |xargs -<span class="keyword">item</span>  <span class="keyword">command</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>xargs的默认命令是<code>echo</code>，空格是默认定界符。</li>
 </ul>
-<h3 id="例子-11"><a href="#例子-11" class="headerlink" title="例子"></a>例子</h3><h4 id="格式化输入"><a href="#格式化输入" class="headerlink" title="格式化输入"></a>格式化输入</h4><ul>
+<h3 id="例子-12"><a href="#例子-12" class="headerlink" title="例子"></a>例子</h3><h4 id="格式化输入"><a href="#格式化输入" class="headerlink" title="格式化输入"></a>格式化输入</h4><ul>
 <li><p>将test文件中的多行变成一行：</p>
 <figure class="highlight stata"><table><tr><td class="code"><pre><span class="line"><span class="keyword">cat</span> <span class="keyword">test</span>.txt | xargs</span><br></pre></td></tr></table></figure>
 </li>
