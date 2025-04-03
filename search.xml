@@ -1386,7 +1386,7 @@
 <li><p>def2-系列用Def2SV, Def2SVP, Def2SVPP, Def2TZV, Def2TZVP, Def2TZVPP, Def2QZV, Def2QZVP, Def2QZVPP, and QZVP等指定，去掉了”-“</p>
 </li>
 </ul>
-<p>用IOp(3/24=1)可以显示每个原子实际用的基组，检查是否设对了；也可以用GFPrint关键词输出相似内容，但没那么清楚；也可以用GFInput关键词来输出实际所用基组，这些信息可以直接作为基组输入的信息。</p>
+<p><strong>用IOp(3/24=1)可以显示每个原子实际用的基组，检查是否设对了；也可以用GFPrint关键词输出相似内容，但没那么清楚；也可以用GFInput关键词来输出实际所用基组，这些信息可以直接作为基组输入的信息。</strong></p>
 <h1 id="赝势的输入"><a href="#赝势的输入" class="headerlink" title="赝势的输入"></a><strong>赝势的输入</strong></h1><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"># B3LYP/genecp</span><br><span class="line"></span><br><span class="line">Cu(CO)+</span><br><span class="line"></span><br><span class="line"><span class="number">1</span> <span class="number">1</span></span><br><span class="line"> Cu             </span><br><span class="line"> C                  <span class="number">1</span>            B1</span><br><span class="line"> O                  <span class="number">2</span>            B2    <span class="number">1</span>            <span class="number">180.</span></span><br><span class="line"></span><br><span class="line">Cu <span class="number">0</span></span><br><span class="line">Lanl2DZ    &lt;-- Cu用Lanl2DZ赝势基组</span><br><span class="line">****</span><br><span class="line">C O <span class="number">0</span></span><br><span class="line"><span class="number">6</span><span class="number">-31</span>G*   &lt;-- C O用的基组为<span class="number">6</span><span class="number">-31</span>G*</span><br><span class="line">****</span><br><span class="line"></span><br><span class="line">Cu <span class="number">0</span></span><br><span class="line">Lanl2   &lt;-- Cu用的赝势为Lanl2，这种赝势是Lanl2DZ赝势基组对应的赝势。如果不知道赝势名是什么，此处直接写赝势基组名就可以。比如这里也可以写成Lanl2DZ，和写Lanl2是等价的</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h2 id="Stuttgart赝势"><a href="#Stuttgart赝势" class="headerlink" title="Stuttgart赝势"></a>Stuttgart赝势</h2><p>Stuttgart赝势规范的写法是nXY这种形式，含义是：</p>
 <ul>
@@ -2098,7 +2098,12 @@
 </ul>
 </li>
 <li><p>同时查找多个关键词</p>
-<figure class="highlight taggerscript"><table><tr><td class="code"><pre><span class="line">?<span class="symbol">\&lt;</span>Ce<span class="symbol">\&gt;</span><span class="symbol">\|</span><span class="symbol">\&lt;</span>C.f1<span class="symbol">\&gt;</span><span class="symbol">\|</span><span class="symbol">\&lt;</span>Sc<span class="symbol">\&gt;</span>  </span><br></pre></td></tr></table></figure>
+<figure class="highlight taggerscript"><table><tr><td class="code"><pre><span class="line">?<span class="symbol">\&lt;</span>Ce<span class="symbol">\&gt;</span><span class="symbol">\|</span><span class="symbol">\&lt;</span>C.f1<span class="symbol">\&gt;</span><span class="symbol">\|</span><span class="symbol">\&lt;</span>Sc<span class="symbol">\&gt;</span>  </span><br><span class="line"></span><br><span class="line">/string1 <span class="symbol">\|</span> string2</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>查找同一行包含两个关键词的内容</p>
+<figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line"><span class="string">/keyword1.</span>*keyword2</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h1 id="删除d"><a href="#删除d" class="headerlink" title="删除d"></a>删除d</h1><ul>
@@ -2476,6 +2481,8 @@
 <li><p>如果ORCA以一般消息终止：“ ORCA finished by error termination in [ORCA module]”，并且上面没有其他有用的消息， 原因取决于运行哪个ORCA模块。如果运行的模块是占用大量内存的模块，例如：orca_mp2，orca_scfhess，orca_mdci，orca_mrci等，则作业可能会耗尽内存或磁盘空间，或者访问内存或磁盘时出现问题。这也可能是运行一个具有过多内核的小型系统的计算的问题（运行一个仅包含几个原子的系统的60内核计算是没有意义的，并且会导致不可预测的结果）。</p>
 </li>
 </ul>
+<h2 id="核数"><a href="#核数" class="headerlink" title="核数"></a>核数</h2><figure class="highlight fortran"><table><tr><td class="code"><pre><span class="line">%pal nprocs <span class="number">4</span> # <span class="built_in">any</span> <span class="keyword">number</span> (positive <span class="keyword">integer</span>)</span><br><span class="line">     <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>或者直接用<code>! PAL4</code>，可以从2到8，16，32，64</p>
 <h1 id="多步作业"><a href="#多步作业" class="headerlink" title="多步作业"></a>多步作业</h1><p>ORCA支持在一个输入文件中设置多步作业，使用<code>$new_job</code>关键词来标记下一个作业的开始。多步作业常在以下类型的计算中会用到：</p>
 <ul>
 <li>用不同的方法或基组计算同一个分子的性质。</li>
@@ -2549,11 +2556,11 @@
 <li>执行最小基扩展的uckel计算和使用GuessMode两种方法之一将MOs从这个计算投影到实际的基组上进行。最小基是STO-3G，比较差，因此休克尔初猜可能不太好。</li>
 </ul>
 </li>
-<li><code>PAtom</code>：极化原子密度。<ul>
+<li><code>PAtom</code>：极化原子密度。（PAtom 猜测不适用于 ANO 基组。）<ul>
 <li>原子密度的叠加是以一种很好的初步猜测，但是分子的实际形状没有被考虑进去，更难可靠地定义单个占据轨道的ROHF计算或合理的自旋密度的UHF计算。因此，ORCA在PAtom猜测时选择了不同的方法。在所有的电子在最小的原子SCF轨道进行Huckel计算，这些都是一次性确定的，并存储在程序中，这意味着原子周围的密度非常接近原子，一个中心上的所有轨道都是正交的，最初的电子分布已经反应了分子形状，对于ROHF的计算，有明确的单已占据轨道。</li>
 </ul>
 </li>
-<li><code>PModel</code> ：Model potential，或者直接用<code>!PModel</code>。<ul>
+<li><code>PModel</code> ：Model potential，或者直接用<code>!PModel</code>。把diagonalized LDA DFT matrix作为初猜。<ul>
 <li>它包括建立和对角化一个带有电子密度的Kohn-Sham矩阵，电子密度由球形中性原子密度的叠加构成，而这些密度是相对论和非相对论方法预先确定的。这一猜测对Hartree-Fock和DFT方法都有效，但对半经验模型无效。由于猜测的复杂性稍微耗时。对于元素周期表中的大多数原子来说，PModel 是可用的，因此PModel猜测通常是选择的方法(特别是对于含有重元素的分子)，除非有更精确的起始轨道可用。</li>
 </ul>
 </li>
@@ -4902,7 +4909,7 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">OCCUPATIONS keeporbitals=<span class="number">50</span> <span class="keyword">freeze</span> </span><br><span class="line">OCCUPATIONS keeporbitals=<span class="number">50</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir 01_listi 02_listb 03_fdiis 04_listf 05_mesa 06_sdiis 07_arh 08_mix 09_shift </span><br><span class="line"></span><br><span class="line">for i in 01 02 03 04 05 06 07 08 09 ;do cp 00*/*run 00*/am* $&#123;i&#125;*; done</span><br><span class="line"></span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod listi/&#x27; 01*/*.run </span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod listb/&#x27; 02*/*.run </span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod fdiis/&#x27; 03*/*.run </span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod listf/&#x27; 04*/*.run</span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod mesa/&#x27; 05*/*.run</span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod sdiis/&#x27; 06*/*.run</span><br><span class="line">sed -i &#x27;s/SCF/SCF\narh\nend/&#x27; 07*/*.run</span><br><span class="line">sed -i &#x27;s/SCF/SCF\nDIIS\nN 25\nCyc 30\nEnd\nMixing 0.015\n Mixing1 0.09/&#x27; 08*/*.run</span><br><span class="line">sed -i &#x27;s/SCF/SCF\nLshift 0.01/&#x27; 09*/*.run</span><br><span class="line"></span><br><span class="line">for i in &#123;1..9&#125;;do echo 0$&#123;i&#125;*/;cd 0$&#123;i&#125;*; zjsub am*; cd ..; done</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir 00_NoConv</span><br><span class="line"></span><br><span class="line">mv * 0*</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mkdir 01_listi 02_listb 03_fdiis 04_listf 05_mesa 06_sdiis 07_arh 08_mix 09_shift </span><br><span class="line"></span><br><span class="line">for i in 01 02 03 04 05 06 07 08 09 ;do cp 00*/*run 00*/am* $&#123;i&#125;*; done</span><br><span class="line"></span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod listi/&#x27; 01*/*.run </span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod listb/&#x27; 02*/*.run </span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod fdiis/&#x27; 03*/*.run </span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod listf/&#x27; 04*/*.run</span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod mesa/&#x27; 05*/*.run</span><br><span class="line">sed -i &#x27;s/SCF/SCF\nAccelerationMethod sdiis/&#x27; 06*/*.run</span><br><span class="line">sed -i &#x27;s/SCF/SCF\narh\nend/&#x27; 07*/*.run</span><br><span class="line">sed -i &#x27;s/SCF/SCF\nDIIS\nN 25\nCyc 30\nEnd\nMixing 0.015\n Mixing1 0.09/&#x27; 08*/*.run</span><br><span class="line">sed -i &#x27;s/SCF/SCF\nLshift 0.01/&#x27; 09*/*.run</span><br><span class="line"></span><br><span class="line">for i in &#123;1..9&#125;;do echo 0$&#123;i&#125;*/;cd 0$&#123;i&#125;*; zjsub am*; cd ..; done</span><br></pre></td></tr></table></figure>
 <p>看收敛没有</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> `ls`; <span class="keyword">do</span> <span class="built_in">echo</span> <span class="variable">$i</span>; tail <span class="variable">$i</span>/*out; <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
 <h1 id="对称性的设置"><a href="#对称性的设置" class="headerlink" title="对称性的设置"></a>对称性的设置</h1><p>除了在AMS中<code>System</code>块中指定，<code>Engine ADF</code>中也可以设置对称性：</p>
@@ -5962,7 +5969,7 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 </li>
 <li><p>对于电子密度函数，通常出现在离原子核很近的位置。</p>
 <ul>
-<li>对于重原子，(3,-3)临界点与原子核几乎精确重合，因此也称为核临界点（nuclear critical point，NCP）。氢原子由于电子数较少，受周围环境影响明显，因此(3,-3)临界点与氢核位置有一定偏离。</li>
+<li>对于重原子，(3,-3)临界点与原子核几乎精确重合，因此也称为<strong>核临界点（nuclear critical point，NCP</strong>）。氢原子由于电子数较少，受周围环境影响明显，因此(3,-3)临界点与氢核位置有一定偏离。</li>
 <li>一般情况下(3,-3)临界点与原子核一一对应，数目与原子数目一致。但是有些情况下原子核没有(3,-3)临界点，比如KrH<sup>+</sup>氢核对应的临界点被电子分布弥散的Kr所吞并。也有的(3,-3)临界点出现在原子核以外的位置，比如Li<sub>2</sub>在两个Li之间有(3,-3)临界点。</li>
 </ul>
 <blockquote>
@@ -5976,12 +5983,12 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <p>如图，箭头代表负梯度（数值最快下降方向），在垂直于键的平面上，此临界点是极大值，在顺着键的方向上，此临界点是极小值：</p>
 <p><img src="/image-20210521205948041.png" alt="image-20210521205948041" style="zoom:50%;" /></p>
 <ul>
-<li>对于电子密度函数，通常出现在有相互作用的两个原子之间，也被称为键临界点（bond critical point，BCP）。</li>
+<li>对于电子密度函数，通常出现在有相互作用的两个原子之间，也被称为<strong>键临界点（bond critical point，BCP）</strong>。</li>
 <li>对于ELF函数，位置不甚确定，经常偏离两个相关的(3,-3)的连线很多。</li>
 </ul>
 <h3 id="3-1-1"><a href="#3-1-1" class="headerlink" title="(3,+1)"></a>(3,+1)</h3><p>Hessian矩阵两个本征值为正，一个为负。对应函数一阶鞍点，如同势能面上的过渡态。</p>
 <ul>
-<li>对于电子密度函数，通常出现在环体系平面中，如苯环的中心，也被称为环临界点（ring critical point，RCP），表现出位阻效应。在环的平面上，此临界点为电子密度极小值，在垂直于环的方向上为极大值。</li>
+<li>对于电子密度函数，通常出现在环体系平面中，如苯环的中心，也被称为<strong>环临界点（ring critical point，RCP）</strong>，表现出位阻效应。在环的平面上，此临界点为电子密度极小值，在垂直于环的方向上为极大值。</li>
 <li>对于ELF，(3,+1)和(3,+3)通常较少讨论下。</li>
 </ul>
 <h3 id="3-3-1"><a href="#3-3-1" class="headerlink" title="(3,+3)"></a>(3,+3)</h3><p>Hessian矩阵三个本征值都为正，对应函数的局部极小点。</p>
@@ -6291,6 +6298,8 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 </ul>
 <h1 id="用block-coords表示"><a href="#用block-coords表示" class="headerlink" title="用block %coords表示"></a>用block <code>%coords</code>表示</h1><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">%coords</span><br><span class="line">	CTyp xyz <span class="meta"># the type of coordinates = xyz or internal</span></span><br><span class="line">	Charge <span class="number">0</span> <span class="meta"># the total charge of the molecule</span></span><br><span class="line">	Mult <span class="number">2</span> <span class="meta"># the multiplicity = 2S+1</span></span><br><span class="line">	Units Angs <span class="meta"># the unit of length = angs or bohrs</span></span><br><span class="line">	<span class="meta"># the subblock coords is for the actual coordinates</span></span><br><span class="line">	<span class="meta"># for CTyp=xyz</span></span><br><span class="line">	coords</span><br><span class="line">		Atom1 x1 y1 z1</span><br><span class="line">		Atom2 x2 y2 z2</span><br><span class="line">	end</span><br><span class="line">	<span class="meta"># for CTyp=internal</span></span><br><span class="line">	coords</span><br><span class="line">		Atom1 <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0.0</span> <span class="number">0.0</span> <span class="number">0.0</span></span><br><span class="line">		Atom2 <span class="number">1</span> <span class="number">0</span> <span class="number">0</span> R1 <span class="number">0.0</span> <span class="number">0.0</span></span><br><span class="line">		Atom3 <span class="number">1</span> <span class="number">2</span> <span class="number">0</span> R2 A1 <span class="number">0.0</span></span><br><span class="line">		Atom4 <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> R3 A2 D1</span><br><span class="line">		. . .</span><br><span class="line">		AtomN NA NB NC RN AN DN</span><br><span class="line">	end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 <h1 id="文件形式输入"><a href="#文件形式输入" class="headerlink" title="文件形式输入"></a>文件形式输入</h1><ul>
+<li><p>在ORCA的计算中使用关键词<code>!xyzfile</code>可以输出最后结果的xyz文件</p>
+</li>
 <li><p>.xyz坐标为埃，文件中第一行是原子数量，第二行是描述行，接着是坐标</p>
 <figure class="highlight css"><table><tr><td class="code"><pre><span class="line">*<span class="selector-tag">xyzfile</span> <span class="selector-tag">charge</span> <span class="selector-tag">multiplicity</span> <span class="selector-tag">myCoordinateFile</span><span class="selector-class">.xyz</span></span><br></pre></td></tr></table></figure>
 <ul>
@@ -6536,12 +6545,14 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <li><p>可以用<code>GTOName</code>, <code>GTOAuxJName</code>（=<code>GTOAuxName</code>）, <code>GTOAuxJKName</code>，<code>GTOAuxCName</code>：</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">%basis</span><br><span class="line">    GTOName = <span class="string">&quot;MyBasis.bas&quot;</span></span><br><span class="line">    GTOAuxJName = <span class="string">&quot;MyAuxJBasis.bas&quot;</span></span><br><span class="line">    GTOAuxJKName = <span class="string">&quot;MyAuxJKBasis.bas&quot;</span></span><br><span class="line">    GTOAuxCName = <span class="string">&quot;MyAuxCBasis.bas&quot;</span></span><br><span class="line">    STOName = <span class="string">&quot;MySTOBasis.bas&quot;</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>文件格式是”GAMESS-US“ in the EMSL library，也可以自己编辑基组，辅助基组的格式也相同。</p>
+<li><p>文件格式是”GAMESS-US“的， in the EMSL library，也可以自己编辑基组，辅助基组的格式也相同。</p>
 <ul>
 <li><p>比如Buenker的3-21GSP：<a id="LShell"></a></p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="number">3</span><span class="number">-21</span>GSP</span><br><span class="line">! !开头的都是注释</span><br><span class="line">! BASIS=<span class="string">&quot;3-21GSP&quot;</span></span><br><span class="line">!Elements References</span><br><span class="line">!-------- ----------</span><br><span class="line">! H - Ne: A.V. Mitin, G. Hirsch, R. J. Buenker, Chem. Phys. Lett. <span class="number">259</span>, <span class="number">151</span> (<span class="number">1996</span>)</span><br><span class="line">! Na - Ar: A.V. Mitin, G. Hirsch, R. J. Buenker, J. Comp. Chem. <span class="number">18</span>, <span class="number">1200</span> (<span class="number">1997</span>).</span><br><span class="line">!</span><br><span class="line">HYDROGEN ! (<span class="number">3</span>s) -&gt; [<span class="number">2</span>s]</span><br><span class="line">	S <span class="number">2</span></span><br><span class="line">		<span class="number">1</span> <span class="number">4.50036231</span> <span class="number">0.15631167</span></span><br><span class="line">		<span class="number">2</span> <span class="number">0.68128924</span> <span class="number">0.90466909</span></span><br><span class="line">	S <span class="number">1</span></span><br><span class="line">		<span class="number">1</span> <span class="number">0.15137639</span> <span class="number">1.00000000</span></span><br><span class="line">CARBON ! (<span class="number">6</span>s,<span class="number">3</span>p) -&gt; [<span class="number">3</span>s,<span class="number">2</span>p]</span><br><span class="line">	S <span class="number">3</span></span><br><span class="line">		<span class="number">1</span> <span class="number">499.24042249</span> <span class="number">0.03330322</span></span><br><span class="line">		<span class="number">2</span> <span class="number">75.25419194</span> <span class="number">0.23617745</span></span><br><span class="line">		<span class="number">3</span> <span class="number">16.86538669</span> <span class="number">0.81336259</span></span><br><span class="line">	L <span class="number">2</span> （L是一个具有相同指数的s和p壳层）</span><br><span class="line">		<span class="number">1</span> <span class="number">0.89739483</span> <span class="number">0.24008573</span> <span class="number">0.46214684</span></span><br><span class="line">		<span class="number">2</span> <span class="number">0.21746772</span> <span class="number">0.81603757</span> <span class="number">0.66529098</span></span><br><span class="line">	L <span class="number">1</span></span><br><span class="line">		<span class="number">1</span> <span class="number">4.52660451</span> <span class="number">1.00000000</span> <span class="number">1.00000000</span></span><br><span class="line">STOP</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+</li>
+<li><p>如果是ANO基组，加上<code>ANOBasis true</code>比较重要（PAtom 猜测不适用于 ANO 基组。）</p>
 </li>
 </ul>
 <h2 id="弥散基组"><a href="#弥散基组" class="headerlink" title="弥散基组"></a>弥散基组</h2><h1 id="辅助基组"><a href="#辅助基组" class="headerlink" title="辅助基组"></a>辅助基组</h1><ul>
@@ -6993,7 +7004,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <ul>
 <li><p>尝试不同的SCF收敛：默认是DIIS一般比较好，<a href="#KDIIS">使用KDIIS</a>等可能会导致收敛到其他情况</p>
 </li>
-<li><p><strong>对初始轨道尝试不同的猜测</strong>：Guess可以用HCore、Hueckel、PAtom、PModel 、MORead。</p>
+<li><p><strong>对初始轨道尝试不同的猜测</strong>：Guess可以用HCore、Hueckel、PAtom、PModel 、MORead。（见《【ORCA】04.重启计算&amp;初猜》）</p>
 </li>
 <li><p><strong>尝试改变初猜MO的轨道顺序</strong>：错误的SCF解决方案的常见原因是，位于最高位置的电子占据了错误的轨道。 通过读取先前收敛解的轨道并交换HOMO和LUMO轨道（或者可能是：HOMO和LUMO + 1，HOMO和LUMO + 2，HOMO-1和LUMO等），可以将SCF重新收敛到正确的位置解。</p>
 </li>
@@ -7484,7 +7495,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <ul>
 <li>注意：<font color=red>molden文件不支持含h以上角动量的基组，如果仅需要可视化轨道查看，那么可以将基组中的h删去，输出molden文件，结果差别很小。</font></li>
 </ul>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">put</span>,molden,h<span class="number">2</span>o.molden;</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">put</span>,molden,h<span class="number">2</span>o.molden;</span><br><span class="line"></span><br><span class="line"><span class="attribute">put</span>,molden,h<span class="number">2</span>o_ddens.molden;orb,<span class="number">2110</span>.<span class="number">2</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p><code>IRSPEC</code>：gnuplot输入文件，该文件可用于绘制IR光谱</p>
 </li>
@@ -7567,7 +7578,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <h2 id="重启计算"><a href="#重启计算" class="headerlink" title="重启计算"></a>重启计算</h2><figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">RESTART</span>;  	# 默认，重启所有跟File卡有关的文件</span><br><span class="line"><span class="keyword">RESTART</span>,<span class="number">1</span>; 		#will <span class="keyword">restart</span> file <span class="number">1</span> <span class="keyword">only</span></span><br><span class="line"><span class="keyword">RESTART</span>,<span class="number">2</span>; 		#will <span class="keyword">restart</span> file <span class="number">2</span> <span class="keyword">only</span></span><br><span class="line"><span class="keyword">RESTART</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>; 	#will <span class="keyword">restart</span> files <span class="number">1</span><span class="number">-3</span></span><br><span class="line"><span class="keyword">RESTART</span>,<span class="number">2000.1</span>;	#will <span class="keyword">restart</span> file <span class="number">1</span> <span class="keyword">and</span> <span class="keyword">truncate</span> <span class="keyword">before</span> <span class="type">record</span> <span class="number">2000.</span></span><br></pre></td></tr></table></figure>
 <p>2022molpro测试重启计算结果</p>
 <ol>
-<li>计算1得到a.wfu、a.int</li>
+<li>计算1，file卡中写<code>FILE,1,a.int</code>和<code>FILE,2,a.wfu</code>，得到a.wfu、a.int</li>
 <li>计算2时，重命名a.wfu，a.int为b.<em>（注意小写），然后file卡中写<code>FILE,1,b.int</code>和<code>FILE,2,b.wfu</code>，会自动重启计算，不需要再写<code>restart</code>关键词，并且覆盖原来的`b.</em>`文件</li>
 <li>下一次重启是以此类推</li>
 </ol>
@@ -7578,7 +7589,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li><code>BASIS</code>：打印基的信息</li>
 <li><code>DISTANCE</code>：打印键长（默认）</li>
 <li><code>ANGLES</code>：打印键角信息（默认=0）。如果大于0，还打印二面角</li>
-<li><code>ORBITAL(=int)</code>：打印SCF和MCSCF的轨道，打印每个对称性下的占据轨道和int个最低空轨道。</li>
+<li><strong><code>ORBITAL(=int)</code>：打印SCF和MCSCF的轨道，打印每个对称性下的占据轨道和int个最低空轨道。</strong></li>
 <li><code>CIVECTOR</code>：打印MCSCF的CI矢量（注意，默认情况下只打印大于0.05的CI系数。）</li>
 <li><code>PAIRS</code>：打印CI和CCSD中的电子对列表</li>
 <li><code>CS</code>：打印CI和CCSD中的单激发信息</li>
@@ -7649,7 +7660,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 </ul>
 <h3 id="可调用的基组"><a href="#可调用的基组" class="headerlink" title="可调用的基组"></a>可调用的基组</h3><ul>
 <li><code>basis</code>可以在文件lib/defbas中查找，包含的通用基组有：<ul>
-<li>所有的Dunning关联一致基组，用基组的标准名称（cc-pVXZ，aug-cc-pVXZ）或缩写（VXZ，AVXZ）调用。对于Al-Ar，用标准名称cc-pV(X+d)Z，aug-cc-pV(X+d)Z，或VXZ+d，AVXZ+d，可以得到紧凑的d扩充集。X=D,T,Q,5的基组适用于H-Kr，X=6适用于B-Ne和Al-Ar。</li>
+<li>所有的Dunning关联一致基组，用基组的标准名称<strong>（cc-pVXZ，aug-cc-pVXZ）</strong>或缩写<strong>（VXZ，AVXZ）</strong>调用。对于Al-Ar，用标准名称cc-pV(X+d)Z，aug-cc-pV(X+d)Z，或VXZ+d，AVXZ+d，可以得到紧凑的d扩充集。X=D,T,Q,5的基组适用于H-Kr，X=6适用于B-Ne和Al-Ar。</li>
 <li>用于芯关联的关联一致基组cc-pCVXZ，aug-cc-pCVXZ，或CVXZ，ACVXZ（X=D,T,Q,5），以及更新的“加权集”cc-pwCVXZ，aug-cc-pwCVXZ，或WCVXZ，AWCVXZ（X=D,T,Q,5）。这些基组适用于Li-Kr（CVXZ不包括Sc-Zn）。</li>
 <li>Douglas-Kroll-Hess相对论版本的关联一致基组，可以使用加上-DK后缀的标准名称或简称，例如，cc-pVXZ-DK或VXZ-DK。X=D-5适用于H-Kr，X=T适用于YCd和Hf-Hg。三阶DKH收缩集适用于Hf-Hg，需要加上后缀-DK3。</li>
 <li>Peterson等人用于用于显关联计算的F12基组：cc-pVXZ-F12，cc-pCVXZ-F12，或VXZ-F12，CVXZ-F12，其中X=D,T,Q。它们适用于H-Ar。</li>
@@ -7667,7 +7678,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li>对于使用cc-pVXZ-F12轨道基组的显关联F12计算，默认用相应的VXZ-F12/OPTRI基组构造附加的辅助轨道基（complementary auxiliary orbital basis；CABS）。对于其它轨道基组，默认使用合适的JKFIT集。</li>
 </ul>
 <h3 id="对于角动量的限制"><a href="#对于角动量的限制" class="headerlink" title="对于角动量的限制"></a>对于角动量的限制</h3><ul>
-<li><p>可以使用一些关于最大角动量函数的限制，或是收缩函数的数量限制，比如减少基组的最大角动量：</p>
+<li><p><strong>可以使用一些关于最大角动量函数的限制，或是收缩函数的数量限制，比如减少基组的最大角动量：</strong></p>
 <ul>
 <li>忽略正常情况下出现在VQZ基组中的𝑓和𝑔函数：</li>
 </ul>
@@ -10124,7 +10135,26 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
   <entry>
     <title>【ORCA】07.输出</title>
     <url>/2020/09/04/%E3%80%90ORCA%E3%80%9107.%E8%BE%93%E5%87%BA/</url>
-    <content><![CDATA[<h1 id="导出molden"><a href="#导出molden" class="headerlink" title="导出molden"></a>导出molden</h1><figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">orca_2mkl </span><span class="keyword">basename </span>-molden</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h1 id="控制输出"><a href="#控制输出" class="headerlink" title="控制输出"></a>控制输出</h1><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">%output</span></span><br><span class="line">  <span class="string">PrintLevel</span>     <span class="string">Normal</span></span><br><span class="line">  <span class="string">Print[</span> <span class="string">Flag</span> <span class="string">]</span>  <span class="number">0</span>  <span class="comment"># turn print off</span></span><br><span class="line">                 <span class="number">1</span>  <span class="comment"># turn print on</span></span><br><span class="line">                 <span class="string">n</span>  <span class="comment"># some flags are more sophisticated</span></span><br><span class="line"><span class="string">end</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Printlevel</code>可选的范围是 <code>Nothing</code>、<code>Mini</code>、<code>Small</code>、<code>Normal</code>、<code>Maxi</code>、<code>Large</code>、<code>Huge</code>、<code>Debug</code></li>
+<li>输出的Flag可选的有：<ul>
+<li><code>P_ReducedOrbPopMO_L</code>：打印Mulliken reduced orbital population</li>
+<li><code>P_MOs</code>：打印MO收敛系数，和<code>! PrintMOs</code>相同</li>
+</ul>
+</li>
+</ul>
+<h1 id="Chemcraft-或-Avogadro"><a href="#Chemcraft-或-Avogadro" class="headerlink" title="Chemcraft 或 Avogadro"></a>Chemcraft 或 Avogadro</h1><ul>
+<li><p>这两个软件可以直接读取ORCA的输出文件并绘制轨道，但是要加入如下关键词（或者直接<code>! PrintMOs Printbasis</code>）：</p>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line">!Printbasis <span class="meta"># prints the basis </span></span><br><span class="line">%<span class="built_in">print</span> </span><br><span class="line">	<span class="built_in">print</span>[p_mos] <span class="number">1</span> 	<span class="meta">#prints MO Coefficients</span></span><br><span class="line"><span class="built_in">end</span> </span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="修改gbw文件"><a href="#修改gbw文件" class="headerlink" title="修改gbw文件"></a>修改gbw文件</h1><p>比如在计算CASSCF中，得到一个gbw文件后，可以使用 orca_2mkl 模块将文件转换为人可读的 ASCII 文件：</p>
+<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">orca_2mkl </span><span class="keyword">bpguess </span>–mkl -u</span><br></pre></td></tr></table></figure>
+<ul>
+<li>就会生成一个<code>bpguess.mkl</code>文件</li>
+</ul>
+<h1 id="导出molden"><a href="#导出molden" class="headerlink" title="导出molden"></a>导出molden</h1><figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">orca_2mkl </span><span class="keyword">basename </span>-molden</span><br></pre></td></tr></table></figure>
 <h1 id="自然轨道"><a href="#自然轨道" class="headerlink" title="自然轨道"></a>自然轨道</h1><ul>
 <li><p>在<code>%scf</code>里写上<code>UHFNO true</code>，或者直接<code>! UNO</code>。</p>
 <figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line"><span class="comment">%scf </span></span><br><span class="line">	UHFNO <span class="literal">true</span> </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
@@ -10326,44 +10356,311 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
   <entry>
     <title>【ORCA】08.CASSCF教程</title>
     <url>/2023/10/07/%E3%80%90ORCA%E3%80%9108.CASSCF%E6%95%99%E7%A8%8B/</url>
-    <content><![CDATA[<h1 id="CASSCF"><a href="#CASSCF" class="headerlink" title="CASSCF"></a>CASSCF</h1><p>步骤：</p>
+    <content><![CDATA[<h1 id="CASSCF"><a href="#CASSCF" class="headerlink" title="CASSCF"></a>CASSCF</h1><h2 id="初猜计算"><a href="#初猜计算" class="headerlink" title="初猜计算"></a>初猜计算</h2><p>好的起始轨道在开始时具有较小的 CASSCF 轨道梯度范数（在输出中表示为 ||g||）。然而，较小的初始梯度并不总是意味着较少数量的 CASSCF 迭代。重要的是与最终轨道的相似性。</p>
 <ul>
-<li>做ROHF计算，构造初始猜测轨道：</li>
-<li>将计算产生的.gbw文件转换成molden，找出要选进活性空间及其编号</li>
+<li><p>直接计算</p>
+<ul>
+<li><p>默认是<code>Pmodel</code>初猜，可以针对重元素</p>
+<ul>
+<li><p>可以直接计算一个<code>!noiter</code>的结果来初猜</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">! <span class="built_in">SV</span> def2/JK <span class="built_in">RI</span><span class="literal">-JK</span> Conv XYZFile noiter normalprint</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>对于过渡金属，所需的金属 3d 轨道通常位于 HOMO-LUMO 能隙（或者对于由“离子”金属轨道组成的活性空间），可以使用<code>! PAtom</code>初猜（PAtom 猜测不适用于 ANO 基组。）对于更重的金属，不适用。</p>
+</li>
+</ul>
+</li>
+<li><p>做ROHF/RKS计算，构造初始猜测轨道。</p>
+</li>
+<li><p>DFT-QRO：做DFT计算，通过<code>UNO</code>关键词得到<strong>qro轨道</strong>。</p>
+<ul>
+<li>注意：猜测应该从高自旋重数开始，以避免 SCF 级别的收敛问题</li>
+<li>HF-QRO的计算量更大，但是有时候它和CASSCF的结果更相似，初始梯度反而较小，也能较快收敛。但是对于离域性比较强的体系，HF很难识别反键轨道，结果反而不好。</li>
+</ul>
+</li>
+<li><p>通过小活性空间，再计算大活性空间</p>
+</li>
+<li><p>从阳离子轨道开始，比如要计算f3系统，可以先算f0。</p>
+</li>
+<li><p>run a simple selected CEPA/2 calculation</p>
+</li>
+<li><p>对于有机化合物，通过简单的后HF计算，比如MP2或MRCI得到自然轨道*.mp2nat，和gbw文件一样。</p>
+<ul>
+<li><p>最昂贵的初猜，但是借助分数占据数可以简化“重要”轨道的选择。特别是，键合和反键合伙伴轨道，例如 π − π * 轨道，很容易识别。自然轨道是有机分子的绝佳选择。</p>
+<figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">! RI-MP2 SVP def2-SVP/C</span><br><span class="line"></span><br><span class="line">%mp2 </span><br><span class="line">	natorbs <span class="literal">true</span></span><br><span class="line">    density unrelaxed <span class="comment"># or relaxed (更耗时)</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="orca-loc"><a href="#orca-loc" class="headerlink" title="orca_loc"></a>orca_loc</h3><p>ORCA 中有四种不同的定域方法可用：Pipek-Mezey 方法 (PM)、Foster-Boys 方法 (FB)、基于固有原子轨道 (IAO) 的 PM 方法和基于 IAO 的 FB 方法。</p>
+<ul>
+<li>对于 Foster-Boys定域方法，存在三种不同的算法：<ul>
+<li><code>FB</code>：传统方法</li>
+<li><code>NEWBOYS</code>：速度更快，并且可以用于定位大型系统的空轨道</li>
+<li><code>AHFB</code>：系统地收敛到局部最小值，而不是不同类型的驻点。</li>
+</ul>
+</li>
+</ul>
+<p>使用：</p>
+<ul>
+<li><p>在输入文件中增加相应的块：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">%loc</span>   </span><br><span class="line"><span class="string">LocMet</span>      <span class="string">PM</span>      <span class="comment"># Localization method e.g. PIPEK-MEZEY </span></span><br><span class="line">            <span class="string">FB</span>      <span class="comment"># FOSTER-BOYS</span></span><br><span class="line">            <span class="string">IAOIBO</span>  <span class="comment"># IAOIBO </span></span><br><span class="line">            <span class="string">IAOBOYS</span> <span class="comment"># IAOBOYS</span></span><br><span class="line">            <span class="string">NEWBOYS</span> <span class="comment"># FOSTER-BOYS</span></span><br><span class="line">            <span class="string">AHFB</span>    <span class="comment"># Augmented Hessian Foster-Boys</span></span><br><span class="line"><span class="string">Tol</span>         <span class="number">1e-6</span>    <span class="comment"># absolute convergence tolerance for the localization sum</span></span><br><span class="line">                    <span class="comment"># default value is 1e-6</span></span><br><span class="line">                    <span class="comment"># In the case of AHFB, however, this is the gradient threshold!</span></span><br><span class="line"><span class="string">Random</span>      <span class="number">0</span>       <span class="comment"># Always take the same seed for start for localization</span></span><br><span class="line">                    <span class="comment"># (For testing/debug purpose,optional)</span></span><br><span class="line">            <span class="number">1</span>       <span class="comment"># Take a random seed for start of localization (default)</span></span><br><span class="line"><span class="string">PrintLevel</span>  <span class="number">2</span>       <span class="comment"># Amount of printing </span></span><br><span class="line"><span class="string">MaxIter</span>     <span class="number">64</span>      <span class="comment"># Max number of iterations </span></span><br><span class="line"><span class="string">T_Bond</span>      <span class="number">0.85</span>    <span class="comment"># Thresh that classifies orbitals in bond-like at the printing </span></span><br><span class="line"><span class="string">T_Strong</span>    <span class="number">0.95</span>    <span class="comment"># Thresh that classifies orbitals into strongly-localized at</span></span><br><span class="line">                    <span class="comment"># the printing </span></span><br><span class="line"><span class="string">OCC</span>         <span class="literal">true</span>    <span class="comment"># Localize the occupied space </span></span><br><span class="line"><span class="string">T_CORE</span>      <span class="number">-99.9</span>   <span class="comment"># The Energy window for the first OCC MO to be localized (in a.u.)</span></span><br><span class="line">                    <span class="comment"># Here, we localize all occupied MOs including core orbitals.</span></span><br><span class="line"><span class="string">VIRT</span>        <span class="literal">true</span>    <span class="comment"># Localize the virtual space </span></span><br><span class="line"><span class="string">end</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在shell中直接：</p>
+<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line">orc<span class="built_in">a_loc</span> localization.input</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>input文件中按顺序准备以下：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">Myjob.gbw</span>     <span class="comment"># input orbitals </span></span><br><span class="line"><span class="string">Myjob.loc.gbw</span> <span class="comment"># output orbitals </span></span><br><span class="line"><span class="number">10</span>            <span class="comment"># orbital window: first orbital to be localized e.g. first active </span></span><br><span class="line"><span class="number">15</span>            <span class="comment"># orbital window: last orbital to be localized e.g. last active </span></span><br><span class="line"><span class="number">0</span>             <span class="comment"># localization method:</span></span><br><span class="line">              <span class="comment"># 1=PIPEK-MEZEY,2=FOSTER-BOYS,3=IAO-IBO,4=IAO-BOYS,5=NEW-BOYS,6=AHFB</span></span><br><span class="line"><span class="comment">#以下参数为可选参数</span></span><br><span class="line"><span class="comment"># 但是，如果您想更改其中一个，则必须同时设置前面的所有参数。</span></span><br><span class="line"><span class="number">0</span>             <span class="comment"># operator: 0 for alpha, 1 for beta</span></span><br><span class="line"><span class="number">128</span>           <span class="comment"># maximum number of iterations </span></span><br><span class="line"><span class="number">1e-6</span>          <span class="comment"># convergence tolerance of the localization functional value </span></span><br><span class="line"><span class="number">0.0</span>           <span class="comment"># relative convergence tolerance of the localization functional value              </span></span><br><span class="line"><span class="number">0.95</span>          <span class="comment"># printing thresh to call an orbital strongly localized </span></span><br><span class="line"><span class="number">0.85</span>          <span class="comment"># printing thresh to call an orbital bond-like</span></span><br><span class="line"><span class="number">2</span>             <span class="comment"># printlevel</span></span><br><span class="line"><span class="number">1</span>             <span class="comment"># use Cholesky Decomposition (0=false, 1=true)</span></span><br><span class="line"><span class="number">1</span>             <span class="comment"># randomize seed for localization (0=false, 1=true)</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>比如</p>
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line"><span class="module-access"><span class="module"><span class="identifier">PPD</span>.</span></span>gbw</span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">LOC</span>.</span></span>gbw</span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">20</span></span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="orca-mergefrag"><a href="#orca-mergefrag" class="headerlink" title="orca-mergefrag"></a>orca-mergefrag</h3><ul>
+<li><p>对配位化合物（尤其是重金属）通过<code>orca_mergefrag</code>生成初猜</p>
+<ul>
+<li><p>首先计算DFT下配体的波函数L.gbw和纯金属CASSCF的波函数CAS.gbw</p>
+</li>
+<li><p>合并两个gbw文件（第二个必须是CASSCF的结果）</p>
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line">orca_mergefrag <span class="module-access"><span class="module"><span class="identifier">L</span>.</span></span>gbw <span class="module-access"><span class="module"><span class="identifier">CAS</span>.</span></span>gbw <span class="module-access"><span class="module"><span class="identifier">LCAS_merged</span>.</span></span>gbw</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>然后将LCAS_merged.gbw作为初猜（注意坐标里面金属变为最后一行</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="旋转轨道"><a href="#旋转轨道" class="headerlink" title="旋转轨道"></a>旋转轨道</h2><p>找出要选进活性空间及其编号，必要的时候进行旋转</p>
+<p>例子：苯的CAS(6,6)计算的输入文件如下：（苯的π轨道为17,20-23,30，需要交换轨道）</p>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">!cc-pvtz UseSym pal8</span><br><span class="line">!moread</span><br><span class="line">%moinp <span class="string">&quot;benzene-rhf.gbw&quot;</span></span><br><span class="line">%scf</span><br><span class="line">	rotate &#123;<span class="number">16</span>,<span class="number">18</span>,<span class="number">90</span>&#125; &#123;<span class="number">23</span>,<span class="number">29</span>,<span class="number">90</span>&#125; end</span><br><span class="line">	#或者直接rotate &#123;<span class="number">16</span>,<span class="number">18</span>&#125; &#123;<span class="number">23</span>,<span class="number">29</span>&#125; end</span><br><span class="line">end</span><br><span class="line">%casscf</span><br><span class="line">	nel <span class="number">6</span></span><br><span class="line">	norb <span class="number">6</span></span><br><span class="line">	mult <span class="number">1</span></span><br><span class="line">	irrep <span class="number">0</span></span><br><span class="line">end</span><br><span class="line">*xyzfile <span class="number">0</span> <span class="number">1</span> benzene.xyz</span><br></pre></td></tr></table></figure>
+<h2 id="对称性"><a href="#对称性" class="headerlink" title="对称性"></a>对称性</h2><p>使用对称性的好处是可以节约时间，另一方面可以指定特定的激发态，否则需要更多的roots去得到这个态。</p>
+<ul>
+<li><p>要使用对称性，全过程的计算都应该增加对称性的关键词<code>! USESYM</code>。输出的结果与对称性有关的：</p>
+<p><img src="/image-20250120152608731.png" alt="image-20250120152608731"></p>
+<p><img src="/image-20250120153010260.png" alt="image-20250120153010260"></p>
+</li>
+</ul>
+<ul>
+<li>IRREP 被计数为从零开始的整数，比如在Cs下是A’ (0) 和A’’ (1).</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">%casscf mult   <span class="number">1</span>,<span class="number">3</span> # here: multiplicities singlet <span class="keyword">and</span> triplet</span><br><span class="line">        irrep  <span class="number">0</span>,<span class="number">1</span> # here: irrep <span class="keyword">for</span> each mult. block (mandatory!)</span><br><span class="line">        nroots <span class="number">4</span>,<span class="number">2</span> # four singlets, two triplets</span><br></pre></td></tr></table></figure>
+<h2 id="态平均"><a href="#态平均" class="headerlink" title="态平均"></a>态平均</h2><p>为了首先避免收敛问题，建议进行状态平均计算。</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">%casscf </span><br><span class="line">	nel <span class="number">3</span> </span><br><span class="line">	norb <span class="number">5</span> </span><br><span class="line">	mult <span class="number">4</span>,<span class="number">2</span> </span><br><span class="line">	nroots <span class="number">10</span>,<span class="number">9</span> </span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>注意，程序在默认情况下为多重块选择相等的权重。给定块中的根具有相等的权重。用户可以为多重块和根定义自定义加权方案：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">%casscf mult <span class="number">1</span>,<span class="number">3</span>   # here: multiplicities singlet <span class="keyword">and</span> triplet</span><br><span class="line">        nroots <span class="number">4</span>,<span class="number">2</span>  # four singlets, two triplets</span><br><span class="line">        bweight <span class="number">2</span>,<span class="number">1</span> # singlets <span class="keyword">and</span> triplets weighted <span class="number">2</span>:<span class="number">1</span></span><br><span class="line">        weights[<span class="number">0</span>] = <span class="number">0.5</span>,<span class="number">0.2</span>,<span class="number">0.2</span>,<span class="number">0.2</span> # singlet weights</span><br><span class="line">        weights[<span class="number">1</span>] = <span class="number">0.7</span>,<span class="number">0.3</span>         # triplet weights</span><br><span class="line">        end</span><br></pre></td></tr></table></figure>
+<h3 id="确定态的数目"><a href="#确定态的数目" class="headerlink" title="确定态的数目"></a>确定态的数目</h3><p>对于最高多重度，直接使用公式$C_n^m$，即可，比如d3是$C_5^3=10$</p>
+<h4 id="Cr3-d3系统"><a href="#Cr3-d3系统" class="headerlink" title="Cr3+ d3系统"></a>Cr3+ d3系统</h4><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">%casscf </span><br><span class="line">	nel <span class="number">3</span></span><br><span class="line">	norb <span class="number">5</span></span><br><span class="line">	mult <span class="number">4</span>,<span class="number">2</span> </span><br><span class="line">	nroots <span class="number">10</span>,<span class="number">9</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>它的Tanabe-Sugano图是：</p>
+<p><img src="/image-20250115210600674.png" alt="image-20250115210600674"></p>
+<p>最左边是自由离子的光谱项，会分裂成右边的光谱项（可以根据原子对称性在Oh下的分裂来推导）</p>
+<p><img src="/image-20250115210718195.png" alt="image-20250115210718195"></p>
+<ul>
+<li>四重态的态选的是10个，主要根据的是较低的四重态$^4F$+$^4P$，分裂成A2u ⊕ T1u ⊕ T2u和T1u，加起来是1+3+3+3=10。也可以直接根据原子光谱项的数目，F代表7，P代表3，加起来是10</li>
+<li>同理，双重态的选的是9个，则是最低的2G=9个</li>
+<li>原子光谱的顺序也可以通过<a href="https://physics.nist.gov/PhysRefData/ASD/levels_form.html">NIST</a>查询（查Cr3+输入Cr IV）</li>
+</ul>
+<h4 id="Co-II-d7系统"><a href="#Co-II-d7系统" class="headerlink" title="Co II d7系统"></a>Co II d7系统</h4><p><img src="/image-20250115211320115.png" alt="image-20250115211320115"></p>
+<p>则四重态是7+3=10个，双重态是9+3+11+5+7=35个</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">%casscf </span><br><span class="line">	nel <span class="number">7</span> </span><br><span class="line">	norb <span class="number">5</span> </span><br><span class="line">	nroots <span class="number">10</span>,<span class="number">35</span> </span><br><span class="line">	mult <span class="number">4</span>,<span class="number">2</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h2 id="轨道优化方法"><a href="#轨道优化方法" class="headerlink" title="轨道优化方法"></a>轨道优化方法</h2><p>CASSCF迭代的输出部分会显示当前用的方法：</p>
+<figure class="highlight asciidoc"><table><tr><td class="code"><pre><span class="line">....</span><br><span class="line">#||g||的值控制了收敛方法，比如这里||g||&lt;0.02后用就改为NR方法，可以用SwitchConv控制这个值</span><br><span class="line">||g|| = 2.971340e-02 Max(G)= -8.643429e-03 Rot=52,20</span><br><span class="line"><span class="bullet">--- </span>Orbital Update [SuperCI(PT)]</span><br><span class="line">....</span><br><span class="line">||g|| = 8.761362e-03 Max(G)= 4.388664e-03 Rot=43,19</span><br><span class="line"><span class="bullet">--- </span>Orbital Update [ NR]</span><br></pre></td></tr></table></figure>
+<p>关键词<code>Orbstep</code>和<code>Switchstep</code>的选择有：默认都是<code>SuperCI_PT</code></p>
+<figure class="highlight oxygene"><table><tr><td class="code"><pre><span class="line">SuperCI_PT  # perturbative SuperCI (first <span class="keyword">order</span>) </span><br><span class="line">SuperCI     # SuperCI (first <span class="keyword">order</span>)</span><br><span class="line">DIIS        # DIIS (first <span class="keyword">order</span>)</span><br><span class="line">KDIIS       # KDIIS (first <span class="keyword">order</span>)</span><br><span class="line">SOSCF       # approx. Newton-Raphson (first <span class="keyword">order</span>)</span><br><span class="line">NR          # augmented Hessian Newton-Raphson</span><br><span class="line">            # unfolded two-<span class="keyword">step</span> <span class="function"><span class="keyword">procedure</span></span></span><br><span class="line"><span class="function">            # - <span class="title">still</span> <span class="title">not</span> <span class="title">true</span> <span class="title">second</span> <span class="title">order</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>一阶方法成本低，但与二阶方法相比，通常需要更多的迭代。</li>
+<li>当远离收敛限的时用<code>Orbstep</code>指定的方法，接近收敛时用<code>Switchstep</code>指定的方法<ul>
+<li>用关键词<code>SwitchConv</code>和<code>SwitchIter</code>定义转变方法的条件</li>
+</ul>
+</li>
+</ul>
+<h3 id="SuperCI-PT"><a href="#SuperCI-PT" class="headerlink" title="SuperCI_PT"></a>SuperCI_PT</h3><ul>
+<li><p>对于精确双占据或空轨道具有鲁棒性（即占据2或者0</p>
+</li>
+<li><p>可以使用关键字 <code>DThresh</code>（默认=1e-6）控制占据的阈值</p>
+</li>
+<li><p>在某些情况下，例如基集投影或PATOM猜测（固有基集投影），程序可能会选择太大的步长，通过关键字<code>MaxRot</code>（默认值=0.2）限制步长可能会有用。</p>
+<p>这两个关键词是特定于<code>SuperCI_PT</code></p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">MaxRot</span> <span class="number">0</span>.<span class="number">05</span>  # cap stepsize for SuperCI_PT</span><br><span class="line"><span class="attribute">DThresh</span> <span class="number">1</span>e-<span class="number">6</span> # thresh for critical occupation</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>SuperCI_PT也可以使用能级移动（最好不要对其他收敛方法使用）或者<code>GradScaling</code>，其他收敛方法的关键词不适用于SuperCI_PT？？</p>
+<ul>
+<li>Note, damping and level shifting techniques are not recommended for the default converger (SuperCI_PT).</li>
+</ul>
+</li>
+<li><p>相比起SuperCI_PT，<FONT COLOR=RED>DIIS、SuperCI和KDIIS不适用于占据正好是2.0或者0.0的活性空间&lt;/font&gt;。后者允许更多的调整，例如可以使用关键字“FreezeGrad”禁用冻结核心旋转。</p>
+</li>
 </ul>
 <hr>
-<p>例子：苯的CAS(6,6)计算的输入文件如下：（苯的π轨道为17,20-23,30，需要交换轨道）</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="type">!cc</span><span class="string">-pvtz</span> <span class="string">UseSym</span> <span class="string">pal8</span></span><br><span class="line"><span class="type">!moread</span></span><br><span class="line"><span class="string">%moinp</span> <span class="string">&quot;benzene-rhf.gbw&quot;</span></span><br><span class="line"><span class="string">%scf</span></span><br><span class="line">	<span class="string">rotate</span> &#123;<span class="number">16</span>,<span class="number">18</span>,<span class="number">90</span>&#125; &#123;<span class="number">23</span>,<span class="number">29</span>,<span class="number">90</span>&#125; <span class="string">end</span></span><br><span class="line"><span class="string">end</span></span><br><span class="line"><span class="string">%casscf</span></span><br><span class="line">	<span class="string">nel</span> <span class="number">6</span></span><br><span class="line">	<span class="string">norb</span> <span class="number">6</span></span><br><span class="line">	<span class="string">mult</span> <span class="number">1</span></span><br><span class="line">	<span class="string">irrep</span> <span class="number">0</span></span><br><span class="line">	<span class="string">end</span></span><br><span class="line"><span class="string">*xyzfile</span> <span class="number">0</span> <span class="number">1</span> <span class="string">benzene.xyz</span></span><br></pre></td></tr></table></figure>
-<hr>
-<p>例子：使用MP2的自然轨道作为初猜:</p>
-<figure class="highlight llvm"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="title">!MP2</span> <span class="keyword">cc</span>-pvtz NoFrozenCore UseSym pal<span class="number">4</span></span><br><span class="line"><span class="symbol">%mp2</span> Density unrelaxed</span><br><span class="line">NatOrbs <span class="keyword">true</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">*xyzfile <span class="number">0</span> <span class="number">1</span> benzene.xyz</span><br></pre></td></tr></table></figure>
 <ul>
-<li>可以在casscf 模块使用actorbs locorbs关键词，对活性轨道做局域化<ul>
+<li><p>如果默认设置出现收敛问题，建议尝试 <code>orbstep SuperCI</code> 和 <code>switchstep DIIS</code> 的组合（使用SuperCI来收敛，达到一定收敛性后转变为DIIS），结合大能级移动 (2 Eh)，可能会立即成功</p>
+<ul>
+<li>但会需要更多迭代</li>
+<li>SuperCI 和 DIIS (switchstep) 的组合特别适合保护活动空间成分。</li>
+</ul>
+<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line">%casscf </span><br><span class="line">  <span class="keyword">OrbStep </span>   SuperCI </span><br><span class="line">  <span class="keyword">SwitchStep </span><span class="keyword">DIIS </span>   </span><br><span class="line">  <span class="keyword">SwitchConv </span><span class="number">0</span>.<span class="number">03</span> </span><br><span class="line">  <span class="keyword">SwitchIter </span><span class="number">15</span>   </span><br><span class="line">  MaxIter     <span class="number">75</span>  <span class="comment"># Maximum number of macro-iterations</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="能级移动"><a href="#能级移动" class="headerlink" title="能级移动"></a>能级移动</h4><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">%casscf</span></span><br><span class="line">  	<span class="string">ShiftUp</span> <span class="number">2.0</span> <span class="comment"># static up-shift the virtual orbitals</span></span><br><span class="line">	<span class="string">ShiftDn</span> <span class="number">2.0</span> <span class="comment"># static down-shift the internal orbitals</span></span><br><span class="line">	<span class="string">MinShift</span> <span class="number">0.6</span> <span class="comment"># minimum separation subspaces</span></span><br><span class="line"><span class="string">end</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>理想情况下，内层和活性空间、活性空间和空轨道之间的能量差应为正且大于 0.2 Eh。当能量分离变为负值时，收敛器可能会失效或无法保留活动空间。</li>
+<li>如果输入中未指定平移，ORCA 将选择能级平移以保证子空间之间的能量分离 (<code>MinShift</code>)。</li>
+</ul>
+<h3 id="NR"><a href="#NR" class="headerlink" title="NR"></a>NR</h3><p>在达到一定的收敛性后，使用Newton-Raphson方法去收敛</p>
+<ul>
+<li>使用 Newton-Raphson 求解器进行轨道优化仅限于较小尺寸的分子，因为该程序会生成冗长的积分和 Hessian 文件</li>
+<li>一开始就用昂贵的 NR 方法开始轨道优化是一种浪费，因为它的二次收敛半径非常小。</li>
+<li>在困难的情况下，建议使用牛顿-拉夫森方法 (NR)，即使每次单独迭代的成本要高得多</li>
+</ul>
+<figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line"><span class="comment">%casscf</span></span><br><span class="line">  	SwitchStep nr</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>成本较低的替代方法是准牛顿的SOSCF方法</p>
+<h2 id="RI近似"><a href="#RI近似" class="headerlink" title="RI近似"></a>RI近似</h2><ul>
+<li><p>默认是<code>Exact</code>，精确变换，使用RI近似（仅影响CASSCF计算中的积分变换）：</p>
+<figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line"><span class="comment">%casscf</span></span><br><span class="line">	TrafoStep RI</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>需要对AuxC指定对应的辅助基组</p>
+<p>例：</p>
+<figure class="highlight llvm"><table><tr><td class="code"><pre><span class="line">! SV(P) def<span class="number">2</span>-svp/C 			# smaller compared <span class="keyword">to</span> def<span class="number">2</span>/JK</span><br><span class="line">! moread</span><br><span class="line"><span class="symbol">%moinp</span> <span class="string">&quot;Test-CASSCF-Benzene-2.mrci.nat&quot;</span></span><br><span class="line">                </span><br><span class="line"># <span class="symbol">%basis</span> </span><br><span class="line"># auxC <span class="string">&quot;def2-svp/C&quot;</span> 		# <span class="string">&quot;AutoAux&quot;</span> <span class="keyword">or</span> <span class="string">&quot;def2/JK&quot;</span></span><br><span class="line"># <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="symbol">%casscf</span>  nel    <span class="number">6</span></span><br><span class="line">         norb   <span class="number">6</span></span><br><span class="line">         nroots <span class="number">1</span></span><br><span class="line">         mult   <span class="number">1</span>         </span><br><span class="line">         trafostep ri</span><br><span class="line">         <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>进一步加速整个计算，可以直接使用 （都需要设置相应的辅助基组）</p>
+<ul>
+<li><p><code>!RIJCOSX</code>：适合较大的系统</p>
+<figure class="highlight clean"><table><tr><td class="code"><pre><span class="line">! SV(P) def2-svp/C RIJCOSX def2/J</span><br><span class="line">! moread</span><br><span class="line">%moinp <span class="string">&quot;Test-CASSCF-Benzene-2.mrci.nat&quot;</span></span><br><span class="line"></span><br><span class="line"># %basis </span><br><span class="line"># auxJ <span class="string">&quot;def2/J&quot;</span>     # <span class="string">&quot;AutoAux&quot;</span></span><br><span class="line"># auxC <span class="string">&quot;def2-svp/C&quot;</span> # <span class="string">&quot;AutoAux&quot;</span>, <span class="string">&quot;def2/JK&quot;</span></span><br><span class="line"># end</span><br><span class="line"></span><br><span class="line">%casscf  nel    <span class="number">6</span></span><br><span class="line">  norb   <span class="number">6</span></span><br><span class="line">  nroots <span class="number">1</span></span><br><span class="line">  mult   <span class="number">1</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>!RIJK</code>：更准确一些</p>
+<figure class="highlight clean"><table><tr><td class="code"><pre><span class="line">! SV(P) RIJK  def2/JK</span><br><span class="line"></span><br><span class="line"># %basis </span><br><span class="line"># auxJK <span class="string">&quot;def2/JK&quot;</span> # or <span class="string">&quot;AutoAux&quot;</span></span><br><span class="line"># end</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="输出轨道"><a href="#输出轨道" class="headerlink" title="输出轨道"></a>输出轨道</h2><p><code>IntOrbs</code>、<code>ExtOrbs</code>和<code>ActOrbs</code>选项都有</p>
+<ul>
+<li><p><code>CanonOrbs</code></p>
+</li>
+<li><p><code>LocOrbs</code></p>
+</li>
+<li><p><code>unchanged</code></p>
+</li>
+<li><p>除此之外的选项有</p>
+<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line">IntOrbs PMOS      <span class="comment"># based on orthogonalization tails.</span></span><br><span class="line">        OSZ       <span class="comment"># based on oszillator orbital      </span></span><br><span class="line">        DOI       <span class="comment"># based on differential overlap</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ExtOrbs </span>PMOS      <span class="comment"># based on orthogonalization tails.</span></span><br><span class="line">        OSZ       <span class="comment"># based on oszillator orbital</span></span><br><span class="line">        DOI       <span class="comment"># based on differential overlap</span></span><br><span class="line">        DoubleShel</span><br><span class="line"></span><br><span class="line">ActOrb  dOrbs     <span class="comment"># purify metal d-orbital and call the AILFT</span></span><br><span class="line">        fOrbs     <span class="comment"># purify metal f-orbital and call the AILFT</span></span><br><span class="line">        SDO       <span class="comment"># Single Determinant Orbitals: this is only possible if the</span></span><br><span class="line">                  <span class="comment"># active space has a single hole or a single electron.</span></span><br><span class="line">                  <span class="comment"># SDOs are then the unique choice of orbitals that simultaneously</span></span><br><span class="line">                  <span class="comment"># turns each CASSCF root into a single determinant.</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>比如在某些小活性空间下进一步扩大活性空间，有些内部的轨道可能比较离域，则可以使用<code>intorbs locorbs</code>。</p>
+</li>
+</ul>
+<h3 id="内部"><a href="#内部" class="headerlink" title="内部"></a>内部</h3><h3 id="活性空间"><a href="#活性空间" class="headerlink" title="活性空间"></a>活性空间</h3><p>可以在casscf 模块使用actorbs locorbs关键词，对活性轨道做局域化</p>
+<ul>
 <li>在判断计算得到的是否为开壳层单重态时，不能只通过占据数来判断，要结合轨道图像一起判断。ORCA做CAS默认得到的是自然活性轨道，不一定能够直接通过组态信息确定所得到的电子态</li>
 <li>因为CASSCF的能量对活性轨道的旋转是酉不变的，因此，如果要更直观地展现单电子，可以使用actorbs locorbs关键词得到局域化的活性轨道。使用局域活性轨道，易于通过组态信息确定电子态。</li>
 </ul>
+<h3 id="外部"><a href="#外部" class="headerlink" title="外部"></a>外部</h3><ul>
+<li><p>如果希望包含第二壳层的轨道（比如计算二阶微扰，CASPT2或NEVPT2），比如已经计算包含了3d的活性轨道，希望继续包含4d轨道，可以基于前一次的计算使用<code>extorbs doubleshell</code>，但不能和对称性（<code>UseSym</code>）同时使用</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">%casscf</span> </span><br><span class="line">	<span class="string">nel</span> <span class="number">7</span> </span><br><span class="line">	<span class="string">norb</span> <span class="number">7</span> </span><br><span class="line">	<span class="string">mult</span> <span class="number">4</span><span class="string">,2</span> </span><br><span class="line">	<span class="string">nroots</span> <span class="number">10</span><span class="string">,9</span>  </span><br><span class="line">	<span class="string">extorbs</span> <span class="string">doubleshell</span> <span class="comment"># produce the double-shell above the actives. </span></span><br><span class="line">						<span class="comment"># all other virtuals are canonicalized </span></span><br><span class="line"><span class="string">end</span></span><br></pre></td></tr></table></figure>
 </li>
+</ul>
+<h2 id="CIStep"><a href="#CIStep" class="headerlink" title="CIStep"></a>CIStep</h2><figure class="highlight llvm"><table><tr><td class="code"><pre><span class="line"><span class="symbol">%casscf</span></span><br><span class="line">  CIStep CSFCI # CSF based CI (<span class="keyword">default</span>)</span><br><span class="line">  		 ACCCI  </span><br><span class="line">  		 ICE   </span><br><span class="line">  		 DMRGCI</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>对于较大的活动空间或许多根，使用accelerated CI (ACCCI)进行 CI 计算可以显着改善</p>
+<ul>
+<li>目前，ACCCI尚不提供属性（自旋轨道耦合、g-张量……）以及 NEVPT2 校正，但是可以作为下一部计算的初猜</li>
+</ul>
+</li>
+<li><p>更大的活动空间可以通过 DMRG 方法或迭代配置扩展 (ICE) 来处理。</p>
+<ul>
+<li><p>推荐不太严格的 CASSCF 收敛阈值（<code>etol 1e6</code>）。</p>
+</li>
+<li><p>详细设置可以在子块中控制</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">%casscf </span><br><span class="line">	ci</span><br><span class="line">		MaxIter 64   # max. <span class="literal">no</span>. of CI iters.</span><br><span class="line">		MaxDim  10    # Davidson expansion space = MaxDim * NRoots</span><br><span class="line">		NGuessMat 512  # Initial guess matrix: 512x512</span><br><span class="line">		PrintLevel 3 # amount of output during CI iterations</span><br><span class="line">		ETol   1e-10    #<span class="built_in"> default </span>0.1<span class="number">*E</span>Tol <span class="keyword">in</span> CASSCF</span><br><span class="line">		RTol   1e-10    #<span class="built_in"> default </span>0.1<span class="number">*E</span>Tol <span class="keyword">in</span> CASSCF</span><br><span class="line">		TGen   1e-4     # ICE generator thresh</span><br><span class="line">		TVar   1e-11    # ICE selection thresh,<span class="built_in"> default </span>= TGen<span class="number">*1e</span>-7</span><br><span class="line">	end</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">%casscf</span><br><span class="line">  nel  8</span><br><span class="line">  norb 6</span><br><span class="line">  mult 3</span><br><span class="line">  CIStep DMRGCI</span><br><span class="line"></span><br><span class="line">  # Detailed settings</span><br><span class="line">  dmrg</span><br><span class="line">    # more/refined options</span><br><span class="line">    <span class="built_in">..</span>.</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="output"><a href="#output" class="headerlink" title="output"></a>output</h2><ul>
+<li>观察收敛情况：<code>grep Max\(G\) *log</code>、<code>grep &quot;Eh DE=&quot; *log</code></li>
+</ul>
+<h3 id="监控活性空间"><a href="#监控活性空间" class="headerlink" title="监控活性空间"></a>监控活性空间</h3><ul>
+<li><p>如果活动空间成分变化超过 50%，ORCA将在迭代过程中打印警告。</p>
+<ul>
+<li>混合量表示为OVL。</li>
+<li>此外，打印还包括更新前后活性轨道之间的重叠矩阵。</li>
+<li>该矩阵应该是对角占优的，其值接近于统一。请注意，在此打印中，活动 MO 的编号从零开始。</li>
+</ul>
+<p><img src="/image-20250121181834643.png" alt="image-20250121181834643"></p>
+<ul>
+<li>如果活动空间确实发生了变化，则可以使用重新旋转的轨道重新开始计算，或者使用不同的收敛设置（修改的 MaxRot、更大的能级偏移或不同的收敛器）从头开始计算。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">ActConstraints</span>  <span class="number">0</span> <span class="comment"># no checks and no changes</span></span><br><span class="line">                <span class="number">1</span> <span class="comment"># maximize overlap of active orbitals and check sanity. (default for DIIS)</span></span><br><span class="line">                <span class="number">2</span> <span class="comment"># make natural orbitals in every iteration (default SuperCI)</span></span><br><span class="line">                <span class="number">3</span> <span class="comment"># make canonical orbitals in every iteration</span></span><br><span class="line">                <span class="number">4</span> <span class="comment"># localize orbitals</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>迭代过程中打印的占据数不一定是自然轨道占据。如果要强制设置（不推荐）则比如<code>ActConstraints 1</code>还检查活动空间的组成是否已更改，即轨道已旋转出活动空间。在这种情况下，ORCA 中止并存储最后一组有效的轨道。以下是错误消息示例：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">--- Orbital Update [      DIIS]</span><br><span class="line">	--- Failed to constrain active orbitals due to rotations:</span><br><span class="line">	Rot( <span class="number">37</span>, <span class="number">35</span>) with OVL=<span class="number">0.960986</span></span><br><span class="line">	Rot( <span class="number">38</span>, <span class="number">34</span>) with OVL=<span class="number">0.842114</span></span><br><span class="line">	Rot( <span class="number">43</span>,<span class="number">104</span>) with OVL=<span class="number">0.031938</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="波函数打印"><a href="#波函数打印" class="headerlink" title="波函数打印"></a>波函数打印</h3><p><img src="/image-20250114202528212.png" alt="image-20250114202528212"></p>
+<ul>
+<li><p>基态的权重为0.96606，这意味着最低根被单一配置支配到96.6%，这个数值是通过CI系数的平方和得到的。</p>
+</li>
+<li><p>如果对CI系数或自旋行列式的表示感兴趣，可以通过关键字<code>PrintWF</code>实现</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">PrintWF</span> <span class="number">0</span>     <span class="comment"># (default) prints only the CFGs</span></span><br><span class="line">        csf   <span class="comment"># Printing of the wavefunction in the basis of CSFs</span></span><br><span class="line">        det   <span class="comment"># Printing of the wavefunction in the basis of Determinants</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>请注意，CSF 的打印仅对高自旋状态有意义，因为未解释 CSF 的寻址。</li>
+</ul>
+<p>打印阈值可以通过<code>TPrintWF</code>控制</p>
+<figure class="highlight gauss"><table><tr><td class="code"><pre><span class="line">%casscf </span><br><span class="line">	printwf <span class="built_in">det</span> </span><br><span class="line">	ci </span><br><span class="line">		TPrintWF <span class="number">0.1</span> <span class="meta"># cutoff for printing </span></span><br><span class="line">	<span class="keyword">end</span> </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>det</code>的结果如下：</p>
+<p><strong><img src="/image-20250117173200422.png" alt="image-20250117173200422"></strong></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="激发能量"><a href="#激发能量" class="headerlink" title="激发能量"></a>激发能量</h3><ul>
+<li>激发能量,例：<a id="SA-CASSCF">$d^3$的SA-CASSCF结果</a></li>
+</ul>
+<p><img src="/image-20250114203201474.png" alt="image-20250114203201474"></p>
+<ul>
+<li>CASSCF 计算通常不能准确地再现激发能量。改善结果的最简单方法是使用 NEVPT2。</li>
 </ul>
 <h1 id="CASPT2"><a href="#CASPT2" class="headerlink" title="CASPT2"></a>CASPT2</h1><ul>
 <li><p>CASSCF收敛的结果是考虑动态相关多参考的起点，常用的MRCI和MRPT</p>
 </li>
 <li><p>internally contracted N-Electron valence state perturbation theory<br>N个电子价层微扰(NEVPT2) 是动态相关的首选，只需要一个关键词：</p>
-<figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">%casscf</span><br><span class="line">...</span><br><span class="line">PTMethod SC_NEVPT2 <span class="comment"># for the strongly contracted NEVPT2</span></span><br><span class="line"><span class="comment"># Other options: FIC-NEVPT2, DLPNO-NEVPT2, FIC CASPT2</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">%casscf</span><br><span class="line">...</span><br><span class="line">PTMethod SC_NEVPT2 	<span class="comment"># for the strongly contracted NEVPT2</span></span><br><span class="line">					<span class="comment"># Other options: FIC-NEVPT2, DLPNO-NEVPT2, FIC CASPT2</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>NEVPT2</code>就是NEVPT2方法的strongly contracted” 版本</li>
-<li><code>PC-NEVPT2</code>是in the canonical and in the DLPNO methodology</li>
-<li><code>FIC-NEVPT2</code>是fully internally contracted (FIC)版</li>
+<li><code>FIC-NEVPT2</code>是fully internally contracted (FIC)版，又名PC-NEVPT2</li>
 </ul>
+</li>
+</ul>
+<ul>
+<li><p>使用RI近似的SC-NEVPT2</p>
+<figure class="highlight diff"><table><tr><td class="code"><pre><span class="line"><span class="addition">! RI-NEVPT2</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <p>例子：</p>
 <figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="attr">%casscf</span></span><br><span class="line"> <span class="attr">nel</span>          <span class="string">10</span></span><br><span class="line"> <span class="attr">norb</span>        <span class="string">8</span></span><br><span class="line"> <span class="attr">irrep</span>       <span class="string">0</span></span><br><span class="line"> <span class="attr">mult</span>       <span class="string">1</span></span><br><span class="line"> <span class="attr">NRoots</span>     <span class="string">6</span></span><br><span class="line"> <span class="attr">Maxiter</span>    <span class="string">200</span></span><br><span class="line"> <span class="attr">PTMethod</span>   <span class="string">FIC_CASPT2</span></span><br><span class="line"> <span class="attr">PTsettings</span> <span class="string"></span></span><br><span class="line">  <span class="attr">CASPT2_IPEAshift</span>    <span class="string">0.25</span></span><br><span class="line">  <span class="attr">CASPT2_rshift</span>       <span class="string">0.10</span></span><br><span class="line"> <span class="attr">end</span></span><br><span class="line"><span class="attr">end</span></span><br></pre></td></tr></table></figure>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><ul>
+<li><p>激发能量，例：$d^3$的结果（借助它们的简并性和d3 的 Tanabe-Sugano 图，可以很容易地分配状态）</p>
+<p><img src="/image-20250114203304205.png" alt="image-20250114203304205"></p>
+<ul>
+<li>可以和<a href="#SA-CASSCF">态平均的CASSCF的结果对比</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="从头算配体场AILFT"><a href="#从头算配体场AILFT" class="headerlink" title="从头算配体场AILFT"></a>从头算配体场AILFT</h1><p>在CASSCF计算中增加<code>actorbs forbs</code>或<code>actorbs dorbs</code>。</p>
 ]]></content>
       <categories>
         <category>计算化学</category>
         <category>软件</category>
       </categories>
       <tags>
+        <tag>多组态</tag>
         <tag>ORCA</tag>
         <tag>CASSCF</tag>
       </tags>
@@ -10524,7 +10821,349 @@ p=\frac{h}{\lambda}</script><p>联立得到实物的波长为：$\lambda=\frac{h
   <entry>
     <title>【Molcas】01.基本输入</title>
     <url>/2024/09/13/%E3%80%90Molcas%E3%80%9101.%E5%9F%BA%E6%9C%AC%E8%BE%93%E5%85%A5/</url>
-    <content><![CDATA[<h1 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h1>]]></content>
+    <content><![CDATA[<h1 id="程序基本情况"><a href="#程序基本情况" class="headerlink" title="程序基本情况"></a>程序基本情况</h1><p><img src="/image-20240922194032566.png" alt="image-20240922194032566"></p>
+<h1 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h1><ul>
+<li><code>MOLCAS</code>：Molcas的主目录。</li>
+<li><code>MOLCAS_MEM</code>：内存定义(以Mb为单位)，默认为1024。</li>
+<li><code>MOLCAS_PRINT</code>：打印级别:<code>2</code>普通，<code>3</code>冗长</li>
+<li><code>MOLCAS_PROJECT</code>：项目/文件使用的名称。</li>
+<li><code>MOLCAS_WORKDIR</code>：中间文件的临时目录。</li>
+</ul>
+<h1 id="EMIL命令"><a href="#EMIL命令" class="headerlink" title="EMIL命令"></a>EMIL命令</h1><ul>
+<li><p>简短形式：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">&gt; <span class="selector-tag">KEY</span> <span class="selector-attr">[VALUE]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更完善的形式：</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;</span>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;  KEY  [VALUE]  &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span><br></pre></td></tr></table></figure>
+<p>EMIL命令不区分大小写，但命令中使用的变量必须用大写字母。此外，在命令中的元素(单词)之间放置空格也很重要。</p>
+</li>
+<li><p><code>&gt;&gt; Do While</code>：开始循环</p>
+</li>
+<li><code>&gt;&gt; Foreach</code>：在输入文件中开始对若干项进行循环。</li>
+<li><code>&gt;&gt; EndDo</code>：结束循环</li>
+<li><code>&gt;&gt; If ( condition )</code>：</li>
+<li><code>&gt;&gt; EndIf</code>：</li>
+<li><code>&gt;&gt; Label Mark</code>：在输入中设置标签“Mark”。</li>
+<li><code>&gt;&gt; Goto Mark</code>：向前跳转到标签“Mark”，跳过这部分输入。</li>
+</ul>
+<hr>
+<ul>
+<li>如果在Molcas命令中使用<code>-f</code>标志，则日志文件将以ProjectName.log和ProjectName.err的名称存储在CurrDir目录中。</li>
+</ul>
+<p>例子：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">&amp;GATEWAY</span><br><span class="line"> <span class="attribute">coord</span>=water.xyz</span><br><span class="line"> <span class="attribute">basis</span>=sto-3g</span><br><span class="line">&amp;SEWARD</span><br><span class="line">&amp;SCF</span><br></pre></td></tr></table></figure>
+<h1 id="amp-GATEWAY"><a href="#amp-GATEWAY" class="headerlink" title="&amp;GATEWAY"></a><code>&amp;GATEWAY</code></h1><ul>
+<li>收集有关分子系统的信息(几何、基集、对称性)，用于未来的计算。</li>
+<li><code>&amp;GATEWAY</code>是<code>&amp;SEWARD</code>的一个子集，本模块的所有关键词也可以作为<code>&amp;SEWARD</code>的输入，但为了清晰起见，可以将分子系统的信息作为本模块的输入。</li>
+<li><code>&amp;GATEWAY</code>不计算任何积分，因此必须<font color=red>跟着<code>&amp;SEWARD</code>模块</font>的运行。<code>&amp;GATEWAY</code>破坏通信文件<code>RUNFILE</code>，如果它与几何优化结合使用，它应该在优化循环之外运行。</li>
+</ul>
+<p>例子：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">&amp;GATEWAY</span><br><span class="line">Title= Water <span class="keyword">in</span> C2v symmetry - A Tutorial</span><br><span class="line">Coord = water.xyz</span><br><span class="line">Group = XY Y</span><br><span class="line">Basis <span class="builtin-name">Set</span> = O.ANO-S-MB,H.ANO-S-MB</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>常用的关键词：</p>
+<ul>
+<li><p><code>TITLE</code></p>
+</li>
+<li><p><code>TEST</code>： <code>&amp;GATEWAY</code>将仅处理输入并生成非零返回代码。</p>
+</li>
+<li><p><strong><code>Coord</code></strong></p>
+</li>
+<li><p><code>EXPErt</code></p>
+</li>
+<li><p><code>BASDIR</code></p>
+</li>
+<li><p><code>BASLIB</code></p>
+</li>
+<li><strong><code>BASIs Set</code></strong></li>
+<li><strong><code>Group</code></strong></li>
+<li><code>SYMMetry</code></li>
+<li><p><code>RICD</code>：动态辅助基组</p>
+</li>
+<li><p><code>RTRN</code></p>
+</li>
+<li><p><code>ISOTopes</code></p>
+</li>
+<li><p><code>ECPShow</code>：强制 <code>&amp;GATEWAY</code>打印ECP参数</p>
+</li>
+<li><p><code>AUXShow</code>：强制 <code>&amp;GATEWAY</code>打印辅助基组参数</p>
+</li>
+<li><p><code>BSSHow</code>：强制 <code>&amp;GATEWAY</code>打印基组参数</p>
+</li>
+<li><p><code>VERBose</code>：强制 <code>&amp;GATEWAY</code>打印更详细的内容。</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong><code>&amp;GATEWAY</code>的输出：</strong><ul>
+<li>包含对称字符表、基组信息和输入原子中心。基组信息列出了指数和收缩系数以及所使用的高斯函数的类型（笛卡尔函数、球函数或污染函数）。</li>
+<li>核间距离和价键角（包括二面角）显示在基组信息之后。惯性和刚性转子分析也与定时信息一起包含在输出中。</li>
+<li>对于确定 Molcas 模块 SCF 的输入有用的输出部分是对称自适应基函数，它出现在输出的 <code>&amp;GATEWAY</code> 部分末尾附近。 SCF 教程对此进行了更详细的介绍。</li>
+<li><code>&amp;GATEWAY</code> 模块生成的最重要的文件是 <code>RUNFILE</code>，是用于在各个 Molcas 程序模块之间传输数据的通用 Molcas 通信文件。许多程序模块将数据添加到  <code>RUNFILE</code> 中，这些数据可以在其他模块中使用。每次运行 <code>&amp;GATEWAY</code> 时都会生成一个新的  <code>RUNFILE</code>。最后应该提到的是，为了向后兼容，可以在不调用 <code>&amp;GATEWAY</code> 的情况下运行 MOLCAS。然后相应的输入和输出将由程序 <code>&amp;SEWARD</code> 处理。</li>
+</ul>
+</li>
+</ul>
+<h2 id="几何、对称性和基组"><a href="#几何、对称性和基组" class="headerlink" title="几何、对称性和基组"></a>几何、对称性和基组</h2><p>一共有三种方式指定</p>
+<h3 id="Z-matrix-and-XYZ-input"><a href="#Z-matrix-and-XYZ-input" class="headerlink" title="Z-matrix and XYZ input"></a>Z-matrix and XYZ input</h3><p>有时，以标准形式的 Z 矩阵或笛卡尔坐标设置坐标信息会更方便。在这种情况下，原子的基组应在 <code>XBAS</code> 关键字之后指定。之后，应出现 <code>ZMAT</code> 或 <code>XYZ</code> 来指定坐标。请注意，这些格式中的坐标使用 ångström 作为单位。</p>
+<ul>
+<li><p>基组<code>XBAS</code> 例子：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">XBAS</span>=STO-<span class="number">3</span>G</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">XBAS</span><br><span class="line">C.STO<span class="number">-3</span>G</span><br><span class="line">H.STO<span class="number">-3</span>G</span><br><span class="line">End of basis</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Z矩阵 <code>ZMAT</code> 形式例子：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">ZMAT</span></span><br><span class="line"><span class="attribute">C1</span></span><br><span class="line"><span class="attribute">O2</span>      <span class="number">1</span>   <span class="number">1</span>.<span class="number">40000</span></span><br><span class="line"><span class="attribute">C3</span>      <span class="number">1</span>   <span class="number">1</span>.<span class="number">45000</span>   <span class="number">2</span>   <span class="number">109</span>.<span class="number">471</span></span><br><span class="line"><span class="attribute">H4</span>      <span class="number">1</span>   <span class="number">1</span>.<span class="number">08900</span>   <span class="number">2</span>   <span class="number">109</span>.<span class="number">471</span>     <span class="number">3</span>   <span class="number">120</span>.<span class="number">000</span></span><br><span class="line"><span class="attribute">Cl5</span>     <span class="number">1</span>   <span class="number">1</span>.<span class="number">75000</span>   <span class="number">2</span>   <span class="number">109</span>.<span class="number">471</span>     <span class="number">3</span>  -<span class="number">120</span>.<span class="number">000</span></span><br><span class="line"><span class="attribute">H6</span>      <span class="number">2</span>   <span class="number">0</span>.<span class="number">94700</span>   <span class="number">1</span>   <span class="number">109</span>.<span class="number">471</span>     <span class="number">3</span>   <span class="number">180</span>.<span class="number">000</span></span><br><span class="line"><span class="attribute">H7</span>      <span class="number">3</span>   <span class="number">1</span>.<span class="number">08900</span>   <span class="number">1</span>   <span class="number">109</span>.<span class="number">471</span>     <span class="number">2</span>   <span class="number">180</span>.<span class="number">000</span></span><br><span class="line"><span class="attribute">H8</span>      <span class="number">3</span>   <span class="number">1</span>.<span class="number">08900</span>   <span class="number">1</span>   <span class="number">109</span>.<span class="number">471</span>     <span class="number">7</span>   <span class="number">120</span>.<span class="number">000</span></span><br><span class="line"><span class="attribute">H9</span>      <span class="number">3</span>   <span class="number">1</span>.<span class="number">08900</span>   <span class="number">1</span>   <span class="number">109</span>.<span class="number">471</span>     <span class="number">7</span>   <span class="number">240</span>.<span class="number">000</span></span><br><span class="line"><span class="attribute">End</span> of z-matrix</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>笛卡尔坐标形式 <code>XYZ</code> 例子</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">XBAS</span>=STO-<span class="number">3</span>G</span><br><span class="line"><span class="attr">XYZ</span>=<span class="variable">$CurrDir</span>/Water.xyz</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="attribute">XBAS</span>=STO-3G</span><br><span class="line">XYZ</span><br><span class="line">1</span><br><span class="line"><span class="built_in"> note </span>angstrom units!</span><br><span class="line">C 0 0 0</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>XYZ</code> 关键字不进行对称操作，并且计算始终在不对称的情况下执行。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Advanced-XYZ-input"><a href="#Advanced-XYZ-input" class="headerlink" title="Advanced XYZ input"></a>Advanced XYZ input</h3><ul>
+<li><p>默认单位是Å。默认情况下，使用最大可能的对称性。</p>
+</li>
+<li><p>Molcas的xyz文件形式：</p>
+<ul>
+<li>第一行包含原子的数目。</li>
+<li>第二行（注释行）可以包含“a.u.”或“bohr”使用原子单位，而不是默认的ångströms。此行还可以包含关键字 <code>TRANS</code>，后跟 3 个数字和/或 <code>ROT</code>，后跟 9 个数字（在这种情况下，坐标将由指定向量平移和/或旋转）和 <code>SCALE</code>（或 <code>SCALEX</code>、<code>SCALEY</code>、<code>SCALEZ</code>）随后是比例因子。</li>
+<li>其余的行用于指定元素和笛卡尔坐标。<ul>
+<li>元素名称后面可以选择<strong>跟随数字</strong>（例如 H7）、标签（<strong>用 _ 分隔</strong>：例如 H_INNER）或基组（<strong>用 . 分隔</strong>，例如 H.STO-3G）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>BASIS</code>：单个实例限制为80个字符，但关键字可以多次给出</p>
+</li>
+<li><p>例子：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">COORD</span></span><br><span class="line"><span class="attribute">4</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">C</span>           <span class="number">0</span>.<span class="number">00000</span> <span class="number">0</span>.<span class="number">00000</span> <span class="number">0</span>.<span class="number">00000</span></span><br><span class="line"><span class="attribute">H</span>           <span class="number">1</span>.<span class="number">00000</span> <span class="number">0</span>.<span class="number">00000</span> <span class="number">0</span>.<span class="number">00000</span></span><br><span class="line"><span class="attribute">H</span>           <span class="number">0</span>.<span class="number">00000</span> <span class="number">1</span>.<span class="number">00000</span> <span class="number">0</span>.<span class="number">00000</span></span><br><span class="line"><span class="attribute">H</span>           <span class="number">0</span>.<span class="number">00000</span> <span class="number">0</span>.<span class="number">00000</span> <span class="number">1</span>.<span class="number">00000</span></span><br><span class="line"><span class="attribute">BASIS</span></span><br><span class="line"><span class="attribute">STO</span>-<span class="number">3</span>G, H.<span class="number">6</span>-<span class="number">31</span>G*</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">BASIS</span><br><span class="line">STO<span class="number">-3</span>G</span><br><span class="line">BASIS</span><br><span class="line">H<span class="number">.6</span><span class="number">-31</span>G*</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>GROUP</code>：后面可以跟随</p>
+<ul>
+<li><code>FULL</code>：默认，用D2h可能的最大子群</li>
+<li><code>NOSYM</code>：等同于<code>E</code>或者<code>C1</code></li>
+<li>空格分隔的对称元素列表：比如<code>X XY</code>，Molcas支持的对称性和生成器列表如下：</li>
+</ul>
+<p><img src="【Molcas】01.基本输入/image-20240920140606797.png" alt="image-20240920140606797"></p>
+</li>
+<li><p>默认情况下，分子的坐标可能会发生变化去保持最高对称性，比如以下的水分子在C2v对称性的阈值中，坐标就会被转换。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;gateway</span></span><br><span class="line"><span class="string">coord</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="string">O</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line"><span class="string">H</span> <span class="number">1.0000001</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line"><span class="string">H</span> <span class="number">0</span> <span class="number">1</span> <span class="number">0.0000001</span></span><br><span class="line"><span class="meta">*nomove</span></span><br><span class="line"><span class="string">*group=c1</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果激活了<code>nomove</code>，分子就不会被旋转，xy对称面是唯一的对称元素，H原子的位置也会略微改变</li>
+<li>如果激活了<code>group=c1</code>，几何才会完全不变。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Native-input"><a href="#Native-input" class="headerlink" title="Native input"></a>Native input</h3><ul>
+<li><p>默认单位是原子单位</p>
+</li>
+<li><p><code>SYMMetry</code>：对称元素列表，默认没有对称性</p>
+</li>
+<li><p><code>BASIs Set</code>：下一行始终包含基组标签，始终以<code>End of Basis</code>结束</p>
+<ul>
+<li></li>
+<li><p>例子：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">&amp;GATEWAY</span><br><span class="line">Title</span><br><span class="line">formaldehyde</span><br><span class="line">SYMMETRY</span><br><span class="line">X Y</span><br><span class="line">Basis <span class="keyword">set</span></span><br><span class="line">H.STO<span class="number">-3</span>G....</span><br><span class="line">H1           <span class="number">0.000000</span>    <span class="number">0.924258</span>   <span class="number">-1.100293</span> /angstrom</span><br><span class="line">End of basis</span><br><span class="line"></span><br><span class="line">Basis <span class="keyword">set</span></span><br><span class="line">C.STO<span class="number">-3</span>G....</span><br><span class="line">C3           <span class="number">0.000000</span>    <span class="number">0.000000</span>   <span class="number">-0.519589</span> /angstrom</span><br><span class="line">End of basis</span><br><span class="line"></span><br><span class="line">Basis <span class="keyword">set</span></span><br><span class="line">O.STO<span class="number">-3</span>G....</span><br><span class="line">O            <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.664765</span> /angstrom</span><br><span class="line">End of basis</span><br><span class="line"></span><br><span class="line">End of input</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>其他关键词：</p>
+<ul>
+<li><p><code>SYMThreshold</code>：后跟一个实数 — 对称识别的阈值（默认为 0.01 Å）</p>
+</li>
+<li><p><code>CSPF</code></p>
+</li>
+<li><p><code>MOVE</code>：允许平移和旋转分子以找到最高可能的对称性。除了C1，对所有对称性都是默认的。</p>
+</li>
+<li><p><code>NOMOVE</code>：不允许在搜索最高组时转换坐标，C1是默认的</p>
+</li>
+<li><p><code>BSSE</code>：<code>&amp;GATEWAY</code>可以处理多个坐标文件，方便计算BSSE校正量。<code>BSSE</code>后面跟着一个数字，这标志着XYZ文件应该被视为虚拟原子。例如：</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">&amp;GATEWAY</span><br><span class="line">coord = ethanol.xyz</span><br><span class="line">coord = water.xyz</span><br><span class="line">bsse  = 1</span><br><span class="line">basis = ANO-S-MB</span><br><span class="line">NOMOVE</span><br><span class="line">&amp;SEWARD; &amp;SCF</span><br><span class="line">&amp;GRID_IT</span><br><span class="line">NAME = water</span><br><span class="line">***************</span><br><span class="line">&amp;GATEWAY</span><br><span class="line">coord = ethanol.xyz</span><br><span class="line">coord = water.xyz</span><br><span class="line">bsse  = 2</span><br><span class="line">basis = ANO-S-MB</span><br><span class="line">NOMOVE</span><br><span class="line">&amp;SEWARD; &amp;SCF</span><br><span class="line">&amp;GRID_IT</span><br><span class="line">NAME = ethanol</span><br><span class="line">**************</span><br><span class="line">&amp;GATEWAY</span><br><span class="line">coord = ethanol.xyz</span><br><span class="line">coord = water.xyz</span><br><span class="line">basis = ANO-S-MB</span><br><span class="line">NOMOVE</span><br><span class="line">&amp;SEWARD; &amp;SCF</span><br><span class="line">&amp;GRID_IT</span><br><span class="line">NAME = akvavit</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>VART</code></p>
+</li>
+<li><code>VARR</code></li>
+<li><code>NUMErical</code>：即使解析梯度可用，也强制计算数值梯度。</li>
+<li><code>SHAKe</code>：</li>
+</ul>
+</li>
+</ul>
+<h2 id="基组"><a href="#基组" class="headerlink" title="基组"></a>基组</h2><ul>
+<li>Molcas 的基组库包含一组广泛的基组，包括segmented和generally收缩基组。<ul>
+<li>Molcas自带基组基于原子自然轨道 (ANO) 概念，并标记为 ANO-X（X=S、L 或 RCC）。</li>
+<li>专门为计算分子电特性（POL）而设计的第四基组。</li>
+</ul>
+</li>
+<li>除此之外，还包括segmented标准基组的子集，如STO-3G、3-21G、4-31G、6-31G、6-31G<em>、6-31G*</em>、cc-pVXZ (X=D,T,Q)、aug-cc-pVXZ (X=D,T)。</li>
+<li>还包含Turbomole RI基组的不同变体。</li>
+<li>所有基组都存储在 <code>basic_library</code> 目录中。可以在此目录中的文件 <code>basictype.tbl</code> 中找到不同类型的可用基组。文件 <code>basic.tbl</code> 中列出了名称的别名。</li>
+<li><font color=red>找出可用的基组的最佳方法是发出命令 <code>pymolcas help_basis X</code>，其中 X 是原子。</font><ul>
+<li>请注意，速记符号可用于大多数基组：例如 ANO-L-VTZP 将给出具有偏振函数的价三重 zeta 精度的基组。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p>ANO-S：最小的原子自然轨道 (ANO) 基组可用于原子 H–Kr。</p>
+</li>
+<li><p>ANO-L：原子 H-Zn（不包括 K 和 Ca）</p>
+<ul>
+<li>建议至少使用两个极化 (3d/4f) 函数，因为<strong>其中一个用于极化，第二个用于相关</strong>。如果仅使用一个 3d/4f 型函数，则必须决定其用途并相应地调整指数和收缩。这里，这两种效应由前两个 3d/4f 型 ANO 共同描述（对于氢 2p 型 ANO 也是如此）。</li>
+</ul>
+</li>
+<li><p>ANP-RCC：用于原子 H–Cm，只能用于包含标量相对论效应的计算。</p>
+<ul>
+<li><p>当使用这些基组时，<code>&amp;Seward</code> 将自动识别这一点并打开 <code>DK</code> 选项</p>
+</li>
+<li><p>输入文件中的写法是:</p>
+<figure class="highlight stata"><table><tr><td class="code"><pre><span class="line">Atom.<span class="keyword">ANO</span>-RCC…contracted <span class="keyword">set</span>. (<span class="keyword">Note</span> the last dot!).</span><br><span class="line">Atom.<span class="keyword">ANO</span>-RCC-<span class="keyword">label</span>, where <span class="keyword">label</span> is <span class="keyword">one</span> of MB, VDZ, VDZP, VTZP, or VQZP.</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="辅助基组"><a href="#辅助基组" class="headerlink" title="辅助基组"></a>辅助基组</h2><p>所谓的身份解析 (RI) 技术（也称为密度拟合，DF）是在 Molcas 包中实现的。此选项涉及在 2 电子积分的有效计算中使用辅助基组。 Molcas 结合了传统计算、外部提供的辅助基组（RIJ、RIJK 和 RIC 类型）以及即时生成的辅助基组（on-the-fly generated auxiliary basis sets）的使用。后者是基于 Cholesky 分解方法（Cholesky decomposition method）的 atomic CD (aCD) 或atomic compact CD (acCD) 基组。外部提供的辅助基组非常紧凑，因为它们是为特殊波函数方法量身定制的。然而，它们并未针对所有可用的价基组提供。 aCD 或 acCD RI 辅助基组是更通用的选项，为任何波函数模型和价基组提供辅助基组。</p>
+<ul>
+<li><font color=red>如果 <code>MOLCAS_NEW_DEFAULTS</code> 设置为 <code>YES</code>，acCD RI (RICD) 将默认启用，可以通过 <code>NOCD</code> 禁用</font>。</li>
+<li>也可以直接在<code>&amp;GATEWAY</code>中使用<code>RICD</code>关键词</li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li><p>请注意，要使用<strong>虚原子</strong>，用户应使用基组标签“<code>X....</code>”。这将意味着没有电荷也没有基函数。</p>
+</li>
+<li><p>坐标文件可能包含变量，例如：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">&gt;&gt;FILE</span> <span class="string">H2.input</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="string">scale</span> <span class="string">$DD</span></span><br><span class="line"><span class="string">H</span> <span class="number">0.35</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line"><span class="string">H</span> <span class="number">-0.35</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line"><span class="string">&gt;&gt;EOF</span></span><br><span class="line"></span><br><span class="line"><span class="string">&gt;&gt;</span> <span class="string">FOREACH</span> <span class="string">DD</span> <span class="string">IN</span> <span class="string">(</span> <span class="number">0.9</span> <span class="number">1.0</span> <span class="number">1.1</span> <span class="string">)</span></span><br><span class="line"><span class="meta">&amp;GATEWAY</span></span><br><span class="line"><span class="string">COORD=$WorkDir/H2.input</span></span><br><span class="line"><span class="string">BASIS=STO-3G</span></span><br><span class="line"><span class="meta">&amp;SEWARD</span></span><br><span class="line"><span class="meta">&amp;SCF</span></span><br><span class="line"><span class="string">&gt;&gt;ENDDO</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>XYZ文件中的原子名可以包含一个轨道标签(以简化不同基组的分配)。比如：</p>
+<ul>
+<li><code>C_SMALL</code>，然后再<code>BASIS=C_SMALL.ANO-S-MB</code>. 也可以直接：</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">COORD</span><br><span class="line"><span class="number">1</span></span><br><span class="line"></span><br><span class="line">O.ANO-S-VDZP <span class="number">0</span> <span class="number">0</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>XYZ文件也可以包含有关点<strong>电荷</strong>的信息。在 XYZ 文件中设置原子电荷有三种可能性：</p>
+<ul>
+<li>主要的选择是使用<code>Q</code>作为元素名称，应该指定第四个数字，即电荷</li>
+<li><p>另一种可能是使用以负号结尾的元素名，使用元素的形式电荷，比如：</p>
+<ul>
+<li><code>H-</code>， Li-， <code>Na-</code>， <code>K-</code>定义+1</li>
+<li><code>Mg-</code>、<code>Ca-</code>定义+2</li>
+<li><code>Al-</code>定义+3</li>
+<li><code>C-</code>、<code>Si-</code>定义+4</li>
+<li><code>F-</code>、<code>Cl-</code>、<code>Br-</code>、<code>I-</code>定义-1</li>
+<li><code>O-</code>、<code>S-</code>定义-2</li>
+</ul>
+</li>
+<li><p>在XYZ文件- <code>CLUSTER</code>的注释行上加上一个标签，后面跟着一个整数，可以指定有多少原子是“真实的”，因此其余的原子将被视为带有该元素默认值的电荷。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="amp-SEWARD"><a href="#amp-SEWARD" class="headerlink" title="&amp;SEWARD"></a><code>&amp;SEWARD</code></h1><ul>
+<li><code>&amp;SEWARD</code>模块生成所需的单电子和双电子积分</li>
+<li>除了标准输出文件外，<code>&amp;SEWARD</code>还可以生成以下文件：ONEINT、ORDINT、CHVEC、CHRED、CHORST、CHOMAP、CHOR2F，<ul>
+<li>比如<code>$Project.OneInt</code>和<code>$Project.OrdInt</code>（这仅适用于非 Cholesky 类型的计算）</li>
+<li>ONEINT 文件包含单电子积分。 ORDINT 包含有序且压缩的二电子积分。</li>
+<li>。</li>
+</ul>
+</li>
+</ul>
+<h1 id="amp-SCF"><a href="#amp-SCF" class="headerlink" title="&amp;SCF"></a><code>&amp;SCF</code></h1><ul>
+<li>Molcas 实现执行闭壳层（所有电子在轨道中配对）和开壳层（无限制 Hartree-Fock）计算。如果没有给出输入，程序将计算中性分子的 SCF 能量，其中轨道占据给出最低能量。<ul>
+<li>闭壳层计算一般不需要其他关键词</li>
+<li><code>UHF</code>计算<ul>
+<li>可以将 UHF 与关键字 <code>Charge</code> 或 <code>Aufbau</code> 一起使用，指定关键字 <code>ZSPIN</code> 。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>无法使用 SCF 执行受限开壳 Hartree–Fock (ROHF) 计算。这是使用 RASSCF 程序来完成的。</li>
+<li>SCF 程序还可用于使用 Kohn Sham 密度泛函理论 (DFT) 执行计算。要进行密度泛函理论计算，</li>
+</ul>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>会输出以下文件：</p>
+<ul>
+<li><code>SCFORB</code>：SCF 轨道输出文件。包含用于闭壳计算的规范 Hartree-Fock 轨道。可以在后续的 Molcas 模块中使用。</li>
+<li><code>UHFORB</code>：开壳层计算的正则 Hartree-Fock 轨道。</li>
+<li><code>UNAORB</code>：UHF计算的自然轨道</li>
+<li><code>MD_SCF</code>：用于分子轨道分析的 Molden 输入文件。</li>
+</ul>
+<h2 id="DFT计算"><a href="#DFT计算" class="headerlink" title="DFT计算"></a>DFT计算</h2><ul>
+<li><p>关键字 <code>KSDFT</code> 必须在下一行中紧跟输入部分中列出的可用泛函名称。目前提供以下功能关键字：BLYP、B3LYP、B3LYP5、HFB、HFS、LDA、LDA5、LSDA、LSDA5、SVWN、SVWN5、TLYP、PBE、PBE0、M06、M06HF、M062X、M06L。例子：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">KSDFT</span>= B<span class="number">3</span>LYP<span class="number">5</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">KSDFT</span>=HYB_GGA_XC_B<span class="number">3</span>LYP      * A Libxc functional name</span><br><span class="line"></span><br><span class="line"><span class="attribute">KSDFT</span>=<span class="number">5</span>                     * Five components with their weights</span><br><span class="line">      <span class="attribute">0</span>.<span class="number">20</span> HF_X             * Keyword for exact exchange</span><br><span class="line">      <span class="attribute">0</span>.<span class="number">08</span> XC_LDA_X         * Libxc functional names</span><br><span class="line">      <span class="attribute">0</span>.<span class="number">72</span> XC_GGA_X_B<span class="number">88</span>     *  .</span><br><span class="line">      <span class="attribute">0</span>.<span class="number">19</span> XC_LDA_C_VWN_RPA *  .</span><br><span class="line">      <span class="attribute">0</span>.<span class="number">81</span> XC_GGA_C_LYP     *  .</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>pymolcas help_func</code>查看都有哪些泛函可用</p>
+</li>
+</ul>
+<h2 id="电子结构指定"><a href="#电子结构指定" class="headerlink" title="电子结构指定"></a>电子结构指定</h2><h3 id="ZSPIN"><a href="#ZSPIN" class="headerlink" title="ZSPIN"></a><code>ZSPIN</code></h3><ul>
+<li>设置为 alpha 和 beta 电子之间的差异</li>
+</ul>
+<h3 id="CHARge"><a href="#CHARge" class="headerlink" title="CHARge"></a><code>CHARge</code></h3><p>使用该关键字设置系统中的电子数。该数字是通过给出系统的净电荷来定义的。如果未指定此关键字，则假定分子的净电荷为零。</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">Charge</span>=n</span><br></pre></td></tr></table></figure>
+<h3 id="OCCUpied"><a href="#OCCUpied" class="headerlink" title="OCCUpied"></a><code>OCCUpied</code></h3><ul>
+<li><p>使用该关键字设置系统中的电子数。通过给出D2h子群的每个不可约表示的电子对数量来定义的 </p>
+</li>
+<li><p><code>OCCUpied</code>和<code>charge</code>可以只用一个，如果都没有默认电荷为0</p>
+</li>
+<li><p>指定此关键字时，不会使用“Fermi aufbau”过程。</p>
+</li>
+<li><p>例：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">OCCUpied</span>= n<span class="number">1</span> n<span class="number">2</span> n<span class="number">3</span> n<span class="number">4</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>n1代表第一个不可约表示占据轨道上的电子对数</li>
+<li>如果指定了 <code>UHF</code> 关键字，则必须在两行中指定<code>OCCUpied</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="OCCNumbers"><a href="#OCCNumbers" class="headerlink" title="OCCNumbers"></a><code>OCCNumbers</code></h3><ul>
+<li><p>可以指定0和2之外的占据数，对于生成开壳情况的起始轨道非常有用。对于<code>UHF</code>计算要指定两条</p>
+</li>
+<li><p>例：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&amp;SCF</span></span><br><span class="line"><span class="string">TITLE</span></span><br><span class="line"> <span class="string">NiH</span> <span class="string">G.S.</span></span><br><span class="line"><span class="string">OCCUPIED</span></span><br><span class="line"> <span class="number">8</span> <span class="number">3</span> <span class="number">3</span> <span class="number">1</span></span><br><span class="line"><span class="string">OCCNumber</span></span><br><span class="line"><span class="number">2.0</span> <span class="number">2.0</span> <span class="number">2.0</span> <span class="number">2.0</span> <span class="number">2.0</span> <span class="number">2.0</span> <span class="number">2.0</span> <span class="number">2.0</span></span><br><span class="line"><span class="number">2.0</span> <span class="number">2.0</span> <span class="number">2.0</span></span><br><span class="line"><span class="number">2.0</span> <span class="number">2.0</span> <span class="number">2.0</span></span><br><span class="line"><span class="number">1.0</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="SCRAmble"><a href="#SCRAmble" class="headerlink" title="SCRAmble"></a><code>SCRAmble</code></h3><p>对于开壳层单重态可能比较有用，默认值为0.2，表最大的旋转角为arcsin 0.2。</p>
+<h3 id="IVO"><a href="#IVO" class="headerlink" title="IVO"></a><code>IVO</code></h3><p>指定要改进虚拟轨道以用于后续 MCSCF 计算。核心哈密顿量在虚拟轨道子空间内对角化，从而产生尽可能紧凑的轨道，但约束条件是它们必须与占据的轨道正交。请注意，每当 Hartree-Fock 波函数本身用作后续计算中的参考时，不得使用此选项。比如MP2或者CC计算等。</p>
+<h2 id="初猜"><a href="#初猜" class="headerlink" title="初猜"></a>初猜</h2><h3 id="LUMOrb"><a href="#LUMOrb" class="headerlink" title="LUMOrb"></a><code>LUMOrb</code></h3><ul>
+<li>如果没有其他说明，SCF 程序将使用 SEWARD 生成的猜测轨道作为输入轨道，内部名称为 <code>GUESSORB</code></li>
+<li>如果想要为 SCF 程序使用任何其他输入轨道，则必须使用选项 <code>LUMOrb</code>。相应的文件应复制到内部文件<code>*.INPORB</code>。即：起始向量取自先前名为 INPORB 的 SCFORB 文件。<ul>
+<li>比如：这可以是由早期 SCF 计算 $Project.ScfOrb 生成的轨道文件。只需将文件复制或链接为 <code>*.INPORB</code>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="FILEORB"><a href="#FILEORB" class="headerlink" title="FILEORB"></a><code>FILEORB</code></h3><ul>
+<li>起始向量取自用户指定的先前 SCFORB 文件。</li>
+</ul>
+<h2 id="打印"><a href="#打印" class="headerlink" title="打印"></a>打印</h2><ul>
+<li><p><code>PRORbitals</code>：指定要在日志文件（标准输出）中打印哪些轨道。默认是1。</p>
+<ul>
+<li><p><code>0</code>：不打印任何轨道</p>
+</li>
+<li><p><code>1</code>：打印轨道能量小于<script type="math/tex">2E_{HOMO}-E_{LUMO}</script>的</p>
+</li>
+<li><p><code>2</code>：后面接实数(ThrEne);轨道能量小于ThrEne的轨道被打印出来。</p>
+</li>
+<li><p>第二个（可选）参数指定格式：对于少量 MO，默认值为 3；对于 MO 数量 &gt; 256，默认值为 2。</p>
+<ul>
+<li><code>0</code>：不打印</li>
+<li><code>1</code>：仅打印单电子能量和占据数</li>
+<li><code>2</code>：短打印格式</li>
+<li><code>3</code>：扩展打印格式</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">Prorbitals </span><br><span class="line"><span class="number">2</span> <span class="number">1.</span>d+<span class="number">10</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="amp-MBPT2-MP2计算"><a href="#amp-MBPT2-MP2计算" class="headerlink" title="&amp;MBPT2-MP2计算"></a><code>&amp;MBPT2</code>-MP2计算</h1><ul>
+<li><code>FREEze</code>：指定冻结占据轨道的总数。然后自动识别并冻结能量最低的占据轨道。该关键字采用一个整数作为参数。与 <code>FROZen</code> 关键字不兼容。</li>
+<li><code>FROZen</code> ：指定表示系统的 D2h 子群的每个不可约表示 (irreps) 中冻结占据轨道的数量。与 <code>FREEze</code> 关键字不兼容。默认是冻结非价轨道。</li>
+<li><code>sFrozen</code>：指定特定的冻结轨道。第一行代表Frozn中的，后面几行代表每个对称性冻结的哪个轨道。</li>
+</ul>
+<p>例子：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">&amp;MBPT2</span><br><span class="line">Title</span><br><span class="line"> H2O:  O(<span class="number">9.5</span>/<span class="number">4.2</span>), H(<span class="number">4</span>/<span class="number">2</span>)</span><br><span class="line">* The lowest energy occupied orbital <span class="keyword">in</span> the repr. no<span class="number">.1</span> will be frozen <span class="keyword">in</span></span><br><span class="line">* MBPT2 calculations. The number of representations <span class="keyword">is</span> <span class="number">4</span> <span class="keyword">and</span> all zeros</span><br><span class="line">* must be explicitly given</span><br><span class="line">Frozen</span><br><span class="line"><span class="number">1</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line">* Two highest energy <span class="keyword">external</span> orbitals <span class="keyword">in</span> the repr. no<span class="number">.3</span> will be deleted</span><br><span class="line">* <span class="keyword">in</span> MBPT2 calculations. The number of representations <span class="keyword">is</span> <span class="number">4</span> <span class="keyword">and</span> all</span><br><span class="line">* zeros must be explicitly given</span><br><span class="line">Deleted</span><br><span class="line"><span class="number">0</span> <span class="number">0</span> <span class="number">2</span> <span class="number">0</span></span><br><span class="line">* One occupied orbital <span class="keyword">in</span> symmetry no<span class="number">.1</span> will be additionally frozen by</span><br><span class="line">* using the SFRO option. Let it be the third SCF occupied orbital <span class="keyword">in</span></span><br><span class="line">* <span class="keyword">this</span> symmetry</span><br><span class="line">sFrozen</span><br><span class="line"><span class="number">1</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>   <span class="comment">// Gives the number of frozen orbitals in each symmetry</span></span><br><span class="line"><span class="number">3</span>         <span class="comment">// Gives the frozen orbital reference number in symmetry no. 1</span></span><br><span class="line">* Two <span class="keyword">external</span> orbitals <span class="keyword">in</span> symmetry no<span class="number">.1</span> <span class="keyword">and</span> one <span class="keyword">external</span> orbital <span class="keyword">in</span></span><br><span class="line">* symmetry <span class="number">3</span> will be deleted. In symmetry <span class="number">1</span> let it be the second <span class="keyword">and</span></span><br><span class="line">* third <span class="keyword">external</span> orbitals, <span class="keyword">and</span> <span class="keyword">in</span> symmetry <span class="number">3</span> the third (already deleted</span><br><span class="line">* <span class="keyword">in</span> by using the option DELE) <span class="keyword">external</span> orbital</span><br><span class="line">sDeleted</span><br><span class="line"><span class="number">2</span> <span class="number">0</span> <span class="number">1</span> <span class="number">0</span>   <span class="comment">// Gives the number of orbitals to be deleted in each symmetry</span></span><br><span class="line"><span class="number">2</span> <span class="number">3</span>       <span class="comment">// Gives the reference numbers of external orbitals in sym. 1</span></span><br><span class="line"><span class="number">3</span>         <span class="comment">// Gives the reference number of the external orb. in sym. 3</span></span><br></pre></td></tr></table></figure>
+]]></content>
       <categories>
         <category>计算化学</category>
         <category>软件</category>
@@ -10578,6 +11217,204 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
       <tags>
         <tag>ORCA</tag>
         <tag>对称性破缺</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Molcas】02.RASSCF</title>
+    <url>/2024/09/24/%E3%80%90Molcas%E3%80%9102.RASSCF/</url>
+    <content><![CDATA[<p>完整活动空间 (CASSCF) 和受限活动空间 (RASSCF) SCF 计算均可使用 RASSCF 程序模块执行</p>
+<p>例子：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">&amp;RASSCF</span><br><span class="line">Title= The CASSCF energy of water <span class="keyword">is</span> calculated using C2v symmetry. <span class="number">2</span> <span class="number">3</span>B2 state.</span><br><span class="line">nActEl= <span class="number">8</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line">Inactive= <span class="number">1</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>; Ras2= <span class="number">3</span> <span class="number">2</span> <span class="number">0</span> <span class="number">1</span></span><br><span class="line">Symmetry= <span class="number">2</span>; Spin= <span class="number">3</span></span><br><span class="line">CIRoot= <span class="number">1</span> <span class="number">2</span>; <span class="number">2</span></span><br><span class="line">LumOrb</span><br></pre></td></tr></table></figure>
+<h1 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h1><p> RASSCF需要系统的轨道信息，可以通过两种方式获得。 LUMOrb 指示轨道应取自用户定义的轨道文件，该文件被复制到内部文件 INPORB。如果未给出此关键字，程序将按照优先顺序在运行文件中查找轨道：RASORB、SCFORB 和 GUESSORB</p>
+<h1 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h1><ul>
+<li><p><code>SYMMetry</code>：波函数的对称性（根据 GATEWAY）（1 到 8）</p>
+</li>
+<li><p><code>SPIN</code>：自旋多重度</p>
+</li>
+<li><p><code>CHARGE</code>:电荷</p>
+</li>
+<li><p><code>NACTel</code>：三个数字：Ras1 中的活性电子、空穴总数、Ras3 中的粒子总数</p>
+</li>
+<li><p><code>INACtive</code>：双占轨道，通过对称性指定</p>
+</li>
+<li><p><code>FROZen</code>：可用于重原子，以减少基集叠加误差 (BSSE)。相应的轨道将不会被优化。</p>
+</li>
+<li><p><code>RAS2</code>：指定每个对称性中包含在允许所有可能占据的电子激发中的轨道数量。</p>
+</li>
+<li><p>使用关键字 <code>RAS1</code> 和/或 <code>RAS3</code> 指定轨道并指定非零数量的空穴/电子将产生 RASSCF 波函数。</p>
+<ul>
+<li><p>如果 RAS1 和 RAS3 空间为零，RASSCF 计算将产生 CASSCF 波函数。</p>
+</li>
+<li><p>不同的RAS1和RAS3代表的计算类型：</p>
+<p><img src="/../【Molcas】02-RASSCF/image-20240924154746777.png" alt="image-20240924154746777"></p>
+</li>
+</ul>
+</li>
+<li><p><code>LEVShift</code>：进行电平转换以提高计算的收敛性。</p>
+</li>
+<li><p><code>ITERations</code>：RASSCF迭代最大次数</p>
+</li>
+<li><p><code>ALTEr</code>：改变轨道</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">ALTEr= <span class="number">2</span>; <span class="number">1</span> <span class="number">4</span> <span class="number">5</span>; <span class="number">3</span> <span class="number">6</span> <span class="number">8</span></span><br></pre></td></tr></table></figure>
+<p>表示2对MO将被交换：对称1中的4和5以及对称3中的6和8。</p>
+</li>
+</ul>
+<h2 id="多组态"><a href="#多组态" class="headerlink" title="多组态"></a>多组态</h2><ul>
+<li><p><code>STAVerage</code>：态平均计算中包含的根数，是<code>CIroot</code>关键词的简化，比如：<code>STAverage = n</code>和<code>CIRoot = n n 1</code>是等同的。</p>
+</li>
+<li><p><code>CIROot</code>：第一行包含2或3个数字，分别代表NROOTS、LROOTS和IALL</p>
+<ul>
+<li><code>NROOTS</code>表示用几个态来进行计算</li>
+<li><code>LROOTS</code>表示Davidson过程中小CI矩阵的维数</li>
+<li><code>IALL</code>如果不等于1或者没有指定，那么就要给出第二行（指定选择的态的编号）和第三行（和第二行对应，他们所占的比例）</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">#平均值分别在与根<span class="number">2</span>、<span class="number">4</span>和<span class="number">5</span>相对应的三个状态下，分别为<span class="number">20</span>％，<span class="number">20</span>％和<span class="number">60</span>％。</span><br><span class="line">CIRoot= <span class="number">3</span> <span class="number">5</span>; <span class="number">2</span> <span class="number">4</span> <span class="number">5</span>; <span class="number">1</span> <span class="number">1</span> <span class="number">3</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h1>]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>CASSCF</tag>
+        <tag>molcas</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2025/01/07/%E3%80%90ORCA%E3%80%9110.%E7%A3%81%E6%80%A7%E7%9B%B8%E5%85%B3%E8%AE%A1%E7%AE%97/</url>
+    <content><![CDATA[<h1 id="g-tensor"><a href="#g-tensor" class="headerlink" title="g tensor"></a>g tensor</h1><h2 id="CASSCF"><a href="#CASSCF" class="headerlink" title="CASSCF"></a>CASSCF</h2><figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line"><span class="comment">%casscf </span></span><br><span class="line">...</span><br><span class="line">	rel</span><br><span class="line">		dosoc <span class="literal">true</span>   #spin-orbit coupling (<span class="keyword">and</span> ZFS)</span><br><span class="line">		gtensor <span class="literal">true</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">...</span><br><span class="line"> <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>CASSCF中有两种方法计算：</p>
+<ul>
+<li>Effective Hamiltonian method，对任何多重度都可以（Kramers或nonKramers系统）</li>
+<li>Quasi-degenerate perturbation theory (QDPT)方法，只对单个Karmer双重态（奇数个电子）有效</li>
+</ul>
+<h3 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h3><ul>
+<li><p>Effective Hamiltonian Method得到的结果：</p>
+<p><img src="/image-20250117154939895.png" alt="image-20250117154939895"></p>
+<ul>
+<li>输出显示总 g 矩阵，后跟三个主成分及其方向（特征向量eigenvectors）。特征向量是列向量</li>
+<li>此例子中$g<em>z=2.99,g</em>{x,y}=2.24$</li>
+</ul>
+</li>
+</ul>
+<p>对于重元素，使用相对论效应和SOC时，需要增加%rel模块</p>
+<figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line">%<span class="built_in">rel</span>  </span><br><span class="line">	picturechange <span class="number">2</span> <span class="comment"># second order DKH SOC </span></span><br><span class="line">	fpFWtrafo <span class="literal">false</span> <span class="comment"># recommended option for g-tensor </span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">%casscf </span><br><span class="line">...</span><br><span class="line">	<span class="built_in">rel</span></span><br><span class="line">		dosoc <span class="literal">true</span>   <span class="comment">#spin-orbit coupling (and ZFS)</span></span><br><span class="line">		gtensor <span class="literal">true</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">...</span><br><span class="line"> <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h1 id="D-tensor"><a href="#D-tensor" class="headerlink" title="D-tensor"></a>D-tensor</h1><h2 id="CASSCF-1"><a href="#CASSCF-1" class="headerlink" title="CASSCF"></a>CASSCF</h2><figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line"><span class="comment">%casscf </span></span><br><span class="line">...</span><br><span class="line">	rel</span><br><span class="line">		dosoc <span class="literal">true</span>   #spin-orbit coupling (<span class="keyword">and</span> ZFS)</span><br><span class="line">		dtensor <span class="literal">true</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">...</span><br><span class="line"> <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>有两种方法计算，the 2nd Order PT approach（二阶 PT 方法）和Effective Hamiltonian Method<ul>
+<li>在存在低激发态 (&lt; 1000 cm-1)（通过 SOC 与基态贡献）的情况下，二阶 PT 方法对于计算零场分裂 (ZFS) 无效。</li>
+</ul>
+</li>
+</ul>
+<h3 id="输出-1"><a href="#输出-1" class="headerlink" title="输出"></a>输出</h3><p><img src="/image-20250117161710614.png" alt="image-20250117161710614"></p>
+<ul>
+<li><p>analysis of the individual contributions to the D-tensor</p>
+<p><img src="/image-20250117161848921.png" alt="image-20250117161848921"></p>
+</li>
+</ul>
+<h1 id="磁化率曲线的计算"><a href="#磁化率曲线的计算" class="headerlink" title="磁化率曲线的计算"></a>磁化率曲线的计算</h1><h2 id="CASSCF-2"><a href="#CASSCF-2" class="headerlink" title="CASSCF"></a>CASSCF</h2><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">soc</span></span><br><span class="line">  <span class="string">dosoc</span> <span class="literal">true</span></span><br><span class="line">  <span class="string">domagnetization</span> <span class="literal">true</span>       <span class="comment"># Calculate magnetization (def: false)</span></span><br><span class="line">  <span class="string">dosusceptibility</span> <span class="literal">true</span>      <span class="comment"># Calculate susceptiblity (def: false)</span></span><br><span class="line">  <span class="string">LebedevPrec</span>            <span class="number">5</span>   <span class="comment"># Precision of the grid for different field</span></span><br><span class="line">                             <span class="comment"># directions (meaningful values range from 1</span></span><br><span class="line">                             <span class="comment"># (smallest) to 10 (largest))</span></span><br><span class="line">  <span class="string">nPointsFStep</span>           <span class="number">5</span>   <span class="comment"># number of steps for numerical differentiation</span></span><br><span class="line">                             <span class="comment"># (def: 5, meaningful values are 3, 5 7 and 9)</span></span><br><span class="line">  <span class="string">MAGFieldStep</span>       <span class="number">100.0</span>   <span class="comment"># Size of field step for numerical differentiation</span></span><br><span class="line">                             <span class="comment"># (def: 100 Gauss)</span></span><br><span class="line">  <span class="string">MAGTemperatureMIN</span>    <span class="number">4.0</span>   <span class="comment"># minimum temperature (K) for magnetization</span></span><br><span class="line">  <span class="string">MAGTemperatureMAX</span>    <span class="number">4.0</span>   <span class="comment"># maximum temperature (K) for magnetization</span></span><br><span class="line">  <span class="string">MAGTemperatureNPoints</span>  <span class="number">1</span>   <span class="comment"># number of temperature points for magnetization</span></span><br><span class="line">  <span class="string">MAGFieldMIN</span>          <span class="number">0.0</span>   <span class="comment"># minimum field (Gauss) for magnetization</span></span><br><span class="line">  <span class="string">MAGFieldMAX</span>      <span class="number">70000.0</span>   <span class="comment"># maximum field (Gauss) for magnetization</span></span><br><span class="line">  <span class="string">MAGNpoints</span>            <span class="number">15</span>   <span class="comment"># number of field points for magnetization</span></span><br><span class="line">  <span class="string">SUSTempMIN</span>           <span class="number">1.0</span>   <span class="comment"># minimum temperature (K) for susceptibility</span></span><br><span class="line">  <span class="string">SUSTempMAX</span>         <span class="number">300.0</span>   <span class="comment"># maximum temperature (K) for susceptibility</span></span><br><span class="line">  <span class="string">SUSNPoints</span>           <span class="number">300</span>   <span class="comment"># number of temperature points for susceptibility</span></span><br><span class="line">  <span class="string">SUSStatFieldMIN</span>      <span class="number">0.0</span>   <span class="comment"># minimum static field (Gauss) for susceptibility</span></span><br><span class="line">  <span class="string">SUSStatFieldMAX</span>      <span class="number">0.0</span>   <span class="comment"># maximum static field (Gauss) for susceptibility</span></span><br><span class="line">  <span class="string">SUSStatFieldNPoints</span>    <span class="number">1</span>   <span class="comment"># number of static fields for susceptibility</span></span><br><span class="line"><span class="string">end</span></span><br></pre></td></tr></table></figure>
+<h1 id="SINGLE-ANISO"><a href="#SINGLE-ANISO" class="headerlink" title="SINGLE_ANISO"></a>SINGLE_ANISO</h1><figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">source <span class="regexp">/share/</span>apps<span class="regexp">/anaconda3/</span>bin<span class="regexp">/activate /</span>work<span class="regexp">/chem-zhaoxk/</span>.conda<span class="regexp">/envs/g</span>nuplot-<span class="number">5.4</span>.<span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#把anisoinp文件中 DATA部分的路径删掉只留下文件名</span></span><br><span class="line">~<span class="regexp">/apps/</span>orca601/otool_single_aniso &lt; N4UCoP3_CASSCF_7e7o_2spin.anisoinp &gt; single_aniso.output</span><br></pre></td></tr></table></figure>
+<h2 id="输出-2"><a href="#输出-2" class="headerlink" title="输出"></a>输出</h2><ul>
+<li>各个轨道的mJ（磁量子数）百分比贡献</li>
+</ul>
+<p><img src="/image-20250206182306324.png" alt="image-20250206182306324"></p>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>ORCA</tag>
+        <tag>磁性</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【ORCA】11.多参考计算</title>
+    <url>/2025/01/17/%E3%80%90ORCA%E3%80%9111.%E5%A4%9A%E5%8F%82%E8%80%83%E8%AE%A1%E7%AE%97/</url>
+    <content><![CDATA[<h2 id="DDCI3"><a href="#DDCI3" class="headerlink" title="DDCI3"></a>DDCI3</h2><p>The difference dedicated MRCI</p>
+<p>CAS(2,2) NEVPT2 结果可以通过 DDCI3 的自然轨道得到显着改善。</p>
+<p>基于收敛后的CASSCF波函数进行计算：</p>
+<ul>
+<li>要设置<code>! allowrhf</code>和<code>! noiter</code>，否则程序将使用 Hartree Fock 方法（单参考方法）重新优化轨道。</li>
+<li><code>nopop</code> 禁用 MRCI 群体分析。当计算许多根时，这可能会花费大量的时间。</li>
+<li>禁用戴维森类型尺寸一致性校正。尺寸一致性误差对计算的交换耦合参数有很大影响。戴维森校正强烈依赖于参考波函数的权重，并且对于较小的参考权重来说是不可靠的。DDCI3 会出现大小一致性错误，但比规范的 MRCI（单打双打）要少得多。因此，没有进行尺寸一致性校正的结果应该是合理的。</li>
+<li>可以在较大的分子中使用RI近似<code>intmode ritrafo</code></li>
+</ul>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">! def2-SVP MOREAD PAL4 noiter allowrhf nopop</span><br><span class="line">%moinp <span class="string">&quot;cas2.gbw&quot;</span></span><br><span class="line">%maxcore <span class="number">6000</span></span><br><span class="line">%mrci </span><br><span class="line">	citype mrddci3</span><br><span class="line">	# preselection cut-off</span><br><span class="line">	TSel <span class="number">1e-8</span> # tighter than <span class="section">default</span> TSel <span class="number">1e-6</span></span><br><span class="line">	#TPre <span class="number">1e-4</span> #<span class="section">default</span></span><br><span class="line">	</span><br><span class="line">	# singlet multiplicity block</span><br><span class="line">	newblock <span class="number">1</span> *</span><br><span class="line">		refs cas(<span class="number">2</span>,<span class="number">2</span>) end</span><br><span class="line">	end</span><br><span class="line">	# triplet multiplicity block</span><br><span class="line">	newblock <span class="number">3</span> *</span><br><span class="line">		refs cas(<span class="number">2</span>,<span class="number">2</span>) end</span><br><span class="line">	end</span><br><span class="line">	</span><br><span class="line">	davidsonopt none # no davidson correction</span><br><span class="line">	</span><br><span class="line">	# create natural orbitals (not necessary)</span><br><span class="line">	natorbiters <span class="number">1</span>	#如果值为<span class="number">1</span>，则产生平均自然轨道，并使用新轨道进行第二次MRCI计算。</span><br><span class="line"></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h3 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h3><ul>
+<li><p>该程序创建一个文件“.mrci.nat”，这是一个可由 ORCA 读取的常规 gbw 文件。</p>
+</li>
+<li><p>跃迁能量：</p>
+<p><img src="/image-20250117165117565.png" alt="image-20250117165117565"></p>
+</li>
+<li><p>不同组态的贡献：</p>
+<p><img src="/image-20250117172257059.png" alt="image-20250117172257059"></p>
+<p><img src="/image-20250117165617573.png" alt="image-20250117165617573"></p>
+<ul>
+<li>含义是（这个计算是针对于一个CAS(2,2)的结果），比如对于这个开壳层单重态的结果：<ul>
+<li>[xy]代表了两个轨道，[11]的权重是88.8%，[02]或[20]的离子项占了0.33%</li>
+<li>其他的代表非活性空间到活性空间的激发，比如h 84[12]代表了这样一个组态</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>打印更详细的波函数（仅打印weight大于 <code>TPrintWF</code> 指定的配置。）</p>
+<figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">%mrci</span><br><span class="line">	printwf det <span class="comment"># wave function printing in determinants </span></span><br><span class="line">	tprintwf <span class="number">0.1</span> <span class="comment"># cutoff for the printing</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</li>
+<li></li>
+<li></li>
+</ul>
+<h2 id="FIC-MRCI"><a href="#FIC-MRCI" class="headerlink" title="FIC-MRCI"></a>FIC-MRCI</h2><p>fully internally contracted MRCI</p>
+<p>具有扩展活动空间的非收缩 MRCI 计算非常耗时且需要资源。内部收缩方法可以处理大分子，因为积分不保存在内存中。</p>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>多组态</tag>
+        <tag>ORCA</tag>
+        <tag>多参考</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【molpro】07.相关分析</title>
+    <url>/2024/11/14/%E3%80%90molpro%E3%80%9107.%E7%9B%B8%E5%85%B3%E5%88%86%E6%9E%90/</url>
+    <content><![CDATA[<h1 id="PROPERTY"><a href="#PROPERTY" class="headerlink" title="PROPERTY"></a><code>PROPERTY</code></h1><p>例子：</p>
+<figure class="highlight pf"><table><tr><td class="code"><pre><span class="line">***,h2o properties</span><br><span class="line">geometry=&#123;o;h1,o,r;h2,o,r,h1,theta&#125;   !Z-matrix geometry input</span><br><span class="line">r=<span class="number">1</span> ang                               !bond length</span><br><span class="line">theta=<span class="number">104</span>                             !bond angle</span><br><span class="line">hf                                    !do scf calculation</span><br><span class="line">property                              !call property program</span><br><span class="line">orbital                               !read scf orbitals</span><br><span class="line">density                               !read scf density matrix</span><br><span class="line">dm                                    !compute dipole moments and print orbital contributions</span><br><span class="line">qm                                    !compute quadrupole moments and print orbital contributions</span><br><span class="line">&#123;multi;wf;<span class="keyword">state</span>,<span class="number">2</span>;dm                  !do full-valence CASSCF</span><br><span class="line">natorb,<span class="keyword">state</span>=<span class="number">1.1</span>                      !compute natural orbitals <span class="keyword">for</span> <span class="keyword">state</span> <span class="number">1.1</span></span><br><span class="line">natorb,<span class="keyword">state</span>=<span class="number">2.1</span>&#125;                     !compute natural orbitals <span class="keyword">for</span> <span class="keyword">state</span> <span class="number">2.1</span></span><br><span class="line"></span><br><span class="line">&#123;property                             !call property program</span><br><span class="line">orbital,<span class="keyword">state</span>=<span class="number">1.1</span>                     !read casscf natural orbitals <span class="keyword">for</span> <span class="keyword">state</span> <span class="number">1.1</span></span><br><span class="line">density,<span class="keyword">state</span>=<span class="number">1.1</span>                     !read casscf density matrix <span class="keyword">for</span> <span class="keyword">state</span> <span class="number">1.1</span></span><br><span class="line">dm                                    !compute dipole moments and print orbital contributions</span><br><span class="line">qm&#125;                                    !compute quadrupole moments and print orbital contributions</span><br><span class="line"></span><br><span class="line">&#123;property                             !call property program</span><br><span class="line">orbital,<span class="keyword">state</span>=<span class="number">2.1</span>                     !read casscf natural orbitals <span class="keyword">for</span> <span class="keyword">state</span> <span class="number">2.1</span></span><br><span class="line">density,<span class="keyword">state</span>=<span class="number">2.1</span>                     !read casscf density matrix <span class="keyword">for</span> <span class="keyword">state</span> <span class="number">2.1</span></span><br><span class="line">dm                                    !compute dipole moments and print orbital contributions</span><br><span class="line">qm&#125;                                   !compute quadrupole moments and print orbital contributions</span><br></pre></td></tr></table></figure>
+<h1 id="Mulliken电荷分析"><a href="#Mulliken电荷分析" class="headerlink" title="Mulliken电荷分析"></a>Mulliken电荷分析</h1><figure class="highlight abnf"><table><tr><td class="code"><pre><span class="line">POP<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>调用Mulliken分析程序，用于把任何密度矩阵分解为每个原子s,p,d,f…基函数的贡献。密度矩阵来自最后一个转存记录，除非使用DENSITY卡覆盖。</p>
+<figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">DENSITY,<span class="built_in">record</span>.<span class="built_in">file</span>[,specifications]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>从文件file的记录record获取用于分析的密度矩阵。</li>
+<li>特定态的密度矩阵可以用specifications选择</li>
+</ul>
+<figure class="highlight abnf"><table><tr><td class="code"><pre><span class="line">INDIVIDUAL<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果指定，则打印每个基函数的Mulliken布居。</li>
+</ul>
+</li>
+<li><p>例子：</p>
+<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line">***,h2o population analysis</span><br><span class="line">geometry=&#123;o<span class="comment">;h1,o,r;h2,o,r,h1,theta&#125;   !Z-matrix geometry input</span></span><br><span class="line">r=<span class="number">1</span> ang                               !<span class="keyword">bond </span>length</span><br><span class="line">theta=<span class="number">104</span>                             !<span class="keyword">bond </span>angle</span><br><span class="line"><span class="keyword">basis=6-311g**</span></span><br><span class="line"><span class="keyword">hf </span>                                   !do <span class="keyword">scf </span>calculation</span><br><span class="line">pop<span class="comment">;                                  !Mulliken population analysis using mcscf density</span></span><br><span class="line">individual                            !give occupations of individual <span class="keyword">basis </span>functions</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="NBO分析"><a href="#NBO分析" class="headerlink" title="NBO分析"></a>NBO分析</h1><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">NBO,[<span class="attribute">WITH_CORE</span>=core_option],[<span class="attribute">LEVEL</span>=level],[<span class="attribute">KEEP_WBI</span>=wbi_option];</span><br><span class="line">SAVE,record.file;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>默认使用完全轨道空间，但是如果定义了coreoption=0，那么芯轨道可以放到流程外。</li>
+<li>用LEVEL关键词可以截选转换的轨道序列（例如，只计算NAO轨道）。如果LEVEL=1，<br>则只执行NAO转换。对于LEVEL=2，执行NBO转换，=3为NLMO（默认）。</li>
+<li>有时由于双中心键搜索顺序的错误，NBO流程可能不收敛。第一次运行基于Wiberg键级，但是在随后的运行中，算法调整到原子顺序。这可以用KEEPWBI选项避免。如果wbioption=1，那么在所有的迭代中使用Wiberg键级。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>molpro</tag>
+        <tag>电荷</tag>
       </tags>
   </entry>
 </search>

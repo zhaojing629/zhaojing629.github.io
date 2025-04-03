@@ -28,12 +28,15 @@
 <meta property="og:site_name" content="Jing&#39;s Notes">
 <meta property="og:description" content="输入文件简单学习">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/image-20240922194032566.png">
+<meta property="og:image" content="http://example.com/2024/09/13/%E3%80%90Molcas%E3%80%9101.%E5%9F%BA%E6%9C%AC%E8%BE%93%E5%85%A5/【Molcas】01.基本输入/image-20240920140606797.png">
 <meta property="article:published_time" content="2024-09-13T06:03:30.000Z">
-<meta property="article:modified_time" content="2024-09-18T06:28:33.954Z">
+<meta property="article:modified_time" content="2024-09-24T13:49:49.649Z">
 <meta property="article:author" content="Zhao Jing">
 <meta property="article:tag" content="输入">
 <meta property="article:tag" content="molcas">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/image-20240922194032566.png">
 
 <link rel="canonical" href="http://example.com/2024/09/13/%E3%80%90Molcas%E3%80%9101.%E5%9F%BA%E6%9C%AC%E8%BE%93%E5%85%A5/">
 
@@ -222,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-18 14:28:33" itemprop="dateModified" datetime="2024-09-18T14:28:33+08:00">2024-09-18</time>
+                <time title="修改时间：2024-09-24 21:49:49" itemprop="dateModified" datetime="2024-09-24T21:49:49+08:00">2024-09-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -267,14 +270,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2</span>
+              <span>9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>8 分钟</span>
             </span>
             <div class="post-description">输入文件简单学习</div>
 
@@ -287,7 +290,349 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h1>
+        <h1 id="程序基本情况"><a href="#程序基本情况" class="headerlink" title="程序基本情况"></a>程序基本情况</h1><p><img src="/image-20240922194032566.png" alt="image-20240922194032566"></p>
+<h1 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h1><ul>
+<li><code>MOLCAS</code>：Molcas的主目录。</li>
+<li><code>MOLCAS_MEM</code>：内存定义(以Mb为单位)，默认为1024。</li>
+<li><code>MOLCAS_PRINT</code>：打印级别:<code>2</code>普通，<code>3</code>冗长</li>
+<li><code>MOLCAS_PROJECT</code>：项目/文件使用的名称。</li>
+<li><code>MOLCAS_WORKDIR</code>：中间文件的临时目录。</li>
+</ul>
+<h1 id="EMIL命令"><a href="#EMIL命令" class="headerlink" title="EMIL命令"></a>EMIL命令</h1><ul>
+<li><p>简短形式：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="selector-tag">KEY</span> <span class="selector-attr">[VALUE]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更完善的形式：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;</span>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;  KEY  [VALUE]  &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span><br></pre></td></tr></table></figure>
+<p>EMIL命令不区分大小写，但命令中使用的变量必须用大写字母。此外，在命令中的元素(单词)之间放置空格也很重要。</p>
+</li>
+<li><p><code>&gt;&gt; Do While</code>：开始循环</p>
+</li>
+<li><code>&gt;&gt; Foreach</code>：在输入文件中开始对若干项进行循环。</li>
+<li><code>&gt;&gt; EndDo</code>：结束循环</li>
+<li><code>&gt;&gt; If ( condition )</code>：</li>
+<li><code>&gt;&gt; EndIf</code>：</li>
+<li><code>&gt;&gt; Label Mark</code>：在输入中设置标签“Mark”。</li>
+<li><code>&gt;&gt; Goto Mark</code>：向前跳转到标签“Mark”，跳过这部分输入。</li>
+</ul>
+<hr>
+<ul>
+<li>如果在Molcas命令中使用<code>-f</code>标志，则日志文件将以ProjectName.log和ProjectName.err的名称存储在CurrDir目录中。</li>
+</ul>
+<p>例子：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&amp;GATEWAY</span><br><span class="line"> <span class="attribute">coord</span>=water.xyz</span><br><span class="line"> <span class="attribute">basis</span>=sto-3g</span><br><span class="line">&amp;SEWARD</span><br><span class="line">&amp;SCF</span><br></pre></td></tr></table></figure>
+<h1 id="amp-GATEWAY"><a href="#amp-GATEWAY" class="headerlink" title="&amp;GATEWAY"></a><code>&amp;GATEWAY</code></h1><ul>
+<li>收集有关分子系统的信息(几何、基集、对称性)，用于未来的计算。</li>
+<li><code>&amp;GATEWAY</code>是<code>&amp;SEWARD</code>的一个子集，本模块的所有关键词也可以作为<code>&amp;SEWARD</code>的输入，但为了清晰起见，可以将分子系统的信息作为本模块的输入。</li>
+<li><code>&amp;GATEWAY</code>不计算任何积分，因此必须<font color=red>跟着<code>&amp;SEWARD</code>模块</font>的运行。<code>&amp;GATEWAY</code>破坏通信文件<code>RUNFILE</code>，如果它与几何优化结合使用，它应该在优化循环之外运行。</li>
+</ul>
+<p>例子：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&amp;GATEWAY</span><br><span class="line">Title= Water <span class="keyword">in</span> C2v symmetry - A Tutorial</span><br><span class="line">Coord = water.xyz</span><br><span class="line">Group = XY Y</span><br><span class="line">Basis <span class="builtin-name">Set</span> = O.ANO-S-MB,H.ANO-S-MB</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>常用的关键词：</p>
+<ul>
+<li><p><code>TITLE</code></p>
+</li>
+<li><p><code>TEST</code>： <code>&amp;GATEWAY</code>将仅处理输入并生成非零返回代码。</p>
+</li>
+<li><p><strong><code>Coord</code></strong></p>
+</li>
+<li><p><code>EXPErt</code></p>
+</li>
+<li><p><code>BASDIR</code></p>
+</li>
+<li><p><code>BASLIB</code></p>
+</li>
+<li><strong><code>BASIs Set</code></strong></li>
+<li><strong><code>Group</code></strong></li>
+<li><code>SYMMetry</code></li>
+<li><p><code>RICD</code>：动态辅助基组</p>
+</li>
+<li><p><code>RTRN</code></p>
+</li>
+<li><p><code>ISOTopes</code></p>
+</li>
+<li><p><code>ECPShow</code>：强制 <code>&amp;GATEWAY</code>打印ECP参数</p>
+</li>
+<li><p><code>AUXShow</code>：强制 <code>&amp;GATEWAY</code>打印辅助基组参数</p>
+</li>
+<li><p><code>BSSHow</code>：强制 <code>&amp;GATEWAY</code>打印基组参数</p>
+</li>
+<li><p><code>VERBose</code>：强制 <code>&amp;GATEWAY</code>打印更详细的内容。</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong><code>&amp;GATEWAY</code>的输出：</strong><ul>
+<li>包含对称字符表、基组信息和输入原子中心。基组信息列出了指数和收缩系数以及所使用的高斯函数的类型（笛卡尔函数、球函数或污染函数）。</li>
+<li>核间距离和价键角（包括二面角）显示在基组信息之后。惯性和刚性转子分析也与定时信息一起包含在输出中。</li>
+<li>对于确定 Molcas 模块 SCF 的输入有用的输出部分是对称自适应基函数，它出现在输出的 <code>&amp;GATEWAY</code> 部分末尾附近。 SCF 教程对此进行了更详细的介绍。</li>
+<li><code>&amp;GATEWAY</code> 模块生成的最重要的文件是 <code>RUNFILE</code>，是用于在各个 Molcas 程序模块之间传输数据的通用 Molcas 通信文件。许多程序模块将数据添加到  <code>RUNFILE</code> 中，这些数据可以在其他模块中使用。每次运行 <code>&amp;GATEWAY</code> 时都会生成一个新的  <code>RUNFILE</code>。最后应该提到的是，为了向后兼容，可以在不调用 <code>&amp;GATEWAY</code> 的情况下运行 MOLCAS。然后相应的输入和输出将由程序 <code>&amp;SEWARD</code> 处理。</li>
+</ul>
+</li>
+</ul>
+<h2 id="几何、对称性和基组"><a href="#几何、对称性和基组" class="headerlink" title="几何、对称性和基组"></a>几何、对称性和基组</h2><p>一共有三种方式指定</p>
+<h3 id="Z-matrix-and-XYZ-input"><a href="#Z-matrix-and-XYZ-input" class="headerlink" title="Z-matrix and XYZ input"></a>Z-matrix and XYZ input</h3><p>有时，以标准形式的 Z 矩阵或笛卡尔坐标设置坐标信息会更方便。在这种情况下，原子的基组应在 <code>XBAS</code> 关键字之后指定。之后，应出现 <code>ZMAT</code> 或 <code>XYZ</code> 来指定坐标。请注意，这些格式中的坐标使用 ångström 作为单位。</p>
+<ul>
+<li><p>基组<code>XBAS</code> 例子：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">XBAS</span>=STO-<span class="number">3</span>G</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">XBAS</span><br><span class="line">C.STO<span class="number">-3</span>G</span><br><span class="line">H.STO<span class="number">-3</span>G</span><br><span class="line">End of basis</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Z矩阵 <code>ZMAT</code> 形式例子：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">ZMAT</span></span><br><span class="line"><span class="attribute">C1</span></span><br><span class="line"><span class="attribute">O2</span>      <span class="number">1</span>   <span class="number">1</span>.<span class="number">40000</span></span><br><span class="line"><span class="attribute">C3</span>      <span class="number">1</span>   <span class="number">1</span>.<span class="number">45000</span>   <span class="number">2</span>   <span class="number">109</span>.<span class="number">471</span></span><br><span class="line"><span class="attribute">H4</span>      <span class="number">1</span>   <span class="number">1</span>.<span class="number">08900</span>   <span class="number">2</span>   <span class="number">109</span>.<span class="number">471</span>     <span class="number">3</span>   <span class="number">120</span>.<span class="number">000</span></span><br><span class="line"><span class="attribute">Cl5</span>     <span class="number">1</span>   <span class="number">1</span>.<span class="number">75000</span>   <span class="number">2</span>   <span class="number">109</span>.<span class="number">471</span>     <span class="number">3</span>  -<span class="number">120</span>.<span class="number">000</span></span><br><span class="line"><span class="attribute">H6</span>      <span class="number">2</span>   <span class="number">0</span>.<span class="number">94700</span>   <span class="number">1</span>   <span class="number">109</span>.<span class="number">471</span>     <span class="number">3</span>   <span class="number">180</span>.<span class="number">000</span></span><br><span class="line"><span class="attribute">H7</span>      <span class="number">3</span>   <span class="number">1</span>.<span class="number">08900</span>   <span class="number">1</span>   <span class="number">109</span>.<span class="number">471</span>     <span class="number">2</span>   <span class="number">180</span>.<span class="number">000</span></span><br><span class="line"><span class="attribute">H8</span>      <span class="number">3</span>   <span class="number">1</span>.<span class="number">08900</span>   <span class="number">1</span>   <span class="number">109</span>.<span class="number">471</span>     <span class="number">7</span>   <span class="number">120</span>.<span class="number">000</span></span><br><span class="line"><span class="attribute">H9</span>      <span class="number">3</span>   <span class="number">1</span>.<span class="number">08900</span>   <span class="number">1</span>   <span class="number">109</span>.<span class="number">471</span>     <span class="number">7</span>   <span class="number">240</span>.<span class="number">000</span></span><br><span class="line"><span class="attribute">End</span> of z-matrix</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>笛卡尔坐标形式 <code>XYZ</code> 例子</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">XBAS</span>=STO-<span class="number">3</span>G</span><br><span class="line"><span class="attr">XYZ</span>=<span class="variable">$CurrDir</span>/Water.xyz</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">XBAS</span>=STO-3G</span><br><span class="line">XYZ</span><br><span class="line">1</span><br><span class="line"><span class="built_in"> note </span>angstrom units!</span><br><span class="line">C 0 0 0</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>XYZ</code> 关键字不进行对称操作，并且计算始终在不对称的情况下执行。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Advanced-XYZ-input"><a href="#Advanced-XYZ-input" class="headerlink" title="Advanced XYZ input"></a>Advanced XYZ input</h3><ul>
+<li><p>默认单位是Å。默认情况下，使用最大可能的对称性。</p>
+</li>
+<li><p>Molcas的xyz文件形式：</p>
+<ul>
+<li>第一行包含原子的数目。</li>
+<li>第二行（注释行）可以包含“a.u.”或“bohr”使用原子单位，而不是默认的ångströms。此行还可以包含关键字 <code>TRANS</code>，后跟 3 个数字和/或 <code>ROT</code>，后跟 9 个数字（在这种情况下，坐标将由指定向量平移和/或旋转）和 <code>SCALE</code>（或 <code>SCALEX</code>、<code>SCALEY</code>、<code>SCALEZ</code>）随后是比例因子。</li>
+<li>其余的行用于指定元素和笛卡尔坐标。<ul>
+<li>元素名称后面可以选择<strong>跟随数字</strong>（例如 H7）、标签（<strong>用 _ 分隔</strong>：例如 H_INNER）或基组（<strong>用 . 分隔</strong>，例如 H.STO-3G）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>BASIS</code>：单个实例限制为80个字符，但关键字可以多次给出</p>
+</li>
+<li><p>例子：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">COORD</span></span><br><span class="line"><span class="attribute">4</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">C</span>           <span class="number">0</span>.<span class="number">00000</span> <span class="number">0</span>.<span class="number">00000</span> <span class="number">0</span>.<span class="number">00000</span></span><br><span class="line"><span class="attribute">H</span>           <span class="number">1</span>.<span class="number">00000</span> <span class="number">0</span>.<span class="number">00000</span> <span class="number">0</span>.<span class="number">00000</span></span><br><span class="line"><span class="attribute">H</span>           <span class="number">0</span>.<span class="number">00000</span> <span class="number">1</span>.<span class="number">00000</span> <span class="number">0</span>.<span class="number">00000</span></span><br><span class="line"><span class="attribute">H</span>           <span class="number">0</span>.<span class="number">00000</span> <span class="number">0</span>.<span class="number">00000</span> <span class="number">1</span>.<span class="number">00000</span></span><br><span class="line"><span class="attribute">BASIS</span></span><br><span class="line"><span class="attribute">STO</span>-<span class="number">3</span>G, H.<span class="number">6</span>-<span class="number">31</span>G*</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">BASIS</span><br><span class="line">STO<span class="number">-3</span>G</span><br><span class="line">BASIS</span><br><span class="line">H<span class="number">.6</span><span class="number">-31</span>G*</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>GROUP</code>：后面可以跟随</p>
+<ul>
+<li><code>FULL</code>：默认，用D2h可能的最大子群</li>
+<li><code>NOSYM</code>：等同于<code>E</code>或者<code>C1</code></li>
+<li>空格分隔的对称元素列表：比如<code>X XY</code>，Molcas支持的对称性和生成器列表如下：</li>
+</ul>
+<p><img src="【Molcas】01.基本输入/image-20240920140606797.png" alt="image-20240920140606797"></p>
+</li>
+<li><p>默认情况下，分子的坐标可能会发生变化去保持最高对称性，比如以下的水分子在C2v对称性的阈值中，坐标就会被转换。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&amp;gateway</span></span><br><span class="line"><span class="string">coord</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="string">O</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line"><span class="string">H</span> <span class="number">1.0000001</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line"><span class="string">H</span> <span class="number">0</span> <span class="number">1</span> <span class="number">0.0000001</span></span><br><span class="line"><span class="meta">*nomove</span></span><br><span class="line"><span class="string">*group=c1</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果激活了<code>nomove</code>，分子就不会被旋转，xy对称面是唯一的对称元素，H原子的位置也会略微改变</li>
+<li>如果激活了<code>group=c1</code>，几何才会完全不变。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Native-input"><a href="#Native-input" class="headerlink" title="Native input"></a>Native input</h3><ul>
+<li><p>默认单位是原子单位</p>
+</li>
+<li><p><code>SYMMetry</code>：对称元素列表，默认没有对称性</p>
+</li>
+<li><p><code>BASIs Set</code>：下一行始终包含基组标签，始终以<code>End of Basis</code>结束</p>
+<ul>
+<li></li>
+<li><p>例子：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&amp;GATEWAY</span><br><span class="line">Title</span><br><span class="line">formaldehyde</span><br><span class="line">SYMMETRY</span><br><span class="line">X Y</span><br><span class="line">Basis <span class="keyword">set</span></span><br><span class="line">H.STO<span class="number">-3</span>G....</span><br><span class="line">H1           <span class="number">0.000000</span>    <span class="number">0.924258</span>   <span class="number">-1.100293</span> /angstrom</span><br><span class="line">End of basis</span><br><span class="line"></span><br><span class="line">Basis <span class="keyword">set</span></span><br><span class="line">C.STO<span class="number">-3</span>G....</span><br><span class="line">C3           <span class="number">0.000000</span>    <span class="number">0.000000</span>   <span class="number">-0.519589</span> /angstrom</span><br><span class="line">End of basis</span><br><span class="line"></span><br><span class="line">Basis <span class="keyword">set</span></span><br><span class="line">O.STO<span class="number">-3</span>G....</span><br><span class="line">O            <span class="number">0.000000</span>    <span class="number">0.000000</span>    <span class="number">0.664765</span> /angstrom</span><br><span class="line">End of basis</span><br><span class="line"></span><br><span class="line">End of input</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>其他关键词：</p>
+<ul>
+<li><p><code>SYMThreshold</code>：后跟一个实数 — 对称识别的阈值（默认为 0.01 Å）</p>
+</li>
+<li><p><code>CSPF</code></p>
+</li>
+<li><p><code>MOVE</code>：允许平移和旋转分子以找到最高可能的对称性。除了C1，对所有对称性都是默认的。</p>
+</li>
+<li><p><code>NOMOVE</code>：不允许在搜索最高组时转换坐标，C1是默认的</p>
+</li>
+<li><p><code>BSSE</code>：<code>&amp;GATEWAY</code>可以处理多个坐标文件，方便计算BSSE校正量。<code>BSSE</code>后面跟着一个数字，这标志着XYZ文件应该被视为虚拟原子。例如：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&amp;GATEWAY</span><br><span class="line">coord = ethanol.xyz</span><br><span class="line">coord = water.xyz</span><br><span class="line">bsse  = 1</span><br><span class="line">basis = ANO-S-MB</span><br><span class="line">NOMOVE</span><br><span class="line">&amp;SEWARD; &amp;SCF</span><br><span class="line">&amp;GRID_IT</span><br><span class="line">NAME = water</span><br><span class="line">***************</span><br><span class="line">&amp;GATEWAY</span><br><span class="line">coord = ethanol.xyz</span><br><span class="line">coord = water.xyz</span><br><span class="line">bsse  = 2</span><br><span class="line">basis = ANO-S-MB</span><br><span class="line">NOMOVE</span><br><span class="line">&amp;SEWARD; &amp;SCF</span><br><span class="line">&amp;GRID_IT</span><br><span class="line">NAME = ethanol</span><br><span class="line">**************</span><br><span class="line">&amp;GATEWAY</span><br><span class="line">coord = ethanol.xyz</span><br><span class="line">coord = water.xyz</span><br><span class="line">basis = ANO-S-MB</span><br><span class="line">NOMOVE</span><br><span class="line">&amp;SEWARD; &amp;SCF</span><br><span class="line">&amp;GRID_IT</span><br><span class="line">NAME = akvavit</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>VART</code></p>
+</li>
+<li><code>VARR</code></li>
+<li><code>NUMErical</code>：即使解析梯度可用，也强制计算数值梯度。</li>
+<li><code>SHAKe</code>：</li>
+</ul>
+</li>
+</ul>
+<h2 id="基组"><a href="#基组" class="headerlink" title="基组"></a>基组</h2><ul>
+<li>Molcas 的基组库包含一组广泛的基组，包括segmented和generally收缩基组。<ul>
+<li>Molcas自带基组基于原子自然轨道 (ANO) 概念，并标记为 ANO-X（X=S、L 或 RCC）。</li>
+<li>专门为计算分子电特性（POL）而设计的第四基组。</li>
+</ul>
+</li>
+<li>除此之外，还包括segmented标准基组的子集，如STO-3G、3-21G、4-31G、6-31G、6-31G<em>、6-31G*</em>、cc-pVXZ (X=D,T,Q)、aug-cc-pVXZ (X=D,T)。</li>
+<li>还包含Turbomole RI基组的不同变体。</li>
+<li>所有基组都存储在 <code>basic_library</code> 目录中。可以在此目录中的文件 <code>basictype.tbl</code> 中找到不同类型的可用基组。文件 <code>basic.tbl</code> 中列出了名称的别名。</li>
+<li><font color=red>找出可用的基组的最佳方法是发出命令 <code>pymolcas help_basis X</code>，其中 X 是原子。</font><ul>
+<li>请注意，速记符号可用于大多数基组：例如 ANO-L-VTZP 将给出具有偏振函数的价三重 zeta 精度的基组。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p>ANO-S：最小的原子自然轨道 (ANO) 基组可用于原子 H–Kr。</p>
+</li>
+<li><p>ANO-L：原子 H-Zn（不包括 K 和 Ca）</p>
+<ul>
+<li>建议至少使用两个极化 (3d/4f) 函数，因为<strong>其中一个用于极化，第二个用于相关</strong>。如果仅使用一个 3d/4f 型函数，则必须决定其用途并相应地调整指数和收缩。这里，这两种效应由前两个 3d/4f 型 ANO 共同描述（对于氢 2p 型 ANO 也是如此）。</li>
+</ul>
+</li>
+<li><p>ANP-RCC：用于原子 H–Cm，只能用于包含标量相对论效应的计算。</p>
+<ul>
+<li><p>当使用这些基组时，<code>&amp;Seward</code> 将自动识别这一点并打开 <code>DK</code> 选项</p>
+</li>
+<li><p>输入文件中的写法是:</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Atom.<span class="keyword">ANO</span>-RCC…contracted <span class="keyword">set</span>. (<span class="keyword">Note</span> the last dot!).</span><br><span class="line">Atom.<span class="keyword">ANO</span>-RCC-<span class="keyword">label</span>, where <span class="keyword">label</span> is <span class="keyword">one</span> of MB, VDZ, VDZP, VTZP, or VQZP.</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="辅助基组"><a href="#辅助基组" class="headerlink" title="辅助基组"></a>辅助基组</h2><p>所谓的身份解析 (RI) 技术（也称为密度拟合，DF）是在 Molcas 包中实现的。此选项涉及在 2 电子积分的有效计算中使用辅助基组。 Molcas 结合了传统计算、外部提供的辅助基组（RIJ、RIJK 和 RIC 类型）以及即时生成的辅助基组（on-the-fly generated auxiliary basis sets）的使用。后者是基于 Cholesky 分解方法（Cholesky decomposition method）的 atomic CD (aCD) 或atomic compact CD (acCD) 基组。外部提供的辅助基组非常紧凑，因为它们是为特殊波函数方法量身定制的。然而，它们并未针对所有可用的价基组提供。 aCD 或 acCD RI 辅助基组是更通用的选项，为任何波函数模型和价基组提供辅助基组。</p>
+<ul>
+<li><font color=red>如果 <code>MOLCAS_NEW_DEFAULTS</code> 设置为 <code>YES</code>，acCD RI (RICD) 将默认启用，可以通过 <code>NOCD</code> 禁用</font>。</li>
+<li>也可以直接在<code>&amp;GATEWAY</code>中使用<code>RICD</code>关键词</li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li><p>请注意，要使用<strong>虚原子</strong>，用户应使用基组标签“<code>X....</code>”。这将意味着没有电荷也没有基函数。</p>
+</li>
+<li><p>坐标文件可能包含变量，例如：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&gt;&gt;FILE</span> <span class="string">H2.input</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="string">scale</span> <span class="string">$DD</span></span><br><span class="line"><span class="string">H</span> <span class="number">0.35</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line"><span class="string">H</span> <span class="number">-0.35</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line"><span class="string">&gt;&gt;EOF</span></span><br><span class="line"></span><br><span class="line"><span class="string">&gt;&gt;</span> <span class="string">FOREACH</span> <span class="string">DD</span> <span class="string">IN</span> <span class="string">(</span> <span class="number">0.9</span> <span class="number">1.0</span> <span class="number">1.1</span> <span class="string">)</span></span><br><span class="line"><span class="meta">&amp;GATEWAY</span></span><br><span class="line"><span class="string">COORD=$WorkDir/H2.input</span></span><br><span class="line"><span class="string">BASIS=STO-3G</span></span><br><span class="line"><span class="meta">&amp;SEWARD</span></span><br><span class="line"><span class="meta">&amp;SCF</span></span><br><span class="line"><span class="string">&gt;&gt;ENDDO</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>XYZ文件中的原子名可以包含一个轨道标签(以简化不同基组的分配)。比如：</p>
+<ul>
+<li><code>C_SMALL</code>，然后再<code>BASIS=C_SMALL.ANO-S-MB</code>. 也可以直接：</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">COORD</span><br><span class="line"><span class="number">1</span></span><br><span class="line"></span><br><span class="line">O.ANO-S-VDZP <span class="number">0</span> <span class="number">0</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>XYZ文件也可以包含有关点<strong>电荷</strong>的信息。在 XYZ 文件中设置原子电荷有三种可能性：</p>
+<ul>
+<li>主要的选择是使用<code>Q</code>作为元素名称，应该指定第四个数字，即电荷</li>
+<li><p>另一种可能是使用以负号结尾的元素名，使用元素的形式电荷，比如：</p>
+<ul>
+<li><code>H-</code>， Li-， <code>Na-</code>， <code>K-</code>定义+1</li>
+<li><code>Mg-</code>、<code>Ca-</code>定义+2</li>
+<li><code>Al-</code>定义+3</li>
+<li><code>C-</code>、<code>Si-</code>定义+4</li>
+<li><code>F-</code>、<code>Cl-</code>、<code>Br-</code>、<code>I-</code>定义-1</li>
+<li><code>O-</code>、<code>S-</code>定义-2</li>
+</ul>
+</li>
+<li><p>在XYZ文件- <code>CLUSTER</code>的注释行上加上一个标签，后面跟着一个整数，可以指定有多少原子是“真实的”，因此其余的原子将被视为带有该元素默认值的电荷。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="amp-SEWARD"><a href="#amp-SEWARD" class="headerlink" title="&amp;SEWARD"></a><code>&amp;SEWARD</code></h1><ul>
+<li><code>&amp;SEWARD</code>模块生成所需的单电子和双电子积分</li>
+<li>除了标准输出文件外，<code>&amp;SEWARD</code>还可以生成以下文件：ONEINT、ORDINT、CHVEC、CHRED、CHORST、CHOMAP、CHOR2F，<ul>
+<li>比如<code>$Project.OneInt</code>和<code>$Project.OrdInt</code>（这仅适用于非 Cholesky 类型的计算）</li>
+<li>ONEINT 文件包含单电子积分。 ORDINT 包含有序且压缩的二电子积分。</li>
+<li>。</li>
+</ul>
+</li>
+</ul>
+<h1 id="amp-SCF"><a href="#amp-SCF" class="headerlink" title="&amp;SCF"></a><code>&amp;SCF</code></h1><ul>
+<li>Molcas 实现执行闭壳层（所有电子在轨道中配对）和开壳层（无限制 Hartree-Fock）计算。如果没有给出输入，程序将计算中性分子的 SCF 能量，其中轨道占据给出最低能量。<ul>
+<li>闭壳层计算一般不需要其他关键词</li>
+<li><code>UHF</code>计算<ul>
+<li>可以将 UHF 与关键字 <code>Charge</code> 或 <code>Aufbau</code> 一起使用，指定关键字 <code>ZSPIN</code> 。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>无法使用 SCF 执行受限开壳 Hartree–Fock (ROHF) 计算。这是使用 RASSCF 程序来完成的。</li>
+<li>SCF 程序还可用于使用 Kohn Sham 密度泛函理论 (DFT) 执行计算。要进行密度泛函理论计算，</li>
+</ul>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>会输出以下文件：</p>
+<ul>
+<li><code>SCFORB</code>：SCF 轨道输出文件。包含用于闭壳计算的规范 Hartree-Fock 轨道。可以在后续的 Molcas 模块中使用。</li>
+<li><code>UHFORB</code>：开壳层计算的正则 Hartree-Fock 轨道。</li>
+<li><code>UNAORB</code>：UHF计算的自然轨道</li>
+<li><code>MD_SCF</code>：用于分子轨道分析的 Molden 输入文件。</li>
+</ul>
+<h2 id="DFT计算"><a href="#DFT计算" class="headerlink" title="DFT计算"></a>DFT计算</h2><ul>
+<li><p>关键字 <code>KSDFT</code> 必须在下一行中紧跟输入部分中列出的可用泛函名称。目前提供以下功能关键字：BLYP、B3LYP、B3LYP5、HFB、HFS、LDA、LDA5、LSDA、LSDA5、SVWN、SVWN5、TLYP、PBE、PBE0、M06、M06HF、M062X、M06L。例子：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">KSDFT</span>= B<span class="number">3</span>LYP<span class="number">5</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">KSDFT</span>=HYB_GGA_XC_B<span class="number">3</span>LYP      * A Libxc functional name</span><br><span class="line"></span><br><span class="line"><span class="attribute">KSDFT</span>=<span class="number">5</span>                     * Five components with their weights</span><br><span class="line">      <span class="attribute">0</span>.<span class="number">20</span> HF_X             * Keyword for exact exchange</span><br><span class="line">      <span class="attribute">0</span>.<span class="number">08</span> XC_LDA_X         * Libxc functional names</span><br><span class="line">      <span class="attribute">0</span>.<span class="number">72</span> XC_GGA_X_B<span class="number">88</span>     *  .</span><br><span class="line">      <span class="attribute">0</span>.<span class="number">19</span> XC_LDA_C_VWN_RPA *  .</span><br><span class="line">      <span class="attribute">0</span>.<span class="number">81</span> XC_GGA_C_LYP     *  .</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>pymolcas help_func</code>查看都有哪些泛函可用</p>
+</li>
+</ul>
+<h2 id="电子结构指定"><a href="#电子结构指定" class="headerlink" title="电子结构指定"></a>电子结构指定</h2><h3 id="ZSPIN"><a href="#ZSPIN" class="headerlink" title="ZSPIN"></a><code>ZSPIN</code></h3><ul>
+<li>设置为 alpha 和 beta 电子之间的差异</li>
+</ul>
+<h3 id="CHARge"><a href="#CHARge" class="headerlink" title="CHARge"></a><code>CHARge</code></h3><p>使用该关键字设置系统中的电子数。该数字是通过给出系统的净电荷来定义的。如果未指定此关键字，则假定分子的净电荷为零。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Charge</span>=n</span><br></pre></td></tr></table></figure>
+<h3 id="OCCUpied"><a href="#OCCUpied" class="headerlink" title="OCCUpied"></a><code>OCCUpied</code></h3><ul>
+<li><p>使用该关键字设置系统中的电子数。通过给出D2h子群的每个不可约表示的电子对数量来定义的 </p>
+</li>
+<li><p><code>OCCUpied</code>和<code>charge</code>可以只用一个，如果都没有默认电荷为0</p>
+</li>
+<li><p>指定此关键字时，不会使用“Fermi aufbau”过程。</p>
+</li>
+<li><p>例：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">OCCUpied</span>= n<span class="number">1</span> n<span class="number">2</span> n<span class="number">3</span> n<span class="number">4</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>n1代表第一个不可约表示占据轨道上的电子对数</li>
+<li>如果指定了 <code>UHF</code> 关键字，则必须在两行中指定<code>OCCUpied</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="OCCNumbers"><a href="#OCCNumbers" class="headerlink" title="OCCNumbers"></a><code>OCCNumbers</code></h3><ul>
+<li><p>可以指定0和2之外的占据数，对于生成开壳情况的起始轨道非常有用。对于<code>UHF</code>计算要指定两条</p>
+</li>
+<li><p>例：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&amp;SCF</span></span><br><span class="line"><span class="string">TITLE</span></span><br><span class="line"> <span class="string">NiH</span> <span class="string">G.S.</span></span><br><span class="line"><span class="string">OCCUPIED</span></span><br><span class="line"> <span class="number">8</span> <span class="number">3</span> <span class="number">3</span> <span class="number">1</span></span><br><span class="line"><span class="string">OCCNumber</span></span><br><span class="line"><span class="number">2.0</span> <span class="number">2.0</span> <span class="number">2.0</span> <span class="number">2.0</span> <span class="number">2.0</span> <span class="number">2.0</span> <span class="number">2.0</span> <span class="number">2.0</span></span><br><span class="line"><span class="number">2.0</span> <span class="number">2.0</span> <span class="number">2.0</span></span><br><span class="line"><span class="number">2.0</span> <span class="number">2.0</span> <span class="number">2.0</span></span><br><span class="line"><span class="number">1.0</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="SCRAmble"><a href="#SCRAmble" class="headerlink" title="SCRAmble"></a><code>SCRAmble</code></h3><p>对于开壳层单重态可能比较有用，默认值为0.2，表最大的旋转角为arcsin 0.2。</p>
+<h3 id="IVO"><a href="#IVO" class="headerlink" title="IVO"></a><code>IVO</code></h3><p>指定要改进虚拟轨道以用于后续 MCSCF 计算。核心哈密顿量在虚拟轨道子空间内对角化，从而产生尽可能紧凑的轨道，但约束条件是它们必须与占据的轨道正交。请注意，每当 Hartree-Fock 波函数本身用作后续计算中的参考时，不得使用此选项。比如MP2或者CC计算等。</p>
+<h2 id="初猜"><a href="#初猜" class="headerlink" title="初猜"></a>初猜</h2><h3 id="LUMOrb"><a href="#LUMOrb" class="headerlink" title="LUMOrb"></a><code>LUMOrb</code></h3><ul>
+<li>如果没有其他说明，SCF 程序将使用 SEWARD 生成的猜测轨道作为输入轨道，内部名称为 <code>GUESSORB</code></li>
+<li>如果想要为 SCF 程序使用任何其他输入轨道，则必须使用选项 <code>LUMOrb</code>。相应的文件应复制到内部文件<code>*.INPORB</code>。即：起始向量取自先前名为 INPORB 的 SCFORB 文件。<ul>
+<li>比如：这可以是由早期 SCF 计算 $Project.ScfOrb 生成的轨道文件。只需将文件复制或链接为 <code>*.INPORB</code>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="FILEORB"><a href="#FILEORB" class="headerlink" title="FILEORB"></a><code>FILEORB</code></h3><ul>
+<li>起始向量取自用户指定的先前 SCFORB 文件。</li>
+</ul>
+<h2 id="打印"><a href="#打印" class="headerlink" title="打印"></a>打印</h2><ul>
+<li><p><code>PRORbitals</code>：指定要在日志文件（标准输出）中打印哪些轨道。默认是1。</p>
+<ul>
+<li><p><code>0</code>：不打印任何轨道</p>
+</li>
+<li><p><code>1</code>：打印轨道能量小于<script type="math/tex">2E_{HOMO}-E_{LUMO}</script>的</p>
+</li>
+<li><p><code>2</code>：后面接实数(ThrEne);轨道能量小于ThrEne的轨道被打印出来。</p>
+</li>
+<li><p>第二个（可选）参数指定格式：对于少量 MO，默认值为 3；对于 MO 数量 &gt; 256，默认值为 2。</p>
+<ul>
+<li><code>0</code>：不打印</li>
+<li><code>1</code>：仅打印单电子能量和占据数</li>
+<li><code>2</code>：短打印格式</li>
+<li><code>3</code>：扩展打印格式</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Prorbitals </span><br><span class="line"><span class="number">2</span> <span class="number">1.</span>d+<span class="number">10</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="amp-MBPT2-MP2计算"><a href="#amp-MBPT2-MP2计算" class="headerlink" title="&amp;MBPT2-MP2计算"></a><code>&amp;MBPT2</code>-MP2计算</h1><ul>
+<li><code>FREEze</code>：指定冻结占据轨道的总数。然后自动识别并冻结能量最低的占据轨道。该关键字采用一个整数作为参数。与 <code>FROZen</code> 关键字不兼容。</li>
+<li><code>FROZen</code> ：指定表示系统的 D2h 子群的每个不可约表示 (irreps) 中冻结占据轨道的数量。与 <code>FREEze</code> 关键字不兼容。默认是冻结非价轨道。</li>
+<li><code>sFrozen</code>：指定特定的冻结轨道。第一行代表Frozn中的，后面几行代表每个对称性冻结的哪个轨道。</li>
+</ul>
+<p>例子：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&amp;MBPT2</span><br><span class="line">Title</span><br><span class="line"> H2O:  O(<span class="number">9.5</span>/<span class="number">4.2</span>), H(<span class="number">4</span>/<span class="number">2</span>)</span><br><span class="line">* The lowest energy occupied orbital <span class="keyword">in</span> the repr. no<span class="number">.1</span> will be frozen <span class="keyword">in</span></span><br><span class="line">* MBPT2 calculations. The number of representations <span class="keyword">is</span> <span class="number">4</span> <span class="keyword">and</span> all zeros</span><br><span class="line">* must be explicitly given</span><br><span class="line">Frozen</span><br><span class="line"><span class="number">1</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line">* Two highest energy <span class="keyword">external</span> orbitals <span class="keyword">in</span> the repr. no<span class="number">.3</span> will be deleted</span><br><span class="line">* <span class="keyword">in</span> MBPT2 calculations. The number of representations <span class="keyword">is</span> <span class="number">4</span> <span class="keyword">and</span> all</span><br><span class="line">* zeros must be explicitly given</span><br><span class="line">Deleted</span><br><span class="line"><span class="number">0</span> <span class="number">0</span> <span class="number">2</span> <span class="number">0</span></span><br><span class="line">* One occupied orbital <span class="keyword">in</span> symmetry no<span class="number">.1</span> will be additionally frozen by</span><br><span class="line">* using the SFRO option. Let it be the third SCF occupied orbital <span class="keyword">in</span></span><br><span class="line">* <span class="keyword">this</span> symmetry</span><br><span class="line">sFrozen</span><br><span class="line"><span class="number">1</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>   <span class="comment">// Gives the number of frozen orbitals in each symmetry</span></span><br><span class="line"><span class="number">3</span>         <span class="comment">// Gives the frozen orbital reference number in symmetry no. 1</span></span><br><span class="line">* Two <span class="keyword">external</span> orbitals <span class="keyword">in</span> symmetry no<span class="number">.1</span> <span class="keyword">and</span> one <span class="keyword">external</span> orbital <span class="keyword">in</span></span><br><span class="line">* symmetry <span class="number">3</span> will be deleted. In symmetry <span class="number">1</span> let it be the second <span class="keyword">and</span></span><br><span class="line">* third <span class="keyword">external</span> orbitals, <span class="keyword">and</span> <span class="keyword">in</span> symmetry <span class="number">3</span> the third (already deleted</span><br><span class="line">* <span class="keyword">in</span> by using the option DELE) <span class="keyword">external</span> orbital</span><br><span class="line">sDeleted</span><br><span class="line"><span class="number">2</span> <span class="number">0</span> <span class="number">1</span> <span class="number">0</span>   <span class="comment">// Gives the number of orbitals to be deleted in each symmetry</span></span><br><span class="line"><span class="number">2</span> <span class="number">3</span>       <span class="comment">// Gives the reference numbers of external orbitals in sym. 1</span></span><br><span class="line"><span class="number">3</span>         <span class="comment">// Gives the reference number of the external orb. in sym. 3</span></span><br></pre></td></tr></table></figure>
+
     </div>
 
     
@@ -342,7 +687,10 @@
     <a href="/2024/08/04/%E3%80%90ORCA%E3%80%9109.%E5%AF%B9%E7%A7%B0%E6%80%A7%E7%A0%B4%E7%BC%BA%E8%AE%A1%E7%AE%97/" rel="prev" title="【ORCA】09.对称性破缺计算">
       <i class="fa fa-chevron-left"></i> 【ORCA】09.对称性破缺计算
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2024/09/24/%E3%80%90Molcas%E3%80%9102.RASSCF/" rel="next" title="【Molcas】02.RASSCF">
+      【Molcas】02.RASSCF <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -402,7 +750,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%93%E5%85%A5"><span class="nav-number">1.</span> <span class="nav-text">输入</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E5%9F%BA%E6%9C%AC%E6%83%85%E5%86%B5"><span class="nav-number">1.</span> <span class="nav-text">程序基本情况</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">2.</span> <span class="nav-text">环境变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#EMIL%E5%91%BD%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">EMIL命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#amp-GATEWAY"><span class="nav-number">4.</span> <span class="nav-text">&amp;GATEWAY</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%A0%E4%BD%95%E3%80%81%E5%AF%B9%E7%A7%B0%E6%80%A7%E5%92%8C%E5%9F%BA%E7%BB%84"><span class="nav-number">4.1.</span> <span class="nav-text">几何、对称性和基组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Z-matrix-and-XYZ-input"><span class="nav-number">4.1.1.</span> <span class="nav-text">Z-matrix and XYZ input</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Advanced-XYZ-input"><span class="nav-number">4.1.2.</span> <span class="nav-text">Advanced XYZ input</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Native-input"><span class="nav-number">4.1.3.</span> <span class="nav-text">Native input</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%BB%84"><span class="nav-number">4.2.</span> <span class="nav-text">基组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%85%E5%8A%A9%E5%9F%BA%E7%BB%84"><span class="nav-number">4.3.</span> <span class="nav-text">辅助基组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">4.4.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#amp-SEWARD"><span class="nav-number">5.</span> <span class="nav-text">&amp;SEWARD</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#amp-SCF"><span class="nav-number">6.</span> <span class="nav-text">&amp;SCF</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%87%BA"><span class="nav-number">6.1.</span> <span class="nav-text">输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DFT%E8%AE%A1%E7%AE%97"><span class="nav-number">6.2.</span> <span class="nav-text">DFT计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%B5%E5%AD%90%E7%BB%93%E6%9E%84%E6%8C%87%E5%AE%9A"><span class="nav-number">6.3.</span> <span class="nav-text">电子结构指定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ZSPIN"><span class="nav-number">6.3.1.</span> <span class="nav-text">ZSPIN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CHARge"><span class="nav-number">6.3.2.</span> <span class="nav-text">CHARge</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OCCUpied"><span class="nav-number">6.3.3.</span> <span class="nav-text">OCCUpied</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OCCNumbers"><span class="nav-number">6.3.4.</span> <span class="nav-text">OCCNumbers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SCRAmble"><span class="nav-number">6.3.5.</span> <span class="nav-text">SCRAmble</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IVO"><span class="nav-number">6.3.6.</span> <span class="nav-text">IVO</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E7%8C%9C"><span class="nav-number">6.4.</span> <span class="nav-text">初猜</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LUMOrb"><span class="nav-number">6.4.1.</span> <span class="nav-text">LUMOrb</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FILEORB"><span class="nav-number">6.4.2.</span> <span class="nav-text">FILEORB</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%8D%B0"><span class="nav-number">6.5.</span> <span class="nav-text">打印</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#amp-MBPT2-MP2%E8%AE%A1%E7%AE%97"><span class="nav-number">7.</span> <span class="nav-text">&amp;MBPT2-MP2计算</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -418,7 +766,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-count">75</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -429,7 +777,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -458,7 +806,7 @@
     <h3 class="widget-title"></h3>
     <div id="myCanvasContainer" class="widget tagcloud">
         <canvas width="250" height="250" id="resCanvas" style="width=100%">
-            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ADF/" rel="tag">ADF</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AIM/" rel="tag">AIM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AMS/" rel="tag">AMS</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASPT2/" rel="tag">CASPT2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASSCF/" rel="tag">CASSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDA/" rel="tag">CDA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CP2K/" rel="tag">CP2K</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CT/" rel="tag">CT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DLPNO/" rel="tag">DLPNO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gaussian/" rel="tag">Gaussian</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HF/" rel="tag">HF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hatree-Fock/" rel="tag">Hatree-Fock</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jahn-Teller/" rel="tag">Jahn-Teller</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jmol/" rel="tag">Jmol</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LmodeA/" rel="tag">LmodeA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCSCF/" rel="tag">MCSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MD/" rel="tag">MD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MOKIT/" rel="tag">MOKIT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Multiwfn/" rel="tag">Multiwfn</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NBO/" rel="tag">NBO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NICS/" rel="tag">NICS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORCA/" rel="tag">ORCA</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Office/" rel="tag">Office</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PIO/" rel="tag">PIO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pyscf/" rel="tag">Pyscf</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RI%E8%BF%91%E4%BC%BC/" rel="tag">RI近似</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SO/" rel="tag">SO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMD/" rel="tag">VMD</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Word/" rel="tag">Word</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/compliance/" rel="tag">compliance</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/molcas/" rel="tag">molcas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/molpro/" rel="tag">molpro</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%B4%E7%95%8C%E7%82%B9/" rel="tag">临界点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98/" rel="tag">内存</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E8%83%BD/" rel="tag">内能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="tag">几何优化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%AD%90%E8%BD%A8%E9%81%93/" rel="tag">分子轨道</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%9D%E7%8C%9C/" rel="tag">初猜</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%9B%E5%B8%B8%E6%95%B0/" rel="tag">力常数</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%82%B9/" rel="tag">单点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag">占据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/" rel="tag">变分法</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%90%E6%A0%87/" rel="tag">坐标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%BB%84/" rel="tag">基组</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BB%84%E6%80%81/" rel="tag">多组态</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A7%9C-%E6%B3%B0%E5%8B%92%E6%95%88%E5%BA%94/" rel="tag">姜-泰勒效应</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag">对称性</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7%E7%A0%B4%E7%BC%BA/" rel="tag">对称性破缺</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E6%89%B0%E7%90%86%E8%AE%BA/" rel="tag">微扰理论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%93%E6%89%91%E5%88%86%E6%9E%90/" rel="tag">拓扑分析</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%94%B6%E6%95%9B/" rel="tag">收敛</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%8B%E8%BD%A8%E8%80%A6%E5%90%88/" rel="tag">旋轨耦合</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag">波函</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BF%80%E5%8F%91/" rel="tag">激发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BF%80%E5%8F%91%E6%80%81/" rel="tag">激发态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag">点群</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%84%93/" rel="tag">焓</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%86%B5/" rel="tag">熵</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E5%AD%90%E6%80%81/" rel="tag">电子态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E8%8D%B7/" rel="tag">电荷</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%BB%E5%9B%BE/" rel="tag">画图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA/" rel="tag">相对论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%9F%BA%E7%BB%84/" rel="tag">相对论基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B2%BE%E5%BA%A6/" rel="tag">精度</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%98%E5%9B%BE/" rel="tag">绘图</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%8A%B3%E9%A6%99%E6%80%A7/" rel="tag">芳香性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%96%9B%E5%AE%9A%E8%B0%94%E6%96%B9%E7%A8%8B/" rel="tag">薛定谔方程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%9D%E5%8A%BF/" rel="tag">赝势</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%A8%E9%81%93/" rel="tag">轨道</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%85%E5%8A%A9%E5%9F%BA%E7%BB%84/" rel="tag">辅助基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5/" rel="tag">输入</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%87%BA/" rel="tag">输出</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%87%E6%B8%A1%E6%80%81/" rel="tag">过渡态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E5%BE%84/" rel="tag">键径</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E7%BA%A7/" rel="tag">键级</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%B6%E7%82%B9%E8%83%BD/" rel="tag">零点能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%91%E7%8E%87/" rel="tag">频率</a><span class="tag-list-count">2</span></li></ul>
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ADF/" rel="tag">ADF</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AIM/" rel="tag">AIM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AMS/" rel="tag">AMS</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASPT2/" rel="tag">CASPT2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASSCF/" rel="tag">CASSCF</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDA/" rel="tag">CDA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CP2K/" rel="tag">CP2K</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CT/" rel="tag">CT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DLPNO/" rel="tag">DLPNO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gaussian/" rel="tag">Gaussian</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HF/" rel="tag">HF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hatree-Fock/" rel="tag">Hatree-Fock</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jahn-Teller/" rel="tag">Jahn-Teller</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jmol/" rel="tag">Jmol</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LmodeA/" rel="tag">LmodeA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCSCF/" rel="tag">MCSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MD/" rel="tag">MD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MOKIT/" rel="tag">MOKIT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Multiwfn/" rel="tag">Multiwfn</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NBO/" rel="tag">NBO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NICS/" rel="tag">NICS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORCA/" rel="tag">ORCA</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Office/" rel="tag">Office</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PIO/" rel="tag">PIO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pyscf/" rel="tag">Pyscf</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RI%E8%BF%91%E4%BC%BC/" rel="tag">RI近似</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SO/" rel="tag">SO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMD/" rel="tag">VMD</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Word/" rel="tag">Word</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/compliance/" rel="tag">compliance</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/molcas/" rel="tag">molcas</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/molpro/" rel="tag">molpro</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%B4%E7%95%8C%E7%82%B9/" rel="tag">临界点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98/" rel="tag">内存</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E8%83%BD/" rel="tag">内能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="tag">几何优化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%AD%90%E8%BD%A8%E9%81%93/" rel="tag">分子轨道</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%9D%E7%8C%9C/" rel="tag">初猜</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%9B%E5%B8%B8%E6%95%B0/" rel="tag">力常数</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%82%B9/" rel="tag">单点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag">占据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/" rel="tag">变分法</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%90%E6%A0%87/" rel="tag">坐标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%BB%84/" rel="tag">基组</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E5%8F%82%E8%80%83/" rel="tag">多参考</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BB%84%E6%80%81/" rel="tag">多组态</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A7%9C-%E6%B3%B0%E5%8B%92%E6%95%88%E5%BA%94/" rel="tag">姜-泰勒效应</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag">对称性</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7%E7%A0%B4%E7%BC%BA/" rel="tag">对称性破缺</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E6%89%B0%E7%90%86%E8%AE%BA/" rel="tag">微扰理论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%93%E6%89%91%E5%88%86%E6%9E%90/" rel="tag">拓扑分析</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%94%B6%E6%95%9B/" rel="tag">收敛</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%8B%E8%BD%A8%E8%80%A6%E5%90%88/" rel="tag">旋轨耦合</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag">波函</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BF%80%E5%8F%91/" rel="tag">激发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BF%80%E5%8F%91%E6%80%81/" rel="tag">激发态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag">点群</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%84%93/" rel="tag">焓</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%86%B5/" rel="tag">熵</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E5%AD%90%E6%80%81/" rel="tag">电子态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E8%8D%B7/" rel="tag">电荷</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%BB%E5%9B%BE/" rel="tag">画图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA/" rel="tag">相对论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%9F%BA%E7%BB%84/" rel="tag">相对论基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A3%81%E6%80%A7/" rel="tag">磁性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B2%BE%E5%BA%A6/" rel="tag">精度</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%98%E5%9B%BE/" rel="tag">绘图</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%8A%B3%E9%A6%99%E6%80%A7/" rel="tag">芳香性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%96%9B%E5%AE%9A%E8%B0%94%E6%96%B9%E7%A8%8B/" rel="tag">薛定谔方程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%9D%E5%8A%BF/" rel="tag">赝势</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%A8%E9%81%93/" rel="tag">轨道</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%85%E5%8A%A9%E5%9F%BA%E7%BB%84/" rel="tag">辅助基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5/" rel="tag">输入</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%87%BA/" rel="tag">输出</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%87%E6%B8%A1%E6%80%81/" rel="tag">过渡态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E5%BE%84/" rel="tag">键径</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E7%BA%A7/" rel="tag">键级</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%B6%E7%82%B9%E8%83%BD/" rel="tag">零点能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%91%E7%8E%87/" rel="tag">频率</a><span class="tag-list-count">2</span></li></ul>
         </canvas>
     </div>
 </div>
@@ -488,7 +836,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-flask"></i>
   </span>
@@ -498,7 +846,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">336k</span>
+    <span title="站点总字数">361k</span>
 </div>
 
         
