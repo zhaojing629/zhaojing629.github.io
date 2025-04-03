@@ -11347,11 +11347,11 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <li><p>该程序创建一个文件“.mrci.nat”，这是一个可由 ORCA 读取的常规 gbw 文件。</p>
 </li>
 <li><p>跃迁能量：</p>
-<p><img src="/image-20250117165117565.png" alt="image-20250117165117565"></p>
+<p><img src="image-20250117165117565.png" alt="image-20250117165117565"></p>
 </li>
 <li><p>不同组态的贡献：</p>
-<p><img src="/image-20250117172257059.png" alt="image-20250117172257059"></p>
-<p><img src="/image-20250117165617573.png" alt="image-20250117165617573"></p>
+<p><img src="image-20250117172257059.png" alt="image-20250117172257059"></p>
+<p><img src="image-20250117165617573.png" alt="image-20250117165617573"></p>
 <ul>
 <li>含义是（这个计算是针对于一个CAS(2,2)的结果），比如对于这个开壳层单重态的结果：<ul>
 <li>[xy]代表了两个轨道，[11]的权重是88.8%，[02]或[20]的离子项占了0.33%</li>
