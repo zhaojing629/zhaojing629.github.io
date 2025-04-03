@@ -2,9 +2,9 @@
 title: 【ADF】01.基本计算设置
 typora-root-url: 【ADF】01.基本计算设置
 date: 2019-09-23
-updated:
+updated: 
 description: Engine ADF中的的基本输入结构，SCF选项以及不收敛的处理方法
-tags: [AMS, ADF, SCF, 基组, 对称性, 占据, 相对论]
+tags: [AMS, ADF, SCF, 基组, 对称性, 占据, 相对论, 电子态]
 mathjax: true
 categories: [计算化学, 软件]
 ---
@@ -158,6 +158,8 @@ End
 >
 >   - 注意此时：unrestricted不再适用，解决办法删掉unrestricted或加上collinear/nocollinear，以及nosym关键词
 >   - 并且不能同时计算解析freq
+
+
 
 # SCF选项
 
@@ -327,9 +329,16 @@ End
    
 
 ```shell
+mkdir 00_NoConv
+
+mv * 0*
+
+
+
+
 mkdir 01_listi 02_listb 03_fdiis 04_listf 05_mesa 06_sdiis 07_arh 08_mix 09_shift 
 
-for i in 01 02 03 04 05 06 07 08 09 ;do cp 00*/*run 00*/a* ${i}*; done
+for i in 01 02 03 04 05 06 07 08 09 ;do cp 00*/*run 00*/am* ${i}*; done
 
 sed -i 's/SCF/SCF\nAccelerationMethod listi/' 01*/*.run 
 sed -i 's/SCF/SCF\nAccelerationMethod listb/' 02*/*.run 
@@ -361,7 +370,11 @@ for i in `ls`; do echo $i; tail $i/*out; done
 
 > 即使在`System`中设置了 `Symmetry nosym`，ADF中也可能会检测出对称性。因此要在ADF中也设置`nosym`。
 
-# 指定占据`IrrepOccupations`
+
+
+# 电子构型
+
+## 指定占据`IrrepOccupations`
 
 ```
 IrrepOccupations
@@ -396,43 +409,34 @@ End
 - 可以用分数占据
 - 在数值频率计算中，程序内部默认使用nosym，因此只能识别不可约表示A。
 
+## spin flip
 
-
-# `NumericalQuality`
-
-- 设置ADF计算的质量，包括BeckeGrid（数值积分）和 ZlmFit（密度拟合）。
-- 选项有`Basic`、`Normal`（默认）、`Good`、`VeryGood`、`Excellent`
-
-# `BeckeGrid`
-
-数值积分格点的选项。
+先计算高自旋的态，然后重起计算，通过`spinflip`关键词翻转某些原子上面的电子。
 
 ```
-BECKEGRID
-  Quality [basic|normal|good|verygood|excellent]
-  {QualityPerRegion
-     Region myregion
-     Quality {Basic|Normal|Good|VeryGood|Excellent}
-  End}
-  {qpnear qpnear}
-  {RadialGridBoost boost}
-End
+EngineRestart restartfile
+
+Engine ADF
+	SpinFlip 
+EndEngine
 ```
 
-- `Quality`：选项有`auto`（默认）、`Basic`、`Normal`、`Good`、`VeryGood`、`Excellent`。会覆盖`NumericalQuality`中的设置。
+也可以通过`ModifyStartPotential`进行。
 
-- `QualityPerRegion`：设置特定区域的原子的积分格点质量。
 
-  ```
-  BeckeGrid
-    QualityPerRegion Region=Accurate Quality=Good
-    QualityPerRegion Region=Far      Quality=Basic
-  End
-  ```
 
-- `qpnear`：默认为`4`Å。当在输入文件中指定了点电荷时，ADF 仅围绕那些接近原子的点电荷生成网格。`qpnear`指定的是最近的距离。
+## OCCUPATIONS
 
-- `RadialGridBoost`：默认为`1.0`。增加径向积分点的数量。一些 XC 泛函需要非常精确的径向积分网格，因此 ADF 会自动将径向网格提升 3 倍用于一些数值敏感泛函。
+可以通过`OCCUPATIONS`指定电子的占据方式
+
+- `IntegerAufbau`：根据 Aufbau 原理，电子被分配给 MO，尝试使用整数占领，在费米级简并的情况下也是如此。
+- `Keeporbitals=NKeep`：
+- `Freeze`：
+- `ElectronicTemperature=T`：
+- `Smear=Smear1[,Smear2,Smear3,...,Smear10]`：
+- `Steep=Lambda[,Nmax]`：
+- `OptimizeSpin=Delta`，`OptimizeSpinRound=Delta`：
+- 
 
 
 

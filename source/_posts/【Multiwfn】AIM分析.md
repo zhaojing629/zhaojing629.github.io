@@ -79,7 +79,7 @@ Hessian矩阵三个本征值都为负。
 
 - 对于电子密度函数，通常出现在离原子核很近的位置。
 
-  - 对于重原子，(3,-3)临界点与原子核几乎精确重合，因此也称为核临界点（nuclear critical point，NCP）。氢原子由于电子数较少，受周围环境影响明显，因此(3,-3)临界点与氢核位置有一定偏离。
+  - 对于重原子，(3,-3)临界点与原子核几乎精确重合，因此也称为**核临界点（nuclear critical point，NCP**）。氢原子由于电子数较少，受周围环境影响明显，因此(3,-3)临界点与氢核位置有一定偏离。
   - 一般情况下(3,-3)临界点与原子核一一对应，数目与原子数目一致。但是有些情况下原子核没有(3,-3)临界点，比如KrH<sup>+</sup>氢核对应的临界点被电子分布弥散的Kr所吞并。也有的(3,-3)临界点出现在原子核以外的位置，比如Li<sub>2</sub>在两个Li之间有(3,-3)临界点。
 
   > 电子密度在原子核处的尖峰导数不连续，因此严格讲梯度不为0，但实际计算使用的是高斯基函数，因此原子核处的导数是0
@@ -94,14 +94,14 @@ Hessian矩阵两个本征值为负，一个为正。对应函数的二阶鞍点�
 
 <img src="/image-20210521205948041.png" alt="image-20210521205948041" style="zoom:50%;" />
 
-- 对于电子密度函数，通常出现在有相互作用的两个原子之间，也被称为键临界点（bond critical point，BCP）。
+- 对于电子密度函数，通常出现在有相互作用的两个原子之间，也被称为**键临界点（bond critical point，BCP）**。
 - 对于ELF函数，位置不甚确定，经常偏离两个相关的(3,-3)的连线很多。
 
 ### (3,+1)
 
 Hessian矩阵两个本征值为正，一个为负。对应函数一阶鞍点，如同势能面上的过渡态。
 
-- 对于电子密度函数，通常出现在环体系平面中，如苯环的中心，也被称为环临界点（ring critical point，RCP），表现出位阻效应。在环的平面上，此临界点为电子密度极小值，在垂直于环的方向上为极大值。
+- 对于电子密度函数，通常出现在环体系平面中，如苯环的中心，也被称为**环临界点（ring critical point，RCP）**，表现出位阻效应。在环的平面上，此临界点为电子密度极小值，在垂直于环的方向上为极大值。
 - 对于ELF，(3,+1)和(3,+3)通常较少讨论下。
 
 ### (3,+3)
@@ -181,22 +181,119 @@ n(3,-3) – n(3,-1) + n(3,+1) – n(3,+3) =
 
 - `7 Show real space function values at specific CP or all CPs `并且输入临界点的编号：可以获知这个临界点的一切信息，包括Multiwfn支持的各种实空间函数的数值（如电子密度、拉普拉斯值、动能密度、势能密度等）和电子密度的梯度以及Hessian矩阵，输出信息例如：
 
-  ```
-  CP Position:   -1.54802279321209    1.64407933432874   -0.36311758584834
-  CP type: (3,-1)
-  Density of all electrons:  0.3333962073E+00
-  Density of Alpha electrons:  0.1666981037E+00
-  Density of Beta electrons:  0.1666981037E+00
-  Spin density of electrons:  0.0000000000E+00
-  Lagrangian kinetic energy G(r):  0.1055976596E+00
-  Hamiltonian kinetic energy K(r):  0.3702940096E+00
-  Potential energy density V(r): -0.4758916692E+00
-  Energy density: -0.3702940096E+00
-  Laplacian of electron density: -0.1058785400E+01
-  Electron localization function (ELF):  0.9499848594E+00
-  Localized orbital locator (LOL):  0.8133846890E+00
-  ...略
-  ```
+  > 184
+  >
+  >  Note: Unless otherwise specified, all units are in a.u.
+  >
+  >  Position (Bohr):    1.118511204465  -0.001806202187  0.017663742600
+  >
+  >  Position (Angstrom):  0.591890639542  -0.000955801036  0.009347250043
+  >
+  >  CP type: (3,-1)
+  >
+  > <font color=red> Density of all electrons: 0.1563742424E+00		#电子密度ρ  ρ(BCP)越大  则化学键强度越大 </font>
+  >
+  >  Density of Alpha electrons: 0.7818712122E-01
+  >
+  >  Density of Beta electrons: 0.7818712122E-01
+  >
+  >  Spin density of electrons: 0.0000000000E+00
+  >
+  >  <font color=red>Lagrangian kinetic energy G(r): 0.1106221438E+00 	#=动能密度G</font>	
+  >
+  >  G(r) in X,Y,Z: 0.5382807204E-01 0.2985514476E-01 0.2693892700E-01
+  >
+  >  Hamiltonian kinetic energy K(r): 0.9139442265E-01
+  >
+  >  <font color=red>Potential energy density V(r): -0.2020165664E+00		#势能密度V   V(BCP)越负 则化学键强度越大 </font>
+  >
+  > <font color=red> Energy density E(r) or H(r): -0.9139442265E-01		#电子能量密度H    H(BCP)<0时这个键可以被认为是共价作用</font>
+  >
+  > <font color=red> Laplacian of electron density: 0.7691096976E-01		#拉普拉斯电子密度▽2ρ     ▽2ρ<0可以认为形成了共价键</font>
+  >
+  >  Electron localization function (ELF): 0.5811661727E+00
+  >
+  >  Localized orbital locator (LOL): 0.5408764749E+00
+  >
+  >  Local information entropy: 0.2366936838E-02
+  >
+  >  Interaction region indicator (IRI): 0.3836068920E-15
+  >
+  >  Reduced density gradient (RDG): 0.1000000000E+03
+  >
+  >  Reduced density gradient with promolecular approximation: 0.1000000000E+03
+  >
+  >  Sign(lambda2)*rho: -0.1563742424E+00
+  >
+  >  Sign(lambda2)*rho with promolecular approximation: -0.1181402003E+00
+  >
+  >  Corr. hole for alpha, ref.:  0.00000  0.00000  0.00000 : -0.3342036582E-01
+  >
+  >  Source function, ref.:  0.00000  0.00000  0.00000 : -0.5471209817E-02
+  >
+  >  Wavefunction value for orbital    1 : -0.5236335577E-03
+  >
+  >  Average local ionization energy (ALIE): 0.6114079535E+00
+  >
+  >  van der Waals potential (probe atom: C ): 0.4818156536E+07 kcal/mol
+  >
+  >  Delta-g (under promolecular approximation): 0.2210101312E+00
+  >
+  >  Delta-g (under Hirshfeld partition): 0.3342702235E+00
+  >
+  >  User-defined real space function: 0.1000000000E+01
+  >
+  >  ESP from nuclear charges: 0.8328363540E+02
+  >
+  >  ESP from electrons: -0.8270491826E+02
+  >
+  >  Total ESP: 0.5787171379E+00 a.u. ( 0.1574769E+02 eV, 0.3631508E+03 kcal/mol)
+  >
+  >  
+  >
+  >  Note: Below information are for electron density
+  >
+  >  
+  >
+  >  Components of gradient in x/y/z are:
+  >
+  >  -0.3986278498E-16 0.2588083169E-16 -0.1496361425E-16
+  >
+  >  Norm of gradient is: 0.4982739032E-16
+  >
+  >  
+  >
+  >  Components of Laplacian in x/y/z are:
+  >
+  >  0.4543665012E+00 -0.1777568276E+00 -0.1996987038E+00
+  >
+  >  Total: 0.7691096976E-01
+  >
+  >  
+  >
+  >  Hessian matrix:
+  >
+  >  0.4543665012E+00 0.1480273892E-02 -0.8797682026E-02
+  >
+  >  0.1480273892E-02 -0.1777568276E+00 -0.1372600462E-02
+  >
+  >  -0.8797682026E-02 -0.1372600462E-02 -0.1996987038E+00
+  >
+  >  Eigenvalues of Hessian: -0.1998996512E+00 -0.1776777465E+00 0.4544883675E+00
+  >
+  >  Eigenvectors (columns) of Hessian:
+  >
+  >  -0.1328246209E-01 0.3185960576E-02 0.9999067086E+00
+  >
+  >  -0.6097971468E-01 -0.9981361912E+00 0.2370282933E-02
+  >
+  >  -0.9980506253E+00 0.6094254260E-01 -0.1345198509E-01
+  >
+  >  Determinant of Hessian: 0.1614239038E-01
+  >
+  >  <font color=red>Ellipticity of electron density:  0.125069		#椭率 ε  椭率越大，π特征越大 三重键和单键接近0 </font>
+  >
+  > <font color=red> eta index:  0.439834		#η指数 大于1的时候被认为是共价作用为主</font> 
 
   Multiwfn还可以将临界点上的各种函数分解为各个轨道的贡献（可以是分子轨道、定域化轨道等）
 

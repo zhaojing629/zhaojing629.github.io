@@ -107,6 +107,17 @@ description:  Vim编辑的一些快捷方式
 
   ```
   ?\<Ce\>\|\<C.f1\>\|\<Sc\>  
+  
+  /string1 \| string2
+  
+  
+  ```
+  
+
+- 查找同一行包含两个关键词的内容
+
+  ```
+  /keyword1.*keyword2
   ```
 
   
@@ -174,6 +185,8 @@ description:  Vim编辑的一些快捷方式
 
 - `:set nu`：显示行号，设定之后，会在每一行的前缀显示该行的行号
 - `:set nonu`：与 set nu 相反，为取消行号
+
+可以直接`vim ~/.vimrc`，然后添加`set nu`，默认是有行号的
 
 # 管理命令
 

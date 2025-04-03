@@ -12,7 +12,11 @@ description: 单点计算的一些基础和SCF不收敛的一些处理方法
 
 
 
+
+
 # `Geom`几何相关选项
+
+
 
 # `Charge`点电荷
 
@@ -36,14 +40,15 @@ description: 单点计算的一些基础和SCF不收敛的一些处理方法
   2.0 -2.0 2.0 1.1
   ```
 
+
+
 # `SCF`相关选项
 
 ## 算法相关
 
 - `DIIS`：迭代子空间中直接求逆。在迭代子空间 (DIIS) 外推方法中使用 Pulay 的直接反演 。默认的加速SCF收敛的方法。使用`NoDIIS`关闭。
 - `Fermi`：默认是`NoFermi`关闭。使用Fermi展宽时，此时默认也会择情自动使用能级移动和阻尼。
-
-# 初猜`guess=`
+- 
 
 ## 算法相关选项
 
@@ -69,6 +74,10 @@ description: 单点计算的一些基础和SCF不收敛的一些处理方法
 
 - `Only`：在计算和打印初始猜测后终止计算。
 
+
+
+
+
 ## 读取波函数作为初猜
 
 `guess=read`可以从chk文件中读取波函数作为初猜。
@@ -86,6 +95,12 @@ description: 单点计算的一些基础和SCF不收敛的一些处理方法
   %chk=C:\new.chk
   # guess=read
   ```
+
+- **如果chk文件是不同的版本的Gaussian得到的，会报错，可以用`unfchk`指令把fchk转成当前版本的chk文件。**
+
+
+
+
 
 # 检测波函数的稳定性`stable`
 
@@ -225,4 +240,26 @@ sed -i 's/\#/&SCF\(maxcyc=300\) guess=mix /' 11_mix/*gjf
 
 for i in 01 02 03 04 07 08 09 10 11; do cd ${i}*; zsub g16*; cd ..; done 
 ```
+
+
+
+
+
+# 后HF计算
+
+## 后HF计算波函数
+
+- 仅有解析梯度的后HF方法才能产生后HF波函数，比如CISD、QCISD、CCSD、MP2、MP3、MP4(SDQ)等，对于没有解析梯度的方法比如CCSD(T)、QCISD(T)、MP4(SDTQ)都无法产生对应波函数
+
+- 需要在后HF计算中写`density`关键词（等价于`density=current`）才会产生后HF波函数，否则Gaussian输出的都是HF的波函数，比如原子电荷、偶极矩等都和HF计算相同。
+
+- 写了`density`关键词后，chk/fch中的轨道仍然是HF轨道，如果需要后HF计算的自然轨道，则
+
+  1. 先通过`density`关键词计算一次后HF计算（将后HF密度矩阵存到chk中）
+
+  2. 再通过`# guess(save,only,naturalorbitals) chkbais`再计算一次，%chk和之前计算的%chk要相同
+
+     或
+
+     直接将1中的fch文件载入Multiwfn，然后通过200中的16，根据提示输入后HF波函数类型，Multiwfn会产生自然轨道，选择y乐意将自然轨道导出到molden文件中，通过0可以观看自然轨道。
 

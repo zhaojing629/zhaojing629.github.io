@@ -9,7 +9,10 @@ categories: [计算化学, 软件]
 description: ORCA的SCF计算比较糟糕，因此通常最好使用初猜，能加快计算速度
 ---
 
-
+> 参考文献：
+>
+> 1. 邹竞祥在qq中的解答
+> 1. 《ORCA 6.0》手册
 
 
 
@@ -36,16 +39,18 @@ Guess可以用`HCore`、`Hueckel`、`PAtom`、`PModel` 【默认】、`MORead`�
 
 - `Hueckel`：扩展休克尔方法。
   - 执行最小基扩展的uckel计算和使用GuessMode两种方法之一将MOs从这个计算投影到实际的基组上进行。最小基是STO-3G，比较差，因此休克尔初猜可能不太好。
-- `PAtom`：极化原子密度。
+- `PAtom`：极化原子密度。（PAtom 猜测不适用于 ANO 基组。）
   - 原子密度的叠加是以一种很好的初步猜测，但是分子的实际形状没有被考虑进去，更难可靠地定义单个占据轨道的ROHF计算或合理的自旋密度的UHF计算。因此，ORCA在PAtom猜测时选择了不同的方法。在所有的电子在最小的原子SCF轨道进行Huckel计算，这些都是一次性确定的，并存储在程序中，这意味着原子周围的密度非常接近原子，一个中心上的所有轨道都是正交的，最初的电子分布已经反应了分子形状，对于ROHF的计算，有明确的单已占据轨道。
-- `PModel` ：Model potential，或者直接用`!PModel`。
+- `PModel` ：Model potential，或者直接用`!PModel`。把diagonalized LDA DFT matrix作为初猜。
   - 它包括建立和对角化一个带有电子密度的Kohn-Sham矩阵，电子密度由球形中性原子密度的叠加构成，而这些密度是相对论和非相对论方法预先确定的。这一猜测对Hartree-Fock和DFT方法都有效，但对半经验模型无效。由于猜测的复杂性稍微耗时。对于元素周期表中的大多数原子来说，PModel 是可用的，因此PModel猜测通常是选择的方法(特别是对于含有重元素的分子)，除非有更精确的起始轨道可用。
 
-## MOInp&AutoStart 重启SCF计算
+## `MOInp`&`AutoStart` 重启SCF计算
 
 每一圈SCF都会自动储存当前的轨道，覆盖前面的gbw文件（因此要注意初猜是否需要重命名以免被覆盖），因此可以通过当前gbw文件重启计算。只有HF和数值频率可以重启（不包括post HF、分子性质、光谱等）。
 
-- `Autostart`默认是`true` ：从找是否存在存在的的同名.gbw文件，然后读取轨道和重启所需的所有其他信息，`Guess`也会被设置为`MORead`，并且该gbw文件会被重名为BaseName.ges，`Moinp`就会指向这个文件。如果不需要，则使用用`false`或者使用`!NoAutoStart`则关闭。
+- `Autostart`默认是`true` ：程序会自动检查是否存在同名的`.gbw`文件，如果存在，程序会检查它是否含有轨道和其他重启需要的信息。如果存在，`Guess`就会设置为`MORead`，已存在的`.gbw`文件会重命名为`.ges`文件。如果不需要的话，就在`%SCF`中将`AutoStart`设置为`false`，或者使用`!NoAutoStart`
+
+- 几何优化时不会自动重启，需要设置`MORead`和`MOInp`。
 
 - 如果需要另外读取轨道，可以：
 
@@ -97,13 +102,13 @@ Guess可以用`HCore`、`Hueckel`、`PAtom`、`PModel` 【默认】、`MORead`�
 end
 ```
 
-- MO1和MO2是两个轨道的序号。**注意ORCA的轨道序号是从0开始的。**
+- MO1和MO2是两个轨道的序号。<font color=red>**注意ORCA的轨道序号是从0开始的。**</font>
 - Angle是旋转的角度。`90`度是翻转两个轨道，`45`是1:1混合两个轨道，180度导致相变。
 - `Operator1` and `Operator2`是轨道设置。对于UHF来说，alpha是`0`，beta是`1`。但是RHF和ROHF只有一个轨道设置，即`0`
 
 `Rotate`可以用来在过渡金属二聚体中产生对称性破缺的解。首先做一个高自旋的计算，然后找到相互对称和反对称组合的MOs对，让这些轨道作为初猜，然后对每一对用45的旋转。
 
-## GuessMode 
+## `GuessMode` 基组投影
 
 其余的猜测(可能)需要将最初的猜测轨道投影到实际的基组上，有两种方法：
 
@@ -115,7 +120,22 @@ end
 - FMatrix projection定义了一个有效的单电子算符，$$f=\sum_{i} \varepsilon_{i} a_{i}^{\dagger} a_{i}$$
   - 这个和是初猜轨道集中的所有轨道，$$a_{i}^{\dagger}$$是一个猜测MO_i的电子生成算符，$$a_{i}$$是相应的湮灭算符，$$ε_i$$是轨道能量。这个有效的单电子算符在实际基组中被对角化，特征向量是在目标基础上的初始猜测轨道。对于大多数波函数，这产生了一个相当合理的猜测。
 
-- CMatrix更加复杂，它用了Corresponding orbital去分别拟合每个MO的子空间（占据、部分占据、alpha、beta占据）。拟合已占据轨道后，在已占据轨道的正交补中选择虚起始轨道。在某些情况下，特别是重新启动ROHF计算时，这可能是一个优势。
+- CMatrix更加复杂，它用了Corresponding orbital去分别拟合每个MO的子空间（占据、部分占据、alpha、beta占据）。拟合已占据轨道后，在已占据轨道的正交补中选择虚起始轨道。在某些情况下，特别是重新启动ROHF计算时，这可能是一个优势。在大多数情况下，CMatrix 不会明显优于 FMatrix。
+
+## `guessmix`
+
+- 使用`! guessmix`会自动将 50% 的 alpha LUMO 混合到 alpha HOMO 中。这相当于上面所做的 45 度旋转
+- 或者：
+
+```
+%scf 
+	guessmix 75 # angle in degrees, default is 45 
+end
+```
+
+
+
+
 
 # 用Gaussian的输出转换为初猜文件gbw
 

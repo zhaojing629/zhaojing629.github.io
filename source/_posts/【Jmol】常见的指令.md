@@ -339,8 +339,6 @@ measure RANGE 1.5 2.5 ALL (_C) (_U) "2://pm"
 6
 ```
 
-
-
 - `mo ON/OFF`：开启或关闭分子轨道，默认是`ON`
 
 - `mo (integer)`：显示指定的分子轨道，序号从1开始。
@@ -357,6 +355,16 @@ measure RANGE 1.5 2.5 ALL (_C) (_U) "2://pm"
 - `mo CUTOFF (decimal)`：设置等值面的值。默认是0.05。
 
 - `mo RESOLUTION (decimal)`：等值面的精度，一般范围是4-10。分辨率越高，等值面越光滑，但是生成速度更慢。
+
+- `mo next`或`mo previous`（或者`mo prev`）：显示下一个或者上一个分子轨道
+
+
+
+```
+mo translucent 1
+```
+
+
 
 ## 显示效果
 

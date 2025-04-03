@@ -144,6 +144,8 @@ PUT,style,file,status,info
   
     ```
     put,molden,h2o.molden;
+    
+    put,molden,h2o_ddens.molden;orb,2110.2
     ```
   
   - `IRSPEC`：gnuplot输入文件，该文件可用于绘制IR光谱
@@ -288,7 +290,7 @@ RESTART,2000.1;	#will restart file 1 and truncate before record 2000.
 
 2022molpro测试重启计算结果
 
-1. 计算1得到a.wfu、a.int
+1. 计算1，file卡中写`FILE,1,a.int`和`FILE,2,a.wfu`，得到a.wfu、a.int
 2. 计算2时，重命名a.wfu，a.int为b.*（注意小写），然后file卡中写`FILE,1,b.int`和`FILE,2,b.wfu`，会自动重启计算，不需要再写`restart`关键词，并且覆盖原来的`b.*`文件
 3. 下一次重启是以此类推
 
@@ -307,7 +309,7 @@ NOGPRINT,key1,key2,. . .
   - `BASIS`：打印基的信息
   - `DISTANCE`：打印键长（默认）
   - `ANGLES`：打印键角信息（默认=0）。如果大于0，还打印二面角
-  - `ORBITAL(=int)`：打印SCF和MCSCF的轨道，打印每个对称性下的占据轨道和int个最低空轨道。
+  - **`ORBITAL(=int)`：打印SCF和MCSCF的轨道，打印每个对称性下的占据轨道和int个最低空轨道。**
   - `CIVECTOR`：打印MCSCF的CI矢量（注意，默认情况下只打印大于0.05的CI系数。）
   - `PAIRS`：打印CI和CCSD中的电子对列表
   - `CS`：打印CI和CCSD中的单激发信息
@@ -458,7 +460,7 @@ MOLPRO默认使用球谐基函数(5d，7f等)，即使是对Pople基组，如6-3
 ### 可调用的基组
 
 - `basis`可以在文件lib/defbas中查找，包含的通用基组有：
-  - 所有的Dunning关联一致基组，用基组的标准名称（cc-pVXZ，aug-cc-pVXZ）或缩写（VXZ，AVXZ）调用。对于Al-Ar，用标准名称cc-pV(X+d)Z，aug-cc-pV(X+d)Z，或VXZ+d，AVXZ+d，可以得到紧凑的d扩充集。X=D,T,Q,5的基组适用于H-Kr，X=6适用于B-Ne和Al-Ar。
+  - 所有的Dunning关联一致基组，用基组的标准名称**（cc-pVXZ，aug-cc-pVXZ）**或缩写**（VXZ，AVXZ）**调用。对于Al-Ar，用标准名称cc-pV(X+d)Z，aug-cc-pV(X+d)Z，或VXZ+d，AVXZ+d，可以得到紧凑的d扩充集。X=D,T,Q,5的基组适用于H-Kr，X=6适用于B-Ne和Al-Ar。
   - 用于芯关联的关联一致基组cc-pCVXZ，aug-cc-pCVXZ，或CVXZ，ACVXZ（X=D,T,Q,5），以及更新的“加权集”cc-pwCVXZ，aug-cc-pwCVXZ，或WCVXZ，AWCVXZ（X=D,T,Q,5）。这些基组适用于Li-Kr（CVXZ不包括Sc-Zn）。
   - Douglas-Kroll-Hess相对论版本的关联一致基组，可以使用加上-DK后缀的标准名称或简称，例如，cc-pVXZ-DK或VXZ-DK。X=D-5适用于H-Kr，X=T适用于YCd和Hf-Hg。三阶DKH收缩集适用于Hf-Hg，需要加上后缀-DK3。
   - Peterson等人用于用于显关联计算的F12基组：cc-pVXZ-F12，cc-pCVXZ-F12，或VXZ-F12，CVXZ-F12，其中X=D,T,Q。它们适用于H-Ar。
@@ -476,7 +478,7 @@ MOLPRO默认使用球谐基函数(5d，7f等)，即使是对Pople基组，如6-3
 
 ### 对于角动量的限制
 
-- 可以使用一些关于最大角动量函数的限制，或是收缩函数的数量限制，比如减少基组的最大角动量：
+- **可以使用一些关于最大角动量函数的限制，或是收缩函数的数量限制，比如减少基组的最大角动量：**
 
   - 忽略正常情况下出现在VQZ基组中的𝑓和𝑔函数：
 

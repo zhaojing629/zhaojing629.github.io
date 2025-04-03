@@ -1,5 +1,5 @@
 ---
- title: 【Linux】命令
+title: 【Linux】命令
 typora-root-url: 【Linux】命令
 date: 2019-09-25 
 updated:
@@ -411,7 +411,7 @@ ln -s [源文件或目录] [目标文件目录]
 比如现在在1文件夹，想要通过1访问2，则
 
 ```
-ln 2
+ln -s 2 
 ```
 
 

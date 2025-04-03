@@ -246,7 +246,7 @@ end
   end
   ```
 
-- 文件格式是”GAMESS-US“ in the EMSL library，也可以自己编辑基组，辅助基组的格式也相同。
+- 文件格式是”GAMESS-US“的， in the EMSL library，也可以自己编辑基组，辅助基组的格式也相同。
 
   - 比如Buenker的3-21GSP：<a id="LShell"></a>
 
@@ -278,6 +278,8 @@ end
     STOP
     ```
 
+- 如果是ANO基组，加上`ANOBasis true`比较重要（PAtom 猜测不适用于 ANO 基组。）
+
 ## 弥散基组
 
 
@@ -296,7 +298,7 @@ end
 
 ## 只存在库仑积分的RI-J近似
 
-- RI-J近似用于近似库仑积分（J）。因为在所有计算中都存在库仑积分时，通常可以始终使用RI-J近似。纯泛函应该用RI加速而不是RIJCOSX。GGA-DFT计算默认情况下启用RI-J近似，因此不需要再指定。`NORI`关键字可用于关闭近似。
+- RI-J近似用于近似库仑积分（J）。因为**在所有计算中都存在库仑积分时，通常可以始终使用RI-J近似**。纯泛函应该用RI加速而不是RIJCOSX。GGA-DFT计算默认情况下启用RI-J近似，因此不需要再指定。`NORI`关键字可用于关闭近似。
 - Split-RI-J算法是RI-J算法的改进版本，通常更快，对内存的需求仅稍微多一点。仅用于SCF过程（不用于梯度，耦合的扰动方程式和TD-DFT）。要关闭`!NoSplit-RI-J`。
 
 - 指定辅助基组：

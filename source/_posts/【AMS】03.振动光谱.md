@@ -2,7 +2,7 @@
 title: 【AMS】03.振动光谱
 typora-root-url: 【AMS】03.振动光谱
 date: 2019-09-23
-updated:
+updated: 
 description: 计算频率的一些
 tags: [AMS, 频率]
 mathjax: true
@@ -35,6 +35,8 @@ categories: [计算化学, 软件]
   End
   ```
 
+
+
 # 红外光谱
 
 ```
@@ -43,7 +45,7 @@ Properties
 End
 ```
 
-`ADF`块中也有相应的设置。
+<font color=red size=5>`ADF`块中也有<a href="{% post_path '【ADF】01.基本计算设置' %}#红外光谱">相应的设置</a>。比如设置`Max_CPKS_Iterations`等</font>
 
 ## 重新扫描虚频
 
