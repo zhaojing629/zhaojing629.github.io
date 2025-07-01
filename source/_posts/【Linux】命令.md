@@ -647,6 +647,14 @@ rm [options] name...
   grep "main()" . -r --exclude-from filelist
   ```
 
+- -m1：找到第一个匹配后停止。
+
+```
+grep -m1 -A10 'XXX' 文件名 | tail -n +2
+```
+
+
+
 ## sed
 
 Stream Editor利用脚本来处理文本文件。主要用来自动编辑一个或多个文件、简化对文件的反复操作、编写转换程序等。

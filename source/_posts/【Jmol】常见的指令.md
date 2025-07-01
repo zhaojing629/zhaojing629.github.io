@@ -364,6 +364,10 @@ measure RANGE 1.5 2.5 ALL (_C) (_U) "2://pm"
 mo translucent 1
 ```
 
+```
+
+```
+
 
 
 ## 显示效果
@@ -373,9 +377,17 @@ mo translucent 1
 - `mo translucent`：将等值面设置为透明的，后面可以跟0-1的小数设置透明度。
 - `mo nofill nomesh dots`：设置为点填充。
   - `mo fill nodots`：取消点填充。
-
 - `mo fill`：
 - `mo opaque`：
+
+用透明的时候等值面互相之间无法透明，只是透视了分子，可以用：
+
+```
+isosurface molpos color [X7BC8A4] cutoff +0.03 mo 20 translucent
+isosurface molneg color white cutoff -0.03 mo 20 translucent
+```
+
+
 
 ## 标题
 

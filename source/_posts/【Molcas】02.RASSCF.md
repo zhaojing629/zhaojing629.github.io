@@ -43,7 +43,7 @@ LumOrb
 
 - `CHARGE`:电荷
 
-- `NACTel`：三个数字：Ras1 中的活性电子、空穴总数、Ras3 中的粒子总数
+- `NACTel`：三个数字：活性电子、Ras1 中的空穴总数、Ras3 中的粒子总数
 
 - `INACtive`：双占轨道，通过对称性指定
 
