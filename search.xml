@@ -11328,7 +11328,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <li><p>D和E/D的物理意义：$\hat{H}_{\mathbf{ZFS}}=D\left(S_z^2-\frac{S(S+1)}{3}\right)+E(S_x^2-S_y^2)$</p>
 <ul>
 <li>D 值（零场分裂参数）：描述轴向（轴对称）方向的自旋能级分裂强度，单位为波数（cm⁻¹）或频率（MHz）。<ul>
-<li>∣D∣ 越大，零场能级分裂越显著。</li>
+<li>∣D∣ 越大，零场能级分裂越显著。  </li>
 <li>符号（正负）反映能级顺序：D&gt;0，$m_s=0$为基态；D&lt;0，$m_s=±1$为基态</li>
 <li>大小：<ul>
 <li>大∣<em>D</em>∣ 体系（D&gt;1cm⁻¹）需高频EPR（如W波段）观测共振；</li>
