@@ -11294,7 +11294,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
       </tags>
   </entry>
   <entry>
-    <title></title>
+    <title>【ORCA】10.磁性相关计算</title>
     <url>/2025/01/07/%E3%80%90ORCA%E3%80%9110.%E7%A3%81%E6%80%A7%E7%9B%B8%E5%85%B3%E8%AE%A1%E7%AE%97/</url>
     <content><![CDATA[<h1 id="g-tensor"><a href="#g-tensor" class="headerlink" title="g tensor"></a>g tensor</h1><h2 id="CASSCF"><a href="#CASSCF" class="headerlink" title="CASSCF"></a>CASSCF</h2><figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line"><span class="comment">%casscf </span></span><br><span class="line">...</span><br><span class="line">	rel</span><br><span class="line">		dosoc <span class="literal">true</span>   #spin-orbit coupling (<span class="keyword">and</span> ZFS)</span><br><span class="line">		gtensor <span class="literal">true</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">...</span><br><span class="line"> <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 <p>CASSCF中有两种方法计算：</p>
@@ -11331,7 +11331,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <li>∣D∣ 越大，零场能级分裂越显著。  </li>
 <li>符号（正负）反映能级顺序：D&gt;0，$m_s=0$为基态；D&lt;0，$m_s=±1$为基态</li>
 <li>大小：<ul>
-<li>大∣<em>D</em>∣ 体系（D&gt;1cm⁻¹）需高频EPR（如W波段）观测共振；</li>
+<li>大∣<em>D</em>∣ 体系（D&gt;1cm⁻¹）需高频EPR（如W波段，D&gt;10cm⁻¹时也很难）观测共振；</li>
 <li>小∣<em>D</em>∣ 体系（如有机三重态）可用X波段检测</li>
 </ul>
 </li>
