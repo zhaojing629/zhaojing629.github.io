@@ -4127,6 +4127,14 @@ p_{x} & p_{y}
 <li>$^1\Sigma^+_g$：$1-1=0=\Sigma$，$+*+=+$</li>
 </ul>
 <p><img src="1.png" alt=""></p>
+<blockquote>
+<p>摘选自DeepSeek</p>
+<p>对重元素（如镧系、锕系），SOC 效应显著，<strong>自旋角动量和轨道角动量发生耦合</strong>，此时需引入 <strong>总角动量投影 $\Omega$</strong>，定义为：<script type="math/tex">\Omega = |\Lambda \pm \Sigma|</script>，（$\Sigma$是自旋角动量在分子轴上的投影）。</p>
+<ul>
+<li>例如：假设某个态的 Λ=2（Δ 态），自旋 S=1（三重态），则可能的 Σ = -1, 0, +1，对应的 Ω = |2−1|=1、|2+0|=2、|2+1|=3，最终分裂成 Ω=1, 2, 3 三个态。</li>
+<li></li>
+</ul>
+</blockquote>
 <h2 id="2S-1-Lambda-Omega-中-Omega-的确定"><a href="#2S-1-Lambda-Omega-中-Omega-的确定" class="headerlink" title="$^{2S+1}\Lambda_\Omega$中$\Omega$的确定"></a>$^{2S+1}\Lambda_\Omega$中$\Omega$的确定</h2><p>$\Omega$为$\pm{(S+\Lambda)}$，$\pm{(S+\Lambda-1)}$……一共$2(S+\Lambda)+1$项</p>
 <p>例子：$^4H$中$S+\Lambda=\frac{3}{2}+5=\frac{13}{2}$，则$\Omega$为$\pm\frac{13}{2}$，$\pm\frac{11}{2}$，$\pm\frac{9}{2}$，$\pm\frac{7}{2}$，$\pm\frac{5}{2}$，$\pm\frac{3}{2}$，$\pm\frac{1}{2}$一共14项。</p>
 <h1 id="单原子"><a href="#单原子" class="headerlink" title="单原子"></a>单原子</h1><h2 id="等价电子原子光谱"><a href="#等价电子原子光谱" class="headerlink" title="等价电子原子光谱"></a>等价电子原子光谱</h2><script type="math/tex; mode=display">
@@ -5743,19 +5751,20 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 </li>
 </ul>
 <figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">mo translucent <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
 <h2 id="显示效果"><a href="#显示效果" class="headerlink" title="显示效果"></a>显示效果</h2><ul>
 <li><code>mo mesh nofill</code>：除了网格，并且填充。默认是<code>mo mesh nofill</code></li>
 <li><code>mo fill nomesh</code>：可以去掉网格线</li>
 <li><code>mo translucent</code>：将等值面设置为透明的，后面可以跟0-1的小数设置透明度。</li>
-<li><p><code>mo nofill nomesh dots</code>：设置为点填充。</p>
-<ul>
+<li><code>mo nofill nomesh dots</code>：设置为点填充。<ul>
 <li><code>mo fill nodots</code>：取消点填充。</li>
 </ul>
 </li>
-<li><p><code>mo fill</code>：</p>
-</li>
+<li><code>mo fill</code>：</li>
 <li><code>mo opaque</code>：</li>
 </ul>
+<p>用透明的时候等值面互相之间无法透明，只是透视了分子，可以用：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">isosurface molpos color [X7BC8A4] cutoff +<span class="number">0.03</span> mo <span class="number">20</span> translucent</span><br><span class="line">isosurface molneg color white cutoff <span class="number">-0.03</span> mo <span class="number">20</span> translucent</span><br></pre></td></tr></table></figure>
 <h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><p>默认生成的分子轨道左上角有标题，标题的格式可以通过<code>mo TITLEFORMAT &quot;format&quot;</code>控制</p>
 <ul>
 <li><code>%E</code>或者<code>%0.dE</code>：能量，可以控制小数位数</li>
@@ -8140,7 +8149,10 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li><p>在grep搜索结果中包括或者排除指定文件：</p>
 <figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">grep</span> <span class="string">&quot;main()&quot;</span> . -r --<span class="keyword">include</span> *.&#123;php,html&#125;</span><br><span class="line"><span class="keyword">grep</span> <span class="string">&quot;main()&quot;</span> . -r --<span class="keyword">exclude</span> <span class="string">&quot;README&quot;</span></span><br><span class="line">#在搜索结果中排除filelist文件列表里的文件</span><br><span class="line"><span class="keyword">grep</span> <span class="string">&quot;main()&quot;</span> . -r --<span class="keyword">exclude</span>-<span class="keyword">from</span> filelist</span><br></pre></td></tr></table></figure>
 </li>
+<li><p>-m1：找到第一个匹配后停止。</p>
+</li>
 </ul>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">grep</span> -m<span class="number">1</span> -A<span class="number">10</span> &#x27;XXX&#x27; 文件名 | tail -n +<span class="number">2</span></span><br></pre></td></tr></table></figure>
 <h2 id="sed"><a href="#sed" class="headerlink" title="sed"></a>sed</h2><p>Stream Editor利用脚本来处理文本文件。主要用来自动编辑一个或多个文件、简化对文件的反复操作、编写转换程序等。</p>
 <h3 id="语法-9"><a href="#语法-9" class="headerlink" title="语法"></a>语法</h3><figure class="highlight gams"><table><tr><td class="code"><pre><span class="line">sed [<span class="keyword">options</span>] <span class="string">&#x27;command&#x27;</span> <span class="keyword">file</span>(s)</span><br><span class="line">sed [<span class="keyword">options</span>] -f scriptfile <span class="keyword">file</span>(s)</span><br></pre></td></tr></table></figure>
 <ul>
@@ -11233,7 +11245,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </li>
 <li><p><code>CHARGE</code>:电荷</p>
 </li>
-<li><p><code>NACTel</code>：三个数字：Ras1 中的活性电子、空穴总数、Ras3 中的粒子总数</p>
+<li><p><code>NACTel</code>：三个数字：活性电子、Ras1 中的空穴总数、Ras3 中的粒子总数</p>
 </li>
 <li><p><code>INACtive</code>：双占轨道，通过对称性指定</p>
 </li>
@@ -11312,6 +11324,25 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <ul>
 <li><p>analysis of the individual contributions to the D-tensor</p>
 <p><img src="/image-20250117161848921.png" alt="image-20250117161848921"></p>
+</li>
+<li><p>D和E/D的物理意义：$\hat{H}_{\mathbf{ZFS}}=D\left(S_z^2-\frac{S(S+1)}{3}\right)+E(S_x^2-S_y^2)$</p>
+<ul>
+<li>D 值（零场分裂参数）：描述轴向（轴对称）方向的自旋能级分裂强度，单位为波数（cm⁻¹）或频率（MHz）。<ul>
+<li>∣D∣ 越大，零场能级分裂越显著。</li>
+<li>符号（正负）反映能级顺序：D&gt;0，$m_s=0$为基态；D&lt;0，$m_s=±1$为基态</li>
+<li>大小：<ul>
+<li>大∣<em>D</em>∣ 体系（D&gt;1cm⁻¹）需高频EPR（如W波段）观测共振；</li>
+<li>小∣<em>D</em>∣ 体系（如有机三重态）可用X波段检测</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>E/D 比值：定义正交方向分裂的相对强度，范围 0≤∣E/D∣≤1/3。<ul>
+<li>E/D=0：完美轴对称（如八面体）；</li>
+<li>∣E/D∣=1/3：最大菱形畸变（如三方晶格压缩）</li>
+</ul>
+</li>
+</ul>
 </li>
 </ul>
 <h1 id="磁化率曲线的计算"><a href="#磁化率曲线的计算" class="headerlink" title="磁化率曲线的计算"></a>磁化率曲线的计算</h1><h2 id="CASSCF-2"><a href="#CASSCF-2" class="headerlink" title="CASSCF"></a>CASSCF</h2><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">soc</span></span><br><span class="line">  <span class="string">dosoc</span> <span class="literal">true</span></span><br><span class="line">  <span class="string">domagnetization</span> <span class="literal">true</span>       <span class="comment"># Calculate magnetization (def: false)</span></span><br><span class="line">  <span class="string">dosusceptibility</span> <span class="literal">true</span>      <span class="comment"># Calculate susceptiblity (def: false)</span></span><br><span class="line">  <span class="string">LebedevPrec</span>            <span class="number">5</span>   <span class="comment"># Precision of the grid for different field</span></span><br><span class="line">                             <span class="comment"># directions (meaningful values range from 1</span></span><br><span class="line">                             <span class="comment"># (smallest) to 10 (largest))</span></span><br><span class="line">  <span class="string">nPointsFStep</span>           <span class="number">5</span>   <span class="comment"># number of steps for numerical differentiation</span></span><br><span class="line">                             <span class="comment"># (def: 5, meaningful values are 3, 5 7 and 9)</span></span><br><span class="line">  <span class="string">MAGFieldStep</span>       <span class="number">100.0</span>   <span class="comment"># Size of field step for numerical differentiation</span></span><br><span class="line">                             <span class="comment"># (def: 100 Gauss)</span></span><br><span class="line">  <span class="string">MAGTemperatureMIN</span>    <span class="number">4.0</span>   <span class="comment"># minimum temperature (K) for magnetization</span></span><br><span class="line">  <span class="string">MAGTemperatureMAX</span>    <span class="number">4.0</span>   <span class="comment"># maximum temperature (K) for magnetization</span></span><br><span class="line">  <span class="string">MAGTemperatureNPoints</span>  <span class="number">1</span>   <span class="comment"># number of temperature points for magnetization</span></span><br><span class="line">  <span class="string">MAGFieldMIN</span>          <span class="number">0.0</span>   <span class="comment"># minimum field (Gauss) for magnetization</span></span><br><span class="line">  <span class="string">MAGFieldMAX</span>      <span class="number">70000.0</span>   <span class="comment"># maximum field (Gauss) for magnetization</span></span><br><span class="line">  <span class="string">MAGNpoints</span>            <span class="number">15</span>   <span class="comment"># number of field points for magnetization</span></span><br><span class="line">  <span class="string">SUSTempMIN</span>           <span class="number">1.0</span>   <span class="comment"># minimum temperature (K) for susceptibility</span></span><br><span class="line">  <span class="string">SUSTempMAX</span>         <span class="number">300.0</span>   <span class="comment"># maximum temperature (K) for susceptibility</span></span><br><span class="line">  <span class="string">SUSNPoints</span>           <span class="number">300</span>   <span class="comment"># number of temperature points for susceptibility</span></span><br><span class="line">  <span class="string">SUSStatFieldMIN</span>      <span class="number">0.0</span>   <span class="comment"># minimum static field (Gauss) for susceptibility</span></span><br><span class="line">  <span class="string">SUSStatFieldMAX</span>      <span class="number">0.0</span>   <span class="comment"># maximum static field (Gauss) for susceptibility</span></span><br><span class="line">  <span class="string">SUSStatFieldNPoints</span>    <span class="number">1</span>   <span class="comment"># number of static fields for susceptibility</span></span><br><span class="line"><span class="string">end</span></span><br></pre></td></tr></table></figure>
