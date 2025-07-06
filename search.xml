@@ -1520,8 +1520,9 @@
 <h1 id="SCF相关选项"><a href="#SCF相关选项" class="headerlink" title="SCF相关选项"></a><code>SCF</code>相关选项</h1><h2 id="算法相关"><a href="#算法相关" class="headerlink" title="算法相关"></a>算法相关</h2><ul>
 <li><code>DIIS</code>：迭代子空间中直接求逆。在迭代子空间 (DIIS) 外推方法中使用 Pulay 的直接反演 。默认的加速SCF收敛的方法。使用<code>NoDIIS</code>关闭。</li>
 <li><code>Fermi</code>：默认是<code>NoFermi</code>关闭。使用Fermi展宽时，此时默认也会择情自动使用能级移动和阻尼。</li>
+<li></li>
 </ul>
-<h1 id="初猜guess"><a href="#初猜guess" class="headerlink" title="初猜guess="></a>初猜<code>guess=</code></h1><h2 id="算法相关选项"><a href="#算法相关选项" class="headerlink" title="算法相关选项"></a>算法相关选项</h2><ul>
+<h2 id="算法相关选项"><a href="#算法相关选项" class="headerlink" title="算法相关选项"></a>算法相关选项</h2><ul>
 <li><code>Harris</code>：使用Harris泛函的DFT方法的结果作为初猜。是所有HF和DFT的默认方法。通过自由原子密度叠加作为分子电子密度来构建KS算符，然后将变分得到的轨道用做后续计算的初猜，这步只做一次而不像普通DFT方法继续做迭代。</li>
 <li><code>Huckel</code>：扩展Huckel方法，也不需要迭代。是一些半经验方法（CNDO、INDO、MNDO 和 MINDO3 ）的初猜默认设置。对于涉及许多第二行原子的 PM6 计算，应考虑 Huckel 猜测。 </li>
 <li><code>INDO</code>：实指INDO、CNDO、Huckel的混合。第一行为INDO，第二行为CNDO，第三行及以上为Huckel。<ul>
@@ -1531,9 +1532,13 @@
 <li><code>Core</code>：将核哈密顿量对角化以形成初始猜测。是一些半经验方法（AM1、PM3、PM3MM、PM6 和 PDDG ）计算的默认设置。初始的Fock矩阵元只含单电子项而不含双电子项，即密度矩阵用空矩阵，比较粗糙。</li>
 <li><code>AM1</code>：进行AM1计算作为初猜。一般不能直接使用。</li>
 </ul>
-<h2 id="轨道相关选项"><a href="#轨道相关选项" class="headerlink" title="轨道相关选项"></a>轨道相关选项</h2><ul>
+<h2 id="轨道相关选项"><a href="#轨道相关选项" class="headerlink" title="轨道相关选项"></a>轨道相关选项</h2><h3 id="guess-mix"><a href="#guess-mix" class="headerlink" title="guess=mix"></a>guess=mix</h3><ul>
 <li><code>Mix</code>：HOMO和LUMO混合，以破坏α-β和空间对称性。只有在产生复杂的初始猜测时，才默认进行。<code>NoMix</code>指不混合。</li>
 </ul>
+<ol>
+<li><code>guess=mix</code>只在自旋极化单重态（即使用UHF方法在单重态下做计算，发现有严重自旋污染）时需要考虑加，其他情况（如二重态、三重态）等无需考虑这个问题；</li>
+<li><code>always</code>表示在结构优化的每一步中都执行<code>guess=mix</code>。顾名思义，这只在结构优化中可能有用，而在单点计算中无需加、加了也没用。</li>
+</ol>
 <h2 id="程序选项"><a href="#程序选项" class="headerlink" title="程序选项"></a>程序选项</h2><ul>
 <li><code>Only</code>：在计算和打印初始猜测后终止计算。</li>
 </ul>
@@ -1548,10 +1553,12 @@
 <li><p>如果避免破坏之前的版本，可以用</p>
 <figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">%<span class="attribute">oldchk</span>=C:\name.chk</span><br><span class="line">%<span class="attribute">chk</span>=C:\new.chk</span><br><span class="line"><span class="comment"># guess=read</span></span><br></pre></td></tr></table></figure>
 </li>
+<li><p><strong>如果chk文件是不同的版本的Gaussian得到的，会报错，可以用<code>unfchk</code>指令把fchk转成当前版本的chk文件。</strong></p>
+</li>
 </ul>
 <h1 id="检测波函数的稳定性stable"><a href="#检测波函数的稳定性stable" class="headerlink" title="检测波函数的稳定性stable"></a>检测波函数的稳定性<code>stable</code></h1><ul>
 <li><code>stable</code>只检查波函数稳定性</li>
-<li><code>stable=opt</code>如果检查到不稳定就找到一个最近的稳定点</li>
+<li><code>stable=opt</code>如果检查到不稳定就找到一个最近的稳定点，不能与结构优化，限制性优化或IRC等一起使用</li>
 </ul>
 <p>提示结果有：</p>
 <ul>
@@ -1559,6 +1566,7 @@
 <li><code>The wavefunction has an RHF -&gt; UHF instability</code>表示对闭壳层计算，但是基态是开壳层，被当成了闭壳层计算</li>
 <li><code>The wavefunction has an internal instability</code>说明可能是其他情况。</li>
 </ul>
+<h1 id="片段组合波函数例子"><a href="#片段组合波函数例子" class="headerlink" title="片段组合波函数例子"></a>片段组合波函数例子</h1><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">%chk=N2_cc-pVDZ_2<span class="number">.0</span>_frag.chk</span><br><span class="line">%mem=<span class="number">4</span>GB</span><br><span class="line">%nprocshared=<span class="number">4</span></span><br><span class="line">#p UHF/cc-pVDZ nosymm guess(fragment=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">title</span><br><span class="line"></span><br><span class="line"><span class="number">0</span> <span class="number">1</span> <span class="number">0</span> <span class="number">4</span> <span class="number">0</span> <span class="number">-4</span></span><br><span class="line">N(fragment=<span class="number">1</span>)   <span class="number">0.0</span>   <span class="number">0.0</span>   <span class="number">0.0</span></span><br><span class="line">N(fragment=<span class="number">2</span>)   <span class="number">0.0</span>   <span class="number">0.0</span>   <span class="number">2.0</span></span><br><span class="line"></span><br><span class="line">--Link1--</span><br><span class="line">%chk=N2_cc-pVDZ_2<span class="number">.0</span>_frag.chk</span><br><span class="line">%mem=<span class="number">4</span>GB</span><br><span class="line">%nprocshared=<span class="number">4</span></span><br><span class="line">#p UHF chkbasis nosymm guess=read geom=allcheck stable=opt</span><br></pre></td></tr></table></figure>
 <h1 id="SCF不收敛的常用做法"><a href="#SCF不收敛的常用做法" class="headerlink" title="SCF不收敛的常用做法"></a>SCF不收敛的常用做法</h1><p>首先要使用<code>#P</code>，这样SCF迭代过程的每一轮信息才会输出出来，能够了解当前已经迭代到了第几轮，能量变化（Delta-E）、密度矩阵元最大变化（MaxDP）和密度矩阵平均变化（RMSDP）是多少，当前离收敛限还有多远（收敛限会在SCF开始之前明确提示）以及迭代过程是否有收敛的趋势。</p>
 <ul>
 <li>可以通过<code>grep “SCF Done”  *log</code>和<code>grep &quot;Delta-E=&quot; *log</code>来输出并查看趋势。</li>
@@ -1648,9 +1656,27 @@
 <li>用Multiwfn载入那个程序产生的含有基函数信息的文件（如.molden），进入主功能100的子功能2，选择导出波函数为fch文件，之后再用Gaussian的unfchk工具将之转换成chk文件，然后Gaussian计算时用<code>guess=read</code>从中读取波函数作为初猜</li>
 </ul>
 </li>
+<li><p><code>IOp(5/37=N)</code>：：默认情况下，默认情况下，SCF 迭代每 20 个周期，高斯将完整重建 Fock 矩阵。可以选择 N&lt;20，并加入 IOp（5/37=N） 选项，每 N 个 SCF 周期形成 Fock 矩阵。</p>
+</li>
 </ul>
 <h2 id="批量脚本"><a href="#批量脚本" class="headerlink" title="批量脚本"></a>批量脚本</h2><p>将上述方法都试一下的脚本，先新建一个文件夹，在其中存在.gjf和.sub文件，.gjf部分写入<code># SCF</code></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mkdir 01_novaracc_noincfock 02_vshift300 03_vshift400 04_vshift500 05_huckel 06_INDO 07_QC 08_XQC 09_Fermi 10_NODIIS 11_mix</span><br><span class="line"></span><br><span class="line">for i in 01 02 03 04 05 06 07 08 09 10 11; do cp 00_*/*gjf 00_*/g16* $&#123;i&#125;* ;done</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(novaracc,noincfock,maxcyc=300\) /&#x27; 01_novaracc_noincfock/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(vshift=300,maxcyc=300\) /&#x27; 02_vshift300/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(vshift=400,maxcyc=300\) /&#x27; 03_vshift400/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(vshift=500,maxcyc=300\) /&#x27; 04_vshift500/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300\) guess=huckel /&#x27; 05_huckel/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300\) guess=INDO /&#x27; 06_INDO/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF=QC /&#x27; 07_QC/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF=XQC /&#x27; 08_XQC/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300,Fermi\) /&#x27; 09_Fermi/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300,NODIIS\) /&#x27; 10_NODIIS/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300\) guess=mix /&#x27; 11_mix/*gjf</span><br><span class="line"></span><br><span class="line">for i in 01 02 03 04 05 06 07 08 09 10 11; do cd $&#123;i&#125;*; qsub g16*; cd ..; done </span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">mkdir 00_NoConv</span><br><span class="line">mv * 00*</span><br><span class="line">mkdir 01_novaracc_noincfock 02_vshift300 03_vshift400 04_vshift500 05_huckel 06_INDO 07_QC 08_XQC 09_Fermi 10_NODIIS 11_mix</span><br><span class="line"></span><br><span class="line">for i in 01 02 03 04 05 06 07 08 09 10 11; do cp 00_*/*gjf 00_*/g16* $&#123;i&#125;* ;done</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(novaracc,noincfock,maxcyc=300\) /&#x27; 01_novaracc_noincfock/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(vshift=300,maxcyc=300\) /&#x27; 02_vshift300/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(vshift=400,maxcyc=300\) /&#x27; 03_vshift400/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(vshift=500,maxcyc=300\) /&#x27; 04_vshift500/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300\) guess=huckel /&#x27; 05_huckel/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300\) guess=INDO /&#x27; 06_INDO/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF=QC /&#x27; 07_QC/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF=XQC /&#x27; 08_XQC/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300,Fermi\) /&#x27; 09_Fermi/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300,NODIIS\) /&#x27; 10_NODIIS/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300\) guess=mix /&#x27; 11_mix/*gjf</span><br><span class="line"></span><br><span class="line">for i in 01 02 03 04 07 08 09 10 11; do cd $&#123;i&#125;*; zsub g16*; cd ..; done </span><br></pre></td></tr></table></figure>
+<h1 id="后HF计算"><a href="#后HF计算" class="headerlink" title="后HF计算"></a>后HF计算</h1><h2 id="后HF计算波函数"><a href="#后HF计算波函数" class="headerlink" title="后HF计算波函数"></a>后HF计算波函数</h2><ul>
+<li><p>仅有解析梯度的后HF方法才能产生后HF波函数，比如CISD、QCISD、CCSD、MP2、MP3、MP4(SDQ)等，对于没有解析梯度的方法比如CCSD(T)、QCISD(T)、MP4(SDTQ)都无法产生对应波函数</p>
+</li>
+<li><p>需要在后HF计算中写<code>density</code>关键词（等价于<code>density=current</code>）才会产生后HF波函数，否则Gaussian输出的都是HF的波函数，比如原子电荷、偶极矩等都和HF计算相同。</p>
+</li>
+<li><p>写了<code>density</code>关键词后，chk/fch中的轨道仍然是HF轨道，如果需要后HF计算的自然轨道，则</p>
+<ol>
+<li><p>先通过<code>density</code>关键词计算一次后HF计算（将后HF密度矩阵存到chk中）</p>
+</li>
+<li><p>再通过<code># guess(save,only,naturalorbitals) chkbais</code>再计算一次，%chk和之前计算的%chk要相同</p>
+<p>或</p>
+<p>直接将1中的fch文件载入Multiwfn，然后通过200中的16，根据提示输入后HF波函数类型，Multiwfn会产生自然轨道，选择y乐意将自然轨道导出到molden文件中，通过0可以观看自然轨道。</p>
+</li>
+</ol>
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>计算化学</category>
