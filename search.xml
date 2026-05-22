@@ -1408,7 +1408,7 @@
   <entry>
     <title>【Gaussian】01.基础知识</title>
     <url>/2019/09/03/%E3%80%90Gaussian%E3%80%9101.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
-    <content><![CDATA[<h1 id="输入文件基本格式"><a href="#输入文件基本格式" class="headerlink" title="输入文件基本格式"></a>输入文件基本格式</h1><h1 id="闭壳层与开壳层体系SCF计算"><a href="#闭壳层与开壳层体系SCF计算" class="headerlink" title="闭壳层与开壳层体系SCF计算"></a>闭壳层与开壳层体系SCF计算</h1><p><img src="/image-20221107191726335.png" alt="image-20221107191726335"></p>
+    <content><![CDATA[<h1 id="输入文件基本格式"><a href="#输入文件基本格式" class="headerlink" title="输入文件基本格式"></a>输入文件基本格式</h1><h1 id="闭壳层与开壳层体系SCF计算"><a href="#闭壳层与开壳层体系SCF计算" class="headerlink" title="闭壳层与开壳层体系SCF计算"></a>闭壳层与开壳层体系SCF计算</h1><p><img src="image-20221107191726335.png" alt="image-20221107191726335"></p>
 <ul>
 <li>在Gaussian中，对于多重度不为1的体系，即使在关键词中只写hf，程序也会自动进行UHF计算。</li>
 <li>如果在关键词一行只写上uhf，则往往这时候的结果会与RHF相同，最终给出的<code>&lt;S**2&gt;</code>和S值均为0，没有自旋污染，说明此时得到的就是RHF解。解决方法是加入guess=mix关键词，用以强制混合HOMO和LUMO，以破坏α-β和空间对称性。</li>
@@ -7067,7 +7067,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 </ul>
 <p>方法：</p>
 <ul>
-<li><p>尝试不同的SCF收敛：默认是DIIS一般比较好，<a href="#KDIIS">使用KDIIS</a>等可能会导致收敛到其他情况</p>
+<li><p>尝试不同的SCF收敛：默认是DIIS一般比较好，<a href="#KDIIS">使用KDIIS</a> 等可能会导致收敛到其他情况 </p>
 </li>
 <li><p><strong>对初始轨道尝试不同的猜测</strong>：Guess可以用HCore、Hueckel、PAtom、PModel 、MORead。（见《【ORCA】04.重启计算&amp;初猜》）</p>
 </li>
@@ -11567,9 +11567,9 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
       </tags>
   </entry>
   <entry>
-    <title>测试图片</title>
-    <url>/2026/05/22/%E6%B5%8B%E8%AF%95%E5%9B%BE%E7%89%87/</url>
-    <content><![CDATA[<p>1111<br><img src="file-20260522173553172.png" alt=""><img src="file-20260522173616446.png" alt=""></p>
+    <title>[object Object]</title>
+    <url>/2026/05/22/%E6%B5%8B%E8%AF%95111/</url>
+    <content><![CDATA[<p><img src="file-20260522194317026.png" alt=""></p>
 ]]></content>
   </entry>
 </search>
