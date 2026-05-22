@@ -11390,8 +11390,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
   <entry>
     <title>【ORCA】10.磁性相关计算</title>
     <url>/2025/01/07/%E3%80%90ORCA%E3%80%9110.%E7%A3%81%E6%80%A7%E7%9B%B8%E5%85%B3%E8%AE%A1%E7%AE%97/</url>
-    <content><![CDATA[<p>1</p>
-<h1 id="g-tensor"><a href="#g-tensor" class="headerlink" title="g tensor"></a>g tensor</h1><h2 id="CASSCF"><a href="#CASSCF" class="headerlink" title="CASSCF"></a>CASSCF</h2><figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line"><span class="comment">%casscf </span></span><br><span class="line">...</span><br><span class="line">	rel</span><br><span class="line">		dosoc <span class="literal">true</span>   #spin-orbit coupling (<span class="keyword">and</span> ZFS)</span><br><span class="line">		gtensor <span class="literal">true</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">...</span><br><span class="line"> <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h1 id="g-tensor"><a href="#g-tensor" class="headerlink" title="g tensor"></a>g tensor</h1><h2 id="CASSCF"><a href="#CASSCF" class="headerlink" title="CASSCF"></a>CASSCF</h2><figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line"><span class="comment">%casscf </span></span><br><span class="line">...</span><br><span class="line">	rel</span><br><span class="line">		dosoc <span class="literal">true</span>   #spin-orbit coupling (<span class="keyword">and</span> ZFS)</span><br><span class="line">		gtensor <span class="literal">true</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">...</span><br><span class="line"> <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 <p>CASSCF中有两种方法计算：</p>
 <ul>
 <li>Effective Hamiltonian method，对任何多重度都可以（Kramers或nonKramers系统）</li>
@@ -11399,7 +11398,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </ul>
 <h3 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h3><ul>
 <li><p>Effective Hamiltonian Method得到的结果：</p>
-<p><img src="../images/image-20250117154939895.png" alt="image-20250117154939895"></p>
+<p><img src="image-20250117154939895.png" alt="image-20250117154939895"></p>
 <ul>
 <li>输出显示总 g 矩阵，后跟三个主成分及其方向（特征向量eigenvectors）。特征向量是列向量</li>
 <li>此例子中$g<em>z=2.99,g</em>{x,y}=2.24$</li>
@@ -11415,10 +11414,10 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </ul>
 </li>
 </ul>
-<h3 id="输出-1"><a href="#输出-1" class="headerlink" title="输出"></a>输出</h3><p><img src="source/images/image-20250117161710614.png" alt="image-20250117161710614"></p>
+<h3 id="输出-1"><a href="#输出-1" class="headerlink" title="输出"></a>输出</h3><p><img src="image-20250117161710614.png" alt="image-20250117161710614"></p>
 <ul>
 <li><p>analysis of the individual contributions to the D-tensor</p>
-<p><img src="source/images/image-20250117161848921.png" alt="image-20250117161848921"></p>
+<p><img src="image-20250117161848921.png" alt="image-20250117161848921"></p>
 </li>
 <li><p>D和E/D的物理意义：$\hat{H}_{\mathbf{ZFS}}=D\left(S_z^2-\frac{S(S+1)}{3}\right)+E(S_x^2-S_y^2)$</p>
 <ul>
@@ -11445,7 +11444,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <h2 id="输出-2"><a href="#输出-2" class="headerlink" title="输出"></a>输出</h2><ul>
 <li>各个轨道的mJ（磁量子数）百分比贡献</li>
 </ul>
-<p><img src="source/images/image-20250206182306324.png" alt="image-20250206182306324"></p>
+<p><img src="image-20250206182306324.png" alt="image-20250206182306324"></p>
 ]]></content>
       <categories>
         <category>计算化学</category>
@@ -11570,8 +11569,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
   <entry>
     <title>测试图片</title>
     <url>/2026/05/22/%E6%B5%8B%E8%AF%95%E5%9B%BE%E7%89%87/</url>
-    <content><![CDATA[<p>1111</p>
-<p><img src="/images/测试图片_image_1.png" alt=""></p>
+    <content><![CDATA[<p>1111<br><img src="file-20260522173553172.png" alt=""><img src="file-20260522173616446.png" alt=""></p>
 ]]></content>
   </entry>
 </search>
