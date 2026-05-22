@@ -8618,8 +8618,9 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
   <entry>
     <title>基组</title>
     <url>/2019/09/01/%E5%9F%BA%E7%BB%84/</url>
-    <content><![CDATA[<ul>
-<li>从头算中，采取了LCAO-MO近似，即通过对原子轨道进行线性叠加来构造分子轨道：$\left|\psi<em>{\mu}\right\rangle=\sum</em>{i=1}^{n}\left|\varphi<em>{i}\right\rangle a</em>{i \mu}$</li>
+    <content><![CDATA[<p> $Y_{l m}$部分</p>
+<ul>
+<li>从头算中，采取了LCAO-MO近似，即通过对原子轨道进行线性叠加来构造分子轨道：$\left|\psi<em>{\mu}\right\rangle=\sum</em>{i=1}^{n}\left|\varphi<em>{i}\right\rangle a</em>{i \mu}$。</li>
 <li>由原子的Hatree-Fock方程得到的原子轨道AO为数值解析的函数，因此需要通过解析函数来拟合：$\left|\varphi<em>{i}\right\rangle=\sum</em>{k=1}^{m}\left|\chi<em>{k}\right\rangle b</em>{k i}$</li>
 <li>以基函数为基的Roothaan方程：$\left|\psi<em>{\mu}\right\rangle=\sum</em>{=1}^{n} \sum<em>{k=1}^{m}\left|\chi</em>{k}\right\rangle b<em>{k i} a</em>{i \mu}=\sum<em>{k=1}^{m}\left|\chi</em>{k}\right\rangle\left[\sum<em>{i=1}^{n} b</em>{k} a<em>{i \mu}\right]=\sum</em>{i=1}^{m}\left|\chi<em>{k}\right\rangle c</em>{k \mu}$</li>
 <li>基函数集基本要求：<ul>
