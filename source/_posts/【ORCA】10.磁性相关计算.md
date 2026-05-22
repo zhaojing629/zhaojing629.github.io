@@ -1,11 +1,15 @@
 ---
-：去！title: 【ORCA】10.磁性相关计算
+title: 【ORCA】10.磁性相关计算
 typora-root-url: 【ORCA】10.磁性相关计算
 mathjax: true
 date: 2025-01-07 16:54:26
 updated:
-tags: [ORCA, 磁性]
-categories: [计算化学, 软件]
+tags:
+  - ORCA
+  - 磁性
+categories:
+  - 计算化学
+  - 软件
 description: ORCA中磁性的计算
 ---
 
@@ -15,7 +19,7 @@ description: ORCA中磁性的计算
 
 # g tensor
 
-## CASSCF
+##  CASSC F 
 
 ```
 %casscf 
@@ -37,7 +41,7 @@ CASSCF中有两种方法计算：
 
 - Effective Hamiltonian Method得到的结果：
 
-  ![image-20250117154939895](/image-20250117154939895.png)
+  ![[Pasted image 20260522155723.png]]![image-20250117154939895](image-20250117154939895.png)
 
   - 输出显示总 g 矩阵，后跟三个主成分及其方向（特征向量eigenvectors）。特征向量是列向量
   - 此例子中$g_z=2.99,g_{x,y}=2.24$
@@ -77,22 +81,22 @@ end
 ```
 
 - 有两种方法计算，the 2nd Order PT approach（二阶 PT 方法）和Effective Hamiltonian Method
-  - 在存在低激发态 (< 1000 cm-1)（通过 SOC 与基态贡献）的情况下，二阶 PT 方法对于计算零场分裂 (ZFS) 无效。
+  - 在存在低激发态 (< 1000 cm-1)（通过 SOC 与基态贡献）的情况下，**二阶 PT 方法对于计算零场分裂 (ZFS) 无效**。
 
 ### 输出
 
-![image-20250117161710614](/image-20250117161710614.png)
+![image-20250117161710614](image-20250117161710614.png)
 
 - analysis of the individual contributions to the D-tensor
 
-  ![image-20250117161848921](/image-20250117161848921.png)
+  ![image-20250117161848921](image-20250117161848921.png)
 
 - D和E/D的物理意义：$\hat{H}_{\mathbf{ZFS}}=D\left(S_z^2-\frac{S(S+1)}{3}\right)+E(S_x^2-S_y^2)$
   - D 值（零场分裂参数）：描述轴向（轴对称）方向的自旋能级分裂强度，单位为波数（cm⁻¹）或频率（MHz）。
-    - ∣D∣ 越大，零场能级分裂越显著。
+    - ∣D∣ 越大，零场能级分裂越显著。  
     - 符号（正负）反映能级顺序：D>0，$m_s=0$为基态；D<0，$m_s=±1$为基态
     - 大小：
-      - 大∣*D*∣ 体系（D>1cm⁻¹）需高频EPR（如W波段）观测共振；
+      - 大∣*D*∣ 体系（D>1cm⁻¹）需高频EPR（如W波段，D>10cm⁻¹时也很难）观测共振；
       - 小∣*D*∣ 体系（如有机三重态）可用X波段检测
   - E/D 比值：定义正交方向分裂的相对强度，范围 0≤∣E/D∣≤1/3。
     - E/D=0：完美轴对称（如八面体）；
@@ -154,4 +158,4 @@ source /share/apps/anaconda3/bin/activate /work/chem-zhaoxk/.conda/envs/gnuplot-
 
 - 各个轨道的mJ（磁量子数）百分比贡献
 
-![image-20250206182306324](/image-20250206182306324.png)
+![image-20250206182306324](image-20250206182306324.png)

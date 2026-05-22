@@ -469,3 +469,9 @@ End
 
 - `Max_CPKS_Iterations`：解析频率的计算需要求解Coupled Perturbed Kohn-Sham (CPKS)  (CPKS)方程，这是一个迭代过程。如果没有实现收敛（输出中会打印警告" CPKS failed to converge. Frequencies may be wrong")，可以增加迭代次数（收敛不能保证）。默认为`20`
 
+```
+AnalyticalFreq
+  Max_CPKS_Iterations 200
+End
+```
+

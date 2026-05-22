@@ -1,5 +1,5 @@
 ---
-   title: 【ORCA】09.对称性破缺计算
+title: 【ORCA】09.对称性破缺计算
 typora-root-url: 【ORCA】09.对称性破缺计算
 mathjax: true
 date: 2024-08-04 16:54:26

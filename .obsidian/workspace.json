@@ -1,0 +1,221 @@
+{
+  "main": {
+    "id": "11eb44b919dc3afc",
+    "type": "split",
+    "children": [
+      {
+        "id": "3367d3770868d0be",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2d353791634f360e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "source/_posts/【ORCA】10.磁性相关计算.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "【ORCA】10.磁性相关计算"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "2bdb06074f1de8ea",
+    "type": "split",
+    "children": [
+      {
+        "id": "baaa24a59ff3abe0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d8203fac5d239e53",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "d6d110019d72019e",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "c0a792a84576228d",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 409.5
+  },
+  "right": {
+    "id": "d3e02ac9ff5b4063",
+    "type": "split",
+    "children": [
+      {
+        "id": "4070ec6a84359e4f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "4d2697b174855ad5",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "反向链接"
+            }
+          },
+          {
+            "id": "89a914db1ed32ec4",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "出链"
+            }
+          },
+          {
+            "id": "0f745b349a5cf006",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "2b5939cc3c242cfa",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "58a48468731329c1",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "未命名.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "未命名 的大纲"
+            }
+          }
+        ],
+        "currentTab": 4
+      }
+    ],
+    "direction": "horizontal",
+    "width": 396.5
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false,
+      "obsidian-git:Open Git source control": false
+    }
+  },
+  "active": "d8203fac5d239e53",
+  "lastOpenFiles": [
+    "未命名 1.md",
+    "source/_posts/【ORCA】10.磁性相关计算.md",
+    "未命名.md",
+    "public/2025/09/04/【Gaussian】05.几何优化/index.html",
+    "public/2025/09/04/【Gaussian】05.几何优化",
+    "public/2025/09/04",
+    "public/2025/09",
+    "public/archives/2025/09/index.html",
+    "public/archives/2025/09",
+    "source/_posts/【Linux】命令.md",
+    "source/_posts/【Jmol】常见的指令.md",
+    "source/_posts/【Gaussian】柔性力常数.md",
+    "source/_posts/【Gaussian】核独立化学位移（NICS）.md",
+    "source/_posts/【Gaussian】对称性破缺.md",
+    "source/_posts/【Gaussian】05.几何优化.md",
+    "source/_posts/【Gaussian】04.激发态计算.md",
+    "source/_posts/【Gaussian】03.单点计算.md",
+    "source/_posts/【Gaussian】02.基组.md",
+    "source/_posts/【Gaussian】01.基础知识.md",
+    "source/_posts/【CP2K】05.MD.md",
+    "source/_posts/【CP2K】04.几何优化.md",
+    "source/_posts/【CP2K】03.MGRID中的CUTOFF和RELEL-CUTOFF.md",
+    "source/_posts/【CP2K】02.计算力和能量.md",
+    "source/_posts/【CP2K】01.基础.md",
+    "source/_posts/【AMS】05.过渡态.md",
+    "source/_posts/【AMS】04.键级.md",
+    "source/_posts/【AMS】03.振动光谱.md",
+    "source/_posts/【AMS】02.几何优化.md",
+    "source/_posts/【AMS】01.基本输入结构.md",
+    "source/_posts/【ADF】04.画图相关.md",
+    "source/_posts/【ADF】03.精度控制.md",
+    "source/_posts/【ADF】02.EDA-NOCV.md",
+    "Pasted image 20260522155723.png"
+  ]
+}

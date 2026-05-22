@@ -1,5 +1,4 @@
 ---
-：:：q:ls
 title: 【Gaussian】03.单点计算
 typora-root-url: 【Gaussian】03.单点计算
 mathjax: true
@@ -243,7 +242,12 @@ for i in 01 02 03 04 07 08 09 10 11; do cd ${i}*; zsub g16*; cd ..; done
 
 
 
+# 色散校正
 
+- DFT-D2校正：`EmpiricalDispersion=GD2`
+- 零阻尼的DFT-D3校正：`EmpiricalDispersion=GD3`
+- DFT-D3(BJ)校正：`EmpiricalDispersion=GD3BJ`
+- `EmpiricalDispersion`可以简写为`em`，比如`em=GD3BJ`。
 
 # 后HF计算
 

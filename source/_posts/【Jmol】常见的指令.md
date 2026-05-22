@@ -12,6 +12,117 @@ description: Jmol常见的指令
 
 
 
+# 一些例子
+
+- 初始：
+
+  ```
+  #设置窗口大小
+  set window 1060 800
+  set zoomEnabled off
+  
+  #设置透视
+  set perspectiveDepth Off
+  
+  #背景白色
+  background white
+  
+  #通过show state记录的调整好的位置
+  moveto 0.0 { 91 -986 142 117.98} 100.0 0.0 0.0 {0.0 0.0 0.0} 6.3156853 {0 0 0} 0 0 0 3.0 0.0 0.0;;
+  
+  #显示氢原子否
+  set showhydrogens false
+  ```
+
+- 调整键，原子大小，设置原子标签：
+
+  ```
+  #把所有cage的框架改成单键 细一点
+  select (*)[1][80]
+  bondorder 1
+  wireframe 0.05
+  color atoms TRANSLUCENT 0.8
+  #删除所有原子
+  select (*)[1][80]
+  spacefill off
+  #删除所有键
+  for (var i from [1,80]) {
+  connect (*)[83] (*)[i] Delete;
+  connect (*)[84] (*)[i] Delete;
+  connect (*)[82] (*)[i] Delete;
+  }
+  
+  #Sc1
+  for (var i in [66,44,67]) {
+  select (*)[i]
+  spacefill 0.35
+  connect (*)[83] (*)[i] partial ModifyOrCreate;
+  select  (*)[83],(*)[i]; wireframe 0.05
+  }
+  for (var i in [66,44,67,45,65,47,46,68,78]) {
+  select (*)[i]
+  spacefill 0.35
+  label %a
+  }
+  ```
+
+- 修改标签原子颜色等：
+
+  ```
+  select (*)[82]; Color atoms [X398E38]
+  select (*)[83]; label "Sc1"; Color atoms [xA1589C]
+  select (*)[84]; label "Sc2";Color atoms [xA1589C]
+  select (*)[81]; label "C81"; Color atoms [X3CA1C9]
+  Select (*)[81][84]
+  set labelOffset 0 0
+  font label 40 BOLD;
+  Color label  [XFFFFF1]
+  ```
+
+- 测量键长键角：
+
+  ```
+  measure 2.1 2.7 all (_C) (*)[83]  "2:%a1-%a2 %0.3VALUE //A"
+  measure 2.1 2.7 all (_C) (*)[84]  "2:%a1-%a2 %0.3VALUE //A"
+  Measure (*)[81]  (*)[79] (*)[82]  (*)[80] "4:"
+  ```
+
+- 设置空间模糊
+
+  ```
+  set zShade on
+   set zslab 50
+  set zdepth -200
+  ```
+
+- 设置分子轨道
+
+  ```
+  mo resolution 10
+  mo fill nomesh
+  
+  mo color [x7FB3D5] white #蓝白
+  mo color [xE78895] white #粉白
+  ```
+
+- 批量保存图片：
+
+  ```
+  cd D:/desktop/MO
+  
+  for (var I in [93,97,98,83]) {
+  mo @i
+  f = "NLMO_out"+i+".png"
+  p = "NLMO_out"+i+".pov"
+  write IMAGE pngt @f
+  write POVRAY @p
+  }
+  ```
+
+  
+
+
+
 
 
 

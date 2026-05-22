@@ -36,7 +36,7 @@ symmetry,x,y
 geometry={o}
 ```
 
-# 波函
+# 波函数
 
 ## 定义
 

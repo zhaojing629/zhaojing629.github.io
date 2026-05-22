@@ -1,19 +1,19 @@
 ---
-title: 【linux】Slurm队列系统
-typora-root-url: 【linux】Slurm队列系统
+title: 【linux】队列系统
+typora-root-url: 【linux】队列系统
 mathjax: true
 date: 2022-11-07 14:47:37
 updated:
 tags: [Linux, Linux]
 categories: 系统
-description: Slurm队列系统的基本操作
+description: 队列系统的基本操作
 ---
 
 
 
+# Slurm队列系统
 
-
-# 查看队列设定和节点状态
+## 查看队列设定和节点状态
 
 - `sinfo`：显示队列或节点状态，具有非常多过滤、排序和格式化等选项。
 
@@ -23,7 +23,7 @@ description: Slurm队列系统的基本操作
 
 
 
-# 提交任务
+## 提交任务
 
 三种模式：
 
@@ -39,7 +39,7 @@ description: Slurm队列系统的基本操作
 - `-p`：使用<partition_names>队列
 - `-t`：作业最大运行总时间，到时间后将被终止掉。
 
-## sbatch
+### sbatch
 
 sbatch提交一个批处理作业脚本到Slurm。脚本文件基本格式：
 
@@ -51,15 +51,15 @@ sbatch提交一个批处理作业脚本到Slurm。脚本文件基本格式：
 
 
 
-# 取消任务
+## 取消任务
 
 - `scancel`：取消排队或运行中的作业或作业步，还可用于发送任意信号到运行中的作业或作业步中的所有进程。
 
 
 
-# 查看任务
+## 查看任务
 
-## squeue
+### squeue
 
 - `squeue`：显示队列中的作业及作业步状态，含非常多过滤、排序和格式化等选项。
 
@@ -67,6 +67,32 @@ sbatch提交一个批处理作业脚本到Slurm。脚本文件基本格式：
 
 - `-u <user_list>`：显示特定用户的作业信息
 
-## scontrol
+### scontrol
 
 - `scontrol show job <jobid>`：显示作业号为JOBID的作业信息
+
+
+
+
+
+# LSF调度系统
+
+### bjobs
+
+- bjobs 检查提交作业状态
+- bjobs –r 显示正在运行的作业
+- bjobs –a 显示正在运行的和最近完成的作业
+- bjobs -p 显示等待运行的作业和等待原因
+- bjobs –s 显示正在挂起的作业和挂起的原因
+- bjobs -l 显示该作业的所有信息
+- bjobs -w 显示作业完整的信息，不截断。方便grep来过滤。
+
+### bqueues
+
+- bqueues 显示队列信息
+- bqueues –l  <queue name>
+
+### bhosts
+
+- bhosts 显示各节点作业相关情况、
+- bhosts  <hostname>

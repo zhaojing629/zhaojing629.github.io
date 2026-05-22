@@ -1,0 +1,8 @@
+{
+  "userIgnoreFilters": [
+    "node_modules/",
+    "scripts/",
+    "scaffolds/",
+    "themes/"
+  ]
+}
