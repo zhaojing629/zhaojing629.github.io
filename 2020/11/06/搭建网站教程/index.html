@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2020/11/06/%E6%90%AD%E5%BB%BA%E7%BD%91%E7%AB%99%E6%95%99%E7%A8%8B/1.png">
 <meta property="article:published_time" content="2020-11-06T04:15:00.000Z">
-<meta property="article:modified_time" content="2026-05-22T07:56:32.302Z">
+<meta property="article:modified_time" content="2026-05-22T13:10:23.815Z">
 <meta property="article:author" content="Zhao Jing">
 <meta property="article:tag" content="hexo">
 <meta property="article:tag" content="git">
@@ -224,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2026-05-22 15:56:32" itemprop="dateModified" datetime="2026-05-22T15:56:32+08:00">2026-05-22</time>
+                <time title="修改时间：2026-05-22 21:10:23" itemprop="dateModified" datetime="2026-05-22T21:10:23+08:00">2026-05-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -571,15 +571,26 @@
 </ol>
 <h3 id="图片的放大功能"><a href="#图片的放大功能" class="headerlink" title="图片的放大功能"></a>图片的放大功能</h3><p>将<code>主题配置文件</code>中的<code>fancybox</code>关键词为<code>true</code>即可，此时点击图片会有浮动的放大功能。</p>
 <h3 id="显示公式"><a href="#显示公式" class="headerlink" title="显示公式"></a>显示公式</h3><ol>
-<li>首先卸载默认的渲染引擎，安装next所需要的：<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">uninstall</span> hexo-renderer-marked <span class="comment">--save</span></span><br><span class="line">npm <span class="keyword">install</span> hexo-renderer-kramed <span class="comment">--save</span></span><br></pre></td></tr></table></figure></li>
-<li>在<code>主题配置文件</code>中的<code>math</code>部分：   <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">math:</span></span><br><span class="line">  <span class="attr">per_page:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">mathjax:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">mhchem:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">katex:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">copy_tex:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<li><p>首先卸载默认的渲染引擎，安装next所需要的：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">uninstall</span> hexo-renderer-marked <span class="comment">--save</span></span><br><span class="line">npm <span class="keyword">install</span> hexo-renderer-kramed <span class="comment">--save</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在<code>主题配置文件</code>中的<code>math</code>部分：   </p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">math:</span></span><br><span class="line">  <span class="attr">per_page:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">mathjax:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">mhchem:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">katex:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">copy_tex:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>per_pag</code>中，<code>true</code>代表按需要加载公式，在.md文件Front-matter添加<code>mathjax: true</code>才会加载公式。否则在所有页面都加载</li>
 <li><code>mathjax</code>的enable改为<code>true</code></li>
 </ul>
 </li>
-<li>行内的公式左右各一个$即可。</li>
+<li><p>行内的公式左右各一个$即可。</p>
+</li>
 </ol>
+<ul>
+<li>Karmed的有一些冲突：<ul>
+<li><a target="_blank" rel="noopener" href="https://murphypei.github.io/blog/2019/03/hexo-render-mathjax.html">解决hexo-next主题和mathjax下划线冲突问题 | 拾荒志</a></li>
+<li><a target="_blank" rel="noopener" href="https://corecabin.cn/2021/08/14/solve-some-problems-of-hexo-renderer-kramed-rendering-conflicts/">解决 hexo-renderer-kramed 渲染冲突的部分问题 | 卡洛的核心舱</a></li>
+</ul>
+</li>
+</ul>
 <h3 id="主页不显示全文"><a href="#主页不显示全文" class="headerlink" title="主页不显示全文"></a>主页不显示全文</h3><ol>
 <li>在文章中使用 <code>&lt;!-- more --&gt;</code> 手动进行截断</li>
 <li>在文章的 front-matter 中添加 description，并提供文章摘录<br>如果希望摘录在首页是居中的，则将~\themes\hexo-theme-next\layout_macro\post.swig中的<code>&lt;p&gt;&#123;&#123; post.description &#125;&#125;&lt;/p&gt;</code>改为如下即可：<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">p</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span></span><span class="template-variable">&#123;&#123; <span class="name">post.description</span> &#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
@@ -930,7 +941,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">365k</span>
+    <span title="站点总字数">366k</span>
 </div>
 
         

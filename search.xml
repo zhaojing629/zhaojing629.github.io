@@ -8619,9 +8619,9 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
     <title>基组</title>
     <url>/2019/09/01/%E5%9F%BA%E7%BB%84/</url>
     <content><![CDATA[<ul>
-<li>从头算中，采取了LCAO-MO近似，即通过对原子轨道进行线性叠加来构造分子轨道：<script type="math/tex">\left|\psi_{\mu}\right\rangle=\sum_{i=1}^{n}\left|\varphi_{i}\right\rangle a_{i \mu}</script></li>
-<li>由原子的Hatree-Fock方程得到的原子轨道AO为数值解析的函数，因此需要通过解析函数来拟合：<script type="math/tex">\left|\varphi_{i}\right\rangle=\sum_{k=1}^{m}\left|\chi_{k}\right\rangle b_{k i}</script></li>
-<li>以基函数为基的Roothaan方程：<script type="math/tex">\left|\psi_{\mu}\right\rangle=\sum_{=1}^{n} \sum_{k=1}^{m}\left|\chi_{k}\right\rangle b_{k i} a_{i \mu}=\sum_{k=1}^{m}\left|\chi_{k}\right\rangle\left[\sum_{i=1}^{n} b_{k} a_{i \mu}\right]=\sum_{i=1}^{m}\left|\chi_{k}\right\rangle c_{k \mu}</script></li>
+<li>从头算中，采取了LCAO-MO近似，即通过对原子轨道进行线性叠加来构造分子轨道：$\left|\psi<em>{\mu}\right\rangle=\sum</em>{i=1}^{n}\left|\varphi<em>{i}\right\rangle a</em>{i \mu}$</li>
+<li>由原子的Hatree-Fock方程得到的原子轨道AO为数值解析的函数，因此需要通过解析函数来拟合：$\left|\varphi<em>{i}\right\rangle=\sum</em>{k=1}^{m}\left|\chi<em>{k}\right\rangle b</em>{k i}$</li>
+<li>以基函数为基的Roothaan方程：$\left|\psi<em>{\mu}\right\rangle=\sum</em>{=1}^{n} \sum<em>{k=1}^{m}\left|\chi</em>{k}\right\rangle b<em>{k i} a</em>{i \mu}=\sum<em>{k=1}^{m}\left|\chi</em>{k}\right\rangle\left[\sum<em>{i=1}^{n} b</em>{k} a<em>{i \mu}\right]=\sum</em>{i=1}^{m}\left|\chi<em>{k}\right\rangle c</em>{k \mu}$</li>
 <li>基函数集基本要求：<ul>
 <li>分子积分容易计算，且速度快；</li>
 <li>在较小的基组维界下即可逼近数学完备集的理论极限精度（MO的展开具有高的收敛性）</li>
@@ -8632,9 +8632,9 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li>当基函数无穷多，成为完备集，就达到了完备基组极限(Complete basis set limmit,CBS)，能够完美展开分子轨道。从基组角度来说没有误差，误差来源于理论方法。</li>
 <li>实际用的基组尺寸是有限的而达不到CBS，由此导致的计算结果的误差称为基组不完备性误差。</li>
 </ul>
-<h1 id="Y-l-m-部分"><a href="#Y-l-m-部分" class="headerlink" title="Y_{l m}部分"></a><script type="math/tex">Y_{l m}</script>部分</h1><h2 id="中心势场型AO基组"><a href="#中心势场型AO基组" class="headerlink" title="中心势场型AO基组"></a>中心势场型AO基组</h2><ul>
-<li>对单电子原子的薛定谔方程进行求解，通过球坐标的变换和使用变量分离法，得到<script type="math/tex">\varphi(r, \theta, \phi)=R_{n l}(r) Y_{l m}(\theta, \phi)</script>，其中球谐部分<script type="math/tex">Y_{l m}(\theta, \phi)</script>与势能无关。</li>
-<li>对于多电子体系，其他电子对第i个电子的排斥看为对核电荷的屏蔽，即引入屏蔽常数σ。与势能的径向部分写为<script type="math/tex">R_{n l}(r, \sigma)</script>，即得到<script type="math/tex">\varphi(r, \theta, \phi)=R_{n l}(r, \sigma) Y_{l m}(\theta, \phi)</script><ul>
+<h1 id="Y-l-m-部分"><a href="#Y-l-m-部分" class="headerlink" title="$Y_{l m}$部分"></a>$Y_{l m}$部分</h1><h2 id="中心势场型AO基组"><a href="#中心势场型AO基组" class="headerlink" title="中心势场型AO基组"></a>中心势场型AO基组</h2><ul>
+<li>对单电子原子的薛定谔方程进行求解，通过球坐标的变换和使用变量分离法，得到$\varphi(r, \theta, \phi)=R<em>{n l}(r) Y</em>{l m}(\theta, \phi)<script type="math/tex">，其中球谐部分</script>Y_{l m}(\theta, \phi)$与势能无关。</li>
+<li>对于多电子体系，其他电子对第i个电子的排斥看为对核电荷的屏蔽，即引入屏蔽常数σ。与势能的径向部分写为$R<em>{n l}(r, \sigma)$，即得到$\varphi(r, \theta, \phi)=R</em>{n l}(r, \sigma) Y_{l m}(\theta, \phi)$<ul>
 <li>n主量子数：1, 2, …</li>
 <li>l角量子数：0, 1, 2, …, n-1（s、p、d、f……）</li>
 <li>m磁量子数：0,±1, …,±l</li>
@@ -8642,21 +8642,11 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 </li>
 </ul>
 <h2 id="复AO和实AO"><a href="#复AO和实AO" class="headerlink" title="复AO和实AO"></a>复AO和实AO</h2><ul>
-<li><script type="math/tex">Y_{l m}(\theta, \phi)</script>分为复型（连属Legendre多项式）和实型。</li>
-</ul>
-<p>例子：</p>
-<ul>
-<li><p><script type="math/tex">\text { Complex }\left\{\begin{array}{l}
-Y_{11}=\sqrt{\frac{3}{8 \pi}} \sin \theta e^{i \varphi} \\
-Y_{10}=\sqrt{\frac{3}{4 \pi}} \cos \theta \\
-Y_{1 \overline{1}}=\sqrt{\frac{3}{8 \pi}} \sin \theta e^{-i \varphi}
-\end{array}\right.</script>具有球对称性<script type="math/tex">K_h</script>，无方向性，物理学家更关心。</p>
+<li><p>$Y_{l m}(\theta, \phi)$分为复型（连属Legendre多项式）和实型。<br>例子：</p>
 </li>
-<li><p><script type="math/tex">\text { Real }\left\{\begin{array}{l}
-Y_{p x}=\sqrt{\frac{3}{4 \pi}} \sin \theta \cos \varphi=\sqrt{\frac{3}{4 \pi}} \frac{x}{r} \\
-Y_{p y}=\sqrt{\frac{3}{4 \pi}} \sin \theta \sin \varphi=\sqrt{\frac{3}{4 \pi}} \frac{y}{r} \\
-Y_{p z}=\sqrt{\frac{3}{4 \pi}} \cos \theta=\sqrt{\frac{3}{4 \pi}} \frac{z}{r}
-\end{array}\right.</script>具有立方对称性<script type="math/tex">O_h</script>，化学家更关心化学键中原子的位置和方向，所以降低其对称性，引入了x，y，z方向。</p>
+<li><p>$\text { Complex }\left{\begin{array}{l}<br>Y<em>{11}=\sqrt{\frac{3}{8 \pi}} \sin \theta e^{i \varphi} \<br>Y</em>{10}=\sqrt{\frac{3}{4 \pi}} \cos \theta \<br>Y_{1 \overline{1}}=\sqrt{\frac{3}{8 \pi}} \sin \theta e^{-i \varphi}<br>\end{array}\right.$具有球对称性$$K_h$，无方向性，物理学家更关心。</p>
+</li>
+<li><p>$\text { Real }\left{\begin{array}{l}<br>Y<em>{p x}=\sqrt{\frac{3}{4 \pi}} \sin \theta \cos \varphi=\sqrt{\frac{3}{4 \pi}} \frac{x}{r} \<br>Y</em>{p y}=\sqrt{\frac{3}{4 \pi}} \sin \theta \sin \varphi=\sqrt{\frac{3}{4 \pi}} \frac{y}{r} \<br>Y_{p z}=\sqrt{\frac{3}{4 \pi}} \cos \theta=\sqrt{\frac{3}{4 \pi}} \frac{z}{r}<br>\end{array}\right.$ 具有立方对称性 $O_h$，化学家更关心化学键中原子的位置和方向，所以降低其对称性，引入了x，y，z方向。</p>
 </li>
 </ul>
 <p><img src="p型复AO和实AO的角度分布比较.png" alt=""></p>
@@ -9597,15 +9587,26 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 </ol>
 <h3 id="图片的放大功能"><a href="#图片的放大功能" class="headerlink" title="图片的放大功能"></a>图片的放大功能</h3><p>将<code>主题配置文件</code>中的<code>fancybox</code>关键词为<code>true</code>即可，此时点击图片会有浮动的放大功能。</p>
 <h3 id="显示公式"><a href="#显示公式" class="headerlink" title="显示公式"></a>显示公式</h3><ol>
-<li>首先卸载默认的渲染引擎，安装next所需要的：<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">npm <span class="keyword">uninstall</span> hexo-renderer-marked <span class="comment">--save</span></span><br><span class="line">npm <span class="keyword">install</span> hexo-renderer-kramed <span class="comment">--save</span></span><br></pre></td></tr></table></figure></li>
-<li>在<code>主题配置文件</code>中的<code>math</code>部分：   <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">math:</span></span><br><span class="line">  <span class="attr">per_page:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">mathjax:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">mhchem:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">katex:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">copy_tex:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<li><p>首先卸载默认的渲染引擎，安装next所需要的：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">npm <span class="keyword">uninstall</span> hexo-renderer-marked <span class="comment">--save</span></span><br><span class="line">npm <span class="keyword">install</span> hexo-renderer-kramed <span class="comment">--save</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在<code>主题配置文件</code>中的<code>math</code>部分：   </p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">math:</span></span><br><span class="line">  <span class="attr">per_page:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">mathjax:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">mhchem:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">katex:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">copy_tex:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>per_pag</code>中，<code>true</code>代表按需要加载公式，在.md文件Front-matter添加<code>mathjax: true</code>才会加载公式。否则在所有页面都加载</li>
 <li><code>mathjax</code>的enable改为<code>true</code></li>
 </ul>
 </li>
-<li>行内的公式左右各一个$即可。</li>
+<li><p>行内的公式左右各一个$即可。</p>
+</li>
 </ol>
+<ul>
+<li>Karmed的有一些冲突：<ul>
+<li><a href="https://murphypei.github.io/blog/2019/03/hexo-render-mathjax.html">解决hexo-next主题和mathjax下划线冲突问题 | 拾荒志</a></li>
+<li><a href="https://corecabin.cn/2021/08/14/solve-some-problems-of-hexo-renderer-kramed-rendering-conflicts/">解决 hexo-renderer-kramed 渲染冲突的部分问题 | 卡洛的核心舱</a></li>
+</ul>
+</li>
+</ul>
 <h3 id="主页不显示全文"><a href="#主页不显示全文" class="headerlink" title="主页不显示全文"></a>主页不显示全文</h3><ol>
 <li>在文章中使用 <code>&lt;!-- more --&gt;</code> 手动进行截断</li>
 <li>在文章的 front-matter 中添加 description，并提供文章摘录<br>如果希望摘录在首页是居中的，则将~\themes\hexo-theme-next\layout_macro\post.swig中的<code>&lt;p&gt;&#123;&#123; post.description &#125;&#125;&lt;/p&gt;</code>改为如下即可：<figure class="highlight handlebars"><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">p</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span></span><span class="template-variable">&#123;&#123; <span class="name">post.description</span> &#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
@@ -11571,7 +11572,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
     <url>/2026/05/22/%E6%B5%8B%E8%AF%95%E5%85%AC%E5%BC%8F/</url>
     <content><![CDATA[<ul>
 <li>单的效果：$A^2$、2</li>
-<li>双$：<script type="math/tex">\left|\psi_{\mu}\right\rangle=\sum_{i=1}^{n}\left|\varphi_{i}\right\rangle a_{i \mu}</script> <script type="math/tex; mode=display">\left|\psi_{\mu}\right\rangle=\sum_{i=1}^{n}\left|\varphi_{i}\right\rangle a_{i \mu}</script>打发士</li>
+<li>双$：<script type="math/tex">\left|\psi_{\mu}\right\rangle=\sum_{i=1}^{n}\left|\varphi_{i}\right\rangle a_{i \mu}</script> 。5555<script type="math/tex; mode=display">\left|\psi_{\mu}\right\rangle=\sum_{i=1}^{n}\left|\varphi_{i}\right\rangle a_{i \mu}</script>打发士</li>
 </ul>
 ]]></content>
   </entry>
