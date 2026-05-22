@@ -11570,8 +11570,8 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
     <title>[object Object]</title>
     <url>/2026/05/22/%E6%B5%8B%E8%AF%95%E5%85%AC%E5%BC%8F/</url>
     <content><![CDATA[<ul>
-<li>这是一个公式<script type="math/tex">A_1</script></li>
-<li>这是一个公式：<script type="math/tex">\left|\psi_{\mu}\right\rangle=\sum_{i=1}^{n}\left|\varphi_{i}\right\rangle a_{i \mu}</script> <script type="math/tex; mode=display">\left|\psi_{\mu}\right\rangle=\sum_{i=1}^{n}\left|\varphi_{i}\right\rangle a_{i \mu}</script></li>
+<li>单$的效果:$A_1$</li>
+<li>双$：<script type="math/tex">\left|\psi_{\mu}\right\rangle=\sum_{i=1}^{n}\left|\varphi_{i}\right\rangle a_{i \mu}</script> <script type="math/tex; mode=display">\left|\psi_{\mu}\right\rangle=\sum_{i=1}^{n}\left|\varphi_{i}\right\rangle a_{i \mu}</script></li>
 </ul>
 ]]></content>
   </entry>
