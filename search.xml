@@ -8619,9 +8619,9 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
     <title>基组</title>
     <url>/2019/09/01/%E5%9F%BA%E7%BB%84/</url>
     <content><![CDATA[<ul>
-<li>从头算中，采取了LCAO-MO近似，即通过对原子轨道进行线性叠加来构造分子轨道：<script type="math/tex">\left|\psi_{\mu}\right\rangle=\sum_{i=1}^{n}\left|\varphi_{i}\right\rangle a_{i \mu}</script></li>
-<li>由原子的Hatree-Fock方程得到的原子轨道AO为数值解析的函数，因此需要通过解析函数来拟合：<script type="math/tex">\left|\varphi_{i}\right\rangle=\sum_{k=1}^{m}\left|\chi_{k}\right\rangle b_{k i}</script></li>
-<li>以基函数为基的Roothaan方程：<script type="math/tex">\left|\psi_{\mu}\right\rangle=\sum_{=1}^{n} \sum_{k=1}^{m}\left|\chi_{k}\right\rangle b_{k i} a_{i \mu}=\sum_{k=1}^{m}\left|\chi_{k}\right\rangle\left[\sum_{i=1}^{n} b_{k} a_{i \mu}\right]=\sum_{i=1}^{m}\left|\chi_{k}\right\rangle c_{k \mu}</script></li>
+<li>从头算中，采取了LCAO-MO近似，即通过对原子轨道进行线性叠加来构造分子轨道：$\left|\psi<em>{\mu}\right\rangle=\sum</em>{i=1}^{n}\left|\varphi<em>{i}\right\rangle a</em>{i \mu} ￥$</li>
+<li>由原子的Hatree-Fock方程得到的原子轨道AO为数值解析的函数，因此需要通过解析函数来拟合：$\left|\varphi<em>{i}\right\rangle=\sum</em>{k=1}^{m}\left|\chi<em>{k}\right\rangle b</em>{k i} $</li>
+<li>以基函数为基的Roothaan方程：$\left|\psi<em>{\mu}\right\rangle=\sum</em>{=1}^{n} \sum<em>{k=1}^{m}\left|\chi</em>{k}\right\rangle b<em>{k i} a</em>{i \mu}=\sum<em>{k=1}^{m}\left|\chi</em>{k}\right\rangle\left[\sum<em>{i=1}^{n} b</em>{k} a<em>{i \mu}\right]=\sum</em>{i=1}^{m}\left|\chi<em>{k}\right\rangle c</em>{k \mu}$</li>
 <li>基函数集基本要求：<ul>
 <li>分子积分容易计算，且速度快；</li>
 <li>在较小的基组维界下即可逼近数学完备集的理论极限精度（MO的展开具有高的收敛性）</li>
@@ -8632,7 +8632,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li>当基函数无穷多，成为完备集，就达到了完备基组极限(Complete basis set limmit,CBS)，能够完美展开分子轨道。从基组角度来说没有误差，误差来源于理论方法。</li>
 <li>实际用的基组尺寸是有限的而达不到CBS，由此导致的计算结果的误差称为基组不完备性误差。</li>
 </ul>
-<h1 id="Y-l-m-部分"><a href="#Y-l-m-部分" class="headerlink" title="Y_{l m}部分"></a><script type="math/tex">Y_{l m}</script>部分</h1><h2 id="中心势场型AO基组"><a href="#中心势场型AO基组" class="headerlink" title="中心势场型AO基组"></a>中心势场型AO基组</h2><ul>
+<h1 id="Y-l-m-部分"><a href="#Y-l-m-部分" class="headerlink" title="$Y_{l m}$部分"></a>$Y_{l m}$部分</h1><h2 id="中心势场型AO基组"><a href="#中心势场型AO基组" class="headerlink" title="中心势场型AO基组"></a>中心势场型AO基组</h2><ul>
 <li>对单电子原子的薛定谔方程进行求解，通过球坐标的变换和使用变量分离法，得到<script type="math/tex">\varphi(r, \theta, \phi)=R_{n l}(r) Y_{l m}(\theta, \phi)</script>，其中球谐部分<script type="math/tex">Y_{l m}(\theta, \phi)</script>与势能无关。</li>
 <li>对于多电子体系，其他电子对第i个电子的排斥看为对核电荷的屏蔽，即引入屏蔽常数σ。与势能的径向部分写为<script type="math/tex">R_{n l}(r, \sigma)</script>，即得到<script type="math/tex">\varphi(r, \theta, \phi)=R_{n l}(r, \sigma) Y_{l m}(\theta, \phi)</script><ul>
 <li>n主量子数：1, 2, …</li>
