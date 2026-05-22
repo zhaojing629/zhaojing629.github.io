@@ -1661,6 +1661,12 @@
 </ul>
 <h2 id="批量脚本"><a href="#批量脚本" class="headerlink" title="批量脚本"></a>批量脚本</h2><p>将上述方法都试一下的脚本，先新建一个文件夹，在其中存在.gjf和.sub文件，.gjf部分写入<code># SCF</code></p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">mkdir 00_NoConv</span><br><span class="line">mv * 00*</span><br><span class="line">mkdir 01_novaracc_noincfock 02_vshift300 03_vshift400 04_vshift500 05_huckel 06_INDO 07_QC 08_XQC 09_Fermi 10_NODIIS 11_mix</span><br><span class="line"></span><br><span class="line">for i in 01 02 03 04 05 06 07 08 09 10 11; do cp 00_*/*gjf 00_*/g16* $&#123;i&#125;* ;done</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(novaracc,noincfock,maxcyc=300\) /&#x27; 01_novaracc_noincfock/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(vshift=300,maxcyc=300\) /&#x27; 02_vshift300/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(vshift=400,maxcyc=300\) /&#x27; 03_vshift400/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(vshift=500,maxcyc=300\) /&#x27; 04_vshift500/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300\) guess=huckel /&#x27; 05_huckel/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300\) guess=INDO /&#x27; 06_INDO/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF=QC /&#x27; 07_QC/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF=XQC /&#x27; 08_XQC/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300,Fermi\) /&#x27; 09_Fermi/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300,NODIIS\) /&#x27; 10_NODIIS/*gjf</span><br><span class="line">sed -i &#x27;s/\#/&amp;SCF\(maxcyc=300\) guess=mix /&#x27; 11_mix/*gjf</span><br><span class="line"></span><br><span class="line">for i in 01 02 03 04 07 08 09 10 11; do cd $&#123;i&#125;*; zsub g16*; cd ..; done </span><br></pre></td></tr></table></figure>
+<h1 id="色散校正"><a href="#色散校正" class="headerlink" title="色散校正"></a>色散校正</h1><ul>
+<li>DFT-D2校正：<code>EmpiricalDispersion=GD2</code></li>
+<li>零阻尼的DFT-D3校正：<code>EmpiricalDispersion=GD3</code></li>
+<li>DFT-D3(BJ)校正：<code>EmpiricalDispersion=GD3BJ</code></li>
+<li><code>EmpiricalDispersion</code>可以简写为<code>em</code>，比如<code>em=GD3BJ</code>。</li>
+</ul>
 <h1 id="后HF计算"><a href="#后HF计算" class="headerlink" title="后HF计算"></a>后HF计算</h1><h2 id="后HF计算波函数"><a href="#后HF计算波函数" class="headerlink" title="后HF计算波函数"></a>后HF计算波函数</h2><ul>
 <li><p>仅有解析梯度的后HF方法才能产生后HF波函数，比如CISD、QCISD、CCSD、MP2、MP3、MP4(SDQ)等，对于没有解析梯度的方法比如CCSD(T)、QCISD(T)、MP4(SDTQ)都无法产生对应波函数</p>
 </li>
@@ -3204,7 +3210,7 @@
 </ul>
 <h1 id="指定对称性"><a href="#指定对称性" class="headerlink" title="指定对称性"></a>指定对称性</h1><p>在<code>geometry</code>块之前，通过表4.1中的生成元表示，例如：</p>
 <figure class="highlight gml"><table><tr><td class="code"><pre><span class="line">symmetry,<span class="symbol">x</span>,<span class="symbol">y</span></span><br><span class="line">geometry=&#123;o&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="波函"><a href="#波函" class="headerlink" title="波函"></a>波函</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><ul>
+<h1 id="波函数"><a href="#波函数" class="headerlink" title="波函数"></a>波函数</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><ul>
 <li><p>波函数的总对称性通过<code>wf</code>卡定义：</p>
 <figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">WF,</span>nelec,irrep,spin</span><br></pre></td></tr></table></figure>
 <p>或</p>
@@ -5003,6 +5009,7 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
 <ul>
 <li><code>Max_CPKS_Iterations</code>：解析频率的计算需要求解Coupled Perturbed Kohn-Sham (CPKS)  (CPKS)方程，这是一个迭代过程。如果没有实现收敛（输出中会打印警告” CPKS failed to converge. Frequencies may be wrong”)，可以增加迭代次数（收敛不能保证）。默认为<code>20</code></li>
 </ul>
+<figure class="highlight ada"><table><tr><td class="code"><pre><span class="line">AnalyticalFreq</span><br><span class="line">  Max_CPKS_Iterations <span class="number">200</span></span><br><span class="line"><span class="keyword">End</span></span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>计算化学</category>
@@ -5529,7 +5536,30 @@ E_{0}^{C I} \leq E_{1}^{C I} \leq E_{2}^{C I} \leq \cdots \\
   <entry>
     <title></title>
     <url>/2021/08/13/%E3%80%90Jmol%E3%80%91%E5%B8%B8%E8%A7%81%E7%9A%84%E6%8C%87%E4%BB%A4/</url>
-    <content><![CDATA[<h1 id="background背景"><a href="#background背景" class="headerlink" title="background背景"></a><code>background</code>背景</h1><p>设置背景颜色或者图像。用法：</p>
+    <content><![CDATA[<h1 id="一些例子"><a href="#一些例子" class="headerlink" title="一些例子"></a>一些例子</h1><ul>
+<li><p>初始：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="comment">#设置窗口大小</span></span><br><span class="line"><span class="attribute">set</span> window <span class="number">1060</span> <span class="number">800</span></span><br><span class="line"><span class="attribute">set</span> zoomEnabled <span class="literal">off</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#设置透视</span></span><br><span class="line"><span class="attribute">set</span> perspectiveDepth <span class="literal">Off</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#背景白色</span></span><br><span class="line"><span class="attribute">background</span> white</span><br><span class="line"></span><br><span class="line"><span class="comment">#通过show state记录的调整好的位置</span></span><br><span class="line"><span class="attribute">moveto</span> <span class="number">0</span>.<span class="number">0</span> &#123; <span class="number">91</span> -<span class="number">986</span> <span class="number">142</span> <span class="number">117</span>.<span class="number">98</span>&#125; <span class="number">100</span>.<span class="number">0</span> <span class="number">0</span>.<span class="number">0</span> <span class="number">0</span>.<span class="number">0</span> &#123;<span class="number">0</span>.<span class="number">0</span> <span class="number">0</span>.<span class="number">0</span> <span class="number">0</span>.<span class="number">0</span>&#125; <span class="number">6</span>.<span class="number">3156853</span> &#123;<span class="number">0</span> <span class="number">0</span> <span class="number">0</span>&#125; <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">3</span>.<span class="number">0</span> <span class="number">0</span>.<span class="number">0</span> <span class="number">0</span>.<span class="number">0</span>;;</span><br><span class="line"></span><br><span class="line"><span class="comment">#显示氢原子否</span></span><br><span class="line"><span class="attribute">set</span> showhydrogens false</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>调整键，原子大小，设置原子标签：</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line">#把所有<span class="selector-tag">cage</span>的框架改成单键 细一点</span><br><span class="line"><span class="selector-tag">select</span> (*)<span class="selector-attr">[1]</span><span class="selector-attr">[80]</span></span><br><span class="line"><span class="selector-tag">bondorder</span> <span class="selector-tag">1</span></span><br><span class="line"><span class="selector-tag">wireframe</span> <span class="selector-tag">0</span><span class="selector-class">.05</span></span><br><span class="line"><span class="selector-tag">color</span> <span class="selector-tag">atoms</span> <span class="selector-tag">TRANSLUCENT</span> <span class="selector-tag">0</span><span class="selector-class">.8</span></span><br><span class="line">#删除所有原子</span><br><span class="line"><span class="selector-tag">select</span> (*)<span class="selector-attr">[1]</span><span class="selector-attr">[80]</span></span><br><span class="line"><span class="selector-tag">spacefill</span> <span class="selector-tag">off</span></span><br><span class="line">#删除所有键</span><br><span class="line"><span class="selector-tag">for</span> (var i from [<span class="number">1</span>,<span class="number">80</span>]) &#123;</span><br><span class="line"><span class="selector-tag">connect</span> (*)<span class="selector-attr">[83]</span> (*)<span class="selector-attr">[i]</span> <span class="selector-tag">Delete</span>;</span><br><span class="line"><span class="selector-tag">connect</span> (*)<span class="selector-attr">[84]</span> (*)<span class="selector-attr">[i]</span> <span class="selector-tag">Delete</span>;</span><br><span class="line"><span class="selector-tag">connect</span> (*)<span class="selector-attr">[82]</span> (*)<span class="selector-attr">[i]</span> <span class="selector-tag">Delete</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#Sc1</span></span><br><span class="line"><span class="selector-tag">for</span> (var i in [<span class="number">66</span>,<span class="number">44</span>,<span class="number">67</span>]) &#123;</span><br><span class="line"><span class="selector-tag">select</span> (*)<span class="selector-attr">[i]</span></span><br><span class="line"><span class="selector-tag">spacefill</span> <span class="selector-tag">0</span><span class="selector-class">.35</span></span><br><span class="line"><span class="selector-tag">connect</span> (*)<span class="selector-attr">[83]</span> (*)<span class="selector-attr">[i]</span> <span class="selector-tag">partial</span> <span class="selector-tag">ModifyOrCreate</span>;</span><br><span class="line"><span class="selector-tag">select</span>  (*)<span class="selector-attr">[83]</span>,(*)<span class="selector-attr">[i]</span>; <span class="selector-tag">wireframe</span> <span class="selector-tag">0</span><span class="selector-class">.05</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">for</span> (var i in [<span class="number">66</span>,<span class="number">44</span>,<span class="number">67</span>,<span class="number">45</span>,<span class="number">65</span>,<span class="number">47</span>,<span class="number">46</span>,<span class="number">68</span>,<span class="number">78</span>]) &#123;</span><br><span class="line"><span class="selector-tag">select</span> (*)<span class="selector-attr">[i]</span></span><br><span class="line"><span class="selector-tag">spacefill</span> <span class="selector-tag">0</span><span class="selector-class">.35</span></span><br><span class="line"><span class="selector-tag">label</span> %<span class="selector-tag">a</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改标签原子颜色等：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">select</span> (*)<span class="selector-attr">[82]</span>; <span class="attribute">Color</span> atoms <span class="selector-attr">[X398E38]</span></span><br><span class="line"><span class="selector-tag">select</span> (*)<span class="selector-attr">[83]</span>; <span class="selector-tag">label</span> &quot;Sc1&quot;; <span class="attribute">Color</span> atoms <span class="selector-attr">[xA1589C]</span></span><br><span class="line"><span class="selector-tag">select</span> (*)<span class="selector-attr">[84]</span>; <span class="selector-tag">label</span> &quot;Sc2&quot;;<span class="attribute">Color</span> atoms <span class="selector-attr">[xA1589C]</span></span><br><span class="line"><span class="selector-tag">select</span> (*)<span class="selector-attr">[81]</span>; <span class="selector-tag">label</span> &quot;C81&quot;; <span class="attribute">Color</span> atoms <span class="selector-attr">[X3CA1C9]</span></span><br><span class="line"><span class="selector-tag">Select</span> (*)<span class="selector-attr">[81]</span><span class="selector-attr">[84]</span></span><br><span class="line">set labelOffset 0 0</span><br><span class="line"><span class="attribute">font</span> <span class="selector-tag">label</span> 40 BOLD;</span><br><span class="line"><span class="attribute">Color</span> <span class="selector-tag">label</span>  <span class="selector-attr">[XFFFFF1]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>测量键长键角：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">measure</span> <span class="number">2</span>.<span class="number">1</span> <span class="number">2</span>.<span class="number">7</span> <span class="literal">all</span> (_C) (*)[<span class="number">83</span>]  <span class="string">&quot;2:%a1-%a2 %0.3VALUE //A&quot;</span></span><br><span class="line"><span class="attribute">measure</span> <span class="number">2</span>.<span class="number">1</span> <span class="number">2</span>.<span class="number">7</span> <span class="literal">all</span> (_C) (*)[<span class="number">84</span>]  <span class="string">&quot;2:%a1-%a2 %0.3VALUE //A&quot;</span></span><br><span class="line"><span class="attribute">Measure</span> (*)[<span class="number">81</span>]  (*)[<span class="number">79</span>] (*)[<span class="number">82</span>]  (*)[<span class="number">80</span>] <span class="string">&quot;4:&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置空间模糊</p>
+<figure class="highlight gams"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> zShade <span class="comment">on</span></span><br><span class="line"> <span class="keyword">set</span> <span class="comment">zslab 50</span></span><br><span class="line"><span class="keyword">set</span> <span class="comment">zdepth -200</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置分子轨道</p>
+<figure class="highlight smali"><table><tr><td class="code"><pre><span class="line">mo resolution 10</span><br><span class="line">mo<span class="built_in"> fill </span>nomesh</span><br><span class="line"></span><br><span class="line">mo color [x7FB3D5] white <span class="comment">#蓝白</span></span><br><span class="line">mo color [xE78895] white <span class="comment">#粉白</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>批量保存图片：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">cd D:<span class="regexp">/desktop/</span>MO</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> I <span class="keyword">in</span> [<span class="number">93</span>,<span class="number">97</span>,<span class="number">98</span>,<span class="number">83</span>]) &#123;</span><br><span class="line">mo <span class="meta">@i</span></span><br><span class="line">f = <span class="string">&quot;NLMO_out&quot;</span>+i+<span class="string">&quot;.png&quot;</span></span><br><span class="line">p = <span class="string">&quot;NLMO_out&quot;</span>+i+<span class="string">&quot;.pov&quot;</span></span><br><span class="line">write IMAGE pngt <span class="meta">@f</span></span><br><span class="line">write POVRAY <span class="meta">@p</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="background背景"><a href="#background背景" class="headerlink" title="background背景"></a><code>background</code>背景</h1><p>设置背景颜色或者图像。用法：</p>
 <ul>
 <li><p><code>background [RGB-color]</code>：设置窗口的背景颜色。</p>
 </li>
@@ -9259,6 +9289,7 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 <h1 id="赝势和赝势基组"><a href="#赝势和赝势基组" class="headerlink" title="赝势和赝势基组"></a>赝势和赝势基组</h1><p>内核电子不是化学上感兴趣的。化学问题一般只关心价层电子。赝势(Pseudopotential，PP)将内核电子对价层电子的影响通过事先拟合好的势场来表达【全电子内核电子也会用基组描述，不能直接省，内核电子与价层电子有相互作用】。<br>基于赝势计算时需要使用专为其优化的赝势基组描述价电子。同一种赝势可以有多种与之匹配的赝势基组，精度有所不同。<br>有效核势(Effective core potential, ECP)【与PP并不等同】多数情况就是指赝势。<br>用赝势的好处<br>计算时不需要直接考虑内层电子，计算量相对于用全电子基组时大幅降低，原子所属周期越靠后节约时间越显著<br>相对论效应主要来自于内层电子。拟合赝势的时候如果考虑了相对论效应，则基于赝势计算的时候就可以把内层电子对价层电子的相对论的影响近似体现出来【对重元素一般用赝势】<br>对第四周期，特别是第五周期开始的原子强烈建议使用赝势，又省时间又能等效地体现出相对论效应<br>赝势的坏处<br>由于内层电子没有精确表达。导致对价层电子的影响描述得不够严格准确、内核电子的可极化效果和电子相关效应没有得到体现，一定程度会影响计算精度<br>必须依赖内核电子的性质无法计算，如NMR、X光光谱【NMR就是算核化学位移，X光光谱是激发内核电子】<br>大核与小核赝势<br>如果被赝势代替的内核电子(赝化的电子)较少就叫小核赝势。用这样的赝势计算时，价层、亚价层的电子都<br>需要明确计算。<br>如果赝化的电子数较多，就叫大核赝势，用这类赝势时只有价层电子是要明确地计算的。<br>小核赝势计算耗时比大核赝势更多，但由于考虑了亚价层电子，结果通常来说也更好，而且可移植性好，可以<br>适应不同化学环境的情况(如不同氧化态)。【普适性更好，实在算不动的时候再用大核】</p>
 <h2 id="常见的赝势和赝势基组"><a href="#常见的赝势和赝势基组" class="headerlink" title="常见的赝势和赝势基组"></a>常见的赝势和赝势基组</h2><h3 id="Lanl赝势-Los-Alamos-National-Laboratory"><a href="#Lanl赝势-Los-Alamos-National-Laboratory" class="headerlink" title="Lanl赝势(Los Alamos National Laboratory)"></a>Lanl赝势(Los Alamos National Laboratory)</h3><p>Hay和Wadt在上世纪80年代提出的很常用的一种赝势，对第四周期元素未考虑相对论效应，对更重的元素都考虑了相对论效应。<br>对过渡金属，Lanl1 是大核赝势【现在精度很糙，一般不用】，Lanl2是小核赝势。对主族二者一样，都是大核赝势。【有标配基组，作者顺带提的】二者都有MB（极小基）和DZ （双分裂价基）两个档次的标配赝势基组，最常用的是Lanl2DZ。<br>2008年又提出了Lanl2TZ，【不是严格的3-zeta基组】是对Lanl2DZ重新进行收缩得到，计算量有所增加但精度也有所提高。Lanl2TZ+是对第一周期过渡金属增加一层d弥散。Lanl2TZ(f)是对过渡金属增加一层f极化。<br>Lanl08【主要给主族用】是对于过渡金属和主族元素在Lanl2DZ基础上都彻底去收缩化。Lanl08+ 是在Lanl08基础上对于第一周期过渡金属加上弥散。Lanl08(d)和Lanl08(f)分别是在Lanl08基础上对主族和过渡金属加上d和f极化。<br>Lanl系列目前包含前六个周期绝大部分元素，不支持镧系锕系（仅Lanl2DZ支持极个别锕系)</p>
 <h3 id="Stuttgart赝势"><a href="#Stuttgart赝势" class="headerlink" title="Stuttgart赝势"></a>Stuttgart赝势</h3><p>也称SDD (Stuttgart/Dresden)赝势，对于过渡金属和主族都是大核和小核版本都有，且有考虑和不考虑相对论效应的版本，几乎涵盖整个周期表【甚至110多的元素】，精度较好，可靠度高，特别是计算镧系、锕系的首选。其标配的赝势基组适合用于DFT计算，后HF计算也基本能用</p>
+<p><img src="http://bbs.keinsci.com/forum.php?mod=attachment&amp;aid=MjIyNjJ8ZjczZjJlYTJ8MTc1ODg3NTc0MXwwfDE1Mjk3&amp;noupdate=yes" alt="img"></p>
 <h3 id="def-def2系列赝势基组"><a href="#def-def2系列赝势基组" class="headerlink" title="def/def2系列赝势基组"></a>def/def2系列赝势基组</h3><p>def/def2系列基组对前四周期是全电子基组，从第五周期开始是赝势基组【比如XeF4，Gaussian自动就知道F是全电子，Xe是赝势】，搭配Stuttgart小核赝势</p>
 <h3 id="aug-cc-pVnZ-PP-n-D-T-Q-5-系列赝势基组"><a href="#aug-cc-pVnZ-PP-n-D-T-Q-5-系列赝势基组" class="headerlink" title="(aug-)cc-pVnZ-PP (n=D,T,Q,5)系列赝势基组"></a>(aug-)cc-pVnZ-PP (n=D,T,Q,5)系列赝势基组</h3><p>是2003年开始陆续提出的最适合后HF计算的赝势基组，搭配Stuttgart小核赝势。很适合对轻原子结合(aug-)cc-pVnZ使用。特征和构建思想类似(aug-)cc-pVnZ系列，由于高角动量函数多，收缩度高，用在DFT计算上比较亏</p>
 <h2 id="赝势基组的选用"><a href="#赝势基组的选用" class="headerlink" title="赝势基组的选用"></a>赝势基组的选用</h2><p>使用的前提是对要算的元素有定义。镧系可以用Stuttgart赝势+标配基组或档次合适的def2系列赝势基组【对锕系没有定义】。锕系可以用Stuttgart赝势+标配基组或def-TZVP赝势基组。<br>DFT计算<br>计算条件差：Lanl2DZ【6-31G*】<br>计算条件一般：过渡金属用Lanl2TZ，主族用Lanl08或SDD<br>计算条件不错：过渡金属用Lanl2TZ(f)或SDD，主族用Lanl08(d)<br>计算条件很好：def2-TZVB<br>计算条件无限好：def2-QZVP（DFT计算用QZ级别其实很浪费）<br>后HF<br>计算条件奇差无比：cc-pVDZ-PP或def2-SVP<br>计算条件一般：过渡金属用SDD，主族用Lanl08(d)<br>计算条件不错：cc-pVTZ-PP或def2-TZVPP<br>计算条件很好：cc-pVQZ-PP或def2-QZVPP<br>def2对第四周期还是全电子基组，cc-pVnZ-PP对K以及从Cu开始的元素才有定义【Fe、Co、Ni等就用不了】。因此后HF计算时非要对除K以外的Cu之前的元素用赝势基组的话就只能靠Lanl或SDD了。</p>
@@ -10227,16 +10258,16 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
       </tags>
   </entry>
   <entry>
-    <title>【linux】Slurm队列系统</title>
+    <title>【linux】队列系统</title>
     <url>/2022/11/07/%E3%80%90linux%E3%80%91Slurm%E9%98%9F%E5%88%97%E7%B3%BB%E7%BB%9F/</url>
-    <content><![CDATA[<h1 id="查看队列设定和节点状态"><a href="#查看队列设定和节点状态" class="headerlink" title="查看队列设定和节点状态"></a>查看队列设定和节点状态</h1><ul>
+    <content><![CDATA[<h1 id="Slurm队列系统"><a href="#Slurm队列系统" class="headerlink" title="Slurm队列系统"></a>Slurm队列系统</h1><h2 id="查看队列设定和节点状态"><a href="#查看队列设定和节点状态" class="headerlink" title="查看队列设定和节点状态"></a>查看队列设定和节点状态</h2><ul>
 <li><code>sinfo</code>：显示队列或节点状态，具有非常多过滤、排序和格式化等选项。</li>
 </ul>
 <p>主要参数：</p>
 <ul>
 <li><code>-l</code>、<code>--long</code>：显示详细信息。</li>
 </ul>
-<h1 id="提交任务"><a href="#提交任务" class="headerlink" title="提交任务"></a>提交任务</h1><p>三种模式：</p>
+<h2 id="提交任务"><a href="#提交任务" class="headerlink" title="提交任务"></a>提交任务</h2><p>三种模式：</p>
 <ul>
 <li>批处理作业（采用<code>sbatch</code>命令提交，最常用方式）</li>
 <li>交互式作业提交（采用<code>srun</code>命令提交）</li>
@@ -10250,24 +10281,41 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 <li><code>-p</code>：使用<partition_names>队列</li>
 <li><code>-t</code>：作业最大运行总时间，到时间后将被终止掉。</li>
 </ul>
-<h2 id="sbatch"><a href="#sbatch" class="headerlink" title="sbatch"></a>sbatch</h2><p>sbatch提交一个批处理作业脚本到Slurm。脚本文件基本格式：</p>
+<h3 id="sbatch"><a href="#sbatch" class="headerlink" title="sbatch"></a>sbatch</h3><p>sbatch提交一个批处理作业脚本到Slurm。脚本文件基本格式：</p>
 <ul>
 <li>第一行以#!/bin/sh等指定该脚本的解释程序，/bin/sh可以变为/bin/bash、/bin/csh等。</li>
 <li>在可执行命令之前的每行“#SBATCH”前缀后跟的参数作为作业调度系统参数。在任何非注释及空白之后的“#SBATCH”将不再作为Slurm参数处理。</li>
 <li>默认，标准输出和标准出错都定向到同一个文件slurm­%j.out，“%j”将被作业号代替。</li>
 </ul>
-<h1 id="取消任务"><a href="#取消任务" class="headerlink" title="取消任务"></a>取消任务</h1><ul>
+<h2 id="取消任务"><a href="#取消任务" class="headerlink" title="取消任务"></a>取消任务</h2><ul>
 <li><code>scancel</code>：取消排队或运行中的作业或作业步，还可用于发送任意信号到运行中的作业或作业步中的所有进程。</li>
 </ul>
-<h1 id="查看任务"><a href="#查看任务" class="headerlink" title="查看任务"></a>查看任务</h1><h2 id="squeue"><a href="#squeue" class="headerlink" title="squeue"></a>squeue</h2><ul>
+<h2 id="查看任务"><a href="#查看任务" class="headerlink" title="查看任务"></a>查看任务</h2><h3 id="squeue"><a href="#squeue" class="headerlink" title="squeue"></a>squeue</h3><ul>
 <li><code>squeue</code>：显示队列中的作业及作业步状态，含非常多过滤、排序和格式化等选项。</li>
 </ul>
 <p>主要参数：</p>
 <ul>
 <li><code>-u &lt;user_list&gt;</code>：显示特定用户的作业信息</li>
 </ul>
-<h2 id="scontrol"><a href="#scontrol" class="headerlink" title="scontrol"></a>scontrol</h2><ul>
+<h3 id="scontrol"><a href="#scontrol" class="headerlink" title="scontrol"></a>scontrol</h3><ul>
 <li><code>scontrol show job &lt;jobid&gt;</code>：显示作业号为JOBID的作业信息</li>
+</ul>
+<h1 id="LSF调度系统"><a href="#LSF调度系统" class="headerlink" title="LSF调度系统"></a>LSF调度系统</h1><h3 id="bjobs"><a href="#bjobs" class="headerlink" title="bjobs"></a>bjobs</h3><ul>
+<li>bjobs 检查提交作业状态</li>
+<li>bjobs –r 显示正在运行的作业</li>
+<li>bjobs –a 显示正在运行的和最近完成的作业</li>
+<li>bjobs -p 显示等待运行的作业和等待原因</li>
+<li>bjobs –s 显示正在挂起的作业和挂起的原因</li>
+<li>bjobs -l 显示该作业的所有信息</li>
+<li>bjobs -w 显示作业完整的信息，不截断。方便grep来过滤。</li>
+</ul>
+<h3 id="bqueues"><a href="#bqueues" class="headerlink" title="bqueues"></a>bqueues</h3><ul>
+<li>bqueues 显示队列信息</li>
+<li>bqueues –l  <queue name></li>
+</ul>
+<h3 id="bhosts"><a href="#bhosts" class="headerlink" title="bhosts"></a>bhosts</h3><ul>
+<li>bhosts 显示各节点作业相关情况、</li>
+<li>bhosts  <hostname></li>
 </ul>
 ]]></content>
       <categories>
@@ -10733,6 +10781,26 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 <li>选中公式编号，插入书签，输入名称</li>
 <li>引用的时候用交叉引用就可以了</li>
 </ol>
+<h1 id="在字符上或者下加符号"><a href="#在字符上或者下加符号" class="headerlink" title="在字符上或者下加符号"></a>在字符上或者下加符号</h1><figure class="highlight taggerscript"><table><tr><td class="code"><pre><span class="line">&#123;eq <span class="symbol">\o</span>(<span class="symbol">\s</span><span class="symbol">\u</span>p1(<span class="symbol">\o</span>(<span class="symbol">\s</span><span class="symbol">\u</span>p3(←),<span class="symbol">\s</span><span class="symbol">\d</span>o3(←),—)))&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>&#123;EQ ... &#125;</code>：域的“公式”类型声明，告诉Word这里要插入的是一个数学公式或特殊排版结构。</li>
+<li><p><code>\o()</code>：重叠函数。它将括号内用逗号分隔的多个元素，从上到下重叠在一起。</p>
+<ul>
+<li>规则：第一个元素在最上层，最后一个元素在最底层。</li>
+</ul>
+</li>
+<li><p><code>\s</code>：表示开始一个上下标位置的元素。</p>
+</li>
+<li><code>\up3</code>：表示将这个元素向上移动 <code>1</code> 磅。这个数字可以调整，值越大，元素的位置越高。</li>
+</ul>
+<figure class="highlight taggerscript"><table><tr><td class="code"><pre><span class="line">&#123;EQ <span class="symbol">\*</span> jc0 <span class="symbol">\*</span> &quot;Font:Times New Roman&quot; <span class="symbol">\*</span> hps20 <span class="symbol">\o</span>(<span class="symbol">\s</span><span class="symbol">\u</span>p 11(•••••),Pu)&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>\* jc0</code>：设置对齐方式。<code>jc0</code> 表示居左对齐，<code>jc1</code> 表示居中，<code>jc2</code> 表示居右。这里可能受文档整体格式影响。</p>
+</li>
+<li><p><code>\* &quot;Font:Times New Roman&quot;</code>：强制将域内的所有字符（包括点号和字母）的字体设置为 <strong>Times New Roman</strong>。这确保了显示效果的一致性。</p>
+</li>
+<li><code>\* hps20</code>：设置字体大小。<code>hps</code> 后面跟的数字代表半磅值。<code>hps20</code> 表示将字体大小设置为 <code>10</code> 磅（因为 20 / 2 = 10）。</li>
+</ul>
 ]]></content>
       <categories>
         <category>办公</category>
@@ -11322,7 +11390,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
   <entry>
     <title>【ORCA】10.磁性相关计算</title>
     <url>/2025/01/07/%E3%80%90ORCA%E3%80%9110.%E7%A3%81%E6%80%A7%E7%9B%B8%E5%85%B3%E8%AE%A1%E7%AE%97/</url>
-    <content><![CDATA[<h1 id="g-tensor"><a href="#g-tensor" class="headerlink" title="g tensor"></a>g tensor</h1><h2 id="CASSCF"><a href="#CASSCF" class="headerlink" title="CASSCF"></a>CASSCF</h2><figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line"><span class="comment">%casscf </span></span><br><span class="line">...</span><br><span class="line">	rel</span><br><span class="line">		dosoc <span class="literal">true</span>   #spin-orbit coupling (<span class="keyword">and</span> ZFS)</span><br><span class="line">		gtensor <span class="literal">true</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">...</span><br><span class="line"> <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h1 id="g-tensor"><a href="#g-tensor" class="headerlink" title="g tensor"></a>g tensor</h1><h2 id="CASSC-F"><a href="#CASSC-F" class="headerlink" title="CASSC F"></a>CASSC F</h2><figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line"><span class="comment">%casscf </span></span><br><span class="line">...</span><br><span class="line">	rel</span><br><span class="line">		dosoc <span class="literal">true</span>   #spin-orbit coupling (<span class="keyword">and</span> ZFS)</span><br><span class="line">		gtensor <span class="literal">true</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">...</span><br><span class="line"> <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 <p>CASSCF中有两种方法计算：</p>
 <ul>
 <li>Effective Hamiltonian method，对任何多重度都可以（Kramers或nonKramers系统）</li>
@@ -11330,7 +11398,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </ul>
 <h3 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h3><ul>
 <li><p>Effective Hamiltonian Method得到的结果：</p>
-<p><img src="image-20250117154939895.png" alt="image-20250117154939895"></p>
+<p>![[Pasted image 20260522155723.png]]<img src="image-20250117154939895.png" alt="image-20250117154939895"></p>
 <ul>
 <li>输出显示总 g 矩阵，后跟三个主成分及其方向（特征向量eigenvectors）。特征向量是列向量</li>
 <li>此例子中$g<em>z=2.99,g</em>{x,y}=2.24$</li>
@@ -11339,10 +11407,10 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </ul>
 <p>对于重元素，使用相对论效应和SOC时，需要增加%rel模块</p>
 <figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line">%<span class="built_in">rel</span>  </span><br><span class="line">	picturechange <span class="number">2</span> <span class="comment"># second order DKH SOC </span></span><br><span class="line">	fpFWtrafo <span class="literal">false</span> <span class="comment"># recommended option for g-tensor </span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">%casscf </span><br><span class="line">...</span><br><span class="line">	<span class="built_in">rel</span></span><br><span class="line">		dosoc <span class="literal">true</span>   <span class="comment">#spin-orbit coupling (and ZFS)</span></span><br><span class="line">		gtensor <span class="literal">true</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">...</span><br><span class="line"> <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<h1 id="D-tensor"><a href="#D-tensor" class="headerlink" title="D-tensor"></a>D-tensor</h1><h2 id="CASSCF-1"><a href="#CASSCF-1" class="headerlink" title="CASSCF"></a>CASSCF</h2><figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line"><span class="comment">%casscf </span></span><br><span class="line">...</span><br><span class="line">	rel</span><br><span class="line">		dosoc <span class="literal">true</span>   #spin-orbit coupling (<span class="keyword">and</span> ZFS)</span><br><span class="line">		dtensor <span class="literal">true</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">...</span><br><span class="line"> <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h1 id="D-tensor"><a href="#D-tensor" class="headerlink" title="D-tensor"></a>D-tensor</h1><h2 id="CASSCF"><a href="#CASSCF" class="headerlink" title="CASSCF"></a>CASSCF</h2><figure class="highlight erlang"><table><tr><td class="code"><pre><span class="line"><span class="comment">%casscf </span></span><br><span class="line">...</span><br><span class="line">	rel</span><br><span class="line">		dosoc <span class="literal">true</span>   #spin-orbit coupling (<span class="keyword">and</span> ZFS)</span><br><span class="line">		dtensor <span class="literal">true</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">...</span><br><span class="line"> <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>有两种方法计算，the 2nd Order PT approach（二阶 PT 方法）和Effective Hamiltonian Method<ul>
-<li>在存在低激发态 (&lt; 1000 cm-1)（通过 SOC 与基态贡献）的情况下，二阶 PT 方法对于计算零场分裂 (ZFS) 无效。</li>
+<li>在存在低激发态 (&lt; 1000 cm-1)（通过 SOC 与基态贡献）的情况下，<strong>二阶 PT 方法对于计算零场分裂 (ZFS) 无效</strong>。</li>
 </ul>
 </li>
 </ul>
@@ -11371,7 +11439,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </ul>
 </li>
 </ul>
-<h1 id="磁化率曲线的计算"><a href="#磁化率曲线的计算" class="headerlink" title="磁化率曲线的计算"></a>磁化率曲线的计算</h1><h2 id="CASSCF-2"><a href="#CASSCF-2" class="headerlink" title="CASSCF"></a>CASSCF</h2><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">soc</span></span><br><span class="line">  <span class="string">dosoc</span> <span class="literal">true</span></span><br><span class="line">  <span class="string">domagnetization</span> <span class="literal">true</span>       <span class="comment"># Calculate magnetization (def: false)</span></span><br><span class="line">  <span class="string">dosusceptibility</span> <span class="literal">true</span>      <span class="comment"># Calculate susceptiblity (def: false)</span></span><br><span class="line">  <span class="string">LebedevPrec</span>            <span class="number">5</span>   <span class="comment"># Precision of the grid for different field</span></span><br><span class="line">                             <span class="comment"># directions (meaningful values range from 1</span></span><br><span class="line">                             <span class="comment"># (smallest) to 10 (largest))</span></span><br><span class="line">  <span class="string">nPointsFStep</span>           <span class="number">5</span>   <span class="comment"># number of steps for numerical differentiation</span></span><br><span class="line">                             <span class="comment"># (def: 5, meaningful values are 3, 5 7 and 9)</span></span><br><span class="line">  <span class="string">MAGFieldStep</span>       <span class="number">100.0</span>   <span class="comment"># Size of field step for numerical differentiation</span></span><br><span class="line">                             <span class="comment"># (def: 100 Gauss)</span></span><br><span class="line">  <span class="string">MAGTemperatureMIN</span>    <span class="number">4.0</span>   <span class="comment"># minimum temperature (K) for magnetization</span></span><br><span class="line">  <span class="string">MAGTemperatureMAX</span>    <span class="number">4.0</span>   <span class="comment"># maximum temperature (K) for magnetization</span></span><br><span class="line">  <span class="string">MAGTemperatureNPoints</span>  <span class="number">1</span>   <span class="comment"># number of temperature points for magnetization</span></span><br><span class="line">  <span class="string">MAGFieldMIN</span>          <span class="number">0.0</span>   <span class="comment"># minimum field (Gauss) for magnetization</span></span><br><span class="line">  <span class="string">MAGFieldMAX</span>      <span class="number">70000.0</span>   <span class="comment"># maximum field (Gauss) for magnetization</span></span><br><span class="line">  <span class="string">MAGNpoints</span>            <span class="number">15</span>   <span class="comment"># number of field points for magnetization</span></span><br><span class="line">  <span class="string">SUSTempMIN</span>           <span class="number">1.0</span>   <span class="comment"># minimum temperature (K) for susceptibility</span></span><br><span class="line">  <span class="string">SUSTempMAX</span>         <span class="number">300.0</span>   <span class="comment"># maximum temperature (K) for susceptibility</span></span><br><span class="line">  <span class="string">SUSNPoints</span>           <span class="number">300</span>   <span class="comment"># number of temperature points for susceptibility</span></span><br><span class="line">  <span class="string">SUSStatFieldMIN</span>      <span class="number">0.0</span>   <span class="comment"># minimum static field (Gauss) for susceptibility</span></span><br><span class="line">  <span class="string">SUSStatFieldMAX</span>      <span class="number">0.0</span>   <span class="comment"># maximum static field (Gauss) for susceptibility</span></span><br><span class="line">  <span class="string">SUSStatFieldNPoints</span>    <span class="number">1</span>   <span class="comment"># number of static fields for susceptibility</span></span><br><span class="line"><span class="string">end</span></span><br></pre></td></tr></table></figure>
+<h1 id="磁化率曲线的计算"><a href="#磁化率曲线的计算" class="headerlink" title="磁化率曲线的计算"></a>磁化率曲线的计算</h1><h2 id="CASSCF-1"><a href="#CASSCF-1" class="headerlink" title="CASSCF"></a>CASSCF</h2><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">soc</span></span><br><span class="line">  <span class="string">dosoc</span> <span class="literal">true</span></span><br><span class="line">  <span class="string">domagnetization</span> <span class="literal">true</span>       <span class="comment"># Calculate magnetization (def: false)</span></span><br><span class="line">  <span class="string">dosusceptibility</span> <span class="literal">true</span>      <span class="comment"># Calculate susceptiblity (def: false)</span></span><br><span class="line">  <span class="string">LebedevPrec</span>            <span class="number">5</span>   <span class="comment"># Precision of the grid for different field</span></span><br><span class="line">                             <span class="comment"># directions (meaningful values range from 1</span></span><br><span class="line">                             <span class="comment"># (smallest) to 10 (largest))</span></span><br><span class="line">  <span class="string">nPointsFStep</span>           <span class="number">5</span>   <span class="comment"># number of steps for numerical differentiation</span></span><br><span class="line">                             <span class="comment"># (def: 5, meaningful values are 3, 5 7 and 9)</span></span><br><span class="line">  <span class="string">MAGFieldStep</span>       <span class="number">100.0</span>   <span class="comment"># Size of field step for numerical differentiation</span></span><br><span class="line">                             <span class="comment"># (def: 100 Gauss)</span></span><br><span class="line">  <span class="string">MAGTemperatureMIN</span>    <span class="number">4.0</span>   <span class="comment"># minimum temperature (K) for magnetization</span></span><br><span class="line">  <span class="string">MAGTemperatureMAX</span>    <span class="number">4.0</span>   <span class="comment"># maximum temperature (K) for magnetization</span></span><br><span class="line">  <span class="string">MAGTemperatureNPoints</span>  <span class="number">1</span>   <span class="comment"># number of temperature points for magnetization</span></span><br><span class="line">  <span class="string">MAGFieldMIN</span>          <span class="number">0.0</span>   <span class="comment"># minimum field (Gauss) for magnetization</span></span><br><span class="line">  <span class="string">MAGFieldMAX</span>      <span class="number">70000.0</span>   <span class="comment"># maximum field (Gauss) for magnetization</span></span><br><span class="line">  <span class="string">MAGNpoints</span>            <span class="number">15</span>   <span class="comment"># number of field points for magnetization</span></span><br><span class="line">  <span class="string">SUSTempMIN</span>           <span class="number">1.0</span>   <span class="comment"># minimum temperature (K) for susceptibility</span></span><br><span class="line">  <span class="string">SUSTempMAX</span>         <span class="number">300.0</span>   <span class="comment"># maximum temperature (K) for susceptibility</span></span><br><span class="line">  <span class="string">SUSNPoints</span>           <span class="number">300</span>   <span class="comment"># number of temperature points for susceptibility</span></span><br><span class="line">  <span class="string">SUSStatFieldMIN</span>      <span class="number">0.0</span>   <span class="comment"># minimum static field (Gauss) for susceptibility</span></span><br><span class="line">  <span class="string">SUSStatFieldMAX</span>      <span class="number">0.0</span>   <span class="comment"># maximum static field (Gauss) for susceptibility</span></span><br><span class="line">  <span class="string">SUSStatFieldNPoints</span>    <span class="number">1</span>   <span class="comment"># number of static fields for susceptibility</span></span><br><span class="line"><span class="string">end</span></span><br></pre></td></tr></table></figure>
 <h1 id="SINGLE-ANISO"><a href="#SINGLE-ANISO" class="headerlink" title="SINGLE_ANISO"></a>SINGLE_ANISO</h1><figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">source <span class="regexp">/share/</span>apps<span class="regexp">/anaconda3/</span>bin<span class="regexp">/activate /</span>work<span class="regexp">/chem-zhaoxk/</span>.conda<span class="regexp">/envs/g</span>nuplot-<span class="number">5.4</span>.<span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#把anisoinp文件中 DATA部分的路径删掉只留下文件名</span></span><br><span class="line">~<span class="regexp">/apps/</span>orca601/otool_single_aniso &lt; N4UCoP3_CASSCF_7e7o_2spin.anisoinp &gt; single_aniso.output</span><br></pre></td></tr></table></figure>
 <h2 id="输出-2"><a href="#输出-2" class="headerlink" title="输出"></a>输出</h2><ul>
 <li>各个轨道的mJ（磁量子数）百分比贡献</li>
@@ -11472,6 +11540,30 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
       <tags>
         <tag>molpro</tag>
         <tag>电荷</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Gaussian】05.几何优化.md</title>
+    <url>/2025/09/04/%E3%80%90Gaussian%E3%80%9105.%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/</url>
+    <content><![CDATA[<h1 id="消除虚频"><a href="#消除虚频" class="headerlink" title="消除虚频"></a>消除虚频</h1><ul>
+<li><p>几何优化时用更严的收敛限：<code>tight</code>或者<code>vtight</code></p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">opt</span>=tight freq		<span class="comment">#freq最后也会用tight标准来判断是否收敛</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>提升DFT积分格点精度（Gaussian 16<code>int=ultrafine</code>是默认设置）</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">int</span>=superfine</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用精确的Hessian矩阵：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="comment">#几何优化过程中每一步都会精确计算Hessian，优化任务结束后会自动做振动分析</span></span><br><span class="line"><span class="attr">opt</span>=calcall</span><br><span class="line"></span><br><span class="line"><span class="comment">#只在优化第一步的时候精确计算Hessian，而之后还是近似估计Hessian</span></span><br><span class="line"><span class="attr">opt</span>=calfc</span><br><span class="line"></span><br><span class="line"><span class="comment">#第一步精确计算一次Hessian矩阵，之后每n步重新计算一次Hessian矩阵。</span></span><br><span class="line"><span class="attr">opt</span>=recalc=n</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>几何优化</tag>
+        <tag>Gaussian</tag>
       </tags>
   </entry>
 </search>
