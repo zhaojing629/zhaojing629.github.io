@@ -689,6 +689,7 @@ p=\frac{h}{\lambda}</script><p>联立得到实物的波长为：$\lambda=\frac{h
   if (typeof MathJax === 'undefined') {
     window.MathJax = {
       loader: {
+          load: ['[tex]/mhchem'],
         source: {
           '[tex]/amsCd': '[tex]/amscd',
           '[tex]/AMScd': '[tex]/amscd'
@@ -696,6 +697,7 @@ p=\frac{h}{\lambda}</script><p>联立得到实物的波长为：$\lambda=\frac{h
       },
       tex: {
         inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
         tags: 'ams'
       },
       options: {

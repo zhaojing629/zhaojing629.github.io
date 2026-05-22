@@ -733,6 +733,7 @@ E_{n}=h\left(n+\frac{1}{2}\right) \nu=h\left(n+\frac{1}{2}\right) \frac{1}{2 \pi
   if (typeof MathJax === 'undefined') {
     window.MathJax = {
       loader: {
+          load: ['[tex]/mhchem'],
         source: {
           '[tex]/amsCd': '[tex]/amscd',
           '[tex]/AMScd': '[tex]/amscd'
@@ -740,6 +741,7 @@ E_{n}=h\left(n+\frac{1}{2}\right) \nu=h\left(n+\frac{1}{2}\right) \frac{1}{2 \pi
       },
       tex: {
         inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
         tags: 'ams'
       },
       options: {
