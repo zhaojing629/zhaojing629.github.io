@@ -5,7 +5,11 @@
     "scaffolds/",
     "themes/"
   ],
-  "attachmentFolderPath": "source/images",
+  "attachmentFolderPath": "/",
   "newFileLocation": "folder",
-  "newFileFolderPath": "source/_posts"
+  "newFileFolderPath": "source/_posts",
+  "newLinkFormat": "shortest",
+  "alwaysUpdateLinks": true,
+  "useMarkdownLinks": true,
+  "promptDelete": false
 }

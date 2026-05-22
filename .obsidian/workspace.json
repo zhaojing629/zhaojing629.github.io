@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "3367d3770868d0be",
+        "id": "185261505451c371",
         "type": "tabs",
         "children": [
           {
-            "id": "2d353791634f360e",
+            "id": "a15c6b0e5bb9feb9",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "source/_posts/【ORCA】10.磁性相关计算.md",
+                "file": "source/_posts/测试图片.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "【ORCA】10.磁性相关计算"
+              "title": "测试图片"
             }
           }
         ]
@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "[\"title\"]",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "source/_posts/【ORCA】10.磁性相关计算.md",
+                "file": "source/_posts/测试图片.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "【ORCA】10.磁性相关计算 的反向链接列表"
+              "title": "测试图片 的反向链接列表"
             }
           },
           {
@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "source/_posts/【ORCA】10.磁性相关计算.md",
+                "file": "source/_posts/测试图片.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "【ORCA】10.磁性相关计算 的出链列表"
+              "title": "测试图片 的出链列表"
             }
           },
           {
@@ -156,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "source/_posts/【ORCA】10.磁性相关计算.md",
+                "file": "source/_posts/测试图片.md",
                 "followCursor": true,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "【ORCA】10.磁性相关计算 的大纲"
+              "title": "测试图片 的大纲"
             }
           },
           {
@@ -171,14 +171,14 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "source/_posts/【ORCA】10.磁性相关计算.md"
+                "file": "source/_posts/测试图片.md"
               },
               "icon": "lucide-info",
-              "title": "【ORCA】10.磁性相关计算的笔记属性"
+              "title": "测试图片的笔记属性"
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -188,36 +188,53 @@
     "hiddenItems": {
       "switcher:打开快速切换": false,
       "graph:查看关系图谱": false,
-      "canvas:新建白板": false,
       "daily-notes:打开/创建今天的日记": false,
+      "canvas:新建白板": false,
       "templates:插入模板": false,
       "command-palette:打开命令面板": false,
       "bases:新建数据库": false,
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "2d353791634f360e",
+  "active": "a15c6b0e5bb9feb9",
   "lastOpenFiles": [
-    "source/images/Pasted image 20260522163020.png",
-    "source/_posts/附件/Pasted image 20260522162215.png",
+    "source/_posts/测试图片/file-20260522173616446.png",
+    "source/_posts/测试图片/file-20260522173553172.png",
+    "source/_posts/测试图片",
     "source/_posts/【ORCA】10.磁性相关计算.md",
-    "source/_posts/附件",
-    "Pasted image 20260522161925.png",
+    "source/_posts/【ORCA】10.磁性相关计算/image-20250206182306324.png",
+    "source/_posts/【ORCA】10.磁性相关计算/image-20250117161848921.png",
+    "source/_posts/【ORCA】10.磁性相关计算/image-20250117161710614.png",
+    "source/_posts/【ORCA】10.磁性相关计算/image-20250117154939895.png",
+    "public/images/image-20250206182306324.png",
+    "public/images/image-20250117161710614.png",
+    "public/images/image-20250117161848921.png",
+    "source/images/image-20250117161710614.png",
+    "public/images/image-20250117154939895.png",
+    "source/_posts/测试图片.md",
+    "source/_posts/image-20250206182306324.png.md",
+    "public/2026/05/22/测试图片/index.html",
+    "public/2026/05/22/测试图片",
+    "public/2026/05/22",
+    "public/2026/05",
+    "public/2026",
+    "public/archives/2026/index.html",
+    "public/archives/2026/05/index.html",
+    "public/archives/2026/05",
+    "public/archives/2026",
+    "source/_posts/Invalid date.md",
+    "未命名.canvas",
+    "未命名 3.canvas",
+    "未命名 2.canvas",
+    "未命名 1.canvas",
+    "未命名.md",
     "source/_posts/【ORCA】09.对称性破缺计算.md",
     "source/_posts/【ORCA】08.CASSCF教程.md",
     "source/_posts/【ORCA】04.重启计算&初猜.md",
-    "source/_posts/未命名.md",
-    "未命名.md",
     "source/_posts/搭建网站教程.md",
     "source/_posts/【VMD】常见命令.md",
     "source/_posts/【ORCA】11.多参考计算.md",
     "未命名 1.md",
-    "public/2025/09/04/【Gaussian】05.几何优化/index.html",
-    "public/2025/09/04/【Gaussian】05.几何优化",
-    "public/2025/09/04",
-    "public/2025/09",
-    "public/archives/2025/09/index.html",
-    "public/archives/2025/09",
     "source/_posts/【Linux】命令.md",
     "source/_posts/【Jmol】常见的指令.md",
     "source/_posts/【Gaussian】柔性力常数.md",
@@ -230,9 +247,6 @@
     "source/_posts/【Gaussian】01.基础知识.md",
     "source/_posts/【CP2K】05.MD.md",
     "source/_posts/【CP2K】04.几何优化.md",
-    "source/_posts/【CP2K】03.MGRID中的CUTOFF和RELEL-CUTOFF.md",
-    "source/_posts/【CP2K】02.计算力和能量.md",
-    "source/_posts/【CP2K】01.基础.md",
-    "Pasted image 20260522155723.png"
+    "source/_posts/【CP2K】03.MGRID中的CUTOFF和RELEL-CUTOFF.md"
   ]
 }

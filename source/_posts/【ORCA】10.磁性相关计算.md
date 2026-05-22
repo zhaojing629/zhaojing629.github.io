@@ -4,12 +4,8 @@ typora-root-url: 【ORCA】10.磁性相关计算
 mathjax: true
 date: 2025-01-07 16:54:26
 updated:
-tags:
-  - ORCA
-  - 磁性
-categories:
-  - 计算化学
-  - 软件
+tags: [ORCA, 磁性]
+categories: [计算化学, 软件]
 description: ORCA中磁性的计算
 ---
 
@@ -19,7 +15,7 @@ description: ORCA中磁性的计算
 
 # g tensor
 
-##  CASSCF 
+## CASSCF
 
 ```
 %casscf 
@@ -41,7 +37,7 @@ CASSCF中有两种方法计算：
 
 - Effective Hamiltonian Method得到的结果：
 
-![image-20250117154939895](image-20250117154939895.png)
+  ![image-20250117154939895](image-20250117154939895.png)
 
   - 输出显示总 g 矩阵，后跟三个主成分及其方向（特征向量eigenvectors）。特征向量是列向量
   - 此例子中$g_z=2.99,g_{x,y}=2.24$
@@ -62,6 +58,7 @@ end
 ...
  end
 ```
+
 
 
 # D-tensor
@@ -158,7 +155,3 @@ source /share/apps/anaconda3/bin/activate /work/chem-zhaoxk/.conda/envs/gnuplot-
 - 各个轨道的mJ（磁量子数）百分比贡献
 
 ![image-20250206182306324](image-20250206182306324.png)
-
-
-# Test
-![[Pasted image 20260522163020.png]]
