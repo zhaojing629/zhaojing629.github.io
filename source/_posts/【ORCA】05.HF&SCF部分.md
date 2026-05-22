@@ -300,7 +300,7 @@ description: ORCA的SCF部分
 
 方法：
 
-- 尝试不同的SCF收敛：默认是DIIS一般比较好，<a href="#KDIIS">使用KDIIS</a>等可能会导致收敛到其他情况
+- 尝试不同的SCF收敛：默认是DIIS一般比较好，<a href="#KDIIS">使用KDIIS</a> 等可能会导致收敛到其他情况 
 
 - **对初始轨道尝试不同的猜测**：Guess可以用HCore、Hueckel、PAtom、PModel 、MORead。（见《【ORCA】04.重启计算&初猜》）
 - **尝试改变初猜MO的轨道顺序**：错误的SCF解决方案的常见原因是，位于最高位置的电子占据了错误的轨道。 通过读取先前收敛解的轨道并交换HOMO和LUMO轨道（或者可能是：HOMO和LUMO + 1，HOMO和LUMO + 2，HOMO-1和LUMO等），可以将SCF重新收敛到正确的位置解。

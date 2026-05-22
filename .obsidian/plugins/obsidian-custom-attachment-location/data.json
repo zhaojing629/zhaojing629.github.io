@@ -7,7 +7,7 @@
   "customTokensStr": "",
   "defaultImageSize": "",
   "defaultImageSizeDimension": "width",
-  "duplicateNameSeparator": "_",
+  "duplicateNameSeparator": " ",
   "emptyFolderBehavior": "DeleteWithEmptyParents",
   "excludePaths": [],
   "excludePathsFromAttachmentCollecting": [],

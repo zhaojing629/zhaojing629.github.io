@@ -1,24 +1,20 @@
 {
   "main": {
-    "id": "11eb44b919dc3afc",
+    "id": "94cc4325aae3d47c",
     "type": "split",
     "children": [
       {
-        "id": "185261505451c371",
+        "id": "95e6b063b5692091",
         "type": "tabs",
         "children": [
           {
-            "id": "a15c6b0e5bb9feb9",
+            "id": "c400b3134134439e",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "source/_posts/测试图片.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "测试图片"
+              "title": "新标签页"
             }
           }
         ]
@@ -27,15 +23,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "2bdb06074f1de8ea",
+    "id": "6c9217bcd92b302a",
     "type": "split",
     "children": [
       {
-        "id": "baaa24a59ff3abe0",
+        "id": "9d8c7cd2c0cae29e",
         "type": "tabs",
         "children": [
           {
-            "id": "d8203fac5d239e53",
+            "id": "2113f606e51a918b",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -48,12 +44,12 @@
             }
           },
           {
-            "id": "d6d110019d72019e",
+            "id": "78a0361e7baeb9b3",
             "type": "leaf",
             "state": {
               "type": "search",
               "state": {
-                "query": "[\"title\"]",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -65,7 +61,7 @@
             }
           },
           {
-            "id": "c0a792a84576228d",
+            "id": "48753c0157ab6d3c",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -73,28 +69,39 @@
               "icon": "lucide-bookmark",
               "title": "书签"
             }
+          },
+          {
+            "id": "28db3c366435d3e7",
+            "type": "leaf",
+            "state": {
+              "type": "file-tree-view",
+              "state": {},
+              "icon": "sheets-in-box",
+              "title": "File Tree"
+            }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 409.5
+    "width": 237.5
   },
   "right": {
-    "id": "d3e02ac9ff5b4063",
+    "id": "0f769753adaf1ed5",
     "type": "split",
     "children": [
       {
-        "id": "4070ec6a84359e4f",
+        "id": "acae413d15f4a422",
         "type": "tabs",
         "children": [
           {
-            "id": "4d2697b174855ad5",
+            "id": "605c1ca3e25a4aa6",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "source/_posts/测试图片.md",
+                "file": "source/_posts/测试.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,25 +111,25 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "测试图片 的反向链接列表"
+              "title": "测试 的反向链接列表"
             }
           },
           {
-            "id": "89a914db1ed32ec4",
+            "id": "91d284395540e748",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "source/_posts/测试图片.md",
+                "file": "source/_posts/测试.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "测试图片 的出链列表"
+              "title": "测试 的出链列表"
             }
           },
           {
-            "id": "0f745b349a5cf006",
+            "id": "adb280d9f89572bd",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -137,7 +144,7 @@
             }
           },
           {
-            "id": "2b5939cc3c242cfa",
+            "id": "b0ce3773651d3acc",
             "type": "leaf",
             "state": {
               "type": "all-properties",
@@ -151,102 +158,52 @@
             }
           },
           {
-            "id": "58a48468731329c1",
+            "id": "c7a10bef222ad153",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "source/_posts/测试图片.md",
-                "followCursor": true,
+                "file": "source/_posts/测试.md",
+                "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "测试图片 的大纲"
-            }
-          },
-          {
-            "id": "fb59db142e63f428",
-            "type": "leaf",
-            "state": {
-              "type": "file-properties",
-              "state": {
-                "file": "source/_posts/测试图片.md"
-              },
-              "icon": "lucide-info",
-              "title": "测试图片的笔记属性"
+              "title": "测试 的大纲"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 434.5
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
       "switcher:打开快速切换": false,
       "graph:查看关系图谱": false,
       "daily-notes:打开/创建今天的日记": false,
-      "canvas:新建白板": false,
-      "templates:插入模板": false,
       "command-palette:打开命令面板": false,
       "bases:新建数据库": false,
-      "obsidian-git:Open Git source control": false
+      "file-tree-alternative:File Tree Alternative Plugin": false,
+      "templates:插入模板": false,
+      "canvas:新建白板": false
     }
   },
-  "active": "a15c6b0e5bb9feb9",
+  "active": "c400b3134134439e",
   "lastOpenFiles": [
-    "source/_posts/测试图片/file-20260522173616446.png",
-    "source/_posts/测试图片/file-20260522173553172.png",
-    "source/_posts/测试图片",
-    "source/_posts/【ORCA】10.磁性相关计算.md",
-    "source/_posts/【ORCA】10.磁性相关计算/image-20250206182306324.png",
-    "source/_posts/【ORCA】10.磁性相关计算/image-20250117161848921.png",
-    "source/_posts/【ORCA】10.磁性相关计算/image-20250117161710614.png",
-    "source/_posts/【ORCA】10.磁性相关计算/image-20250117154939895.png",
-    "public/images/image-20250206182306324.png",
-    "public/images/image-20250117161710614.png",
-    "public/images/image-20250117161848921.png",
-    "source/images/image-20250117161710614.png",
-    "public/images/image-20250117154939895.png",
-    "source/_posts/测试图片.md",
-    "source/_posts/image-20250206182306324.png.md",
-    "public/2026/05/22/测试图片/index.html",
-    "public/2026/05/22/测试图片",
-    "public/2026/05/22",
-    "public/2026/05",
-    "public/2026",
-    "public/archives/2026/index.html",
-    "public/archives/2026/05/index.html",
-    "public/archives/2026/05",
-    "public/archives/2026",
-    "source/_posts/Invalid date.md",
-    "未命名.canvas",
-    "未命名 3.canvas",
-    "未命名 2.canvas",
-    "未命名 1.canvas",
-    "未命名.md",
-    "source/_posts/【ORCA】09.对称性破缺计算.md",
-    "source/_posts/【ORCA】08.CASSCF教程.md",
-    "source/_posts/【ORCA】04.重启计算&初猜.md",
-    "source/_posts/搭建网站教程.md",
-    "source/_posts/【VMD】常见命令.md",
-    "source/_posts/【ORCA】11.多参考计算.md",
-    "未命名 1.md",
-    "source/_posts/【Linux】命令.md",
-    "source/_posts/【Jmol】常见的指令.md",
-    "source/_posts/【Gaussian】柔性力常数.md",
-    "source/_posts/【Gaussian】核独立化学位移（NICS）.md",
-    "source/_posts/【Gaussian】对称性破缺.md",
-    "source/_posts/【Gaussian】05.几何优化.md",
-    "source/_posts/【Gaussian】04.激发态计算.md",
-    "source/_posts/【Gaussian】03.单点计算.md",
-    "source/_posts/【Gaussian】02.基组.md",
     "source/_posts/【Gaussian】01.基础知识.md",
-    "source/_posts/【CP2K】05.MD.md",
-    "source/_posts/【CP2K】04.几何优化.md",
-    "source/_posts/【CP2K】03.MGRID中的CUTOFF和RELEL-CUTOFF.md"
+    "scaffolds/模板.md",
+    "source/_posts/测试111.md",
+    "public/2026/05/22/测试111/index.html",
+    "public/2026/05/22/测试111/file-20260522194317026.png",
+    "public/2026/05/22/测试111",
+    "source/_posts/测试111/file-20260522194317026.png",
+    "source/_posts/测试111",
+    "source/_posts/未命名.canvas",
+    "未命名.canvas",
+    "source/_posts/【Gaussian】03.单点计算.md",
+    "source/_posts/【ADF】02.EDA-NOCV.md"
   ]
 }

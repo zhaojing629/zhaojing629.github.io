@@ -1,15 +1,14 @@
 {
-  "userIgnoreFilters": [
-    "node_modules/",
-    "scripts/",
-    "scaffolds/",
-    "themes/"
-  ],
-  "attachmentFolderPath": "/",
+  "showLineNumber": true,
   "newFileLocation": "folder",
   "newFileFolderPath": "source/_posts",
-  "newLinkFormat": "shortest",
-  "alwaysUpdateLinks": true,
   "useMarkdownLinks": true,
-  "promptDelete": false
+  "promptDelete": false,
+  "userIgnoreFilters": [
+    "node_modules/",
+    "public/",
+    "scaffolds/",
+    "scripts/",
+    "themes/"
+  ]
 }

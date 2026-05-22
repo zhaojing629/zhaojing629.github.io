@@ -4,7 +4,7 @@
     "cssclasses": "multitext",
     "tags": "tags",
     "title": "text",
-    "date": "date",
-    "typora-root-url": "multitext"
+    "date": "datetime",
+    "updated": "datetime"
   }
 }
