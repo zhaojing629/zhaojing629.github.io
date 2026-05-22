@@ -11399,7 +11399,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <h3 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h3><ul>
 <li>Effective Hamiltonian Method得到的结果：</li>
 </ul>
-<p><img src="../images/image-20250117154939895.png" alt="image-20250117154939895"></p>
+<p><img src="【ORCA】10.磁性相关计算/image-20250117154939895.png" alt="image-20250117154939895"></p>
 <ul>
 <li>输出显示总 g 矩阵，后跟三个主成分及其方向（特征向量eigenvectors）。特征向量是列向量</li>
 <li>此例子中$g<em>z=2.99,g</em>{x,y}=2.24$</li>
@@ -11413,10 +11413,10 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </ul>
 </li>
 </ul>
-<h3 id="输出-1"><a href="#输出-1" class="headerlink" title="输出"></a>输出</h3><p><img src="../images/image-20250117161710614.png" alt="image-20250117161710614"></p>
+<h3 id="输出-1"><a href="#输出-1" class="headerlink" title="输出"></a>输出</h3><p><img src="【ORCA】10.磁性相关计算/image-20250117161710614.png" alt="image-20250117161710614"></p>
 <ul>
 <li><p>analysis of the individual contributions to the D-tensor</p>
-<p><img src="../images/image-20250117161848921.png" alt="image-20250117161848921"></p>
+<p><img src="【ORCA】10.磁性相关计算/image-20250117161848921.png" alt="image-20250117161848921"></p>
 </li>
 <li><p>D和E/D的物理意义：$\hat{H}_{\mathbf{ZFS}}=D\left(S_z^2-\frac{S(S+1)}{3}\right)+E(S_x^2-S_y^2)$</p>
 <ul>
@@ -11444,8 +11444,9 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <li>各个轨道的mJ（磁量子数）百分比贡献</li>
 </ul>
 <p><img src="image-20250206182306324.png" alt=""></p>
-<h1 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h1><p><img src="../images/Pasted%20image%2020260522163020.png" alt=""></p>
+<h1 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h1><p><img src="【ORCA】10.磁性相关计算/Pasted%20image%2020260522163020.png" alt=""></p>
 <p><img src="../images/source/_posts/【ORCA】10.磁性相关计算/IMG-【ORCA】10.磁性相关计算-1.png" alt=""></p>
+<p><img src="【ORCA】10.磁性相关计算/IMG-20260522165015813.png" alt=""></p>
 ]]></content>
       <categories>
         <category>计算化学</category>
