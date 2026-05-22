@@ -94,6 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "source/_posts/【ORCA】10.磁性相关计算.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "反向链接"
+              "title": "【ORCA】10.磁性相关计算 的反向链接列表"
             }
           },
           {
@@ -112,11 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "source/_posts/【ORCA】10.磁性相关计算.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "出链"
+              "title": "【ORCA】10.磁性相关计算 的出链列表"
             }
           },
           {
@@ -154,13 +156,25 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "未命名.md",
-                "followCursor": false,
+                "file": "source/_posts/【ORCA】10.磁性相关计算.md",
+                "followCursor": true,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "未命名 的大纲"
+              "title": "【ORCA】10.磁性相关计算 的大纲"
+            }
+          },
+          {
+            "id": "fb59db142e63f428",
+            "type": "leaf",
+            "state": {
+              "type": "file-properties",
+              "state": {
+                "file": "source/_posts/【ORCA】10.磁性相关计算.md"
+              },
+              "icon": "lucide-info",
+              "title": "【ORCA】10.磁性相关计算的笔记属性"
             }
           }
         ],
@@ -168,7 +182,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 396.5
+    "width": 434.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -182,11 +196,22 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "d8203fac5d239e53",
+  "active": "2d353791634f360e",
   "lastOpenFiles": [
-    "未命名 1.md",
+    "source/images/Pasted image 20260522163020.png",
+    "source/_posts/附件/Pasted image 20260522162215.png",
     "source/_posts/【ORCA】10.磁性相关计算.md",
+    "source/_posts/附件",
+    "Pasted image 20260522161925.png",
+    "source/_posts/【ORCA】09.对称性破缺计算.md",
+    "source/_posts/【ORCA】08.CASSCF教程.md",
+    "source/_posts/【ORCA】04.重启计算&初猜.md",
+    "source/_posts/未命名.md",
     "未命名.md",
+    "source/_posts/搭建网站教程.md",
+    "source/_posts/【VMD】常见命令.md",
+    "source/_posts/【ORCA】11.多参考计算.md",
+    "未命名 1.md",
     "public/2025/09/04/【Gaussian】05.几何优化/index.html",
     "public/2025/09/04/【Gaussian】05.几何优化",
     "public/2025/09/04",
@@ -208,14 +233,6 @@
     "source/_posts/【CP2K】03.MGRID中的CUTOFF和RELEL-CUTOFF.md",
     "source/_posts/【CP2K】02.计算力和能量.md",
     "source/_posts/【CP2K】01.基础.md",
-    "source/_posts/【AMS】05.过渡态.md",
-    "source/_posts/【AMS】04.键级.md",
-    "source/_posts/【AMS】03.振动光谱.md",
-    "source/_posts/【AMS】02.几何优化.md",
-    "source/_posts/【AMS】01.基本输入结构.md",
-    "source/_posts/【ADF】04.画图相关.md",
-    "source/_posts/【ADF】03.精度控制.md",
-    "source/_posts/【ADF】02.EDA-NOCV.md",
     "Pasted image 20260522155723.png"
   ]
 }

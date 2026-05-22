@@ -4,5 +4,8 @@
     "scripts/",
     "scaffolds/",
     "themes/"
-  ]
+  ],
+  "attachmentFolderPath": "source/images",
+  "newFileLocation": "folder",
+  "newFileFolderPath": "source/_posts"
 }
