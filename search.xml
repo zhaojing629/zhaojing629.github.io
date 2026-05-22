@@ -11398,7 +11398,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </ul>
 <h3 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h3><ul>
 <li><p>Effective Hamiltonian Method得到的结果：</p>
-<p><img src="image-20250117154939895.png" alt="image-20250117154939895"></p>
+<p><img src="../images/image-20250117154939895.png" alt="image-20250117154939895"></p>
 <ul>
 <li>输出显示总 g 矩阵，后跟三个主成分及其方向（特征向量eigenvectors）。特征向量是列向量</li>
 <li>此例子中$g<em>z=2.99,g</em>{x,y}=2.24$</li>
