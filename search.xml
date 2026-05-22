@@ -11414,10 +11414,10 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </ul>
 </li>
 </ul>
-<h3 id="输出-1"><a href="#输出-1" class="headerlink" title="输出"></a>输出</h3><p><img src="image-20250117161710614.png" alt="image-20250117161710614"></p>
+<h3 id="输出-1"><a href="#输出-1" class="headerlink" title="输出"></a>输出</h3><p><img src="source/images/image-20250117161710614.png" alt="image-20250117161710614"></p>
 <ul>
 <li><p>analysis of the individual contributions to the D-tensor</p>
-<p><img src="image-20250117161848921.png" alt="image-20250117161848921"></p>
+<p><img src="source/images/image-20250117161848921.png" alt="image-20250117161848921"></p>
 </li>
 <li><p>D和E/D的物理意义：$\hat{H}_{\mathbf{ZFS}}=D\left(S_z^2-\frac{S(S+1)}{3}\right)+E(S_x^2-S_y^2)$</p>
 <ul>
@@ -11444,7 +11444,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <h2 id="输出-2"><a href="#输出-2" class="headerlink" title="输出"></a>输出</h2><ul>
 <li>各个轨道的mJ（磁量子数）百分比贡献</li>
 </ul>
-<p><img src="image-20250206182306324.png" alt="image-20250206182306324"></p>
+<p><img src="source/images/image-20250206182306324.png" alt="image-20250206182306324"></p>
 ]]></content>
       <categories>
         <category>计算化学</category>
