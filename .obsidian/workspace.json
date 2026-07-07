@@ -4,17 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "95e6b063b5692091",
+        "id": "ad01921f14c424dc",
         "type": "tabs",
         "children": [
           {
-            "id": "c400b3134134439e",
+            "id": "85279d668708794a",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "source/_posts/搭建网站教程.md",
+                "mode": "preview",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "新标签页"
+              "title": "搭建网站教程"
             }
           }
         ]
@@ -79,13 +83,24 @@
               "icon": "sheets-in-box",
               "title": "File Tree"
             }
+          },
+          {
+            "id": "939ba953ae78390c",
+            "type": "leaf",
+            "state": {
+              "type": "file-tree-view",
+              "state": {},
+              "icon": "sheets-in-box",
+              "title": "File Tree"
+            }
           }
         ],
         "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 237.5
+    "width": 277.5,
+    "collapsed": true
   },
   "right": {
     "id": "0f769753adaf1ed5",
@@ -101,9 +116,9 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "source/_posts/测试.md",
-                "collapseAll": false,
-                "extraContext": false,
+                "file": "source/_posts/搭建网站教程.md",
+                "collapseAll": true,
+                "extraContext": true,
                 "sortOrder": "alphabetical",
                 "showSearch": false,
                 "searchQuery": "",
@@ -111,7 +126,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "测试 的反向链接列表"
+              "title": "搭建网站教程 的反向链接列表"
             }
           },
           {
@@ -120,12 +135,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "source/_posts/测试.md",
+                "file": "source/_posts/搭建网站教程.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "测试 的出链列表"
+              "title": "搭建网站教程 的出链列表"
             }
           },
           {
@@ -163,20 +178,21 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "source/_posts/测试.md",
+                "file": "source/_posts/搭建网站教程.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "测试 的大纲"
+              "title": "搭建网站教程 的大纲"
             }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
-    "width": 300,
+    "width": 454.5,
     "collapsed": true
   },
   "left-ribbon": {
@@ -186,24 +202,50 @@
       "daily-notes:打开/创建今天的日记": false,
       "command-palette:打开命令面板": false,
       "bases:新建数据库": false,
-      "file-tree-alternative:File Tree Alternative Plugin": false,
       "templates:插入模板": false,
-      "canvas:新建白板": false
+      "canvas:新建白板": false,
+      "file-tree-alternative:File Tree Alternative Plugin": false
     }
   },
-  "active": "c400b3134134439e",
+  "active": "85279d668708794a",
   "lastOpenFiles": [
+    "source/_posts/【ADF】01.基本计算设置.md",
+    "source/_posts/【AMS】01.基本输入结构.md",
+    "source/_posts/【ADF】03.精度控制.md",
+    "source/_posts/【ADF】02.EDA-NOCV.md",
+    "source/_posts/【Jmol】常见的指令.md",
     "source/_posts/【Gaussian】01.基础知识.md",
-    "scaffolds/模板.md",
-    "source/_posts/测试111.md",
+    "source/_posts/搭建网站教程.md",
+    "source/_posts/测试公式.md",
+    "source/_posts/基组.md",
+    "source/_posts/【【草稿】】Hatree-Forck方法.md",
+    "source/_posts/【ORCA】10.磁性相关计算.md",
+    "source/_posts/【ORCA】11.多参考计算.md",
+    "source/_posts/【Pyscf】02.SCF.md",
+    "source/_posts/【VMD】01.绘制分子轨道.md",
+    "source/_posts/【VMD】常见命令.md",
+    "source/_posts/CSS语法.md",
+    "source/_posts/html基础.md",
+    "source/_posts/NBO.md",
+    "source/_posts/PIO.md",
+    "source/_posts/光谱项.md",
+    "source/_posts/多组态MCSCF.md",
+    "source/_posts/组态相互作用CI.md",
+    "scaffolds/post.md",
+    "scaffolds/page.md",
+    "scaffolds/draft.md",
+    "source/_posts/【ORCA】09.对称性破缺计算.md",
+    "public/archives/2026/index.html",
+    "public/archives/2026/05/index.html",
+    "public/2026/05/22/测试公式/index.html",
+    "public/2026/05/22/测试公式",
+    "source/_posts/【Gaussian】01.基础知识/image-20221107191726335.png",
     "public/2026/05/22/测试111/index.html",
     "public/2026/05/22/测试111/file-20260522194317026.png",
     "public/2026/05/22/测试111",
     "source/_posts/测试111/file-20260522194317026.png",
     "source/_posts/测试111",
     "source/_posts/未命名.canvas",
-    "未命名.canvas",
-    "source/_posts/【Gaussian】03.单点计算.md",
-    "source/_posts/【ADF】02.EDA-NOCV.md"
+    "未命名.canvas"
   ]
 }
