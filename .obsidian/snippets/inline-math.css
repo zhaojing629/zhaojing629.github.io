@@ -1,0 +1,21 @@
+/* 针对阅读模式 (Preview Mode) */
+p:has(> .math-block):not(:has(> .math-block:only-child)) {
+    display: inline;
+}
+p:has(> .math-block):not(:has(> .math-block:only-child)) .math-block {
+    display: inline-block;
+    margin: 0 0.25em;
+    padding: 0;
+}
+
+/* 针对实时预览模式 (Live Preview) */
+.cm-line:has(.math-block):not(:has(.math-block:only-child)) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.cm-line:has(.math-block):not(:has(.math-block:only-child)) .math-block {
+    display: inline-block !important;
+    margin: 0 0.25em !important;
+    padding: 0 !important;
+}
