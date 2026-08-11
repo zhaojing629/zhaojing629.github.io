@@ -11785,19 +11785,643 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
         <category>软件</category>
       </categories>
       <tags>
-        <tag>Gromacs</tag>
+        <tag>GROMACS</tag>
       </tags>
   </entry>
   <entry>
     <title>【GROMACS】2.基础知识</title>
     <url>/2026/08/11/%E3%80%90GROMACS%E3%80%912.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="MD单位"><a href="#MD单位" class="headerlink" title="MD单位"></a>MD单位</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">物理量</th>
+<th style="text-align:center">符号</th>
+<th style="text-align:center">单位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">长度</td>
+<td style="text-align:center">r</td>
+<td style="text-align:center">nm＝ 10<sup>-9</sup> m</td>
+</tr>
+<tr>
+<td style="text-align:center">质量</td>
+<td style="text-align:center">m</td>
+<td style="text-align:center">原子质量单位(u) ＝ 1.660 540 2(10) × 10<sup>-17</sup> kg</td>
+</tr>
+<tr>
+<td style="text-align:center">时间</td>
+<td style="text-align:center">t</td>
+<td style="text-align:center">ps＝ 10<sup>-12</sup>  s</td>
+</tr>
+<tr>
+<td style="text-align:center">电荷</td>
+<td style="text-align:center">q</td>
+<td style="text-align:center">e ＝ 1.602 177 33(49) × 10<sup>-9</sup> C</td>
+</tr>
+<tr>
+<td style="text-align:center">温度</td>
+<td style="text-align:center">T</td>
+<td style="text-align:center">K</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">物理量</th>
+<th style="text-align:center">符号</th>
+<th style="text-align:center">单位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">能量</td>
+<td style="text-align:center">$E,V$</td>
+<td style="text-align:center">$\mathrm{kJ~mol}^{-1}$</td>
+</tr>
+<tr>
+<td style="text-align:center">力</td>
+<td style="text-align:center">$\mathbf{F}$</td>
+<td style="text-align:center">$\mathrm{kJ~mol}^{-1}~\mathrm{nm}^{-1}$</td>
+</tr>
+<tr>
+<td style="text-align:center">压力</td>
+<td style="text-align:center">$p$</td>
+<td style="text-align:center">bar</td>
+</tr>
+<tr>
+<td style="text-align:center">速度</td>
+<td style="text-align:center">$v$</td>
+<td style="text-align:center">$\mathrm{e\ nm}$   nm/ps</td>
+</tr>
+<tr>
+<td style="text-align:center">偶极矩</td>
+<td style="text-align:center">$\mu$</td>
+<td style="text-align:center">$\mathrm{e\ nm}$</td>
+</tr>
+<tr>
+<td style="text-align:center">电势</td>
+<td style="text-align:center">$\Phi$</td>
+<td style="text-align:center">$\mathrm{kJ~mol}^{-1}\mathrm{~e}^{-1} = 0.010\,364\,269\,19$</td>
+</tr>
+<tr>
+<td style="text-align:center">电场强度</td>
+<td style="text-align:center">$E$</td>
+<td style="text-align:center">$\mathrm{kJ~mol}^{-1}\mathrm{~nm}^{-1}\ \mathrm{e}^{-1} =1.036\,426\,919 \times 10^7\mathrm{~V m}^{-1}$</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
       <categories>
         <category>计算化学</category>
         <category>软件</category>
       </categories>
       <tags>
-        <tag>Gromacs</tag>
+        <tag>GROMACS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【GROMACS】3.文件类型</title>
+    <url>/2026/08/11/%E3%80%90GROMACS%E3%80%913.%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B/</url>
+    <content><![CDATA[<h1 id="文件总览"><a href="#文件总览" class="headerlink" title="文件总览"></a>文件总览</h1><ul>
+<li><u>下划线为二进制数据</u></li>
+<li><strong>加粗为mdrun计算产生的文件</strong></li>
+</ul>
+<h2 id="参数文件"><a href="#参数文件" class="headerlink" title="参数文件"></a>参数文件</h2><ul>
+<li><code>.mdp</code>：运行参数，用于 GMX、Grompp 和 GMX Convert 工具的处理</li>
+</ul>
+<h2 id="结构文件"><a href="#结构文件" class="headerlink" title="结构文件"></a>结构文件</h2><p>当执行 <code>gmx pdb2gmx</code> 来生成分子结构时，该程序会将结构文件（<code>.pdb</code>文件）转换为 GROMOS 结构文件（<code>.gro</code>文件）。<code>.pdb</code>文件和 gromos 文件的主要区别在于它们的格式，而且<code>.gro</code>文件还可以包含速度信息。</p>
+<ul>
+<li><a href="#gro文件"><code>.gro</code></a>： GROMOS格式的结构文件</li>
+<li><a href="#PDB文件"><code>.pdb</code></a>：蛋白质结构格式</li>
+</ul>
+<h2 id="拓扑文件"><a href="#拓扑文件" class="headerlink" title="拓扑文件"></a>拓扑文件</h2><ul>
+<li><code>.top</code>：主拓扑文件<ul>
+<li>由 <code>gmx pdb2gmx</code> 程序生成的。<code>gmx pdb2gmx</code> 能够将任何肽或蛋白质的 pdb 结构文件转换为分子拓扑文件。该拓扑文件包含了你所研究的肽或蛋白质中所有相互作用的详细信息。</li>
+</ul>
+</li>
+<li><code>.itp</code>：被引用的拓扑文件</li>
+</ul>
+<h2 id="运行输入文件"><a href="#运行输入文件" class="headerlink" title="运行输入文件"></a>运行输入文件</h2><ul>
+<li><u><code>.tpr</code>：系统拓扑结构、参数、坐标以及速度（二进制表示，可移植）</u><ul>
+<li>由<code>grompp</code>汇总结构+拓扑+参数生成</li>
+<li><code>mdrun</code>的输入文件</li>
+</ul>
+</li>
+</ul>
+<h2 id="轨迹文件"><a href="#轨迹文件" class="headerlink" title="轨迹文件"></a>轨迹文件</h2><ul>
+<li><strong><u><code>.trr</code>：全精度轨迹文件，含模拟时间和原子坐标。 并可以包含原子速度、受力信息</u></strong><ul>
+<li><strong>x（坐标）、v（速度） 和 f（受力）（二进制数，全精度，可移植）</strong></li>
+</ul>
+</li>
+<li><strong><u><code>.xtc</code>：压缩的轨迹文件。体积比<code>.trr</code>小，记录精可调，且可以只记录指定的group</u></strong><ul>
+<li><strong>仅 x 类型（压缩格式，可移植，任意精度）</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="能量文件"><a href="#能量文件" class="headerlink" title="能量文件"></a>能量文件</h2><ul>
+<li><strong><u><code>.edr</code>：能量文仵，记录了模拟过程中的各种信息（能量、体积、压力、温度等）</strong>&lt;/u&gt;</li>
+</ul>
+<h2 id="其他文件"><a href="#其他文件" class="headerlink" title="其他文件"></a>其他文件</h2><ul>
+<li><strong><code>.log</code>：日志文件</strong></li>
+<li><strong><u><code>.cpt</code>：可移植的 checkpoint 文件。用于续算，延长计算</u></strong></li>
+<li><code>.ndx</code>：索引文件，设定各个组里包含哪些原子</li>
+<li><code>.xvg</code>：被grace程序读取来对其中的数据绘图</li>
+</ul>
+<h1 id="一般流程"><a href="#一般流程" class="headerlink" title="一般流程"></a>一般流程</h1><h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">gmx grompp-f md1<span class="selector-class">.mdp</span> -o md1<span class="selector-class">.tpr</span> -c eq2<span class="selector-class">.gro</span> -t eq2<span class="selector-class">.cpt</span> -<span class="selector-tag">p</span> memwat<span class="selector-class">.top</span> -maxwarn <span class="number">10</span></span><br></pre></td></tr></table></figure>
+<h2 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h2><p><img src="/image-20260811102611572.png" alt="这是模拟蛋白质在水中的行为的典型 GROMACS 分子动力学运行的流程图。过程中可能需要多次进行能量最小化操作，这些步骤包括以下几个循环：gmx grompp -&gt; gmx mdrun。"></p>
+<ol>
+<li>前处理：<ul>
+<li>建立体系结构文件(<code>.gro</code>)和生成拓扑文件 ( <code>.top</code>) 主要涉及的命令: <code>editconf</code>、 <code>solvate</code> 、 <code>insert-molecules</code>、 <code>genion</code> 、 <code>pdb2gmx</code> 、 <code>x2top</code> 。另涉及make_ndx 、 <code>genrestr</code>等</li>
+<li>对于蛋白质：<ol>
+<li>首先可以使用 <code>gmx editconf</code> 程序来定义围绕分子的一个适当大小的盒子。</li>
+<li><code>gmx solvate</code> 可以将溶质分子（即肽分子）溶解在任何溶剂中。<code>gmx solvate</code> 的输出结果是一个包含在水中溶解后的肽分子的结构文件。此外，<code>gmx solvate</code> 还会修改由 <code>gmx pdb2gmx</code> 生成的分子结构文件，以在结构中添加溶剂信息。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>计算：<ol>
+<li>手写模拟参数文件<code>.mdp</code></li>
+<li><code>grompp</code>：<code>.mdp</code>、<code>.gro</code>、 <code>.top</code>一起产生<code>mdrun</code>的运行文件<code>.tpr</code></li>
+<li><code>mdrun</code>：运行<code>.tpr</code>开始能量极小化、动力学等计算，期间可以监控<code>.log</code>输出信息。</li>
+</ol>
+</li>
+<li>后处理：<ul>
+<li>对<code>mdrun</code>产生的轨迹文件（<code>.trr</code>或<code>.xtc</code>)、结构文件（<code>.gro</code>)及能量文件(<code>.edr</code>)通过各种命令进行分析处理和提取有用的信息，或对轨迹进行合并/分割/转换等操作。</li>
+<li>涉及的命令:<code>energy</code>、<code>trjconv</code>、<code>trjcat</code>、<code>analyze</code>、<code>spatial</code>、<code>cluster</code>、<code>clustersize</code>、<code>traj</code>、<code>mindist</code>、<code>rdf</code>、<code>gyrate</code>,<code>msd</code>、<code>order</code>、<code>hbond</code>、<code>angle</code>、<code>density</code>、<code>densmap</code>、<code>distance</code>、<code>pairdist</code>、<code>velacc</code>、<code>chi</code>、<code>do_dssp</code>、<code>rama</code>、<code>sasa</code>、<code>anaeig</code>、<code>order</code>、<code>rms</code>、<code>rmsf</code>、<code>dipole</code>、<code>helix</code>、<code>freevolume</code>、<code>h2order</code>、<code>mdmat</code>等等数十种</li>
+</ul>
+</li>
+</ol>
+<h1 id="结构文件-1"><a href="#结构文件-1" class="headerlink" title="结构文件"></a>结构文件</h1><h2 id="PDB文件"><a href="#PDB文件" class="headerlink" title="PDB文件"></a>PDB文件</h2><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">HEADER    EXTRACELLULAR MATRIX                    <span class="number">22</span>-JAN<span class="number">-98</span>   <span class="number">1</span>A3I</span><br><span class="line">TITLE     X-RAY CRYSTALLOGRAPHIC DETERMINATION OF A COLLAGEN-LIKE</span><br><span class="line">TITLE    <span class="number">2</span> PEPTIDE WITH THE REPEATING SEQUENCE (PRO-PRO-GLY)</span><br><span class="line">...</span><br><span class="line">EXPDTA    X-RAY DIFFRACTION</span><br><span class="line">AUTHOR    R.Z.KRAMER,L.VITAGLIANO,J.BELLA,R.BERISIO,L.MAZZARELLA,</span><br><span class="line">AUTHOR   <span class="number">2</span> B.BRODSKY,A.ZAGARI,H.M.BERMAN</span><br><span class="line">...</span><br><span class="line">REMARK <span class="number">350</span> BIOMOLECULE: <span class="number">1</span></span><br><span class="line">REMARK <span class="number">350</span> APPLY THE FOLLOWING TO CHAINS: A, B, C</span><br><span class="line">REMARK <span class="number">350</span>   BIOMT1   <span class="number">1</span>  <span class="number">1.000000</span>  <span class="number">0.000000</span>  <span class="number">0.000000</span>        <span class="number">0.00000</span></span><br><span class="line">REMARK <span class="number">350</span>   BIOMT2   <span class="number">1</span>  <span class="number">0.000000</span>  <span class="number">1.000000</span>  <span class="number">0.000000</span>        <span class="number">0.00000</span></span><br><span class="line">...</span><br><span class="line">SEQRES   <span class="number">1</span> A    <span class="number">9</span>  PRO PRO GLY PRO PRO GLY PRO PRO GLY</span><br><span class="line">SEQRES   <span class="number">1</span> B    <span class="number">6</span>  PRO PRO GLY PRO PRO GLY</span><br><span class="line">SEQRES   <span class="number">1</span> C    <span class="number">6</span>  PRO PRO GLY PRO PRO GLY</span><br><span class="line">...</span><br><span class="line">ATOM      <span class="number">1</span>  N   PRO A   <span class="number">1</span>       <span class="number">8.316</span>  <span class="number">21.206</span>  <span class="number">21.530</span>  <span class="number">1.00</span> <span class="number">17.44</span>           N</span><br><span class="line">ATOM      <span class="number">2</span>  CA  PRO A   <span class="number">1</span>       <span class="number">7.608</span>  <span class="number">20.729</span>  <span class="number">20.336</span>  <span class="number">1.00</span> <span class="number">17.44</span>           C</span><br><span class="line">ATOM      <span class="number">3</span>  C   PRO A   <span class="number">1</span>       <span class="number">8.487</span>  <span class="number">20.707</span>  <span class="number">19.092</span>  <span class="number">1.00</span> <span class="number">17.44</span>           C</span><br><span class="line">ATOM      <span class="number">4</span>  O   PRO A   <span class="number">1</span>       <span class="number">9.466</span>  <span class="number">21.457</span>  <span class="number">19.005</span>  <span class="number">1.00</span> <span class="number">17.44</span>           O</span><br><span class="line">ATOM      <span class="number">5</span>  CB  PRO A   <span class="number">1</span>       <span class="number">6.460</span>  <span class="number">21.723</span>  <span class="number">20.211</span>  <span class="number">1.00</span> <span class="number">22.26</span>           C</span><br><span class="line">...</span><br><span class="line">HETATM  <span class="number">130</span>  C   ACY   <span class="number">401</span>       <span class="number">3.682</span>  <span class="number">22.541</span>  <span class="number">11.236</span>  <span class="number">1.00</span> <span class="number">21.19</span>           C</span><br><span class="line">HETATM  <span class="number">131</span>  O   ACY   <span class="number">401</span>       <span class="number">2.807</span>  <span class="number">23.097</span>  <span class="number">10.553</span>  <span class="number">1.00</span> <span class="number">21.19</span>           O</span><br><span class="line">HETATM  <span class="number">132</span>  OXT ACY   <span class="number">401</span>       <span class="number">4.306</span>  <span class="number">23.101</span>  <span class="number">12.291</span>  <span class="number">1.00</span> <span class="number">21.19</span>           O</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第一列：<ul>
+<li><code>ATOM</code>：描述构成蛋白质的各个原子的坐标。</li>
+<li><code>TER</code> ：记录标识了多肽链的结束</li>
+<li><code>HETATM</code>：描述杂原子的坐标，即那些不属于蛋白质分子的原子。</li>
+</ul>
+</li>
+<li>第二列：原子序号</li>
+<li>第三列：原子名</li>
+<li>第四列：残基名</li>
+<li>第五列：链名</li>
+<li>第六列：残基号</li>
+<li>第5-7列：原子xyz坐标（埃）</li>
+<li>第七列：占有率，代表这个原子在当前三维坐标位置的出现概率。1.00 意味着 100%，即在所有被解析的分子颗粒中，这个原子完全存在于这个位置。</li>
+<li>第八列：温度因子。反映了该原子在空间中的“动态柔性”或“位置不确定度”。数值越大，代表这个原子晃动得越厉害，或者在实验图谱中越模糊。</li>
+<li>第九列：元素</li>
+</ul>
+<h2 id="gro文件"><a href="#gro文件" class="headerlink" title="gro文件"></a>gro文件</h2><p>不需要记录速度时，gro文件可等价地用pdb格式代替。</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">MD</span> of <span class="number">2</span> waters, t= <span class="number">0</span>.<span class="number">0</span></span><br><span class="line">    <span class="attribute">6</span></span><br><span class="line">    <span class="attribute">1WATER</span>  OW<span class="number">1</span>    <span class="number">1</span>   <span class="number">0</span>.<span class="number">126</span>   <span class="number">1</span>.<span class="number">624</span>   <span class="number">1</span>.<span class="number">679</span>  <span class="number">0</span>.<span class="number">1227</span> -<span class="number">0</span>.<span class="number">0580</span>  <span class="number">0</span>.<span class="number">0434</span></span><br><span class="line">    <span class="attribute">1WATER</span>  HW<span class="number">2</span>    <span class="number">2</span>   <span class="number">0</span>.<span class="number">190</span>   <span class="number">1</span>.<span class="number">661</span>   <span class="number">1</span>.<span class="number">747</span>  <span class="number">0</span>.<span class="number">8085</span>  <span class="number">0</span>.<span class="number">3191</span> -<span class="number">0</span>.<span class="number">7791</span></span><br><span class="line">    <span class="attribute">1WATER</span>  HW<span class="number">3</span>    <span class="number">3</span>   <span class="number">0</span>.<span class="number">177</span>   <span class="number">1</span>.<span class="number">568</span>   <span class="number">1</span>.<span class="number">613</span> -<span class="number">0</span>.<span class="number">9045</span> -<span class="number">2</span>.<span class="number">6469</span>  <span class="number">1</span>.<span class="number">3180</span></span><br><span class="line">    <span class="attribute">2WATER</span>  OW<span class="number">1</span>    <span class="number">4</span>   <span class="number">1</span>.<span class="number">275</span>   <span class="number">0</span>.<span class="number">053</span>   <span class="number">0</span>.<span class="number">622</span>  <span class="number">0</span>.<span class="number">2519</span>  <span class="number">0</span>.<span class="number">3140</span> -<span class="number">0</span>.<span class="number">1734</span></span><br><span class="line">    <span class="attribute">2WATER</span>  HW<span class="number">2</span>    <span class="number">5</span>   <span class="number">1</span>.<span class="number">337</span>   <span class="number">0</span>.<span class="number">002</span>   <span class="number">0</span>.<span class="number">680</span> -<span class="number">1</span>.<span class="number">0641</span> -<span class="number">1</span>.<span class="number">1349</span>  <span class="number">0</span>.<span class="number">0257</span></span><br><span class="line">    <span class="attribute">2WATER</span>  HW<span class="number">3</span>    <span class="number">6</span>   <span class="number">1</span>.<span class="number">326</span>   <span class="number">0</span>.<span class="number">120</span>   <span class="number">0</span>.<span class="number">568</span>  <span class="number">1</span>.<span class="number">9427</span> -<span class="number">0</span>.<span class="number">8216</span> -<span class="number">0</span>.<span class="number">0244</span></span><br><span class="line">   <span class="attribute">1</span>.<span class="number">82060</span>   <span class="number">1</span>.<span class="number">82060</span>   <span class="number">1</span>.<span class="number">82060</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>标题：标题字符串（自由格式的字符串，可选，在“ t= ”之后加上时间格式）</p>
+</li>
+<li><p>原子数量（以自由格式的整数表示）</p>
+</li>
+<li><p>每个原子对应一行字符</p>
+<ul>
+<li>残基编号和名称</li>
+<li>原子名称</li>
+<li>原子编号</li>
+<li>原子坐标（单位是nm）</li>
+<li>原子速度（单位是nm/ps=km/s，不是必须有）</li>
+<li>原子部分以固定格式记录：<code>(i5,2a5,i5,3f8.3,3f8.4)</code><ul>
+<li><code>i</code>是整数，<code>a</code>是字符串，<code>f</code>是小数</li>
+<li><strong><code>i5</code></strong>：占<strong>5列</strong>的<strong>整数</strong>。→ 对应<strong>残基编号</strong>（如 <code>30</code>）。</li>
+<li><strong><code>2a5</code></strong>：连续两个<strong>占5列的字符串</strong>。→ 第一个对应<strong>残基名称</strong>（如 <code>GLU</code>），第二个对应<strong>原子名称</strong>（如 <code>CA</code>）。</li>
+<li><strong><code>i5</code></strong>：占<strong>5列</strong>的<strong>整数</strong>。→ 对应<strong>原子编号</strong>（如 <code>2</code>）。</li>
+<li><strong><code>3f8.3</code></strong>：连续三个<strong>占8列</strong>的<strong>浮点数</strong>，小数点后保留<strong>3位</strong>。→ 对应<strong>X、Y、Z坐标</strong>（单位nm）。例如 <code>106.568</code>。</li>
+<li><strong><code>3f8.4</code></strong>：连续三个<strong>占8列</strong>的<strong>浮点数</strong>，小数点后保留<strong>4位</strong>。→ 对应<strong>速度VX、VY、VZ</strong>（单位nm/ps），如果没有速度这3个格子可以空着。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>盒子三个方向的尺寸（nm）</p>
+<ul>
+<li>实际是：<code>v1(x) v2(y) v3(z) v1(y) v1(z) v2(x) v2(z) v3(x) v3(y)</code><ul>
+<li><code>v3(y)</code>代表第 3个盒子矢量的y分量。</li>
+</ul>
+</li>
+<li>最后六个数值可以省略（默认值为零），即记录正交盒子时后6个可省。</li>
+<li>GROMACS 仅支持满足 <code>v1(y)=v1(z)=v2(z)=0</code> 的盒式向量。即盒子第一个矢量必须平行于X方向，第二个矢量必须在XY平面上。盒子以(0,0,0)为原点开始，往正方向定义盒子矢量以及原子坐标，所以不会有负原子坐标。若出现负原子坐标，原子会被认为是在负方向的镜像盒子里，做模拟时会根据周期性自动平移成正值。</li>
+<li>盒子信息部分是自由格式的。</li>
+</ul>
+</li>
+</ul>
+<h1 id="拓扑文件-1"><a href="#拓扑文件-1" class="headerlink" title="拓扑文件"></a>拓扑文件</h1><p>其他：</p>
+<ul>
+<li><p><a href="https://jerkwin.github.io/GMX/GMXman-5/#571-拓扑文件">GROMACS中文手册：第五章　拓扑文件|Jerkwin</a></p>
+</li>
+<li><p>拓扑文件包含体系中原子类型、原子电荷、成键和非键项及参数、各种分子数目等信息。<code>.top</code>和<code>.itp</code>都叫拓扑(topology)文件</p>
+<ul>
+<li><p>top：作为体系的主拓扑文件，是grompp的输入文件之一</p>
+</li>
+<li><p>itp：included topology，<code>.top</code>通过<code>#include</code>方式引用，储存力场参数和定义分子信息。itp文件不是必须的，也可以直接把itp文件里的内容直接写到top的合适位置里</p>
+</li>
+<li><p><strong>拓扑文件里可以开头用<code>;</code>进行注释。每个字段用<code>[]</code>标识。</strong></p>
+</li>
+<li><p>拓扑文件里<code>#</code>开头的叫做预处理指令(preprocessor directive)。grompp先根据预处理指令对拓扑文件内容进行事先处理后，再对拓扑文件的内容进行处理。</p>
+</li>
+<li><p>例子</p>
+  <figure class="highlight gauss"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;gromos54a7.ff/forcefield.itp&quot;</span>				54A7力场的主文件</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;gromos54a7.ff/spce.itp&quot;</span>					SPC/E水模型的定义</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;gromos54a7.ff/ions.itp&quot;</span>					54A7力场对离子的定义</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;itp/a_A.itp&quot;</span>								分别定义两种分子信息的itp文件		</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;itp/a_B.itp&quot;</span></span></span><br><span class="line"></span><br><span class="line">[ <span class="keyword">system</span> ]</span><br><span class="line">Protein in water		体系名称，随意取</span><br><span class="line">[ molecules ]</span><br><span class="line">Protein_A	<span class="number">1</span></span><br><span class="line">Protein_B	<span class="number">1</span></span><br><span class="line">SOL			<span class="number">4199</span>		体系里分子的出现顺序和数目</span><br><span class="line">NA			<span class="number">12</span>			GROMACS里自带的力场中的各种水模型的名字都统叫SOL，离子的名字都统一是大写，如NA、CL、MG</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>所有被include的文件(以及被include文件所include的文件)在grompp做预处理时会被完整展开，grompp实际处理的是所有被include的文件展开之后的内容。因此不要管include了什么文件，而只需要关心最终全展开之后都有什么内容。</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p><code>[ defaults ]</code>：全局非键设置</p>
+<ul>
+<li><code>nbfunc</code> = 1：采用 Lennard-Jones 型非键势函数。</li>
+<li><code>comb-rule</code> = 1：异种原子的 LJ 参数按组合规则生成。 </li>
+<li><code>gen-pairs</code> = yes：自动生成 1–4 pair 相互作用。 </li>
+<li><code>fudgeLJ</code> / <code>fudgeQQ</code> = 1：1–4 LJ 与静电相互作用不缩放。</li>
+</ul>
+</li>
+<li><p><code>[ atomtypes ]</code>：  原子类型参数</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="string">[ atomtypes ]</span></span><br><span class="line">; 	type	mass	charge	ptype	sigma(nm)	epsilon(kJ/mol)</span><br><span class="line">	<span class="number">0</span>W	<span class="number">15.99940</span>	<span class="number">0.0000</span>	A		<span class="number">3.16655E-01</span>	<span class="number">8.903586E-01</span></span><br><span class="line">	HW	 <span class="number">1.00800</span>	<span class="number">0.0000</span>	A 		<span class="number">0.00000E+00</span>	<span class="number">0.00000E+00</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>type：原子类型名,后续 <code>[ atoms ]</code> 会引用。</li>
+<li>mass / charge:类型层面的默认质量和电荷</li>
+<li>ptype = A：普通原子类型。</li>
+<li>sigma、epsilon：LJ 参数；OW 有 LJ，HW 设置为 0。<ul>
+<li>OW 表示水氧，承担主要范德华相互作用。sigma = 0.316655 nm，epsilon = 0.8903586 kJ/mol  是水氧 LJ 参数。</li>
+<li>HW 表示水氢,通常不设置 LJ,只参与静电与约束几何。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>[ nonbond_params ]</code>  特定非键相互作用。用于覆盖或指定某些原子类型对之间的非键参数。</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="string">[ nonbond_params ]</span> </span><br><span class="line">; i j func C A </span><br><span class="line">OW OW <span class="number">1</span> <span class="number">0.5</span> <span class="number">0.5</span> </span><br><span class="line">OW HW <span class="number">1</span> <span class="number">0.0</span> <span class="number">0.0</span> </span><br><span class="line">HW HW <span class="number">1</span> <span class="number">0.0</span> <span class="number">0.0</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>i、j：相互作用的两个原子类型；</li>
+<li>func = 1 表示 LJ 形式。 </li>
+<li>C、A:该文件写法下的势函数参数；OW–HW 与 HW–HW 为 0</li>
+<li><code>[ nonbond_params ]</code> 会改变特定 pair 的非键相互作用,  需与力场格式保持一致。 水模型拓扑应与主力场文件和 mdp 设置配套使用。 修改该段参数会直接影响水–水及水–其他物质的相互作用。</li>
+</ul>
+</li>
+<li><p><code>[ moleculetype ]</code> ：分子与排除规则。表示开始定义一个新的分子类型，置于文件开头，下面紧接着定义分子名和<code>nrexcl</code>（nrexcl=<em>n</em>表示不计算≤<em>n</em>个键相连的原子间非键作用，一般为3)。</p>
+<ul>
+<li><p>例子：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="string">[ moleculetype ]</span></span><br><span class="line">; name  nrexcl</span><br><span class="line">Urea         <span class="number">3</span>			忽略 <span class="number">1</span><span class="number">-2</span> 、 <span class="number">1</span><span class="number">-3</span> 、 <span class="number">1</span><span class="number">-4</span> 间的非键作用</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>第1列name：定义一个名为 SPCE 的分子类型。 </p>
+</li>
+<li><p>第2列nrexcl：同一分子内相隔不超过 3 个键的非键相互作用将被排除。 对小分子水而言，这是避免分子内部非键相互作用重复计入的重要设置。</p>
+</li>
+<li><p>虽然可以将多个不相互成键的分子定义在一个<code>[ moleculetype ]</code> 里，但最好还是把每个分子作为单独的一个<code>[ moleculetype ]</code> 来定义，这样易于管理</p>
+</li>
+<li><p>对于一批相同的分子，一起作为一个<code>[ moleculetype ]</code> 来定义对计算资源的消耗量明显高于共用同一个<code>[ moleculetype ]</code> </p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">两种定义方式：</span><br><span class="line"></span><br><span class="line"><span class="number">500</span>个A分子放一起：</span><br><span class="line">    .itp中：</span><br><span class="line"><span class="string">        [ moleculetype ]</span></span><br><span class="line">        all_A</span><br><span class="line"><span class="string">        [ atoms ]</span></span><br><span class="line">        A分子<span class="number">1</span>的各原子</span><br><span class="line">        A分子<span class="number">2</span>的各原子</span><br><span class="line">        ...</span><br><span class="line">        A分子<span class="number">500</span>的各原子</span><br><span class="line"><span class="string">        [bonds,angles等项]</span></span><br><span class="line">        ...</span><br><span class="line">	.top中:</span><br><span class="line"><span class="string">        [ molecules ]</span></span><br><span class="line">        all_A <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="number">500</span>个A分子单独：</span><br><span class="line">	.itp中：</span><br><span class="line"><span class="string">		[ moleculetype ]</span></span><br><span class="line">		all_A</span><br><span class="line"><span class="string">		[ atoms ]</span></span><br><span class="line">		A分子</span><br><span class="line"><span class="string">		[bonds,angles等项]</span></span><br><span class="line">		A分子参数</span><br><span class="line">	.top中:</span><br><span class="line"><span class="string">		[ molecules ]</span></span><br><span class="line">		A <span class="number">500</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>moleculetype</code>中的不同函数类型：<a href="https://manual.gromacs.org/current/reference-manual/topologies/topology-file-formats.html#id38">File formats - GROMACS 2026.3 documentation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>[ atoms ]</code> ： 定义分子中各个原子的名字、原子类型、所属残基、原子电荷、原子质量、所属电荷组</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="string">[ atoms ]</span></span><br><span class="line">;   nr    type   resnr  residu    atom    cgnr  charge</span><br><span class="line">     <span class="number">1</span>       C       <span class="number">1</span>    UREA      C1       <span class="number">1</span>   <span class="number">0.683</span></span><br><span class="line">     <span class="number">2</span>       O       <span class="number">1</span>    UREA      O2       <span class="number">1</span>  <span class="number">-0.683</span></span><br><span class="line">     <span class="number">3</span>      NT       <span class="number">1</span>    UREA      N3       <span class="number">2</span>  <span class="number">-0.622</span></span><br><span class="line">     <span class="number">4</span>       H       <span class="number">1</span>    UREA      H4       <span class="number">2</span>   <span class="number">0.346</span></span><br><span class="line">     <span class="number">5</span>       H       <span class="number">1</span>    UREA      H5       <span class="number">2</span>   <span class="number">0.276</span></span><br><span class="line">     <span class="number">6</span>      NT       <span class="number">1</span>    UREA      N6       <span class="number">3</span>  <span class="number">-0.622</span></span><br><span class="line">     <span class="number">7</span>       H       <span class="number">1</span>    UREA      H7       <span class="number">3</span>   <span class="number">0.346</span></span><br><span class="line">     <span class="number">8</span>       H       <span class="number">1</span>    UREA      H8       <span class="number">3</span>   <span class="number">0.276</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>第1列nr：原子序号</li>
+<li>第2列type：引用 <code>[ atomtypes ]</code> 中的原子类型。</li>
+<li>第3-4列resnr/ residu：残基编号与残基名。</li>
+<li>第5列atom：原子名</li>
+<li>第6列cgnr：电荷组编号。</li>
+<li>第7列charge：原子电荷</li>
+<li>第8列mass：原子质量<ul>
+<li>质量用于积分运动方程,与时间步长稳定性有关。 质量在 [ atoms ] 中明确列出，优先用于该分 子。实际模拟中分子数量由 .top 文件的 [ molecules ] 指 定。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>以下字段可以定义多次，效果累加：</strong></p>
+<ul>
+<li><p><code>[ bonds ]</code>：定义键伸缩项的信息</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="string">[ bonds ]</span></span><br><span class="line">;  ai    aj funct           c0           c1</span><br><span class="line">    <span class="number">3</span>     <span class="number">4</span>     <span class="number">1</span> <span class="number">1.000000e-01</span> <span class="number">3.744680e+05</span></span><br><span class="line">    <span class="number">3</span>     <span class="number">5</span>     <span class="number">1</span> <span class="number">1.000000e-01</span> <span class="number">3.744680e+05</span></span><br><span class="line">    ....</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第1-2列：成键原子在<strong>当前</strong>分子类型中的序号</li>
+<li>第3列：函数类型</li>
+<li>第4-5列c0和c1：可以合并为一列，用在力场文件中的参数名字代替</li>
+</ul>
+</li>
+<li><p><code>[ pairs ]</code>：定义要计算的范德华和静电1-4作用</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="string">[ pairs ]</span></span><br><span class="line">;  ai    aj funct           c0           c1</span><br><span class="line">    <span class="number">2</span>     <span class="number">4</span>     <span class="number">1</span> <span class="number">0.000000e+00</span> <span class="number">0.000000e+00</span></span><br><span class="line">    <span class="number">2</span>     <span class="number">5</span>     <span class="number">1</span> <span class="number">0.000000e+00</span> <span class="number">0.000000e+00</span></span><br><span class="line">    ....</span><br></pre></td></tr></table></figure>
+<ul>
+<li>由千nrexcl=3，常规的1-4间的非键作用不被计算。但由于定义了<code>[ pairs ]</code>，故会以特殊方式计算此处罗列出的1-4作用项</li>
+<li>c0和c1好像可以省略</li>
+</ul>
+</li>
+<li><p><code>[ angles ]</code>：定义键角弯曲项的信息</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="string">[ angles ]</span></span><br><span class="line">;  ai    aj    ak funct           c0           c1</span><br><span class="line">    <span class="number">1</span>     <span class="number">3</span>     <span class="number">4</span>     <span class="number">1</span> <span class="number">1.200000e+02</span> <span class="number">2.928800e+02</span></span><br><span class="line">    <span class="number">1</span>     <span class="number">3</span>     <span class="number">5</span>     <span class="number">1</span> <span class="number">1.200000e+02</span> <span class="number">2.928800e+02</span></span><br><span class="line">    <span class="number">4</span>     <span class="number">3</span>     <span class="number">5</span>     <span class="number">1</span> <span class="number">1.200000e+02</span> <span class="number">3.347200e+02</span></span><br><span class="line">    ....</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>[ dihedrals ]</code>： 定义二面角项的信息 </p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="string">[ dihedrals ]</span></span><br><span class="line">;  ai    aj    ak    al funct           c0           c1           c2</span><br><span class="line">    <span class="number">2</span>     <span class="number">1</span>     <span class="number">3</span>     <span class="number">4</span>     <span class="number">1</span> <span class="number">1.800000e+02</span> <span class="number">3.347200e+01</span> <span class="number">2.000000e+00</span></span><br><span class="line">    <span class="number">6</span>     <span class="number">1</span>     <span class="number">3</span>     <span class="number">4</span>     <span class="number">1</span> <span class="number">1.800000e+02</span> <span class="number">3.347200e+01</span> <span class="number">2.000000e+00</span></span><br><span class="line">    <span class="number">2</span>     <span class="number">1</span>     <span class="number">3</span>     <span class="number">5</span>     <span class="number">1</span> <span class="number">1.800000e+02</span> <span class="number">3.347200e+01</span> <span class="number">2.000000e+00</span></span><br><span class="line">    ....</span><br><span class="line"><span class="string">[ dihedrals ]</span>		第二次定义二面角项，和上一批定义的效果累加</span><br><span class="line">;  ai    aj    ak    al funct           c0           c1</span><br><span class="line">    <span class="number">3</span>     <span class="number">4</span>     <span class="number">5</span>     <span class="number">1</span>     <span class="number">2</span> <span class="number">0.000000e+00</span> <span class="number">1.673600e+02</span></span><br><span class="line">    <span class="number">6</span>     <span class="number">7</span>     <span class="number">8</span>     <span class="number">1</span>     <span class="number">2</span> <span class="number">0.000000e+00</span> <span class="number">1.673600e+02</span></span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<ul>
+<li>通常将普通二面角项和 improper项用不同的 <code>[ dihedrals]</code> 分开定义以便区分和易于修改.</li>
+</ul>
+</li>
+<li><p><code>[ settles/bonds/angles ]</code>  刚性或柔性水</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#ifndef FLEXIBLE					表示默认使用刚性水</span></span><br><span class="line">[ <span class="string">settles</span> ]							<span class="string">用解析算法保持水分子几何</span></span><br><span class="line"><span class="string">;</span>	<span class="string">i</span>	<span class="string">funct</span>	<span class="string">doh</span>		<span class="string">dhh</span>			<span class="string">doh</span> <span class="string">O–H</span> <span class="string">键长;dhh</span> <span class="string">H–H</span> <span class="string">距离。</span></span><br><span class="line">	<span class="number">1</span>	<span class="number">1</span>		<span class="number">0.1</span>		<span class="number">0.16330</span>	</span><br><span class="line"><span class="comment">#else								柔性水：若定义 FLEXIBLE，则改用键伸缩和角弯曲势。</span></span><br><span class="line">[ <span class="string">bonds</span> ] <span class="attr">0-H:</span> <span class="string">r0=0.1000</span> <span class="string">nm,</span> <span class="string">k=3.45E+05</span></span><br><span class="line">[ <span class="string">angles</span> ] <span class="attr">H-0-H:</span> <span class="string">a0=109.47&quot;,</span> <span class="string">k=3.83E+02</span></span><br><span class="line"><span class="comment">#endif</span></span><br><span class="line">[ <span class="string">exclusions</span> ]</span><br><span class="line"><span class="number">1</span> <span class="number">2</span> <span class="number">3</span><span class="string">/</span> <span class="number">2</span> <span class="number">1</span> <span class="number">3</span> <span class="string">/</span> <span class="number">3</span> <span class="number">1</span> <span class="number">2</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>柔性模型计算更重,时间步长通常更保守</li>
+</ul>
+</li>
+<li><p><code>[ exclusions ]</code>：定义哪些原子间的非键作用被忽略掉</p>
+<ul>
+<li>明确排除同一水分子内部 OW 与两个 HW 之间的非键相互作用。 </li>
+<li>避免分子内静电或 LJ 相互作用与约束/键角项重复计入。 </li>
+<li>对刚性小分子水模型,这是保持拓扑一致性的关键段落。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h2><ul>
+<li><p>gromos54a7.ff下的spc.itp</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="string">[ moleculetype ]</span></span><br><span class="line">; molname	nrexcl</span><br><span class="line">SOL		<span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="string">[ atoms ]</span></span><br><span class="line">;   nr   type  resnr residue  atom   cgnr     charge       mass</span><br><span class="line">#ifndef HEAVY_H			默认情况 (在mdp里没设define =-DHEAVY H时用的)</span><br><span class="line">     <span class="number">1</span>     OW      <span class="number">1</span>    SOL     OW      <span class="number">1</span>      <span class="number">-0.82</span>   <span class="number">15.99940</span></span><br><span class="line">     <span class="number">2</span>      H      <span class="number">1</span>    SOL    HW1      <span class="number">1</span>       <span class="number">0.41</span>    <span class="number">1.00800</span></span><br><span class="line">     <span class="number">3</span>      H      <span class="number">1</span>    SOL    HW2      <span class="number">1</span>       <span class="number">0.41</span>    <span class="number">1.00800</span></span><br><span class="line">#<span class="keyword">else</span>					在mdp文件设定了define=-DHEAVY_H时用的，可减缓氢的运动</span><br><span class="line">     <span class="number">1</span>     OW      <span class="number">1</span>    SOL     OW      <span class="number">1</span>      <span class="number">-0.82</span>    <span class="number">9.95140</span></span><br><span class="line">     <span class="number">2</span>      H      <span class="number">1</span>    SOL    HW1      <span class="number">1</span>       <span class="number">0.41</span>    <span class="number">4.03200</span></span><br><span class="line">     <span class="number">3</span>      H      <span class="number">1</span>    SOL    HW2      <span class="number">1</span>       <span class="number">0.41</span>    <span class="number">4.03200</span></span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">#ifndef FLEXIBLE				默认情况，对应刚性水</span><br><span class="line"><span class="string">[ settles ]</span></span><br><span class="line">; OW	funct	doh	dhh			使用SETTLE算法约束水的结构为刚性</span><br><span class="line"><span class="number">1</span>	<span class="number">1</span>	<span class="number">0.1</span>	<span class="number">0.16330</span></span><br><span class="line"></span><br><span class="line"><span class="string">[ exclusions ]</span>					忽略掉<span class="number">1</span>与<span class="number">2</span>/<span class="number">3</span>，<span class="number">2</span>与<span class="number">1</span>/<span class="number">3</span>、<span class="number">3</span>与<span class="number">1</span>/<span class="number">2</span>原子间的非键相互作用</span><br><span class="line"><span class="number">1</span>	<span class="number">2</span>	<span class="number">3</span></span><br><span class="line"><span class="number">2</span>	<span class="number">1</span>	<span class="number">3</span></span><br><span class="line"><span class="number">3</span>	<span class="number">1</span>	<span class="number">2</span></span><br><span class="line">#<span class="keyword">else</span>							mdp里设了deine=-DFLEXiBLE时的情况，对应柔性水</span><br><span class="line"><span class="string">[ bonds ]</span></span><br><span class="line">; i	j	funct	length	force.c.</span><br><span class="line"><span class="number">1</span>	<span class="number">2</span>	<span class="number">1</span>	<span class="number">0.1</span>	<span class="number">345000</span>	<span class="number">0.1</span>     <span class="number">345000</span></span><br><span class="line"><span class="number">1</span>	<span class="number">3</span>	<span class="number">1</span>	<span class="number">0.1</span>	<span class="number">345000</span>	<span class="number">0.1</span>     <span class="number">345000</span></span><br><span class="line">	</span><br><span class="line"><span class="string">[ angles ]</span></span><br><span class="line">; i	j	k	funct	angle	force.c.</span><br><span class="line"><span class="number">2</span>	<span class="number">1</span>	<span class="number">3</span>	<span class="number">1</span>	<span class="number">109.47</span>	<span class="number">383</span>	<span class="number">109.47</span>	<span class="number">383</span></span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>gromos54a7.ff下的 ions.itp 的一部分</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="built_in">..</span>.</span><br><span class="line">[ moleculetype ]</span><br><span class="line">; molname	nrexcl</span><br><span class="line">CA		1		除个例外，所有力场中离子的“分子名”“残基名”、“原子名”相同且都是元素符号大写，但原子类型名视力场而定</span><br><span class="line"></span><br><span class="line">[ atoms ]</span><br><span class="line">; id	at<span class="built_in"> type	</span>res nr 	residu name	at name  cg nr	charge   mass</span><br><span class="line">1	CA2+	1	CA		CA	 1	2	 40.08000</span><br><span class="line"></span><br><span class="line">[ moleculetype ]</span><br><span class="line">; molname	nrexcl</span><br><span class="line">NA		1</span><br><span class="line"></span><br><span class="line">[ atoms ]</span><br><span class="line">; id	at<span class="built_in"> type	</span>res nr 	residu name	at name  cg nr	charge   mass</span><br><span class="line">1	NA+	1	NA		NA	 1	1	 22.9898</span><br><span class="line"><span class="built_in">..</span>.</span><br></pre></td></tr></table></figure>
+<ul>
+<li>一个itp文件里可以有多个<code>[moleculetype]</code>字段分别定义多个分子类型的信息。在下一个<code>[moleculetype]</code>字段之前出现的各种字段都是对上一个<code>[moleculetype]</code>定义的分子来定义的。</li>
+</ul>
+</li>
+</ul>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>拓扑文件与结构文件的对应关系问题：</p>
+<ul>
+<li><p>只有拓扑文件对应的原子顺序与结构文件(一般为gro、pdb)的原子顺序完全一致时计算才有意义，否则参数会匹配错乱，导致结果离谱或者崩溃。为此，必须满足:</p>
+<ul>
+<li><p>top文件里[molecules ]中分子出现顺序必须和结构文件里严格一致。如</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="string">[ molecules ]</span></span><br><span class="line">SOL <span class="number">100</span></span><br><span class="line">MOL <span class="number">8</span></span><br><span class="line">SOL <span class="number">20</span></span><br></pre></td></tr></table></figure>
+<p>则结构文件里必须按顺序依次出现100个SOL、8个MOL、20个SOL</p>
+</li>
+<li><p>结构文件里每个分子的原子顺序必须和<code>[ molecules ]</code>里出现的分子的相应的<code>[ moleculetype ]</code>里的<code>[ atoms ]</code>里的原子顺序相一致。例如：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="string">[ molecules ]</span></span><br><span class="line">MOL <span class="number">4</span></span><br><span class="line">SOL <span class="number">4199</span></span><br><span class="line">NA	<span class="number">12</span></span><br></pre></td></tr></table></figure>
+<p>若<code>include</code>了GROMACS自带力场目录下的spce.itp，由于此itp里的<code>[atoms]</code>中原子出现顺序是O、H、H，因此结构文件里每个水的原子顺序也必须是O、H、H。如果不符，应当在使用packmol或insert-molecules等工具将水加入体系前将被插入的水的结构文件里的原子顺序手动调整成O、H、H。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="mdp文件"><a href="#mdp文件" class="headerlink" title="mdp文件"></a>mdp文件</h1><ul>
+<li><p>mdp参数一般不区分大小写，顺序无所谓，但如果输入两次相同的内容，则使用最后一次输入的内容（ <code>gmx grompp</code> 会在值被覆盖时发出提示）。左侧的破折号和下划线将被忽略。</p>
+</li>
+<li><p>例：蛋白质在水箱中进行 1 纳秒 MD 模拟的值</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">integrator</span>               = md</span><br><span class="line"><span class="attr">dt</span>                       = <span class="number">0.002</span></span><br><span class="line"><span class="attr">nsteps</span>                   = <span class="number">500000</span></span><br><span class="line"></span><br><span class="line"><span class="attr">nstlog</span>                   = <span class="number">5000</span></span><br><span class="line"><span class="attr">nstenergy</span>                = <span class="number">5000</span></span><br><span class="line"><span class="attr">nstxout-compressed</span>       = <span class="number">5000</span></span><br><span class="line"></span><br><span class="line"><span class="attr">continuation</span>             = <span class="literal">yes</span></span><br><span class="line"><span class="attr">constraints</span>              = all-bonds</span><br><span class="line"><span class="attr">constraint-algorithm</span>     = lincs</span><br><span class="line"></span><br><span class="line"><span class="attr">cutoff-scheme</span>            = Verlet</span><br><span class="line"></span><br><span class="line"><span class="attr">coulombtype</span>              = PME</span><br><span class="line"><span class="attr">rcoulomb</span>                 = <span class="number">1.0</span></span><br><span class="line"></span><br><span class="line"><span class="attr">vdwtype</span>                  = Cut-<span class="literal">off</span></span><br><span class="line"><span class="attr">rvdw</span>                     = <span class="number">1.0</span></span><br><span class="line"><span class="attr">DispCorr</span>                 = EnerPres</span><br><span class="line"></span><br><span class="line"><span class="attr">tcoupl</span>                   = V-rescale</span><br><span class="line"><span class="attr">tc-grps</span>                  = Protein  SOL</span><br><span class="line"><span class="attr">tau-t</span>                    = <span class="number">0.1</span>      <span class="number">0.1</span></span><br><span class="line"><span class="attr">ref-t</span>                    = <span class="number">300</span>      <span class="number">300</span></span><br><span class="line"></span><br><span class="line"><span class="attr">pcoupl</span>                   = Parrinello-Rahman</span><br><span class="line"><span class="attr">tau-p</span>                    = <span class="number">2.0</span></span><br><span class="line"><span class="attr">compressibility</span>          = <span class="number">4.5</span>e-<span class="number">5</span></span><br><span class="line"><span class="attr">ref-p</span>                    = <span class="number">1.0</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>gmx grompp</code> 将生成一个带有默认名称的注释文件 该文件将包含上述选项以及所有其他未明确设置的选项，并显示其默认值。</p>
+</li>
+<li><p><a href="https://pypi.org/project/mdpeditor/">mdpeditor · PyPI</a>：该工具可以根据简单的指令，帮助用户按照最佳实践生成 mdp 文件。</p>
+</li>
+</ul>
+<p>常用的mdp选项：<a href="https://manual.gromacs.org/current/user-guide/mdp-options.html">Molecular dynamics parameters (.mdp options) - GROMACS 2026.3 documentation</a></p>
+<h2 id="预处理控制（区分大小写）"><a href="#预处理控制（区分大小写）" class="headerlink" title="预处理控制（区分大小写）"></a>预处理控制（区分大小写）</h2><ul>
+<li><code>define</code>：传递给<code>.top</code>的预处理器的设定。<ul>
+<li><code>-DFLEXIBLE</code> 将在您的拓扑中使用柔性水而不是刚性水，这对于正态模式分析非常有用。</li>
+<li><code>-DPOSRES</code> 将触发将 <code>posre.itp</code> 包含到您的拓扑中，用于实现位置约束。</li>
+</ul>
+</li>
+</ul>
+<h2 id="运行控制"><a href="#运行控制" class="headerlink" title="运行控制"></a>运行控制</h2><ul>
+<li><code>integrator</code>: 决定当前任务干什么<ul>
+<li><code>md</code>(默认):leap-frog方式做动力学</li>
+<li><code>md-wv</code>:用Velocity-Verlet方式做动力学，在功能上有一些限制</li>
+<li><code>sd</code>:做随机动力学(Langevin动力学)</li>
+<li><code>bd</code>:做布朗动力学</li>
+<li><code>steep</code>:用最陡下降法做能量极小化</li>
+<li><code>cg</code>:用共轭梯度法做能量极小化(不支持约束)</li>
+<li><code>l-bfgs</code>:用L-BFGS准牛顿法做能量极小化，比较准确、收敛性好但耗时高</li>
+<li><code>nm</code>:做正则振动分析(必须双精度版)</li>
+</ul>
+</li>
+<li><code>tinit</code>:动力学开始的时间(ps)。默认0</li>
+<li><code>dt</code>:动力学步长(ps)。默认0.001(即1fs)</li>
+<li><code>nsteps</code>：动力学或能量极小化的步数上限<ul>
+<li>总模拟时长=dt*nsteps</li>
+</ul>
+</li>
+<li><code>comm-mode</code>:设定消除整体运动的方式<ul>
+<li><code>Linear</code>(默认):消除质心平动速度</li>
+<li><code>Angular</code>:消除质心平动速度与绕着质心的转动速度</li>
+<li><code>Linear-acceleration-correction</code>:同Linear,但还假定体系存在质心常加速度并消除之</li>
+<li><code>None</code>:不消除(通常加外力时应当用none)</li>
+</ul>
+</li>
+<li><code>nstcomm</code>：每多少步消除一次整体运动，默认100步</li>
+<li><code>comm-grps</code>:对哪个组消除整体运动，默认是system</li>
+</ul>
+<h2 id="能量极小化参数"><a href="#能量极小化参数" class="headerlink" title="能量极小化参数"></a>能量极小化参数</h2><ul>
+<li><code>emtol</code>:能量极小化时最大受力小于多少就认为己收敛(kJ/mol/nm)。默认为<br>10.0</li>
+<li><code>emstep</code>:最陡下降法最大步长(nm)，默认0.01</li>
+<li><code>nstcgsteep</code>：每做多少步共轭梯度极小化时做一次最陡下降法极小化，默认为1000。这种组合使用比单独用共轭梯度法效果往往更好</li>
+</ul>
+<h2 id="输出控制"><a href="#输出控制" class="headerlink" title="输出控制"></a>输出控制</h2><ul>
+<li><code>nstxout</code>:每多少步输出一次坐标到trr文件</li>
+<li><code>nstvout</code>:每多少步输出一次速度到trr文件</li>
+<li><code>nstfout</code>:每多少步输出一次受力到tr文件</li>
+<li><code>nstxout-compressed</code>:每多少步输出一次坐标到xtc文件</li>
+</ul>
+<p>以上4个默认为0，即不输出</p>
+<ul>
+<li><code>compressed-x-grps</code>:选择输出到xtc文件的group,默认为system</li>
+<li><code>nstlog</code>:每多少步输出一次各种能量、属性信息到log文件，默认为1000</li>
+<li><code>nstenergy</code>:每多少步输出一次能量信息到.edr文件，默认为1000。应是计算能量频率(由<code>nstcalcenergy</code>设定，默认100)的倍数</li>
+<li><code>energygrps</code>:将哪个group的短程非键作用能输出到.edr文件中。例如设AB则.edr里会包含A、B组自身的以及它们之问的短程非键作用能信息。GPU加速时不支持</li>
+<li>xtc/edr/trr第一帧对应初始时刻信息。初始时刻和最终时刻信息总会被输出到log和edr中</li>
+</ul>
+<h2 id="邻居列表生成方式"><a href="#邻居列表生成方式" class="headerlink" title="邻居列表生成方式"></a>邻居列表生成方式</h2><p>有verlet和基于charge group两种方式构建邻居列表</p>
+<ul>
+<li><p><code>cutof-schemevedet</code>：</p>
+<ul>
+<li><p><code>verlet</code>：默认。只能用于PBC下的计算。对于水不占体系主要部分的情况效率比group方式更高，且GPU加速时只能用此方法。</p>
+<p>邻居列表距离(rlist)会依据指定的差限(verlet-bufer-tolerance)自动设定来确保留出足够大的缓冲区。邻居列表最小更新频率虽可通过nstlist设定，但mdrun可能自发增加nstist以达到最佳效率。因此此时rist和nstlist没必要自己设</p>
+</li>
+<li><p><code>group</code>：是GROMACS 4.6版之前唯一支持的方法，如今一般不用，此时也不支持OpenMP并行和GPU加速。但对于非PBC下的模拟、GB模型下的模拟等情况只能用这个。用nstlis定义更新邻居列表的频率(默认为10)，用rlist定义邻居列表距离(默认为1nm)。从2020版开始不再支持</p>
+</li>
+</ul>
+</li>
+<li><p><code>nstlist</code>：默认每 5 步更新一次邻域表；对应 10 fs。</p>
+</li>
+<li><p><code>rlist</code>：邻域表搜索半径。默认1.0 nm</p>
+</li>
+</ul>
+<h3 id="周期性设定"><a href="#周期性设定" class="headerlink" title="周期性设定"></a>周期性设定</h3><ul>
+<li><code>pbc</code><ul>
+<li><code>xyz</code>(默认):在xly/z方向都用周期性</li>
+<li><code>xy</code>:只在xy方向上用周期性</li>
+<li><code>no</code>:不用周期性，此时通常应当将所有<code>cutoff</code>设0，即每一步都计算所有粒子间非键作用，且将<code>nstlist</code>也设0，即只在第一步构建一次邻居列表</li>
+</ul>
+</li>
+<li><code>periodic-molecules</code>:说明模拟体系是否有首尾相接的周期性分子(如无限长纳米管)<ul>
+<li><code>no</code>(默认):不是周期性分子</li>
+<li><code>yes</code>:是周期性分子</li>
+</ul>
+</li>
+</ul>
+<h2 id="静电作用的计算设定"><a href="#静电作用的计算设定" class="headerlink" title="静电作用的计算设定"></a>静电作用的计算设定</h2><ul>
+<li><p><code>coulombtype</code>：设静电作用的计算方式</p>
+<ul>
+<li><code>cut-off</code>（默认）：简单截断方法</li>
+<li><code>Ewald</code>:Ewald方法</li>
+<li><code>PME</code>:SPME方法</li>
+<li><code>P3M-AD</code>:带解析导数的PPPME方法，精度比PME略微高一点</li>
+<li><code>Reaction-Field</code>:反应场方法，圆球外介电常数用epsilon-rf设定</li>
+<li><code>User</code>:使用用户在table.xvg中定义的静电作用的列表势(从2020版开始不再支持。）</li>
+</ul>
+</li>
+<li><p><code>rcoulomb</code>:对截断方法义cutoff值:对Ewald/PME/P3M-AD定义实空间中计算短程静电作用的距离值;对反应场方法定义圆球半径。默认为1nm</p>
+</li>
+<li><code>epsilon-r</code>:相对介电常数，默认为1。如果设0代表无穷大(等价于忽略体系中静电相互作用，但不能由此达到省时间目的。此时必须用<code>coulombtype=cut-off</code>否则会报错</li>
+</ul>
+<h2 id="范德华作用的计算设定"><a href="#范德华作用的计算设定" class="headerlink" title="范德华作用的计算设定"></a>范德华作用的计算设定</h2><ul>
+<li><p><code>vdwtype</code>:设定范德华作用的计算方式</p>
+<ul>
+<li><code>Cut-off</code>:截断方式计算</li>
+<li><code>PME</code>:PME方式计算</li>
+<li><code>User</code>:使用用户在table.xvg中定义的范德华作用的列表势(从2020版开始不再支持)</li>
+</ul>
+</li>
+<li><p><code>rvdw</code>:范德华作用距离(nm)，默认为1nm</p>
+<ul>
+<li>一 般令 rcoulomb=rvdw 。原理上数值越大色散 作用精度越高,越小计算速度越快。建议根 据所用力场参数化时的参数恰当设定数值.</li>
+</ul>
+</li>
+<li><p><code>vdw-modifier</code>:设定如何修改范德华势</p>
+<ul>
+<li><code>Potential-shift-Verlet</code>(默认):对范德华势进行shif使得cutoff处数值为0，不会增加耗时</li>
+<li><code>None</code>:不对范德华势做任何修改</li>
+<li><code>Force-switch</code>, <code>Potential-switch</code>: 用switchingfunction分别使得范德华力、势从rvdw-switchrvdw范围间平滑切换到0，会增加耗时</li>
+</ul>
+</li>
+<li><p><code>DispCorr</code>:对色散作用的长程校正</p>
+<ul>
+<li><p><code>no</code>(默认):不做校正</p>
+</li>
+<li><p><code>EnerPres</code>:对能量和压力都做校正</p>
+</li>
+<li><p><code>Ener</code>:只对能量做校正</p>
+<p>盒子被原子填满的情况一般建议用<code>EnerPres</code>,其它情况用<code>no</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>≥2018 版的非键作用通常情况下的推荐设定</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">cutoff-scheme</span>=verlet</span><br><span class="line"><span class="attr">coulombtype</span>=PME</span><br><span class="line"><span class="attr">rcoulomb</span>=<span class="number">1.0</span></span><br><span class="line"><span class="attr">vdwtype</span>=cut-<span class="literal">off</span></span><br><span class="line"><span class="attr">rvdw</span>=<span class="number">1.0</span></span><br><span class="line"><span class="attr">DispCorr</span>=EnerPres</span><br></pre></td></tr></table></figure>
+<h2 id="与键有关的设定"><a href="#与键有关的设定" class="headerlink" title="与键有关的设定"></a>与键有关的设定</h2><ul>
+<li><code>constraints</code>:设定约束方式。约束的参考值是拓扑文件里定义的平衡坐标<ul>
+<li><code>none</code>（默认)：不做约束</li>
+<li><code>h-bonds</code>:约束与氢相连的键。如果还要约束与之相关的键角用<code>h-angles</code></li>
+<li><code>all-bonds</code>：约束所有的键</li>
+<li><code>all-angles</code>:约束所有键、键角</li>
+<li><strong>主流力场普遍是对h-bonds约束做的参数化，对重原子之间都是特意给定了力常数的。</strong></li>
+</ul>
+</li>
+<li><code>constraint-algorithm</code>：设定约束算法<ul>
+<li><code>LINCS</code>(默认)：使用LINCS方法约束，但不能约束键角</li>
+<li><code>SHAKE</code>:使用SHAKE方法约束，没LINCS稳健，且不能用于能量极小化</li>
+</ul>
+</li>
+<li>continuation：是否对初始结构做约束。<ul>
+<li>默认的no代表对初始结构做约束。</li>
+<li>yes代表对初始结构不做约束，对于续跑、rerun的目的应当设此值（但用默认的no一般也没什么不良影响）</li>
+</ul>
+</li>
+<li><code>lincs-iter</code>：LINCS 校正迭代次数;数值越高越严格但更耗时。默认1。</li>
+<li><code>lincs-order</code>：LINCS 展开阶数;影响约束精度和稳定性。默认4。</li>
+</ul>
+<p>控压只影响MD过程，在能量极小化过程中叩便用了压浴，盒子尺寸也不会发生变化</p>
+<h2 id="压浴设定"><a href="#压浴设定" class="headerlink" title="压浴设定"></a>压浴设定</h2><ul>
+<li><code>pcoupl</code>:选择压浴<ul>
+<li><code>no</code>(默认):不使用压浴</li>
+<li><code>Berendsen</code>: 使用Berendsen压浴。常用于预平衡,不严格产生 NPT 系综。</li>
+<li><code>Parrinello-Rahman</code>: 用Parrinello-Rahman浴</li>
+<li><code>C-rescale</code>:stochastic cell rescaling压浴 (2021版入)</li>
+</ul>
+</li>
+<li><p><code>pcoupltype</code>:选择控压方式</p>
+<ul>
+<li><code>isotropic</code>:各方向等比例缩放盒子,适合各向同性液体或溶液。</li>
+<li><code>semiisotropic</code>:半各项同性控压，即xy方向上和z方向上分别控压。相关参数(compressibility、ref-p)因此需要设定两套。对于界面体系、膜体系有用</li>
+<li><code>anisotropic</code>:各问异性控压，相关参数需要对xx,Wy,zz,xy/yx;xz/zx,yz/zy分别输入。若非对角元值都设为0则矩形盒子会一直保持矩形而不会歪斜</li>
+<li><code>surface-tension</code>:对xly方向按照指定的表面张力值对盒子进行调节，而z方向还是用普通控压</li>
+</ul>
+</li>
+<li><p><code>nstpcouple</code>：每多少步做一次控压。通常用默认的-1即可，含义对于不同版本有所不同。对于2018版默认值相当于nstpcouple=10，而从2023版开始为了降低耗时面将默认值对应的控压步数间隔设得较大（极个别<br>时候可能导致控压不稳定)</p>
+</li>
+<li><p><code>tau-p</code>：控压的时间常数(ps)，数值较大时体积调节更平缓。</p>
+</li>
+<li><p><code>compressibility</code>:可压缩系数（bar）通常用水在1atm、298.5K下的值4.5E-5bar，0代表不可压缩</p>
+</li>
+<li><p><code>ref-p</code>:控压的参考压力(bar)。通常设1或1.01325</p>
+</li>
+<li><p><code>refcoord-scaling</code>:设置使用控压调节盒子尺寸时怎么处理位置限制对应的参考坐标</p>
+<ul>
+<li><p>no:不修改参考坐标</p>
+</li>
+<li><p>all：所有参考坐标以盒子为比例调节</p>
+</li>
+<li><p>com:只按照盒子比例调节被限制的部分的质心，</p>
+<p>而原子的参考坐标相对于质心的坐标不变。通常使用这个以避免被限制的分子的结构变形</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="热浴设定"><a href="#热浴设定" class="headerlink" title="热浴设定"></a>热浴设定</h2><ul>
+<li><p><code>tcoupl</code>:选择热浴</p>
+<ul>
+<li><code>no</code>(默认):不用热浴</li>
+<li><code>berendsen</code>: Berendsen热浴</li>
+<li><code>nose-hoover</code>: Nose-Hoover热浴，适合产生正则系综。</li>
+<li><code>v-rescale</code>:Velocity-rescale热浴</li>
+</ul>
+</li>
+<li><p><code>nsttcouple</code>:每多少步做一次控温。默认为-1，即使用<code>nstlist</code>的值，通常是合适的</p>
+</li>
+<li><code>tc-grps</code>:控温组，默认为system。可以设定对多个组单独控温，如Protein SOL</li>
+<li><code>tau-t</code>:控温的时间常数(ps)，需要对每个控温组都设定。-1代表不做控温</li>
+<li><code>ref-t</code>:参考温度(K)，需要对每个控温组都设定<br>使用热浴时，每个原子都必须属于一个控温组。但可以把某个组的tau-t设为-1代表对之不控温，由此可以研究诸如热传导问题。</li>
+</ul>
+<h2 id="退火设定"><a href="#退火设定" class="headerlink" title="退火设定"></a>退火设定</h2><ul>
+<li><code>annealing</code><ul>
+<li><code>no</code>(默认):不做退火</li>
+<li><code>single</code>:单次退火。如果模拟时间超过最后退火点则会一直维持此温度</li>
+<li><code>periodic</code>:每次达到最后退火点时从最初退火点温度重新开始，反复周期性循环直到模拟结束</li>
+</ul>
+</li>
+<li><code>annealing-npoints</code>:对每个控温组设定退火点数目</li>
+<li><code>annealing-time</code>:对每个控温组设定每个退火点的时间(ps)</li>
+<li><code>annealing-temp</code>:对每个控温组设定每个退火点的温度(K)</li>
+</ul>
+<h2 id="初始速度生成设定"><a href="#初始速度生成设定" class="headerlink" title="初始速度生成设定"></a>初始速度生成设定</h2><ul>
+<li><p><code>gen-vel</code></p>
+<ul>
+<li><code>no</code>(默认):如果输入文件里有速度信息则使用其作为初速度，里面没有速度信息则初速度为0</li>
+<li><code>yes</code>:令grompp按照Maxwell分布产生随机的初速度</li>
+</ul>
+</li>
+<li><p><code>gen-temp</code>:产生的初速度对应的温度(K)，默认为300</p>
+</li>
+<li><p>gen-seed:随机数的种子。默认为-1，对应赝随机数注:用gen-vel= yes时不宜结合较高的gen-temp,否则有可能有些原子初速度过大，导致一开始动力学出现不稳定、崩溃。应当用较低的gen-temp(如100K)，然后通过控温的自发过程，或者指定退火方式，使温度最终达到期望值。</p>
+<p>注:用<code>gen-vel= yes</code>时不宜结合较高的<code>gen-temp</code>,否则有可能有些原子初速度过大，导致一开始动力学出现不稳定、崩溃。应当用较低的gen-temp(如100K)，然后通过控温的自发过程，或者指定退火方式，使温度最终达到期望值。</p>
+</li>
+</ul>
+<p><code>ns_type</code>：<code>grid</code>：采用网格法进行邻域搜索,提高非键相互作用搜索效率。</p>
+<p>pme_order：PME 插值阶数为 4;常见且稳定的默认选择。</p>
+<p>fourierspacing：PME 傅里叶网格间距;越小通常越精确但更耗时。</p>
+<p>gen_vel no 不重新生成初速度;通常从输入结构/重启文件读取速度。</p>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>GROMACS</tag>
+        <tag>文件</tag>
       </tags>
   </entry>
 </search>
