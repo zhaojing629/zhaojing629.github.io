@@ -9416,7 +9416,7 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 <h2 id="添加文章时自动打开编辑器"><a href="#添加文章时自动打开编辑器" class="headerlink" title="添加文章时自动打开编辑器"></a>添加文章时自动打开编辑器</h2><p>在~/scripts下新建一个脚本，任意命名即可，输入<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> spawn = <span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>).exec;</span><br><span class="line">hexo.on(<span class="string">&#x27;new&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">  spawn(<span class="string">&#x27;start  &quot;markdown编辑器绝对路径.exe&quot; &#x27;</span> + data.path);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
 <h2 id="在文章中插入图片"><a href="#在文章中插入图片" class="headerlink" title="在文章中插入图片"></a>在文章中插入图片</h2><ol>
 <li>如果只有少量图片，可以在~/source目录下新建images文件夹，通过<code>![](/images/xxx.png)</code>来引用。</li>
-<li>如果图片比较多，可以建立文章自己的目录，在<code>站点配置文件</code>中，将<code>post_asset_folder</code>关键词改成<code>true</code>。之后通过<code>hexo new post &quot;article title&quot;</code>在新建文章时，就会出现与文章名相同的文件夹<code>article title</code>，将图片放入其中后，通过<code>![](XXXX.jpg)</code>直接引用。</li>
+<li>如果图片比较多，可以建立文章自己的目录，在<code>站点配置文件</code>中，将<code>post_asset_folder</code>关键词改成<code>true</code>。之后通过<code>hexo new post &quot;article title&quot;</code>在新建文章时，就会出现与文章名相同的文件夹<code>article title</code>，将图片放入其中后，通过<code>![](XXXX.jpg)</code>直接引用。<strong>（注意，括号里没有“/”）</strong></li>
 <li>基于md编辑器Typora编辑：<ul>
 <li>以上在Typora中无法显示图片，可以在md文件的Front-matter部分，根据文章所有图片存在的位置，添加<code>typora-root-url: ..</code>或者<code>typora-root-url: article title</code>，即可在编辑器中也正常显示图片。</li>
 <li>在Typora的偏好设置→图像部分→选择复制到指定路径， <code>./$&#123;filename&#125;</code>，之后可以直接在编辑md文件的时候复制图片，文章中会显示图像，并且已经在<code>article title</code>的文件夹下复制了该图片，可以用第二种方法引用。</li>
@@ -11584,7 +11584,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
     <url>/2026/07/07/Claude%20Code%20+%20VS%20code%20%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</url>
     <content><![CDATA[<h1 id="安装Claude"><a href="#安装Claude" class="headerlink" title="安装Claude"></a>安装Claude</h1><p>参考来源：<a href="https://zhuanlan.zhihu.com/p/2004150496781410721">https://zhuanlan.zhihu.com/p/2004150496781410721</a></p>
 <ol>
-<li>首先安装好Git和Node.js（见<a href="搭建网站教程.md#下载Git和Node.js">下载Git和Node.js</a>）</li>
+<li>首先安装好Git和Node.js（见<a href="#搭建">下载Git和Node.js</a>）</li>
 <li>使用npm全局安装： <figure class="highlight coffeescript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">npm</span> install -g @anthropic-ai/claude-code</span><br></pre></td></tr></table></figure></li>
 <li>安装完成后验证：<figure class="highlight ada"><table><tr><td class="code"><pre><span class="line">claude <span class="comment">--version</span></span><br></pre></td></tr></table></figure>
 <h1 id="安装VScode-Claude"><a href="#安装VScode-Claude" class="headerlink" title="安装VScode+Claude"></a>安装VScode+Claude</h1>参考来源：<a href="https://zhuanlan.zhihu.com/p/2038567190648074568">https://zhuanlan.zhihu.com/p/2038567190648074568</a></li>
