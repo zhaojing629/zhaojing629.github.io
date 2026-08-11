@@ -19,9 +19,27 @@
               },
               "icon": "lucide-file",
               "title": "搭建网站教程"
+<<<<<<< HEAD
+=======
+            }
+          },
+          {
+            "id": "f21f1decac69ad35",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "source/_posts/搭建网站教程.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "搭建网站教程"
+>>>>>>> 4c89ce20f75c2ae20670d6b9ae7b1c8a22ccbd75
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -53,7 +71,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:vscoed",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -85,7 +103,11 @@
             }
           },
           {
+<<<<<<< HEAD
             "id": "27d2d59c0b4ad132",
+=======
+            "id": "939ba953ae78390c",
+>>>>>>> 4c89ce20f75c2ae20670d6b9ae7b1c8a22ccbd75
             "type": "leaf",
             "state": {
               "type": "file-tree-view",
@@ -99,7 +121,11 @@
       }
     ],
     "direction": "horizontal",
+<<<<<<< HEAD
     "width": 200
+=======
+    "width": 277.5
+>>>>>>> 4c89ce20f75c2ae20670d6b9ae7b1c8a22ccbd75
   },
   "right": {
     "id": "0f769753adaf1ed5",
@@ -177,13 +203,21 @@
             "state": {
               "type": "outline",
               "state": {
+<<<<<<< HEAD
                 "file": "source/_posts/搭建网站教程.md",
+=======
+                "file": "source/_posts/Claude Code + VS code 安装教程.md",
+>>>>>>> 4c89ce20f75c2ae20670d6b9ae7b1c8a22ccbd75
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
+<<<<<<< HEAD
               "title": "大纲"
+=======
+              "title": "Claude Code + VS code 安装教程 的大纲"
+>>>>>>> 4c89ce20f75c2ae20670d6b9ae7b1c8a22ccbd75
             }
           }
         ],
@@ -191,7 +225,12 @@
       }
     ],
     "direction": "horizontal",
+<<<<<<< HEAD
     "width": 200
+=======
+    "width": 200,
+    "collapsed": true
+>>>>>>> 4c89ce20f75c2ae20670d6b9ae7b1c8a22ccbd75
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -205,15 +244,47 @@
       "file-tree-alternative:File Tree Alternative Plugin": false
     }
   },
+<<<<<<< HEAD
   "active": "27d2d59c0b4ad132",
   "lastOpenFiles": [
+=======
+  "active": "f21f1decac69ad35",
+  "lastOpenFiles": [
+    "source/_posts/Claude Code + VS code 安装教程.md",
+    "source/_posts/搭建网站教程.md",
+    "source/_posts/【VMD】常见命令.md",
+    "public/js/schemes/pisces.js",
+    "public/js/schemes/muse.js",
+    "public/js/schemes",
+    "public/2025/01/17/【ORCA】11.多参考计算/image-20250117172257059.png",
+    "public/2025/01/17/【ORCA】11.多参考计算/image-20250117165551603.png",
+    "public/2025/01/17/【ORCA】11.多参考计算/index.html",
+    "public/2025/01/17/【ORCA】11.多参考计算/image-20250117172255552.png",
+    "public/2025/01/17/【ORCA】11.多参考计算/image-20250117165617573.png",
+    "public/2025/01/17/【ORCA】11.多参考计算/image-20250117165117565.png",
+    "public/2025/09/04/【Gaussian】05.几何优化/index.html",
+    "public/2025/01/07/【ORCA】10.磁性相关计算/index.html",
+    "public/2025/01/07/【ORCA】10.磁性相关计算/image-20250206182306324.png",
+    "public/2025/01/07/【ORCA】10.磁性相关计算/image-20250117161848921.png",
+    "public/2025/01/07/【ORCA】10.磁性相关计算/image-20250117161847549.png",
+    "public/2025/01/07/【ORCA】10.磁性相关计算/image-20250117161710614.png",
+    "public/2025/01/07/【ORCA】10.磁性相关计算/image-20250117154939895.png",
+    "public/2025/01/17/【ORCA】11.多参考计算",
+    "public/2025/09/04/【Gaussian】05.几何优化",
+    "public/2025/01/07/【ORCA】10.磁性相关计算",
+    "public/2025/09/04",
+    "public/2023/03/07/【CP2K】05.MD",
+>>>>>>> 4c89ce20f75c2ae20670d6b9ae7b1c8a22ccbd75
     "source/_posts/【ADF】01.基本计算设置.md",
     "source/_posts/【AMS】01.基本输入结构.md",
     "source/_posts/【ADF】03.精度控制.md",
     "source/_posts/【ADF】02.EDA-NOCV.md",
     "source/_posts/【Jmol】常见的指令.md",
     "source/_posts/【Gaussian】01.基础知识.md",
+<<<<<<< HEAD
     "source/_posts/搭建网站教程.md",
+=======
+>>>>>>> 4c89ce20f75c2ae20670d6b9ae7b1c8a22ccbd75
     "source/_posts/测试公式.md",
     "source/_posts/基组.md",
     "source/_posts/【【草稿】】Hatree-Forck方法.md",
@@ -221,7 +292,10 @@
     "source/_posts/【ORCA】11.多参考计算.md",
     "source/_posts/【Pyscf】02.SCF.md",
     "source/_posts/【VMD】01.绘制分子轨道.md",
+<<<<<<< HEAD
     "source/_posts/【VMD】常见命令.md",
+=======
+>>>>>>> 4c89ce20f75c2ae20670d6b9ae7b1c8a22ccbd75
     "source/_posts/CSS语法.md",
     "source/_posts/html基础.md",
     "source/_posts/NBO.md",
@@ -231,6 +305,7 @@
     "source/_posts/组态相互作用CI.md",
     "scaffolds/post.md",
     "scaffolds/page.md",
+<<<<<<< HEAD
     "scaffolds/draft.md",
     "source/_posts/【ORCA】09.对称性破缺计算.md",
     "public/archives/2026/index.html",
@@ -243,6 +318,8 @@
     "public/2026/05/22/测试111",
     "source/_posts/测试111/file-20260522194317026.png",
     "source/_posts/测试111",
+=======
+>>>>>>> 4c89ce20f75c2ae20670d6b9ae7b1c8a22ccbd75
     "source/_posts/未命名.canvas",
     "未命名.canvas"
   ]

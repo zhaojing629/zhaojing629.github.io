@@ -6,7 +6,6 @@ tags: [Claude, vscode, deepseek]
 categories: [办公, 软件]
 typora-root-url: Claude Code + VS code 安装教程
 description: 通过npm安装Claude和使用Vscode使用
-mathjax: true
 ---
 # 安装Claude
 参考来源：https://zhuanlan.zhihu.com/p/2004150496781410721
