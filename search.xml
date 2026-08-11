@@ -2649,7 +2649,7 @@
 <ul>
 <li><p>FMatrix projection定义了一个有效的单电子算符，<script type="math/tex">f=\sum_{i} \varepsilon_{i} a_{i}^{\dagger} a_{i}</script></p>
 <ul>
-<li>这个和是初猜轨道集中的所有轨道，<script type="math/tex">a_{i}^{\dagger}</script>是一个猜测MO<em>i的电子生成算符，$$a</em>{i}<script type="math/tex">是相应的湮灭算符，</script>ε_i$$是轨道能量。这个有效的单电子算符在实际基组中被对角化，特征向量是在目标基础上的初始猜测轨道。对于大多数波函数，这产生了一个相当合理的猜测。</li>
+<li>这个和是初猜轨道集中的所有轨道，<script type="math/tex">a_{i}^{\dagger}</script>是一个猜测MO_i的电子生成算符，<script type="math/tex">a_{i}</script>是相应的湮灭算符，<script type="math/tex">ε_i</script>是轨道能量。这个有效的单电子算符在实际基组中被对角化，特征向量是在目标基础上的初始猜测轨道。对于大多数波函数，这产生了一个相当合理的猜测。</li>
 </ul>
 </li>
 <li><p>CMatrix更加复杂，它用了Corresponding orbital去分别拟合每个MO的子空间（占据、部分占据、alpha、beta占据）。拟合已占据轨道后，在已占据轨道的正交补中选择虚起始轨道。在某些情况下，特别是重新启动ROHF计算时，这可能是一个优势。在大多数情况下，CMatrix 不会明显优于 FMatrix。</p>
@@ -7833,10 +7833,10 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li><code>l′max</code>是相应的SO部分的项个数</li>
 </ul>
 </li>
-<li><p>定义$ V<em>{l</em>{max}}$的一些卡：</p>
+<li><p>定义$ V_{l_{max}}$的一些卡：</p>
 <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">m_1</span>,γ_<span class="number">1</span>,c_<span class="number">1</span>;m_<span class="number">2</span>,γ_<span class="number">2</span>,c_<span class="number">2</span>;...</span><br></pre></td></tr></table></figure>
 <script type="math/tex; mode=display">V_{l_{max}} = \sum_{j=1}^{n_{l_{max}}} c_j r^{m_j-2} e^{-\gamma _j r^2}</script><ul>
-<li>第一个给出展开式长度$n<em>{l</em>{max}}$，接下来的$n<em>{l</em>{max}}$给出参数</li>
+<li>第一个给出展开式长度$n_{l_{max}}$，接下来的$n_{l_{max}}$给出参数</li>
 </ul>
 </li>
 <li><p>定义标量相对论半局域项的一些卡:</p>
@@ -7846,7 +7846,7 @@ U_{l}=\sum_{k} d_{k l} r^{n_{k l}} \exp \left(-\alpha_{k l} r^{2}\right)
 <li>对每一项，必须给出一个展开长度是$n_l$的卡，后面再接$n_l$个卡</li>
 </ul>
 </li>
-<li><p>类似的，是一些径向势$\Delta V<em>l$因子的卡，定义$V</em>{ps}$的SO部分</p>
+<li><p>类似的，是一些径向势$\Delta V_l$因子的卡，定义$V_{ps}$的SO部分</p>
 </li>
 </ul>
 <p>例子：Cu原子SCF d10s1→d9s2激发能，使用相对论Ne-芯的赝势和Stuttgart/Koeln小组的基组</p>
@@ -9330,11 +9330,13 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 </ol>
 <h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><ol>
 <li>在命令行里利用npm命令安装hexo，最后通过 <code>hexo -v</code>验证是否安装成功。<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line">$ npm <span class="keyword">install</span> -g hexo</span><br></pre></td></tr></table></figure></li>
-<li>在Github上创建Repository，Repository  name 中填入<code>username.github.io</code>，点击Create repository<blockquote>
-<p>有很多教程中，在此处可以接着：<br>在Repository的<code>Setting</code>中的<code>GitHub Pages</code>部分，<code>Choose a theme</code>先选择一个主题，直接可以生成Github主题的网站，再进行后续操作。<br>但在<a href="https://www.jiqizhixin.com/articles/2020-09-21-10">2020-10-01后，github新建的默认的库是main而不是master</a>，会导致在<code>hexo g -d</code>后，网页一直不更新，此时就需要在<code>GitHub Pages</code>部分的<code>Source</code>中把分支切换为<code>master</code>。<br>为了避免这个问题，可以跳过这一步；也可以在<code>deploy:</code>中把<code>branch: master</code>改成<code>branch: main</code>。<br><img src="1.png" style="zoom: 50%;" /></p>
+<li><p>在Github上创建Repository，Repository  name 中填入<code>username.github.io</code>，点击Create repository</p>
+<blockquote>
+<p>有很多教程中，在此处可以接着：<br>在Repository的<code>Setting</code>中的<code>GitHub Pages</code>部分，<code>Choose a theme</code>先选择一个主题，直接可以生成Github主题的网站，再进行后续操作。<br>但在<a href="https://www.jiqizhixin.com/articles/2020-09-21-10">2020-10-01后，github新建的默认的库是main而不是master</a>，会导致在<code>hexo g -d</code>后，网页一直不更新，此时就需要在<code>GitHub Pages</code>部分的<code>Source</code>中把分支切换为<code>master</code>。<br>为了避免这个问题，可以跳过这一步；也可以在<code>deploy:</code>中把<code>branch: master</code>改成<code>branch: main</code>。</p>
 </blockquote>
 </li>
-<li>在本地创建一个与 Repository 中博客项目同名的文件夹<code>username.github.io</code>后，进入文件夹，右键 <code>Git bash here</code>，输入<code>hexo init</code>初始化文件夹，接着输入<code>npm install</code>安装必备的组件</li>
+<li><p>在本地创建一个与 Repository 中博客项目同名的文件夹<code>username.github.io</code>后，进入文件夹，右键 <code>Git bash here</code>，输入<code>hexo init</code>初始化文件夹，接着输入<code>npm install</code>安装必备的组件</p>
+</li>
 <li>确保git部署：<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">npm <span class="keyword">install</span> hexo-deployer-git <span class="comment">--save</span></span><br></pre></td></tr></table></figure></li>
 <li>输入<code>hexo g</code>生成静态网页，再输入<code>hexo s</code>打开本地服务器，然后打开浏览器预览：<a href="http://localhost:4000">http://localhost:4000</a> ，按<code>ctrl+c</code>关闭本地服务器。</li>
 </ol>
@@ -10125,7 +10127,7 @@ R_{n}(r, \alpha)=c_{n} r^{n-1} e^{-\alpha r^{2}}，
 </ul>
 <h2 id="mix具体的含义"><a href="#mix具体的含义" class="headerlink" title="mix具体的含义"></a>mix具体的含义</h2><ul>
 <li><p>可以是只混合alpha列的HOMO与LUMO轨道，也可以是alpha、beta两列的HOMO与LUMO轨道各自混合、但混合方式不一样。比如Gaussian采用后者中对1.5Å的H2计算（<a href="http://sobereva.com/82）是（注意还要乘归一化系数）：">http://sobereva.com/82）是（注意还要乘归一化系数）：</a></p>
-<p>$ψα<em>{HOMO}=ψ</em>{HOMO}+ψ<em>{LUMO}$<br>$ψα</em>{LUMO}=ψ<em>{LUMO}-ψ</em>{HOMO}$<br>$ψβ<em>{HOMO}=-(ψ</em>{LUMO}-ψ<em>{HOMO})$<br>$ψβ</em>{LUMO}=-(ψ<em>{HOMO}+ψ</em>{LUMO})$</p>
+<p>$ψα_{HOMO}=ψ_{HOMO}+ψ_{LUMO}$<br>$ψα_{LUMO}=ψ_{LUMO}-ψ_{HOMO}$<br>$ψβ_{HOMO}=-(ψ_{LUMO}-ψ_{HOMO})$<br>$ψβ_{LUMO}=-(ψ_{HOMO}+ψ_{LUMO})$</p>
 </li>
 <li><p>还可以手动修改比例（<a href="https://mp.weixin.qq.com/s/ZB6gkRtfZQ8yuh3u0FNbOw）">https://mp.weixin.qq.com/s/ZB6gkRtfZQ8yuh3u0FNbOw）</a></p>
 </li>
@@ -11412,7 +11414,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <p><img src="image-20250117154939895.png" alt="image-20250117154939895"></p>
 <ul>
 <li>输出显示总 g 矩阵，后跟三个主成分及其方向（特征向量eigenvectors）。特征向量是列向量</li>
-<li>此例子中$g<em>z=2.99,g</em>{x,y}=2.24$</li>
+<li>此例子中$g_z=2.99,g_{x,y}=2.24$</li>
 </ul>
 </li>
 </ul>
@@ -11575,6 +11577,30 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
       <tags>
         <tag>几何优化</tag>
         <tag>Gaussian</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Claude Code + VS code 安装教程</title>
+    <url>/2026/07/07/Claude%20Code%20+%20VS%20code%20%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<h1 id="安装Claude"><a href="#安装Claude" class="headerlink" title="安装Claude"></a>安装Claude</h1><p>参考来源：<a href="https://zhuanlan.zhihu.com/p/2004150496781410721">https://zhuanlan.zhihu.com/p/2004150496781410721</a></p>
+<ol>
+<li>首先安装好Git和Node.js（见<a href="搭建网站教程.md#下载Git和Node.js">下载Git和Node.js</a>）</li>
+<li>使用npm全局安装： <figure class="highlight coffeescript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">npm</span> install -g @anthropic-ai/claude-code</span><br></pre></td></tr></table></figure></li>
+<li>安装完成后验证：<figure class="highlight ada"><table><tr><td class="code"><pre><span class="line">claude <span class="comment">--version</span></span><br></pre></td></tr></table></figure>
+<h1 id="安装VScode-Claude"><a href="#安装VScode-Claude" class="headerlink" title="安装VScode+Claude"></a>安装VScode+Claude</h1>参考来源：<a href="https://zhuanlan.zhihu.com/p/2038567190648074568">https://zhuanlan.zhihu.com/p/2038567190648074568</a></li>
+<li>VScode官网下载安装即可</li>
+<li>在扩展里输入“Chinese”下载第一个更改语言</li>
+<li>在扩展里搜索“claude code”安装“claude code for vs code”</li>
+<li>进入“claude code for vs code”的设置界面，找到在 settings.json中编辑<br> 下面的json可从提示位置直接复制粘贴，注意代码中记得换上你自己申请的deepseek密钥。<br> 以下添加的配置本质就是更改了claude code的环境变量，让其调用deepseek-v4大模型。 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;files.autoSave&quot;</span>: <span class="string">&quot;onWindowChange&quot;</span>,</span><br><span class="line">    <span class="comment">//&quot;python.defaultInterpreterPath&quot;: &quot;D:\\software\\anaconda3\\python.exe&quot;,</span></span><br><span class="line">    <span class="attr">&quot;notebook.output.textLineLimit&quot;</span>: <span class="number">50</span>,</span><br><span class="line">    <span class="attr">&quot;notebook.output.linkifyFilePaths&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;workbench.editor.enablePreview&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;workbench.colorTheme&quot;</span>: <span class="string">&quot;One Dark Modern&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;vscode-office.pasterImgPath&quot;</span>: <span class="string">&quot;$&#123;fileName&#125;.assets/$&#123;now&#125;.png&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;comments.openView&quot;</span>: <span class="string">&quot;never&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;workbench.statusBar.visible&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;vscode-office.openOutline&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;chat.viewSessions.orientation&quot;</span>: <span class="string">&quot;stacked&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;claudeCode.enableNewConversationShortcut&quot;</span>: <span class="literal">true</span>,</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//*************************上面的部分可根据自己需要保留配置，以下部分直接复制粘贴即可******************************</span></span><br><span class="line">    <span class="attr">&quot;claudeCode.environmentVariables&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;ANTHROPIC_BASE_URL&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;https://api.deepseek.com/anthropic&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;ANTHROPIC_AUTH_TOKEN&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;xxxxxxxxxxxxxxxxxxxxxxxxxxx&quot;</span> <span class="comment">//换上你自己申请的API 密钥*****************************************</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;API_TIMEOUT_MS&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;600000&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;ANTHROPIC_MODEL&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;deepseek-v4-pro&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;ANTHROPIC_SMALL_FAST_MODEL&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;deepseek-v4-flash&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;ANTHROPIC_DEFAULT_OPUS_MODEL&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;deepseek-v4-pro&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;ANTHROPIC_DEFAULT_SONNET_MODEL&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;deepseek-v4-pro&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;ANTHROPIC_DEFAULT_HAIKU_MODEL&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;deepseek-v4-flash&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+      <categories>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>Claude</tag>
+        <tag>vscode</tag>
+        <tag>deepseek</tag>
       </tags>
   </entry>
 </search>
