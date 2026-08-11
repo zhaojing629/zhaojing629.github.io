@@ -11595,12 +11595,162 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </ol>
 ]]></content>
       <categories>
+        <category>办公</category>
         <category>软件</category>
       </categories>
       <tags>
         <tag>Claude</tag>
         <tag>vscode</tag>
         <tag>deepseek</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>WIPO检索的一些方便的操作</title>
+    <url>/2026/08/14/WIPO%E6%A3%80%E7%B4%A2%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E4%BE%BF%E7%9A%84%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<ul>
+<li>建议注册一个账号</li>
+<li>检索方式有三种<ul>
+<li>简单检索（这个感觉是最常用的）</li>
+<li>高级检索（这个主要是为了后面一次检索多个关键词，需要输入语句）</li>
+<li>字段组合（会有更多字段，可以拿来测试一下检索的关键词是什么）<br><img src="/file-20260805115457286.png" alt="file-20260805115457286"></li>
+</ul>
+</li>
+<li>比如上面简单检索我输入“GLP-1”，出来的是：<br><img src="/file-20260805115826854.png" alt="file-20260805115826854"></li>
+</ul>
+<p>主要有两点：</p>
+<h1 id="1-设置"><a href="#1-设置" class="headerlink" title="1. 设置"></a>1. 设置</h1><p><img src="/file-20260805115903051.png" alt="file-20260805115903051"><br> 这样保存后，每次搜索出来都是按公布日降序，不需要再点一下。<br> 与之类似的，还可以把表长改成更多，减少翻页。</p>
+<h1 id="2-保存"><a href="#2-保存" class="headerlink" title="2. 保存"></a>2. 保存</h1><p><img src="/file-20260805120321597.png" alt="file-20260805120321597"></p>
+<ul>
+<li>RSS订阅：就是会把你查询的结果放在一个网址里面，然后这个网址可以导入到一些其他的文献管理软件或者什么订阅软件里，然后设定更新时间，自动更新查询的结果。不弄的话就不用管。</li>
+<li>保存完后会出现如下的视图，下一次想检索就直接点这个放大镜就可以了，就不用再输入一遍。当然比较简单的检索，比如只有个”GLP-1”就没必要保存了，输一下也很快。<ul>
+<li>这个“保存的查询”我没有在WIPO的网站上找到入口，只有每次保存后会跳转过来，但是它的网站可以保存到收藏夹里，直接访问，我这里的网址是：<a href="https://patentscope2.wipo.int/search/zh/reg/user_queries.jsf">https://patentscope2.wipo.int/search/zh/reg/user_queries.jsf</a><br><img src="/file-20260805120613135.png" alt="file-20260805120613135"></li>
+</ul>
+</li>
+</ul>
+<h1 id="检索式-关键词"><a href="#检索式-关键词" class="headerlink" title="检索式-关键词"></a>检索式-关键词</h1><ul>
+<li><p>上面提到的检索式</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">FP:(GLP<span class="number">-1</span>)</span><br></pre></td></tr></table></figure>
+<p>，FP就是首页的意思</p>
+<ul>
+<li>Gemini——<strong><code>FP</code> 代表 Front Page（首页）。</strong> 当您输入例如 <code>FP:(&quot;GLP-1&quot; AND obesity)</code> 时，搜索引擎<strong>只会在这篇专利的“首页”内容中去寻找这些词</strong>。 专利的首页通常包含：<strong>标题（Title）</strong>、<strong>摘要（Abstract）</strong>以及申请人/发明人等著录项目。 <strong>为什么常用 <code>FP</code>？</strong> 因为如果一个关键词出现在标题或摘要里，说明它是这篇专利的<strong>核心发明点</strong>。如果您全篇检索（ALL），只要说明书背景技术里随口提了一句 “GLP-1”，这篇专利也会被搜出来，会导致大量“噪音”。使用 <code>FP:</code> 是为了提高检索的<strong>准确率（查准率）</strong>。</li>
+</ul>
+</li>
+<li><p>如果我们检索的时候选择的全文，这个检索式就会变成<code>ZH_ALLTXT:(GLP-1)</code>，ZH是中文的意思，查的是中文全文（可能是因为我WIPO的网页语言设定的是中文），如果我把WIPO语言改成英文，搜索全文就会变成<code>EN_ALLTXT:(GLP-1)</code>。<br> <img src="/file-20260805121124480.png" alt="file-20260805121124480"><br><img src="/file-20260805121154686.png" alt="file-20260805121154686"></p>
+</li>
+<li><p>与之对应的还有<code>ZH_ALL</code>、<code>EN_ALL</code>等，还有非常多，感觉我也没法每个都知道，有个办法是，点击“字段检索”，然后选择你感兴趣的字段，随便试一下，比如这里选择“申请人姓名或名称”<br> <img src="/file-20260805123650032.png" alt="file-20260805123650032"></p>
+</li>
+<li><p>出来的检索结果如下，就知道这个对应的关键词是PA。<br> <img src="/file-20260805123808465.png" alt="file-20260805123808465"></p>
+</li>
+</ul>
+<h1 id="检索式-检索词"><a href="#检索式-检索词" class="headerlink" title="检索式-检索词"></a>检索式-检索词</h1><ul>
+<li>如果你在检索框里面自己输入一个关键词，比如<code>FP:</code>，会出现一些下拉框的提示词：<br><img src="/file-20260805123921035.png" alt="file-20260805123921035"><br> 我通过AI咨询总结了一下：</li>
+</ul>
+<p>Deepseek总结： </p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>名称</th>
+<th>含义与示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>term</code></strong></td>
+<td>普通单词</td>
+<td>精确匹配你输入的词。例如 <code>GIP</code> 就只找“GIP”。</td>
+</tr>
+<tr>
+<td><strong><code>term\*</code></strong></td>
+<td>多字符通配符</td>
+<td>匹配0个或多个字符。例如 <code>GLP-1*</code> 可以匹配 <code>GLP-1</code>、<code>GLP-1R</code>、<code>GLP-1 agonist</code> 等。</td>
+</tr>
+<tr>
+<td><strong><code>t?rm</code></strong></td>
+<td>单字符通配符</td>
+<td>匹配<strong>任意一个</strong>字符。例如 <code>AMY?</code> 可以匹配 <code>AMYR</code>，但不匹配 <code>AMYLIN</code>。</td>
+</tr>
+<tr>
+<td><strong><code>te\*m</code></strong></td>
+<td>中间通配符</td>
+<td>在单词中间使用 <code>*</code>。例如 <code>G*P</code> 可以匹配 <code>GIP</code>、<code>GAP</code>、<code>GLP</code> 等。</td>
+</tr>
+<tr>
+<td><strong><code>term~</code></strong></td>
+<td>模糊检索</td>
+<td>找到与 <code>term</code> 拼写相似的词。例如 <code>Amylin~</code> 可能会找到 <code>Amylin</code> 的拼写变体。</td>
+</tr>
+<tr>
+<td><strong><code>term^10</code></strong></td>
+<td>权重因子</td>
+<td>给 <code>term</code> 赋予10倍权重，使其在结果排序中更重要。例如 <code>GLP-1^5</code> 会让包含该词的专利排名更靠前。</td>
+</tr>
+<tr>
+<td><strong><code>[term1 AND term2]</code></strong></td>
+<td>布尔运算符</td>
+<td>搜索结果必须<strong>同时包含</strong> <code>term1</code> 和 <code>term2</code>。</td>
+</tr>
+<tr>
+<td><strong><code>[term1 NEAR term2]</code></strong></td>
+<td>位置运算符</td>
+<td>查找 <code>term1</code> 和 <code>term2</code> <strong>彼此靠近</strong>出现的文档。WIPO中可用 <code>NEAR/N</code> 指定距离，如 <code>NEAR/10</code> 表示两词间最多间隔9个单词。</td>
+</tr>
+<tr>
+<td><strong><code>[term1 OR term2]</code></strong></td>
+<td>布尔运算符</td>
+<td>搜索结果<strong>至少包含</strong> <code>term1</code> 和 <code>term2</code> 中的一个。</td>
+</tr>
+<tr>
+<td><strong><code>[term1 ANDNOT term2]</code></strong></td>
+<td>布尔运算符</td>
+<td>搜索结果<strong>必须包含</strong> <code>term1</code>，<strong>但不包含</strong> <code>term2</code>。</td>
+</tr>
+<tr>
+<td><strong><code>&quot;phrase&quot;</code></strong></td>
+<td>短语检索</td>
+<td>精确匹配引号内的完整短语。例如 <code>&quot;Glucagon-like peptide-1&quot;</code>。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Gemini总结：</p>
+<ul>
+<li><strong><code>term\*</code></strong>：搜 <code>agonist*</code>，系统会同时帮您把 agonist（单数）、agonists（复数）、agonism（激动作用）全部搜出来。搜 <code>amylin*</code> 可以顺带带出 amylin-like 等词。</li>
+<li><strong><code>t?rm</code></strong>：搜 <strong><code>GLP?1</code></strong>，这样无论中间是横杠还是空格，统统能命中。</li>
+<li><strong><code>te\*m</code></strong>：词中间有字母变化。医药里用的相对少，比如 <code>sulfo*amide</code>。</li>
+<li><code>term~</code> 和 <code>term^10</code>：<strong>直接放弃使用</strong>。这两个主要用于泛文本搜索的相似度排名。在严谨的专利检索中，使用模糊搜索会引入海量的垃圾专利（噪音），我们通常用 <code>OR</code> 来穷举同义词，而不是靠系统瞎猜。</li>
+<li><code>[term1 NEAR term2]</code>:用 <code>AND</code>，靶点和“激动剂”可能隔了十万八千里。如果您用 <strong><code>GLP?1 NEAR10 agonist\*</code></strong>，意思是这两个词必须在 10 个单词的距离内出现。</li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li>比如我现在写的检索式：</li>
+</ul>
+<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line"><span class="symbol">FP:</span>(GLP?<span class="number">1</span> <span class="keyword">OR </span>GIP <span class="keyword">OR </span>GIPR <span class="keyword">OR </span>amylin* <span class="keyword">OR </span>AMY?R <span class="keyword">OR </span>AMY)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>效果就是这样：<br> <img src="/file-20260805125157800.png" alt="file-20260805125157800"></li>
+<li>保存后的结果是这样：<br> <img src="/file-20260805125334462.png" alt="file-20260805125334462"></li>
+<li>以后重复查询只需要再点一下这个放大镜就可以了。</li>
+<li>除了比较宽泛的这样检索一下，如果有更精确的某个主题的需求，也可以这样保存，就可能需要用一些AND的逻辑，还有一些别的关键词来限制了</li>
+</ul>
+<p>以上的这个宽泛的检索式，由于个人的知识范畴比较狭窄，理解不到更深，写得也不全面。请大家也不吝分享自己想到需要检索的方向。</p>
+<ul>
+<li>IC:(A61K OR A61P)<ul>
+<li>利用专利分类号（IPC/CPC）查全：这是防止漏检的关键一步。小分子药物相关的专利，通常会分在几个特定的分类号下：<ul>
+<li>A61K：这个大类涵盖了医用、牙科或化妆用配制品。绝大多数药物制剂专利都会涉及这个分类</li>
+<li>A61P：这个子类专门用于标示化合物或药物制剂的特定治疗活性。它通常作为副分类号（secondary classification）出现，与A61K等主分类号结合使用。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>办公</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>专利</tag>
+        <tag>WIPO</tag>
       </tags>
   </entry>
 </search>
