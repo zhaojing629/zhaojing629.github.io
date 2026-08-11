@@ -1,77 +1,61 @@
 {
   "main": {
-    "id": "94cc4325aae3d47c",
+    "id": "dce667f677212e56",
     "type": "split",
     "children": [
       {
-        "id": "ad01921f14c424dc",
+        "id": "6ef1f384034762ef",
         "type": "tabs",
         "children": [
           {
-            "id": "85279d668708794a",
+            "id": "043d90e689edd209",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
                 "file": "source/_posts/搭建网站教程.md",
-                "mode": "preview",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
               "title": "搭建网站教程"
-<<<<<<< HEAD
-=======
-            }
-          },
-          {
-            "id": "f21f1decac69ad35",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "source/_posts/搭建网站教程.md",
-                "mode": "preview",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "搭建网站教程"
->>>>>>> 4c89ce20f75c2ae20670d6b9ae7b1c8a22ccbd75
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
   },
   "left": {
-    "id": "6c9217bcd92b302a",
+    "id": "23e6feba28fde90e",
     "type": "split",
     "children": [
       {
-        "id": "9d8c7cd2c0cae29e",
+        "id": "a0bcb4acbddeb375",
         "type": "tabs",
         "children": [
           {
-            "id": "2113f606e51a918b",
+            "id": "065a678df06e5b5b",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "文件列表"
             }
           },
           {
-            "id": "78a0361e7baeb9b3",
+            "id": "d147fe99fa9c3b79",
             "type": "leaf",
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:vscoed",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -83,31 +67,20 @@
             }
           },
           {
-            "id": "48753c0157ab6d3c",
+            "id": "4b708df411be9928",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {},
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
               "icon": "lucide-bookmark",
               "title": "书签"
             }
           },
           {
-            "id": "28db3c366435d3e7",
-            "type": "leaf",
-            "state": {
-              "type": "file-tree-view",
-              "state": {},
-              "icon": "sheets-in-box",
-              "title": "File Tree"
-            }
-          },
-          {
-<<<<<<< HEAD
-            "id": "27d2d59c0b4ad132",
-=======
-            "id": "939ba953ae78390c",
->>>>>>> 4c89ce20f75c2ae20670d6b9ae7b1c8a22ccbd75
+            "id": "5e465b6c1ecc2081",
             "type": "leaf",
             "state": {
               "type": "file-tree-view",
@@ -117,33 +90,28 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-<<<<<<< HEAD
-    "width": 200
-=======
-    "width": 277.5
->>>>>>> 4c89ce20f75c2ae20670d6b9ae7b1c8a22ccbd75
+    "width": 300
   },
   "right": {
-    "id": "0f769753adaf1ed5",
+    "id": "ca501d0799ddd6ee",
     "type": "split",
     "children": [
       {
-        "id": "acae413d15f4a422",
+        "id": "116b410ca8e89026",
         "type": "tabs",
         "children": [
           {
-            "id": "605c1ca3e25a4aa6",
+            "id": "44bbadf9ce73cc06",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "source/_posts/搭建网站教程.md",
-                "collapseAll": true,
-                "extraContext": true,
+                "collapseAll": false,
+                "extraContext": false,
                 "sortOrder": "alphabetical",
                 "showSearch": false,
                 "searchQuery": "",
@@ -151,25 +119,24 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "搭建网站教程 的反向链接列表"
+              "title": "反向链接"
             }
           },
           {
-            "id": "91d284395540e748",
+            "id": "47f363936caf2668",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "source/_posts/搭建网站教程.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "搭建网站教程 的出链列表"
+              "title": "出链"
             }
           },
           {
-            "id": "adb280d9f89572bd",
+            "id": "f9084a88b191e714",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -184,7 +151,7 @@
             }
           },
           {
-            "id": "b0ce3773651d3acc",
+            "id": "00d60bd0f5c2ae90",
             "type": "leaf",
             "state": {
               "type": "all-properties",
@@ -198,129 +165,38 @@
             }
           },
           {
-            "id": "c7a10bef222ad153",
+            "id": "f868ff09d6b58f14",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-<<<<<<< HEAD
-                "file": "source/_posts/搭建网站教程.md",
-=======
-                "file": "source/_posts/Claude Code + VS code 安装教程.md",
->>>>>>> 4c89ce20f75c2ae20670d6b9ae7b1c8a22ccbd75
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-<<<<<<< HEAD
               "title": "大纲"
-=======
-              "title": "Claude Code + VS code 安装教程 的大纲"
->>>>>>> 4c89ce20f75c2ae20670d6b9ae7b1c8a22ccbd75
             }
           }
-        ],
-        "currentTab": 4
+        ]
       }
     ],
     "direction": "horizontal",
-<<<<<<< HEAD
-    "width": 200
-=======
-    "width": 200,
+    "width": 300,
     "collapsed": true
->>>>>>> 4c89ce20f75c2ae20670d6b9ae7b1c8a22ccbd75
   },
   "left-ribbon": {
     "hiddenItems": {
       "switcher:打开快速切换": false,
       "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
       "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
       "command-palette:打开命令面板": false,
       "bases:新建数据库": false,
-      "templates:插入模板": false,
-      "canvas:新建白板": false,
       "file-tree-alternative:File Tree Alternative Plugin": false
     }
   },
-<<<<<<< HEAD
-  "active": "27d2d59c0b4ad132",
-  "lastOpenFiles": [
-=======
-  "active": "f21f1decac69ad35",
-  "lastOpenFiles": [
-    "source/_posts/Claude Code + VS code 安装教程.md",
-    "source/_posts/搭建网站教程.md",
-    "source/_posts/【VMD】常见命令.md",
-    "public/js/schemes/pisces.js",
-    "public/js/schemes/muse.js",
-    "public/js/schemes",
-    "public/2025/01/17/【ORCA】11.多参考计算/image-20250117172257059.png",
-    "public/2025/01/17/【ORCA】11.多参考计算/image-20250117165551603.png",
-    "public/2025/01/17/【ORCA】11.多参考计算/index.html",
-    "public/2025/01/17/【ORCA】11.多参考计算/image-20250117172255552.png",
-    "public/2025/01/17/【ORCA】11.多参考计算/image-20250117165617573.png",
-    "public/2025/01/17/【ORCA】11.多参考计算/image-20250117165117565.png",
-    "public/2025/09/04/【Gaussian】05.几何优化/index.html",
-    "public/2025/01/07/【ORCA】10.磁性相关计算/index.html",
-    "public/2025/01/07/【ORCA】10.磁性相关计算/image-20250206182306324.png",
-    "public/2025/01/07/【ORCA】10.磁性相关计算/image-20250117161848921.png",
-    "public/2025/01/07/【ORCA】10.磁性相关计算/image-20250117161847549.png",
-    "public/2025/01/07/【ORCA】10.磁性相关计算/image-20250117161710614.png",
-    "public/2025/01/07/【ORCA】10.磁性相关计算/image-20250117154939895.png",
-    "public/2025/01/17/【ORCA】11.多参考计算",
-    "public/2025/09/04/【Gaussian】05.几何优化",
-    "public/2025/01/07/【ORCA】10.磁性相关计算",
-    "public/2025/09/04",
-    "public/2023/03/07/【CP2K】05.MD",
->>>>>>> 4c89ce20f75c2ae20670d6b9ae7b1c8a22ccbd75
-    "source/_posts/【ADF】01.基本计算设置.md",
-    "source/_posts/【AMS】01.基本输入结构.md",
-    "source/_posts/【ADF】03.精度控制.md",
-    "source/_posts/【ADF】02.EDA-NOCV.md",
-    "source/_posts/【Jmol】常见的指令.md",
-    "source/_posts/【Gaussian】01.基础知识.md",
-<<<<<<< HEAD
-    "source/_posts/搭建网站教程.md",
-=======
->>>>>>> 4c89ce20f75c2ae20670d6b9ae7b1c8a22ccbd75
-    "source/_posts/测试公式.md",
-    "source/_posts/基组.md",
-    "source/_posts/【【草稿】】Hatree-Forck方法.md",
-    "source/_posts/【ORCA】10.磁性相关计算.md",
-    "source/_posts/【ORCA】11.多参考计算.md",
-    "source/_posts/【Pyscf】02.SCF.md",
-    "source/_posts/【VMD】01.绘制分子轨道.md",
-<<<<<<< HEAD
-    "source/_posts/【VMD】常见命令.md",
-=======
->>>>>>> 4c89ce20f75c2ae20670d6b9ae7b1c8a22ccbd75
-    "source/_posts/CSS语法.md",
-    "source/_posts/html基础.md",
-    "source/_posts/NBO.md",
-    "source/_posts/PIO.md",
-    "source/_posts/光谱项.md",
-    "source/_posts/多组态MCSCF.md",
-    "source/_posts/组态相互作用CI.md",
-    "scaffolds/post.md",
-    "scaffolds/page.md",
-<<<<<<< HEAD
-    "scaffolds/draft.md",
-    "source/_posts/【ORCA】09.对称性破缺计算.md",
-    "public/archives/2026/index.html",
-    "public/archives/2026/05/index.html",
-    "public/2026/05/22/测试公式/index.html",
-    "public/2026/05/22/测试公式",
-    "source/_posts/【Gaussian】01.基础知识/image-20221107191726335.png",
-    "public/2026/05/22/测试111/index.html",
-    "public/2026/05/22/测试111/file-20260522194317026.png",
-    "public/2026/05/22/测试111",
-    "source/_posts/测试111/file-20260522194317026.png",
-    "source/_posts/测试111",
-=======
->>>>>>> 4c89ce20f75c2ae20670d6b9ae7b1c8a22ccbd75
-    "source/_posts/未命名.canvas",
-    "未命名.canvas"
-  ]
+  "active": "043d90e689edd209",
+  "lastOpenFiles": []
 }

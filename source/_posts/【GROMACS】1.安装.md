@@ -4,7 +4,7 @@ typora-root-url: 【GROMACS】1.安装
 mathjax: true
 date: 2026-08-6 12:49:19
 updated:
-tags: [Gromacs]
+tags: [GROMACS]
 categories: [计算化学, 软件]
 description: Gromacs的安装方法
 ---
