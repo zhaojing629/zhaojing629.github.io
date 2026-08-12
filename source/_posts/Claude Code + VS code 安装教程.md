@@ -9,24 +9,32 @@ description: 通过npm安装Claude和使用Vscode使用
 ---
 # 安装Claude
 参考来源：https://zhuanlan.zhihu.com/p/2004150496781410721
-1. 首先安装好Git和Node.js（见<a href="{% post_path '搭建网站教程' %}#搭建">下载Git和Node.js</a>）
+1. 首先安装好[Git](https://git-scm.com/)和[Node.js](https://nodejs.org/en/)
+
 2. 使用npm全局安装：
 	```
 	npm install -g @anthropic-ai/claude-code
 	```
+	
 3. 安装完成后验证：
-```
-claude --version
-```
+
+   ```
+   claude --version
+   ```
+
 # 安装VScode+Claude
 参考来源：https://zhuanlan.zhihu.com/p/2038567190648074568
 1. VScode官网下载安装即可
+
 2. 在扩展里输入“Chinese”下载第一个更改语言
+
 3. 在扩展里搜索“claude code”安装“claude code for vs code”
+
 4. 进入“claude code for vs code”的设置界面，找到在 settings.json中编辑
 	下面的json可从提示位置直接复制粘贴，注意代码中记得换上你自己申请的deepseek密钥。
 	以下添加的配置本质就是更改了claude code的环境变量，让其调用deepseek-v4大模型。
-	```json
+	
+	```
 	{
 	    "files.autoSave": "onWindowChange",
 	    //"python.defaultInterpreterPath": "D:\\software\\anaconda3\\python.exe",
@@ -40,8 +48,8 @@ claude --version
 	    "vscode-office.openOutline": false,
 	    "chat.viewSessions.orientation": "stacked",
 	    "claudeCode.enableNewConversationShortcut": true,
-
-
+	
+	
 	//*************************上面的部分可根据自己需要保留配置，以下部分直接复制粘贴即可******************************
 	    "claudeCode.environmentVariables": [
 	        {
@@ -79,3 +87,6 @@ claude --version
 	  ]
 	}
 	```
+	
+	
+
