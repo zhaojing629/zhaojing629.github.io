@@ -2840,133 +2840,6 @@
       </tags>
   </entry>
   <entry>
-    <title>【VMD】01.绘制分子轨道</title>
-    <url>/2020/09/29/%E3%80%90VMD%E3%80%9101.%E7%BB%98%E5%88%B6%E5%88%86%E5%AD%90%E8%BD%A8%E9%81%93/</url>
-    <content><![CDATA[<h1 id="单个cube文件"><a href="#单个cube文件" class="headerlink" title="单个cube文件"></a>单个cube文件</h1><ol>
-<li><p>直接将*.cub文件拖入main窗口</p>
-</li>
-<li><p>将分子改为球棍模型：Graphics→Representation→Drawing method→CPK</p>
-</li>
-<li><p>新建一个等值面：Graphics→Representation→Create Rep</p>
-<ol>
-<li>修改Drawing method为Isosurface</li>
-<li>修改Isovalue为0.05</li>
-<li>修改等值面风格：在Draw中选择Solid Surface（实心）或者Wireframe（网格显示）</li>
-<li>取消显示边框：修改Show为Isosurface</li>
-<li>修改颜色：在Coloring Method选择colorID，在其后选择颜色，如1（红色）</li>
-<li>修改材质：在Material中选择，比如Glossy</li>
-</ol>
-</li>
-<li><p>重复步骤3，除了：</p>
-<ol>
-<li>将Isovalue为负的</li>
-<li>颜色修改为另一个颜色，比如0（蓝色）</li>
-</ol>
-</li>
-<li><p>其他美化：</p>
-<ol>
-<li>display→depth cueing→off</li>
-<li>display→Rendermode→GLSL</li>
-<li>修改背景为白色：Graphics→Color→Display→Background→White</li>
-<li>取消显示坐标轴：Display→Axes→off</li>
-<li>……</li>
-</ol>
-</li>
-<li><p>导出：File→Render→Tachyon，修改Filename，Start Rendering即可，此时VMD目录下有相应的*.dat（是Tachyon的输入文件）和*.bmp文件（在默认设置下渲染出来的图像文件）。</p>
-<ul>
-<li>还可以通过Flie→Save Visualization state…保存当前的操作</li>
-</ul>
-</li>
-<li><p>进一步渲染，6中是使用的默认方法，可以调用VMD自带的tachyon_WIN32.exe渲染器进一步在当前目录下使用*dat文件渲染出*.bmp图像文件，在命令行中输入：</p>
-<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">tachyon_WIN32.exe XXXX.dat -format BMP -o X.bmp -trans_raster3d -res <span class="number">2000</span> <span class="number">1500</span> -fullshade -numthreads <span class="number">4</span> -aasamples <span class="number">24</span> -shadow_filter_off</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;C:\VMD<span class="subst">\\</span>tachyon_WIN32.exe&quot;</span> -aasamples <span class="number">12</span> %s -format BMP -o %s.bmp</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="批量处理多个轨道文件"><a href="#批量处理多个轨道文件" class="headerlink" title="批量处理多个轨道文件"></a>批量处理多个轨道文件</h1><h2 id="1-生成cube文件"><a href="#1-生成cube文件" class="headerlink" title="1. 生成cube文件"></a>1. 生成cube文件</h2><h3 id="打开Multiwfn生成"><a href="#打开Multiwfn生成" class="headerlink" title="打开Multiwfn生成"></a>打开Multiwfn生成</h3><ol>
-<li><p>Multiwfn载入*fchk文件后，通过以下命令一步步生成。然后就会在Multiwfn文件夹下生成orb0000XX.cub的文件。</p>
-<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">200 </span>#其他功能</span><br><span class="line"><span class="symbol">3 </span>#保存轨道</span><br><span class="line"><span class="number">1</span>-<span class="number">4</span>，<span class="number">47</span>-<span class="number">50</span> #绘制轨道的范围</span><br><span class="line"><span class="symbol">3 </span>#选择格点质量</span><br><span class="line"><span class="symbol">1 </span>#单独保存每一个</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>如果是空轨道，Multiwfn计算格点数据的默认的延展距离不够大，可能造成以比较小的轨道等值面数值显示时轨道等值面被截断，可以在第三行和第四行之间加入以下步骤将延展距离加大到12Bohr：</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="number">-10</span></span><br><span class="line"><span class="number">12</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>以上内容可以保存为一个文本文件放在Multiwfn文件夹下用于后续的批处理，如showorb.txt（Multiwfn文件夹中的examples\scripts也有）</p>
-</li>
-</ul>
-</li>
-<li><p>再将*.cub文件移动到VMD根文件夹下</p>
-</li>
-</ol>
-<h3 id="不打开Multiwfn生成"><a href="#不打开Multiwfn生成" class="headerlink" title="不打开Multiwfn生成"></a>不打开Multiwfn生成</h3><ol>
-<li><p>通过Windows批处理命令，在Multiwfn文件夹下新建showorb.bat文件（Multiwfn文件夹中的examples\scripts也有）：</p>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">Multiwfn .\XXXXXXXX<span class="selector-class">.fchk</span> &lt; showorb.txt</span><br><span class="line">move /Y *<span class="selector-class">.cub</span> <span class="string">&quot;XXXX\VMD\&quot;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>修改*.fchk文件的路径和名字</li>
-<li>修改VMD的路径，如果路径中有空格，必须加双引号。</li>
-</ul>
-</li>
-<li><p>直接双击showorb.bat，这个脚本就会调用Multiwfn去对指定的输入文件计算要考察的各个轨道的格点数据，并且导出为cube文件，所有算出来的cube文件会被这个脚本自动挪到VMD目录下。</p>
-</li>
-</ol>
-<h2 id="2-绘制部分"><a href="#2-绘制部分" class="headerlink" title="2. 绘制部分"></a>2. 绘制部分</h2><ul>
-<li><p>把Multiwfn文件包的examples\scripts目录下的VMD绘图脚本<strong>showorb.vmd</strong>拷到VMD目录下，然后用文本编辑器编辑VMD目录下的<strong>vmd.rc</strong>，在最后插入此命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> showorb.vmd</span><br></pre></td></tr></table></figure>
-<ul>
-<li>它定义了三个命令：<ul>
-<li><code>orb</code>：用来载入和显示轨道。输入orb 33，就会载入VMD目录下的orb000033.cub，并把它的绘制方式修改为等值面图的形式。之后如果比如再输入orb 34，则33号轨道就会被撤销，而将orb00034.cub以等值面形式显示。</li>
-<li><code>orbiso</code>：用来修改等值面数值，默认为0.05。</li>
-<li><code>orbclean</code>：用来把VMD目录下所有orb开头的.cub文件全都删掉。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>启动VMD，在命令行窗口输入就可以显示相应的文件。</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">orb</span> <span class="selector-attr">[序号]</span> </span><br></pre></td></tr></table></figure>
-</li>
-<li><p>看完轨道后，输入<code>orbclean</code>可以把VMD目录下的cub文件都清掉。</p>
-</li>
-</ul>
-<h3 id="showorb-vmd"><a href="#showorb-vmd" class="headerlink" title="showorb.vmd"></a>showorb.vmd</h3><h4 id="orb命令"><a href="#orb命令" class="headerlink" title="orb命令"></a><code>orb</code>命令</h4><figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">proc orb &#123;iorb&#125; &#123;</span><br><span class="line">#修改轨道等值面数值默认值，推荐<span class="number">0.02</span>~<span class="number">0.06</span></span><br><span class="line">set isoval <span class="number">0.05</span></span><br><span class="line"></span><br><span class="line">#修改等值面材质，如果想改成透明的，可以使用EdgyGlass或Translucent等</span><br><span class="line">set mater Glossy</span><br><span class="line"></span><br><span class="line">#开启额外的<span class="number">3</span>号光源令图像更亮</span><br><span class="line">#light <span class="number">3</span> on</span><br><span class="line"></span><br><span class="line">color Display Background white</span><br><span class="line">display depthcue off</span><br><span class="line"></span><br><span class="line">#设置某个元素的颜色</span><br><span class="line">color Name C tan</span><br><span class="line">#修改tan颜色的定义。这最终使得碳原子比其默认的深青色显得更柔美</span><br><span class="line">#color change rgb tan <span class="number">0.700000</span> <span class="number">0.560000</span> <span class="number">0.360000</span></span><br><span class="line"></span><br><span class="line">display projection Orthographic</span><br><span class="line">display rendermode GLSL</span><br><span class="line">axes location Off</span><br><span class="line"></span><br><span class="line">if &#123;[molinfo num]&gt;<span class="number">0</span>&#125; &#123;</span><br><span class="line">set viewpoint [molinfo top get &#123;center_matrix rotate_matrix scale_matrix&#125;]</span><br><span class="line">&#125;</span><br><span class="line">mol delete top</span><br><span class="line"></span><br><span class="line">#修改cub文件的命名格式</span><br><span class="line">#mol new AdNDPorb[format %<span class="number">04</span>d $iorb].cub</span><br><span class="line">mol new orb[format %<span class="number">06</span>d $iorb].cub</span><br><span class="line"></span><br><span class="line">mol modstyle <span class="number">0</span> top CPK <span class="number">0.800000</span> <span class="number">0.300000</span> <span class="number">22.000000</span> <span class="number">22.000000</span></span><br><span class="line">mol addrep top</span><br><span class="line">mol modstyle <span class="number">1</span> top Isosurface $isoval <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">#修改正等值面颜色淡绿色</span><br><span class="line">#mol modcolor <span class="number">1</span> top ColorID <span class="number">12</span></span><br><span class="line">mol modcolor <span class="number">1</span> top ColorID <span class="number">1</span></span><br><span class="line"></span><br><span class="line">mol modmaterial <span class="number">1</span> top $mater</span><br><span class="line">mol addrep top</span><br><span class="line">mol modstyle <span class="number">2</span> top Isosurface -$isoval <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">#修改负值部分等值面的颜色为淡蓝色</span><br><span class="line">#mol modcolor <span class="number">2</span> top ColorID <span class="number">22</span></span><br><span class="line">mol modcolor <span class="number">2</span> top ColorID <span class="number">0</span></span><br><span class="line"></span><br><span class="line">mol modmaterial <span class="number">2</span> top $mater</span><br><span class="line">if [info exists viewpoint] &#123;</span><br><span class="line">molinfo top set &#123;center_matrix rotate_matrix scale_matrix&#125; $viewpoint</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#保存当前状态的渲染文件</span><br><span class="line">#render Tachyon $iorb.dat <span class="string">&quot;tachyon_WIN32.exe $&#123;iorb&#125;.dat -format BMP -o $&#123;iorb&#125;.bmp -trans_raster3d -res 2000 1500 -numthreads 4 -aasamples 24 -mediumshade &quot;</span></span><br><span class="line">render Tachyon $iorb.dat <span class="string">&quot;tachyon_WIN32.exe $&#123;iorb&#125;.dat -format BMP -o $&#123;iorb&#125;.bmp  -aasamples 12&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>其他美化：</p>
-<ul>
-<li>material change mirror Opaque 0.15：修改不透明材质（用于显示分子结构）的mirror属性，大于0的时候通过考虑光线追踪的渲染器渲染的时候就会有反光效果</li>
-<li>material change outline Opaque 4.000000：设定不透明材质的轮廓深度</li>
-<li>material change outlinewidth Opaque 0.5：设定不透明材质的轮廓粗度。设置轮廓可以使原子有勾边效果（有效避免白色的氢原子在某些地方和白色背景连为一体）</li>
-<li>material change ambient Glossy 0.1：设置用于显示等值面的Glossy材质的ambient属性</li>
-<li>material change diffuse Glossy 0.600000</li>
-<li>material change opacity Glossy 0.75：把Glossy材质改为微透明</li>
-<li>material change shininess Glossy 1.0</li>
-<li>display distance -7.0：让视角距离画面的更远，可避免在窗口边缘的物体由于近大远小而畸变太厉害</li>
-<li>display height 10：这句是避免因为减小了distance而导致图像变小</li>
-<li>……</li>
-</ul>
-<h4 id="orbiso命令"><a href="#orbiso命令" class="headerlink" title="orbiso命令"></a><code>orbiso</code>命令</h4><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">proc orbiso &#123;isoval&#125; &#123;</span><br><span class="line">mol modstyle <span class="number">1</span> top Isosurface $isoval <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1</span> <span class="number">1</span></span><br><span class="line">mol modstyle <span class="number">2</span> top Isosurface -$isoval <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1</span> <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="orbclean命令"><a href="#orbclean命令" class="headerlink" title="orbclean命令"></a><code>orbclean</code>命令</h4><figure class="highlight tcl"><table><tr><td class="code"><pre><span class="line"><span class="keyword">proc</span><span class="title"> orbclean</span> &#123;&#125; &#123;</span><br><span class="line"><span class="comment">#修改cub文件的命名格式</span></span><br><span class="line"><span class="comment">#file delete &#123;*&#125;[glob AdNDPorb*.cub]</span></span><br><span class="line"><span class="keyword">file</span> delete &#123;*&#125;[<span class="keyword">glob</span> orb*.cub]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="使用脚本任意cube文件"><a href="#使用脚本任意cube文件" class="headerlink" title="使用脚本任意cube文件"></a>使用脚本任意cube文件</h1><p>把Multiwfn文件包的examples\scripts目录下的VMD绘图脚本showorb.vmd拷到VMD目录下，然后用文本编辑器编辑VMD目录下的vmd.rc，在最后插入此命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> showcub.vmd</span><br></pre></td></tr></table></figure>
-<p>此脚本定义了四条命令，可以直接在VMD的控制台里输入，这里直接给出一些例子：</p>
-<ul>
-<li><code>cub MIO</code>：将VMD目录下的MIO.cub绘制成等值面图，正值和负值部分分别用绿色和蓝色显示，等值面数值分别为默认值0.05和-0.05</li>
-<li><code>cub MIO 0.02</code>：同上，但正值和负值部分等值面数值直接分别设为0.02和-0.02</li>
-<li><code>cubiso 0.015</code>：在使用cub命令后使用，把当前载入的格点数据的正值和负值部分分别设为0.015和-0.015</li>
-</ul>
-<p>有的时候我们需要同时将两个cube文件显示在一起，此脚本里也定义了相应命令用于此目的，示例：</p>
-<ul>
-<li><code>cub2 eri nozomi</code>：将VMD目录下的eri.cub和nozomi.cub同时绘制成等值面，分别用绿色和蓝色表示，等值面数值都为默认的0.05（注：如果eri和nozomi格点数据里也有负值部分，负值部分不会被显示出来）</li>
-<li><code>cub2 eri nozomi 0.02</code>：同上，但是二者的等值面数值都直接设为0.02</li>
-<li><code>cub2iso 0.015</code>：在使用cub2命令后使用，代表把已载入的两套cube文件对应的等值面数值都设为0.015</li>
-</ul>
-<p>用Multiwfn的主功能5计算完这个体系的自旋密度格点数据后，在后处理菜单选择导出cube文件，当前目录下就得到了spindensity.cub。将此文件挪到VMD目录下，启动VMD，直接输入cub spindensity 0.01</p>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
-      <tags>
-        <tag>VMD</tag>
-        <tag>绘图</tag>
-        <tag>分子轨道</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【VMD】常见命令</title>
     <url>/2020/09/29/%E3%80%90VMD%E3%80%91%E5%B8%B8%E8%A7%81%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h1 id="脚本基础"><a href="#脚本基础" class="headerlink" title="脚本基础"></a>脚本基础</h1><ul>
@@ -3090,7 +2963,7 @@
 </li>
 <li><p><code>modrep &lt;rep_number&gt; &lt;molecule_number&gt;</code>：将给定分子的给定rep的方法设置为默认设置。</p>
 </li>
-<li><p><code>modselect &lt;rep_number&gt; &lt;molecule_number&gt; &lt;select_method&gt;</code>：更改指定分子、指定的Rep所包含的部分。select_method可以是（更多可以查看Graphics→Representations→Selections）</p>
+<li><p><code>modselect &lt;rep_number&gt; &lt;molecule_number&gt; &lt;select_method&gt;</code>：更改指定分子、指定的Rep所包含的部分。select_method可以是（更多可以查看Graphics→Representations→Selections）选择的语法可以见<a href="/2026/08/13/%E3%80%90VMD%E3%80%911.%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/#范围选择语句基本语法">范围选择语句基本语法</a></p>
 <ul>
 <li><code>all</code>、<code>none</code>……</li>
 <li>逻辑<code>and</code>、<code>or</code>、<code>not</code></li>
@@ -11365,7 +11238,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <li><p>如果 RAS1 和 RAS3 空间为零，RASSCF 计算将产生 CASSCF 波函数。</p>
 </li>
 <li><p>不同的RAS1和RAS3代表的计算类型：</p>
-<p><img src="/../【Molcas】02-RASSCF/image-20240924154746777.png" alt="image-20240924154746777"></p>
+<p><img src="image-20240924154746777.png" alt="image-20240924154746777"></p>
 </li>
 </ul>
 </li>
@@ -11919,6 +11792,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </ul>
 </li>
 <li><code>.itp</code>：被引用的拓扑文件</li>
+<li><code>rtp</code> ：残基拓扑(文本) </li>
 </ul>
 <h2 id="运行输入文件"><a href="#运行输入文件" class="headerlink" title="运行输入文件"></a>运行输入文件</h2><ul>
 <li><u><code>.tpr</code>：系统拓扑结构、参数、坐标以及速度（二进制表示，可移植）</u><ul>
@@ -11938,7 +11812,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </li>
 </ul>
 <h2 id="能量文件"><a href="#能量文件" class="headerlink" title="能量文件"></a>能量文件</h2><ul>
-<li><strong><u><code>.edr</code>：能量文仵，记录了模拟过程中的各种信息（能量、体积、压力、温度等）</strong>&lt;/u&gt;</li>
+<li><strong><u><code>.edr</code>：能量文仵，记录了模拟过程中的各种信息（能量、体积、压力、温度等）</u></strong></li>
 </ul>
 <h2 id="其他文件"><a href="#其他文件" class="headerlink" title="其他文件"></a>其他文件</h2><ul>
 <li><strong><code>.log</code>：日志文件</strong></li>
@@ -11947,7 +11821,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <li><code>.xvg</code>：被grace程序读取来对其中的数据绘图</li>
 </ul>
 <h1 id="一般流程"><a href="#一般流程" class="headerlink" title="一般流程"></a>一般流程</h1><h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">gmx grompp-f md1<span class="selector-class">.mdp</span> -o md1<span class="selector-class">.tpr</span> -c eq2<span class="selector-class">.gro</span> -t eq2<span class="selector-class">.cpt</span> -<span class="selector-tag">p</span> memwat<span class="selector-class">.top</span> -maxwarn <span class="number">10</span></span><br></pre></td></tr></table></figure>
-<h2 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h2><p><img src="/image-20260811102611572.png" alt="这是模拟蛋白质在水中的行为的典型 GROMACS 分子动力学运行的流程图。过程中可能需要多次进行能量最小化操作，这些步骤包括以下几个循环：gmx grompp -&gt; gmx mdrun。"></p>
+<h2 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h2><p><img src="image-20260811102611572.png" alt="这是模拟蛋白质在水中的行为的典型 GROMACS 分子动力学运行的流程图。过程中可能需要多次进行能量最小化操作，这些步骤包括以下几个循环：gmx grompp -&gt; gmx mdrun。"></p>
 <ol>
 <li>前处理：<ul>
 <li>建立体系结构文件(<code>.gro</code>)和生成拓扑文件 ( <code>.top</code>) 主要涉及的命令: <code>editconf</code>、 <code>solvate</code> 、 <code>insert-molecules</code>、 <code>genion</code> 、 <code>pdb2gmx</code> 、 <code>x2top</code> 。另涉及make_ndx 、 <code>genrestr</code>等</li>
@@ -11970,23 +11844,105 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </ul>
 </li>
 </ol>
-<h1 id="结构文件-1"><a href="#结构文件-1" class="headerlink" title="结构文件"></a>结构文件</h1><h2 id="PDB文件"><a href="#PDB文件" class="headerlink" title="PDB文件"></a>PDB文件</h2><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">HEADER    EXTRACELLULAR MATRIX                    <span class="number">22</span>-JAN<span class="number">-98</span>   <span class="number">1</span>A3I</span><br><span class="line">TITLE     X-RAY CRYSTALLOGRAPHIC DETERMINATION OF A COLLAGEN-LIKE</span><br><span class="line">TITLE    <span class="number">2</span> PEPTIDE WITH THE REPEATING SEQUENCE (PRO-PRO-GLY)</span><br><span class="line">...</span><br><span class="line">EXPDTA    X-RAY DIFFRACTION</span><br><span class="line">AUTHOR    R.Z.KRAMER,L.VITAGLIANO,J.BELLA,R.BERISIO,L.MAZZARELLA,</span><br><span class="line">AUTHOR   <span class="number">2</span> B.BRODSKY,A.ZAGARI,H.M.BERMAN</span><br><span class="line">...</span><br><span class="line">REMARK <span class="number">350</span> BIOMOLECULE: <span class="number">1</span></span><br><span class="line">REMARK <span class="number">350</span> APPLY THE FOLLOWING TO CHAINS: A, B, C</span><br><span class="line">REMARK <span class="number">350</span>   BIOMT1   <span class="number">1</span>  <span class="number">1.000000</span>  <span class="number">0.000000</span>  <span class="number">0.000000</span>        <span class="number">0.00000</span></span><br><span class="line">REMARK <span class="number">350</span>   BIOMT2   <span class="number">1</span>  <span class="number">0.000000</span>  <span class="number">1.000000</span>  <span class="number">0.000000</span>        <span class="number">0.00000</span></span><br><span class="line">...</span><br><span class="line">SEQRES   <span class="number">1</span> A    <span class="number">9</span>  PRO PRO GLY PRO PRO GLY PRO PRO GLY</span><br><span class="line">SEQRES   <span class="number">1</span> B    <span class="number">6</span>  PRO PRO GLY PRO PRO GLY</span><br><span class="line">SEQRES   <span class="number">1</span> C    <span class="number">6</span>  PRO PRO GLY PRO PRO GLY</span><br><span class="line">...</span><br><span class="line">ATOM      <span class="number">1</span>  N   PRO A   <span class="number">1</span>       <span class="number">8.316</span>  <span class="number">21.206</span>  <span class="number">21.530</span>  <span class="number">1.00</span> <span class="number">17.44</span>           N</span><br><span class="line">ATOM      <span class="number">2</span>  CA  PRO A   <span class="number">1</span>       <span class="number">7.608</span>  <span class="number">20.729</span>  <span class="number">20.336</span>  <span class="number">1.00</span> <span class="number">17.44</span>           C</span><br><span class="line">ATOM      <span class="number">3</span>  C   PRO A   <span class="number">1</span>       <span class="number">8.487</span>  <span class="number">20.707</span>  <span class="number">19.092</span>  <span class="number">1.00</span> <span class="number">17.44</span>           C</span><br><span class="line">ATOM      <span class="number">4</span>  O   PRO A   <span class="number">1</span>       <span class="number">9.466</span>  <span class="number">21.457</span>  <span class="number">19.005</span>  <span class="number">1.00</span> <span class="number">17.44</span>           O</span><br><span class="line">ATOM      <span class="number">5</span>  CB  PRO A   <span class="number">1</span>       <span class="number">6.460</span>  <span class="number">21.723</span>  <span class="number">20.211</span>  <span class="number">1.00</span> <span class="number">22.26</span>           C</span><br><span class="line">...</span><br><span class="line">HETATM  <span class="number">130</span>  C   ACY   <span class="number">401</span>       <span class="number">3.682</span>  <span class="number">22.541</span>  <span class="number">11.236</span>  <span class="number">1.00</span> <span class="number">21.19</span>           C</span><br><span class="line">HETATM  <span class="number">131</span>  O   ACY   <span class="number">401</span>       <span class="number">2.807</span>  <span class="number">23.097</span>  <span class="number">10.553</span>  <span class="number">1.00</span> <span class="number">21.19</span>           O</span><br><span class="line">HETATM  <span class="number">132</span>  OXT ACY   <span class="number">401</span>       <span class="number">4.306</span>  <span class="number">23.101</span>  <span class="number">12.291</span>  <span class="number">1.00</span> <span class="number">21.19</span>           O</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h1 id="结构文件-1"><a href="#结构文件-1" class="headerlink" title="结构文件"></a>结构文件</h1><h2 id="PDB文件"><a href="#PDB文件" class="headerlink" title="PDB文件"></a>PDB文件</h2><p>是上世纪70年代提出的记录X光衍射或NMR等手段测定的生物大分子体系结构的标准文件格式。目前也是被支持得最广泛的通用的记录分子结构的格式。</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">HEADER    EXTRACELLULAR MATRIX                    <span class="number">22</span>-JAN<span class="number">-98</span>   <span class="number">1</span>A3I</span><br><span class="line">TITLE     X-RAY CRYSTALLOGRAPHIC DETERMINATION OF A COLLAGEN-LIKE</span><br><span class="line">TITLE    <span class="number">2</span> PEPTIDE WITH THE REPEATING SEQUENCE (PRO-PRO-GLY)</span><br><span class="line">...</span><br><span class="line">EXPDTA    X-RAY DIFFRACTION</span><br><span class="line">AUTHOR    R.Z.KRAMER,L.VITAGLIANO,J.BELLA,R.BERISIO,L.MAZZARELLA,</span><br><span class="line">AUTHOR   <span class="number">2</span> B.BRODSKY,A.ZAGARI,H.M.BERMAN</span><br><span class="line">...</span><br><span class="line">REMARK <span class="number">350</span> BIOMOLECULE: <span class="number">1</span></span><br><span class="line">REMARK <span class="number">350</span> APPLY THE FOLLOWING TO CHAINS: A, B, C</span><br><span class="line">REMARK <span class="number">350</span>   BIOMT1   <span class="number">1</span>  <span class="number">1.000000</span>  <span class="number">0.000000</span>  <span class="number">0.000000</span>        <span class="number">0.00000</span></span><br><span class="line">REMARK <span class="number">350</span>   BIOMT2   <span class="number">1</span>  <span class="number">0.000000</span>  <span class="number">1.000000</span>  <span class="number">0.000000</span>        <span class="number">0.00000</span></span><br><span class="line">...</span><br><span class="line">SEQRES   <span class="number">1</span> A    <span class="number">9</span>  PRO PRO GLY PRO PRO GLY PRO PRO GLY</span><br><span class="line">SEQRES   <span class="number">1</span> B    <span class="number">6</span>  PRO PRO GLY PRO PRO GLY</span><br><span class="line">SEQRES   <span class="number">1</span> C    <span class="number">6</span>  PRO PRO GLY PRO PRO GLY</span><br><span class="line">...</span><br><span class="line">ATOM      <span class="number">1</span>  N   PRO A   <span class="number">1</span>       <span class="number">8.316</span>  <span class="number">21.206</span>  <span class="number">21.530</span>  <span class="number">1.00</span> <span class="number">17.44</span>           N</span><br><span class="line">ATOM      <span class="number">2</span>  CA  PRO A   <span class="number">1</span>       <span class="number">7.608</span>  <span class="number">20.729</span>  <span class="number">20.336</span>  <span class="number">1.00</span> <span class="number">17.44</span>           C</span><br><span class="line">ATOM      <span class="number">3</span>  C   PRO A   <span class="number">1</span>       <span class="number">8.487</span>  <span class="number">20.707</span>  <span class="number">19.092</span>  <span class="number">1.00</span> <span class="number">17.44</span>           C</span><br><span class="line">ATOM      <span class="number">4</span>  O   PRO A   <span class="number">1</span>       <span class="number">9.466</span>  <span class="number">21.457</span>  <span class="number">19.005</span>  <span class="number">1.00</span> <span class="number">17.44</span>           O</span><br><span class="line">ATOM      <span class="number">5</span>  CB  PRO A   <span class="number">1</span>       <span class="number">6.460</span>  <span class="number">21.723</span>  <span class="number">20.211</span>  <span class="number">1.00</span> <span class="number">22.26</span>           C</span><br><span class="line">...</span><br><span class="line">HETATM  <span class="number">130</span>  C   ACY   <span class="number">401</span>       <span class="number">3.682</span>  <span class="number">22.541</span>  <span class="number">11.236</span>  <span class="number">1.00</span> <span class="number">21.19</span>           C</span><br><span class="line">HETATM  <span class="number">131</span>  O   ACY   <span class="number">401</span>       <span class="number">2.807</span>  <span class="number">23.097</span>  <span class="number">10.553</span>  <span class="number">1.00</span> <span class="number">21.19</span>           O</span><br><span class="line">HETATM  <span class="number">132</span>  OXT ACY   <span class="number">401</span>       <span class="number">4.306</span>  <span class="number">23.101</span>  <span class="number">12.291</span>  <span class="number">1.00</span> <span class="number">21.19</span>           O</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>pdb文件当中不同字段用于    录不同信息：</p>
+<ol>
+<li><p>标题部分：</p>
 <ul>
-<li>第一列：<ul>
-<li><code>ATOM</code>：描述构成蛋白质的各个原子的坐标。</li>
+<li><p><code>HEADER</code>: 在第一行，分子类, 公布日期, ID号</p>
+</li>
+<li><p><code>TITLE</code>: 说明实验方法类型，对记录的体系的描述</p>
+</li>
+<li><p><code>COMPND</code>: 化合物分子组成</p>
+</li>
+<li><p><code>SOURCE</code>: 描述记录的生物大分子的来源</p>
+</li>
+<li><p><code>REMARK</code>: 注释信息</p>
+</li>
+<li><p><code>JRNL</code>: 本pdb对应的文献</p>
+</li>
+<li><p><code>AUTHOR</code>: 结构测定者</p>
+</li>
+</ul>
+</li>
+<li><p>一级结构：</p>
+<ul>
+<li><p><code>SEQRES</code>: 骨架的残基序列</p>
+</li>
+<li><p><code>MODRES</code>: 对标准残基的修改</p>
+</li>
+</ul>
+</li>
+<li><p>二级结构：</p>
+<ul>
+<li><code>HELIX</code>、<code>SHEET</code>: alpha螺旋、beta折叠涉及的残基范围</li>
+</ul>
+</li>
+<li><p>连接注释：</p>
+<ul>
+<li><p><code>SSBOND</code>: 二硫键。定义半胱氨酸CYS残基之间的二硫键</p>
+</li>
+<li><p><code>LINK</code>: 指认的残基间的键</p>
+</li>
+</ul>
+</li>
+<li><p>晶胞特征：</p>
+<ul>
+<li><code>CRYST1</code>: 晶胞参数。也可以记录模拟体系盒子参数</li>
+</ul>
+</li>
+<li><p>坐标部分</p>
+<ul>
+<li><p>第一列：</p>
+<ul>
+<li><code>ATOM</code>：描述构成蛋白质的各个原子的坐标。（必有）</li>
 <li><code>TER</code> ：记录标识了多肽链的结束</li>
 <li><code>HETATM</code>：描述杂原子的坐标，即那些不属于蛋白质分子的原子。</li>
 </ul>
 </li>
-<li>第二列：原子序号</li>
-<li>第三列：原子名</li>
-<li>第四列：残基名</li>
-<li>第五列：链名</li>
-<li>第六列：残基号</li>
-<li>第5-7列：原子xyz坐标（埃）</li>
-<li>第七列：占有率，代表这个原子在当前三维坐标位置的出现概率。1.00 意味着 100%，即在所有被解析的分子颗粒中，这个原子完全存在于这个位置。</li>
-<li>第八列：温度因子。反映了该原子在空间中的“动态柔性”或“位置不确定度”。数值越大，代表这个原子晃动得越厉害，或者在实验图谱中越模糊。</li>
-<li>第九列：元素</li>
+<li><p>第二列：原子序号</p>
+</li>
+<li><p>第三列：原子名</p>
+</li>
+<li><p>第四列：残基名</p>
+</li>
+<li><p>第五列：链名</p>
+</li>
+<li><p>第六列：残基号</p>
+</li>
+<li><p>第5-7列：原子xyz坐标（埃）</p>
+</li>
+<li><p>第七列：占有率，代表这个原子在当前三维坐标位置的出现概率。1.00 意味着 100%，即在所有被解析的分子颗粒中，这个原子完全存在于这个位置。</p>
+</li>
+<li><p>第八列：温度因子B因子。反映了该原子在空间中的“动态柔性”或“位置不确定度”。数值越大，代表这个原子晃动得越厉害，或者在实验图谱中越模糊。</p>
+</li>
+<li><p>第九列：元素</p>
+</li>
+<li><code>MODEL</code>: 一个pdb文件也可以记录多个结构(常见于NMR得到的pdb)，也因此可以记录动力学轨迹(但精度低、体积大)。每个结构以<code>MODEL</code>行为开头标注帧号，<code>ENDMDL</code>行为结尾。</li>
+</ul>
+</li>
+<li><p>连接信息</p>
+<ul>
+<li><code>CONECT</code>: 原子间的连接信息</li>
+</ul>
+</li>
+<li><p>其他：</p>
+<ul>
+<li><code>END</code>: 文件结束. 标志PDB文件的结束, 必需记录</li>
+</ul>
+</li>
+</ol>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li><p>获得蛋白质的pdb文件后一定要仔细从头看一遍REMARK段落，其中记录了许多信息。尤其注意搜索MISSING，寻找记录了结构缺失的信息，如：</p>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="comment">REMARK 465 MISSING RESIDUES                                                     </span></span><br><span class="line"><span class="comment">REMARK 465 THE FOLLOWING RESIDUES WERE NOT LOCATED IN THE                       </span></span><br><span class="line"><span class="comment">REMARK 465 EXPERIMENT. (M=MODEL NUMBER; RES=RESIDUE NAME; C=CHAIN               </span></span><br><span class="line"><span class="comment">REMARK 465 IDENTIFIER; SSSEQ=SEQUENCE NUMBER; I=INSERTION CODE.)                </span></span><br><span class="line"><span class="comment">REMARK 465                                                                      </span></span><br><span class="line"><span class="comment">REMARK 465   M RES C SSSEQI                                                     </span></span><br><span class="line"><span class="comment">REMARK 465     MET E     0                                                      </span></span><br><span class="line"><span class="comment">REMARK 465     LYS E     1                                                      </span></span><br><span class="line"><span class="comment">REMARK 465     THR E     2                                                    </span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下载PDB的数据库：</p>
+<ul>
+<li><a href="https://www.rcsb.org/">RCSB PDB: Homepage</a></li>
+</ul>
+</li>
+<li>不对称单元与装配：一些生物大分子整体是多聚体结构，并且有对称性，整体结构可以通过不对称单元通过对称性操作来装配得到。此时pdb文件里只给出不对称单元的结构，并且同时记录对称操作信息(REMARK300和350，前者记录作者注释，后者记录构建各重复单元所需的旋转+平移变换矩阵)，借助某些工具可以装配成完整的结构。RCSB库中也可以直接下载到事先装配好的完整结构。</li>
 </ul>
 <h2 id="gro文件"><a href="#gro文件" class="headerlink" title="gro文件"></a>gro文件</h2><p>不需要记录速度时，gro文件可等价地用pdb格式代替。</p>
 <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">MD</span> of <span class="number">2</span> waters, t= <span class="number">0</span>.<span class="number">0</span></span><br><span class="line">    <span class="attribute">6</span></span><br><span class="line">    <span class="attribute">1WATER</span>  OW<span class="number">1</span>    <span class="number">1</span>   <span class="number">0</span>.<span class="number">126</span>   <span class="number">1</span>.<span class="number">624</span>   <span class="number">1</span>.<span class="number">679</span>  <span class="number">0</span>.<span class="number">1227</span> -<span class="number">0</span>.<span class="number">0580</span>  <span class="number">0</span>.<span class="number">0434</span></span><br><span class="line">    <span class="attribute">1WATER</span>  HW<span class="number">2</span>    <span class="number">2</span>   <span class="number">0</span>.<span class="number">190</span>   <span class="number">1</span>.<span class="number">661</span>   <span class="number">1</span>.<span class="number">747</span>  <span class="number">0</span>.<span class="number">8085</span>  <span class="number">0</span>.<span class="number">3191</span> -<span class="number">0</span>.<span class="number">7791</span></span><br><span class="line">    <span class="attribute">1WATER</span>  HW<span class="number">3</span>    <span class="number">3</span>   <span class="number">0</span>.<span class="number">177</span>   <span class="number">1</span>.<span class="number">568</span>   <span class="number">1</span>.<span class="number">613</span> -<span class="number">0</span>.<span class="number">9045</span> -<span class="number">2</span>.<span class="number">6469</span>  <span class="number">1</span>.<span class="number">3180</span></span><br><span class="line">    <span class="attribute">2WATER</span>  OW<span class="number">1</span>    <span class="number">4</span>   <span class="number">1</span>.<span class="number">275</span>   <span class="number">0</span>.<span class="number">053</span>   <span class="number">0</span>.<span class="number">622</span>  <span class="number">0</span>.<span class="number">2519</span>  <span class="number">0</span>.<span class="number">3140</span> -<span class="number">0</span>.<span class="number">1734</span></span><br><span class="line">    <span class="attribute">2WATER</span>  HW<span class="number">2</span>    <span class="number">5</span>   <span class="number">1</span>.<span class="number">337</span>   <span class="number">0</span>.<span class="number">002</span>   <span class="number">0</span>.<span class="number">680</span> -<span class="number">1</span>.<span class="number">0641</span> -<span class="number">1</span>.<span class="number">1349</span>  <span class="number">0</span>.<span class="number">0257</span></span><br><span class="line">    <span class="attribute">2WATER</span>  HW<span class="number">3</span>    <span class="number">6</span>   <span class="number">1</span>.<span class="number">326</span>   <span class="number">0</span>.<span class="number">120</span>   <span class="number">0</span>.<span class="number">568</span>  <span class="number">1</span>.<span class="number">9427</span> -<span class="number">0</span>.<span class="number">8216</span> -<span class="number">0</span>.<span class="number">0244</span></span><br><span class="line">   <span class="attribute">1</span>.<span class="number">82060</span>   <span class="number">1</span>.<span class="number">82060</span>   <span class="number">1</span>.<span class="number">82060</span></span><br></pre></td></tr></table></figure>
@@ -12155,17 +12111,17 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </li>
 </ul>
 <h2 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h2><ul>
-<li><p>gromos54a7.ff下的spc.itp</p>
+<li><p><code>gromos54a7.ff</code>下的<code>spc.itp</code></p>
 <figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="string">[ moleculetype ]</span></span><br><span class="line">; molname	nrexcl</span><br><span class="line">SOL		<span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="string">[ atoms ]</span></span><br><span class="line">;   nr   type  resnr residue  atom   cgnr     charge       mass</span><br><span class="line">#ifndef HEAVY_H			默认情况 (在mdp里没设define =-DHEAVY H时用的)</span><br><span class="line">     <span class="number">1</span>     OW      <span class="number">1</span>    SOL     OW      <span class="number">1</span>      <span class="number">-0.82</span>   <span class="number">15.99940</span></span><br><span class="line">     <span class="number">2</span>      H      <span class="number">1</span>    SOL    HW1      <span class="number">1</span>       <span class="number">0.41</span>    <span class="number">1.00800</span></span><br><span class="line">     <span class="number">3</span>      H      <span class="number">1</span>    SOL    HW2      <span class="number">1</span>       <span class="number">0.41</span>    <span class="number">1.00800</span></span><br><span class="line">#<span class="keyword">else</span>					在mdp文件设定了define=-DHEAVY_H时用的，可减缓氢的运动</span><br><span class="line">     <span class="number">1</span>     OW      <span class="number">1</span>    SOL     OW      <span class="number">1</span>      <span class="number">-0.82</span>    <span class="number">9.95140</span></span><br><span class="line">     <span class="number">2</span>      H      <span class="number">1</span>    SOL    HW1      <span class="number">1</span>       <span class="number">0.41</span>    <span class="number">4.03200</span></span><br><span class="line">     <span class="number">3</span>      H      <span class="number">1</span>    SOL    HW2      <span class="number">1</span>       <span class="number">0.41</span>    <span class="number">4.03200</span></span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">#ifndef FLEXIBLE				默认情况，对应刚性水</span><br><span class="line"><span class="string">[ settles ]</span></span><br><span class="line">; OW	funct	doh	dhh			使用SETTLE算法约束水的结构为刚性</span><br><span class="line"><span class="number">1</span>	<span class="number">1</span>	<span class="number">0.1</span>	<span class="number">0.16330</span></span><br><span class="line"></span><br><span class="line"><span class="string">[ exclusions ]</span>					忽略掉<span class="number">1</span>与<span class="number">2</span>/<span class="number">3</span>，<span class="number">2</span>与<span class="number">1</span>/<span class="number">3</span>、<span class="number">3</span>与<span class="number">1</span>/<span class="number">2</span>原子间的非键相互作用</span><br><span class="line"><span class="number">1</span>	<span class="number">2</span>	<span class="number">3</span></span><br><span class="line"><span class="number">2</span>	<span class="number">1</span>	<span class="number">3</span></span><br><span class="line"><span class="number">3</span>	<span class="number">1</span>	<span class="number">2</span></span><br><span class="line">#<span class="keyword">else</span>							mdp里设了deine=-DFLEXiBLE时的情况，对应柔性水</span><br><span class="line"><span class="string">[ bonds ]</span></span><br><span class="line">; i	j	funct	length	force.c.</span><br><span class="line"><span class="number">1</span>	<span class="number">2</span>	<span class="number">1</span>	<span class="number">0.1</span>	<span class="number">345000</span>	<span class="number">0.1</span>     <span class="number">345000</span></span><br><span class="line"><span class="number">1</span>	<span class="number">3</span>	<span class="number">1</span>	<span class="number">0.1</span>	<span class="number">345000</span>	<span class="number">0.1</span>     <span class="number">345000</span></span><br><span class="line">	</span><br><span class="line"><span class="string">[ angles ]</span></span><br><span class="line">; i	j	k	funct	angle	force.c.</span><br><span class="line"><span class="number">2</span>	<span class="number">1</span>	<span class="number">3</span>	<span class="number">1</span>	<span class="number">109.47</span>	<span class="number">383</span>	<span class="number">109.47</span>	<span class="number">383</span></span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>gromos54a7.ff下的 ions.itp 的一部分</p>
+<li><p><code>gromos54a7.ff</code>下的 <code>ions.itp</code> 的一部分</p>
 <figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="built_in">..</span>.</span><br><span class="line">[ moleculetype ]</span><br><span class="line">; molname	nrexcl</span><br><span class="line">CA		1		除个例外，所有力场中离子的“分子名”“残基名”、“原子名”相同且都是元素符号大写，但原子类型名视力场而定</span><br><span class="line"></span><br><span class="line">[ atoms ]</span><br><span class="line">; id	at<span class="built_in"> type	</span>res nr 	residu name	at name  cg nr	charge   mass</span><br><span class="line">1	CA2+	1	CA		CA	 1	2	 40.08000</span><br><span class="line"></span><br><span class="line">[ moleculetype ]</span><br><span class="line">; molname	nrexcl</span><br><span class="line">NA		1</span><br><span class="line"></span><br><span class="line">[ atoms ]</span><br><span class="line">; id	at<span class="built_in"> type	</span>res nr 	residu name	at name  cg nr	charge   mass</span><br><span class="line">1	NA+	1	NA		NA	 1	1	 22.9898</span><br><span class="line"><span class="built_in">..</span>.</span><br></pre></td></tr></table></figure>
 <ul>
 <li>一个itp文件里可以有多个<code>[moleculetype]</code>字段分别定义多个分子类型的信息。在下一个<code>[moleculetype]</code>字段之前出现的各种字段都是对上一个<code>[moleculetype]</code>定义的分子来定义的。</li>
 </ul>
 </li>
 </ul>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>拓扑文件与结构文件的对应关系问题：</p>
+<h2 id="注意事项-1"><a href="#注意事项-1" class="headerlink" title="注意事项"></a>注意事项</h2><p>拓扑文件与结构文件的对应关系问题：</p>
 <ul>
 <li><p>只有拓扑文件对应的原子顺序与结构文件(一般为gro、pdb)的原子顺序完全一致时计算才有意义，否则参数会匹配错乱，导致结果离谱或者崩溃。为此，必须满足:</p>
 <ul>
@@ -12180,7 +12136,8 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </ul>
 </li>
 </ul>
-<h1 id="mdp文件"><a href="#mdp文件" class="headerlink" title="mdp文件"></a>mdp文件</h1><ul>
+<h1 id="mdp文件"><a href="#mdp文件" class="headerlink" title="mdp文件"></a>mdp文件</h1><p>常用的mdp选项：<a href="https://manual.gromacs.org/current/user-guide/mdp-options.html">Molecular dynamics parameters (.mdp options) - GROMACS 2026.3 documentation</a></p>
+<ul>
 <li><p>mdp参数一般不区分大小写，顺序无所谓，但如果输入两次相同的内容，则使用最后一次输入的内容（ <code>gmx grompp</code> 会在值被覆盖时发出提示）。左侧的破折号和下划线将被忽略。</p>
 </li>
 <li><p>例：蛋白质在水箱中进行 1 纳秒 MD 模拟的值</p>
@@ -12191,7 +12148,6 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <li><p><a href="https://pypi.org/project/mdpeditor/">mdpeditor · PyPI</a>：该工具可以根据简单的指令，帮助用户按照最佳实践生成 mdp 文件。</p>
 </li>
 </ul>
-<p>常用的mdp选项：<a href="https://manual.gromacs.org/current/user-guide/mdp-options.html">Molecular dynamics parameters (.mdp options) - GROMACS 2026.3 documentation</a></p>
 <h2 id="预处理控制（区分大小写）"><a href="#预处理控制（区分大小写）" class="headerlink" title="预处理控制（区分大小写）"></a>预处理控制（区分大小写）</h2><ul>
 <li><code>define</code>：传递给<code>.top</code>的预处理器的设定。<ul>
 <li><code>-DFLEXIBLE</code> 将在您的拓扑中使用柔性水而不是刚性水，这对于正态模式分析非常有用。</li>
@@ -12226,6 +12182,13 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </li>
 <li><code>nstcomm</code>：每多少步消除一次整体运动，默认100步</li>
 <li><code>comm-grps</code>:对哪个组消除整体运动，默认是system</li>
+</ul>
+<h3 id="多时间步长"><a href="#多时间步长" class="headerlink" title="多时间步长"></a>多时间步长</h3><p>GROMACS2021版开始支持多时间步长(multiple timing-stepping,mts)节约耗时。例如可以成键、1-4作用造成的受力每步都计算，而高耗时的非键作用力每两步更新一次，在相同计算量下可以跑近乎双倍的时间。由于非键作用力随时间变化远小于成键作用的，因此此做法造成的不良影响在一般可容忍范围内。但由于此做法尚未流行，需慎用。</p>
+<ul>
+<li><code>mts =yes</code>：默认<code>NO</code></li>
+<li><code>mts-levels=2</code>：默认，而且只能为2</li>
+<li><code>mts-level2-forces = nonbonded longrange-nonbonded</code>：定义哪些组作为level2组。这样令非键作用的实空间和倒易空间部分都纳入才能起到明显节约时间的效果</li>
+<li><code>mts-level2-factor =2</code>（令level2组每2步算一次受力)</li>
 </ul>
 <h2 id="能量极小化参数"><a href="#能量极小化参数" class="headerlink" title="能量极小化参数"></a>能量极小化参数</h2><ul>
 <li><code>emtol</code>:能量极小化时最大受力小于多少就认为己收敛(kJ/mol/nm)。默认为<br>10.0</li>
@@ -12412,17 +12375,25 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <h2 id="初始速度生成设定"><a href="#初始速度生成设定" class="headerlink" title="初始速度生成设定"></a>初始速度生成设定</h2><ul>
 <li><p><code>gen-vel</code></p>
 <ul>
-<li><code>no</code>(默认):如果输入文件里有速度信息则使用其作为初速度，里面没有速度信息则初速度为0</li>
-<li><code>yes</code>:令grompp按照Maxwell分布产生随机的初速度</li>
+<li><code>no</code>(默认)：如果输入文件里有速度信息则使用其作为初速度，里面没有速度信息则初速度为0</li>
+<li><code>yes</code>：令<code>grompp</code>按照Maxwell分布产生随机的初速度</li>
+</ul>
+<p>通常情况不是必须用<code>gen-vel</code>产生初速度，哪怕没有初速度信息（即初速度为0）。由于通常都会使用热浴，因此原子速度会自然而然地逐渐变化到指定的参考温度状态。</p>
+<ul>
+<li>有些情况则需要用<code>gen-vel</code>，如:<ul>
+<li>若能量极小化极其精确，原子受力都将几乎严格为0，因而也不会自发地带来速度。此时在大多数控温算法下，速度会一直很接近0，经过很长时间都升不到期望的温度</li>
+<li>做多次平行模拟以避免单次模拟的偶然性时，应当用<code>gen_vel</code>并结合赝随机数，以在每次模拟时都拥有不同的随机初速度</li>
+</ul>
+</li>
 </ul>
 </li>
 <li><p><code>gen-temp</code>:产生的初速度对应的温度(K)，默认为300</p>
 </li>
-<li><p>gen-seed:随机数的种子。默认为-1，对应赝随机数注:用gen-vel= yes时不宜结合较高的gen-temp,否则有可能有些原子初速度过大，导致一开始动力学出现不稳定、崩溃。应当用较低的gen-temp(如100K)，然后通过控温的自发过程，或者指定退火方式，使温度最终达到期望值。</p>
-<p>注:用<code>gen-vel= yes</code>时不宜结合较高的<code>gen-temp</code>,否则有可能有些原子初速度过大，导致一开始动力学出现不稳定、崩溃。应当用较低的gen-temp(如100K)，然后通过控温的自发过程，或者指定退火方式，使温度最终达到期望值。</p>
+<li><p><code>gen-seed</code>:随机数的种子。默认为-1，对应赝随机数</p>
+<p>注:用<code>gen-vel= yes</code>时不宜结合较高的<code>gen-temp</code>，否则有可能有些原子初速度过大，导致一开始动力学出现不稳定、崩溃。应当用较低的gen-temp(如100K)，然后通过控温的自发过程，或者指定退火方式，使温度最终达到期望值。</p>
 </li>
 </ul>
-<p><code>ns_type</code>：<code>grid</code>：采用网格法进行邻域搜索,提高非键相互作用搜索效率。</p>
+<h2 id="外电场设定"><a href="#外电场设定" class="headerlink" title="外电场设定"></a>外电场设定</h2><h2 id=""><a href="#" class="headerlink" title=" "></a> </h2><p><code>ns_type</code>：<code>grid</code>：采用网格法进行邻域搜索,提高非键相互作用搜索效率。</p>
 <p>pme_order：PME 插值阶数为 4;常见且稳定的默认选择。</p>
 <p>fourierspacing：PME 傅里叶网格间距;越小通常越精确但更耗时。</p>
 <p>gen_vel no 不重新生成初速度;通常从输入结构/重启文件读取速度。</p>
@@ -12434,6 +12405,986 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
       <tags>
         <tag>GROMACS</tag>
         <tag>文件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【GROMACS】4.GROMACS中的命令</title>
+    <url>/2026/08/12/%E3%80%90GROMACS%E3%80%914.GROMACS%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h1 id="总体"><a href="#总体" class="headerlink" title="总体"></a>总体</h1><ul>
+<li><a href="https://manual.gromacs.org/current/user-guide/cmdline.html">Command-line reference - GROMACS 2026.3 documentation</a></li>
+<li>可以使用 <code>gmx help *command*</code> 或 <code>gmx *command* -h</code> 查询帮助</li>
+<li>如果已安装 MPI 版本的 GROMACS，则默认情况下 <code>gmx</code> 二进制文件名为 <code>gmx_mpi</code></li>
+</ul>
+<h1 id="常用的参数"><a href="#常用的参数" class="headerlink" title="常用的参数"></a>常用的参数</h1><ul>
+<li><code>-f</code>：结构文件（gro、pdb、tpr等)或轨迹文件(tr、xtc等），或xvg文件，或edr文件。</li>
+<li><code>-s</code>、<code>-c</code>：结构文件 （gro、pdb、tpr等)。具体视程序而定</li>
+<li><code>-n</code>：索引文件(ndx）</li>
+<li><code>-b</code>、<code>-e</code>：设定轨迹中被考虑的部分是从哪里开始（begin)到哪里结束(end)</li>
+<li><code>-dt</code>：轨迹每多长时间被读入一次</li>
+</ul>
+<h1 id="dump"><a href="#dump" class="headerlink" title="dump"></a>dump</h1><p>用来把GROMACS的各种私有的二进制文件转化成可读形式输出，便于检查和提取数据。</p>
+<ul>
+<li><code>-s</code>: .tpr</li>
+<li><code>-f</code>: .xtc/.trr</li>
+<li><code>-e</code>: .edr</li>
+<li>-cp:.cpt</li>
+</ul>
+<p>例子：从info.out中将看到md.cpt中包含的原子坐标/速度、盒子尺寸、当前模拟时间等各种信息。</p>
+<figure class="highlight armasm"><table><tr><td class="code"><pre><span class="line"><span class="symbol">gmx</span> dump-<span class="meta">cp</span> mid.cpt &gt; <span class="meta">info</span>.out</span><br></pre></td></tr></table></figure>
+<p>从tpr中可以获取原子间相互作用参数信息，从edr中可以获取每一帧各种能量项，从trr中可以获取每一帧坐标信息、速度、受力信息(若储存了的话)。</p>
+<h1 id="editconf"><a href="#editconf" class="headerlink" title="editconf"></a>editconf</h1><figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line">gmx editconf [-f <span class="meta">[&lt;.gro/.g96/...&gt;]</span>] [-n <span class="meta">[&lt;.ndx&gt;]</span>] [-bf <span class="meta">[&lt;.dat&gt;]</span>]</span><br><span class="line">             [-o <span class="meta">[&lt;.gro/.g96/...&gt;]</span>] [-mead <span class="meta">[&lt;.pqr&gt;]</span>] [-[no]w]</span><br><span class="line">             [-[no]ndef] [-bt &lt;enum&gt;] [-box &lt;vector&gt;]</span><br><span class="line">             [-angles &lt;vector&gt;] [-d &lt;real&gt;] [-[no]c]</span><br><span class="line">             [-center &lt;vector&gt;] [-aligncenter &lt;vector&gt;]</span><br><span class="line">             [-align &lt;vector&gt;] [-translate &lt;vector&gt;]</span><br><span class="line">             [-rotate &lt;vector&gt;] [-[no]princ] [-scale &lt;vector&gt;]</span><br><span class="line">             [-density &lt;real&gt;] [-[no]pbc] [-resnr &lt;int&gt;] [-[no]grasp]</span><br><span class="line">             [-rvdw &lt;real&gt;] [-[no]sig56] [-[no]vdwread] [-[no]atom]</span><br><span class="line">             [-[no]legend] [-label &lt;string&gt;] [-[no]conect]</span><br></pre></td></tr></table></figure>
+<p>用来设置模拟体系的盒子，也可以用来平移和旋转结构，或者转换文件格式。</p>
+<ul>
+<li><code>-f</code>：输入结构文件</li>
+<li><code>-n</code>：输入索引文件（可选）</li>
+<li><code>-o</code>：输出结构文件（可选）</li>
+</ul>
+<p>设置盒子，会自动把体系放在盒子中央，除非使用了<code>-noc</code></p>
+<ul>
+<li><code>-bt</code>：盒子类型，triclinic（三斜。默认)，cubic（立方）dodecahedron（梭形十二面体），octahedron（截角八面体）</li>
+<li><code>-box &lt;vec&gt;</code>：对triclinic盒子自定义盒子三个边长(a,b,c)，对其它类型盒子只需定义一个边长值</li>
+<li><code>-angles α β γ</code>：使用<code>-box</code>时同时自定义盒子向量 (bc,ac,ab) 之间的夹角</li>
+<li><code>-d &lt;real&gt;</code>：将分子边界向X/Y/Z方向延展此值来定义盒子</li>
+</ul>
+<p>修改结构：</p>
+<ul>
+<li><code>-translate &lt;vector&gt;</code>：对体系在X/Y/Z方向进行平移的距离</li>
+<li><code>-rotate &lt;vector&gt;</code>：绕X, Y和Z轴的旋转角度, 单位为度</li>
+<li><code>-scale &lt;vector&gt;</code>：将原子坐标在三个方向乘以此数值(可达到比如调节密度的目的）</li>
+<li><code>-[no]princ</code>：使某个组的最长的主轴向X轴对齐。</li>
+<li><code>-mead foo.pqr</code>：如果读入的是<code>.tpr</code>文件，则可以输出<code>.pqr</code>文件，格式类似<code>pdb</code>，但同时记录了原子电荷和原子半径信息</li>
+</ul>
+<h1 id="energy"><a href="#energy" class="headerlink" title="energy"></a>energy</h1><p>用于从能量文件(.edr)中提取动能、势能的各种成分、温度、盒子尺寸、压力、维里值、体积、密度、能量组之间的非键作用能等数据，输出随时间的变化，并进行统计分析得到平均值、RMSD、漂移量，并可以计算一些体系的热力学性质。</p>
+<ul>
+<li><p><code>-f</code>:.edr文件</p>
+</li>
+<li><p><code>-o</code>:.xvg文件(默认为energy.xvg)</p>
+</li>
+<li><p><code>-dp</code>:在xvg文件中以更高精度输出数据</p>
+<p>运行比如<code>gmx energy -f md.edr</code>，然后将屏幕上感兴趣的量的序号依次输入;每输入一个按一次回车，最后以空行或0结束，则被选中的量随时间变化就会被提取并一起记录到energy.xvg中。使用<code>xmgrace -nxy energy.xvg</code>即可作到一张图上(若只有一套Y数据则不需要<code>-nxy</code>)</p>
+</li>
+<li><p><code>-fluct_props</code>:计算与性质波动有关的量，诸如热容、等温可压缩系数、热膨胀系数</p>
+</li>
+<li><p><code>-nmol &lt;int&gt;</code>:体系中的分子数，默认为1。对于计算热力学量时应当设为实际值，否则计算出的结果可能错误<br>只有选择全了相应条目的<code>Energy terms needed</code>下面的项，才会在提取数据后将相应的量也算出来。</p>
+</li>
+<li><p><code>-fee</code>：选项会计算体系与理想气体状态时的自由能差值</p>
+<p>$\Delta A = A(N,V,T) - A_{idealgas}(N,V,T) = kT \ln(&lt;\exp(U_{pot}/kT)&gt;)$</p>
+<p>$\Delta G = G(N,p,T) - G_{idealgas}(N,p,T) = kT \ln(<exp(U_{pot}/kT)>)$</p>
+<p>在界面里应当选择Potential 。在输出信息中的  -kT ln<e^(E/kT)>列下方的数值即是要取的值</p>
+</li>
+<li><p><code>-f2</code>：提供另一个edr文件，用于计算两种参数下体系的自由能差。两个edr文件里的帧数需相同，应来自同一体系。</p>
+<p>$\Delta G = -kTln(<exp(-(E_B-E_A) / kT)>_A),$</p>
+<p>界面里应选择Total Energy。</p>
+</li>
+<li><p><code>-fetemp &lt;real&gt;</code> :估算自由能时用的参考温度，默认为300 K</p>
+</li>
+</ul>
+<h1 id="genion"><a href="#genion" class="headerlink" title="genion"></a>genion</h1><p>将结构中指定的组(一般是溶剂组)的部分分子随机替换为单原子离子。</p>
+<ul>
+<li><code>-s</code>：<code>.tpr</code>文件</li>
+<li><code>-n</code>：索引文件(可选)</li>
+<li><code>-p</code>：拓扑文件(会对之进行恰当修改)</li>
+<li><code>-o</code>：结构文件</li>
+</ul>
+<p>用法：默认为加入Na+、Cl-，若自设离子可用<code>-pname [阳离子名] -pq [阳离子电荷数] -nname [阴离子名] -nq [阴离子电荷数]</code>，离子名均为大写，如NA、CL、CA</p>
+<ul>
+<li><code>-np 阳离子数 -nn 阴离子数</code> </li>
+<li><code>-conc 盐浓度(mol/L)</code></li>
+<li><code>-neutral 加入足够离子使体系电荷中性化</code></li>
+</ul>
+<p>genion如果要求加入的离子数非常多的话，可能会出现No more replaceable solvent的提示导致运行失败：</p>
+<ul>
+<li>可以被genion替换的溶剂分子是距离离子超过<code>rmin</code>的溶剂分子。当被替换的溶剂分子已经很多，没有其它满足条件的可被替换的溶剂分子时，就会出现上述错误。</li>
+<li>解决方法是加上<code>-rmin [离子间最小距离]</code>，将离子间最小距离设成小于默认的0.6 nm的值。但也不能设得太小，否则可能导致带电相同的离子间出现位置太近，由于静电互斥过强导致模拟一开始崩溃。</li>
+</ul>
+<p>genion命令无法加入多原子离子。可以利用packmol构建这种体系，也可以用<code>inisert-molecules</code>命令通过<code>-replace</code>选项对原有分子进行替换。</p>
+<p>例子：</p>
+<ul>
+<li><p>产生含有5个Ga<sup>2+</sup>和10个NO<sub>3</sub><sup>-</sup>的3×3×3nm水盒子</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">gmx</span> solvate -box <span class="number">3</span> <span class="number">3</span> <span class="number">3</span> -o waterbox.gro</span><br><span class="line"><span class="attribute">gmx</span> insert-molecules -f waterbox.gro -ci NO<span class="number">3</span>-.pdb -nmol <span class="number">10</span> -replace -o salt.gro</span><br><span class="line"><span class="attribute">gmx</span> insert-molecules -f salt.gro -ci Ca<span class="number">2</span>+.pdb -nmol <span class="number">5</span> -replace -o salt.gro</span><br></pre></td></tr></table></figure>
+<p>每次都选择water组</p>
+</li>
+</ul>
+<h1 id="grompp"><a href="#grompp" class="headerlink" title="grompp"></a>grompp</h1><p>grompp(GROMACS preprocessor)，读取运行参数文件、拓扑文件和结构文件，将信息处理、整合，产生mdrun的输入文件<code>.tpr</code>。</p>
+<ul>
+<li><code>-f:</code>.mdp文件</li>
+<li><code>-c</code>:结构文件</li>
+<li><code>-p</code>：拓扑文件</li>
+<li><code>-t</code>(非必需)：<code>.trr</code>轨迹文件(默认读取其最后一帧信息)或<code>.cpt</code>文件<ul>
+<li>精确延续之前的体系状态应当用<code>-t</code>提供<code>.cpt</code>文件</li>
+</ul>
+</li>
+<li><code>-r</code>：位置限制文件(使用位置限制时才需要)</li>
+<li><code>-n</code>(非必须)：索引文件</li>
+<li><code>-o</code>：<code>.tpr</code>文件</li>
+<li><code>-pp</code>选项可以输出一个<code>processed.top</code>,是预处理器处理top文件后的结果，所有include的文件都会被展开，对ga_1之类参数的引用也直接被实际的参数所替换。</li>
+<li><code>-maxwarn [数目]</code>：可以设允许最多出现多少个Warmning而不终止运行。默认只要出现Wamning则grompp就会终止。<ul>
+<li>grompp给出的所有Warning都应当留意，往往暗示出输入文件里的错误，若轻易无视之可能模拟崩溃或者得到无意义的结果。</li>
+</ul>
+</li>
+</ul>
+<p>grompp还会自动产生<code>mdout.mdp</code>文件，是参数完整的<code>.mdp</code>文件，会体现没设定的参数的默认值，并包含许多注释。</p>
+<p>grompp是按照top文件里的[ molecules ]记录的分子顺序展开成的原子顺序构建<code>tpr</code>文件的，从结构文件中只是读取坐标。grompp会按顺序检查top和结构文件里的原子名的对应关系，如果不符合将会给出警告并使用top里的原子名。</p>
+<h2 id="常见Warning"><a href="#常见Warning" class="headerlink" title="常见Warning"></a>常见Warning</h2><p>关于净电荷的常见Warning</p>
+<ul>
+<li>You are using Ewald electrostatics in a system withnet charge. This can lead to severe artifacts, suchas ions moving into regions with low dielectric, dueto the uniform background charge. We suggest toneutralize your system with counter ions, possibly incombination with a physiological salt concentration.<ul>
+<li>这说明的当前用的是Ewald、PME之类考虑无穷远静电相互作用的方法，但是体系的净电荷不为0，此时模拟可能明显不合理，可能需要修正。</li>
+<li>此时应当检查grompp提示的System has non-zerototal charge后面显示的净电荷是多少，有三种情况：<ul>
+<li>数值非常接近于0：如0.0013。可以用<code>-maxwarn</code>无视此警告继续产生tpr</li>
+<li>数值是不为0的整数：如3.0、-1.0。说明需要用诸如<code>gmx genion</code>加抗衡离子使得整个体系电中性化</li>
+<li>数值是一个偏离整数明显的数：如0.167。这必定是因为有的moleculetype里[ atoms ]定义的所有原子电荷加不为整数所致。哪怕每一个分子的净电荷偏离0仅有诸如0.002的程度，但分子数很多时也会造成整体净电荷偏离0非常明显。需要自行检查体系中涉及的各个moleculetype的净电荷(手动加和其中的原子电荷)，对于净电荷轻微偏离0的分子，可手动调整其中某一个或多个原子电荷以令分子的净电荷恰为整数。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>关于原子顺序的常见Warning</p>
+<ul>
+<li>结构文件里的原子顺序必须和拓扑文件里的[ molecules ]及各类分子的[ atoms ]所对应的原子顺序完全一致，否则模拟时参数会错乱。而拓扑文件和结构文件中的原子名、残基名可以相同也可以不同，不同时在用grompp时会出现warning，可以无视，此时mdrun最终产生的gro文件里的原子和残基名将与拓扑文件里的一致。</li>
+</ul>
+<h1 id="insert-molecules"><a href="#insert-molecules" class="headerlink" title="insert-molecules"></a>insert-molecules</h1><p>将指定的分子插入体系空挡中，或构建一个填充指定分子的盒子。与<code>solvate</code>命令关键不同之处在于此命令中被填入的分子只需提供单个分子的结构文件。</p>
+<ul>
+<li><code>-f</code>：被填充的结构文件</li>
+<li><code>-ci</code>：要填入的分子的结构文件</li>
+<li><code>-o</code>：填充后的结构文件，默认为<code>out.gro</code></li>
+<li><code>-box &lt;vector&gt;</code>：构建新盒子并往里填充<ul>
+<li>如果<code>-f</code>和-box一起用，则是把-f文件里的盒子改成<code>-box</code>的尺寸后再往空隙里填。</li>
+</ul>
+</li>
+</ul>
+<h2 id="随机插入"><a href="#随机插入" class="headerlink" title="随机插入"></a>随机插入</h2><p>随机插入，此为默认情况。和solvate命令一样原子间距离肯定不会小于它们之间范德华半径之和(且可以用<code>-scale</code>调节半径的倍数)</p>
+<ul>
+<li><code>-nmol &lt;int&gt;</code>：最多填入的分子数</li>
+<li><p><code>-try &lt;int&gt;</code>：尝试插入<code>-nmol</code>乘以<code>-try</code>次。因此此值越大可能填充进去的分子越多。默认为<code>10</code></p>
+</li>
+<li><p><code>-rot</code>：默认为xyz，即填充时分子在三个方向可随意旋转。也可以为<code>z</code>(只允许绕Z轴旋转)、<code>none</code>(不能旋转)</p>
+</li>
+</ul>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><ul>
+<li><p>将formamide.pdb里的分子填入3×4×4 nm的空盒子，输出solv.gro。尝试最多填入1000个，如果填不下则能填多少填多少，尽可能填满</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">gmx insert-molecules -box <span class="number">3</span> <span class="number">4</span> <span class="number">4</span> -ci formamide.pdb -o solv.gro -nmol <span class="number">1000</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将ethanol.gro里的分子填入protein.pdb当中溶质与盒子间的空隙，尝试最多填入200个</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">insert-molecules</span> <span class="selector-tag">-f</span> <span class="selector-tag">protein</span><span class="selector-class">.pdb</span> <span class="selector-tag">-ci</span> <span class="selector-tag">ethariol</span><span class="selector-class">.gro</span> <span class="selector-tag">-o</span> <span class="selector-tag">solv</span><span class="selector-class">.gro</span> <span class="selector-tag">-nmol</span> 200</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>把solv.gro的盒子(假设原先为2×2×2nm) 改为2×2×5nm，往多出来的2×2×3nm空间内填充CH4.pdb，尝试最多填入1000个(此法可以构建两相界面体系)</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">gmx</span> insert-molecules -f solv.gro -ci CH<span class="number">4</span>.pdb -box <span class="number">2</span> <span class="number">2</span> <span class="number">5</span> -o biphase.gro -nmol <span class="number">1000</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="指定位置插入"><a href="#指定位置插入" class="headerlink" title="指定位置插入"></a>指定位置插入</h2><p>在一批指定的位置插入分子，需自己提供一个<code>.dat</code>后缀的文件，每一行指定个分子插入的X，Y，Z坐标（相对于<code>-ci</code>文件里的坐标原点而言），用<code>-ip</code>选项接上此文件的路径。</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">gmx insert-molecules -box <span class="number">1</span> <span class="number">2</span> <span class="number">2</span> -ci formamide.pdb -o new.gro -ip pos.dat</span><br></pre></td></tr></table></figure>
+<p><code>pos.dat</code>的内容类似于：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">0</span>.<span class="number">25</span> <span class="number">0.5.0.5</span></span><br><span class="line"><span class="attribute">8</span>.<span class="number">25</span> <span class="number">0</span>.<span class="number">5</span> <span class="number">1</span>.<span class="number">0</span></span><br><span class="line"><span class="attribute">0</span>.<span class="number">25</span> <span class="number">1</span>.<span class="number">8</span> <span class="number">0</span>.<span class="number">5</span></span><br><span class="line"><span class="attribute">0</span>.<span class="number">25</span> <span class="number">1</span>.<span class="number">0</span> <span class="number">1</span>.<span class="number">0</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>通常<code>-ci</code>指定的结构文件里的分子的中心位置应当处于坐标原点，以令<code>.dat</code>设的恰是各个分子中心出现的位置</li>
+</ul>
+<h1 id="mdrun"><a href="#mdrun" class="headerlink" title="mdrun"></a>mdrun</h1><p>是GROMACS最关键的命令，用于做各种计算模拟任务。</p>
+<ul>
+<li><code>-s</code>:<code>.tpr</code>文件</li>
+<li><code>-cpi</code>:<code>.cpt</code>文件(可选，用于精确续算目的。若提供则完整的状态信息从这里读，否则用.tpr里的信息)<ul>
+<li>运行时每隔一定时间(用<code>-cpt</code>来设，默认15分钟)往<code>.cpt</code>里写一次完整的状态数据用于续算。前一次的<code>.cpt</code>文件会被改名为<code>_prev</code>结尾</li>
+</ul>
+</li>
+<li><code>-rerun</code>:轨迹文件(可选，计算已有轨迹的能量才用)</li>
+<li><code>-o</code>:输出的<code>.trr</code>文件</li>
+<li><code>-x</code>:输出的<code>.xtc</code>文件(可选)</li>
+<li><code>-cpo</code>:输出的<code>.cpt</code>文件(可选)</li>
+<li><code>-c</code>：输出的结构文件</li>
+<li><code>-e</code>:输出的<code>.edr</code>文件</li>
+<li><code>-g</code>：输出的<code>log</code>文件</li>
+<li><code>-deffnm</code>：设定对所有选项都用的文件名</li>
+<li><code>-v</code>:在终端不断输出当前已跑步数以及预计的完成时间</li>
+</ul>
+<h2 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h2><ul>
+<li><p>常规计算：将运行md1.tpr,输出md1.trr/xtc/log/cpt/edr/gro。gro文件应轨迹最后一帧结构而且是分子保留完整的状态。运行进度预计完成时间不断输出到屏幕上。四个线程将被利用。</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">gmx</span> mdrun -v -deffnm md<span class="number">1</span> -nt <span class="number">4</span> -pin <span class="literal">on</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果要在远程服务器上运行，用比如：<code>nohup gmx mdrun -deffnm md1 nt 36 -pin on &amp;</code>，之后若用<code>exit</code>命令断开与服务器的连接，任务在服务器上会一直跑完。运行进度可以用<code>tail -f md1.log</code>来实时监控。</li>
+</ul>
+</li>
+<li><p>跑完意外中断的任务md1，轨迹、能量、日志文件会接续之前文件断点处继续写入，最终得到的这些文件和一次性完整运行的相同。</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">gmx</span> mdrun -v -deffnm md<span class="number">1</span> -cpi md<span class="number">1</span>.cpt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>md1已完整跑完，延续之前的模拟参数，再跑额外的5ns模拟，新任务叫md2</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">gmx</span> convert-tpr -s md<span class="number">1</span>.tpr -extend <span class="number">5000</span> -o md<span class="number">2</span>.tpr</span><br><span class="line"><span class="attribute">gmx</span> mdrun -v -deffnm md<span class="number">2</span> -cpi md<span class="number">1</span>.cpt -noappend</span><br></pre></td></tr></table></figure>
+<p>最终会得到md2.part0002.trr/xtc/log/edr/gro和md2.cpt</p>
+</li>
+<li><p>同上，但是直接在之前md1的输出文件上续写</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">gmx</span> convert-tpr -s md<span class="number">1</span>.tpr -extend <span class="number">5000</span> -o md<span class="number">1</span>.tpr</span><br><span class="line"><span class="attribute">gmx</span> mdrun -v -deffnm md<span class="number">1</span> -cpi md<span class="number">1</span>.cpt</span><br></pre></td></tr></table></figure>
+<p>注:<code>convert-tpr</code>还可以结合<code>-until xxx</code>将模拟终止时间延长到<code>xxx</code></p>
+</li>
+<li><p>heat任务已跑完，想延续其最后的状态结合其它的mdp设定跑prod任务</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">gmx grompp -f prod<span class="selector-class">.mdp</span> -c heat<span class="selector-class">.gro</span> -t heat<span class="selector-class">.cpt</span> -<span class="selector-tag">p</span> NANA<span class="selector-class">.top</span> -o prod.tpr</span><br><span class="line">gmx mdrun -v -deffnm prod</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这样产生的轨迹的初始时间由mdp里的<code>tinit</code>定义，如果没定义则默认从0开始计。</li>
+<li>注：多次延长模拟时间时，若为了让每一个任务都有独立的从而易于管理的文件，可以每一段延长的模拟都设置对应的mdp文件(如prod2.mdp、prod3.mdp…)并用此法产生相应的tpr文件。</li>
+</ul>
+</li>
+<li><p>用UR.tpr里的参数和设定计算config.pdb结构的能量(即单点能)</p>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line">gmx mdrun -deffnm UR -rerun <span class="built_in">config</span>.pdb</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用SSR.tpr里的参数和设定计算traj.trr里每一帧的能量并写入SSR.edr中</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">mdrun</span> <span class="selector-tag">-deffnm</span> <span class="selector-tag">SSR</span> <span class="selector-tag">-rerun</span> <span class="selector-tag">traj</span><span class="selector-class">.trr</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用<code>-rerun</code>计算某个结构文件或轨迹文件里各个结构的能量时，提供的结构/轨迹文件里的原子顺序必须与.tpr文件精确一致</li>
+<li>如果用<code>-reprod</code>，可以避免一些自动优化，使得在相同软硬件环境下(包括GROMACS版本)对相同tpr每次跑的结果精确相同。</li>
+</ul>
+</li>
+</ul>
+<h2 id="并行机制"><a href="#并行机制" class="headerlink" title="并行机制"></a>并行机制</h2><ul>
+<li>MPI：是最普的并行化技术。GROMACS4.5版以前的并行无论节点内还是节点间一律通过MPI实现</li>
+<li>thread-MPI:是MPI的轻量级子集，专门用于节点内并行，从4.5版起开始被GROMACS内置</li>
+<li>OpenMP:是最方便、流行的实现节点内并行的技术，从4.6版开始被GROMACS支持。日前版本在节点内并行时thread-MPI与OpenMP会自动结合使用，每个thread-MPI线程下属会有多个OpenMP线程，总并行线程数是二者的乘积。另外GROMACS的一些个别分析命令如hbond也支持OpenMP并行</li>
+</ul>
+<p>基于MPI并行需要在编译时提供MPI库(如OpenMPI)，而基于thread-MPI和OpenMP在节点内并行在编译时不需要额外的库。因此，如果只需要节点内并行则无需提供MPI库并专门编译MPI版，而且用MPI版来并行计算速度还会更慢。</p>
+<p>参数：</p>
+<ul>
+<li><code>-nt</code>：设定用几个线程并行。默认用所有CPU逻辑核数来并行。也可以用<code>-ntmpi</code>和<code>-ntomp</code>分别明确指定其中thread-MPI线程数和下属的OpenMP线程数，二者之积对应总线程数(<code>-nt</code>值)。<ul>
+<li>当节点内n核并行时，top命令看到的gmx进程的CPU占用率原理上应接近n*100%</li>
+</ul>
+</li>
+<li><code>-pin on</code>:将线程和CPU核心绑定，避免系统随意调度导致性能损失。</li>
+<li><code>-pinoffset [id]</code>:<code>-pin on</code>时绑定的CPU核心从第id个核开始算，第一个核心id为0。此选项默认为0。如果同时跑多个任务且用<code>-pin on</code>，总应当结合<code>-pinoffset</code>避免有的核心同时做两个任务</li>
+<li><code>-pinstride [int]</code>:<code>-pin on</code>时绑定的核的序号的间隔。通常设为1，使得被绑定的核的序号挨着</li>
+</ul>
+<p>对于支持超线程的CPU一般建议设成<code>-nt [CPU物理核数] -pin on</code>。没有必要关闭超线程。<br>对于跑非常长、很耗时的轨迹，可以加上比如<code>-nsteps 20000</code>只跑20000步，测试一下以下情况的差异以寻找性能最佳的组合用来跑当前任务:</p>
+<ul>
+<li>用和不用<code>-nt [物理核心数]</code></li>
+<li>用和不用<code>-pin on</code></li>
+<li><code>-ntmpi</code>与<code>-ntomp</code>的不同组合(二者之积应对应实际调用的总核数)</li>
+</ul>
+<p>报错：</p>
+<ul>
+<li><p>Fatal error：Your choice of number of MPI ranks and amount of resourcesresults in using 36 OpenMP threads per rank, which is mostlikely inefficient. The optimum is usually between 1 and 6threads per rank. If you want to run with this setup,specify the -ntomp option. But we suggest to change thenumber of MPI ranks (option -ntmpi).</p>
+<ul>
+<li>写上-ntomp 6使得每个thread-MPI线程下属的OpenMP线程在程序建议的范围。OpenMP线程数太高的话性能会打折扣，将hread-MPI和OpenMP恰当搭配并行时性能才最好。</li>
+</ul>
+</li>
+<li><p>模拟小体系时可能有以下提示 NOTE: Parallelization is limited by the smallnumber of atoms, only starting 2 thread-MPIranks, You can use the -nt and/or -ntmpi option to  optimize the number of threads </p>
+<ul>
+<li>说明体系原子数太少，仅能利用2个thread-MP1线程进行计算，不用管。</li>
+<li>如果实际模拟时发现CPU利用率很低，可尝试用<code>-ntmpi 2</code>结合<code>-ntomp [物理核心数/2]</code>，尽可能充分靠OpenMP来并行。</li>
+</ul>
+</li>
+</ul>
+<h2 id="GPU加速相关"><a href="#GPU加速相关" class="headerlink" title="GPU加速相关"></a>GPU加速相关</h2><p>当mdrun检测到有GPU可以利用时GPU版会自动利用GPU计算，当有些功能不支持GPU导致报错时可以明确指定用CPU算。</p>
+<ul>
+<li><code>-bonded</code>、<code>-nb</code>、<code>-pme [auto/cpu/gpu]</code>:指定成键、非键作用的实空间部分、PME算的非键作用的倒易空间部分用CPU还是GPU算。默认为<code>auto</code></li>
+<li>GPU版mdrun可以通过<code>-nb cpu -pme cpu -bonded cpu</code>强行要求只在CPU上算(2018版没-bonded选项)</li>
+<li><code>-gpu_id [GPUid]</code>:有多块GPU且想用来分别跑多个任务时，指定任务在哪个GPU上跑，避免冲突</li>
+<li><code>-update gpu</code>:令约束以及坐标更新也放到GPU上算，从而进一步加快速度，这称为GPU-resident模式，但功能上有限制。<ul>
+<li>从2020版开始支持，从2023版开始默认开启。2023版以前默认为-<code>-update auto</code>，总是在CPU上做。用<code>export GMX_FORCE_UPDATE _DEFAULT_GPU=true</code>设置环境变量可以总是强行在GPU上做。</li>
+<li>注:为了尽可能避免通信，GPU上做update需要满足updategroups条件。此时如果用了约束，几个原子若共同与某个原子有约束关系，那么在[ atoms ]中这儿个原子应当连续地排在那个原子的后头。例如用<code>constraints = hbonds时</code>，氢原子应当连续地排在它相连的重原子的后头。</li>
+</ul>
+</li>
+</ul>
+<h3 id="例子-2"><a href="#例子-2" class="headerlink" title="例子"></a>例子</h3><ul>
+<li><p>16核32线程机子上用两个GPU分别跑两个任务，且各用不同的8个CPU物理核心的最佳的运行方式：任务1:由0-7号CPU核心连同0号GPU运行；任务2由8-15号CPU核心连同1号GPU运行</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">gmx mdrun [命令] -nt <span class="number">8</span> -pin on -pinstride <span class="number">1</span> -gpu_id <span class="number">0</span></span><br><span class="line">gmx mdrun [命令] -nt <span class="number">8</span> -pin on -pinoffset <span class="number">8</span> -pinstride <span class="number">1</span> -gpu_id <span class="number">1</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="pdb2gmx"><a href="#pdb2gmx" class="headerlink" title="pdb2gmx"></a>pdb2gmx</h1><p>pdb2gmx是GROMACS中模拟生物大分子体系的关键性工具。它载入生物大分子结构文件，从相关力场库文件中读取所需信息，给体系恰当加氢和重排原子顺序，最后产生生物分子的拓扑文件。</p>
+<ul>
+<li><code>-f</code>：结构文件，一般用pdb（输入）<ul>
+<li><code>pdb2gmx</code>也适合用来产生其它类型的由单体聚合而成的体系，如聚合物，但需要自已恰当修改rtp文件后pdb2gmx才能处理。</li>
+<li>pdb2gmx不是普性的拓扑文件产生工具，对rtp文件里没有定义的小分子，不可能用pdb2gmx产生拓扑文件</li>
+</ul>
+</li>
+<li><code>-o</code>：整理后的结构文件，默认为conf.gro</li>
+<li><code>-p</code>：拓扑文件，默认为topol.top</li>
+<li><code>-i</code>：位置限制文件，默认为posre.itp</li>
+<li><code>-ff &lt;string&gt;</code>：设定所用力场，默认是交互式选择</li>
+<li><code>-water &lt;enum&gt;</code>：设定所用水模型，默认是交互式选择</li>
+<li><code>-heavyh</code>:把氢原子质量设为4(并从相连重原子上扣除相应质量)，使氢的运动减缓，从而能用更大步长</li>
+<li><code>-ignh</code>：忽略输入文件里所有氢。NMR测定的pdb里虽然有所有的氢，某些程序(如分子对接程序)产生的结构文件里也往往有氢，但原子名大概率不标准，应当用此选项让pdb2gmx按标准规则加氢<ul>
+<li>通常建议始终带上<code>-ignh</code></li>
+</ul>
+</li>
+<li><code>-ter</code>：交互式选择如何处理末端氨基和羧基，默认是搞成带电状态。对AMBER力场不适用(因为它是直接按照r2b文件对残基处在氮端和碳端的情况进行设定)</li>
+<li><code>-merge</code>:默认是<code>no</code>，代表每个链作为单独的<code>[ moleculetype ]</code>。也可以用<code>all</code>都弄到个<code>[ moleculetype  ]</code>里，或<code>interactive</code>由用户下面则</li>
+</ul>
+<p>以下如果都要交互式选择，则用<code>-inter</code>选项：</p>
+<ul>
+<li><code>-lys</code>、<code>-arg</code>、<code>-asp</code>、<code>-glu</code>、<code>-gin</code>、<code>-his</code>：交互式选择这些残基的质子化态。默认是除了HIS都设为带电状态，HIS自动根据形成氢键最优方式判断是否两个氮都质子化(带电)或者中性时氢在哪个氮上</li>
+<li><code>-ss</code>:交互式方式选择如何设定二硫键</li>
+</ul>
+<h2 id="pdb2gmx利用的文件"><a href="#pdb2gmx利用的文件" class="headerlink" title="pdb2gmx利用的文件"></a><code>pdb2gmx</code>利用的文件</h2><p>（在力场文件夹中，<code>pdb2gmx</code>按照此顺序处理: r2b→hdb→ rtp→tdb）</p>
+<ul>
+<li><p><code>aminoacids.r2b</code>：</p>
+<ul>
+<li><p>含有将结构文件里的残基名转化到building block 名的对应关系。同一个残基在不间力场里的名字有时不同, 所以需要先做这个转换再套用 rtp</p>
+</li>
+<li><p>例子：G54A7力场的 r2b文件：</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="meta">;GMX</span>   <span class="string">Force-field</span></span><br><span class="line"><span class="attr">CYS</span>    <span class="string">CYSH</span></span><br><span class="line"><span class="attr">HISD</span>   <span class="string">HISA</span></span><br><span class="line"><span class="attr">HISE</span>   <span class="string">HISB</span></span><br><span class="line"><span class="attr">LYS</span>    <span class="string">LYSH</span></span><br><span class="line"><span class="attr">LYSN</span>   <span class="string">LYS</span></span><br><span class="line"><span class="attr">HEM</span>    <span class="string">HEME</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>例子：AMBER力场比较特殊，第3 、 4 列说明如果残 基在氮端和碳端时分别改名成什么。第5列是对于单个两亲氨基酸的悄况，当前未定义：</p>
+<figure class="highlight gams"><table><tr><td class="code"><pre><span class="line">; rtp residue to rtp building block <span class="keyword">table</span></span><br><span class="line"></span><br><span class="line">;      main  N-ter C-ter <span class="number">2</span>-ter</span><br><span class="line">ALA    ALA   NALA  CALA  -</span><br><span class="line">ARG    ARG   NARG  CARG  -</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>aminoacids.hdb</code>：hydrogen database 。设定氢原子 如何连接 到重原子上,用于自动补氢</p>
+<ul>
+<li><p>例子：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">ALA     <span class="number">1</span>       </span><br><span class="line"><span class="number">1</span>	<span class="number">1</span>	H	N	-C	CA</span><br><span class="line">ARG     <span class="number">4</span>  →下面要定义的项数     </span><br><span class="line"><span class="number">1</span>	<span class="number">1</span>	H	N	-C	CA</span><br><span class="line"><span class="number">1</span>	<span class="number">1</span>	HE	NE	CD	CZ</span><br><span class="line"><span class="number">2</span>	<span class="number">3</span>	HH1	NH1	CZ	NE</span><br><span class="line"><span class="number">2</span>	<span class="number">3</span>	HH2	NH2	CZ	NE</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第一列：这一项要加氢的数目</li>
+<li>第二列：加氢的规则</li>
+<li>第三列：加入的氢原子名。此项加两个氢，因此名称将为HH21和HH22</li>
+<li>第4-6列：加氢时候用于定位几何位置的原子</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>aminoacids.rtp</code>,：residue topology parameter。记录残基(以 及水、个别小分子、离子)的拓扑信息, pdb2gmx载入结构文 件时会依照此文件构建拓扑信息。</p>
+<ul>
+<li><p>例子：AMBER力场中 rtp文件的一部分</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="string">[ bondedtypes ]</span> ;设定成键项的函数类型以 及产生拓扑信息的规则</span><br><span class="line">; bonds  angles  dihedrals  impropers all_dihedrals nrexcl HH14 RemoveDih</span><br><span class="line">     <span class="number">1</span>       <span class="number">1</span>          <span class="number">9</span>          <span class="number">4</span>        <span class="number">1</span>         <span class="number">3</span>      <span class="number">1</span>     <span class="number">0</span></span><br><span class="line">...</span><br><span class="line"><span class="string">[ GLY ]</span> ; HAx atoms assigned new ff03 atom type</span><br><span class="line"><span class="string"> [ atoms ]</span> </span><br><span class="line"> ; 原子名 原子类型		  原子电荷     序号</span><br><span class="line">     N    N           <span class="number">-0.374282</span>    <span class="number">1</span></span><br><span class="line">     H    H            <span class="number">0.253981</span>    <span class="number">2</span></span><br><span class="line">...</span><br><span class="line"><span class="string"> [ bonds ]</span></span><br><span class="line">     N     H</span><br><span class="line">     N    CA</span><br><span class="line">...</span><br><span class="line">     C     O</span><br><span class="line">    -C     N  ;原子名带负号、正号分别是指上一个、下一个残基的原子</span><br><span class="line"><span class="string"> [ impropers ]</span></span><br><span class="line">    -C    CA     N     H</span><br><span class="line">    CA    +N     C     O</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>pdb里原了顺序与 rtp里可以 不同, pdb2gmx会按照原子 名来匹配。</p>
+</li>
+<li>pdb2gmx会根据 rtp里设定的成键关系,自动产生所有该 有的<code>[ angles ]</code> 、<code>[ dihedrals ]</code> 、 [ pairs ] 项。<ul>
+<li>rtp里若直接定义了<code>[ angles ]</code>等项,会稷盖自动产生的。 GROMOS 力场的 rtp直接就定义完整了所有成键项。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>aminoacids.n.tdb</code>和<code>aminoacids.c.tdb</code>：termini database, 是氨基酸的氮端和碳端的末端数据库,设定对末端残基如何删除、 添加、替换原子和连键</p>
+<ul>
+<li><p>注：Amber力场<code>tdb</code>文件为空,是因为它在 rtp 里就对末端残基直接定义了不同类 型,不需要再按照<code>tdb</code>的规则对末端残基在普通残基基础上做额外处理。</p>
+</li>
+<li><p>例子：此例说明把 N原子的原子类型改为 NL, CA原子的原子类型改为CH1。 <strong>按照4号规则</strong>,以 N 、 CA、 C为参考 <strong>加入3个H类型氢原子</strong>,分别名为 H1 、  H2 、 H3 。<strong>原先残基中名为 H的原子 则被删除</strong>。然后设定新加入的原子 与其它原子间的成键关系。</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">; G54A7力场的氮端tdb文件的一部分 aminoacids.n.tdb</span><br><span class="line"><span class="string">[ None ]</span></span><br><span class="line"></span><br><span class="line"><span class="string">[ NH3+ ]</span></span><br><span class="line"><span class="string">[ replace ]</span></span><br><span class="line">N		NL	<span class="number">14.0067</span>	<span class="number">0.129</span></span><br><span class="line">CA		CH1	<span class="number">13.019</span>	<span class="number">0.127</span>	<span class="number">0</span></span><br><span class="line"><span class="string">[ add ]</span></span><br><span class="line"><span class="number">3</span>	<span class="number">4</span>	H	N	CA	C	  ;H代表新加入的氢的名称前缀</span><br><span class="line">	H	<span class="number">1.008</span>	<span class="number">0.248</span>     ;新加入氢原子类型、质量、电荷</span><br><span class="line"><span class="string">[ delete ]</span></span><br><span class="line">H</span><br><span class="line"><span class="string">[ bonds ]</span></span><br><span class="line">N	H1	gb_2</span><br><span class="line">N	H2	gb_2</span><br><span class="line">N	H3	gb_2</span><br><span class="line"><span class="string">[ angles ]</span></span><br><span class="line">H1	N	H2	ga_10</span><br><span class="line">H2	N	H3	ga_10</span><br><span class="line">...</span><br><span class="line"><span class="string">[ dihedrals ]</span></span><br><span class="line">H1	N	CA	C	gd_39</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>[ none ]</code> 代表对于非末端残基 什么都不做修改 </p>
+</li>
+<li><p><code>[ NH3+ ]</code> 代表对于氮端的且质子化的 氨基酸要做哪些处理</p>
+</li>
+<li><p>例子：G54A7力场的碳端tdb文件的一部分 <code>aminoacids.c.tdb</code>。此例说明把C原子的原子名重置为C。按照8号规则，以C、CA、N做为参考位置加入2个OM类型氧原子，分别名为O1和O2。但如果原本结构中就已经有O和OXT原子了，则直接将之改成名为O1和O2的OM类型原子。</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="string">[ COO- ]</span></span><br><span class="line"><span class="string">[ replace ]</span> ;此处代表对于碳端的且羧基要设成带电状态的氨基酸要做哪些处理。</span><br><span class="line">C	C	C	<span class="number">12.011</span>	<span class="number">0.27</span></span><br><span class="line">O	O1	OM	<span class="number">15.9994</span>	<span class="number">-0.635</span></span><br><span class="line">OXT	O2	OM	<span class="number">15.9994</span>	<span class="number">-0.635</span></span><br><span class="line"><span class="string">[ add ]</span></span><br><span class="line"><span class="number">2</span>	<span class="number">8</span>	O	C	CA	N</span><br><span class="line">	OM	<span class="number">15.9994</span>	<span class="number">-0.635</span></span><br><span class="line"><span class="string">[ bonds ]</span>			;然后设定新加入的原子与其它原子间的成键关系。</span><br><span class="line">C	O1	gb_6</span><br><span class="line">C	O2	gb_6</span><br><span class="line"><span class="string">[ angles ]</span></span><br><span class="line">O1	C	O2	ga_38</span><br><span class="line">CA	C	O1	ga_22</span><br><span class="line">CA	C	O2	ga_22</span><br><span class="line"><span class="string">[ dihedrals ]</span></span><br><span class="line">N	CA	C	O2	gd_45</span><br><span class="line">N       CA      C       O2      gd_42</span><br><span class="line"><span class="string">[ impropers ]</span></span><br><span class="line">C	CA	O2	O1	gi_1</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>aminoacids.vsd</code>：virtual site database文件,用于设定症拟点, 一般用不着</p>
+</li>
+</ul>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>常见提示：WARNING: Residue 18 named GLU of a molecule in the input file was mapped to an entry in the topology database, but the atom CG used in i!,at entry Is not found in the input file. Perhaps your atom and/or residue naming needs to befixed.</p>
+<ul>
+<li>这说明 pdb2gmx在将输入的结构文件里的 第 18号残基 GLU 与 rtp文件里的 [GLU] 字段 匹配时,发现结构文件里这个残基少了名为 CG 的原子,显然需要补全结构文件里的这 个缺失的原子后再用 pdb2gmx 。但也有可 能这个原子实际存在,只是结构文件里的原 子名不对,此时需要修改原子名。  </li>
+<li>注意这里的残基号是从 1 开始排的,和 pdb 文件里记录的残基号未必相同。</li>
+</ul>
+<h1 id="solvate"><a href="#solvate" class="headerlink" title="solvate"></a>solvate</h1><p>可以生成一个充满指定分子的盒子，也可以在<code>-cp</code>指定的结构文件中加溶剂分子把盒子空隙填满。<br>默认填入的溶剂是<code>share/gromacs/top/spc216.gro</code>，这是对216个SPC水组成的盒子经过动力学模拟后己跑到充分平衡状态的文件。如果要填入其它溶剂分子则用-cs[文件名]来指定，文件也应当是经过NPT动力学模拟后的单一纯溶剂体系结构文件。GROMACS会先把整个模拟盒子用此文件里的体系通过平移复制填湾，然后扣掉和溶质有重叠的溶剂分子。</p>
+<ul>
+<li><code>-maxsol [数目]</code>可以设定只填入多少溶剂分子，填充会很不均匀。</li>
+<li>-<code>shell [厚度]</code>可以填充指定厚度的溶剂层。</li>
+<li><code>-p [top文件名]</code>还会同时对指定的拓扑文件进行修改，将其中的溶剂分子数设为当前值。</li>
+<li><code>-scale &lt;real&gt;</code>：当溶剂与溶质之间距离小于它们的范德华半径和，则溶剂会被去掉。范德华半径是<code>share/gromacs/top/vdwradii.dat</code>的半径值乘以<code>0.57</code>（默认值）。对水中的蛋白质, 使用默认值0.57可以得到接近1000 g/l的密度值。</li>
+</ul>
+<h2 id="例子-3"><a href="#例子-3" class="headerlink" title="例子"></a>例子</h2><ul>
+<li><p>生成2×5×4nm的水盒子体系</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">gmx solvate -box <span class="number">2</span> <span class="number">5</span> <span class="number">4</span> -o test.gro</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在protein.gro的盒子空档中填充水分子</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">solvate</span> <span class="selector-tag">-cp</span> <span class="selector-tag">protein</span><span class="selector-class">.gro</span> <span class="selector-tag">-o</span> <span class="selector-tag">solv</span><span class="selector-class">.gro</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在protein.gro中的溶质附近0.5nm范围内填满水分子(前提是.gro里的盒子己足够大)</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">solvate</span> <span class="selector-tag">-cp</span> <span class="selector-tag">protein</span><span class="selector-class">.gro</span> <span class="selector-tag">-o</span> <span class="selector-tag">solv</span><span class="selector-class">.gro</span> <span class="selector-tag">-shell</span> 0<span class="selector-class">.5</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="trjconv"><a href="#trjconv" class="headerlink" title="trjconv"></a>trjconv</h1><p>此命令用于轨迹文件的处理，主要用处：</p>
+<ul>
+<li>转换轨格式(xtc/trr/gro/pdb之间转换)</li>
+<li>减少帧数</li>
+<li>只保留指定组的原子</li>
+<li>截取部分轨迹</li>
+<li>修改轨迹中对周期性的描述</li>
+<li>将轨迹向参考结构叠合</li>
+</ul>
+<p>合并轨迹用<code>trjcat</code></p>
+<p>参数：</p>
+<ul>
+<li><code>-f</code>:被处理的轨迹文件</li>
+<li><code>-s</code>:.tpr/gro/pdb文件(可选，输出结构文件及<code>-fit</code>时必须)</li>
+<li><code>-n</code>:.ndx文件(可选)</li>
+<li><code>-o</code>:新产生的轨迹文件</li>
+<li><code>-skip &lt;int&gt;</code>:每几帧输出一次，默认为1</li>
+<li><code>-dump &lt;time&gt;</code>：输出离指定时间最近的帧</li>
+<li><code>-pbc &lt;选项&gt;</code>:修改PBC处理方式<ul>
+<li>默认值为<code>none</code>，即不对轨迹的PBC描述做任何修</li>
+<li><code>atom</code>:只要原子越过盒子边界就返回另一边。这是mdrun直接产生出的轨迹对应的情况。这会导致边界处分子/残基被截断</li>
+<li><code>mol/res</code>:分子/残基的质心如果跨越了盒子，则分子/残基就挪到盒子另一头，这保证了分子残基的完整性。如果因为用了<code>-trans</code>和<code>-center</code>使得有的分子/残基处于盒子外，也可以由此得到修正<ul>
+<li>注:mdrun直接产生的gro文件对应的是mol状态</li>
+</ul>
+</li>
+<li><code>nojump</code>:使得原子即便跨越了盒子边界也照样运动(相对于第1帧而言)，而不会被挪到另一边。这保证了轨迹的连续性。<ul>
+<li>GROMACS自带的分析工具基本都能自动、恰当地在分析轨迹时考虑PBC问题。但第三方的分析程序则可能没法恰当处理PBC轨迹，如果不先搞成<code>nojump</code>的形式则会得到错误的结果。</li>
+</ul>
+</li>
+<li><code>cluster</code>:选定一个组(通过index文件定义)，使得这个组保持完整。主要用于令轨迹中分子团簇(包括诸如蛋白质+配体复合物)保持完整。使用前应先使用mol保证分子的完整性</li>
+</ul>
+</li>
+<li><code>-ur &lt;选项&gt;</code>:修改盒子描述方式</li>
+<li><code>-center</code>:平移体系使得指定组的几何中心处在盒子中央。盒子中心可以由<code>-boxcenter</code>具体定义</li>
+<li><code>-trans &lt;vector&gt;</code>:对所有坐标按照矢量平移</li>
+<li><code>-fit &lt;选项&gt;</code>:对轨迹中某个组根据参考结构叠合</li>
+<li><code>-step</code>:把轨迹每一帧输出为单独的.gro/pdb文件</li>
+</ul>
+<p>读的文件里有速度信息就会被读/写。但受力不会被读/写，除非写了<code>-force</code></p>
+<h2 id="例子-4"><a href="#例子-4" class="headerlink" title="例子"></a>例子</h2><ul>
+<li><p>将<code>all.trr</code>中3 ns到5 ns的轨迹每隔100ps一次提取出来到3_5.xtc</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">gmx</span> trjcon -f <span class="literal">all</span>.trr -b <span class="number">3000</span> -e <span class="number">5000</span> -dt <span class="number">100</span> -<span class="number">0</span> <span class="number">3</span>_<span class="number">5</span>.xtc</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>从all.trr中提取出grp.ndx里定义的某个组到sub.trr</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">trjconv</span> <span class="selector-tag">-f</span> <span class="selector-tag">all</span><span class="selector-class">.trr</span> <span class="selector-tag">-n</span> <span class="selector-tag">grp</span><span class="selector-class">.ndx</span> <span class="selector-tag">-o</span> <span class="selector-tag">sub</span><span class="selector-class">.trr</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果用<code>-s</code>提供了结构文件，即便没用<code>-n</code>也会提示选择要输出的组</li>
+</ul>
+</li>
+<li><p>提取md.trr中最接近3000ps的结构和速度到3000ps.gro</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">trjconv</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.trr</span> <span class="selector-tag">-s</span> <span class="selector-tag">md</span><span class="selector-class">.tpr</span> <span class="selector-tag">-o</span> 3000<span class="selector-tag">ps</span><span class="selector-class">.gro</span> <span class="selector-tag">-dump</span> 3000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将轨迹按照index.ndx里的某个组进行叠合输出到new.xtc，参考结构是ref.gro</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">trjconv</span> <span class="selector-tag">-f</span> <span class="selector-tag">sol</span><span class="selector-class">.trr</span> <span class="selector-tag">-s</span> <span class="selector-tag">ref</span><span class="selector-class">.gro</span> <span class="selector-tag">-n</span> <span class="selector-tag">index</span><span class="selector-class">.ndx</span> <span class="selector-tag">-fit</span> <span class="selector-tag">rot</span>+<span class="selector-tag">trans</span> <span class="selector-tag">-o</span> <span class="selector-tag">new</span><span class="selector-class">.xtc</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>程序会让选择两次组，第一次选择对哪个组做叠合，第二次选择输出文件里包含哪个组的信息</li>
+</ul>
+</li>
+<li><p>把md.xtc中从50ns开始到末尾的轨迹输出到cen.xtc，并对每一帧结构进行平移使得选定的某个组的质心恒处在盒子中心</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">gmx trjconv -f md<span class="selector-class">.xtc</span> -<span class="selector-tag">b</span> <span class="number">50000</span> -o cen<span class="selector-class">.xtc</span> -n index<span class="selector-class">.ndx</span> -center</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>令sol.trr中的分子保持完整(必须提供.tpr)</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">trjconv</span> <span class="selector-tag">-f</span> <span class="selector-tag">sol</span><span class="selector-class">.trr</span> <span class="selector-tag">-s</span> <span class="selector-tag">sol</span><span class="selector-class">.tpr</span> <span class="selector-tag">-pbc</span> <span class="selector-tag">mol</span> <span class="selector-tag">-o</span> <span class="selector-tag">new</span><span class="selector-class">.xtc</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>若再用以下命令，则分子运动轨迹会保持连续，而不被盒子边界所截断</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">trjconv</span> <span class="selector-tag">-f</span> <span class="selector-tag">new</span><span class="selector-class">.xtc</span> <span class="selector-tag">-pbc</span> <span class="selector-tag">nojump</span> <span class="selector-tag">-o</span> <span class="selector-tag">yuri</span><span class="selector-class">.xtc</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>GROMACS</tag>
+        <tag>文件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【VMD】1.基本操作</title>
+    <url>/2026/08/13/%E3%80%90VMD%E3%80%911.%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<p>参考<a href="http://vmd.chenzhaoqiang.com/intro/startManual.html#">入门教程 — VMD中文教程 2024.09 文档</a></p>
+<h1 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h1><h2 id="VMD软件界面"><a href="#VMD软件界面" class="headerlink" title="VMD软件界面"></a>VMD软件界面</h2><p>VMD启动后会看到三个窗口：</p>
+<ul>
+<li>VMD Main：VMD的主窗口<ul>
+<li>若碰到VMDMain窗口显示不出来的情况，尝试在命令行窗口输入<code>menu main on</code>。如果还不行，输入<code>menu main move 100 100</code>再试。</li>
+</ul>
+</li>
+<li>图形窗口：观看体系结构</li>
+<li>命令行窗口：也叫Console窗口，VMD的一些状态信息、提示信息会显示在其中，并且可以在其中使用操作系统和VMD的内置命令，以及运行Td分析脚本</li>
+</ul>
+<p><img src="VMD_3WIN2024-09-22_131832.945343.png" alt="../_images/VMD_3WIN2024-09-22_131832.945343.png"></p>
+<h2 id="VMD-main窗口"><a href="#VMD-main窗口" class="headerlink" title="VMD main窗口"></a>VMD main窗口</h2><p><img src="Vmain2025-12-18_153212.313726.png" alt="../_images/Vmain2025-12-18_153212.313726.png"></p>
+<ul>
+<li>菜单栏下面的标题栏：<ul>
+<li>ID：载入的每个体系自动分配唯一的ID，依次顺延</li>
+<li>Frames：包含的帧数</li>
+<li>Vol：体数据数目</li>
+</ul>
+</li>
+<li>每个体系有T,A,D,F状态，双击可以切换状态，黑色/红色对应开启/关闭。也可以在菜单栏“Molecule”中操作。<ul>
+<li>T：代表Top。如果载入了多个体系，T在哪个上面，进度条的范围就由哪个体系决定</li>
+<li>A：代表Active，即允许播放轨迹</li>
+<li>D：代表Display，即显示此体系</li>
+<li>F：代表Fixed，即调整视角时保持不动</li>
+</ul>
+</li>
+<li>⇤，⇥：切换到第一帧或最后一帧</li>
+<li>◀、▶：逆向播放或正向播放</li>
+<li>↤、↦：向前或向后移动一帧</li>
+<li>Loop：轨迹播放方式</li>
+<li>step：轨迹播放步长</li>
+<li>speed：轨迹播放速度</li>
+</ul>
+<h2 id="载入结构"><a href="#载入结构" class="headerlink" title="载入结构"></a>载入结构</h2><p>Windows有两种方法载入结构：</p>
+<ul>
+<li><p>对于结构文件，可以直接把文件拖入到VMD Main窗口，文件类型会根据后缀名自行判断。</p>
+</li>
+<li><p>标准的载入方式是用“File(或在空白的地方点右键)-&gt; New Molecule”，然后选择要载入的文件。</p>
+<ul>
+<li>此时目录名不可有中文。如果没有正确判断出文件类型应当自行选择。</li>
+</ul>
+<p><img src="/VMDopen2024-09-22_141453.945268.png" alt="VMD Main界面"></p>
+<p><img src="/loadprot2024-09-22_141912.740591.png" alt="Molecule File Browser"></p>
+</li>
+</ul>
+<p>载入后将在VMDMain窗口产生一个新的ID。</p>
+<p>Linux下可以用比如<code>vmd foo.pdb</code>在启动时直接载入文件。</p>
+<h2 id="载入轨迹"><a href="#载入轨迹" class="headerlink" title="载入轨迹"></a>载入轨迹</h2><p>载入GROMACS的轨迹文件(trr/xtc)前需要先载入对应的gro或者pdb文件以提供原子信息。然后可以通过两种方式：</p>
+<ul>
+<li>“选中文件右键→Load Data into Molecular”</li>
+<li>在Molecule File Browser窗口（“FIle→New Molecular”）。 确认和选择load files for：对应0：pull.gro名称； 点击 Browse 找到pull.xtc文件。 最后点击load。<ul>
+<li>左下角的Frames：可以设定只载入轨迹哪些帧号范围以及载入间隔</li>
+<li>更好、更快的载入方式是选上 Load all at once后载入。</li>
+</ul>
+</li>
+</ul>
+<p>其他：</p>
+<ul>
+<li>载入较长轨迹的过程中建议在Graphics - Representation中把默认的表示取消显示，这样会显著加快载入速度。</li>
+</ul>
+<p>选中文件右键：</p>
+<ul>
+<li>Rename：修改体系名称。默 认名是一开始载入的文件的路径名</li>
+<li>Delete Frames：可以将轨迹中指定范围删除，也可以指定每隔凡帧删除一次。</li>
+<li>Abort FileI/O：载入过程中选择此选项可以终止载入。</li>
+</ul>
+<h3 id="载入GROMACS轨迹的标准方式"><a href="#载入GROMACS轨迹的标准方式" class="headerlink" title="载入GROMACS轨迹的标准方式"></a>载入GROMACS轨迹的标准方式</h3><ol>
+<li>载入gro文件，假设此时体系D=i(gro文件具体是哪个任务产生的无所谓，但里面的原子数、原子顺序需要和被载入的轨迹文件完全相同)</li>
+<li>删除ID=i的仅有的一帧(即gro里的结构)</li>
+<li>将轨迹载入到ID=的体系当中</li>
+</ol>
+<p>图形界面载入大轨迹速度比较慢，建议通过命令行载入大轨迹：<code>vmd em.gro md.xtc</code>。代表载入em.gro后，再把md.xtc里的轨迹载入进去。之后应手动删除第0帧。</p>
+<h3 id="载入轨迹时内存不足导致崩溃的解决办法"><a href="#载入轨迹时内存不足导致崩溃的解决办法" class="headerlink" title="载入轨迹时内存不足导致崩溃的解决办法"></a>载入轨迹时内存不足导致崩溃的解决办法</h3><p>在载入轨迹过程中，VMD的内存占用率会不断上升。当64bit版VMD的内存占用超过剩余物理内存，或者32bit版VMD占用内存达到约2GB时，VMD就会崩溃。解决办法:</p>
+<ul>
+<li>如用的Windows 32 bit版VMD，用Linux 64 bit版VMD。<ul>
+<li>1.9.4测试版也有官方的Windows 64 bit版但bug巨多，1.9.3有第三方编译的Windows 64 bit版：<a href="http://bbs.keinsci.com/thread-23119-1-1.html">http://bbs.keinsci.com/thread-23119-1-1.html</a></li>
+<li>每隔一定帧数载入一帧(载入界面里通过stride设置)。内存占用量与载入的轨迹帧数成正比</li>
+<li>去掉轨迹中不感兴趣的原子。例如蛋白质+水体系可以通过gmxtjconv工具去掉水分子部分后再载入</li>
+<li>一次分析一部分轨迹。可以自行分割轨迹，也可以载入轨迹时通过First和Last指定载入哪部分轨迹</li>
+</ul>
+</li>
+</ul>
+<h3 id="保存轨迹"><a href="#保存轨迹" class="headerlink" title="保存轨迹"></a>保存轨迹</h3><p>VMDMain窗口中选中某个体系，点右键之后选Save Coordinates，可以把当前结构或者轨迹中的指定部分保存成新文件。VMD因此也能起到格式转换的作用。</p>
+<p>常用的记录分子结构的xyz、pdb文件也可以用来储存轨迹，并且载入这样的轨迹文件前不用先载入结构文件。不过缺点是体积比较大。</p>
+<p><img src="/savecoord2024-10-29_143912.351224.png" alt="Save Trajectort"></p>
+<p>从上往下：</p>
+<ul>
+<li>Save data from：保存轨迹的体系</li>
+<li>Selected atoms：保存的原子范围。可以用VMD的选择语句指定，填all会保存所有原子</li>
+<li>File type：新文件的类型</li>
+<li>Frames：要保存的帧号范围和间隔</li>
+</ul>
+<h1 id="Mouse"><a href="#Mouse" class="headerlink" title="Mouse"></a>Mouse</h1><p><img src="/mouseMode2024-09-24_094901.380188.png" alt="../_images/mouseMode2024-09-24_094901.380188.png"></p>
+<h2 id="三个基本模式"><a href="#三个基本模式" class="headerlink" title="三个基本模式"></a>三个基本模式</h2><p>RST：</p>
+<ul>
+<li>旋转模式（R）,默认模式：在VMD Main-&gt;Mouse-&gt;选择Rotate Mode; 或者在Display窗口，按R或者r 进行切换。</li>
+<li>平移模式 (T)：在VMD Main-&gt;Mouse-&gt;选择Translate Mode; 或者在Display窗口，按T或者t 进行切换。</li>
+<li>缩放模式（S）：在VMD Main-&gt;Mouse-&gt;选择Scale Mode; 或者在Display窗口，按S或者s 进行切换。</li>
+</ul>
+<p>旋转模式下（R）：</p>
+<ul>
+<li>按住鼠标左键：上下左右自由旋转；</li>
+<li>滚动鼠标中键可以进行缩放，或者缩放模式下（S）。</li>
+<li>按住鼠标右键、左右拖动：垂直于屏幕旋转</li>
+</ul>
+<p>平移模式下（T）：</p>
+<ul>
+<li>按住鼠标左键：上下左右自由移动；</li>
+<li>滚动鼠标中键：进行缩放；</li>
+<li>按住鼠标右键：前后移动，较少使用；</li>
+</ul>
+<p>缩放模式下（S）：</p>
+<ul>
+<li>按住鼠标左、中、右键，左右移动鼠标都可以缩放，右键的幅度会更大。</li>
+</ul>
+<p>恢复视图：Display -&gt; Reset View或按=：将当前显示的对象居中</p>
+<h2 id="Center：C"><a href="#Center：C" class="headerlink" title="Center：C"></a>Center：C</h2><p>按c键后点击一个原子：之后旋转视图绕这个原子旋转</p>
+<h2 id="结构的测量"><a href="#结构的测量" class="headerlink" title="结构的测量"></a>结构的测量</h2><p>Label 0123：原子、键、键角、二面角的测量和标记</p>
+<ul>
+<li>0：激活图形窗口井按数字键0进入原子查询模式后, 点击某个原子,在文本窗口就会显示原子的各种信 息,如坐标、编号、原子名、所属残基等。</li>
+<li>1、2、3：选择Mouse - Label 里的相应项目或者点键盘上相应数字键后, 点击相应数目的原子,就会把  原子、键长、键角、二面角标 注出来.距离单位为埃。</li>
+</ul>
+<p>风格编辑：</p>
+<ul>
+<li>在Graphics→<a href="#Labels">Labels</a>中，可以检阅被标记的原子的详细信息，还可以把标记的键长/键角/二面角进行作图，并且导出数据。也可以隐藏/删除标记</li>
+</ul>
+<p><img src="/image-20260814121120381.png" alt="Labels"></p>
+<ul>
+<li>颜色的修改见Graphics→Colors</li>
+<li>VMD的一个缺点是没法显示所有原子的序号。但可以通过VMD的脚本来实现，详见卢天的脚本atmlab.fcl和<a href="http://sobereva.com/197">博文</a>。</li>
+</ul>
+<p>播放周期性计算的轨迹时往往出现胡乱连键的现象。这是因为VMD是按照最开始载入的结构依据原子间距离判断的成键，但随着模拟进行，有的原子穿越盒子后向到另一头，成键就混乱了。解决方法：</p>
+<ul>
+<li>用<code>gmx trjconv</code>命令接<code>-pbc mol</code>转换轨迹，使分子保持完整</li>
+<li>用DynamicBonds绘制风格显示</li>
+<li>命令行窗口执行<code>mol bondsrecalc all;mol reanalyze all</code>，会对当前帧、所有体系所有原子重新判断成键，但只解决当前一帧的问题(all改为top可只对top体系更新)</li>
+</ul>
+<h2 id="结构的修改"><a href="#结构的修改" class="headerlink" title="结构的修改"></a>结构的修改</h2><p>VMD不是专门的建模、体系结构编辑程序，只能做简单的结构调整。</p>
+<p>Move 5678：</p>
+<ul>
+<li>在Mouse-Move菜单中选择相应项目，或者直接按键盘上的相应数字键，然后点击原子进行拖动，可以平移相应部分。<ul>
+<li>如果按住shif键后进行拖动，则可以旋转相应部分。</li>
+</ul>
+</li>
+</ul>
+<p>点击Add/Remove Bonds后再点击两个原子，可以使它们成键或取消原先的键连。</p>
+<h1 id="Graphics"><a href="#Graphics" class="headerlink" title="Graphics"></a>Graphics</h1><h2 id="Labels"><a href="#Labels" class="headerlink" title="Labels"></a>Labels</h2><ul>
+<li>选择Graph：可以选择项目后，勾选show preview，可以预览键长键角的变化，还可以Save导出为文本文件。</li>
+</ul>
+<p><img src="/image-20260814121002498.png" alt="image-20260814121002498"></p>
+<ul>
+<li><p>标签尺寸、粗细、颜色、相对于原子核位置都可以调。</p>
+<p><img src="/labelStyle2024-09-23_201206.950127.png" alt="../_images/labelStyle2024-09-23_201206.950127.png"></p>
+<ul>
+<li>标签里的属性：<ul>
+<li><strong>%a：atom name</strong></li>
+<li><strong>%d：resid</strong></li>
+<li>%i：atom index (0-based)</li>
+<li><strong>%1： atom index (1-based)</strong></li>
+<li>%e：atomic element</li>
+<li>%b：beta</li>
+<li>%c：chain</li>
+<li>%C：conformation</li>
+<li>%f：user-applied force</li>
+<li>%F：current trajectory frame</li>
+<li>%m：mass</li>
+<li>%n：molecule index</li>
+<li>%N：molecule name</li>
+<li>%o：occupancy</li>
+<li>%p：atom periodic element number</li>
+<li>%q：atom charge</li>
+<li><strong>%R：resname in upper-case</strong></li>
+<li>%1： 1-char resname in upper-case</li>
+<li>%r：resname in camel case</li>
+<li>%s：segname</li>
+<li>%t：atom type</li>
+<li>%T：physical time</li>
+<li>%x, %y, %z</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Representation"><a href="#Representation" class="headerlink" title="Representation"></a>Representation</h2><h3 id="界面介绍"><a href="#界面介绍" class="headerlink" title="界面介绍"></a>界面介绍</h3><p><img src="/image-20260814135655745.png" alt="image-20260814135655745"></p>
+<ul>
+<li>Selected Molecule：选择哪个ID设定显示方式</li>
+<li>Create Rep：创建新的表示 (Representation) ，可创建无数多,效果会叠加</li>
+<li>Delete Rep：删除当前表示</li>
+<li>Seleted Atoms：被选择的原子</li>
+<li>Coloring Method：着色方式</li>
+<li>Material：材质</li>
+<li>Drawing Method：绘制风格<ul>
+<li>后面是不同绘制风格的具体设定</li>
+</ul>
+</li>
+<li>Apply Changes Automatically：调整设定后立即见效，默认为开启</li>
+</ul>
+<h3 id="Drawing-Style选项卡"><a href="#Drawing-Style选项卡" class="headerlink" title="Drawing Style选项卡"></a>Drawing Style选项卡</h3><p>常用着色方式</p>
+<ul>
+<li>Name：按照原子名着色</li>
+<li>Element：按照元素着色</li>
+<li>ResName/Type/ID：按照残基名、残基类型、残基序号着色</li>
+<li>Chain：按照链名着色</li>
+<li>Secondary Structure：根据二级结构着色</li>
+<li>ColorID：直接指定颜色ID</li>
+<li>Beta：根据pdb的B因子(bet字段)数值着色</li>
+<li>Position：根据x/y/z或径向坐标大小着色</li>
+<li>Fragment：根据所属片段着色</li>
+<li>Index：按照原子序号着色</li>
+<li>Backbone：将蛋白质骨架和侧链分开着色</li>
+<li>Volume：按照格点数据的数值着色</li>
+</ul>
+<p>常用绘制风格（Trace到NewCartoon专门用于显示蛋白质、核酸）</p>
+<ul>
+<li>Lines：用细线描绘结构，显示速度最快</li>
+<li>Bonds：用空心圆柱显示化学键</li>
+<li>DynamicBonds：同上，但是不是根据VMD在载入分子结构时对成键的判断来显示，而是根据当前坐标实时判断成键</li>
+<li>HBonds：虚线显示体系中的氢键(不管是什么原子，带着氢的就被视为氢键给体原子，不带氢的就被视为氢键受体原子)</li>
+<li>Points：用圆点显示原子</li>
+<li>VDW：将原子用范德华球描绘</li>
+<li>CPK：用球棍方式显示</li>
+<li>Licorice：很常用，比Bonds更好看，因为键的末端是半圆型封闭的</li>
+<li>QuickSurf：快速方式显示分子表面</li>
+<li>VolumeSlice：显示格点数据的截面图</li>
+<li>Beads：相邻原子一起用较大圆球显示</li>
+<li>Isosurface：显示格点数据等值面图</li>
+</ul>
+<h3 id="Selection-选项卡"><a href="#Selection-选项卡" class="headerlink" title="Selection 选项卡"></a>Selection 选项卡</h3><p><img src="/image-20260814140755295.png" alt="image-20260814140755295"></p>
+<p>Singlewords中双击可以使用，Apply是应用选择语句，Reset是清空选择语句，Macro definition是具体的定义</p>
+<ul>
+<li>all：所有原子</li>
+<li>none：无原子</li>
+<li>noh：氢以外的原子</li>
+<li>ion：离子</li>
+<li>water：水</li>
+<li>backbone：生物大分子骨架</li>
+<li>sidechain：生物大分子侧链</li>
+<li>protein：蛋白</li>
+<li>nucleic：核酸</li>
+<li>helix：螺旋</li>
+<li>alpha_helix：alpha螺旋(是helix中的子集，较长一段螺旋才算)</li>
+<li>sheet：折叠</li>
+<li>turn：转角</li>
+<li><p>coil：盘绕</p>
+</li>
+<li><p>alpha：蛋白质的alpha碳</p>
+</li>
+<li>acidic：pH=7时带负电氨基酸</li>
+<li>basic：pH=7时带正电氨基酸</li>
+<li>charged：acidic和basic的并集</li>
+<li>neutral：电中性氨基酸</li>
+<li>polar：极性残基</li>
+<li>hydrophobic：疏水性残基</li>
+<li>bonded：成键的原子</li>
+<li>hetero：非蛋白质和核酸的部分</li>
+<li>carbon, hydrogen, oxygen,nitrogen、sulfur：相应元素</li>
+</ul>
+<p>还有些关键词是需要后面接具体参数的，如name CA、x&gt;5。在此窗口中可以看到对于当前体系可以接的参数。</p>
+<p><img src="/image-20260814141500277.png" alt="image-20260814141500277"></p>
+<ul>
+<li>name：原子名</li>
+<li>index：原子序号(从0开始)</li>
+<li>serial：原子序号(从1开始)</li>
+<li>type：原子类型</li>
+<li>element：元素名</li>
+<li>resname：残基名</li>
+<li>residue：残基编号，从O开始</li>
+<li>resid：残基编号，从1开始。若结构文件里有残基号则与之一致</li>
+<li>chain：链名</li>
+<li>fragment：片段编号。VMD在载入结构时会对每个键连的片段设定一个编号</li>
+<li>numbonds：成键数目</li>
+<li>structure：二级结构</li>
+<li>x,y,z：X/Y/Z坐标</li>
+<li>vx，vy，vz：X/Y/Z速度</li>
+<li>beta：pdb文件中的beta值</li>
+<li>mass：原子质量</li>
+<li>charge：原子电荷</li>
+</ul>
+<h4 id="范围选择语句基本语法"><a href="#范围选择语句基本语法" class="headerlink" title="范围选择语句基本语法"></a>范围选择语句基本语法</h4><ul>
+<li>可以用<code>()</code>或<code>&#123;&#125;</code>指定语句处理的优先顺序</li>
+<li>对<code>双引号</code>内的字符可以使用正则表达式。</li>
+<li>用<code>单引号</code>则里面的字符可以避免被转义</li>
+<li>判断语句：<code>&lt;</code>、<code>&lt;=</code>、<code>=</code>、<code>&gt;=</code>、<code>&gt;</code>、<code>!=</code></li>
+<li>与、或、非：<code>and</code>、<code>or</code>、<code>not</code></li>
+<li>函数：sqr(平方)、sqrt(开根号)、abs、sin、cos、tan、atan、asin、acos、 sinh、 cosh、tanh、exp、 log、 log10</li>
+<li><p>运算符：<code>+</code>、<code>-</code>、<code>*</code>、<code>1</code>，也可以用<code>^</code>或<code>**</code>来表示多少次方</p>
+</li>
+<li><p><code>within 5 of AAA</code>：距离AAA 5埃以内的原子。用<code>pbwithin</code>则考虑周期边界条件</p>
+</li>
+<li><code>exwithin 5 of AAA</code>：同上，但不包含AAA自身</li>
+<li><code>withinbonds 2 of AAA</code>：距离AAA≤两个键的原子</li>
+<li><code>same p as AAA</code>：与AAA选区的p属性相同的部分</li>
+<li><code>ringsize 5 from AAA</code>：处于AAA中五元环上的原子</li>
+<li><code>maxringsize 6 from AAA</code>：处于AAA中≤六元环的原子</li>
+</ul>
+<p>例子：</p>
+<p>范围选择语句实例</p>
+<ul>
+<li><code>Chain B</code>：B链的原子</li>
+<li><code>numbonds=2</code>：形成了两个键的原子</li>
+<li><code>index 5 to 200 210</code>：序号在5~200内的原子以及210号原子</li>
+<li><code>protein or nucleic</code>：蛋白质与核酸的原子</li>
+<li><code>resname ALA CYS ARG</code>：丙氨酸、半胱氨酸、精氨酸原子</li>
+<li><code>backbone not helix</code>：除了螺旋区域以外的骨架原子</li>
+<li><code>name CA CB</code>或<code>name &quot;CA|CB&quot;</code> 或<code>name &quot;C[AB]&quot;</code>或<code>name &quot;C(A|B)&quot;</code>：名为CA和CB的原子</li>
+<li><code>name&quot;C.&quot;</code>：名字为两个字符且第一个字符为C的原子</li>
+<li><code>name&quot;CG.*&quot;</code>：名为CG或开头字符为CG的所有原子</li>
+<li><code>name&quot;CE[1-3]&quot;</code>：名字为CE1、CE2、CE3的原子</li>
+<li><code>name &quot;C[6-9]&quot; or name &quot;C[12][0-9]&quot; or name &quot;C3[01]&quot;</code>： 名字从C6到C31的原子</li>
+<li><code>name&#39;O5*&#39;</code>：个别原子名带星号，选取时要用单引号括住</li>
+<li><p><code>resname &#39;CA2+&#39;</code>或<code>resname &quot;CA2\+&quot;</code>：带正负号的也要用单引号括住以免转义，或者括在双引号里并加上斜杠</p>
+</li>
+<li><p><code>mass&gt;5</code>：质量大于5的原子</p>
+</li>
+<li><code>abs(charge)&gt;1</code>：电荷大小超过1的原子</li>
+<li><code>serial%2=0</code>：序号为偶数的原子</li>
+<li><code>x&lt;6 and x&gt;3</code>：选择x在3~6埃区域内的一层原子</li>
+<li><code>x&gt;1 and x&lt;8 and y&gt;24 and y&lt;35 and z&gt;1 and z&lt;5</code>：一个矩形区域内的原子</li>
+<li><code>sqr(x-5)+sqr(y+4)+sqr(z) &lt; sqr(5)</code>： 以(5,-4,0)点为中心半径5埃以内的原子</li>
+<li><code>((x-33)2+(y-14.5)^2)&lt;12^2 and z&lt;40 and z&gt;10</code>：选择以x=33、y=14.5埃为中心，半径为12埃，z范围在10-40埃的柱形区域</li>
+<li><code>x+y+z&lt;80</code>：斜切面内侧的原子</li>
+<li><p><code>not &#123;oxygen and numbonds=0&#125;</code>：扣除孤立的氧原子(可以用于去除X光衍射pdb文件里的结晶水)</p>
+</li>
+<li><p><code>within 6 of protein</code>：距离蛋白质6埃以内的原子</p>
+</li>
+<li><code>not within 5 of resname ADP</code>：距离名为ADP的分子5埃以外的原子</li>
+<li><code>water within 5 of residue 8 to 44</code>：距离8-44号残基5埃以内的水中的原子</li>
+<li><code>withinbonds 2 of index 31</code>：距离编号为31原子的两个键及以内的原子</li>
+<li><code>maxringsize 6 from protein</code>：蛋自当中所有六元及六元以下环上的原子</li>
+<li><code>same resname as resid 33</code>：所有与33号残基相同名称的残基</li>
+<li><code>same residue as &#123;protein within 5 of nucleic&#125;</code>： 与核酸的原子相距5埃以内的蛋白的原子，并且把被截断的残基保留完整</li>
+<li><code>x &gt; 15 and not same fragment as &#123;exwithin 8 of protein&#125;</code>：蛋白质以及蛋白质8埃范围以外的原子，保留完整片段，同时x坐标得大于15埃</li>
+</ul>
+<p>选择范围的更新：</p>
+<p>使用诸如x&lt;20这样的涉及到空间范围的选择语句时，原子是在刚输入此命令时候按照指定规则选定的，之后不会随着帧号的改变而更新。只有选择Update Selection Every Frame后才会在播放轨迹时每一帧都重新按照指定规则确定被选择的原子。当取消这个选项后，选定的原子范围将维持在最后一次更新的情况。</p>
+<p><img src="/image-20260814150324754.png" alt="image-20260814150324754"></p>
+<h3 id="Periodic"><a href="#Periodic" class="headerlink" title="Periodic"></a>Periodic</h3><p>显示周期镜像Graphics - Representation界面中可以点击Periodic标签页的相应复选框来将相应方向的镜像盒子显示出来。</p>
+<p><img src="/image-20260814154536928.png" alt="image-20260814154536928"></p>
+<h2 id="Color"><a href="#Color" class="headerlink" title="Color"></a>Color</h2><p>Graphics-Colors里面可以对颜色进行自由的设定，比如背景色、对每种元素/残基/二级结构等等的着色(必须着色方式选了相应项才能看到效果)</p>
+<ul>
+<li><p>修改背景颜色：</p>
+<p><img src="/image-20260814154037441.png" alt="image-20260814154037441"></p>
+<p>如果希望默认就是白背景，在vmd.rc最后加入<code>color Display Background white</code></p>
+</li>
+<li></li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>VMD</tag>
+        <tag>绘图</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【VMD】绘制分子轨道</title>
+    <url>/2020/09/29/%E3%80%90VMD%E3%80%91%E7%BB%98%E5%88%B6%E5%88%86%E5%AD%90%E8%BD%A8%E9%81%93/</url>
+    <content><![CDATA[<h1 id="单个cube文件"><a href="#单个cube文件" class="headerlink" title="单个cube文件"></a>单个cube文件</h1><ol>
+<li><p>直接将*.cub文件拖入main窗口</p>
+</li>
+<li><p>将分子改为球棍模型：Graphics→Representation→Drawing method→CPK</p>
+</li>
+<li><p>新建一个等值面：Graphics→Representation→Create Rep</p>
+<ol>
+<li>修改Drawing method为Isosurface</li>
+<li>修改Isovalue为0.05</li>
+<li>修改等值面风格：在Draw中选择Solid Surface（实心）或者Wireframe（网格显示）</li>
+<li>取消显示边框：修改Show为Isosurface</li>
+<li>修改颜色：在Coloring Method选择colorID，在其后选择颜色，如1（红色）</li>
+<li>修改材质：在Material中选择，比如Glossy</li>
+</ol>
+</li>
+<li><p>重复步骤3，除了：</p>
+<ol>
+<li>将Isovalue为负的</li>
+<li>颜色修改为另一个颜色，比如0（蓝色）</li>
+</ol>
+</li>
+<li><p>其他美化：</p>
+<ol>
+<li>display→depth cueing→off</li>
+<li>display→Rendermode→GLSL</li>
+<li>修改背景为白色：Graphics→Color→Display→Background→White</li>
+<li>取消显示坐标轴：Display→Axes→off</li>
+<li>……</li>
+</ol>
+</li>
+<li><p>导出：File→Render→Tachyon，修改Filename，Start Rendering即可，此时VMD目录下有相应的*.dat（是Tachyon的输入文件）和*.bmp文件（在默认设置下渲染出来的图像文件）。</p>
+<ul>
+<li>还可以通过Flie→Save Visualization state…保存当前的操作</li>
+</ul>
+</li>
+<li><p>进一步渲染，6中是使用的默认方法，可以调用VMD自带的tachyon_WIN32.exe渲染器进一步在当前目录下使用*dat文件渲染出*.bmp图像文件，在命令行中输入：</p>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">tachyon_WIN32.exe XXXX.dat -format BMP -o X.bmp -trans_raster3d -res <span class="number">2000</span> <span class="number">1500</span> -fullshade -numthreads <span class="number">4</span> -aasamples <span class="number">24</span> -shadow_filter_off</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;C:\VMD<span class="subst">\\</span>tachyon_WIN32.exe&quot;</span> -aasamples <span class="number">12</span> %s -format BMP -o %s.bmp</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="批量处理多个轨道文件"><a href="#批量处理多个轨道文件" class="headerlink" title="批量处理多个轨道文件"></a>批量处理多个轨道文件</h1><h2 id="1-生成cube文件"><a href="#1-生成cube文件" class="headerlink" title="1. 生成cube文件"></a>1. 生成cube文件</h2><h3 id="打开Multiwfn生成"><a href="#打开Multiwfn生成" class="headerlink" title="打开Multiwfn生成"></a>打开Multiwfn生成</h3><ol>
+<li><p>Multiwfn载入*fchk文件后，通过以下命令一步步生成。然后就会在Multiwfn文件夹下生成orb0000XX.cub的文件。</p>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">200 </span>#其他功能</span><br><span class="line"><span class="symbol">3 </span>#保存轨道</span><br><span class="line"><span class="number">1</span>-<span class="number">4</span>，<span class="number">47</span>-<span class="number">50</span> #绘制轨道的范围</span><br><span class="line"><span class="symbol">3 </span>#选择格点质量</span><br><span class="line"><span class="symbol">1 </span>#单独保存每一个</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>如果是空轨道，Multiwfn计算格点数据的默认的延展距离不够大，可能造成以比较小的轨道等值面数值显示时轨道等值面被截断，可以在第三行和第四行之间加入以下步骤将延展距离加大到12Bohr：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="number">-10</span></span><br><span class="line"><span class="number">12</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>以上内容可以保存为一个文本文件放在Multiwfn文件夹下用于后续的批处理，如showorb.txt（Multiwfn文件夹中的examples\scripts也有）</p>
+</li>
+</ul>
+</li>
+<li><p>再将*.cub文件移动到VMD根文件夹下</p>
+</li>
+</ol>
+<h3 id="不打开Multiwfn生成"><a href="#不打开Multiwfn生成" class="headerlink" title="不打开Multiwfn生成"></a>不打开Multiwfn生成</h3><ol>
+<li><p>通过Windows批处理命令，在Multiwfn文件夹下新建showorb.bat文件（Multiwfn文件夹中的examples\scripts也有）：</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">Multiwfn .\XXXXXXXX<span class="selector-class">.fchk</span> &lt; showorb.txt</span><br><span class="line">move /Y *<span class="selector-class">.cub</span> <span class="string">&quot;XXXX\VMD\&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>修改*.fchk文件的路径和名字</li>
+<li>修改VMD的路径，如果路径中有空格，必须加双引号。</li>
+</ul>
+</li>
+<li><p>直接双击showorb.bat，这个脚本就会调用Multiwfn去对指定的输入文件计算要考察的各个轨道的格点数据，并且导出为cube文件，所有算出来的cube文件会被这个脚本自动挪到VMD目录下。</p>
+</li>
+</ol>
+<h2 id="2-绘制部分"><a href="#2-绘制部分" class="headerlink" title="2. 绘制部分"></a>2. 绘制部分</h2><ul>
+<li><p>把Multiwfn文件包的examples\scripts目录下的VMD绘图脚本<strong>showorb.vmd</strong>拷到VMD目录下，然后用文本编辑器编辑VMD目录下的<strong>vmd.rc</strong>，在最后插入此命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> showorb.vmd</span><br></pre></td></tr></table></figure>
+<ul>
+<li>它定义了三个命令：<ul>
+<li><code>orb</code>：用来载入和显示轨道。输入orb 33，就会载入VMD目录下的orb000033.cub，并把它的绘制方式修改为等值面图的形式。之后如果比如再输入orb 34，则33号轨道就会被撤销，而将orb00034.cub以等值面形式显示。</li>
+<li><code>orbiso</code>：用来修改等值面数值，默认为0.05。</li>
+<li><code>orbclean</code>：用来把VMD目录下所有orb开头的.cub文件全都删掉。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>启动VMD，在命令行窗口输入就可以显示相应的文件。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">orb</span> <span class="selector-attr">[序号]</span> </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>看完轨道后，输入<code>orbclean</code>可以把VMD目录下的cub文件都清掉。</p>
+</li>
+</ul>
+<h3 id="showorb-vmd"><a href="#showorb-vmd" class="headerlink" title="showorb.vmd"></a>showorb.vmd</h3><h4 id="orb命令"><a href="#orb命令" class="headerlink" title="orb命令"></a><code>orb</code>命令</h4><figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">proc orb &#123;iorb&#125; &#123;</span><br><span class="line">#修改轨道等值面数值默认值，推荐<span class="number">0.02</span>~<span class="number">0.06</span></span><br><span class="line">set isoval <span class="number">0.05</span></span><br><span class="line"></span><br><span class="line">#修改等值面材质，如果想改成透明的，可以使用EdgyGlass或Translucent等</span><br><span class="line">set mater Glossy</span><br><span class="line"></span><br><span class="line">#开启额外的<span class="number">3</span>号光源令图像更亮</span><br><span class="line">#light <span class="number">3</span> on</span><br><span class="line"></span><br><span class="line">color Display Background white</span><br><span class="line">display depthcue off</span><br><span class="line"></span><br><span class="line">#设置某个元素的颜色</span><br><span class="line">color Name C tan</span><br><span class="line">#修改tan颜色的定义。这最终使得碳原子比其默认的深青色显得更柔美</span><br><span class="line">#color change rgb tan <span class="number">0.700000</span> <span class="number">0.560000</span> <span class="number">0.360000</span></span><br><span class="line"></span><br><span class="line">display projection Orthographic</span><br><span class="line">display rendermode GLSL</span><br><span class="line">axes location Off</span><br><span class="line"></span><br><span class="line">if &#123;[molinfo num]&gt;<span class="number">0</span>&#125; &#123;</span><br><span class="line">set viewpoint [molinfo top get &#123;center_matrix rotate_matrix scale_matrix&#125;]</span><br><span class="line">&#125;</span><br><span class="line">mol delete top</span><br><span class="line"></span><br><span class="line">#修改cub文件的命名格式</span><br><span class="line">#mol new AdNDPorb[format %<span class="number">04</span>d $iorb].cub</span><br><span class="line">mol new orb[format %<span class="number">06</span>d $iorb].cub</span><br><span class="line"></span><br><span class="line">mol modstyle <span class="number">0</span> top CPK <span class="number">0.800000</span> <span class="number">0.300000</span> <span class="number">22.000000</span> <span class="number">22.000000</span></span><br><span class="line">mol addrep top</span><br><span class="line">mol modstyle <span class="number">1</span> top Isosurface $isoval <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">#修改正等值面颜色淡绿色</span><br><span class="line">#mol modcolor <span class="number">1</span> top ColorID <span class="number">12</span></span><br><span class="line">mol modcolor <span class="number">1</span> top ColorID <span class="number">1</span></span><br><span class="line"></span><br><span class="line">mol modmaterial <span class="number">1</span> top $mater</span><br><span class="line">mol addrep top</span><br><span class="line">mol modstyle <span class="number">2</span> top Isosurface -$isoval <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">#修改负值部分等值面的颜色为淡蓝色</span><br><span class="line">#mol modcolor <span class="number">2</span> top ColorID <span class="number">22</span></span><br><span class="line">mol modcolor <span class="number">2</span> top ColorID <span class="number">0</span></span><br><span class="line"></span><br><span class="line">mol modmaterial <span class="number">2</span> top $mater</span><br><span class="line">if [info exists viewpoint] &#123;</span><br><span class="line">molinfo top set &#123;center_matrix rotate_matrix scale_matrix&#125; $viewpoint</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#保存当前状态的渲染文件</span><br><span class="line">#render Tachyon $iorb.dat <span class="string">&quot;tachyon_WIN32.exe $&#123;iorb&#125;.dat -format BMP -o $&#123;iorb&#125;.bmp -trans_raster3d -res 2000 1500 -numthreads 4 -aasamples 24 -mediumshade &quot;</span></span><br><span class="line">render Tachyon $iorb.dat <span class="string">&quot;tachyon_WIN32.exe $&#123;iorb&#125;.dat -format BMP -o $&#123;iorb&#125;.bmp  -aasamples 12&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其他美化：</p>
+<ul>
+<li>material change mirror Opaque 0.15：修改不透明材质（用于显示分子结构）的mirror属性，大于0的时候通过考虑光线追踪的渲染器渲染的时候就会有反光效果</li>
+<li>material change outline Opaque 4.000000：设定不透明材质的轮廓深度</li>
+<li>material change outlinewidth Opaque 0.5：设定不透明材质的轮廓粗度。设置轮廓可以使原子有勾边效果（有效避免白色的氢原子在某些地方和白色背景连为一体）</li>
+<li>material change ambient Glossy 0.1：设置用于显示等值面的Glossy材质的ambient属性</li>
+<li>material change diffuse Glossy 0.600000</li>
+<li>material change opacity Glossy 0.75：把Glossy材质改为微透明</li>
+<li>material change shininess Glossy 1.0</li>
+<li>display distance -7.0：让视角距离画面的更远，可避免在窗口边缘的物体由于近大远小而畸变太厉害</li>
+<li>display height 10：这句是避免因为减小了distance而导致图像变小</li>
+<li>……</li>
+</ul>
+<h4 id="orbiso命令"><a href="#orbiso命令" class="headerlink" title="orbiso命令"></a><code>orbiso</code>命令</h4><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">proc orbiso &#123;isoval&#125; &#123;</span><br><span class="line">mol modstyle <span class="number">1</span> top Isosurface $isoval <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1</span> <span class="number">1</span></span><br><span class="line">mol modstyle <span class="number">2</span> top Isosurface -$isoval <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1</span> <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="orbclean命令"><a href="#orbclean命令" class="headerlink" title="orbclean命令"></a><code>orbclean</code>命令</h4><figure class="highlight tcl"><table><tr><td class="code"><pre><span class="line"><span class="keyword">proc</span><span class="title"> orbclean</span> &#123;&#125; &#123;</span><br><span class="line"><span class="comment">#修改cub文件的命名格式</span></span><br><span class="line"><span class="comment">#file delete &#123;*&#125;[glob AdNDPorb*.cub]</span></span><br><span class="line"><span class="keyword">file</span> delete &#123;*&#125;[<span class="keyword">glob</span> orb*.cub]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="使用脚本任意cube文件"><a href="#使用脚本任意cube文件" class="headerlink" title="使用脚本任意cube文件"></a>使用脚本任意cube文件</h1><p>把Multiwfn文件包的examples\scripts目录下的VMD绘图脚本showorb.vmd拷到VMD目录下，然后用文本编辑器编辑VMD目录下的vmd.rc，在最后插入此命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> showcub.vmd</span><br></pre></td></tr></table></figure>
+<p>此脚本定义了四条命令，可以直接在VMD的控制台里输入，这里直接给出一些例子：</p>
+<ul>
+<li><code>cub MIO</code>：将VMD目录下的MIO.cub绘制成等值面图，正值和负值部分分别用绿色和蓝色显示，等值面数值分别为默认值0.05和-0.05</li>
+<li><code>cub MIO 0.02</code>：同上，但正值和负值部分等值面数值直接分别设为0.02和-0.02</li>
+<li><code>cubiso 0.015</code>：在使用cub命令后使用，把当前载入的格点数据的正值和负值部分分别设为0.015和-0.015</li>
+</ul>
+<p>有的时候我们需要同时将两个cube文件显示在一起，此脚本里也定义了相应命令用于此目的，示例：</p>
+<ul>
+<li><code>cub2 eri nozomi</code>：将VMD目录下的eri.cub和nozomi.cub同时绘制成等值面，分别用绿色和蓝色表示，等值面数值都为默认的0.05（注：如果eri和nozomi格点数据里也有负值部分，负值部分不会被显示出来）</li>
+<li><code>cub2 eri nozomi 0.02</code>：同上，但是二者的等值面数值都直接设为0.02</li>
+<li><code>cub2iso 0.015</code>：在使用cub2命令后使用，代表把已载入的两套cube文件对应的等值面数值都设为0.015</li>
+</ul>
+<p>用Multiwfn的主功能5计算完这个体系的自旋密度格点数据后，在后处理菜单选择导出cube文件，当前目录下就得到了spindensity.cub。将此文件挪到VMD目录下，启动VMD，直接输入cub spindensity 0.01</p>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>VMD</tag>
+        <tag>绘图</tag>
+        <tag>分子轨道</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>分子动力学基础知识</title>
+    <url>/2026/08/12/%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
+    <content><![CDATA[<h1 id="系综"><a href="#系综" class="headerlink" title="系综"></a>系综</h1><p>系综一词在热力学上用来描述体系所处的热力学状态。字母代表守恒量</p>
+<p>粒子数 (Number)、体积(Volumn)、压力(Pressure)、能量(Energy)、温度(Temperature)、焓(Enthalpy)、化学势 （μ）</p>
+<ul>
+<li><p>NVT：正则系综，比如用于固定体积采样</p>
+</li>
+<li><p>NPT：等温等压系综。液态体系模拟一般都用此系综，比如用于获得合理密度</p>
+</li>
+<li>NVE：微正则系综。用于考察绝热、能量守恒过程，比如用于检验能量守恒</li>
+<li>μVE：巨正则系综。适合描述开放体系</li>
+<li>NPH：等焓等压系综</li>
+<li>NPγT：压力/表面张力/温度、比如用于膜和界面</li>
+</ul>
+<p>常见流程：Energy minimization → NVT → NPT → Production MD</p>
+<ul>
+<li>EM消除原子重叠、溶剂插入过近和异常高能接触</li>
+<li>NVT稳定温度,常配合位置限制</li>
+<li>NPT释放盒子体积,使密度和压力趋于合理</li>
+<li>生产模拟前应检查温度、压力、密度、势能和结构稳定性</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>原理</category>
+      </categories>
+      <tags>
+        <tag>MD</tag>
       </tags>
   </entry>
 </search>

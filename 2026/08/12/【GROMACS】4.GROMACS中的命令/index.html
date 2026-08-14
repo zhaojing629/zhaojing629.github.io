@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=EB Garamond:300,300italic,400,400italic,700,700italic|Dancing Script:300,300italic,400,400italic,700,700italic|ZCOOL XiaoWei:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.1/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Gromacs的命令 &#96;gmx xxx&#96;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【GROMACS】4.GROMACS中的命令">
+<meta property="og:url" content="http://example.com/2026/08/12/%E3%80%90GROMACS%E3%80%914.GROMACS%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:site_name" content="Jing&#39;s Notes">
+<meta property="og:description" content="Gromacs的命令 &#96;gmx xxx&#96;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-08-12T04:07:17.000Z">
+<meta property="article:modified_time" content="2026-08-13T09:03:38.707Z">
+<meta property="article:author" content="Zhao Jing">
+<meta property="article:tag" content="GROMACS">
+<meta property="article:tag" content="文件">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2026/08/12/%E3%80%90GROMACS%E3%80%914.GROMACS%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+  <title>【GROMACS】4.GROMACS中的命令 | Jing's Notes</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d23c6dd5b34ecbaba18b829b9084946";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jing's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/08/12/%E3%80%90GROMACS%E3%80%914.GROMACS%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="Zhao Jing">
+      <meta itemprop="description" content="做一棵树，只为岁月而生长。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jing's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【GROMACS】4.GROMACS中的命令
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2026-08-12 12:07:17" itemprop="dateCreated datePublished" datetime="2026-08-12T12:07:17+08:00">2026-08-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-08-13 17:03:38" itemprop="dateModified" datetime="2026-08-13T17:03:38+08:00">2026-08-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">计算化学</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/%E8%BD%AF%E4%BB%B6/" itemprop="url" rel="index"><span itemprop="name">软件</span></a>
+                </span>
+            </span>
+
+          
+            <br>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2026/08/12/%E3%80%90GROMACS%E3%80%914.GROMACS%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2026/08/12/%E3%80%90GROMACS%E3%80%914.GROMACS%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>15k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>14 分钟</span>
+            </span>
+            <div class="post-description">Gromacs的命令 `gmx xxx`</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="总体"><a href="#总体" class="headerlink" title="总体"></a>总体</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://manual.gromacs.org/current/user-guide/cmdline.html">Command-line reference - GROMACS 2026.3 documentation</a></li>
+<li>可以使用 <code>gmx help *command*</code> 或 <code>gmx *command* -h</code> 查询帮助</li>
+<li>如果已安装 MPI 版本的 GROMACS，则默认情况下 <code>gmx</code> 二进制文件名为 <code>gmx_mpi</code></li>
+</ul>
+<h1 id="常用的参数"><a href="#常用的参数" class="headerlink" title="常用的参数"></a>常用的参数</h1><ul>
+<li><code>-f</code>：结构文件（gro、pdb、tpr等)或轨迹文件(tr、xtc等），或xvg文件，或edr文件。</li>
+<li><code>-s</code>、<code>-c</code>：结构文件 （gro、pdb、tpr等)。具体视程序而定</li>
+<li><code>-n</code>：索引文件(ndx）</li>
+<li><code>-b</code>、<code>-e</code>：设定轨迹中被考虑的部分是从哪里开始（begin)到哪里结束(end)</li>
+<li><code>-dt</code>：轨迹每多长时间被读入一次</li>
+</ul>
+<h1 id="dump"><a href="#dump" class="headerlink" title="dump"></a>dump</h1><p>用来把GROMACS的各种私有的二进制文件转化成可读形式输出，便于检查和提取数据。</p>
+<ul>
+<li><code>-s</code>: .tpr</li>
+<li><code>-f</code>: .xtc/.trr</li>
+<li><code>-e</code>: .edr</li>
+<li>-cp:.cpt</li>
+</ul>
+<p>例子：从info.out中将看到md.cpt中包含的原子坐标/速度、盒子尺寸、当前模拟时间等各种信息。</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">gmx</span> dump-<span class="meta">cp</span> mid.cpt &gt; <span class="meta">info</span>.out</span><br></pre></td></tr></table></figure>
+<p>从tpr中可以获取原子间相互作用参数信息，从edr中可以获取每一帧各种能量项，从trr中可以获取每一帧坐标信息、速度、受力信息(若储存了的话)。</p>
+<h1 id="editconf"><a href="#editconf" class="headerlink" title="editconf"></a>editconf</h1><figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">gmx editconf [-f <span class="meta">[&lt;.gro/.g96/...&gt;]</span>] [-n <span class="meta">[&lt;.ndx&gt;]</span>] [-bf <span class="meta">[&lt;.dat&gt;]</span>]</span><br><span class="line">             [-o <span class="meta">[&lt;.gro/.g96/...&gt;]</span>] [-mead <span class="meta">[&lt;.pqr&gt;]</span>] [-[no]w]</span><br><span class="line">             [-[no]ndef] [-bt &lt;enum&gt;] [-box &lt;vector&gt;]</span><br><span class="line">             [-angles &lt;vector&gt;] [-d &lt;real&gt;] [-[no]c]</span><br><span class="line">             [-center &lt;vector&gt;] [-aligncenter &lt;vector&gt;]</span><br><span class="line">             [-align &lt;vector&gt;] [-translate &lt;vector&gt;]</span><br><span class="line">             [-rotate &lt;vector&gt;] [-[no]princ] [-scale &lt;vector&gt;]</span><br><span class="line">             [-density &lt;real&gt;] [-[no]pbc] [-resnr &lt;int&gt;] [-[no]grasp]</span><br><span class="line">             [-rvdw &lt;real&gt;] [-[no]sig56] [-[no]vdwread] [-[no]atom]</span><br><span class="line">             [-[no]legend] [-label &lt;string&gt;] [-[no]conect]</span><br></pre></td></tr></table></figure>
+<p>用来设置模拟体系的盒子，也可以用来平移和旋转结构，或者转换文件格式。</p>
+<ul>
+<li><code>-f</code>：输入结构文件</li>
+<li><code>-n</code>：输入索引文件（可选）</li>
+<li><code>-o</code>：输出结构文件（可选）</li>
+</ul>
+<p>设置盒子，会自动把体系放在盒子中央，除非使用了<code>-noc</code></p>
+<ul>
+<li><code>-bt</code>：盒子类型，triclinic（三斜。默认)，cubic（立方）dodecahedron（梭形十二面体），octahedron（截角八面体）</li>
+<li><code>-box &lt;vec&gt;</code>：对triclinic盒子自定义盒子三个边长(a,b,c)，对其它类型盒子只需定义一个边长值</li>
+<li><code>-angles α β γ</code>：使用<code>-box</code>时同时自定义盒子向量 (bc,ac,ab) 之间的夹角</li>
+<li><code>-d &lt;real&gt;</code>：将分子边界向X/Y/Z方向延展此值来定义盒子</li>
+</ul>
+<p>修改结构：</p>
+<ul>
+<li><code>-translate &lt;vector&gt;</code>：对体系在X/Y/Z方向进行平移的距离</li>
+<li><code>-rotate &lt;vector&gt;</code>：绕X, Y和Z轴的旋转角度, 单位为度</li>
+<li><code>-scale &lt;vector&gt;</code>：将原子坐标在三个方向乘以此数值(可达到比如调节密度的目的）</li>
+<li><code>-[no]princ</code>：使某个组的最长的主轴向X轴对齐。</li>
+<li><code>-mead foo.pqr</code>：如果读入的是<code>.tpr</code>文件，则可以输出<code>.pqr</code>文件，格式类似<code>pdb</code>，但同时记录了原子电荷和原子半径信息</li>
+</ul>
+<h1 id="energy"><a href="#energy" class="headerlink" title="energy"></a>energy</h1><p>用于从能量文件(.edr)中提取动能、势能的各种成分、温度、盒子尺寸、压力、维里值、体积、密度、能量组之间的非键作用能等数据，输出随时间的变化，并进行统计分析得到平均值、RMSD、漂移量，并可以计算一些体系的热力学性质。</p>
+<ul>
+<li><p><code>-f</code>:.edr文件</p>
+</li>
+<li><p><code>-o</code>:.xvg文件(默认为energy.xvg)</p>
+</li>
+<li><p><code>-dp</code>:在xvg文件中以更高精度输出数据</p>
+<p>运行比如<code>gmx energy -f md.edr</code>，然后将屏幕上感兴趣的量的序号依次输入;每输入一个按一次回车，最后以空行或0结束，则被选中的量随时间变化就会被提取并一起记录到energy.xvg中。使用<code>xmgrace -nxy energy.xvg</code>即可作到一张图上(若只有一套Y数据则不需要<code>-nxy</code>)</p>
+</li>
+<li><p><code>-fluct_props</code>:计算与性质波动有关的量，诸如热容、等温可压缩系数、热膨胀系数</p>
+</li>
+<li><p><code>-nmol &lt;int&gt;</code>:体系中的分子数，默认为1。对于计算热力学量时应当设为实际值，否则计算出的结果可能错误<br>只有选择全了相应条目的<code>Energy terms needed</code>下面的项，才会在提取数据后将相应的量也算出来。</p>
+</li>
+<li><p><code>-fee</code>：选项会计算体系与理想气体状态时的自由能差值</p>
+<p>$\Delta A = A(N,V,T) - A_{idealgas}(N,V,T) = kT \ln(&lt;\exp(U_{pot}/kT)&gt;)$</p>
+<p>$\Delta G = G(N,p,T) - G_{idealgas}(N,p,T) = kT \ln(<exp(U_{pot}/kT)>)$</p>
+<p>在界面里应当选择Potential 。在输出信息中的  -kT ln<e^(E/kT)>列下方的数值即是要取的值</p>
+</li>
+<li><p><code>-f2</code>：提供另一个edr文件，用于计算两种参数下体系的自由能差。两个edr文件里的帧数需相同，应来自同一体系。</p>
+<p>$\Delta G = -kTln(<exp(-(E_B-E_A) / kT)>_A),$</p>
+<p>界面里应选择Total Energy。</p>
+</li>
+<li><p><code>-fetemp &lt;real&gt;</code> :估算自由能时用的参考温度，默认为300 K</p>
+</li>
+</ul>
+<h1 id="genion"><a href="#genion" class="headerlink" title="genion"></a>genion</h1><p>将结构中指定的组(一般是溶剂组)的部分分子随机替换为单原子离子。</p>
+<ul>
+<li><code>-s</code>：<code>.tpr</code>文件</li>
+<li><code>-n</code>：索引文件(可选)</li>
+<li><code>-p</code>：拓扑文件(会对之进行恰当修改)</li>
+<li><code>-o</code>：结构文件</li>
+</ul>
+<p>用法：默认为加入Na+、Cl-，若自设离子可用<code>-pname [阳离子名] -pq [阳离子电荷数] -nname [阴离子名] -nq [阴离子电荷数]</code>，离子名均为大写，如NA、CL、CA</p>
+<ul>
+<li><code>-np 阳离子数 -nn 阴离子数</code> </li>
+<li><code>-conc 盐浓度(mol/L)</code></li>
+<li><code>-neutral 加入足够离子使体系电荷中性化</code></li>
+</ul>
+<p>genion如果要求加入的离子数非常多的话，可能会出现No more replaceable solvent的提示导致运行失败：</p>
+<ul>
+<li>可以被genion替换的溶剂分子是距离离子超过<code>rmin</code>的溶剂分子。当被替换的溶剂分子已经很多，没有其它满足条件的可被替换的溶剂分子时，就会出现上述错误。</li>
+<li>解决方法是加上<code>-rmin [离子间最小距离]</code>，将离子间最小距离设成小于默认的0.6 nm的值。但也不能设得太小，否则可能导致带电相同的离子间出现位置太近，由于静电互斥过强导致模拟一开始崩溃。</li>
+</ul>
+<p>genion命令无法加入多原子离子。可以利用packmol构建这种体系，也可以用<code>inisert-molecules</code>命令通过<code>-replace</code>选项对原有分子进行替换。</p>
+<p>例子：</p>
+<ul>
+<li><p>产生含有5个Ga<sup>2+</sup>和10个NO<sub>3</sub><sup>-</sup>的3×3×3nm水盒子</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">gmx</span> solvate -box <span class="number">3</span> <span class="number">3</span> <span class="number">3</span> -o waterbox.gro</span><br><span class="line"><span class="attribute">gmx</span> insert-molecules -f waterbox.gro -ci NO<span class="number">3</span>-.pdb -nmol <span class="number">10</span> -replace -o salt.gro</span><br><span class="line"><span class="attribute">gmx</span> insert-molecules -f salt.gro -ci Ca<span class="number">2</span>+.pdb -nmol <span class="number">5</span> -replace -o salt.gro</span><br></pre></td></tr></table></figure>
+<p>每次都选择water组</p>
+</li>
+</ul>
+<h1 id="grompp"><a href="#grompp" class="headerlink" title="grompp"></a>grompp</h1><p>grompp(GROMACS preprocessor)，读取运行参数文件、拓扑文件和结构文件，将信息处理、整合，产生mdrun的输入文件<code>.tpr</code>。</p>
+<ul>
+<li><code>-f:</code>.mdp文件</li>
+<li><code>-c</code>:结构文件</li>
+<li><code>-p</code>：拓扑文件</li>
+<li><code>-t</code>(非必需)：<code>.trr</code>轨迹文件(默认读取其最后一帧信息)或<code>.cpt</code>文件<ul>
+<li>精确延续之前的体系状态应当用<code>-t</code>提供<code>.cpt</code>文件</li>
+</ul>
+</li>
+<li><code>-r</code>：位置限制文件(使用位置限制时才需要)</li>
+<li><code>-n</code>(非必须)：索引文件</li>
+<li><code>-o</code>：<code>.tpr</code>文件</li>
+<li><code>-pp</code>选项可以输出一个<code>processed.top</code>,是预处理器处理top文件后的结果，所有include的文件都会被展开，对ga_1之类参数的引用也直接被实际的参数所替换。</li>
+<li><code>-maxwarn [数目]</code>：可以设允许最多出现多少个Warmning而不终止运行。默认只要出现Wamning则grompp就会终止。<ul>
+<li>grompp给出的所有Warning都应当留意，往往暗示出输入文件里的错误，若轻易无视之可能模拟崩溃或者得到无意义的结果。</li>
+</ul>
+</li>
+</ul>
+<p>grompp还会自动产生<code>mdout.mdp</code>文件，是参数完整的<code>.mdp</code>文件，会体现没设定的参数的默认值，并包含许多注释。</p>
+<p>grompp是按照top文件里的[ molecules ]记录的分子顺序展开成的原子顺序构建<code>tpr</code>文件的，从结构文件中只是读取坐标。grompp会按顺序检查top和结构文件里的原子名的对应关系，如果不符合将会给出警告并使用top里的原子名。</p>
+<h2 id="常见Warning"><a href="#常见Warning" class="headerlink" title="常见Warning"></a>常见Warning</h2><p>关于净电荷的常见Warning</p>
+<ul>
+<li>You are using Ewald electrostatics in a system withnet charge. This can lead to severe artifacts, suchas ions moving into regions with low dielectric, dueto the uniform background charge. We suggest toneutralize your system with counter ions, possibly incombination with a physiological salt concentration.<ul>
+<li>这说明的当前用的是Ewald、PME之类考虑无穷远静电相互作用的方法，但是体系的净电荷不为0，此时模拟可能明显不合理，可能需要修正。</li>
+<li>此时应当检查grompp提示的System has non-zerototal charge后面显示的净电荷是多少，有三种情况：<ul>
+<li>数值非常接近于0：如0.0013。可以用<code>-maxwarn</code>无视此警告继续产生tpr</li>
+<li>数值是不为0的整数：如3.0、-1.0。说明需要用诸如<code>gmx genion</code>加抗衡离子使得整个体系电中性化</li>
+<li>数值是一个偏离整数明显的数：如0.167。这必定是因为有的moleculetype里[ atoms ]定义的所有原子电荷加不为整数所致。哪怕每一个分子的净电荷偏离0仅有诸如0.002的程度，但分子数很多时也会造成整体净电荷偏离0非常明显。需要自行检查体系中涉及的各个moleculetype的净电荷(手动加和其中的原子电荷)，对于净电荷轻微偏离0的分子，可手动调整其中某一个或多个原子电荷以令分子的净电荷恰为整数。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>关于原子顺序的常见Warning</p>
+<ul>
+<li>结构文件里的原子顺序必须和拓扑文件里的[ molecules ]及各类分子的[ atoms ]所对应的原子顺序完全一致，否则模拟时参数会错乱。而拓扑文件和结构文件中的原子名、残基名可以相同也可以不同，不同时在用grompp时会出现warning，可以无视，此时mdrun最终产生的gro文件里的原子和残基名将与拓扑文件里的一致。</li>
+</ul>
+<h1 id="insert-molecules"><a href="#insert-molecules" class="headerlink" title="insert-molecules"></a>insert-molecules</h1><p>将指定的分子插入体系空挡中，或构建一个填充指定分子的盒子。与<code>solvate</code>命令关键不同之处在于此命令中被填入的分子只需提供单个分子的结构文件。</p>
+<ul>
+<li><code>-f</code>：被填充的结构文件</li>
+<li><code>-ci</code>：要填入的分子的结构文件</li>
+<li><code>-o</code>：填充后的结构文件，默认为<code>out.gro</code></li>
+<li><code>-box &lt;vector&gt;</code>：构建新盒子并往里填充<ul>
+<li>如果<code>-f</code>和-box一起用，则是把-f文件里的盒子改成<code>-box</code>的尺寸后再往空隙里填。</li>
+</ul>
+</li>
+</ul>
+<h2 id="随机插入"><a href="#随机插入" class="headerlink" title="随机插入"></a>随机插入</h2><p>随机插入，此为默认情况。和solvate命令一样原子间距离肯定不会小于它们之间范德华半径之和(且可以用<code>-scale</code>调节半径的倍数)</p>
+<ul>
+<li><code>-nmol &lt;int&gt;</code>：最多填入的分子数</li>
+<li><p><code>-try &lt;int&gt;</code>：尝试插入<code>-nmol</code>乘以<code>-try</code>次。因此此值越大可能填充进去的分子越多。默认为<code>10</code></p>
+</li>
+<li><p><code>-rot</code>：默认为xyz，即填充时分子在三个方向可随意旋转。也可以为<code>z</code>(只允许绕Z轴旋转)、<code>none</code>(不能旋转)</p>
+</li>
+</ul>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><ul>
+<li><p>将formamide.pdb里的分子填入3×4×4 nm的空盒子，输出solv.gro。尝试最多填入1000个，如果填不下则能填多少填多少，尽可能填满</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gmx insert-molecules -box <span class="number">3</span> <span class="number">4</span> <span class="number">4</span> -ci formamide.pdb -o solv.gro -nmol <span class="number">1000</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将ethanol.gro里的分子填入protein.pdb当中溶质与盒子间的空隙，尝试最多填入200个</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">insert-molecules</span> <span class="selector-tag">-f</span> <span class="selector-tag">protein</span><span class="selector-class">.pdb</span> <span class="selector-tag">-ci</span> <span class="selector-tag">ethariol</span><span class="selector-class">.gro</span> <span class="selector-tag">-o</span> <span class="selector-tag">solv</span><span class="selector-class">.gro</span> <span class="selector-tag">-nmol</span> 200</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>把solv.gro的盒子(假设原先为2×2×2nm) 改为2×2×5nm，往多出来的2×2×3nm空间内填充CH4.pdb，尝试最多填入1000个(此法可以构建两相界面体系)</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">gmx</span> insert-molecules -f solv.gro -ci CH<span class="number">4</span>.pdb -box <span class="number">2</span> <span class="number">2</span> <span class="number">5</span> -o biphase.gro -nmol <span class="number">1000</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="指定位置插入"><a href="#指定位置插入" class="headerlink" title="指定位置插入"></a>指定位置插入</h2><p>在一批指定的位置插入分子，需自己提供一个<code>.dat</code>后缀的文件，每一行指定个分子插入的X，Y，Z坐标（相对于<code>-ci</code>文件里的坐标原点而言），用<code>-ip</code>选项接上此文件的路径。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gmx insert-molecules -box <span class="number">1</span> <span class="number">2</span> <span class="number">2</span> -ci formamide.pdb -o new.gro -ip pos.dat</span><br></pre></td></tr></table></figure>
+<p><code>pos.dat</code>的内容类似于：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">0</span>.<span class="number">25</span> <span class="number">0.5.0.5</span></span><br><span class="line"><span class="attribute">8</span>.<span class="number">25</span> <span class="number">0</span>.<span class="number">5</span> <span class="number">1</span>.<span class="number">0</span></span><br><span class="line"><span class="attribute">0</span>.<span class="number">25</span> <span class="number">1</span>.<span class="number">8</span> <span class="number">0</span>.<span class="number">5</span></span><br><span class="line"><span class="attribute">0</span>.<span class="number">25</span> <span class="number">1</span>.<span class="number">0</span> <span class="number">1</span>.<span class="number">0</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>通常<code>-ci</code>指定的结构文件里的分子的中心位置应当处于坐标原点，以令<code>.dat</code>设的恰是各个分子中心出现的位置</li>
+</ul>
+<h1 id="mdrun"><a href="#mdrun" class="headerlink" title="mdrun"></a>mdrun</h1><p>是GROMACS最关键的命令，用于做各种计算模拟任务。</p>
+<ul>
+<li><code>-s</code>:<code>.tpr</code>文件</li>
+<li><code>-cpi</code>:<code>.cpt</code>文件(可选，用于精确续算目的。若提供则完整的状态信息从这里读，否则用.tpr里的信息)<ul>
+<li>运行时每隔一定时间(用<code>-cpt</code>来设，默认15分钟)往<code>.cpt</code>里写一次完整的状态数据用于续算。前一次的<code>.cpt</code>文件会被改名为<code>_prev</code>结尾</li>
+</ul>
+</li>
+<li><code>-rerun</code>:轨迹文件(可选，计算已有轨迹的能量才用)</li>
+<li><code>-o</code>:输出的<code>.trr</code>文件</li>
+<li><code>-x</code>:输出的<code>.xtc</code>文件(可选)</li>
+<li><code>-cpo</code>:输出的<code>.cpt</code>文件(可选)</li>
+<li><code>-c</code>：输出的结构文件</li>
+<li><code>-e</code>:输出的<code>.edr</code>文件</li>
+<li><code>-g</code>：输出的<code>log</code>文件</li>
+<li><code>-deffnm</code>：设定对所有选项都用的文件名</li>
+<li><code>-v</code>:在终端不断输出当前已跑步数以及预计的完成时间</li>
+</ul>
+<h2 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h2><ul>
+<li><p>常规计算：将运行md1.tpr,输出md1.trr/xtc/log/cpt/edr/gro。gro文件应轨迹最后一帧结构而且是分子保留完整的状态。运行进度预计完成时间不断输出到屏幕上。四个线程将被利用。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">gmx</span> mdrun -v -deffnm md<span class="number">1</span> -nt <span class="number">4</span> -pin <span class="literal">on</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果要在远程服务器上运行，用比如：<code>nohup gmx mdrun -deffnm md1 nt 36 -pin on &amp;</code>，之后若用<code>exit</code>命令断开与服务器的连接，任务在服务器上会一直跑完。运行进度可以用<code>tail -f md1.log</code>来实时监控。</li>
+</ul>
+</li>
+<li><p>跑完意外中断的任务md1，轨迹、能量、日志文件会接续之前文件断点处继续写入，最终得到的这些文件和一次性完整运行的相同。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">gmx</span> mdrun -v -deffnm md<span class="number">1</span> -cpi md<span class="number">1</span>.cpt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>md1已完整跑完，延续之前的模拟参数，再跑额外的5ns模拟，新任务叫md2</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">gmx</span> convert-tpr -s md<span class="number">1</span>.tpr -extend <span class="number">5000</span> -o md<span class="number">2</span>.tpr</span><br><span class="line"><span class="attribute">gmx</span> mdrun -v -deffnm md<span class="number">2</span> -cpi md<span class="number">1</span>.cpt -noappend</span><br></pre></td></tr></table></figure>
+<p>最终会得到md2.part0002.trr/xtc/log/edr/gro和md2.cpt</p>
+</li>
+<li><p>同上，但是直接在之前md1的输出文件上续写</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">gmx</span> convert-tpr -s md<span class="number">1</span>.tpr -extend <span class="number">5000</span> -o md<span class="number">1</span>.tpr</span><br><span class="line"><span class="attribute">gmx</span> mdrun -v -deffnm md<span class="number">1</span> -cpi md<span class="number">1</span>.cpt</span><br></pre></td></tr></table></figure>
+<p>注:<code>convert-tpr</code>还可以结合<code>-until xxx</code>将模拟终止时间延长到<code>xxx</code></p>
+</li>
+<li><p>heat任务已跑完，想延续其最后的状态结合其它的mdp设定跑prod任务</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gmx grompp -f prod<span class="selector-class">.mdp</span> -c heat<span class="selector-class">.gro</span> -t heat<span class="selector-class">.cpt</span> -<span class="selector-tag">p</span> NANA<span class="selector-class">.top</span> -o prod.tpr</span><br><span class="line">gmx mdrun -v -deffnm prod</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这样产生的轨迹的初始时间由mdp里的<code>tinit</code>定义，如果没定义则默认从0开始计。</li>
+<li>注：多次延长模拟时间时，若为了让每一个任务都有独立的从而易于管理的文件，可以每一段延长的模拟都设置对应的mdp文件(如prod2.mdp、prod3.mdp…)并用此法产生相应的tpr文件。</li>
+</ul>
+</li>
+<li><p>用UR.tpr里的参数和设定计算config.pdb结构的能量(即单点能)</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gmx mdrun -deffnm UR -rerun <span class="built_in">config</span>.pdb</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用SSR.tpr里的参数和设定计算traj.trr里每一帧的能量并写入SSR.edr中</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">mdrun</span> <span class="selector-tag">-deffnm</span> <span class="selector-tag">SSR</span> <span class="selector-tag">-rerun</span> <span class="selector-tag">traj</span><span class="selector-class">.trr</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用<code>-rerun</code>计算某个结构文件或轨迹文件里各个结构的能量时，提供的结构/轨迹文件里的原子顺序必须与.tpr文件精确一致</li>
+<li>如果用<code>-reprod</code>，可以避免一些自动优化，使得在相同软硬件环境下(包括GROMACS版本)对相同tpr每次跑的结果精确相同。</li>
+</ul>
+</li>
+</ul>
+<h2 id="并行机制"><a href="#并行机制" class="headerlink" title="并行机制"></a>并行机制</h2><ul>
+<li>MPI：是最普的并行化技术。GROMACS4.5版以前的并行无论节点内还是节点间一律通过MPI实现</li>
+<li>thread-MPI:是MPI的轻量级子集，专门用于节点内并行，从4.5版起开始被GROMACS内置</li>
+<li>OpenMP:是最方便、流行的实现节点内并行的技术，从4.6版开始被GROMACS支持。日前版本在节点内并行时thread-MPI与OpenMP会自动结合使用，每个thread-MPI线程下属会有多个OpenMP线程，总并行线程数是二者的乘积。另外GROMACS的一些个别分析命令如hbond也支持OpenMP并行</li>
+</ul>
+<p>基于MPI并行需要在编译时提供MPI库(如OpenMPI)，而基于thread-MPI和OpenMP在节点内并行在编译时不需要额外的库。因此，如果只需要节点内并行则无需提供MPI库并专门编译MPI版，而且用MPI版来并行计算速度还会更慢。</p>
+<p>参数：</p>
+<ul>
+<li><code>-nt</code>：设定用几个线程并行。默认用所有CPU逻辑核数来并行。也可以用<code>-ntmpi</code>和<code>-ntomp</code>分别明确指定其中thread-MPI线程数和下属的OpenMP线程数，二者之积对应总线程数(<code>-nt</code>值)。<ul>
+<li>当节点内n核并行时，top命令看到的gmx进程的CPU占用率原理上应接近n*100%</li>
+</ul>
+</li>
+<li><code>-pin on</code>:将线程和CPU核心绑定，避免系统随意调度导致性能损失。</li>
+<li><code>-pinoffset [id]</code>:<code>-pin on</code>时绑定的CPU核心从第id个核开始算，第一个核心id为0。此选项默认为0。如果同时跑多个任务且用<code>-pin on</code>，总应当结合<code>-pinoffset</code>避免有的核心同时做两个任务</li>
+<li><code>-pinstride [int]</code>:<code>-pin on</code>时绑定的核的序号的间隔。通常设为1，使得被绑定的核的序号挨着</li>
+</ul>
+<p>对于支持超线程的CPU一般建议设成<code>-nt [CPU物理核数] -pin on</code>。没有必要关闭超线程。<br>对于跑非常长、很耗时的轨迹，可以加上比如<code>-nsteps 20000</code>只跑20000步，测试一下以下情况的差异以寻找性能最佳的组合用来跑当前任务:</p>
+<ul>
+<li>用和不用<code>-nt [物理核心数]</code></li>
+<li>用和不用<code>-pin on</code></li>
+<li><code>-ntmpi</code>与<code>-ntomp</code>的不同组合(二者之积应对应实际调用的总核数)</li>
+</ul>
+<p>报错：</p>
+<ul>
+<li><p>Fatal error：Your choice of number of MPI ranks and amount of resourcesresults in using 36 OpenMP threads per rank, which is mostlikely inefficient. The optimum is usually between 1 and 6threads per rank. If you want to run with this setup,specify the -ntomp option. But we suggest to change thenumber of MPI ranks (option -ntmpi).</p>
+<ul>
+<li>写上-ntomp 6使得每个thread-MPI线程下属的OpenMP线程在程序建议的范围。OpenMP线程数太高的话性能会打折扣，将hread-MPI和OpenMP恰当搭配并行时性能才最好。</li>
+</ul>
+</li>
+<li><p>模拟小体系时可能有以下提示 NOTE: Parallelization is limited by the smallnumber of atoms, only starting 2 thread-MPIranks, You can use the -nt and/or -ntmpi option to  optimize the number of threads </p>
+<ul>
+<li>说明体系原子数太少，仅能利用2个thread-MP1线程进行计算，不用管。</li>
+<li>如果实际模拟时发现CPU利用率很低，可尝试用<code>-ntmpi 2</code>结合<code>-ntomp [物理核心数/2]</code>，尽可能充分靠OpenMP来并行。</li>
+</ul>
+</li>
+</ul>
+<h2 id="GPU加速相关"><a href="#GPU加速相关" class="headerlink" title="GPU加速相关"></a>GPU加速相关</h2><p>当mdrun检测到有GPU可以利用时GPU版会自动利用GPU计算，当有些功能不支持GPU导致报错时可以明确指定用CPU算。</p>
+<ul>
+<li><code>-bonded</code>、<code>-nb</code>、<code>-pme [auto/cpu/gpu]</code>:指定成键、非键作用的实空间部分、PME算的非键作用的倒易空间部分用CPU还是GPU算。默认为<code>auto</code></li>
+<li>GPU版mdrun可以通过<code>-nb cpu -pme cpu -bonded cpu</code>强行要求只在CPU上算(2018版没-bonded选项)</li>
+<li><code>-gpu_id [GPUid]</code>:有多块GPU且想用来分别跑多个任务时，指定任务在哪个GPU上跑，避免冲突</li>
+<li><code>-update gpu</code>:令约束以及坐标更新也放到GPU上算，从而进一步加快速度，这称为GPU-resident模式，但功能上有限制。<ul>
+<li>从2020版开始支持，从2023版开始默认开启。2023版以前默认为-<code>-update auto</code>，总是在CPU上做。用<code>export GMX_FORCE_UPDATE _DEFAULT_GPU=true</code>设置环境变量可以总是强行在GPU上做。</li>
+<li>注:为了尽可能避免通信，GPU上做update需要满足updategroups条件。此时如果用了约束，几个原子若共同与某个原子有约束关系，那么在[ atoms ]中这儿个原子应当连续地排在那个原子的后头。例如用<code>constraints = hbonds时</code>，氢原子应当连续地排在它相连的重原子的后头。</li>
+</ul>
+</li>
+</ul>
+<h3 id="例子-2"><a href="#例子-2" class="headerlink" title="例子"></a>例子</h3><ul>
+<li><p>16核32线程机子上用两个GPU分别跑两个任务，且各用不同的8个CPU物理核心的最佳的运行方式：任务1:由0-7号CPU核心连同0号GPU运行；任务2由8-15号CPU核心连同1号GPU运行</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gmx mdrun [命令] -nt <span class="number">8</span> -pin on -pinstride <span class="number">1</span> -gpu_id <span class="number">0</span></span><br><span class="line">gmx mdrun [命令] -nt <span class="number">8</span> -pin on -pinoffset <span class="number">8</span> -pinstride <span class="number">1</span> -gpu_id <span class="number">1</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="pdb2gmx"><a href="#pdb2gmx" class="headerlink" title="pdb2gmx"></a>pdb2gmx</h1><p>pdb2gmx是GROMACS中模拟生物大分子体系的关键性工具。它载入生物大分子结构文件，从相关力场库文件中读取所需信息，给体系恰当加氢和重排原子顺序，最后产生生物分子的拓扑文件。</p>
+<ul>
+<li><code>-f</code>：结构文件，一般用pdb（输入）<ul>
+<li><code>pdb2gmx</code>也适合用来产生其它类型的由单体聚合而成的体系，如聚合物，但需要自已恰当修改rtp文件后pdb2gmx才能处理。</li>
+<li>pdb2gmx不是普性的拓扑文件产生工具，对rtp文件里没有定义的小分子，不可能用pdb2gmx产生拓扑文件</li>
+</ul>
+</li>
+<li><code>-o</code>：整理后的结构文件，默认为conf.gro</li>
+<li><code>-p</code>：拓扑文件，默认为topol.top</li>
+<li><code>-i</code>：位置限制文件，默认为posre.itp</li>
+<li><code>-ff &lt;string&gt;</code>：设定所用力场，默认是交互式选择</li>
+<li><code>-water &lt;enum&gt;</code>：设定所用水模型，默认是交互式选择</li>
+<li><code>-heavyh</code>:把氢原子质量设为4(并从相连重原子上扣除相应质量)，使氢的运动减缓，从而能用更大步长</li>
+<li><code>-ignh</code>：忽略输入文件里所有氢。NMR测定的pdb里虽然有所有的氢，某些程序(如分子对接程序)产生的结构文件里也往往有氢，但原子名大概率不标准，应当用此选项让pdb2gmx按标准规则加氢<ul>
+<li>通常建议始终带上<code>-ignh</code></li>
+</ul>
+</li>
+<li><code>-ter</code>：交互式选择如何处理末端氨基和羧基，默认是搞成带电状态。对AMBER力场不适用(因为它是直接按照r2b文件对残基处在氮端和碳端的情况进行设定)</li>
+<li><code>-merge</code>:默认是<code>no</code>，代表每个链作为单独的<code>[ moleculetype ]</code>。也可以用<code>all</code>都弄到个<code>[ moleculetype  ]</code>里，或<code>interactive</code>由用户下面则</li>
+</ul>
+<p>以下如果都要交互式选择，则用<code>-inter</code>选项：</p>
+<ul>
+<li><code>-lys</code>、<code>-arg</code>、<code>-asp</code>、<code>-glu</code>、<code>-gin</code>、<code>-his</code>：交互式选择这些残基的质子化态。默认是除了HIS都设为带电状态，HIS自动根据形成氢键最优方式判断是否两个氮都质子化(带电)或者中性时氢在哪个氮上</li>
+<li><code>-ss</code>:交互式方式选择如何设定二硫键</li>
+</ul>
+<h2 id="pdb2gmx利用的文件"><a href="#pdb2gmx利用的文件" class="headerlink" title="pdb2gmx利用的文件"></a><code>pdb2gmx</code>利用的文件</h2><p>（在力场文件夹中，<code>pdb2gmx</code>按照此顺序处理: r2b→hdb→ rtp→tdb）</p>
+<ul>
+<li><p><code>aminoacids.r2b</code>：</p>
+<ul>
+<li><p>含有将结构文件里的残基名转化到building block 名的对应关系。同一个残基在不间力场里的名字有时不同, 所以需要先做这个转换再套用 rtp</p>
+</li>
+<li><p>例子：G54A7力场的 r2b文件：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">;GMX</span>   <span class="string">Force-field</span></span><br><span class="line"><span class="attr">CYS</span>    <span class="string">CYSH</span></span><br><span class="line"><span class="attr">HISD</span>   <span class="string">HISA</span></span><br><span class="line"><span class="attr">HISE</span>   <span class="string">HISB</span></span><br><span class="line"><span class="attr">LYS</span>    <span class="string">LYSH</span></span><br><span class="line"><span class="attr">LYSN</span>   <span class="string">LYS</span></span><br><span class="line"><span class="attr">HEM</span>    <span class="string">HEME</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>例子：AMBER力场比较特殊，第3 、 4 列说明如果残 基在氮端和碳端时分别改名成什么。第5列是对于单个两亲氨基酸的悄况，当前未定义：</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">; rtp residue to rtp building block <span class="keyword">table</span></span><br><span class="line"></span><br><span class="line">;      main  N-ter C-ter <span class="number">2</span>-ter</span><br><span class="line">ALA    ALA   NALA  CALA  -</span><br><span class="line">ARG    ARG   NARG  CARG  -</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>aminoacids.hdb</code>：hydrogen database 。设定氢原子 如何连接 到重原子上,用于自动补氢</p>
+<ul>
+<li><p>例子：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ALA     <span class="number">1</span>       </span><br><span class="line"><span class="number">1</span>	<span class="number">1</span>	H	N	-C	CA</span><br><span class="line">ARG     <span class="number">4</span>  →下面要定义的项数     </span><br><span class="line"><span class="number">1</span>	<span class="number">1</span>	H	N	-C	CA</span><br><span class="line"><span class="number">1</span>	<span class="number">1</span>	HE	NE	CD	CZ</span><br><span class="line"><span class="number">2</span>	<span class="number">3</span>	HH1	NH1	CZ	NE</span><br><span class="line"><span class="number">2</span>	<span class="number">3</span>	HH2	NH2	CZ	NE</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第一列：这一项要加氢的数目</li>
+<li>第二列：加氢的规则</li>
+<li>第三列：加入的氢原子名。此项加两个氢，因此名称将为HH21和HH22</li>
+<li>第4-6列：加氢时候用于定位几何位置的原子</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>aminoacids.rtp</code>,：residue topology parameter。记录残基(以 及水、个别小分子、离子)的拓扑信息, pdb2gmx载入结构文 件时会依照此文件构建拓扑信息。</p>
+<ul>
+<li><p>例子：AMBER力场中 rtp文件的一部分</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[ bondedtypes ]</span> ;设定成键项的函数类型以 及产生拓扑信息的规则</span><br><span class="line">; bonds  angles  dihedrals  impropers all_dihedrals nrexcl HH14 RemoveDih</span><br><span class="line">     <span class="number">1</span>       <span class="number">1</span>          <span class="number">9</span>          <span class="number">4</span>        <span class="number">1</span>         <span class="number">3</span>      <span class="number">1</span>     <span class="number">0</span></span><br><span class="line">...</span><br><span class="line"><span class="string">[ GLY ]</span> ; HAx atoms assigned new ff03 atom type</span><br><span class="line"><span class="string"> [ atoms ]</span> </span><br><span class="line"> ; 原子名 原子类型		  原子电荷     序号</span><br><span class="line">     N    N           <span class="number">-0.374282</span>    <span class="number">1</span></span><br><span class="line">     H    H            <span class="number">0.253981</span>    <span class="number">2</span></span><br><span class="line">...</span><br><span class="line"><span class="string"> [ bonds ]</span></span><br><span class="line">     N     H</span><br><span class="line">     N    CA</span><br><span class="line">...</span><br><span class="line">     C     O</span><br><span class="line">    -C     N  ;原子名带负号、正号分别是指上一个、下一个残基的原子</span><br><span class="line"><span class="string"> [ impropers ]</span></span><br><span class="line">    -C    CA     N     H</span><br><span class="line">    CA    +N     C     O</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>pdb里原了顺序与 rtp里可以 不同, pdb2gmx会按照原子 名来匹配。</p>
+</li>
+<li>pdb2gmx会根据 rtp里设定的成键关系,自动产生所有该 有的<code>[ angles ]</code> 、<code>[ dihedrals ]</code> 、 [ pairs ] 项。<ul>
+<li>rtp里若直接定义了<code>[ angles ]</code>等项,会稷盖自动产生的。 GROMOS 力场的 rtp直接就定义完整了所有成键项。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>aminoacids.n.tdb</code>和<code>aminoacids.c.tdb</code>：termini database, 是氨基酸的氮端和碳端的末端数据库,设定对末端残基如何删除、 添加、替换原子和连键</p>
+<ul>
+<li><p>注：Amber力场<code>tdb</code>文件为空,是因为它在 rtp 里就对末端残基直接定义了不同类 型,不需要再按照<code>tdb</code>的规则对末端残基在普通残基基础上做额外处理。</p>
+</li>
+<li><p>例子：此例说明把 N原子的原子类型改为 NL, CA原子的原子类型改为CH1。 <strong>按照4号规则</strong>,以 N 、 CA、 C为参考 <strong>加入3个H类型氢原子</strong>,分别名为 H1 、  H2 、 H3 。<strong>原先残基中名为 H的原子 则被删除</strong>。然后设定新加入的原子 与其它原子间的成键关系。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">; G54A7力场的氮端tdb文件的一部分 aminoacids.n.tdb</span><br><span class="line"><span class="string">[ None ]</span></span><br><span class="line"></span><br><span class="line"><span class="string">[ NH3+ ]</span></span><br><span class="line"><span class="string">[ replace ]</span></span><br><span class="line">N		NL	<span class="number">14.0067</span>	<span class="number">0.129</span></span><br><span class="line">CA		CH1	<span class="number">13.019</span>	<span class="number">0.127</span>	<span class="number">0</span></span><br><span class="line"><span class="string">[ add ]</span></span><br><span class="line"><span class="number">3</span>	<span class="number">4</span>	H	N	CA	C	  ;H代表新加入的氢的名称前缀</span><br><span class="line">	H	<span class="number">1.008</span>	<span class="number">0.248</span>     ;新加入氢原子类型、质量、电荷</span><br><span class="line"><span class="string">[ delete ]</span></span><br><span class="line">H</span><br><span class="line"><span class="string">[ bonds ]</span></span><br><span class="line">N	H1	gb_2</span><br><span class="line">N	H2	gb_2</span><br><span class="line">N	H3	gb_2</span><br><span class="line"><span class="string">[ angles ]</span></span><br><span class="line">H1	N	H2	ga_10</span><br><span class="line">H2	N	H3	ga_10</span><br><span class="line">...</span><br><span class="line"><span class="string">[ dihedrals ]</span></span><br><span class="line">H1	N	CA	C	gd_39</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>[ none ]</code> 代表对于非末端残基 什么都不做修改 </p>
+</li>
+<li><p><code>[ NH3+ ]</code> 代表对于氮端的且质子化的 氨基酸要做哪些处理</p>
+</li>
+<li><p>例子：G54A7力场的碳端tdb文件的一部分 <code>aminoacids.c.tdb</code>。此例说明把C原子的原子名重置为C。按照8号规则，以C、CA、N做为参考位置加入2个OM类型氧原子，分别名为O1和O2。但如果原本结构中就已经有O和OXT原子了，则直接将之改成名为O1和O2的OM类型原子。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[ COO- ]</span></span><br><span class="line"><span class="string">[ replace ]</span> ;此处代表对于碳端的且羧基要设成带电状态的氨基酸要做哪些处理。</span><br><span class="line">C	C	C	<span class="number">12.011</span>	<span class="number">0.27</span></span><br><span class="line">O	O1	OM	<span class="number">15.9994</span>	<span class="number">-0.635</span></span><br><span class="line">OXT	O2	OM	<span class="number">15.9994</span>	<span class="number">-0.635</span></span><br><span class="line"><span class="string">[ add ]</span></span><br><span class="line"><span class="number">2</span>	<span class="number">8</span>	O	C	CA	N</span><br><span class="line">	OM	<span class="number">15.9994</span>	<span class="number">-0.635</span></span><br><span class="line"><span class="string">[ bonds ]</span>			;然后设定新加入的原子与其它原子间的成键关系。</span><br><span class="line">C	O1	gb_6</span><br><span class="line">C	O2	gb_6</span><br><span class="line"><span class="string">[ angles ]</span></span><br><span class="line">O1	C	O2	ga_38</span><br><span class="line">CA	C	O1	ga_22</span><br><span class="line">CA	C	O2	ga_22</span><br><span class="line"><span class="string">[ dihedrals ]</span></span><br><span class="line">N	CA	C	O2	gd_45</span><br><span class="line">N       CA      C       O2      gd_42</span><br><span class="line"><span class="string">[ impropers ]</span></span><br><span class="line">C	CA	O2	O1	gi_1</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>aminoacids.vsd</code>：virtual site database文件,用于设定症拟点, 一般用不着</p>
+</li>
+</ul>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>常见提示：WARNING: Residue 18 named GLU of a molecule in the input file was mapped to an entry in the topology database, but the atom CG used in i!,at entry Is not found in the input file. Perhaps your atom and/or residue naming needs to befixed.</p>
+<ul>
+<li>这说明 pdb2gmx在将输入的结构文件里的 第 18号残基 GLU 与 rtp文件里的 [GLU] 字段 匹配时,发现结构文件里这个残基少了名为 CG 的原子,显然需要补全结构文件里的这 个缺失的原子后再用 pdb2gmx 。但也有可 能这个原子实际存在,只是结构文件里的原 子名不对,此时需要修改原子名。  </li>
+<li>注意这里的残基号是从 1 开始排的,和 pdb 文件里记录的残基号未必相同。</li>
+</ul>
+<h1 id="solvate"><a href="#solvate" class="headerlink" title="solvate"></a>solvate</h1><p>可以生成一个充满指定分子的盒子，也可以在<code>-cp</code>指定的结构文件中加溶剂分子把盒子空隙填满。<br>默认填入的溶剂是<code>share/gromacs/top/spc216.gro</code>，这是对216个SPC水组成的盒子经过动力学模拟后己跑到充分平衡状态的文件。如果要填入其它溶剂分子则用-cs[文件名]来指定，文件也应当是经过NPT动力学模拟后的单一纯溶剂体系结构文件。GROMACS会先把整个模拟盒子用此文件里的体系通过平移复制填湾，然后扣掉和溶质有重叠的溶剂分子。</p>
+<ul>
+<li><code>-maxsol [数目]</code>可以设定只填入多少溶剂分子，填充会很不均匀。</li>
+<li>-<code>shell [厚度]</code>可以填充指定厚度的溶剂层。</li>
+<li><code>-p [top文件名]</code>还会同时对指定的拓扑文件进行修改，将其中的溶剂分子数设为当前值。</li>
+<li><code>-scale &lt;real&gt;</code>：当溶剂与溶质之间距离小于它们的范德华半径和，则溶剂会被去掉。范德华半径是<code>share/gromacs/top/vdwradii.dat</code>的半径值乘以<code>0.57</code>（默认值）。对水中的蛋白质, 使用默认值0.57可以得到接近1000 g/l的密度值。</li>
+</ul>
+<h2 id="例子-3"><a href="#例子-3" class="headerlink" title="例子"></a>例子</h2><ul>
+<li><p>生成2×5×4nm的水盒子体系</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gmx solvate -box <span class="number">2</span> <span class="number">5</span> <span class="number">4</span> -o test.gro</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在protein.gro的盒子空档中填充水分子</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">solvate</span> <span class="selector-tag">-cp</span> <span class="selector-tag">protein</span><span class="selector-class">.gro</span> <span class="selector-tag">-o</span> <span class="selector-tag">solv</span><span class="selector-class">.gro</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在protein.gro中的溶质附近0.5nm范围内填满水分子(前提是.gro里的盒子己足够大)</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">solvate</span> <span class="selector-tag">-cp</span> <span class="selector-tag">protein</span><span class="selector-class">.gro</span> <span class="selector-tag">-o</span> <span class="selector-tag">solv</span><span class="selector-class">.gro</span> <span class="selector-tag">-shell</span> 0<span class="selector-class">.5</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="trjconv"><a href="#trjconv" class="headerlink" title="trjconv"></a>trjconv</h1><p>此命令用于轨迹文件的处理，主要用处：</p>
+<ul>
+<li>转换轨格式(xtc/trr/gro/pdb之间转换)</li>
+<li>减少帧数</li>
+<li>只保留指定组的原子</li>
+<li>截取部分轨迹</li>
+<li>修改轨迹中对周期性的描述</li>
+<li>将轨迹向参考结构叠合</li>
+</ul>
+<p>合并轨迹用<code>trjcat</code></p>
+<p>参数：</p>
+<ul>
+<li><code>-f</code>:被处理的轨迹文件</li>
+<li><code>-s</code>:.tpr/gro/pdb文件(可选，输出结构文件及<code>-fit</code>时必须)</li>
+<li><code>-n</code>:.ndx文件(可选)</li>
+<li><code>-o</code>:新产生的轨迹文件</li>
+<li><code>-skip &lt;int&gt;</code>:每几帧输出一次，默认为1</li>
+<li><code>-dump &lt;time&gt;</code>：输出离指定时间最近的帧</li>
+<li><code>-pbc &lt;选项&gt;</code>:修改PBC处理方式<ul>
+<li>默认值为<code>none</code>，即不对轨迹的PBC描述做任何修</li>
+<li><code>atom</code>:只要原子越过盒子边界就返回另一边。这是mdrun直接产生出的轨迹对应的情况。这会导致边界处分子/残基被截断</li>
+<li><code>mol/res</code>:分子/残基的质心如果跨越了盒子，则分子/残基就挪到盒子另一头，这保证了分子残基的完整性。如果因为用了<code>-trans</code>和<code>-center</code>使得有的分子/残基处于盒子外，也可以由此得到修正<ul>
+<li>注:mdrun直接产生的gro文件对应的是mol状态</li>
+</ul>
+</li>
+<li><code>nojump</code>:使得原子即便跨越了盒子边界也照样运动(相对于第1帧而言)，而不会被挪到另一边。这保证了轨迹的连续性。<ul>
+<li>GROMACS自带的分析工具基本都能自动、恰当地在分析轨迹时考虑PBC问题。但第三方的分析程序则可能没法恰当处理PBC轨迹，如果不先搞成<code>nojump</code>的形式则会得到错误的结果。</li>
+</ul>
+</li>
+<li><code>cluster</code>:选定一个组(通过index文件定义)，使得这个组保持完整。主要用于令轨迹中分子团簇(包括诸如蛋白质+配体复合物)保持完整。使用前应先使用mol保证分子的完整性</li>
+</ul>
+</li>
+<li><code>-ur &lt;选项&gt;</code>:修改盒子描述方式</li>
+<li><code>-center</code>:平移体系使得指定组的几何中心处在盒子中央。盒子中心可以由<code>-boxcenter</code>具体定义</li>
+<li><code>-trans &lt;vector&gt;</code>:对所有坐标按照矢量平移</li>
+<li><code>-fit &lt;选项&gt;</code>:对轨迹中某个组根据参考结构叠合</li>
+<li><code>-step</code>:把轨迹每一帧输出为单独的.gro/pdb文件</li>
+</ul>
+<p>读的文件里有速度信息就会被读/写。但受力不会被读/写，除非写了<code>-force</code></p>
+<h2 id="例子-4"><a href="#例子-4" class="headerlink" title="例子"></a>例子</h2><ul>
+<li><p>将<code>all.trr</code>中3 ns到5 ns的轨迹每隔100ps一次提取出来到3_5.xtc</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">gmx</span> trjcon -f <span class="literal">all</span>.trr -b <span class="number">3000</span> -e <span class="number">5000</span> -dt <span class="number">100</span> -<span class="number">0</span> <span class="number">3</span>_<span class="number">5</span>.xtc</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>从all.trr中提取出grp.ndx里定义的某个组到sub.trr</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">trjconv</span> <span class="selector-tag">-f</span> <span class="selector-tag">all</span><span class="selector-class">.trr</span> <span class="selector-tag">-n</span> <span class="selector-tag">grp</span><span class="selector-class">.ndx</span> <span class="selector-tag">-o</span> <span class="selector-tag">sub</span><span class="selector-class">.trr</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果用<code>-s</code>提供了结构文件，即便没用<code>-n</code>也会提示选择要输出的组</li>
+</ul>
+</li>
+<li><p>提取md.trr中最接近3000ps的结构和速度到3000ps.gro</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">trjconv</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.trr</span> <span class="selector-tag">-s</span> <span class="selector-tag">md</span><span class="selector-class">.tpr</span> <span class="selector-tag">-o</span> 3000<span class="selector-tag">ps</span><span class="selector-class">.gro</span> <span class="selector-tag">-dump</span> 3000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将轨迹按照index.ndx里的某个组进行叠合输出到new.xtc，参考结构是ref.gro</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">trjconv</span> <span class="selector-tag">-f</span> <span class="selector-tag">sol</span><span class="selector-class">.trr</span> <span class="selector-tag">-s</span> <span class="selector-tag">ref</span><span class="selector-class">.gro</span> <span class="selector-tag">-n</span> <span class="selector-tag">index</span><span class="selector-class">.ndx</span> <span class="selector-tag">-fit</span> <span class="selector-tag">rot</span>+<span class="selector-tag">trans</span> <span class="selector-tag">-o</span> <span class="selector-tag">new</span><span class="selector-class">.xtc</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>程序会让选择两次组，第一次选择对哪个组做叠合，第二次选择输出文件里包含哪个组的信息</li>
+</ul>
+</li>
+<li><p>把md.xtc中从50ns开始到末尾的轨迹输出到cen.xtc，并对每一帧结构进行平移使得选定的某个组的质心恒处在盒子中心</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gmx trjconv -f md<span class="selector-class">.xtc</span> -<span class="selector-tag">b</span> <span class="number">50000</span> -o cen<span class="selector-class">.xtc</span> -n index<span class="selector-class">.ndx</span> -center</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>令sol.trr中的分子保持完整(必须提供.tpr)</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">trjconv</span> <span class="selector-tag">-f</span> <span class="selector-tag">sol</span><span class="selector-class">.trr</span> <span class="selector-tag">-s</span> <span class="selector-tag">sol</span><span class="selector-class">.tpr</span> <span class="selector-tag">-pbc</span> <span class="selector-tag">mol</span> <span class="selector-tag">-o</span> <span class="selector-tag">new</span><span class="selector-class">.xtc</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>若再用以下命令，则分子运动轨迹会保持连续，而不被盒子边界所截断</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">trjconv</span> <span class="selector-tag">-f</span> <span class="selector-tag">new</span><span class="selector-class">.xtc</span> <span class="selector-tag">-pbc</span> <span class="selector-tag">nojump</span> <span class="selector-tag">-o</span> <span class="selector-tag">yuri</span><span class="selector-class">.xtc</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>有用可戳(●ˇ∀ˇ●)</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="Zhao Jing 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Zhao Jing
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2026/08/12/%E3%80%90GROMACS%E3%80%914.GROMACS%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4/" title="【GROMACS】4.GROMACS中的命令">http://example.com/2026/08/12/【GROMACS】4.GROMACS中的命令/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/GROMACS/" rel="tag"><i class="fa fa-tag"></i> GROMACS</a>
+              <a href="/tags/%E6%96%87%E4%BB%B6/" rel="tag"><i class="fa fa-tag"></i> 文件</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2026/08/11/%E3%80%90GROMACS%E3%80%913.%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B/" rel="prev" title="【GROMACS】3.文件类型">
+      <i class="fa fa-chevron-left"></i> 【GROMACS】3.文件类型
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2026/08/12/%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="next" title="分子动力学基础知识">
+      分子动力学基础知识 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E4%BD%93"><span class="nav-number">1.</span> <span class="nav-text">总体</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">常用的参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dump"><span class="nav-number">3.</span> <span class="nav-text">dump</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#editconf"><span class="nav-number">4.</span> <span class="nav-text">editconf</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#energy"><span class="nav-number">5.</span> <span class="nav-text">energy</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#genion"><span class="nav-number">6.</span> <span class="nav-text">genion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#grompp"><span class="nav-number">7.</span> <span class="nav-text">grompp</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81Warning"><span class="nav-number">7.1.</span> <span class="nav-text">常见Warning</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#insert-molecules"><span class="nav-number">8.</span> <span class="nav-text">insert-molecules</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%8F%92%E5%85%A5"><span class="nav-number">8.1.</span> <span class="nav-text">随机插入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">8.1.1.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E4%BD%8D%E7%BD%AE%E6%8F%92%E5%85%A5"><span class="nav-number">8.2.</span> <span class="nav-text">指定位置插入</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mdrun"><span class="nav-number">9.</span> <span class="nav-text">mdrun</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90-1"><span class="nav-number">9.1.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E8%A1%8C%E6%9C%BA%E5%88%B6"><span class="nav-number">9.2.</span> <span class="nav-text">并行机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GPU%E5%8A%A0%E9%80%9F%E7%9B%B8%E5%85%B3"><span class="nav-number">9.3.</span> <span class="nav-text">GPU加速相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90-2"><span class="nav-number">9.3.1.</span> <span class="nav-text">例子</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pdb2gmx"><span class="nav-number">10.</span> <span class="nav-text">pdb2gmx</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pdb2gmx%E5%88%A9%E7%94%A8%E7%9A%84%E6%96%87%E4%BB%B6"><span class="nav-number">10.1.</span> <span class="nav-text">pdb2gmx利用的文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F"><span class="nav-number">10.2.</span> <span class="nav-text">注意</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#solvate"><span class="nav-number">11.</span> <span class="nav-text">solvate</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90-3"><span class="nav-number">11.1.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#trjconv"><span class="nav-number">12.</span> <span class="nav-text">trjconv</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90-4"><span class="nav-number">12.1.</span> <span class="nav-text">例子</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhao Jing"
+      src="/images/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">Zhao Jing</p>
+  <div class="site-description" itemprop="description">做一棵树，只为岁月而生长。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">97</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaojing629" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaojing629" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:295483858@qq.com" title="E-Mail → mailto:295483858@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+<div class="sidebar-categories" p align="left">
+  <font size="2">
+  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/">计算化学</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/%E8%BD%AF%E4%BB%B6/">软件</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/%E5%8E%9F%E7%90%86/">原理</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%AB%99/">网站</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F/">系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%9E%E5%85%AC/">办公</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%9E%E5%85%AC/%E8%BD%AF%E4%BB%B6/">软件</a></li></ul></li></ul>
+  </font>
+  </p /div>
+
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title"></h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ADF/" rel="tag">ADF</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AIM/" rel="tag">AIM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AMS/" rel="tag">AMS</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASPT2/" rel="tag">CASPT2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASSCF/" rel="tag">CASSCF</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDA/" rel="tag">CDA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CP2K/" rel="tag">CP2K</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CT/" rel="tag">CT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Claude/" rel="tag">Claude</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DLPNO/" rel="tag">DLPNO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GROMACS/" rel="tag">GROMACS</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gaussian/" rel="tag">Gaussian</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HF/" rel="tag">HF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hatree-Fock/" rel="tag">Hatree-Fock</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jahn-Teller/" rel="tag">Jahn-Teller</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jmol/" rel="tag">Jmol</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LmodeA/" rel="tag">LmodeA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCSCF/" rel="tag">MCSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MD/" rel="tag">MD</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MOKIT/" rel="tag">MOKIT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Multiwfn/" rel="tag">Multiwfn</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NBO/" rel="tag">NBO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NICS/" rel="tag">NICS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORCA/" rel="tag">ORCA</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Office/" rel="tag">Office</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PIO/" rel="tag">PIO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pyscf/" rel="tag">Pyscf</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RI%E8%BF%91%E4%BC%BC/" rel="tag">RI近似</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SO/" rel="tag">SO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMD/" rel="tag">VMD</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WIPO/" rel="tag">WIPO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Word/" rel="tag">Word</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/compliance/" rel="tag">compliance</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deepseek/" rel="tag">deepseek</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/molcas/" rel="tag">molcas</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/molpro/" rel="tag">molpro</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vscode/" rel="tag">vscode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%93%E5%88%A9/" rel="tag">专利</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%B4%E7%95%8C%E7%82%B9/" rel="tag">临界点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98/" rel="tag">内存</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E8%83%BD/" rel="tag">内能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="tag">几何优化</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%AD%90%E8%BD%A8%E9%81%93/" rel="tag">分子轨道</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%9D%E7%8C%9C/" rel="tag">初猜</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%9B%E5%B8%B8%E6%95%B0/" rel="tag">力常数</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%82%B9/" rel="tag">单点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag">占据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/" rel="tag">变分法</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%90%E6%A0%87/" rel="tag">坐标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%BB%84/" rel="tag">基组</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E5%8F%82%E8%80%83/" rel="tag">多参考</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BB%84%E6%80%81/" rel="tag">多组态</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A7%9C-%E6%B3%B0%E5%8B%92%E6%95%88%E5%BA%94/" rel="tag">姜-泰勒效应</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag">对称性</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7%E7%A0%B4%E7%BC%BA/" rel="tag">对称性破缺</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E6%89%B0%E7%90%86%E8%AE%BA/" rel="tag">微扰理论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%93%E6%89%91%E5%88%86%E6%9E%90/" rel="tag">拓扑分析</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%94%B6%E6%95%9B/" rel="tag">收敛</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6/" rel="tag">文件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%8B%E8%BD%A8%E8%80%A6%E5%90%88/" rel="tag">旋轨耦合</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag">波函</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BF%80%E5%8F%91/" rel="tag">激发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BF%80%E5%8F%91%E6%80%81/" rel="tag">激发态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag">点群</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%84%93/" rel="tag">焓</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%86%B5/" rel="tag">熵</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E5%AD%90%E6%80%81/" rel="tag">电子态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E8%8D%B7/" rel="tag">电荷</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%BB%E5%9B%BE/" rel="tag">画图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA/" rel="tag">相对论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%9F%BA%E7%BB%84/" rel="tag">相对论基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A3%81%E6%80%A7/" rel="tag">磁性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B2%BE%E5%BA%A6/" rel="tag">精度</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%98%E5%9B%BE/" rel="tag">绘图</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%8A%B3%E9%A6%99%E6%80%A7/" rel="tag">芳香性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%96%9B%E5%AE%9A%E8%B0%94%E6%96%B9%E7%A8%8B/" rel="tag">薛定谔方程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%9D%E5%8A%BF/" rel="tag">赝势</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%A8%E9%81%93/" rel="tag">轨道</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%85%E5%8A%A9%E5%9F%BA%E7%BB%84/" rel="tag">辅助基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5/" rel="tag">输入</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%87%BA/" rel="tag">输出</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%87%E6%B8%A1%E6%80%81/" rel="tag">过渡态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E5%BE%84/" rel="tag">键径</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E7%BA%A7/" rel="tag">键级</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%B6%E7%82%B9%E8%83%BD/" rel="tag">零点能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%91%E7%8E%87/" rel="tag">频率</a><span class="tag-list-count">2</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-flask"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhao Jing</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">410k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='0,0,0' opacity='0.3' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.1/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : '3L90wCaNUKa1MzSQcAhzkLtk-gzGzoHsz',
+      appKey     : 'fQ4t73jXnb71Y9zQWfXj5bIP',
+      placeholder: "可以输入您发现文中的错误或建议~(。・∀・)ノ",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=EB Garamond:300,300italic,400,400italic,700,700italic|Dancing Script:300,300italic,400,400italic,700,700italic|ZCOOL XiaoWei:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.1/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="VMD的基本操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【VMD】1.基本操作">
+<meta property="og:url" content="http://example.com/2026/08/13/%E3%80%90VMD%E3%80%911.%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:site_name" content="Jing&#39;s Notes">
+<meta property="og:description" content="VMD的基本操作">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2026/08/13/%E3%80%90VMD%E3%80%911.%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/VMD_3WIN2024-09-22_131832.945343.png">
+<meta property="og:image" content="http://example.com/2026/08/13/%E3%80%90VMD%E3%80%911.%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/Vmain2025-12-18_153212.313726.png">
+<meta property="og:image" content="http://example.com/VMDopen2024-09-22_141453.945268.png">
+<meta property="og:image" content="http://example.com/loadprot2024-09-22_141912.740591.png">
+<meta property="og:image" content="http://example.com/savecoord2024-10-29_143912.351224.png">
+<meta property="og:image" content="http://example.com/mouseMode2024-09-24_094901.380188.png">
+<meta property="og:image" content="http://example.com/image-20260814121120381.png">
+<meta property="og:image" content="http://example.com/image-20260814121002498.png">
+<meta property="og:image" content="http://example.com/labelStyle2024-09-23_201206.950127.png">
+<meta property="og:image" content="http://example.com/image-20260814135655745.png">
+<meta property="og:image" content="http://example.com/image-20260814140755295.png">
+<meta property="og:image" content="http://example.com/image-20260814141500277.png">
+<meta property="og:image" content="http://example.com/image-20260814150324754.png">
+<meta property="og:image" content="http://example.com/image-20260814154536928.png">
+<meta property="og:image" content="http://example.com/image-20260814154037441.png">
+<meta property="article:published_time" content="2026-08-13T13:10:17.000Z">
+<meta property="article:modified_time" content="2026-08-14T07:49:18.437Z">
+<meta property="article:author" content="Zhao Jing">
+<meta property="article:tag" content="VMD">
+<meta property="article:tag" content="绘图">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2026/08/13/%E3%80%90VMD%E3%80%911.%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/VMD_3WIN2024-09-22_131832.945343.png">
+
+<link rel="canonical" href="http://example.com/2026/08/13/%E3%80%90VMD%E3%80%911.%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+  <title>【VMD】1.基本操作 | Jing's Notes</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d23c6dd5b34ecbaba18b829b9084946";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jing's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/08/13/%E3%80%90VMD%E3%80%911.%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="Zhao Jing">
+      <meta itemprop="description" content="做一棵树，只为岁月而生长。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jing's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【VMD】1.基本操作
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2026-08-13 21:10:17" itemprop="dateCreated datePublished" datetime="2026-08-13T21:10:17+08:00">2026-08-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-08-14 15:49:18" itemprop="dateModified" datetime="2026-08-14T15:49:18+08:00">2026-08-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">计算化学</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/%E8%BD%AF%E4%BB%B6/" itemprop="url" rel="index"><span itemprop="name">软件</span></a>
+                </span>
+            </span>
+
+          
+            <br>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2026/08/13/%E3%80%90VMD%E3%80%911.%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2026/08/13/%E3%80%90VMD%E3%80%911.%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+            <div class="post-description">VMD的基本操作</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>参考<a target="_blank" rel="noopener" href="http://vmd.chenzhaoqiang.com/intro/startManual.html#">入门教程 — VMD中文教程 2024.09 文档</a></p>
+<h1 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h1><h2 id="VMD软件界面"><a href="#VMD软件界面" class="headerlink" title="VMD软件界面"></a>VMD软件界面</h2><p>VMD启动后会看到三个窗口：</p>
+<ul>
+<li>VMD Main：VMD的主窗口<ul>
+<li>若碰到VMDMain窗口显示不出来的情况，尝试在命令行窗口输入<code>menu main on</code>。如果还不行，输入<code>menu main move 100 100</code>再试。</li>
+</ul>
+</li>
+<li>图形窗口：观看体系结构</li>
+<li>命令行窗口：也叫Console窗口，VMD的一些状态信息、提示信息会显示在其中，并且可以在其中使用操作系统和VMD的内置命令，以及运行Td分析脚本</li>
+</ul>
+<p><img src="VMD_3WIN2024-09-22_131832.945343.png" alt="../_images/VMD_3WIN2024-09-22_131832.945343.png"></p>
+<h2 id="VMD-main窗口"><a href="#VMD-main窗口" class="headerlink" title="VMD main窗口"></a>VMD main窗口</h2><p><img src="Vmain2025-12-18_153212.313726.png" alt="../_images/Vmain2025-12-18_153212.313726.png"></p>
+<ul>
+<li>菜单栏下面的标题栏：<ul>
+<li>ID：载入的每个体系自动分配唯一的ID，依次顺延</li>
+<li>Frames：包含的帧数</li>
+<li>Vol：体数据数目</li>
+</ul>
+</li>
+<li>每个体系有T,A,D,F状态，双击可以切换状态，黑色/红色对应开启/关闭。也可以在菜单栏“Molecule”中操作。<ul>
+<li>T：代表Top。如果载入了多个体系，T在哪个上面，进度条的范围就由哪个体系决定</li>
+<li>A：代表Active，即允许播放轨迹</li>
+<li>D：代表Display，即显示此体系</li>
+<li>F：代表Fixed，即调整视角时保持不动</li>
+</ul>
+</li>
+<li>⇤，⇥：切换到第一帧或最后一帧</li>
+<li>◀、▶：逆向播放或正向播放</li>
+<li>↤、↦：向前或向后移动一帧</li>
+<li>Loop：轨迹播放方式</li>
+<li>step：轨迹播放步长</li>
+<li>speed：轨迹播放速度</li>
+</ul>
+<h2 id="载入结构"><a href="#载入结构" class="headerlink" title="载入结构"></a>载入结构</h2><p>Windows有两种方法载入结构：</p>
+<ul>
+<li><p>对于结构文件，可以直接把文件拖入到VMD Main窗口，文件类型会根据后缀名自行判断。</p>
+</li>
+<li><p>标准的载入方式是用“File(或在空白的地方点右键)-&gt; New Molecule”，然后选择要载入的文件。</p>
+<ul>
+<li>此时目录名不可有中文。如果没有正确判断出文件类型应当自行选择。</li>
+</ul>
+<p><img src="/VMDopen2024-09-22_141453.945268.png" alt="VMD Main界面"></p>
+<p><img src="/loadprot2024-09-22_141912.740591.png" alt="Molecule File Browser"></p>
+</li>
+</ul>
+<p>载入后将在VMDMain窗口产生一个新的ID。</p>
+<p>Linux下可以用比如<code>vmd foo.pdb</code>在启动时直接载入文件。</p>
+<h2 id="载入轨迹"><a href="#载入轨迹" class="headerlink" title="载入轨迹"></a>载入轨迹</h2><p>载入GROMACS的轨迹文件(trr/xtc)前需要先载入对应的gro或者pdb文件以提供原子信息。然后可以通过两种方式：</p>
+<ul>
+<li>“选中文件右键→Load Data into Molecular”</li>
+<li>在Molecule File Browser窗口（“FIle→New Molecular”）。 确认和选择load files for：对应0：pull.gro名称； 点击 Browse 找到pull.xtc文件。 最后点击load。<ul>
+<li>左下角的Frames：可以设定只载入轨迹哪些帧号范围以及载入间隔</li>
+<li>更好、更快的载入方式是选上 Load all at once后载入。</li>
+</ul>
+</li>
+</ul>
+<p>其他：</p>
+<ul>
+<li>载入较长轨迹的过程中建议在Graphics - Representation中把默认的表示取消显示，这样会显著加快载入速度。</li>
+</ul>
+<p>选中文件右键：</p>
+<ul>
+<li>Rename：修改体系名称。默 认名是一开始载入的文件的路径名</li>
+<li>Delete Frames：可以将轨迹中指定范围删除，也可以指定每隔凡帧删除一次。</li>
+<li>Abort FileI/O：载入过程中选择此选项可以终止载入。</li>
+</ul>
+<h3 id="载入GROMACS轨迹的标准方式"><a href="#载入GROMACS轨迹的标准方式" class="headerlink" title="载入GROMACS轨迹的标准方式"></a>载入GROMACS轨迹的标准方式</h3><ol>
+<li>载入gro文件，假设此时体系D=i(gro文件具体是哪个任务产生的无所谓，但里面的原子数、原子顺序需要和被载入的轨迹文件完全相同)</li>
+<li>删除ID=i的仅有的一帧(即gro里的结构)</li>
+<li>将轨迹载入到ID=的体系当中</li>
+</ol>
+<p>图形界面载入大轨迹速度比较慢，建议通过命令行载入大轨迹：<code>vmd em.gro md.xtc</code>。代表载入em.gro后，再把md.xtc里的轨迹载入进去。之后应手动删除第0帧。</p>
+<h3 id="载入轨迹时内存不足导致崩溃的解决办法"><a href="#载入轨迹时内存不足导致崩溃的解决办法" class="headerlink" title="载入轨迹时内存不足导致崩溃的解决办法"></a>载入轨迹时内存不足导致崩溃的解决办法</h3><p>在载入轨迹过程中，VMD的内存占用率会不断上升。当64bit版VMD的内存占用超过剩余物理内存，或者32bit版VMD占用内存达到约2GB时，VMD就会崩溃。解决办法:</p>
+<ul>
+<li>如用的Windows 32 bit版VMD，用Linux 64 bit版VMD。<ul>
+<li>1.9.4测试版也有官方的Windows 64 bit版但bug巨多，1.9.3有第三方编译的Windows 64 bit版：<a target="_blank" rel="noopener" href="http://bbs.keinsci.com/thread-23119-1-1.html">http://bbs.keinsci.com/thread-23119-1-1.html</a></li>
+<li>每隔一定帧数载入一帧(载入界面里通过stride设置)。内存占用量与载入的轨迹帧数成正比</li>
+<li>去掉轨迹中不感兴趣的原子。例如蛋白质+水体系可以通过gmxtjconv工具去掉水分子部分后再载入</li>
+<li>一次分析一部分轨迹。可以自行分割轨迹，也可以载入轨迹时通过First和Last指定载入哪部分轨迹</li>
+</ul>
+</li>
+</ul>
+<h3 id="保存轨迹"><a href="#保存轨迹" class="headerlink" title="保存轨迹"></a>保存轨迹</h3><p>VMDMain窗口中选中某个体系，点右键之后选Save Coordinates，可以把当前结构或者轨迹中的指定部分保存成新文件。VMD因此也能起到格式转换的作用。</p>
+<p>常用的记录分子结构的xyz、pdb文件也可以用来储存轨迹，并且载入这样的轨迹文件前不用先载入结构文件。不过缺点是体积比较大。</p>
+<p><img src="/savecoord2024-10-29_143912.351224.png" alt="Save Trajectort"></p>
+<p>从上往下：</p>
+<ul>
+<li>Save data from：保存轨迹的体系</li>
+<li>Selected atoms：保存的原子范围。可以用VMD的选择语句指定，填all会保存所有原子</li>
+<li>File type：新文件的类型</li>
+<li>Frames：要保存的帧号范围和间隔</li>
+</ul>
+<h1 id="Mouse"><a href="#Mouse" class="headerlink" title="Mouse"></a>Mouse</h1><p><img src="/mouseMode2024-09-24_094901.380188.png" alt="../_images/mouseMode2024-09-24_094901.380188.png"></p>
+<h2 id="三个基本模式"><a href="#三个基本模式" class="headerlink" title="三个基本模式"></a>三个基本模式</h2><p>RST：</p>
+<ul>
+<li>旋转模式（R）,默认模式：在VMD Main-&gt;Mouse-&gt;选择Rotate Mode; 或者在Display窗口，按R或者r 进行切换。</li>
+<li>平移模式 (T)：在VMD Main-&gt;Mouse-&gt;选择Translate Mode; 或者在Display窗口，按T或者t 进行切换。</li>
+<li>缩放模式（S）：在VMD Main-&gt;Mouse-&gt;选择Scale Mode; 或者在Display窗口，按S或者s 进行切换。</li>
+</ul>
+<p>旋转模式下（R）：</p>
+<ul>
+<li>按住鼠标左键：上下左右自由旋转；</li>
+<li>滚动鼠标中键可以进行缩放，或者缩放模式下（S）。</li>
+<li>按住鼠标右键、左右拖动：垂直于屏幕旋转</li>
+</ul>
+<p>平移模式下（T）：</p>
+<ul>
+<li>按住鼠标左键：上下左右自由移动；</li>
+<li>滚动鼠标中键：进行缩放；</li>
+<li>按住鼠标右键：前后移动，较少使用；</li>
+</ul>
+<p>缩放模式下（S）：</p>
+<ul>
+<li>按住鼠标左、中、右键，左右移动鼠标都可以缩放，右键的幅度会更大。</li>
+</ul>
+<p>恢复视图：Display -&gt; Reset View或按=：将当前显示的对象居中</p>
+<h2 id="Center：C"><a href="#Center：C" class="headerlink" title="Center：C"></a>Center：C</h2><p>按c键后点击一个原子：之后旋转视图绕这个原子旋转</p>
+<h2 id="结构的测量"><a href="#结构的测量" class="headerlink" title="结构的测量"></a>结构的测量</h2><p>Label 0123：原子、键、键角、二面角的测量和标记</p>
+<ul>
+<li>0：激活图形窗口井按数字键0进入原子查询模式后, 点击某个原子,在文本窗口就会显示原子的各种信 息,如坐标、编号、原子名、所属残基等。</li>
+<li>1、2、3：选择Mouse - Label 里的相应项目或者点键盘上相应数字键后, 点击相应数目的原子,就会把  原子、键长、键角、二面角标 注出来.距离单位为埃。</li>
+</ul>
+<p>风格编辑：</p>
+<ul>
+<li>在Graphics→<a href="#Labels">Labels</a>中，可以检阅被标记的原子的详细信息，还可以把标记的键长/键角/二面角进行作图，并且导出数据。也可以隐藏/删除标记</li>
+</ul>
+<p><img src="/image-20260814121120381.png" alt="Labels"></p>
+<ul>
+<li>颜色的修改见Graphics→Colors</li>
+<li>VMD的一个缺点是没法显示所有原子的序号。但可以通过VMD的脚本来实现，详见卢天的脚本atmlab.fcl和<a target="_blank" rel="noopener" href="http://sobereva.com/197">博文</a>。</li>
+</ul>
+<p>播放周期性计算的轨迹时往往出现胡乱连键的现象。这是因为VMD是按照最开始载入的结构依据原子间距离判断的成键，但随着模拟进行，有的原子穿越盒子后向到另一头，成键就混乱了。解决方法：</p>
+<ul>
+<li>用<code>gmx trjconv</code>命令接<code>-pbc mol</code>转换轨迹，使分子保持完整</li>
+<li>用DynamicBonds绘制风格显示</li>
+<li>命令行窗口执行<code>mol bondsrecalc all;mol reanalyze all</code>，会对当前帧、所有体系所有原子重新判断成键，但只解决当前一帧的问题(all改为top可只对top体系更新)</li>
+</ul>
+<h2 id="结构的修改"><a href="#结构的修改" class="headerlink" title="结构的修改"></a>结构的修改</h2><p>VMD不是专门的建模、体系结构编辑程序，只能做简单的结构调整。</p>
+<p>Move 5678：</p>
+<ul>
+<li>在Mouse-Move菜单中选择相应项目，或者直接按键盘上的相应数字键，然后点击原子进行拖动，可以平移相应部分。<ul>
+<li>如果按住shif键后进行拖动，则可以旋转相应部分。</li>
+</ul>
+</li>
+</ul>
+<p>点击Add/Remove Bonds后再点击两个原子，可以使它们成键或取消原先的键连。</p>
+<h1 id="Graphics"><a href="#Graphics" class="headerlink" title="Graphics"></a>Graphics</h1><h2 id="Labels"><a href="#Labels" class="headerlink" title="Labels"></a>Labels</h2><ul>
+<li>选择Graph：可以选择项目后，勾选show preview，可以预览键长键角的变化，还可以Save导出为文本文件。</li>
+</ul>
+<p><img src="/image-20260814121002498.png" alt="image-20260814121002498"></p>
+<ul>
+<li><p>标签尺寸、粗细、颜色、相对于原子核位置都可以调。</p>
+<p><img src="/labelStyle2024-09-23_201206.950127.png" alt="../_images/labelStyle2024-09-23_201206.950127.png"></p>
+<ul>
+<li>标签里的属性：<ul>
+<li><strong>%a：atom name</strong></li>
+<li><strong>%d：resid</strong></li>
+<li>%i：atom index (0-based)</li>
+<li><strong>%1： atom index (1-based)</strong></li>
+<li>%e：atomic element</li>
+<li>%b：beta</li>
+<li>%c：chain</li>
+<li>%C：conformation</li>
+<li>%f：user-applied force</li>
+<li>%F：current trajectory frame</li>
+<li>%m：mass</li>
+<li>%n：molecule index</li>
+<li>%N：molecule name</li>
+<li>%o：occupancy</li>
+<li>%p：atom periodic element number</li>
+<li>%q：atom charge</li>
+<li><strong>%R：resname in upper-case</strong></li>
+<li>%1： 1-char resname in upper-case</li>
+<li>%r：resname in camel case</li>
+<li>%s：segname</li>
+<li>%t：atom type</li>
+<li>%T：physical time</li>
+<li>%x, %y, %z</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Representation"><a href="#Representation" class="headerlink" title="Representation"></a>Representation</h2><h3 id="界面介绍"><a href="#界面介绍" class="headerlink" title="界面介绍"></a>界面介绍</h3><p><img src="/image-20260814135655745.png" alt="image-20260814135655745"></p>
+<ul>
+<li>Selected Molecule：选择哪个ID设定显示方式</li>
+<li>Create Rep：创建新的表示 (Representation) ，可创建无数多,效果会叠加</li>
+<li>Delete Rep：删除当前表示</li>
+<li>Seleted Atoms：被选择的原子</li>
+<li>Coloring Method：着色方式</li>
+<li>Material：材质</li>
+<li>Drawing Method：绘制风格<ul>
+<li>后面是不同绘制风格的具体设定</li>
+</ul>
+</li>
+<li>Apply Changes Automatically：调整设定后立即见效，默认为开启</li>
+</ul>
+<h3 id="Drawing-Style选项卡"><a href="#Drawing-Style选项卡" class="headerlink" title="Drawing Style选项卡"></a>Drawing Style选项卡</h3><p>常用着色方式</p>
+<ul>
+<li>Name：按照原子名着色</li>
+<li>Element：按照元素着色</li>
+<li>ResName/Type/ID：按照残基名、残基类型、残基序号着色</li>
+<li>Chain：按照链名着色</li>
+<li>Secondary Structure：根据二级结构着色</li>
+<li>ColorID：直接指定颜色ID</li>
+<li>Beta：根据pdb的B因子(bet字段)数值着色</li>
+<li>Position：根据x/y/z或径向坐标大小着色</li>
+<li>Fragment：根据所属片段着色</li>
+<li>Index：按照原子序号着色</li>
+<li>Backbone：将蛋白质骨架和侧链分开着色</li>
+<li>Volume：按照格点数据的数值着色</li>
+</ul>
+<p>常用绘制风格（Trace到NewCartoon专门用于显示蛋白质、核酸）</p>
+<ul>
+<li>Lines：用细线描绘结构，显示速度最快</li>
+<li>Bonds：用空心圆柱显示化学键</li>
+<li>DynamicBonds：同上，但是不是根据VMD在载入分子结构时对成键的判断来显示，而是根据当前坐标实时判断成键</li>
+<li>HBonds：虚线显示体系中的氢键(不管是什么原子，带着氢的就被视为氢键给体原子，不带氢的就被视为氢键受体原子)</li>
+<li>Points：用圆点显示原子</li>
+<li>VDW：将原子用范德华球描绘</li>
+<li>CPK：用球棍方式显示</li>
+<li>Licorice：很常用，比Bonds更好看，因为键的末端是半圆型封闭的</li>
+<li>QuickSurf：快速方式显示分子表面</li>
+<li>VolumeSlice：显示格点数据的截面图</li>
+<li>Beads：相邻原子一起用较大圆球显示</li>
+<li>Isosurface：显示格点数据等值面图</li>
+</ul>
+<h3 id="Selection-选项卡"><a href="#Selection-选项卡" class="headerlink" title="Selection 选项卡"></a>Selection 选项卡</h3><p><img src="/image-20260814140755295.png" alt="image-20260814140755295"></p>
+<p>Singlewords中双击可以使用，Apply是应用选择语句，Reset是清空选择语句，Macro definition是具体的定义</p>
+<ul>
+<li>all：所有原子</li>
+<li>none：无原子</li>
+<li>noh：氢以外的原子</li>
+<li>ion：离子</li>
+<li>water：水</li>
+<li>backbone：生物大分子骨架</li>
+<li>sidechain：生物大分子侧链</li>
+<li>protein：蛋白</li>
+<li>nucleic：核酸</li>
+<li>helix：螺旋</li>
+<li>alpha_helix：alpha螺旋(是helix中的子集，较长一段螺旋才算)</li>
+<li>sheet：折叠</li>
+<li>turn：转角</li>
+<li><p>coil：盘绕</p>
+</li>
+<li><p>alpha：蛋白质的alpha碳</p>
+</li>
+<li>acidic：pH=7时带负电氨基酸</li>
+<li>basic：pH=7时带正电氨基酸</li>
+<li>charged：acidic和basic的并集</li>
+<li>neutral：电中性氨基酸</li>
+<li>polar：极性残基</li>
+<li>hydrophobic：疏水性残基</li>
+<li>bonded：成键的原子</li>
+<li>hetero：非蛋白质和核酸的部分</li>
+<li>carbon, hydrogen, oxygen,nitrogen、sulfur：相应元素</li>
+</ul>
+<p>还有些关键词是需要后面接具体参数的，如name CA、x&gt;5。在此窗口中可以看到对于当前体系可以接的参数。</p>
+<p><img src="/image-20260814141500277.png" alt="image-20260814141500277"></p>
+<ul>
+<li>name：原子名</li>
+<li>index：原子序号(从0开始)</li>
+<li>serial：原子序号(从1开始)</li>
+<li>type：原子类型</li>
+<li>element：元素名</li>
+<li>resname：残基名</li>
+<li>residue：残基编号，从O开始</li>
+<li>resid：残基编号，从1开始。若结构文件里有残基号则与之一致</li>
+<li>chain：链名</li>
+<li>fragment：片段编号。VMD在载入结构时会对每个键连的片段设定一个编号</li>
+<li>numbonds：成键数目</li>
+<li>structure：二级结构</li>
+<li>x,y,z：X/Y/Z坐标</li>
+<li>vx，vy，vz：X/Y/Z速度</li>
+<li>beta：pdb文件中的beta值</li>
+<li>mass：原子质量</li>
+<li>charge：原子电荷</li>
+</ul>
+<h4 id="范围选择语句基本语法"><a href="#范围选择语句基本语法" class="headerlink" title="范围选择语句基本语法"></a>范围选择语句基本语法</h4><ul>
+<li>可以用<code>()</code>或<code>&#123;&#125;</code>指定语句处理的优先顺序</li>
+<li>对<code>双引号</code>内的字符可以使用正则表达式。</li>
+<li>用<code>单引号</code>则里面的字符可以避免被转义</li>
+<li>判断语句：<code>&lt;</code>、<code>&lt;=</code>、<code>=</code>、<code>&gt;=</code>、<code>&gt;</code>、<code>!=</code></li>
+<li>与、或、非：<code>and</code>、<code>or</code>、<code>not</code></li>
+<li>函数：sqr(平方)、sqrt(开根号)、abs、sin、cos、tan、atan、asin、acos、 sinh、 cosh、tanh、exp、 log、 log10</li>
+<li><p>运算符：<code>+</code>、<code>-</code>、<code>*</code>、<code>1</code>，也可以用<code>^</code>或<code>**</code>来表示多少次方</p>
+</li>
+<li><p><code>within 5 of AAA</code>：距离AAA 5埃以内的原子。用<code>pbwithin</code>则考虑周期边界条件</p>
+</li>
+<li><code>exwithin 5 of AAA</code>：同上，但不包含AAA自身</li>
+<li><code>withinbonds 2 of AAA</code>：距离AAA≤两个键的原子</li>
+<li><code>same p as AAA</code>：与AAA选区的p属性相同的部分</li>
+<li><code>ringsize 5 from AAA</code>：处于AAA中五元环上的原子</li>
+<li><code>maxringsize 6 from AAA</code>：处于AAA中≤六元环的原子</li>
+</ul>
+<p>例子：</p>
+<p>范围选择语句实例</p>
+<ul>
+<li><code>Chain B</code>：B链的原子</li>
+<li><code>numbonds=2</code>：形成了两个键的原子</li>
+<li><code>index 5 to 200 210</code>：序号在5~200内的原子以及210号原子</li>
+<li><code>protein or nucleic</code>：蛋白质与核酸的原子</li>
+<li><code>resname ALA CYS ARG</code>：丙氨酸、半胱氨酸、精氨酸原子</li>
+<li><code>backbone not helix</code>：除了螺旋区域以外的骨架原子</li>
+<li><code>name CA CB</code>或<code>name &quot;CA|CB&quot;</code> 或<code>name &quot;C[AB]&quot;</code>或<code>name &quot;C(A|B)&quot;</code>：名为CA和CB的原子</li>
+<li><code>name&quot;C.&quot;</code>：名字为两个字符且第一个字符为C的原子</li>
+<li><code>name&quot;CG.*&quot;</code>：名为CG或开头字符为CG的所有原子</li>
+<li><code>name&quot;CE[1-3]&quot;</code>：名字为CE1、CE2、CE3的原子</li>
+<li><code>name &quot;C[6-9]&quot; or name &quot;C[12][0-9]&quot; or name &quot;C3[01]&quot;</code>： 名字从C6到C31的原子</li>
+<li><code>name&#39;O5*&#39;</code>：个别原子名带星号，选取时要用单引号括住</li>
+<li><p><code>resname &#39;CA2+&#39;</code>或<code>resname &quot;CA2\+&quot;</code>：带正负号的也要用单引号括住以免转义，或者括在双引号里并加上斜杠</p>
+</li>
+<li><p><code>mass&gt;5</code>：质量大于5的原子</p>
+</li>
+<li><code>abs(charge)&gt;1</code>：电荷大小超过1的原子</li>
+<li><code>serial%2=0</code>：序号为偶数的原子</li>
+<li><code>x&lt;6 and x&gt;3</code>：选择x在3~6埃区域内的一层原子</li>
+<li><code>x&gt;1 and x&lt;8 and y&gt;24 and y&lt;35 and z&gt;1 and z&lt;5</code>：一个矩形区域内的原子</li>
+<li><code>sqr(x-5)+sqr(y+4)+sqr(z) &lt; sqr(5)</code>： 以(5,-4,0)点为中心半径5埃以内的原子</li>
+<li><code>((x-33)2+(y-14.5)^2)&lt;12^2 and z&lt;40 and z&gt;10</code>：选择以x=33、y=14.5埃为中心，半径为12埃，z范围在10-40埃的柱形区域</li>
+<li><code>x+y+z&lt;80</code>：斜切面内侧的原子</li>
+<li><p><code>not &#123;oxygen and numbonds=0&#125;</code>：扣除孤立的氧原子(可以用于去除X光衍射pdb文件里的结晶水)</p>
+</li>
+<li><p><code>within 6 of protein</code>：距离蛋白质6埃以内的原子</p>
+</li>
+<li><code>not within 5 of resname ADP</code>：距离名为ADP的分子5埃以外的原子</li>
+<li><code>water within 5 of residue 8 to 44</code>：距离8-44号残基5埃以内的水中的原子</li>
+<li><code>withinbonds 2 of index 31</code>：距离编号为31原子的两个键及以内的原子</li>
+<li><code>maxringsize 6 from protein</code>：蛋自当中所有六元及六元以下环上的原子</li>
+<li><code>same resname as resid 33</code>：所有与33号残基相同名称的残基</li>
+<li><code>same residue as &#123;protein within 5 of nucleic&#125;</code>： 与核酸的原子相距5埃以内的蛋白的原子，并且把被截断的残基保留完整</li>
+<li><code>x &gt; 15 and not same fragment as &#123;exwithin 8 of protein&#125;</code>：蛋白质以及蛋白质8埃范围以外的原子，保留完整片段，同时x坐标得大于15埃</li>
+</ul>
+<p>选择范围的更新：</p>
+<p>使用诸如x&lt;20这样的涉及到空间范围的选择语句时，原子是在刚输入此命令时候按照指定规则选定的，之后不会随着帧号的改变而更新。只有选择Update Selection Every Frame后才会在播放轨迹时每一帧都重新按照指定规则确定被选择的原子。当取消这个选项后，选定的原子范围将维持在最后一次更新的情况。</p>
+<p><img src="/image-20260814150324754.png" alt="image-20260814150324754"></p>
+<h3 id="Periodic"><a href="#Periodic" class="headerlink" title="Periodic"></a>Periodic</h3><p>显示周期镜像Graphics - Representation界面中可以点击Periodic标签页的相应复选框来将相应方向的镜像盒子显示出来。</p>
+<p><img src="/image-20260814154536928.png" alt="image-20260814154536928"></p>
+<h2 id="Color"><a href="#Color" class="headerlink" title="Color"></a>Color</h2><p>Graphics-Colors里面可以对颜色进行自由的设定，比如背景色、对每种元素/残基/二级结构等等的着色(必须着色方式选了相应项才能看到效果)</p>
+<ul>
+<li><p>修改背景颜色：</p>
+<p><img src="/image-20260814154037441.png" alt="image-20260814154037441"></p>
+<p>如果希望默认就是白背景，在vmd.rc最后加入<code>color Display Background white</code></p>
+</li>
+<li></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>有用可戳(●ˇ∀ˇ●)</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="Zhao Jing 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Zhao Jing
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2026/08/13/%E3%80%90VMD%E3%80%911.%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" title="【VMD】1.基本操作">http://example.com/2026/08/13/【VMD】1.基本操作/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/VMD/" rel="tag"><i class="fa fa-tag"></i> VMD</a>
+              <a href="/tags/%E7%BB%98%E5%9B%BE/" rel="tag"><i class="fa fa-tag"></i> 绘图</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2026/08/12/%E5%88%86%E5%AD%90%E5%8A%A8%E5%8A%9B%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="prev" title="分子动力学基础知识">
+      <i class="fa fa-chevron-left"></i> 分子动力学基础知识
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="nav-number">1.</span> <span class="nav-text">基本信息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#VMD%E8%BD%AF%E4%BB%B6%E7%95%8C%E9%9D%A2"><span class="nav-number">1.1.</span> <span class="nav-text">VMD软件界面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VMD-main%E7%AA%97%E5%8F%A3"><span class="nav-number">1.2.</span> <span class="nav-text">VMD main窗口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%BD%E5%85%A5%E7%BB%93%E6%9E%84"><span class="nav-number">1.3.</span> <span class="nav-text">载入结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%BD%E5%85%A5%E8%BD%A8%E8%BF%B9"><span class="nav-number">1.4.</span> <span class="nav-text">载入轨迹</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%BD%E5%85%A5GROMACS%E8%BD%A8%E8%BF%B9%E7%9A%84%E6%A0%87%E5%87%86%E6%96%B9%E5%BC%8F"><span class="nav-number">1.4.1.</span> <span class="nav-text">载入GROMACS轨迹的标准方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%BD%E5%85%A5%E8%BD%A8%E8%BF%B9%E6%97%B6%E5%86%85%E5%AD%98%E4%B8%8D%E8%B6%B3%E5%AF%BC%E8%87%B4%E5%B4%A9%E6%BA%83%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95"><span class="nav-number">1.4.2.</span> <span class="nav-text">载入轨迹时内存不足导致崩溃的解决办法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%9D%E5%AD%98%E8%BD%A8%E8%BF%B9"><span class="nav-number">1.4.3.</span> <span class="nav-text">保存轨迹</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Mouse"><span class="nav-number">2.</span> <span class="nav-text">Mouse</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E4%B8%AA%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">三个基本模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Center%EF%BC%9AC"><span class="nav-number">2.2.</span> <span class="nav-text">Center：C</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E7%9A%84%E6%B5%8B%E9%87%8F"><span class="nav-number">2.3.</span> <span class="nav-text">结构的测量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E7%9A%84%E4%BF%AE%E6%94%B9"><span class="nav-number">2.4.</span> <span class="nav-text">结构的修改</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Graphics"><span class="nav-number">3.</span> <span class="nav-text">Graphics</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Labels"><span class="nav-number">3.1.</span> <span class="nav-text">Labels</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Representation"><span class="nav-number">3.2.</span> <span class="nav-text">Representation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%95%8C%E9%9D%A2%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.2.1.</span> <span class="nav-text">界面介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Drawing-Style%E9%80%89%E9%A1%B9%E5%8D%A1"><span class="nav-number">3.2.2.</span> <span class="nav-text">Drawing Style选项卡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Selection-%E9%80%89%E9%A1%B9%E5%8D%A1"><span class="nav-number">3.2.3.</span> <span class="nav-text">Selection 选项卡</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4%E9%80%89%E6%8B%A9%E8%AF%AD%E5%8F%A5%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-number">3.2.3.1.</span> <span class="nav-text">范围选择语句基本语法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Periodic"><span class="nav-number">3.2.4.</span> <span class="nav-text">Periodic</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Color"><span class="nav-number">3.3.</span> <span class="nav-text">Color</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhao Jing"
+      src="/images/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">Zhao Jing</p>
+  <div class="site-description" itemprop="description">做一棵树，只为岁月而生长。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">97</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaojing629" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaojing629" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:295483858@qq.com" title="E-Mail → mailto:295483858@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+<div class="sidebar-categories" p align="left">
+  <font size="2">
+  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/">计算化学</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/%E8%BD%AF%E4%BB%B6/">软件</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/%E5%8E%9F%E7%90%86/">原理</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%AB%99/">网站</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F/">系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%9E%E5%85%AC/">办公</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%9E%E5%85%AC/%E8%BD%AF%E4%BB%B6/">软件</a></li></ul></li></ul>
+  </font>
+  </p /div>
+
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title"></h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ADF/" rel="tag">ADF</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AIM/" rel="tag">AIM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AMS/" rel="tag">AMS</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASPT2/" rel="tag">CASPT2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASSCF/" rel="tag">CASSCF</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDA/" rel="tag">CDA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CP2K/" rel="tag">CP2K</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CT/" rel="tag">CT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Claude/" rel="tag">Claude</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DLPNO/" rel="tag">DLPNO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GROMACS/" rel="tag">GROMACS</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gaussian/" rel="tag">Gaussian</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HF/" rel="tag">HF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hatree-Fock/" rel="tag">Hatree-Fock</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jahn-Teller/" rel="tag">Jahn-Teller</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jmol/" rel="tag">Jmol</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LmodeA/" rel="tag">LmodeA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCSCF/" rel="tag">MCSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MD/" rel="tag">MD</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MOKIT/" rel="tag">MOKIT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Multiwfn/" rel="tag">Multiwfn</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NBO/" rel="tag">NBO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NICS/" rel="tag">NICS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORCA/" rel="tag">ORCA</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Office/" rel="tag">Office</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PIO/" rel="tag">PIO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pyscf/" rel="tag">Pyscf</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RI%E8%BF%91%E4%BC%BC/" rel="tag">RI近似</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SO/" rel="tag">SO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMD/" rel="tag">VMD</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WIPO/" rel="tag">WIPO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Word/" rel="tag">Word</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/compliance/" rel="tag">compliance</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deepseek/" rel="tag">deepseek</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/molcas/" rel="tag">molcas</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/molpro/" rel="tag">molpro</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vscode/" rel="tag">vscode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%93%E5%88%A9/" rel="tag">专利</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%B4%E7%95%8C%E7%82%B9/" rel="tag">临界点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98/" rel="tag">内存</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E8%83%BD/" rel="tag">内能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="tag">几何优化</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%AD%90%E8%BD%A8%E9%81%93/" rel="tag">分子轨道</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%9D%E7%8C%9C/" rel="tag">初猜</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%9B%E5%B8%B8%E6%95%B0/" rel="tag">力常数</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%82%B9/" rel="tag">单点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag">占据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/" rel="tag">变分法</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%90%E6%A0%87/" rel="tag">坐标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%BB%84/" rel="tag">基组</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E5%8F%82%E8%80%83/" rel="tag">多参考</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BB%84%E6%80%81/" rel="tag">多组态</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A7%9C-%E6%B3%B0%E5%8B%92%E6%95%88%E5%BA%94/" rel="tag">姜-泰勒效应</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag">对称性</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7%E7%A0%B4%E7%BC%BA/" rel="tag">对称性破缺</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E6%89%B0%E7%90%86%E8%AE%BA/" rel="tag">微扰理论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%93%E6%89%91%E5%88%86%E6%9E%90/" rel="tag">拓扑分析</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%94%B6%E6%95%9B/" rel="tag">收敛</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6/" rel="tag">文件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%8B%E8%BD%A8%E8%80%A6%E5%90%88/" rel="tag">旋轨耦合</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag">波函</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BF%80%E5%8F%91/" rel="tag">激发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BF%80%E5%8F%91%E6%80%81/" rel="tag">激发态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag">点群</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%84%93/" rel="tag">焓</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%86%B5/" rel="tag">熵</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E5%AD%90%E6%80%81/" rel="tag">电子态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E8%8D%B7/" rel="tag">电荷</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%BB%E5%9B%BE/" rel="tag">画图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA/" rel="tag">相对论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%9F%BA%E7%BB%84/" rel="tag">相对论基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A3%81%E6%80%A7/" rel="tag">磁性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B2%BE%E5%BA%A6/" rel="tag">精度</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%98%E5%9B%BE/" rel="tag">绘图</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%8A%B3%E9%A6%99%E6%80%A7/" rel="tag">芳香性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%96%9B%E5%AE%9A%E8%B0%94%E6%96%B9%E7%A8%8B/" rel="tag">薛定谔方程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%9D%E5%8A%BF/" rel="tag">赝势</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%A8%E9%81%93/" rel="tag">轨道</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%85%E5%8A%A9%E5%9F%BA%E7%BB%84/" rel="tag">辅助基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5/" rel="tag">输入</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%87%BA/" rel="tag">输出</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%87%E6%B8%A1%E6%80%81/" rel="tag">过渡态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E5%BE%84/" rel="tag">键径</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E7%BA%A7/" rel="tag">键级</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%B6%E7%82%B9%E8%83%BD/" rel="tag">零点能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%91%E7%8E%87/" rel="tag">频率</a><span class="tag-list-count">2</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-flask"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhao Jing</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">410k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='0,0,0' opacity='0.3' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.1/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : '3L90wCaNUKa1MzSQcAhzkLtk-gzGzoHsz',
+      appKey     : 'fQ4t73jXnb71Y9zQWfXj5bIP',
+      placeholder: "可以输入您发现文中的错误或建议~(。・∀・)ノ",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
