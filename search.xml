@@ -2840,232 +2840,6 @@
       </tags>
   </entry>
   <entry>
-    <title>【VMD】常见命令</title>
-    <url>/2020/09/29/%E3%80%90VMD%E3%80%91%E5%B8%B8%E8%A7%81%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<h1 id="脚本基础"><a href="#脚本基础" class="headerlink" title="脚本基础"></a>脚本基础</h1><ul>
-<li><p>设定变量</p>
-<figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> &lt;<span class="built_in">variable</span>&gt; &lt;<span class="built_in">value</span>&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用变量</p>
-<figure class="highlight gams"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> x <span class="comment">10</span></span><br><span class="line">puts <span class="comment">&quot;the value of x is:$x&quot;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>打印</p>
-<figure class="highlight gams"><table><tr><td class="code"><pre><span class="line">puts <span class="symbol">$</span>&lt;<span class="keyword">variable</span>&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>条件逻辑：</p>
-<figure class="highlight dust"><table><tr><td class="code"><pre><span class="line"><span class="xml">if </span><span class="template-variable">&#123;conditional&#125;</span><span class="xml"> </span><span class="template-variable">&#123;script&#125;</span><span class="xml"> elseif </span><span class="template-variable">&#123;conditional&#125;</span><span class="xml"> </span><span class="template-variable">&#123;script&#125;</span><span class="xml"> else </span><span class="template-variable">&#123;script&#125;</span></span><br></pre></td></tr></table></figure>
-<p>比如：</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="builtin-name">set</span> a 30</span><br><span class="line"><span class="keyword">if</span> &#123;<span class="variable">$a</span> &lt;= 30&#125; &#123;puts <span class="string">&quot;<span class="variable">$a</span> is seq 30&quot;</span>&#125; <span class="keyword">else</span> &#123;puts <span class="string">&quot;<span class="variable">$a</span> is larger than 30&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>循环：</p>
-<figure class="highlight dust"><table><tr><td class="code"><pre><span class="line"><span class="xml">for </span><span class="template-variable">&#123;initialization&#125;</span><span class="xml"> </span><span class="template-variable">&#123;conditional&#125;</span><span class="xml"> </span><span class="template-variable">&#123;increment&#125;</span><span class="xml"> </span><span class="template-variable">&#123;commands&#125;</span></span><br></pre></td></tr></table></figure>
-<p>或</p>
-<figure class="highlight dust"><table><tr><td class="code"><pre><span class="line"><span class="xml">foreach <span class="tag">&lt;<span class="name">variable</span> <span class="attr">name</span>&gt;</span> <span class="tag">&lt;<span class="name">list</span>&gt;</span> </span><span class="template-variable">&#123;commands&#125;</span></span><br></pre></td></tr></table></figure>
-<p>比如：</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">for</span> &#123;set i <span class="number">0</span>&#125; &#123;$i &lt; <span class="number">10</span>&#125; &#123;incr i <span class="number">1</span>&#125; &#123;puts <span class="string">&quot;i is $i&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="attribute">set</span> m &#123;<span class="number">0</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> <span class="number">5</span>&#125;</span><br><span class="line"><span class="attribute">foreach</span> i $m &#123;puts <span class="string">&quot;two times m is [expr $i *2]&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>调用脚本，在tk窗口中：</p>
-<figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">source &lt;<span class="keyword">script</span> <span class="built_in">file</span>&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="axes"><a href="#axes" class="headerlink" title="axes"></a><code>axes</code></h1><p><img src="image-20211120181556786.png" alt="image-20211120181556786"></p>
-<ul>
-<li><p><code>locations</code>：列出位置的列表</p>
-</li>
-<li><p><code>location</code>：获取当前的位置</p>
-</li>
-<li><p><code>location &lt;Position&gt;</code>：设置轴的位置，比如：<code>off</code>、<code>origin</code> 、 <code>lowerleft</code>、 <code>lowerright</code>、<code>upperleft</code>、<code>upperright</code>：</p>
-<figure class="highlight crmsh"><table><tr><td class="code"><pre><span class="line">axes <span class="keyword">location</span> <span class="title">Off</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="color"><a href="#color" class="headerlink" title="color"></a><code>color</code></h1><p><img src="image-20211120181437883.png" alt="image-20211120181437883"></p>
-<ul>
-<li><p><code>&lt;Category&gt; &lt;Name&gt; &lt;color&gt;</code>：更改类别和名字指定的对象：</p>
-<ul>
-<li><p>category包含（具体Categories、Names和Colors可在VMD界面的Graphics→Colors中查看）：</p>
-<ul>
-<li><code>Display</code>：背景颜色</li>
-<li><code>Axes</code>：轴相关</li>
-<li><code>Name</code>：原子名称</li>
-<li>……</li>
-</ul>
-</li>
-<li><p>例子：</p>
-<figure class="highlight hsp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#改变背景颜色</span></span><br><span class="line"><span class="keyword">color</span> Display Background white</span><br><span class="line"></span><br><span class="line"><span class="meta">#改变某个元素颜色</span></span><br><span class="line"><span class="keyword">color</span> Name C silver</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>……</p>
-</li>
-</ul>
-<h1 id="display"><a href="#display" class="headerlink" title="display"></a><code>display</code></h1><ul>
-<li><p><code>depthcue &lt;on|off&gt;</code>: 景深效果，前面的物体比后面的更亮，默认开启，关闭用：</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">display</span> depthcue <span class="literal">off</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>projection &lt;mode&gt;</code>：投影模式mode有：</p>
-<ul>
-<li><code>perspective</code>：透视的，默认</li>
-<li><code>orthographic</code>：</li>
-</ul>
-<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"><span class="built_in">display</span> projection Orthographic</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>rendermode &lt;mode&gt;</code>：渲染模式，使用各种 OpenGL 扩展来实现 alpha 混合透明度，或可编程着色以获得更高质量的分子图形。默认渲染模式不会启用这些功能。</p>
-<ul>
-<li><code>Normal</code>：</li>
-<li><code>AlphaBlend</code>：</li>
-<li><code>GLSL</code>：</li>
-</ul>
-<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"><span class="built_in">display</span> rendermode GLSL</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="mol"><a href="#mol" class="headerlink" title="mol"></a><code>mol</code></h1><p>在VMD中加载、修改或删除一个分子。</p>
-<ul>
-<li><code>&lt;molecule_number&gt;</code>：选择是哪个分子，<ul>
-<li>可以是<code>all</code>、 <code>top</code>、<code>active</code>、 <code>inactive</code>、 <code>displayed</code>、 <code>on</code>、<code>off</code>、<code>fixed</code>、<code>free</code></li>
-<li>也可以是他们的<code>id</code>，是从0开始的，而且即使删除后，也不会重复使用。比如三个分子为0，1，2，删掉0，再载入一个分子，这个分子的<code>id</code>是3，但是它的<code>index</code>仍然是2。</li>
-</ul>
-</li>
-<li><p><code>new [filename] [options]</code>和<code>addfile &lt;filename&gt; [options]</code>：</p>
-<ul>
-<li><code>mol new</code>是用来从文件中新建一个分子。filename是可选的，如果是空的，创建一个空白的没有原子的画布，用户可以在其上自定义几何等。</li>
-<li><code>mol addfile</code>与<code>mol new</code>类似，但是结构和坐标数据加载到top的分子中而不是创建一个新的分子。</li>
-<li>可选的option有：<ul>
-<li><code>type &lt;type&gt;</code>：定义文件的类型（pdf，pdb等），否则根据文件扩展名来决定文件类型。</li>
-<li>……</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><code>list</code>：为每个分子打印一行状态摘要。</p>
-</li>
-<li><code>list &lt;molecule_number&gt;</code>：打印与molecule_number匹配的每个分子的单行状态摘要。如果只有一个分子与molecule_number匹配，也打印该分子的详细表示状态。</li>
-<li><code>color &lt;coloring_method&gt;</code>：更改默认的原子着色方法设置。</li>
-<li><code>representation &lt;rep_style&gt;</code>：更改默认呈现方法设置。</li>
-<li><code>selection select_method</code>：更改默认的原子选择设置</li>
-</ul>
-<h2 id="Molecule部分"><a href="#Molecule部分" class="headerlink" title="Molecule部分"></a>Molecule部分</h2><p><img src="image-20211120181853394.png" alt="image-20211120181853394"></p>
-<p>分子的一些状态，对应于VMD main窗口中的一些标记（黑色为打开状态）：</p>
-<ul>
-<li><code>delete &lt;molecule_number&gt;</code>：删除分子。</li>
-<li><code>fix/free &lt;molecule_number&gt;</code>：固定或者不固定这个分子，对应于”F“标记。</li>
-<li><code>on/off &lt;molecule_number&gt;</code>：显示或者隐藏这个分子，对应于”D“标记</li>
-<li><code>active/inactive &lt;molecule_number&gt;</code>：激活或者不激活这个分子，对应于”A“</li>
-<li><code>top &lt;molecule_number&gt;</code>：置顶这个分子，对应于”T“</li>
-<li><code>rename &lt;molecule_number&gt; XX</code>：重命名指定的分子。</li>
-</ul>
-<p><img src="image-20211120181329843.png" alt="image-20211120181329843"></p>
-<h2 id="Representation部分"><a href="#Representation部分" class="headerlink" title="Representation部分"></a>Representation部分</h2><p><img src="image-20211120185644801.png" alt="image-20211120185644801"></p>
-<ul>
-<li><p><code>addrep &lt;molecule_number&gt;</code>：使用当前默认设置（比如原子选择、着色和渲染方法），为指定的分子添加新的表示。</p>
-<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">mol addrep <span class="built_in">top</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>delrep &lt;rep_number&gt; &lt;molecule_number&gt;</code>：从指定的分子中删除给定的rep。</p>
-</li>
-<li><p><code>modrep &lt;rep_number&gt; &lt;molecule_number&gt;</code>：将给定分子的给定rep的方法设置为默认设置。</p>
-</li>
-<li><p><code>modselect &lt;rep_number&gt; &lt;molecule_number&gt; &lt;select_method&gt;</code>：更改指定分子、指定的Rep所包含的部分。select_method可以是（更多可以查看Graphics→Representations→Selections）选择的语法可以见<a href="/2026/08/13/%E3%80%90VMD%E3%80%911.%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/#范围选择语句基本语法">范围选择语句基本语法</a></p>
-<ul>
-<li><code>all</code>、<code>none</code>……</li>
-<li>逻辑<code>and</code>、<code>or</code>、<code>not</code></li>
-<li><code>Name</code>、<code>Type</code>、<code>Element</code>……</li>
-</ul>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">mol</span> modselect <span class="number">1</span> <span class="number">0</span> <span class="literal">all</span> not index <span class="number">72</span> <span class="number">73</span> <span class="number">74</span> </span><br><span class="line"></span><br><span class="line"><span class="attribute">mol</span> modselect <span class="number">1</span> top name U<span class="number">74</span> Ce<span class="number">75</span> C<span class="number">73</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>图形相关设置：</p>
-<ul>
-<li><p><code>modstyle &lt;rep_number&gt; &lt;molecule_number&gt; &lt;rep_style&gt;</code>：为指定的分子、指定的Rep指定表示方式。</p>
-<ul>
-<li>rep_style可以是<code>Line</code>，<code>CPK</code>等（更多可以查看Graphics→Representations→Draw style→Drawing Method），后面还可以跟相应的设置。</li>
-</ul>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">mol</span> modstyle <span class="number">1</span> <span class="number">0</span> Lines <span class="number">3</span>.<span class="number">000000</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">mol</span> modstyle <span class="number">0</span> top CPK <span class="number">0</span>.<span class="number">800000</span> <span class="number">0</span>.<span class="number">300000</span> <span class="number">22</span>.<span class="number">000000</span> <span class="number">22</span>.<span class="number">000000</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">mol</span> modstyle <span class="number">1</span> top Isosurface <span class="number">0</span>.<span class="number">05</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>modcolor &lt;rep_number&gt; &lt;molecule_number&gt; &lt;coloring_method&gt;</code>：修改给定分子的给定rep的着色方法。</p>
-<ul>
-<li>coloring_method可以是<code>Name</code>、<code>Element</code>等。（更多可以查看Graphics→Representations→Draw style→Cokoring Method）</li>
-</ul>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">mol modcolor <span class="number">1</span> top ColorID <span class="number">1</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>modmaterial &lt;rep_number&gt; &lt;molecule_number&gt; &lt;material_name&gt;</code>：修改给定分子的给定rep的材料</p>
-<ul>
-<li>material_name可以是<code>Glossy</code>、<code>EdgyGlass</code>等。（更多可以查看Graphics→Representations→Draw style→Material）</li>
-</ul>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">mol modmaterial <span class="number">1</span> top EdgyGlass</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="molinfo"><a href="#molinfo" class="headerlink" title="molinfo"></a><code>molinfo</code></h1><p>获取有关分子(或已加载文件)的信息，包括已加载原子的数量、文件名、图形选择和查看矩阵。</p>
-<ul>
-<li><code>list</code>：返回所有当前分子id的列表。</li>
-<li><code>num</code>：返回加载分子的数量。</li>
-<li><p><code>top</code>：返回顶部分子的id</p>
-</li>
-<li><p><code>index n</code>：返回第 n 个分子的 id</p>
-</li>
-<li><p><code>&lt;molecule_id&gt; get &lt;keywords&gt;</code> ：获取关于给定分子某个信息</p>
-</li>
-<li><p><code>&lt;molecule_id&gt; set &lt;keywords&gt; &#123;list of values&#125;</code>：修改关于给定分子的某个信息。<a href="https://www.ks.uiuc.edu/Research/vmd/vmd-1.8.3/ug/node125.html">keyword</a>有</p>
-<ul>
-<li><code>center_matrix</code>：中心矩阵</li>
-<li><code>rotate_matrix</code>：旋转矩阵</li>
-<li><code>scale_matrix</code>：缩放矩阵</li>
-</ul>
-</li>
-</ul>
-<p>例如：</p>
-<ul>
-<li><p>将新加载的分子改成与之前相同的朝向</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="builtin-name">set</span> viewpoint [molinfo top <span class="builtin-name">get</span> &#123;center_matrix rotate_matrix scale_matrix&#125;]</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [<span class="builtin-name">info</span> exists viewpoint] &#123;</span><br><span class="line">molinfo top <span class="builtin-name">set</span> &#123;center_matrix rotate_matrix scale_matrix&#125; <span class="variable">$viewpoint</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="render"><a href="#render" class="headerlink" title="render"></a><code>render</code></h1><ul>
-<li><p><code>list</code>：列出可用的渲染方法</p>
-</li>
-<li><p><code>&lt;method&gt; filename</code>：使用method渲染为filename，method可以是：</p>
-<ul>
-<li>ART</li>
-<li>Tachyon</li>
-<li>TachyonInternal</li>
-<li>snapshot</li>
-<li>POV3</li>
-<li>PostScript</li>
-<li>Radiance</li>
-<li>Raster3D</li>
-<li>Rayshade</li>
-<li>Renderman</li>
-<li>STL</li>
-<li>VRML-1</li>
-<li>VRML-2</li>
-</ul>
-</li>
-<li><p><code>&lt;method&gt; filename command</code>：渲染完成后，执行其他命令。command中的%s都会被文件名替换。比如：</p>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="selector-id">#render</span> Tachyon <span class="variable">$iorb</span><span class="selector-class">.dat</span> <span class="string">&quot;tachyon_WIN32.exe $&#123;iorb&#125;.dat -format BMP -o $&#123;iorb&#125;.bmp -trans_raster3d -res 2000 1500 -numthreads 4 -aasamples 24 -mediumshade &quot;</span></span><br><span class="line"></span><br><span class="line">render Tachyon <span class="variable">$iorb</span><span class="selector-class">.dat</span> <span class="string">&quot;tachyon_WIN32.exe $&#123;iorb&#125;.dat -format BMP -o $&#123;iorb&#125;.bmp  -aasamples 12&quot;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>options &lt;method&gt;</code>：获取指定method的默认命令</p>
-</li>
-<li><code>options &lt;method&gt; command</code>：为method设置新的默认命令</li>
-<li><code>default &lt;method&gt;</code>：获取method最初的默认命令</li>
-</ul>
-<h2 id="Tachyon"><a href="#Tachyon" class="headerlink" title="Tachyon"></a>Tachyon</h2><p>在windows命令行中使用方法为：</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">tachyon_WIN32</span>.exe XXXX.dat -format BMP -o XXXX.bmp -trans_raster<span class="number">3</span>d -res <span class="number">2000</span> <span class="number">1500</span> -fullshade -numthreads <span class="number">4</span> -aasamples <span class="number">24</span> -shadow_filter_off</span><br></pre></td></tr></table></figure>
-<ul>
-<li>透明着色选项：<code>-trans_raster3d</code>（实测效果比其它选项更好）</li>
-<li><code>-res</code>：渲染出的图像像素为2000*1500（通常来说已经足够大了）。</li>
-<li><code>-fullshade</code>代表渲染时考虑阴影效果，还可以用<code>-mediumshade</code>等。</li>
-<li><code>-numthreads</code>设定渲染时的线程数（建议设为CPU的实际物理核心数）。</li>
-<li><code>-aasamples</code>是抗锯齿设定，数值越大抗锯齿效果越好。</li>
-<li><code>-shadow_filter_off</code>：绘制出的图也有阴影效果，但透明的材质的物体，即轨道等值面，不会产生阴影。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算化学</category>
-        <category>软件</category>
-      </categories>
-      <tags>
-        <tag>VMD</tag>
-        <tag>绘图</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【molpro】02.对称性</title>
     <url>/2020/11/16/%E3%80%90molpro%E3%80%9102.%E5%AF%B9%E7%A7%B0%E6%80%A7/</url>
     <content><![CDATA[<h1 id="对称性（点群）"><a href="#对称性（点群）" class="headerlink" title="对称性（点群）"></a>对称性（点群）</h1><ul>
@@ -12444,7 +12218,13 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <li><code>-bt</code>：盒子类型，triclinic（三斜。默认)，cubic（立方）dodecahedron（梭形十二面体），octahedron（截角八面体）</li>
 <li><code>-box &lt;vec&gt;</code>：对triclinic盒子自定义盒子三个边长(a,b,c)，对其它类型盒子只需定义一个边长值</li>
 <li><code>-angles α β γ</code>：使用<code>-box</code>时同时自定义盒子向量 (bc,ac,ab) 之间的夹角</li>
-<li><code>-d &lt;real&gt;</code>：将分子边界向X/Y/Z方向延展此值来定义盒子</li>
+<li><code>-d &lt;real&gt;</code>：将分子边界向X/Y/Z方向延展此值来定义盒子<ul>
+<li>设定盒子边界距离体系原子多远,设得越大之后加水数目 越多,耗时越高。至少要大于非键作用cutoff的一半,否则蛋 白质会与其相邻镜像的蛋白质作用上。</li>
+<li>默认设置下会产生矩形盒子。此时应注意若体系本身偏离球 形很多,且在模拟过程中发生了旋转,则可能会与镜像发生 相互作用。</li>
+<li>如果对蛋白质设置消除整体转动,用矩形盒子也完令没问题 。</li>
+<li></li>
+</ul>
+</li>
 </ul>
 <p>修改结构：</p>
 <ul>
@@ -12524,7 +12304,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </li>
 </ul>
 <p>grompp还会自动产生<code>mdout.mdp</code>文件，是参数完整的<code>.mdp</code>文件，会体现没设定的参数的默认值，并包含许多注释。</p>
-<p>grompp是按照top文件里的[ molecules ]记录的分子顺序展开成的原子顺序构建<code>tpr</code>文件的，从结构文件中只是读取坐标。grompp会按顺序检查top和结构文件里的原子名的对应关系，如果不符合将会给出警告并使用top里的原子名。</p>
+<p>grompp是按照top文件里的<code>[ molecules ]</code>记录的分子顺序展开成的原子顺序构建<code>tpr</code>文件的，从结构文件中只是读取坐标。grompp会按顺序检查top和结构文件里的原子名的对应关系，如果不符合将会给出警告并使用top里的原子名。</p>
 <h2 id="常见Warning"><a href="#常见Warning" class="headerlink" title="常见Warning"></a>常见Warning</h2><p>关于净电荷的常见Warning</p>
 <ul>
 <li>You are using Ewald electrostatics in a system withnet charge. This can lead to severe artifacts, suchas ions moving into regions with low dielectric, dueto the uniform background charge. We suggest toneutralize your system with counter ions, possibly incombination with a physiological salt concentration.<ul>
@@ -12772,7 +12552,39 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <li>这说明 pdb2gmx在将输入的结构文件里的 第 18号残基 GLU 与 rtp文件里的 [GLU] 字段 匹配时,发现结构文件里这个残基少了名为 CG 的原子,显然需要补全结构文件里的这 个缺失的原子后再用 pdb2gmx 。但也有可 能这个原子实际存在,只是结构文件里的原 子名不对,此时需要修改原子名。  </li>
 <li>注意这里的残基号是从 1 开始排的,和 pdb 文件里记录的残基号未必相同。</li>
 </ul>
-<h1 id="solvate"><a href="#solvate" class="headerlink" title="solvate"></a>solvate</h1><p>可以生成一个充满指定分子的盒子，也可以在<code>-cp</code>指定的结构文件中加溶剂分子把盒子空隙填满。<br>默认填入的溶剂是<code>share/gromacs/top/spc216.gro</code>，这是对216个SPC水组成的盒子经过动力学模拟后己跑到充分平衡状态的文件。如果要填入其它溶剂分子则用-cs[文件名]来指定，文件也应当是经过NPT动力学模拟后的单一纯溶剂体系结构文件。GROMACS会先把整个模拟盒子用此文件里的体系通过平移复制填湾，然后扣掉和溶质有重叠的溶剂分子。</p>
+<h1 id="rms"><a href="#rms" class="headerlink" title="rms"></a>rms</h1><p>RMSD (root mean square deviation,方均偏差)是最重要的衡量几何结构偏差的标准，即计算当前结构与参考结构间的MSD再开根号：</p>
+<script type="math/tex; mode=display">
+\mathrm{RMSD}=\sqrt{\frac{1}{N_{\text {atm }}} \sum_{A}^{N_{\text {atm }}}\left|\mathbf{r}_{A}-\mathbf{r}_{A}^{\text {ref }}\right|^{2}}</script><ul>
+<li>N<sub>atm</sub>为所选范围内的原子数，A是其中原子序号。ref上标代表参考结构。</li>
+</ul>
+<p>另一种是质量权重的RMSD:</p>
+<script type="math/tex; mode=display">
+\mathrm{RMSD}=\sqrt{\frac{1}{M} \sum_{A}^{N_{\text {atm }}}m_A\left|\mathbf{r}_{A}-\mathbf{r}_{A}^{\text {ref }}\right|^{2}}</script><ul>
+<li>M：所选范围原子质量和</li>
+</ul>
+<p>例子：</p>
+<p>运行以下命令，计算轨迹中每一帧的结构和参考结构(-s提供的结构文件)间的质量权重的RMSD:</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">rms</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.xtc</span> <span class="selector-tag">-s</span> <span class="selector-tag">md</span><span class="selector-class">.tpr</span> <span class="selector-tag">-o</span> <span class="selector-tag">rmsd_protein</span><span class="selector-class">.xvg</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>要叠合的组，和要计算RMSD的组都选Protein。</li>
+</ul>
+<p>其他</p>
+<ul>
+<li><a href="http://bbs.keinsci.com/thread-51369-1-1.html">一个到达小分子RMSD阈值自动终止Gromacs模拟的小脚本 - 分子模拟 (Molecular Modeling) - 计算化学公社</a></li>
+</ul>
+<h1 id="rmsf"><a href="#rmsf" class="headerlink" title="rmsf"></a>rmsf</h1><p>RMSF (root mean square fluctuation,方均根波动)衡量某个原子在整个轨迹中相对子平均位置的波动程度，对于展现不同区域的柔性很有用。</p>
+<script type="math/tex; mode=display">
+\mathrm{RMSF}_A=\sqrt{\frac{1}{N_{\text {frame}}} \sum_{i}^{N_{\text {frame}}}(\mathbf{r}_{A}^{i}-\mathbf{r}_{A}^{\text {avg}})^{2}}</script><p>可以将RMSF按下式转换为B因子（Tian Lu, et al., Biochemistry, 48, 7986 (2009)）：</p>
+<script type="math/tex; mode=display">
+B_A=(8/3)\times \pi^2 \times \mathrm{RMSF}_A^2</script><p>pdb中的B因子单位是A，GROMACS给出的RMSF单位是nm</p>
+<p><a href="http://sobereva.com/32">原子-残基B因子/rmsf转换小工具ba2r - 思想家公社的门口：量子化学·分子模拟·二次元</a></p>
+<h1 id="solvate"><a href="#solvate" class="headerlink" title="solvate"></a>solvate</h1><p>可以生成一个充满指定分子的盒子，也可以<strong>在<code>-cp</code>指定的结构文件中加溶剂分子把盒子空隙填满。</strong>GROMACS会先把整个模拟盒子用此文件里的体系通过平移复制填满，然后扣掉和溶质有重叠的溶剂分子。</p>
+<ul>
+<li><code>-cp</code>: 带盒子参数的分子坐标文件, 一般是<code>editconf</code>的输出文件</li>
+<li><code>-cs</code>: 添加的水分子模型, 如spc216, spce, tip3p, tip4p等。默认填入的溶剂是<code>share/gromacs/top/spc216.gro</code>，这是对216个SPC水组成的盒子经过动力学模拟后己跑到充分平衡状态的文件。如果要填入其它溶剂分子则用<code>-cs [文件名]</code>来指定，文件也应当是经过NPT动力学模拟后的单一纯溶剂体系结构文件。</li>
+<li><code>-o</code>: 输出坐标文件, 就是添加水分子之后的分子坐标文件, 默认为<code>.gro</code>文件, 但也可以为其他格式, 如pdb</li>
+<li><code>-p</code>: 体系拓扑文件, <code>gmx solvate</code>会往里面写入添加水分子的个数. 这个不要忘记, 不然在进行下一步计算时, 会出现坐标文件和拓扑文件中原子数不一致的错误</li>
+</ul>
 <ul>
 <li><code>-maxsol [数目]</code>可以设定只填入多少溶剂分子，填充会很不均匀。</li>
 <li>-<code>shell [厚度]</code>可以填充指定厚度的溶剂层。</li>
@@ -12965,7 +12777,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <li>File type：新文件的类型</li>
 <li>Frames：要保存的帧号范围和间隔</li>
 </ul>
-<h1 id="Mouse"><a href="#Mouse" class="headerlink" title="Mouse"></a>Mouse</h1><p><img src="/mouseMode2024-09-24_094901.380188.png" alt="../_images/mouseMode2024-09-24_094901.380188.png"></p>
+<h1 id="5-Mouse"><a href="#5-Mouse" class="headerlink" title="5. Mouse"></a>5. Mouse</h1><p><img src="/mouseMode2024-09-24_094901.380188.png" alt="../_images/mouseMode2024-09-24_094901.380188.png"></p>
 <h2 id="三个基本模式"><a href="#三个基本模式" class="headerlink" title="三个基本模式"></a>三个基本模式</h2><p>RST：</p>
 <ul>
 <li>旋转模式（R）,默认模式：在VMD Main-&gt;Mouse-&gt;选择Rotate Mode; 或者在Display窗口，按R或者r 进行切换。</li>
@@ -13019,7 +12831,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </li>
 </ul>
 <p>点击Add/Remove Bonds后再点击两个原子，可以使它们成键或取消原先的键连。</p>
-<h1 id="Graphics"><a href="#Graphics" class="headerlink" title="Graphics"></a>Graphics</h1><h2 id="Labels"><a href="#Labels" class="headerlink" title="Labels"></a>Labels</h2><ul>
+<h1 id="3-Graphics"><a href="#3-Graphics" class="headerlink" title="3. Graphics"></a>3. Graphics</h1><h2 id="Labels"><a href="#Labels" class="headerlink" title="Labels"></a>Labels</h2><ul>
 <li>选择Graph：可以选择项目后，勾选show preview，可以预览键长键角的变化，还可以Save导出为文本文件。</li>
 </ul>
 <p><img src="/image-20260814121002498.png" alt="image-20260814121002498"></p>
@@ -13078,8 +12890,13 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <li>Chain：按照链名着色</li>
 <li>Secondary Structure：根据二级结构着色</li>
 <li>ColorID：直接指定颜色ID</li>
-<li>Beta：根据pdb的B因子(bet字段)数值着色</li>
-<li>Position：根据x/y/z或径向坐标大小着色</li>
+<li><p>Beta：根据pdb的B因子(beta字段)数值着色。</p>
+<ul>
+<li>默认色彩刻度是红-白-蓝，即越红的地方结构刚性越强，越蓝柔性越大，容易运动。</li>
+</ul>
+</li>
+<li><p>Position：根据x/y/z或径向坐标大小着色</p>
+</li>
 <li>Fragment：根据所属片段着色</li>
 <li>Index：按照原子序号着色</li>
 <li>Backbone：将蛋白质骨架和侧链分开着色</li>
@@ -13099,6 +12916,10 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <li>VolumeSlice：显示格点数据的截面图</li>
 <li>Beads：相邻原子一起用较大圆球显示</li>
 <li>Isosurface：显示格点数据等值面图</li>
+</ul>
+<p>材质设定：在Representation界面下可以对各种表示设定材质。每种材质实际上是各种参数的预设的组合，可以在Graphics-Materials…里面自行调节。</p>
+<ul>
+<li><strong>对于Transparent等显示方式，必须把GLSL打开方可如实看到材质的真实效果!GLSL需要在Display-Rendermode中选择</strong>。如果GLSL不可选，说明VMD和显示驱动可能有兼容性问题。</li>
 </ul>
 <h3 id="Selection-选项卡"><a href="#Selection-选项卡" class="headerlink" title="Selection 选项卡"></a>Selection 选项卡</h3><p><img src="/image-20260814140755295.png" alt="image-20260814140755295"></p>
 <p>Singlewords中双击可以使用，Apply是应用选择语句，Reset是清空选择语句，Macro definition是具体的定义</p>
@@ -13209,15 +13030,81 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <p>选择范围的更新：</p>
 <p>使用诸如x&lt;20这样的涉及到空间范围的选择语句时，原子是在刚输入此命令时候按照指定规则选定的，之后不会随着帧号的改变而更新。只有选择Update Selection Every Frame后才会在播放轨迹时每一帧都重新按照指定规则确定被选择的原子。当取消这个选项后，选定的原子范围将维持在最后一次更新的情况。</p>
 <p><img src="/image-20260814150324754.png" alt="image-20260814150324754"></p>
-<h3 id="Periodic"><a href="#Periodic" class="headerlink" title="Periodic"></a>Periodic</h3><p>显示周期镜像Graphics - Representation界面中可以点击Periodic标签页的相应复选框来将相应方向的镜像盒子显示出来。</p>
+<h3 id="Periodic"><a href="#Periodic" class="headerlink" title="Periodic"></a>Periodic</h3><p>显示周期镜像：</p>
+<ul>
+<li><p>Graphics - Representation界面中可以点击Periodic标签页的相应复选框来将相应方向的镜像盒子显示出来。</p>
 <p><img src="/image-20260814154536928.png" alt="image-20260814154536928"></p>
+</li>
+</ul>
 <h2 id="Color"><a href="#Color" class="headerlink" title="Color"></a>Color</h2><p>Graphics-Colors里面可以对颜色进行自由的设定，比如背景色、对每种元素/残基/二级结构等等的着色(必须着色方式选了相应项才能看到效果)</p>
 <ul>
 <li><p>修改背景颜色：</p>
 <p><img src="/image-20260814154037441.png" alt="image-20260814154037441"></p>
 <p>如果希望默认就是白背景，在vmd.rc最后加入<code>color Display Background white</code></p>
 </li>
-<li></li>
+</ul>
+<h1 id="4-Display"><a href="#4-Display" class="headerlink" title="4. Display"></a>4. Display</h1><h2 id="景深效果"><a href="#景深效果" class="headerlink" title="景深效果"></a>景深效果</h2><ul>
+<li><p>VMD默认开启景 深效果,会把靠屏幕越远的区 域券化得越厉害。如果嫌图像被搞得雾蒙蒙. 可以点击 Display - Depth Cueing把默认的景深 效果关闭。</p>
+</li>
+<li><p>在Display-Display Settings中恰当设定雾化范围可以突出主体而避免背景原子扰乱视觉</p>
+<p><img src="/image-20260814155528871.png" alt="image-20260814155528871"></p>
+</li>
+</ul>
+<h2 id="透视效果"><a href="#透视效果" class="headerlink" title="透视效果"></a>透视效果</h2><p>在Display中可以选择Perspective(透视)与Orthographic(正交视角)。默认前者，后者对于考察生物膜等界面体系比较适合，可避免视觉误差。</p>
+<h2 id="Display-Settings"><a href="#Display-Settings" class="headerlink" title="Display Settings"></a>Display Settings</h2><h3 id="视图裁剪"><a href="#视图裁剪" class="headerlink" title="视图裁剪"></a>视图裁剪</h3><ul>
+<li><p>在Display - Display Settings中可以设定距离屏幕多远以外，以及多近以内的内容被剪掉。</p>
+<p><img src="/image-20260814155707477.png" alt="image-20260814155707477"></p>
+</li>
+<li><p>使用自带的Extensions - Visualization -<a href="#Clipping Plane Tool">Clipping Plane Tool</a>插件可以同时设多种裁剪方式，而且裁剪方向可以自定义。</p>
+<ul>
+<li>使用Tachyon、POV-Ray渲染时Display Settings设的Clipping效果不生效，但通过Clipping Plane Tool做的设置生效</li>
+</ul>
+</li>
+</ul>
+<h1 id="6-Extension"><a href="#6-Extension" class="headerlink" title="6. Extension"></a>6. Extension</h1><h2 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h2><h3 id="Sequence-Viewer"><a href="#Sequence-Viewer" class="headerlink" title="Sequence Viewer"></a>Sequence Viewer</h3><p><img src="/image-20260814162427316.png" alt="image-20260814162427316"></p>
+<ul>
+<li>利用VMD的Extensions-Analysis-Sequence Viewer可以查看氨基酸序列。点击哪个氨基酸，图形窗口中哪个氨基酸就会以黄色高亮显示，也可以鼠标圈住一次选一批。</li>
+<li><p>左图颜色越缘的残基B因子越小。</p>
+</li>
+<li><p>二级结构颜色对应的含义：</p>
+<ul>
+<li><p>T：Turn</p>
+</li>
+<li><p>E：Extended conformation</p>
+</li>
+<li><p>B：solated bridge</p>
+</li>
+<li><p>H：Alpha helix</p>
+</li>
+<li><p>G：3-10 helix</p>
+</li>
+<li><p>I：Pi-helix</p>
+</li>
+<li><p>C：Coil (none of the above)</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Visualization"><a href="#Visualization" class="headerlink" title="Visualization"></a>Visualization</h2><h3 id="Clipping-Plane-Tool"><a href="#Clipping-Plane-Tool" class="headerlink" title="Clipping Plane Tool"></a>Clipping Plane Tool</h3><p><img src="./image-20260814162155397.png" alt="image-20260814162155397"></p>
+<h3 id="RMSD-Trajectory-Tool"><a href="#RMSD-Trajectory-Tool" class="headerlink" title="RMSD Trajectory Tool"></a>RMSD Trajectory Tool</h3><p><img src="/image-20260817110111745.png" alt="image-20260817110111745"></p>
+<ul>
+<li>protein：选区语句定义要计算RMSD的组</li>
+<li>Selection Modifiers→noh：不考虑氢</li>
+<li>weights →on/off： 不考虑质量（或其他原子属性）权重</li>
+<li>Trajectory：<ul>
+<li>Save：勾选后再RMSD，VMD目录下将会产生指定的.dat文件，记录各锁的RMSD值</li>
+</ul>
+</li>
+</ul>
+<h3 id="Timeline"><a href="#Timeline" class="headerlink" title="Timeline"></a>Timeline</h3><p>利用VMD还可以绘制每个残基的RMSD来考察对总RMSD的贡献。</p>
+<p>在VMD中将轨迹叠合后，Appearance - Color scale - Rainbow (BGR).然后选Calculate-Calc.RMSD开始计算</p>
+<p><img src="/image-20260817110520353.png" alt="image-20260817110520353"></p>
+<ul>
+<li>对于图中一些感兴趣的区域，可以用鼠标右键拖动放大。</li>
+<li>并且可以用鼠标左键点击某个点高亮之，图形窗口就会切换到相应帧，并且将对应的残基显示出来，而且在窗口左下角显示具体信息。如果用左键在色彩条上滑动，还可以观看对应残基在对应轨迹区间的运动。</li>
+<li>恢复完整视图点fit all按钮</li>
+<li>图上点右键可以缩小视图</li>
+<li>点击高亮处可以取消高亮</li>
 </ul>
 ]]></content>
       <categories>
@@ -13385,6 +13272,238 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
       </categories>
       <tags>
         <tag>MD</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【VMD】2.常见命令</title>
+    <url>/2020/09/29/%E3%80%90VMD%E3%80%912.%E5%B8%B8%E8%A7%81%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h1 id="脚本基础"><a href="#脚本基础" class="headerlink" title="脚本基础"></a>脚本基础</h1><ul>
+<li><p>设定变量</p>
+<figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> &lt;<span class="built_in">variable</span>&gt; &lt;<span class="built_in">value</span>&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用变量</p>
+<figure class="highlight gams"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> x <span class="comment">10</span></span><br><span class="line">puts <span class="comment">&quot;the value of x is:$x&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打印</p>
+<figure class="highlight gams"><table><tr><td class="code"><pre><span class="line">puts <span class="symbol">$</span>&lt;<span class="keyword">variable</span>&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>条件逻辑：</p>
+<figure class="highlight dust"><table><tr><td class="code"><pre><span class="line"><span class="xml">if </span><span class="template-variable">&#123;conditional&#125;</span><span class="xml"> </span><span class="template-variable">&#123;script&#125;</span><span class="xml"> elseif </span><span class="template-variable">&#123;conditional&#125;</span><span class="xml"> </span><span class="template-variable">&#123;script&#125;</span><span class="xml"> else </span><span class="template-variable">&#123;script&#125;</span></span><br></pre></td></tr></table></figure>
+<p>比如：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="builtin-name">set</span> a 30</span><br><span class="line"><span class="keyword">if</span> &#123;<span class="variable">$a</span> &lt;= 30&#125; &#123;puts <span class="string">&quot;<span class="variable">$a</span> is seq 30&quot;</span>&#125; <span class="keyword">else</span> &#123;puts <span class="string">&quot;<span class="variable">$a</span> is larger than 30&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>循环：</p>
+<figure class="highlight dust"><table><tr><td class="code"><pre><span class="line"><span class="xml">for </span><span class="template-variable">&#123;initialization&#125;</span><span class="xml"> </span><span class="template-variable">&#123;conditional&#125;</span><span class="xml"> </span><span class="template-variable">&#123;increment&#125;</span><span class="xml"> </span><span class="template-variable">&#123;commands&#125;</span></span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight dust"><table><tr><td class="code"><pre><span class="line"><span class="xml">foreach <span class="tag">&lt;<span class="name">variable</span> <span class="attr">name</span>&gt;</span> <span class="tag">&lt;<span class="name">list</span>&gt;</span> </span><span class="template-variable">&#123;commands&#125;</span></span><br></pre></td></tr></table></figure>
+<p>比如：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">for</span> &#123;set i <span class="number">0</span>&#125; &#123;$i &lt; <span class="number">10</span>&#125; &#123;incr i <span class="number">1</span>&#125; &#123;puts <span class="string">&quot;i is $i&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="attribute">set</span> m &#123;<span class="number">0</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> <span class="number">5</span>&#125;</span><br><span class="line"><span class="attribute">foreach</span> i $m &#123;puts <span class="string">&quot;two times m is [expr $i *2]&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>调用脚本，在tk窗口中：</p>
+<figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">source &lt;<span class="keyword">script</span> <span class="built_in">file</span>&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="axes"><a href="#axes" class="headerlink" title="axes"></a><code>axes</code></h1><p><img src="image-20211120181556786.png" alt="image-20211120181556786"></p>
+<ul>
+<li><p><code>locations</code>：列出位置的列表</p>
+</li>
+<li><p><code>location</code>：获取当前的位置</p>
+</li>
+<li><p><code>location &lt;Position&gt;</code>：设置轴的位置，比如：<code>off</code>、<code>origin</code> 、 <code>lowerleft</code>、 <code>lowerright</code>、<code>upperleft</code>、<code>upperright</code>：</p>
+<figure class="highlight crmsh"><table><tr><td class="code"><pre><span class="line">axes <span class="keyword">location</span> <span class="title">Off</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="color"><a href="#color" class="headerlink" title="color"></a><code>color</code></h1><p><img src="image-20211120181437883.png" alt="image-20211120181437883"></p>
+<ul>
+<li><p><code>&lt;Category&gt; &lt;Name&gt; &lt;color&gt;</code>：更改类别和名字指定的对象：</p>
+<ul>
+<li><p>category包含（具体Categories、Names和Colors可在VMD界面的Graphics→Colors中查看）：</p>
+<ul>
+<li><code>Display</code>：背景颜色</li>
+<li><code>Axes</code>：轴相关</li>
+<li><code>Name</code>：原子名称</li>
+<li>……</li>
+</ul>
+</li>
+<li><p>例子：</p>
+<figure class="highlight hsp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#改变背景颜色</span></span><br><span class="line"><span class="keyword">color</span> Display Background white</span><br><span class="line"></span><br><span class="line"><span class="meta">#改变某个元素颜色</span></span><br><span class="line"><span class="keyword">color</span> Name C silver</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>……</p>
+</li>
+</ul>
+<h1 id="display"><a href="#display" class="headerlink" title="display"></a><code>display</code></h1><ul>
+<li><p><code>depthcue &lt;on|off&gt;</code>: 景深效果，前面的物体比后面的更亮，默认开启，关闭用：</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">display</span> depthcue <span class="literal">off</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>projection &lt;mode&gt;</code>：投影模式mode有：</p>
+<ul>
+<li><code>perspective</code>：透视的，默认</li>
+<li><code>orthographic</code>：</li>
+</ul>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"><span class="built_in">display</span> projection Orthographic</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>rendermode &lt;mode&gt;</code>：渲染模式，使用各种 OpenGL 扩展来实现 alpha 混合透明度，或可编程着色以获得更高质量的分子图形。默认渲染模式不会启用这些功能。</p>
+<ul>
+<li><code>Normal</code>：</li>
+<li><code>AlphaBlend</code>：</li>
+<li><code>GLSL</code>：</li>
+</ul>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"><span class="built_in">display</span> rendermode GLSL</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="mol"><a href="#mol" class="headerlink" title="mol"></a><code>mol</code></h1><p>在VMD中加载、修改或删除一个分子。</p>
+<ul>
+<li><code>&lt;molecule_number&gt;</code>：选择是哪个分子，<ul>
+<li>可以是<code>all</code>、 <code>top</code>、<code>active</code>、 <code>inactive</code>、 <code>displayed</code>、 <code>on</code>、<code>off</code>、<code>fixed</code>、<code>free</code></li>
+<li>也可以是他们的<code>id</code>，是从0开始的，而且即使删除后，也不会重复使用。比如三个分子为0，1，2，删掉0，再载入一个分子，这个分子的<code>id</code>是3，但是它的<code>index</code>仍然是2。</li>
+</ul>
+</li>
+<li><p><code>new [filename] [options]</code>和<code>addfile &lt;filename&gt; [options]</code>：</p>
+<ul>
+<li><code>mol new</code>是用来从文件中新建一个分子。filename是可选的，如果是空的，创建一个空白的没有原子的画布，用户可以在其上自定义几何等。</li>
+<li><code>mol addfile</code>与<code>mol new</code>类似，但是结构和坐标数据加载到top的分子中而不是创建一个新的分子。</li>
+<li>可选的option有：<ul>
+<li><code>type &lt;type&gt;</code>：定义文件的类型（pdf，pdb等），否则根据文件扩展名来决定文件类型。</li>
+<li>……</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>list</code>：为每个分子打印一行状态摘要。</p>
+</li>
+<li><code>list &lt;molecule_number&gt;</code>：打印与molecule_number匹配的每个分子的单行状态摘要。如果只有一个分子与molecule_number匹配，也打印该分子的详细表示状态。</li>
+<li><code>color &lt;coloring_method&gt;</code>：更改默认的原子着色方法设置。</li>
+<li><code>representation &lt;rep_style&gt;</code>：更改默认呈现方法设置。</li>
+<li><code>selection select_method</code>：更改默认的原子选择设置</li>
+</ul>
+<h2 id="Molecule部分"><a href="#Molecule部分" class="headerlink" title="Molecule部分"></a>Molecule部分</h2><p><img src="image-20211120181853394.png" alt="image-20211120181853394"></p>
+<p>分子的一些状态，对应于VMD main窗口中的一些标记（黑色为打开状态）：</p>
+<ul>
+<li><code>delete &lt;molecule_number&gt;</code>：删除分子。</li>
+<li><code>fix/free &lt;molecule_number&gt;</code>：固定或者不固定这个分子，对应于”F“标记。</li>
+<li><code>on/off &lt;molecule_number&gt;</code>：显示或者隐藏这个分子，对应于”D“标记</li>
+<li><code>active/inactive &lt;molecule_number&gt;</code>：激活或者不激活这个分子，对应于”A“</li>
+<li><code>top &lt;molecule_number&gt;</code>：置顶这个分子，对应于”T“</li>
+<li><code>rename &lt;molecule_number&gt; XX</code>：重命名指定的分子。</li>
+</ul>
+<p><img src="image-20211120181329843.png" alt="image-20211120181329843"></p>
+<h2 id="Representation部分"><a href="#Representation部分" class="headerlink" title="Representation部分"></a>Representation部分</h2><p><img src="image-20211120185644801.png" alt="image-20211120185644801"></p>
+<ul>
+<li><p><code>addrep &lt;molecule_number&gt;</code>：使用当前默认设置（比如原子选择、着色和渲染方法），为指定的分子添加新的表示。</p>
+<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line">mol addrep <span class="built_in">top</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>delrep &lt;rep_number&gt; &lt;molecule_number&gt;</code>：从指定的分子中删除给定的rep。</p>
+</li>
+<li><p><code>modrep &lt;rep_number&gt; &lt;molecule_number&gt;</code>：将给定分子的给定rep的方法设置为默认设置。</p>
+</li>
+<li><p><code>modselect &lt;rep_number&gt; &lt;molecule_number&gt; &lt;select_method&gt;</code>：更改指定分子、指定的Rep所包含的部分。select_method可以是（更多可以查看Graphics→Representations→Selections）选择的语法可以见<a href="/2026/08/13/%E3%80%90VMD%E3%80%911.%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/#范围选择语句基本语法">范围选择语句基本语法</a></p>
+<ul>
+<li><code>all</code>、<code>none</code>……</li>
+<li>逻辑<code>and</code>、<code>or</code>、<code>not</code></li>
+<li><code>Name</code>、<code>Type</code>、<code>Element</code>……</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">mol</span> modselect <span class="number">1</span> <span class="number">0</span> <span class="literal">all</span> not index <span class="number">72</span> <span class="number">73</span> <span class="number">74</span> </span><br><span class="line"></span><br><span class="line"><span class="attribute">mol</span> modselect <span class="number">1</span> top name U<span class="number">74</span> Ce<span class="number">75</span> C<span class="number">73</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>图形相关设置：</p>
+<ul>
+<li><p><code>modstyle &lt;rep_number&gt; &lt;molecule_number&gt; &lt;rep_style&gt;</code>：为指定的分子、指定的Rep指定表示方式。</p>
+<ul>
+<li>rep_style可以是<code>Line</code>，<code>CPK</code>等（更多可以查看Graphics→Representations→Draw style→Drawing Method），后面还可以跟相应的设置。</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">mol</span> modstyle <span class="number">1</span> <span class="number">0</span> Lines <span class="number">3</span>.<span class="number">000000</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">mol</span> modstyle <span class="number">0</span> top CPK <span class="number">0</span>.<span class="number">800000</span> <span class="number">0</span>.<span class="number">300000</span> <span class="number">22</span>.<span class="number">000000</span> <span class="number">22</span>.<span class="number">000000</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">mol</span> modstyle <span class="number">1</span> top Isosurface <span class="number">0</span>.<span class="number">05</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>modcolor &lt;rep_number&gt; &lt;molecule_number&gt; &lt;coloring_method&gt;</code>：修改给定分子的给定rep的着色方法。</p>
+<ul>
+<li>coloring_method可以是<code>Name</code>、<code>Element</code>等。（更多可以查看Graphics→Representations→Draw style→Cokoring Method）</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">mol modcolor <span class="number">1</span> top ColorID <span class="number">1</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>modmaterial &lt;rep_number&gt; &lt;molecule_number&gt; &lt;material_name&gt;</code>：修改给定分子的给定rep的材料</p>
+<ul>
+<li>material_name可以是<code>Glossy</code>、<code>EdgyGlass</code>等。（更多可以查看Graphics→Representations→Draw style→Material）</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">mol modmaterial <span class="number">1</span> top EdgyGlass</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="molinfo"><a href="#molinfo" class="headerlink" title="molinfo"></a><code>molinfo</code></h1><p>获取有关分子(或已加载文件)的信息，包括已加载原子的数量、文件名、图形选择和查看矩阵。</p>
+<ul>
+<li><code>list</code>：返回所有当前分子id的列表。</li>
+<li><code>num</code>：返回加载分子的数量。</li>
+<li><p><code>top</code>：返回顶部分子的id</p>
+</li>
+<li><p><code>index n</code>：返回第 n 个分子的 id</p>
+</li>
+<li><p><code>&lt;molecule_id&gt; get &lt;keywords&gt;</code> ：获取关于给定分子某个信息</p>
+</li>
+<li><p><code>&lt;molecule_id&gt; set &lt;keywords&gt; &#123;list of values&#125;</code>：修改关于给定分子的某个信息。<a href="https://www.ks.uiuc.edu/Research/vmd/vmd-1.8.3/ug/node125.html">keyword</a>有</p>
+<ul>
+<li><code>center_matrix</code>：中心矩阵</li>
+<li><code>rotate_matrix</code>：旋转矩阵</li>
+<li><code>scale_matrix</code>：缩放矩阵</li>
+</ul>
+</li>
+</ul>
+<p>例如：</p>
+<ul>
+<li><p>将新加载的分子改成与之前相同的朝向</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="builtin-name">set</span> viewpoint [molinfo top <span class="builtin-name">get</span> &#123;center_matrix rotate_matrix scale_matrix&#125;]</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [<span class="builtin-name">info</span> exists viewpoint] &#123;</span><br><span class="line">molinfo top <span class="builtin-name">set</span> &#123;center_matrix rotate_matrix scale_matrix&#125; <span class="variable">$viewpoint</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="pbc"><a href="#pbc" class="headerlink" title="pbc"></a><code>pbc</code></h1><p>显示盒子：</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">pbc box</span></span><br></pre></td></tr></table></figure>
+<p>关闭盒子：</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">pbc</span> box -<span class="literal">off</span></span><br></pre></td></tr></table></figure>
+<p>修改盒子颜色和盒子线的宽度：</p>
+<figure class="highlight maxima"><table><tr><td class="code"><pre><span class="line">用红色、粗细为<span class="number">10</span>的虚线绘制盒子</span><br><span class="line">pbc <span class="built_in">box</span> -<span class="built_in">color</span> red -<span class="built_in">width</span> <span class="number">10</span> -<span class="built_in">style</span> dashed</span><br></pre></td></tr></table></figure>
+<h1 id="render"><a href="#render" class="headerlink" title="render"></a><code>render</code></h1><ul>
+<li><p><code>list</code>：列出可用的渲染方法</p>
+</li>
+<li><p><code>&lt;method&gt; filename</code>：使用method渲染为filename，method可以是：</p>
+<ul>
+<li>ART</li>
+<li>Tachyon</li>
+<li>TachyonInternal</li>
+<li>snapshot</li>
+<li>POV3</li>
+<li>PostScript</li>
+<li>Radiance</li>
+<li>Raster3D</li>
+<li>Rayshade</li>
+<li>Renderman</li>
+<li>STL</li>
+<li>VRML-1</li>
+<li>VRML-2</li>
+</ul>
+</li>
+<li><p><code>&lt;method&gt; filename command</code>：渲染完成后，执行其他命令。command中的%s都会被文件名替换。比如：</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="selector-id">#render</span> Tachyon <span class="variable">$iorb</span><span class="selector-class">.dat</span> <span class="string">&quot;tachyon_WIN32.exe $&#123;iorb&#125;.dat -format BMP -o $&#123;iorb&#125;.bmp -trans_raster3d -res 2000 1500 -numthreads 4 -aasamples 24 -mediumshade &quot;</span></span><br><span class="line"></span><br><span class="line">render Tachyon <span class="variable">$iorb</span><span class="selector-class">.dat</span> <span class="string">&quot;tachyon_WIN32.exe $&#123;iorb&#125;.dat -format BMP -o $&#123;iorb&#125;.bmp  -aasamples 12&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>options &lt;method&gt;</code>：获取指定method的默认命令</p>
+</li>
+<li><code>options &lt;method&gt; command</code>：为method设置新的默认命令</li>
+<li><code>default &lt;method&gt;</code>：获取method最初的默认命令</li>
+</ul>
+<h2 id="Tachyon"><a href="#Tachyon" class="headerlink" title="Tachyon"></a>Tachyon</h2><p>在windows命令行中使用方法为：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">tachyon_WIN32</span>.exe XXXX.dat -format BMP -o XXXX.bmp -trans_raster<span class="number">3</span>d -res <span class="number">2000</span> <span class="number">1500</span> -fullshade -numthreads <span class="number">4</span> -aasamples <span class="number">24</span> -shadow_filter_off</span><br></pre></td></tr></table></figure>
+<ul>
+<li>透明着色选项：<code>-trans_raster3d</code>（实测效果比其它选项更好）</li>
+<li><code>-res</code>：渲染出的图像像素为2000*1500（通常来说已经足够大了）。</li>
+<li><code>-fullshade</code>代表渲染时考虑阴影效果，还可以用<code>-mediumshade</code>等。</li>
+<li><code>-numthreads</code>设定渲染时的线程数（建议设为CPU的实际物理核心数）。</li>
+<li><code>-aasamples</code>是抗锯齿设定，数值越大抗锯齿效果越好。</li>
+<li><code>-shadow_filter_off</code>：绘制出的图也有阴影效果，但透明的材质的物体，即轨道等值面，不会产生阴影。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>VMD</tag>
+        <tag>绘图</tag>
       </tags>
   </entry>
 </search>

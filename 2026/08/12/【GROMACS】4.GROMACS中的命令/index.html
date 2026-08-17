@@ -29,7 +29,7 @@
 <meta property="og:description" content="Gromacs的命令 &#96;gmx xxx&#96;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-08-12T04:07:17.000Z">
-<meta property="article:modified_time" content="2026-08-13T09:03:38.707Z">
+<meta property="article:modified_time" content="2026-08-17T03:23:12.421Z">
 <meta property="article:author" content="Zhao Jing">
 <meta property="article:tag" content="GROMACS">
 <meta property="article:tag" content="文件">
@@ -222,7 +222,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2026-08-13 17:03:38" itemprop="dateModified" datetime="2026-08-13T17:03:38+08:00">2026-08-13</time>
+                <time title="修改时间：2026-08-17 11:23:12" itemprop="dateModified" datetime="2026-08-17T11:23:12+08:00">2026-08-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -267,14 +267,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>15k</span>
+              <span>16k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>14 分钟</span>
+              <span>15 分钟</span>
             </span>
             <div class="post-description">Gromacs的命令 `gmx xxx`</div>
 
@@ -321,7 +321,13 @@
 <li><code>-bt</code>：盒子类型，triclinic（三斜。默认)，cubic（立方）dodecahedron（梭形十二面体），octahedron（截角八面体）</li>
 <li><code>-box &lt;vec&gt;</code>：对triclinic盒子自定义盒子三个边长(a,b,c)，对其它类型盒子只需定义一个边长值</li>
 <li><code>-angles α β γ</code>：使用<code>-box</code>时同时自定义盒子向量 (bc,ac,ab) 之间的夹角</li>
-<li><code>-d &lt;real&gt;</code>：将分子边界向X/Y/Z方向延展此值来定义盒子</li>
+<li><code>-d &lt;real&gt;</code>：将分子边界向X/Y/Z方向延展此值来定义盒子<ul>
+<li>设定盒子边界距离体系原子多远,设得越大之后加水数目 越多,耗时越高。至少要大于非键作用cutoff的一半,否则蛋 白质会与其相邻镜像的蛋白质作用上。</li>
+<li>默认设置下会产生矩形盒子。此时应注意若体系本身偏离球 形很多,且在模拟过程中发生了旋转,则可能会与镜像发生 相互作用。</li>
+<li>如果对蛋白质设置消除整体转动,用矩形盒子也完令没问题 。</li>
+<li></li>
+</ul>
+</li>
 </ul>
 <p>修改结构：</p>
 <ul>
@@ -401,7 +407,7 @@
 </li>
 </ul>
 <p>grompp还会自动产生<code>mdout.mdp</code>文件，是参数完整的<code>.mdp</code>文件，会体现没设定的参数的默认值，并包含许多注释。</p>
-<p>grompp是按照top文件里的[ molecules ]记录的分子顺序展开成的原子顺序构建<code>tpr</code>文件的，从结构文件中只是读取坐标。grompp会按顺序检查top和结构文件里的原子名的对应关系，如果不符合将会给出警告并使用top里的原子名。</p>
+<p>grompp是按照top文件里的<code>[ molecules ]</code>记录的分子顺序展开成的原子顺序构建<code>tpr</code>文件的，从结构文件中只是读取坐标。grompp会按顺序检查top和结构文件里的原子名的对应关系，如果不符合将会给出警告并使用top里的原子名。</p>
 <h2 id="常见Warning"><a href="#常见Warning" class="headerlink" title="常见Warning"></a>常见Warning</h2><p>关于净电荷的常见Warning</p>
 <ul>
 <li>You are using Ewald electrostatics in a system withnet charge. This can lead to severe artifacts, suchas ions moving into regions with low dielectric, dueto the uniform background charge. We suggest toneutralize your system with counter ions, possibly incombination with a physiological salt concentration.<ul>
@@ -649,7 +655,39 @@
 <li>这说明 pdb2gmx在将输入的结构文件里的 第 18号残基 GLU 与 rtp文件里的 [GLU] 字段 匹配时,发现结构文件里这个残基少了名为 CG 的原子,显然需要补全结构文件里的这 个缺失的原子后再用 pdb2gmx 。但也有可 能这个原子实际存在,只是结构文件里的原 子名不对,此时需要修改原子名。  </li>
 <li>注意这里的残基号是从 1 开始排的,和 pdb 文件里记录的残基号未必相同。</li>
 </ul>
-<h1 id="solvate"><a href="#solvate" class="headerlink" title="solvate"></a>solvate</h1><p>可以生成一个充满指定分子的盒子，也可以在<code>-cp</code>指定的结构文件中加溶剂分子把盒子空隙填满。<br>默认填入的溶剂是<code>share/gromacs/top/spc216.gro</code>，这是对216个SPC水组成的盒子经过动力学模拟后己跑到充分平衡状态的文件。如果要填入其它溶剂分子则用-cs[文件名]来指定，文件也应当是经过NPT动力学模拟后的单一纯溶剂体系结构文件。GROMACS会先把整个模拟盒子用此文件里的体系通过平移复制填湾，然后扣掉和溶质有重叠的溶剂分子。</p>
+<h1 id="rms"><a href="#rms" class="headerlink" title="rms"></a>rms</h1><p>RMSD (root mean square deviation,方均偏差)是最重要的衡量几何结构偏差的标准，即计算当前结构与参考结构间的MSD再开根号：</p>
+<script type="math/tex; mode=display">
+\mathrm{RMSD}=\sqrt{\frac{1}{N_{\text {atm }}} \sum_{A}^{N_{\text {atm }}}\left|\mathbf{r}_{A}-\mathbf{r}_{A}^{\text {ref }}\right|^{2}}</script><ul>
+<li>N<sub>atm</sub>为所选范围内的原子数，A是其中原子序号。ref上标代表参考结构。</li>
+</ul>
+<p>另一种是质量权重的RMSD:</p>
+<script type="math/tex; mode=display">
+\mathrm{RMSD}=\sqrt{\frac{1}{M} \sum_{A}^{N_{\text {atm }}}m_A\left|\mathbf{r}_{A}-\mathbf{r}_{A}^{\text {ref }}\right|^{2}}</script><ul>
+<li>M：所选范围原子质量和</li>
+</ul>
+<p>例子：</p>
+<p>运行以下命令，计算轨迹中每一帧的结构和参考结构(-s提供的结构文件)间的质量权重的RMSD:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">rms</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.xtc</span> <span class="selector-tag">-s</span> <span class="selector-tag">md</span><span class="selector-class">.tpr</span> <span class="selector-tag">-o</span> <span class="selector-tag">rmsd_protein</span><span class="selector-class">.xvg</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>要叠合的组，和要计算RMSD的组都选Protein。</li>
+</ul>
+<p>其他</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://bbs.keinsci.com/thread-51369-1-1.html">一个到达小分子RMSD阈值自动终止Gromacs模拟的小脚本 - 分子模拟 (Molecular Modeling) - 计算化学公社</a></li>
+</ul>
+<h1 id="rmsf"><a href="#rmsf" class="headerlink" title="rmsf"></a>rmsf</h1><p>RMSF (root mean square fluctuation,方均根波动)衡量某个原子在整个轨迹中相对子平均位置的波动程度，对于展现不同区域的柔性很有用。</p>
+<script type="math/tex; mode=display">
+\mathrm{RMSF}_A=\sqrt{\frac{1}{N_{\text {frame}}} \sum_{i}^{N_{\text {frame}}}(\mathbf{r}_{A}^{i}-\mathbf{r}_{A}^{\text {avg}})^{2}}</script><p>可以将RMSF按下式转换为B因子（Tian Lu, et al., Biochemistry, 48, 7986 (2009)）：</p>
+<script type="math/tex; mode=display">
+B_A=(8/3)\times \pi^2 \times \mathrm{RMSF}_A^2</script><p>pdb中的B因子单位是A，GROMACS给出的RMSF单位是nm</p>
+<p><a target="_blank" rel="noopener" href="http://sobereva.com/32">原子-残基B因子/rmsf转换小工具ba2r - 思想家公社的门口：量子化学·分子模拟·二次元</a></p>
+<h1 id="solvate"><a href="#solvate" class="headerlink" title="solvate"></a>solvate</h1><p>可以生成一个充满指定分子的盒子，也可以<strong>在<code>-cp</code>指定的结构文件中加溶剂分子把盒子空隙填满。</strong>GROMACS会先把整个模拟盒子用此文件里的体系通过平移复制填满，然后扣掉和溶质有重叠的溶剂分子。</p>
+<ul>
+<li><code>-cp</code>: 带盒子参数的分子坐标文件, 一般是<code>editconf</code>的输出文件</li>
+<li><code>-cs</code>: 添加的水分子模型, 如spc216, spce, tip3p, tip4p等。默认填入的溶剂是<code>share/gromacs/top/spc216.gro</code>，这是对216个SPC水组成的盒子经过动力学模拟后己跑到充分平衡状态的文件。如果要填入其它溶剂分子则用<code>-cs [文件名]</code>来指定，文件也应当是经过NPT动力学模拟后的单一纯溶剂体系结构文件。</li>
+<li><code>-o</code>: 输出坐标文件, 就是添加水分子之后的分子坐标文件, 默认为<code>.gro</code>文件, 但也可以为其他格式, 如pdb</li>
+<li><code>-p</code>: 体系拓扑文件, <code>gmx solvate</code>会往里面写入添加水分子的个数. 这个不要忘记, 不然在进行下一步计算时, 会出现坐标文件和拓扑文件中原子数不一致的错误</li>
+</ul>
 <ul>
 <li><code>-maxsol [数目]</code>可以设定只填入多少溶剂分子，填充会很不均匀。</li>
 <li>-<code>shell [厚度]</code>可以填充指定厚度的溶剂层。</li>
@@ -855,7 +893,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E4%BD%93"><span class="nav-number">1.</span> <span class="nav-text">总体</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">常用的参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dump"><span class="nav-number">3.</span> <span class="nav-text">dump</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#editconf"><span class="nav-number">4.</span> <span class="nav-text">editconf</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#energy"><span class="nav-number">5.</span> <span class="nav-text">energy</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#genion"><span class="nav-number">6.</span> <span class="nav-text">genion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#grompp"><span class="nav-number">7.</span> <span class="nav-text">grompp</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81Warning"><span class="nav-number">7.1.</span> <span class="nav-text">常见Warning</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#insert-molecules"><span class="nav-number">8.</span> <span class="nav-text">insert-molecules</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%8F%92%E5%85%A5"><span class="nav-number">8.1.</span> <span class="nav-text">随机插入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">8.1.1.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E4%BD%8D%E7%BD%AE%E6%8F%92%E5%85%A5"><span class="nav-number">8.2.</span> <span class="nav-text">指定位置插入</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mdrun"><span class="nav-number">9.</span> <span class="nav-text">mdrun</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90-1"><span class="nav-number">9.1.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E8%A1%8C%E6%9C%BA%E5%88%B6"><span class="nav-number">9.2.</span> <span class="nav-text">并行机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GPU%E5%8A%A0%E9%80%9F%E7%9B%B8%E5%85%B3"><span class="nav-number">9.3.</span> <span class="nav-text">GPU加速相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90-2"><span class="nav-number">9.3.1.</span> <span class="nav-text">例子</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pdb2gmx"><span class="nav-number">10.</span> <span class="nav-text">pdb2gmx</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pdb2gmx%E5%88%A9%E7%94%A8%E7%9A%84%E6%96%87%E4%BB%B6"><span class="nav-number">10.1.</span> <span class="nav-text">pdb2gmx利用的文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F"><span class="nav-number">10.2.</span> <span class="nav-text">注意</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#solvate"><span class="nav-number">11.</span> <span class="nav-text">solvate</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90-3"><span class="nav-number">11.1.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#trjconv"><span class="nav-number">12.</span> <span class="nav-text">trjconv</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90-4"><span class="nav-number">12.1.</span> <span class="nav-text">例子</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E4%BD%93"><span class="nav-number">1.</span> <span class="nav-text">总体</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">常用的参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dump"><span class="nav-number">3.</span> <span class="nav-text">dump</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#editconf"><span class="nav-number">4.</span> <span class="nav-text">editconf</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#energy"><span class="nav-number">5.</span> <span class="nav-text">energy</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#genion"><span class="nav-number">6.</span> <span class="nav-text">genion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#grompp"><span class="nav-number">7.</span> <span class="nav-text">grompp</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81Warning"><span class="nav-number">7.1.</span> <span class="nav-text">常见Warning</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#insert-molecules"><span class="nav-number">8.</span> <span class="nav-text">insert-molecules</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%8F%92%E5%85%A5"><span class="nav-number">8.1.</span> <span class="nav-text">随机插入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">8.1.1.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E4%BD%8D%E7%BD%AE%E6%8F%92%E5%85%A5"><span class="nav-number">8.2.</span> <span class="nav-text">指定位置插入</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mdrun"><span class="nav-number">9.</span> <span class="nav-text">mdrun</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90-1"><span class="nav-number">9.1.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E8%A1%8C%E6%9C%BA%E5%88%B6"><span class="nav-number">9.2.</span> <span class="nav-text">并行机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GPU%E5%8A%A0%E9%80%9F%E7%9B%B8%E5%85%B3"><span class="nav-number">9.3.</span> <span class="nav-text">GPU加速相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90-2"><span class="nav-number">9.3.1.</span> <span class="nav-text">例子</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pdb2gmx"><span class="nav-number">10.</span> <span class="nav-text">pdb2gmx</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pdb2gmx%E5%88%A9%E7%94%A8%E7%9A%84%E6%96%87%E4%BB%B6"><span class="nav-number">10.1.</span> <span class="nav-text">pdb2gmx利用的文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F"><span class="nav-number">10.2.</span> <span class="nav-text">注意</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#rms"><span class="nav-number">11.</span> <span class="nav-text">rms</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#rmsf"><span class="nav-number">12.</span> <span class="nav-text">rmsf</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#solvate"><span class="nav-number">13.</span> <span class="nav-text">solvate</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90-3"><span class="nav-number">13.1.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#trjconv"><span class="nav-number">14.</span> <span class="nav-text">trjconv</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90-4"><span class="nav-number">14.1.</span> <span class="nav-text">例子</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -951,7 +989,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">410k</span>
+    <span title="站点总字数">413k</span>
 </div>
 
         
