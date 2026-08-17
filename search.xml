@@ -12197,12 +12197,48 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <li><code>-dt</code>：轨迹每多长时间被读入一次</li>
 </ul>
 <h1 id="chi"><a href="#chi" class="headerlink" title="chi"></a>chi</h1><p>计算chi和其他二面角的所有信息</p>
-<h1 id="dssp"><a href="#dssp" class="headerlink" title="dssp"></a>dssp</h1><h1 id="dump"><a href="#dump" class="headerlink" title="dump"></a>dump</h1><p>用来把GROMACS的各种私有的二进制文件转化成可读形式输出，便于检查和提取数据。</p>
+<h1 id="distance"><a href="#distance" class="headerlink" title="distance"></a>distance</h1><p>distance命令用于计算一批原子对的距离变化(需提供索引文件，相应的组中原子数是2的倍数)，也可以结合selection语句考察两个组之间质心或几何中心距离。</p>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><ul>
+<li><p>考察21与29号残基间质心距离随时间的变化</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">gmx</span> distance -s md.tpr -f md.xtc -<span class="literal">select</span> <span class="string">&quot;com of resid 21plus com of resid 29&quot;</span> -oall</span><br></pre></td></tr></table></figure>
+<p>输出了平均值、标准偏差，同时得到distxvg(因用了<code>-oal</code>)</p>
+<p>等价：</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">gmx pairdist -f md<span class="selector-class">.xtc</span> -s md<span class="selector-class">.tpr</span> -ref <span class="string">&quot;com of resid 21&quot;</span> -sel  <span class="string">&quot;com of resid 29&quot;</span> </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>考察21号残基与蛋白质几何中心距离随时间的变化</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">gmx</span> distance -s md.tpr -f md.xtc -<span class="literal">select</span> <span class="string">&quot;cog of resid 21 pluscog of group &quot;</span><span class="string">&quot;protein&quot;</span><span class="string">&quot; -oall</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>distance结合<code>-oh</code> 时还可以计算两个位置间的距离分 布。如果设<code>-len a -tol b</code>, 则统计区间是a±b×a。统计 间隔通过<code>- binw</code> 设置。如：考察21与29号残基侧链间几何中心距离分布</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">gmx</span> distance -s md.tpr -f md.xtc -select <span class="string">&quot;cog of resid 21 and group sidechain plus cog of resid 29 and group sidechain&quot;</span> -oh -len <span class="number">0</span>.<span class="number">7</span> -tol <span class="number">0</span>.<span class="number">6</span> -binw <span class="number">0</span>.<span class="number">05</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="distance-mindist-pairdist对比"><a href="#distance-mindist-pairdist对比" class="headerlink" title="distance, mindist, pairdist对比"></a>distance, mindist, pairdist对比</h2><ul>
+<li><code>distance</code>：计算一批位置对间的距离，以及两个组的中心间距离，还可以计算距离分布。可以用索引文件，也可以用选择语句</li>
+<li><code>mindist</code>：计算两个组间最近、最远距离。还可以计算某组与其镜像的最近、最远距离，计算组间小于某距离的接触数。必须用索引文件</li>
+<li><code>pairdist</code>：计算两个组间，或一批残基各自间最近、最远距离，以及两个组的中心间距离。可以用索引文件，也可以用选择语句</li>
+</ul>
+<p>对于单纯考察两个部分间的距离目的，pairdist最强大，也最方便、灵活。相对于pairdist，distance主要好处是可以计算距离分布，mindist好处是可以计算小于某距离的接触数</p>
+<h1 id="do-dssp"><a href="#do-dssp" class="headerlink" title="do_dssp"></a>do_dssp</h1><p>DSSP是最知名的指认二级结构的算法，也有同名的程序dssp。GROMACS的do_dssp是dssp程序的接口(GROMACS较新版本已经无do_dssp了)，用来考察整个轨迹中各个残基所属的二级结构。从2023版开始GROMACS有了原生的DSSP程序<code>gmx dssp</code>来替代<code>gmx do_dssp</code>。</p>
 <ul>
-<li><code>-s</code>: .tpr</li>
-<li><code>-f</code>: .xtc/.trr</li>
-<li><code>-e</code>: .edr</li>
-<li>-cp:.cpt</li>
+<li><p>把file目录下的dssp放到usr/local/bin目录下(或设置DSSP环境变量指向此文件的实际路径)。然后增加可执行权限。比如增加环境变量：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">DSSP</span>=/path/to/dssp</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>do_dssp给出的ss.xpm用不同颜色展现了各个残基每一帧的二级结构。对于分析二级结构随模拟过程的变化有益。</p>
+</li>
+<li><p>运行以下命令，可以将之转换为图像文件。<code>-by</code>和<code>-bx</code>应根据实际情况调节，使得图像长宽合适</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">gmx</span> xpm<span class="number">2</span>ps -f ss.xpm -noframe -by <span class="number">10</span> -bx <span class="number">3</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>去掉<code>-noframe</code>可以显示图例、坐标轴和标签</li>
+</ul>
+</li>
+<li></li>
+</ul>
+<h1 id="dump"><a href="#dump" class="headerlink" title="dump"></a>dump</h1><p>用来把GROMACS的各种私有的二进制文件转化成可读形式输出，便于检查和提取数据。</p>
+<ul>
+<li><code>-s</code>： .tpr</li>
+<li><code>-f</code>： .xtc/.trr</li>
+<li><code>-e</code>： .edr</li>
+<li>-cp：.cpt</li>
 </ul>
 <p>例子：从info.out中将看到md.cpt中包含的原子坐标/速度、盒子尺寸、当前模拟时间等各种信息。</p>
 <figure class="highlight armasm"><table><tr><td class="code"><pre><span class="line"><span class="symbol">gmx</span> dump-<span class="meta">cp</span> mid.cpt &gt; <span class="meta">info</span>.out</span><br></pre></td></tr></table></figure>
@@ -12237,16 +12273,16 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </ul>
 <h1 id="energy"><a href="#energy" class="headerlink" title="energy"></a>energy</h1><p>用于从能量文件(.edr)中提取动能、势能的各种成分、温度、盒子尺寸、压力、维里值、体积、密度、能量组之间的非键作用能等数据，输出随时间的变化，并进行统计分析得到平均值、RMSD、漂移量，并可以计算一些体系的热力学性质。</p>
 <ul>
-<li><p><code>-f</code>:.edr文件</p>
+<li><p><code>-f</code>：.edr文件</p>
 </li>
-<li><p><code>-o</code>:.xvg文件(默认为energy.xvg)</p>
+<li><p><code>-o</code>：.xvg文件(默认为energy.xvg)</p>
 </li>
-<li><p><code>-dp</code>:在xvg文件中以更高精度输出数据</p>
+<li><p><code>-dp</code>：在xvg文件中以更高精度输出数据</p>
 <p>运行比如<code>gmx energy -f md.edr</code>，然后将屏幕上感兴趣的量的序号依次输入;每输入一个按一次回车，最后以空行或0结束，则被选中的量随时间变化就会被提取并一起记录到energy.xvg中。使用<code>xmgrace -nxy energy.xvg</code>即可作到一张图上(若只有一套Y数据则不需要<code>-nxy</code>)</p>
 </li>
-<li><p><code>-fluct_props</code>:计算与性质波动有关的量，诸如热容、等温可压缩系数、热膨胀系数</p>
+<li><p><code>-fluct_props</code>：计算与性质波动有关的量，诸如热容、等温可压缩系数、热膨胀系数</p>
 </li>
-<li><p><code>-nmol &lt;int&gt;</code>:体系中的分子数，默认为1。对于计算热力学量时应当设为实际值，否则计算出的结果可能错误<br>只有选择全了相应条目的<code>Energy terms needed</code>下面的项，才会在提取数据后将相应的量也算出来。</p>
+<li><p><code>-nmol &lt;int&gt;</code>：体系中的分子数，默认为1。对于计算热力学量时应当设为实际值，否则计算出的结果可能错误<br>只有选择全了相应条目的<code>Energy terms needed</code>下面的项，才会在提取数据后将相应的量也算出来。</p>
 </li>
 <li><p><code>-fee</code>：选项会计算体系与理想气体状态时的自由能差值</p>
 <p>$\Delta A = A(N,V,T) - A_{idealgas}(N,V,T) = kT \ln(&lt;\exp(U_{pot}/kT)&gt;)$</p>
@@ -12257,7 +12293,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <p>$\Delta G = -kTln(<exp(-(E_B-E_A) / kT)>_A),$</p>
 <p>界面里应选择Total Energy。</p>
 </li>
-<li><p><code>-fetemp &lt;real&gt;</code> :估算自由能时用的参考温度，默认为300 K</p>
+<li><p><code>-fetemp &lt;real&gt;</code> ：估算自由能时用的参考温度，默认为300 K</p>
 </li>
 </ul>
 <h1 id="genion"><a href="#genion" class="headerlink" title="genion"></a>genion</h1><p>将结构中指定的组(一般是溶剂组)的部分分子随机替换为单原子离子。</p>
@@ -12288,8 +12324,8 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </ul>
 <h1 id="grompp"><a href="#grompp" class="headerlink" title="grompp"></a>grompp</h1><p>grompp(GROMACS preprocessor)，读取运行参数文件、拓扑文件和结构文件，将信息处理、整合，产生mdrun的输入文件<code>.tpr</code>。</p>
 <ul>
-<li><code>-f:</code>.mdp文件</li>
-<li><code>-c</code>:结构文件</li>
+<li><code>-f</code>：.mdp文件</li>
+<li><code>-c</code>：结构文件</li>
 <li><code>-p</code>：拓扑文件</li>
 <li><code>-t</code>(非必需)：<code>.trr</code>轨迹文件(默认读取其最后一帧信息)或<code>.cpt</code>文件<ul>
 <li>精确延续之前的体系状态应当用<code>-t</code>提供<code>.cpt</code>文件</li>
@@ -12323,6 +12359,38 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <ul>
 <li>结构文件里的原子顺序必须和拓扑文件里的[ molecules ]及各类分子的[ atoms ]所对应的原子顺序完全一致，否则模拟时参数会错乱。而拓扑文件和结构文件中的原子名、残基名可以相同也可以不同，不同时在用grompp时会出现warning，可以无视，此时mdrun最终产生的gro文件里的原子和残基名将与拓扑文件里的一致。</li>
 </ul>
+<h1 id="hbond"><a href="#hbond" class="headerlink" title="hbond"></a>hbond</h1><p> 计算分析氢键</p>
+<h1 id="helix"><a href="#helix" class="headerlink" title="helix"></a>helix</h1><p>helix命令可以计算螺旋的基本参数以及随时间的变化。程序会对指定的组通过psi/phi角和氢键判断出其中哪些残基组成了螺旋，然后把螺旋轴区域指向Z方向，之后计算各种参数。</p>
+<ul>
+<li><p>计算螺旋参数，会产生大量文件</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">gmx helix -f ..<span class="regexp">/md.xtc -s ../m</span>d.tpr -n index.ndx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>也可以人为用<code>-ahxstart</code>和<code>-ahxend</code>指定螺旋中第一个和最后一个残基号。</p>
+</li>
+<li><p>主要输出以下文件，可以用xmgrace绘制属性随时间的变化：</p>
+<ul>
+<li><p>psi.xvg、phi.xvg：螺旋中残基的psi、phi角</p>
+</li>
+<li><p>radius.xvg：螺旋的平均半径</p>
+</li>
+<li><p>len-ahx.xvg：螺旋区域的总长度</p>
+</li>
+<li><p>rise.xvg：螺旋内平均每个残基在Z方向上升高量，即总长度除以螺旋中残基数。理想的螺旋此值应为0.15nm</p>
+</li>
+<li><p>twist.xvg：每个残基的螺旋角。alpha螺旋应在100度左右</p>
+</li>
+<li><p>dip-ahx.xvg：螺旋骨架偶极矩</p>
+</li>
+<li><p>caphi.xvg：螺旋中C。间的平均二面角</p>
+</li>
+<li><p>hb3.xvg、hb4.xvg、hb5.xvg：i与+3/4/5残基间的平均氢键长度</p>
+</li>
+<li><p>rs-ahx.xvg：偏离理想螺旋的程度</p>
+<p>输出的zconf.gro是螺旋轴指向Z轴对应的结构</p>
+</li>
+</ul>
+</li>
+</ul>
 <h1 id="insert-molecules"><a href="#insert-molecules" class="headerlink" title="insert-molecules"></a>insert-molecules</h1><p>将指定的分子插入体系空挡中，或构建一个填充指定分子的盒子。与<code>solvate</code>命令关键不同之处在于此命令中被填入的分子只需提供单个分子的结构文件。</p>
 <ul>
 <li><code>-f</code>：被填充的结构文件</li>
@@ -12341,7 +12409,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <li><p><code>-rot</code>：默认为xyz，即填充时分子在三个方向可随意旋转。也可以为<code>z</code>(只允许绕Z轴旋转)、<code>none</code>(不能旋转)</p>
 </li>
 </ul>
-<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><ul>
+<h3 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h3><ul>
 <li><p>将formamide.pdb里的分子填入3×4×4 nm的空盒子，输出solv.gro。尝试最多填入1000个，如果填不下则能填多少填多少，尽可能填满</p>
 <figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">gmx insert-molecules -box <span class="number">3</span> <span class="number">4</span> <span class="number">4</span> -ci formamide.pdb -o solv.gro -nmol <span class="number">1000</span></span><br></pre></td></tr></table></figure>
 </li>
@@ -12359,24 +12427,38 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <ul>
 <li>通常<code>-ci</code>指定的结构文件里的分子的中心位置应当处于坐标原点，以令<code>.dat</code>设的恰是各个分子中心出现的位置</li>
 </ul>
+<h1 id="make-ndx"><a href="#make-ndx" class="headerlink" title="make_ndx"></a>make_ndx</h1><p>制作索引文件</p>
+<p>运行<code>make_ndx</code>后, 可使用<code>r</code>选择残基, <code>a</code>选择原子, <code>name</code>对多组进行改名, 还可以使用<code>|</code>表示或运算, <code>&amp;</code>表示与运算. 下面是几个简单的例子：</p>
+<ul>
+<li><code>r 56</code>： 选择56号残基</li>
+<li><code>r 1 36 37</code>： 选择不连续的残基</li>
+<li><code>r 3-45</code>： 选择3至45号残基, 使用连接符指定残基标号范围</li>
+<li><code>r 3-15 | r 23-67</code>： 选择3至15, 23至67号残基</li>
+<li><code>r 3-15 &amp; 4</code>： 选择3至15号残基的主干链原子, 在索引文件中, 4号组为默认的主干链.</li>
+<li><code>r 1-36 &amp; a C N CA</code>： 使用包含<code>&amp;</code>的命令指定只包含骨架原子的残基范围</li>
+</ul>
+<h1 id="mdmat"><a href="#mdmat" class="headerlink" title="mdmat"></a>mdmat</h1><p>mdmat命令是用来计算各个残基对之间原子间最小距离的工具，会产生距离矩阵dm.xpm。对于轨迹，给出的是平均距离矩阵。<br>例如：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">gmx</span> mdmat -f md.xtc -s md.tpr (选择Protein)</span><br><span class="line"><span class="attribute">gmx</span> xpm<span class="number">2</span>ps -f dm.xpm -bx <span class="number">15</span> -by <span class="number">15</span></span><br></pre></td></tr></table></figure>
+<p>默认产生的图是灰度图。xpm2ps若加上<code>-rainbow blue</code>可以得到蓝-绿-红变化的图</p>
+<p>越白距离越近，越黑距离越远。默认刻度上限是1.5 nm,可以用<code>-trunc</code>设</p>
 <h1 id="mdrun"><a href="#mdrun" class="headerlink" title="mdrun"></a>mdrun</h1><p>是GROMACS最关键的命令，用于做各种计算模拟任务。</p>
 <ul>
-<li><code>-s</code>:<code>.tpr</code>文件</li>
-<li><code>-cpi</code>:<code>.cpt</code>文件(可选，用于精确续算目的。若提供则完整的状态信息从这里读，否则用.tpr里的信息)<ul>
+<li><code>-s</code>：<code>.tpr</code>文件</li>
+<li><code>-cpi</code>：<code>.cpt</code>文件(可选，用于精确续算目的。若提供则完整的状态信息从这里读，否则用.tpr里的信息)<ul>
 <li>运行时每隔一定时间(用<code>-cpt</code>来设，默认15分钟)往<code>.cpt</code>里写一次完整的状态数据用于续算。前一次的<code>.cpt</code>文件会被改名为<code>_prev</code>结尾</li>
 </ul>
 </li>
-<li><code>-rerun</code>:轨迹文件(可选，计算已有轨迹的能量才用)</li>
-<li><code>-o</code>:输出的<code>.trr</code>文件</li>
-<li><code>-x</code>:输出的<code>.xtc</code>文件(可选)</li>
-<li><code>-cpo</code>:输出的<code>.cpt</code>文件(可选)</li>
+<li><code>-rerun</code>：轨迹文件(可选，计算已有轨迹的能量才用)</li>
+<li><code>-o</code>：输出的<code>.trr</code>文件</li>
+<li><code>-x</code>：输出的<code>.xtc</code>文件(可选)</li>
+<li><code>-cpo</code>：输出的<code>.cpt</code>文件(可选)</li>
 <li><code>-c</code>：输出的结构文件</li>
-<li><code>-e</code>:输出的<code>.edr</code>文件</li>
+<li><code>-e</code>：输出的<code>.edr</code>文件</li>
 <li><code>-g</code>：输出的<code>log</code>文件</li>
 <li><code>-deffnm</code>：设定对所有选项都用的文件名</li>
-<li><code>-v</code>:在终端不断输出当前已跑步数以及预计的完成时间</li>
+<li><code>-v</code>：在终端不断输出当前已跑步数以及预计的完成时间</li>
 </ul>
-<h2 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h2><ul>
+<h2 id="例子-2"><a href="#例子-2" class="headerlink" title="例子"></a>例子</h2><ul>
 <li><p>常规计算：将运行md1.tpr,输出md1.trr/xtc/log/cpt/edr/gro。gro文件应轨迹最后一帧结构而且是分子保留完整的状态。运行进度预计完成时间不断输出到屏幕上。四个线程将被利用。</p>
 <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">gmx</span> mdrun -v -deffnm md<span class="number">1</span> -nt <span class="number">4</span> -pin <span class="literal">on</span></span><br></pre></td></tr></table></figure>
 <ul>
@@ -12392,7 +12474,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </li>
 <li><p>同上，但是直接在之前md1的输出文件上续写</p>
 <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">gmx</span> convert-tpr -s md<span class="number">1</span>.tpr -extend <span class="number">5000</span> -o md<span class="number">1</span>.tpr</span><br><span class="line"><span class="attribute">gmx</span> mdrun -v -deffnm md<span class="number">1</span> -cpi md<span class="number">1</span>.cpt</span><br></pre></td></tr></table></figure>
-<p>注:<code>convert-tpr</code>还可以结合<code>-until xxx</code>将模拟终止时间延长到<code>xxx</code></p>
+<p>注：<code>convert-tpr</code>还可以结合<code>-until xxx</code>将模拟终止时间延长到<code>xxx</code></p>
 </li>
 <li><p>heat任务已跑完，想延续其最后的状态结合其它的mdp设定跑prod任务</p>
 <figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">gmx grompp -f prod<span class="selector-class">.mdp</span> -c heat<span class="selector-class">.gro</span> -t heat<span class="selector-class">.cpt</span> -<span class="selector-tag">p</span> NANA<span class="selector-class">.top</span> -o prod.tpr</span><br><span class="line">gmx mdrun -v -deffnm prod</span><br></pre></td></tr></table></figure>
@@ -12414,8 +12496,8 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </ul>
 <h2 id="并行机制"><a href="#并行机制" class="headerlink" title="并行机制"></a>并行机制</h2><ul>
 <li>MPI：是最普的并行化技术。GROMACS4.5版以前的并行无论节点内还是节点间一律通过MPI实现</li>
-<li>thread-MPI:是MPI的轻量级子集，专门用于节点内并行，从4.5版起开始被GROMACS内置</li>
-<li>OpenMP:是最方便、流行的实现节点内并行的技术，从4.6版开始被GROMACS支持。日前版本在节点内并行时thread-MPI与OpenMP会自动结合使用，每个thread-MPI线程下属会有多个OpenMP线程，总并行线程数是二者的乘积。另外GROMACS的一些个别分析命令如hbond也支持OpenMP并行</li>
+<li>thread-MPI：是MPI的轻量级子集，专门用于节点内并行，从4.5版起开始被GROMACS内置</li>
+<li>OpenMP：是最方便、流行的实现节点内并行的技术，从4.6版开始被GROMACS支持。日前版本在节点内并行时thread-MPI与OpenMP会自动结合使用，每个thread-MPI线程下属会有多个OpenMP线程，总并行线程数是二者的乘积。另外GROMACS的一些个别分析命令如hbond也支持OpenMP并行</li>
 </ul>
 <p>基于MPI并行需要在编译时提供MPI库(如OpenMPI)，而基于thread-MPI和OpenMP在节点内并行在编译时不需要额外的库。因此，如果只需要节点内并行则无需提供MPI库并专门编译MPI版，而且用MPI版来并行计算速度还会更慢。</p>
 <p>参数：</p>
@@ -12424,11 +12506,11 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <li>当节点内n核并行时，top命令看到的gmx进程的CPU占用率原理上应接近n*100%</li>
 </ul>
 </li>
-<li><code>-pin on</code>:将线程和CPU核心绑定，避免系统随意调度导致性能损失。</li>
+<li><code>-pin on</code>：将线程和CPU核心绑定，避免系统随意调度导致性能损失。</li>
 <li><code>-pinoffset [id]</code>:<code>-pin on</code>时绑定的CPU核心从第id个核开始算，第一个核心id为0。此选项默认为0。如果同时跑多个任务且用<code>-pin on</code>，总应当结合<code>-pinoffset</code>避免有的核心同时做两个任务</li>
 <li><code>-pinstride [int]</code>:<code>-pin on</code>时绑定的核的序号的间隔。通常设为1，使得被绑定的核的序号挨着</li>
 </ul>
-<p>对于支持超线程的CPU一般建议设成<code>-nt [CPU物理核数] -pin on</code>。没有必要关闭超线程。<br>对于跑非常长、很耗时的轨迹，可以加上比如<code>-nsteps 20000</code>只跑20000步，测试一下以下情况的差异以寻找性能最佳的组合用来跑当前任务:</p>
+<p>对于支持超线程的CPU一般建议设成<code>-nt [CPU物理核数] -pin on</code>。没有必要关闭超线程。<br>对于跑非常长、很耗时的轨迹，可以加上比如<code>-nsteps 20000</code>只跑20000步，测试一下以下情况的差异以寻找性能最佳的组合用来跑当前任务：</p>
 <ul>
 <li>用和不用<code>-nt [物理核心数]</code></li>
 <li>用和不用<code>-pin on</code></li>
@@ -12450,20 +12532,36 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </ul>
 <h2 id="GPU加速相关"><a href="#GPU加速相关" class="headerlink" title="GPU加速相关"></a>GPU加速相关</h2><p>当mdrun检测到有GPU可以利用时GPU版会自动利用GPU计算，当有些功能不支持GPU导致报错时可以明确指定用CPU算。</p>
 <ul>
-<li><code>-bonded</code>、<code>-nb</code>、<code>-pme [auto/cpu/gpu]</code>:指定成键、非键作用的实空间部分、PME算的非键作用的倒易空间部分用CPU还是GPU算。默认为<code>auto</code></li>
+<li><code>-bonded</code>、<code>-nb</code>、<code>-pme [auto/cpu/gpu]</code>：指定成键、非键作用的实空间部分、PME算的非键作用的倒易空间部分用CPU还是GPU算。默认为<code>auto</code></li>
 <li>GPU版mdrun可以通过<code>-nb cpu -pme cpu -bonded cpu</code>强行要求只在CPU上算(2018版没-bonded选项)</li>
-<li><code>-gpu_id [GPUid]</code>:有多块GPU且想用来分别跑多个任务时，指定任务在哪个GPU上跑，避免冲突</li>
-<li><code>-update gpu</code>:令约束以及坐标更新也放到GPU上算，从而进一步加快速度，这称为GPU-resident模式，但功能上有限制。<ul>
+<li><code>-gpu_id [GPUid]</code>：有多块GPU且想用来分别跑多个任务时，指定任务在哪个GPU上跑，避免冲突</li>
+<li><code>-update gpu</code>：令约束以及坐标更新也放到GPU上算，从而进一步加快速度，这称为GPU-resident模式，但功能上有限制。<ul>
 <li>从2020版开始支持，从2023版开始默认开启。2023版以前默认为-<code>-update auto</code>，总是在CPU上做。用<code>export GMX_FORCE_UPDATE _DEFAULT_GPU=true</code>设置环境变量可以总是强行在GPU上做。</li>
-<li>注:为了尽可能避免通信，GPU上做update需要满足updategroups条件。此时如果用了约束，几个原子若共同与某个原子有约束关系，那么在[ atoms ]中这儿个原子应当连续地排在那个原子的后头。例如用<code>constraints = hbonds时</code>，氢原子应当连续地排在它相连的重原子的后头。</li>
+<li>注：为了尽可能避免通信，GPU上做update需要满足updategroups条件。此时如果用了约束，几个原子若共同与某个原子有约束关系，那么在[ atoms ]中这儿个原子应当连续地排在那个原子的后头。例如用<code>constraints = hbonds时</code>，氢原子应当连续地排在它相连的重原子的后头。</li>
 </ul>
 </li>
 </ul>
-<h3 id="例子-2"><a href="#例子-2" class="headerlink" title="例子"></a>例子</h3><ul>
+<h3 id="例子-3"><a href="#例子-3" class="headerlink" title="例子"></a>例子</h3><ul>
 <li><p>16核32线程机子上用两个GPU分别跑两个任务，且各用不同的8个CPU物理核心的最佳的运行方式：任务1:由0-7号CPU核心连同0号GPU运行；任务2由8-15号CPU核心连同1号GPU运行</p>
 <figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">gmx mdrun [命令] -nt <span class="number">8</span> -pin on -pinstride <span class="number">1</span> -gpu_id <span class="number">0</span></span><br><span class="line">gmx mdrun [命令] -nt <span class="number">8</span> -pin on -pinoffset <span class="number">8</span> -pinstride <span class="number">1</span> -gpu_id <span class="number">1</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<h1 id="mindist"><a href="#mindist" class="headerlink" title="mindist"></a>mindist</h1><p>计算两组间的最小距离</p>
+<p>例如：</p>
+<ul>
+<li><p>检查蛋白与其镜像距离</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">mindist</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.xtc</span> <span class="selector-tag">-s</span> <span class="selector-tag">md</span><span class="selector-class">.tpr</span> <span class="selector-tag">-pi</span></span><br></pre></td></tr></table></figure>
+</li>
+<li></li>
+</ul>
+<h1 id="pairdist"><a href="#pairdist" class="headerlink" title="pairdist"></a>pairdist</h1><p>pairdist命令可以实现mindist大多数功能，好处是可以使用selection语句，免得写索引文件，且更为灵活、强大。需要用<code>-ref</code>和<code>-sel</code>定义两个组。<br>例：计算21和29号残基最小距离随模拟时间的变化</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">gmx pairdist -f md<span class="selector-class">.xtc</span> -s md<span class="selector-class">.tpr</span> -ref <span class="string">&quot;resid 21&quot;</span> -sel <span class="string">&quot;resid 29&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>用<code>-typemax</code>可以考察最大距离的变化</li>
+<li>用<code>-refgrouping</code>和<code>-selgrouping</code>接上<code>res</code>或<code>mol</code>的话，可以分别把ref和sel组划分成残基或分子，从而得到两个组间每对残基或分子间最小/最大距离随时间的变化。</li>
+</ul>
+<p>考察两个原子间距离变化也可以用pairdist。例考察5与10号原子间距离：</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">gmx pairdist -f md<span class="selector-class">.xtc</span> -s md<span class="selector-class">.tpr</span> -ref <span class="string">&quot;atomnr 5&quot;</span> -sel <span class="string">&quot;atomnr 10&quot;</span></span><br></pre></td></tr></table></figure>
 <h1 id="pdb2gmx"><a href="#pdb2gmx" class="headerlink" title="pdb2gmx"></a>pdb2gmx</h1><p>pdb2gmx是GROMACS中模拟生物大分子体系的关键性工具。它载入生物大分子结构文件，从相关力场库文件中读取所需信息，给体系恰当加氢和重排原子顺序，最后产生生物分子的拓扑文件。</p>
 <ul>
 <li><code>-f</code>：结构文件，一般用pdb（输入）<ul>
@@ -12476,20 +12574,20 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <li><code>-i</code>：位置限制文件，默认为posre.itp</li>
 <li><code>-ff &lt;string&gt;</code>：设定所用力场，默认是交互式选择</li>
 <li><code>-water &lt;enum&gt;</code>：设定所用水模型，默认是交互式选择</li>
-<li><code>-heavyh</code>:把氢原子质量设为4(并从相连重原子上扣除相应质量)，使氢的运动减缓，从而能用更大步长</li>
+<li><code>-heavyh</code>：把氢原子质量设为4(并从相连重原子上扣除相应质量)，使氢的运动减缓，从而能用更大步长</li>
 <li><code>-ignh</code>：忽略输入文件里所有氢。NMR测定的pdb里虽然有所有的氢，某些程序(如分子对接程序)产生的结构文件里也往往有氢，但原子名大概率不标准，应当用此选项让pdb2gmx按标准规则加氢<ul>
 <li>通常建议始终带上<code>-ignh</code></li>
 </ul>
 </li>
 <li><code>-ter</code>：交互式选择如何处理末端氨基和羧基，默认是搞成带电状态。对AMBER力场不适用(因为它是直接按照r2b文件对残基处在氮端和碳端的情况进行设定)</li>
-<li><code>-merge</code>:默认是<code>no</code>，代表每个链作为单独的<code>[ moleculetype ]</code>。也可以用<code>all</code>都弄到个<code>[ moleculetype  ]</code>里，或<code>interactive</code>由用户下面则</li>
+<li><code>-merge</code>：默认是<code>no</code>，代表每个链作为单独的<code>[ moleculetype ]</code>。也可以用<code>all</code>都弄到个<code>[ moleculetype  ]</code>里，或<code>interactive</code>由用户下面则</li>
 </ul>
 <p>以下如果都要交互式选择，则用<code>-inter</code>选项：</p>
 <ul>
 <li><code>-lys</code>、<code>-arg</code>、<code>-asp</code>、<code>-glu</code>、<code>-gin</code>、<code>-his</code>：交互式选择这些残基的质子化态。默认是除了HIS都设为带电状态，HIS自动根据形成氢键最优方式判断是否两个氮都质子化(带电)或者中性时氢在哪个氮上</li>
-<li><code>-ss</code>:交互式方式选择如何设定二硫键</li>
+<li><code>-ss</code>：交互式方式选择如何设定二硫键</li>
 </ul>
-<h2 id="pdb2gmx利用的文件"><a href="#pdb2gmx利用的文件" class="headerlink" title="pdb2gmx利用的文件"></a><code>pdb2gmx</code>利用的文件</h2><p>（在力场文件夹中，<code>pdb2gmx</code>按照此顺序处理: r2b→hdb→ rtp→tdb）</p>
+<h2 id="pdb2gmx利用的文件"><a href="#pdb2gmx利用的文件" class="headerlink" title="pdb2gmx利用的文件"></a><code>pdb2gmx</code>利用的文件</h2><p>（在力场文件夹中，<code>pdb2gmx</code>按照此顺序处理： r2b→hdb→ rtp→tdb）</p>
 <ul>
 <li><p><code>aminoacids.r2b</code>：</p>
 <ul>
@@ -12553,18 +12651,28 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <li>这说明 pdb2gmx在将输入的结构文件里的 第 18号残基 GLU 与 rtp文件里的 [GLU] 字段 匹配时,发现结构文件里这个残基少了名为 CG 的原子,显然需要补全结构文件里的这 个缺失的原子后再用 pdb2gmx 。但也有可 能这个原子实际存在,只是结构文件里的原 子名不对,此时需要修改原子名。  </li>
 <li>注意这里的残基号是从 1 开始排的,和 pdb 文件里记录的残基号未必相同。</li>
 </ul>
+<h1 id="rdf"><a href="#rdf" class="headerlink" title="rdf"></a>rdf</h1><p>计算径向分布函数</p>
+<p>例如：</p>
+<p>考察蛋白质表面附近水的分布</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">gmx rdf -f md<span class="selector-class">.xtc</span> -s md<span class="selector-class">.tpr</span> -ref protein -sel <span class="string">&quot;mol com of resname SOL&quot;</span> -surf mol -rmax <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-surf mol</code>是把ref组划分成一个个分子，计算sel组原子与ref组里各分子中最近原子间的rdf。由于蛋白质整体就是一个分子，所以这样算的是水的质心与蛋白质最近原子间的rdf，也即体现了蛋白质英表面附近水的分布特征。</li>
+<li><code>-surfres</code>是把ref组划分成一个个残基。</li>
+<li>用<code>-surf mol</code>或<code>res</code>时会用<code>-norm none</code>,此时给出的g(r)不是一般意义的径向分布函数，而是：$g(r)=\frac{\partial N_{\text {sel }}(r)}{\partial r} \approx \frac{N_{\text {sel }}(r+\delta)-N_{\text {sel }}(r)}{\delta}$，N<sub>sel</sub>(r)是r内sel组的粒子数，δ是统计间隔</li>
+<li>r越大处，由于壳层体积越大，因此这种方式给出的g(r)有越大的倾向</li>
+</ul>
 <h1 id="rms"><a href="#rms" class="headerlink" title="rms"></a>rms</h1><p>RMSD (root mean square deviation,方均偏差)是最重要的衡量几何结构偏差的标准，即计算当前结构与参考结构间的MSD再开根号：</p>
 <script type="math/tex; mode=display">
 \mathrm{RMSD}=\sqrt{\frac{1}{N_{\text {atm }}} \sum_{A}^{N_{\text {atm }}}\left|\mathbf{r}_{A}-\mathbf{r}_{A}^{\text {ref }}\right|^{2}}</script><ul>
 <li>N<sub>atm</sub>为所选范围内的原子数，A是其中原子序号。ref上标代表参考结构。</li>
 </ul>
-<p>另一种是质量权重的RMSD:</p>
+<p>另一种是质量权重的RMSD：</p>
 <script type="math/tex; mode=display">
 \mathrm{RMSD}=\sqrt{\frac{1}{M} \sum_{A}^{N_{\text {atm }}}m_A\left|\mathbf{r}_{A}-\mathbf{r}_{A}^{\text {ref }}\right|^{2}}</script><ul>
 <li>M：所选范围原子质量和</li>
 </ul>
 <p>例子：</p>
-<p>运行以下命令，计算轨迹中每一帧的结构和参考结构(-s提供的结构文件)间的质量权重的RMSD:</p>
+<p>运行以下命令，计算轨迹中每一帧的结构和参考结构(-s提供的结构文件)间的质量权重的RMSD：</p>
 <figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">rms</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.xtc</span> <span class="selector-tag">-s</span> <span class="selector-tag">md</span><span class="selector-class">.tpr</span> <span class="selector-tag">-o</span> <span class="selector-tag">rmsd_protein</span><span class="selector-class">.xvg</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>要叠合的组，和要计算RMSD的组都选Protein。</li>
@@ -12582,12 +12690,32 @@ B_A=(8/3)\times \pi^2 \times \mathrm{RMSF}_A^2</script><p>pdb中的B因子单位
 <ul>
 <li>可以将蛋白质的pdb文件中的原子B因子转换成残基的RMSF，从而可以和rmsf_protein.xvg里的数据进行对比，判断力场、模拟设定是否合理：<a href="http://sobereva.com/32">原子-残基B因子/rmsf转换小工具ba2r - 思想家公社的门口：量子化学·分子模拟·二次元</a></li>
 </ul>
+<h1 id="sasa"><a href="#sasa" class="headerlink" title="sasa"></a>sasa</h1><p>使用sasa命令可以考察蛋白的溶剂可及表面积。</p>
+<ul>
+<li>如果按照原子电荷在-0.2~0.2区间作为疏水区域，其它作为亲水区域，可以用以下命令来计算这两部分各自的面积。</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">gmx</span> sasa -f md.xtc -s md.tpr -surface <span class="string">&quot;group protein&quot;</span> -output &#x27; <span class="string">&quot;Hydrophobic&quot;</span> group protein and charge &#123;-<span class="number">0</span>.<span class="number">2</span> to <span class="number">0</span>.<span class="number">2</span>&#125;; <span class="string">&quot;Hydrophilic&quot;</span> group protein and not charge &#123;-<span class="number">0</span>.<span class="number">2</span> to <span class="number">0</span>.<span class="number">2</span>&#125;&#x27;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>此处<code>-surface</code>设置定义总表面用的组，<code>-output</code>后面定义单独输出表面上的哪些部分。</p>
+</li>
+<li><p>还可以用<code>-probe [半径]</code>来设置溶剂球的探针半径，默认的1.4 埃对应水溶剂分子。</p>
+<ul>
+<li>注：此写法在Windows的cmd利Powershell终端下没法用，用Windows版的话可以在cmder模拟的Bash环境下运行</li>
+</ul>
+</li>
+<li><p>gmx sasa还可以接上-tv得到某个组的被溶剂可及表面(SAS)包围的体积随时间的变化。例如对蛋白质进行计算：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">sasa</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.xtc</span> <span class="selector-tag">-s</span> <span class="selector-tag">md</span><span class="selector-class">.tpr</span> <span class="selector-tag">-tv</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>之后选Protein组。用grace对得到的volume.xvg进行绘图。</li>
+</ul>
+</li>
+</ul>
 <h1 id="solvate"><a href="#solvate" class="headerlink" title="solvate"></a>solvate</h1><p>可以生成一个充满指定分子的盒子，也可以<strong>在<code>-cp</code>指定的结构文件中加溶剂分子把盒子空隙填满。</strong>GROMACS会先把整个模拟盒子用此文件里的体系通过平移复制填满，然后扣掉和溶质有重叠的溶剂分子。</p>
 <ul>
-<li><code>-cp</code>: 带盒子参数的分子坐标文件, 一般是<code>editconf</code>的输出文件</li>
-<li><code>-cs</code>: 添加的水分子模型, 如spc216, spce, tip3p, tip4p等。默认填入的溶剂是<code>share/gromacs/top/spc216.gro</code>，这是对216个SPC水组成的盒子经过动力学模拟后己跑到充分平衡状态的文件。如果要填入其它溶剂分子则用<code>-cs [文件名]</code>来指定，文件也应当是经过NPT动力学模拟后的单一纯溶剂体系结构文件。</li>
-<li><code>-o</code>: 输出坐标文件, 就是添加水分子之后的分子坐标文件, 默认为<code>.gro</code>文件, 但也可以为其他格式, 如pdb</li>
-<li><code>-p</code>: 体系拓扑文件, <code>gmx solvate</code>会往里面写入添加水分子的个数. 这个不要忘记, 不然在进行下一步计算时, 会出现坐标文件和拓扑文件中原子数不一致的错误</li>
+<li><code>-cp</code>： 带盒子参数的分子坐标文件, 一般是<code>editconf</code>的输出文件</li>
+<li><code>-cs</code>： 添加的水分子模型, 如spc216, spce, tip3p, tip4p等。默认填入的溶剂是<code>share/gromacs/top/spc216.gro</code>，这是对216个SPC水组成的盒子经过动力学模拟后己跑到充分平衡状态的文件。如果要填入其它溶剂分子则用<code>-cs [文件名]</code>来指定，文件也应当是经过NPT动力学模拟后的单一纯溶剂体系结构文件。</li>
+<li><code>-o</code>： 输出坐标文件, 就是添加水分子之后的分子坐标文件, 默认为<code>.gro</code>文件, 但也可以为其他格式, 如pdb</li>
+<li><code>-p</code>： 体系拓扑文件, <code>gmx solvate</code>会往里面写入添加水分子的个数. 这个不要忘记, 不然在进行下一步计算时, 会出现坐标文件和拓扑文件中原子数不一致的错误</li>
 </ul>
 <ul>
 <li><code>-maxsol [数目]</code>可以设定只填入多少溶剂分子，填充会很不均匀。</li>
@@ -12595,7 +12723,7 @@ B_A=(8/3)\times \pi^2 \times \mathrm{RMSF}_A^2</script><p>pdb中的B因子单位
 <li><code>-p [top文件名]</code>还会同时对指定的拓扑文件进行修改，将其中的溶剂分子数设为当前值。</li>
 <li><code>-scale &lt;real&gt;</code>：当溶剂与溶质之间距离小于它们的范德华半径和，则溶剂会被去掉。范德华半径是<code>share/gromacs/top/vdwradii.dat</code>的半径值乘以<code>0.57</code>（默认值）。对水中的蛋白质, 使用默认值0.57可以得到接近1000 g/l的密度值。</li>
 </ul>
-<h2 id="例子-3"><a href="#例子-3" class="headerlink" title="例子"></a>例子</h2><ul>
+<h2 id="例子-4"><a href="#例子-4" class="headerlink" title="例子"></a>例子</h2><ul>
 <li><p>生成2×5×4nm的水盒子体系</p>
 <figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">gmx solvate -box <span class="number">2</span> <span class="number">5</span> <span class="number">4</span> -o test.gro</span><br></pre></td></tr></table></figure>
 </li>
@@ -12618,34 +12746,34 @@ B_A=(8/3)\times \pi^2 \times \mathrm{RMSF}_A^2</script><p>pdb中的B因子单位
 <p>合并轨迹用<code>trjcat</code></p>
 <p>参数：</p>
 <ul>
-<li><code>-f</code>:被处理的轨迹文件</li>
-<li><code>-s</code>:.tpr/gro/pdb文件(可选，输出结构文件及<code>-fit</code>时必须)</li>
-<li><code>-n</code>:.ndx文件(可选)</li>
-<li><code>-o</code>:新产生的轨迹文件</li>
-<li><code>-skip &lt;int&gt;</code>:每几帧输出一次，默认为1</li>
+<li><code>-f</code>：被处理的轨迹文件</li>
+<li><code>-s</code>：.tpr/gro/pdb文件(可选，输出结构文件及<code>-fit</code>时必须)</li>
+<li><code>-n</code>：.ndx文件(可选)</li>
+<li><code>-o</code>：新产生的轨迹文件</li>
+<li><code>-skip &lt;int&gt;</code>：每几帧输出一次，默认为1</li>
 <li><code>-dump &lt;time&gt;</code>：输出离指定时间最近的帧</li>
-<li><code>-pbc &lt;选项&gt;</code>:修改PBC处理方式<ul>
+<li><code>-pbc &lt;选项&gt;</code>：修改PBC处理方式<ul>
 <li>默认值为<code>none</code>，即不对轨迹的PBC描述做任何修</li>
-<li><code>atom</code>:只要原子越过盒子边界就返回另一边。这是mdrun直接产生出的轨迹对应的情况。这会导致边界处分子/残基被截断</li>
-<li><code>mol/res</code>:分子/残基的质心如果跨越了盒子，则分子/残基就挪到盒子另一头，这保证了分子残基的完整性。如果因为用了<code>-trans</code>和<code>-center</code>使得有的分子/残基处于盒子外，也可以由此得到修正<ul>
-<li>注:mdrun直接产生的gro文件对应的是mol状态</li>
+<li><code>atom</code>：只要原子越过盒子边界就返回另一边。这是mdrun直接产生出的轨迹对应的情况。这会导致边界处分子/残基被截断</li>
+<li><code>mol/res</code>：分子/残基的质心如果跨越了盒子，则分子/残基就挪到盒子另一头，这保证了分子残基的完整性。如果因为用了<code>-trans</code>和<code>-center</code>使得有的分子/残基处于盒子外，也可以由此得到修正<ul>
+<li>注：mdrun直接产生的gro文件对应的是mol状态</li>
 </ul>
 </li>
-<li><code>nojump</code>:使得原子即便跨越了盒子边界也照样运动(相对于第1帧而言)，而不会被挪到另一边。这保证了轨迹的连续性。<ul>
+<li><code>nojump</code>：使得原子即便跨越了盒子边界也照样运动(相对于第1帧而言)，而不会被挪到另一边。这保证了轨迹的连续性。<ul>
 <li>GROMACS自带的分析工具基本都能自动、恰当地在分析轨迹时考虑PBC问题。但第三方的分析程序则可能没法恰当处理PBC轨迹，如果不先搞成<code>nojump</code>的形式则会得到错误的结果。</li>
 </ul>
 </li>
-<li><code>cluster</code>:选定一个组(通过index文件定义)，使得这个组保持完整。主要用于令轨迹中分子团簇(包括诸如蛋白质+配体复合物)保持完整。使用前应先使用mol保证分子的完整性</li>
+<li><code>cluster</code>：选定一个组(通过index文件定义)，使得这个组保持完整。主要用于令轨迹中分子团簇(包括诸如蛋白质+配体复合物)保持完整。使用前应先使用mol保证分子的完整性</li>
 </ul>
 </li>
-<li><code>-ur &lt;选项&gt;</code>:修改盒子描述方式</li>
-<li><code>-center</code>:平移体系使得指定组的几何中心处在盒子中央。盒子中心可以由<code>-boxcenter</code>具体定义</li>
-<li><code>-trans &lt;vector&gt;</code>:对所有坐标按照矢量平移</li>
-<li><code>-fit &lt;选项&gt;</code>:对轨迹中某个组根据参考结构叠合</li>
-<li><code>-step</code>:把轨迹每一帧输出为单独的.gro/pdb文件</li>
+<li><code>-ur &lt;选项&gt;</code>：修改盒子描述方式</li>
+<li><code>-center</code>：平移体系使得指定组的几何中心处在盒子中央。盒子中心可以由<code>-boxcenter</code>具体定义</li>
+<li><code>-trans &lt;vector&gt;</code>：对所有坐标按照矢量平移</li>
+<li><code>-fit &lt;选项&gt;</code>：对轨迹中某个组根据参考结构叠合</li>
+<li><code>-step</code>：把轨迹每一帧输出为单独的.gro/pdb文件</li>
 </ul>
 <p>读的文件里有速度信息就会被读/写。但受力不会被读/写，除非写了<code>-force</code></p>
-<h2 id="例子-4"><a href="#例子-4" class="headerlink" title="例子"></a>例子</h2><ul>
+<h2 id="例子-5"><a href="#例子-5" class="headerlink" title="例子"></a>例子</h2><ul>
 <li><p>将<code>all.trr</code>中3 ns到5 ns的轨迹每隔100ps一次提取出来到3_5.xtc</p>
 <figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">gmx</span> trjcon -f <span class="literal">all</span>.trr -b <span class="number">3000</span> -e <span class="number">5000</span> -dt <span class="number">100</span> -<span class="number">0</span> <span class="number">3</span>_<span class="number">5</span>.xtc</span><br></pre></td></tr></table></figure>
 </li>
@@ -12676,6 +12804,7 @@ B_A=(8/3)\times \pi^2 \times \mathrm{RMSF}_A^2</script><p>pdb中的B因子单位
 </ul>
 </li>
 </ul>
+<h1 id="xpm2ps"><a href="#xpm2ps" class="headerlink" title="xpm2ps"></a>xpm2ps</h1><p><code>gmx xpm2ps</code>能够将XPM(XPixelMap)矩阵文件转换为漂亮的颜色映射图. 只要提供了正确的矩阵格式, 还可以显示标签和坐标轴. 矩阵数据可以通过一些程序得到, 如<code>gmx do_dssp</code>, <code>gmx rms</code>或<code>gmx mdmat</code>.</p>
 ]]></content>
       <categories>
         <category>计算化学</category>
@@ -12920,6 +13049,17 @@ B_A=(8/3)\times \pi^2 \times \mathrm{RMSF}_A^2</script><p>pdb中的B因子单位
 <li>VolumeSlice：显示格点数据的截面图</li>
 <li>Beads：相邻原子一起用较大圆球显示</li>
 <li>Isosurface：显示格点数据等值面图</li>
+<li>NewCartoon：<ul>
+<li>注意：载入轨迹后，在哪帧选择NewCartoon等展现体系二级结构的模式，就会调用STRIDE程序计算哪帧的二级结构。之后即便切换到别的帧，二级结构还是用之前算的那帧的。</li>
+<li>若想令每一帧的二级结构都根据相应结构来计算，可以使用卢天的<code>sscache.tcl</code>脚本<ul>
+<li>拷到VMD目录，然后运行source sscache.tcl。之后运行诸如<code>start_sscache top</code>，就代表top体系每切换到新的一帧就重算二级结构信息。如果此帧已经算过了就不再重算了。</li>
+<li>运行<code>stop_sscache [ID号]</code>则可以停止实时更新。</li>
+<li>若只想更新top体系的当前帧的二级结构，运行<code>mol ssrecalc top</code>。用</li>
+<li>s<code>tart_sscache</code>之后，可以播放一遍轨迹，这样每一帧的二级结构就都被计算并储存在内存里了，此时播放轨迹比较慢，而之后再次播放轨迹就很快了。</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <p>材质设定：在Representation界面下可以对各种表示设定材质。每种材质实际上是各种参数的预设的组合，可以在Graphics-Materials…里面自行调节。</p>
 <ul>
@@ -13065,31 +13205,10 @@ B_A=(8/3)\times \pi^2 \times \mathrm{RMSF}_A^2</script><p>pdb中的B因子单位
 </ul>
 </li>
 </ul>
-<h1 id="6-Extension"><a href="#6-Extension" class="headerlink" title="6. Extension"></a>6. Extension</h1><h2 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h2><h3 id="Sequence-Viewer"><a href="#Sequence-Viewer" class="headerlink" title="Sequence Viewer"></a>Sequence Viewer</h3><p><img src="/image-20260814162427316.png" alt="image-20260814162427316"></p>
-<ul>
-<li>利用VMD的Extensions-Analysis-Sequence Viewer可以查看氨基酸序列。点击哪个氨基酸，图形窗口中哪个氨基酸就会以黄色高亮显示，也可以鼠标圈住一次选一批。</li>
-<li><p>左图颜色越缘的残基B因子越小。</p>
-</li>
-<li><p>二级结构颜色对应的含义：</p>
-<ul>
-<li><p>T：Turn</p>
-</li>
-<li><p>E：Extended conformation</p>
-</li>
-<li><p>B：solated bridge</p>
-</li>
-<li><p>H：Alpha helix</p>
-</li>
-<li><p>G：3-10 helix</p>
-</li>
-<li><p>I：Pi-helix</p>
-</li>
-<li><p>C：Coil (none of the above)</p>
-</li>
+<h1 id="6-Extension"><a href="#6-Extension" class="headerlink" title="6. Extension"></a>6. Extension</h1><h2 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h2><h3 id="Contact-Map"><a href="#Contact-Map" class="headerlink" title="Contact Map"></a>Contact Map</h3><ul>
+<li>Cale. res-res Dists：计算残基之间 Alpha碳的距离</li>
 </ul>
-</li>
-</ul>
-<h2 id="Visualization"><a href="#Visualization" class="headerlink" title="Visualization"></a>Visualization</h2><h3 id="Clipping-Plane-Tool"><a href="#Clipping-Plane-Tool" class="headerlink" title="Clipping Plane Tool"></a>Clipping Plane Tool</h3><p><img src="./image-20260814162155397.png" alt="image-20260814162155397"></p>
+<p><img src="/image-20260817135221229.png" alt="image-20260817135221229"></p>
 <h3 id="Ramachandran-Plot"><a href="#Ramachandran-Plot" class="headerlink" title="Ramachandran Plot"></a>Ramachandran Plot</h3><p><img src="/image-20260817114533619.png" alt="image-20260817114533619"></p>
 <ul>
 <li>此工具不是把所有残基所有帧的点同时叠加绘制。拉动进度条，则会绘制相应帧的rama图。</li>
@@ -13103,6 +13222,33 @@ B_A=(8/3)\times \pi^2 \times \mathrm{RMSF}_A^2</script><p>pdb中的B因子单位
 <li>weights →on/off： 不考虑质量（或其他原子属性）权重</li>
 <li>Trajectory：<ul>
 <li>Save：勾选后再RMSD，VMD目录下将会产生指定的.dat文件，记录各锁的RMSD值</li>
+</ul>
+</li>
+</ul>
+<h3 id="Salt-Bridges"><a href="#Salt-Bridges" class="headerlink" title="Salt Bridges"></a>Salt Bridges</h3><p>可以搜索出体系中所有正电残基(对应resname ARG HISLYSHSP)和负电残基(对应resname ASP GLU)之间的盐桥。</p>
+<p><img src="/image-20260817152551531.png" alt="image-20260817152551531"></p>
+<ul>
+<li>Update selections every frame：对于选区语句不含几何范围的情况，可取消选项以加快搜索速度</li>
+<li>Side-chain COM distance cut-off (A):侧链质心距离阈值</li>
+<li>Write a file with the distances for each salt bridge：是否把每个找出来的盐桥距离随时间变化写入到独立的文件中</li>
+</ul>
+<p>仅当选定的轨迹范围中负电残基的任意一个氧与正电残基的任意一个氮之间的距离小于过指定值时才会被判断为盐桥。另外还可以额外要求侧链质心距离必须小于过多少。</p>
+<ul>
+<li>每个找到的盐桥都在VMD目录下输出了对应的文件，如saltbr-ASP21-LYS29.dat.其中记录的残基间的距离定义为正电残基侧链氮的质心距离与负电残基侧链的氧的质心距离。</li>
+</ul>
+<h3 id="Sequence-Viewer"><a href="#Sequence-Viewer" class="headerlink" title="Sequence Viewer"></a>Sequence Viewer</h3><p><img src="/image-20260814162427316.png" alt="image-20260814162427316"></p>
+<ul>
+<li>利用VMD的Extensions-Analysis-Sequence Viewer可以查看氨基酸序列。点击哪个氨基酸，图形窗口中哪个氨基酸就会以黄色高亮显示，也可以鼠标圈住一次选一批。</li>
+<li>左图颜色越缘的残基B因子越小。</li>
+<li><p>二级结构颜色对应的含义：</p>
+<ul>
+<li>T：Turn</li>
+<li>E：Extended conformation</li>
+<li>B：solated bridge</li>
+<li>H：Alpha helix</li>
+<li>G：3-10 helix</li>
+<li>I：Pi-helix</li>
+<li>C：Coil (none of the above)</li>
 </ul>
 </li>
 </ul>
@@ -13127,7 +13273,36 @@ B_A=(8/3)\times \pi^2 \times \mathrm{RMSF}_A^2</script><p>pdb中的B因子单位
 <li><p>Calc. Phi/Psi:计算各残基Phi/Psi角度随时间的变化</p>
 </li>
 <li>Calc. delta Phi/Psi:计算各残基Phi/Psi角度相对于第一帧时的变化</li>
+<li>Calc Sec. Struct.：绘制二级结构随时间变化</li>
+<li>Calc. SASA：计算所有残基的SASA随时间的变化</li>
 </ul>
+<h2 id="Visualization"><a href="#Visualization" class="headerlink" title="Visualization"></a>Visualization</h2><h3 id="Bendix"><a href="#Bendix" class="headerlink" title="Bendix"></a>Bendix</h3><p>计算螺旋不同位置弯曲程度的插件，并且可以把螺旋不同位置的弯曲程度用不同颜色直观展现出来。</p>
+<p><img src="/image-20260817161423761.png" alt="image-20260817161423761"></p>
+<p>Helices框如果留空的话会自动判断螺旋涉及的残基，如果有自己不想要的区域可删除。</p>
+<p>在当前RWB色彩刻度下，越蓝的区域弯曲程度越低，越红的区域弯曲程度越高。白色代表略微弯曲。</p>
+<ul>
+<li><p>点击Analysis -Plot: Angle along helix,会将识别出的螺旋上不同残基处的螺旋弯曲度数绘制出来(对于当前帧而言)</p>
+<p><img src="/image-20260817161439044.png" alt="image-20260817161439044"></p>
+</li>
+<li><p>如果想考察螺旋的最大弯曲角随模拟时间的变化，应依次点击以下选项将各帧螺旋信息在轨迹播放过程中存到内存里</p>
+<ol>
+<li><p>选择储存数据</p>
+<p><img src="/image-20260817161606504.png" alt="image-20260817161606504"></p>
+</li>
+<li><p>切换初始帧</p>
+</li>
+<li><p>选择Once</p>
+<p><img src="/image-20260817161720616.png" alt="image-20260817161720616"></p>
+</li>
+<li><p>完整播放一遍轨迹</p>
+</li>
+<li><p>绘制</p>
+<p><img src="/image-20260817161822233.png" alt="image-20260817161822233"></p>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="Clipping-Plane-Tool"><a href="#Clipping-Plane-Tool" class="headerlink" title="Clipping Plane Tool"></a>Clipping Plane Tool</h3><p><img src="./image-20260814162155397.png" alt="image-20260814162155397"></p>
 ]]></content>
       <categories>
         <category>计算化学</category>
@@ -13374,6 +13549,10 @@ B_A=(8/3)\times \pi^2 \times \mathrm{RMSF}_A^2</script><p>pdb中的B因子单位
 </ul>
 <figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"><span class="built_in">display</span> rendermode GLSL</span><br></pre></td></tr></table></figure>
 </li>
+</ul>
+<h1 id="label"><a href="#label" class="headerlink" title="label"></a><code>label</code></h1><ul>
+<li>标记 Bond（385-356）：<code>label add Bonds 0/384 0/355</code></li>
+<li>标记 Angle（385-386-356）：<code>label add Angles 0/384 0/385 0/355</code></li>
 </ul>
 <h1 id="mol"><a href="#mol" class="headerlink" title="mol"></a><code>mol</code></h1><p>在VMD中加载、修改或删除一个分子。</p>
 <ul>
@@ -13720,7 +13899,153 @@ B_A=(8/3)\times \pi^2 \times \mathrm{RMSF}_A^2</script><p>pdb中的B因子单位
 </ul>
 </li>
 </ul>
-<h3 id="考察二级结构的变化"><a href="#考察二级结构的变化" class="headerlink" title="考察二级结构的变化"></a>考察二级结构的变化</h3><h3 id="分析氢键"><a href="#分析氢键" class="headerlink" title="分析氢键"></a>分析氢键</h3>]]></content>
+<h3 id="考察二级结构的变化"><a href="#考察二级结构的变化" class="headerlink" title="考察二级结构的变化"></a>考察二级结构的变化</h3><p>运行以下命令并选Protein组</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">dssp</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.xtc</span> <span class="selector-tag">-s</span> <span class="selector-tag">md</span><span class="selector-class">.tpr</span></span><br></pre></td></tr></table></figure>
+<p>得到的scount.xvg中记录了各个时刻形成不同二级结构的残基数，运行以下命令绘制之:</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">xmgrace</span> <span class="selector-tag">-nxy</span> <span class="selector-tag">scount</span><span class="selector-class">.xvg</span></span><br></pre></td></tr></table></figure>
+<p><img src="/image-20260817130229571.png" alt="image-20260817130229571"></p>
+<p>也可以通过glpt程序绘制：</p>
+<p>安装使用教程：<a href="https://gplt.readthedocs.io/en/latest/gplt.html">Description — gplt 0.1.12 documentation</a></p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">pip install numpy matplotlib colorama pandas openpyxl</span><br><span class="line">pip install --index-url https:<span class="regexp">//</span>test.pypi.org<span class="regexp">/simple/</span> --extra-index-url https:<span class="regexp">//</span>pypi.org<span class="regexp">/simple/</span> gplt</span><br><span class="line">gplt -f ss.xpm</span><br></pre></td></tr></table></figure>
+<p><img src="/image-20260817131859054.png" alt="image-20260817131859054"></p>
+<ul>
+<li>利用 VMD 的 Timeline工具也可以绘 制 二级结构随 时间变化。<code>选Cale Sec. Struct.</code></li>
+</ul>
+<h3 id="考察SASA"><a href="#考察SASA" class="headerlink" title="考察SASA"></a>考察SASA</h3><ul>
+<li>使用sasa命令可以考察蛋白的溶剂可及表面积。</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">gmx</span> sasa -f md.xtc -s md.tpr -surface <span class="string">&quot;group protein&quot;</span> -output &#x27; <span class="string">&quot;Hydrophobic&quot;</span> group protein and charge &#123;-<span class="number">0</span>.<span class="number">2</span> to <span class="number">0</span>.<span class="number">2</span>&#125;; <span class="string">&quot;Hydrophilic&quot;</span> group protein and not charge &#123;-<span class="number">0</span>.<span class="number">2</span> to <span class="number">0</span>.<span class="number">2</span>&#125;&#x27;</span><br><span class="line"><span class="attribute">xmgrace</span> -nxyarea.xvg</span><br></pre></td></tr></table></figure>
+<p><img src="/image-20260817133544793.png" alt="image-20260817133544793"></p>
+<ul>
+<li><p>在VMD中也可以计算总的以及亲水、疏水部分的SASA，但VMD中是按照残基类划分的，因此和GROMACS的SASA命令结果有出入。ALA、LEU、VAL、ILE、PRO、PHE、MET、TRP被当成疏水残基。</p>
+<figure class="highlight coq"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> protein [atomselect <span class="built_in">top</span> <span class="string">&quot;protein&quot;</span>]</span><br><span class="line"><span class="built_in">set</span> phob [atomselect <span class="built_in">top</span> <span class="string">&quot;hydrophobic&quot;</span>]</span><br><span class="line"><span class="built_in">set</span> phil [atomselect <span class="built_in">top</span> <span class="string">&quot;not hydrophobic&#x27;&quot;</span>]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>获得蛋白疏水部分的SASA:</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">measure</span> sasa <span class="number">1</span>.<span class="number">4</span> <span class="variable">$protein</span> -restrict <span class="variable">$phob</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获得蛋白亲水部分的SASA：</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">measure</span> sasa <span class="number">1</span>.<span class="number">4</span> <span class="variable">$protein</span> -restrict <span class="variable">$phil</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>这样得到的两部分结果相加等于蛋白质总SASA：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">measure</span> sasa <span class="number">1</span>.<span class="number">4</span> $protein </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>只计算非极性侧链的SASA：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">measure</span> <span class="selector-tag">sasa</span> 1<span class="selector-class">.4</span> <span class="selector-attr">[atomselect top <span class="string">&quot;sidechain&quot;</span>]</span> <span class="selector-tag">-restrict</span> <span class="selector-attr">[atomselect top <span class="string">&quot;hydrophobic&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>利用VMD\scripts\proteinSASA.tcl可计算所有帧的SASA。并行计算脚本:<a href="http://bbs.keinsci.com/thread-16295-1-1.html">并行计算溶剂可及表面积(SASA)的VMD脚本sasa-dmp.tcl - 分子模拟 (Molecular Modeling) - 计算化学公社</a></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="分析残基间的距离矩阵"><a href="#分析残基间的距离矩阵" class="headerlink" title="分析残基间的距离矩阵"></a>分析残基间的距离矩阵</h3><figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">gmx</span> mdmat -f md.xtc -s md.tpr (选择Protein)</span><br><span class="line"><span class="attribute">gmx</span> xpm<span class="number">2</span>ps -f dm.xpm -bx <span class="number">15</span> -by <span class="number">15</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>VMD也可以：Extensions-Analysis - Contact Map。选择Calculate-Calc.res-res Dists后它会计算残基之间Alpha碳的距离并显示在图中。黑色为0埃，白色对应大于10埃。</li>
+</ul>
+<h3 id="分析氢键"><a href="#分析氢键" class="headerlink" title="分析氢键"></a>分析氢键</h3><p>建立hbond目录，进入其中</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">gmx hbond -f ..<span class="regexp">/md.xtc -s ../m</span>d.tpr -dist -ang -life -nhbdist</span><br></pre></td></tr></table></figure>
+<ul>
+<li>可以选择两次Protein分析蛋白内氢键整体特征和数目</li>
+<li>也可以选Protein然后SOL分析蛋白质与水之间的氢键整体特征。</li>
+<li>注:当前分析目的是考察氢键总数，是否加<code>-nomerge</code>并不影响氢键总数</li>
+</ul>
+<p>使用 hbond 工具可以对此氢键特征做统计。 在 hbond 目录下输入：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">gmx</span> make_ndx -f ../md.gro</span><br><span class="line"><span class="attribute">r</span> <span class="number">37</span> &amp; <span class="number">7</span> (PR<span class="number">037</span>含氢在内的主链)</span><br><span class="line"><span class="attribute">r</span> <span class="number">41</span> &amp; <span class="number">7</span> (GLN<span class="number">41</span>含氢在内的主链)</span><br><span class="line"><span class="attribute">q</span></span><br></pre></td></tr></table></figure>
+<p>然后输入以下命令 , 并选择刚设的两个组</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">gmx hbond -f ..<span class="regexp">/md.xtc -s ../m</span>d.tpr -dist -ang -life -nhbdist -hbm -n index.ndx</span><br></pre></td></tr></table></figure>
+<p>氢键平均寿命 (SPC/E纯水为3.1 ps) :</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">HB</span> lifetime= <span class="number">9</span>.<span class="number">50</span> ps</span><br></pre></td></tr></table></figure>
+<p>(由于当前分析的氢键不涉及一个氢键给体原子 上多个氢同时和一个氢键受体原子形成氢键,所 以加不加-nomerge 不影响结果)</p>
+<p>使用以下命令获得氢键存在性图像文件plot.eps </p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">gmx</span> xpm<span class="number">2</span>ps -f hbmap.xpm -noframe -by <span class="number">50</span> -bx <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>也可以把 hbnum.xvg 里的前两列数据导入到 Origin 里,只对 数值为 1 的时刻绘制散点图,散点符号用 I, 可得到类似效果。</p>
+<h3 id="分析盐桥"><a href="#分析盐桥" class="headerlink" title="分析盐桥"></a>分析盐桥</h3><ul>
+<li>用VMD的Extensions-Analysis -Salt Bridges插件可以搜索出体系中所有正电残基</li>
+</ul>
+<h3 id="蛋白质骨架运动的可视化"><a href="#蛋白质骨架运动的可视化" class="headerlink" title="蛋白质骨架运动的可视化"></a>蛋白质骨架运动的可视化</h3><p>要对backbone做过叠合。且要用Tachyon渲染</p>
+<p><img src="/image-20260817153013416.png" alt="image-20260817153013416"></p>
+<p><img src="/image-20260817153022023.png" alt="image-20260817153022023"></p>
+<p><img src="/image-20260817152955094.png" alt="image-20260817152955094"></p>
+<p><img src="/image-20260817153214928.png" alt="image-20260817153214928"></p>
+<p><img src="/image-20260817153225815.png" alt="image-20260817153225815"></p>
+<p><img src="/image-20260817153233935.png" alt="越红帧数越靠前，越蓝帧数越靠后"></p>
+<h3 id="残基运动的可视化"><a href="#残基运动的可视化" class="headerlink" title="残基运动的可视化"></a>残基运动的可视化</h3><p><img src="/image-20260817153821807.png" alt="image-20260817153821807"></p>
+<p><img src="/image-20260817153832851.png" alt="image-20260817153832851"></p>
+<p><img src="/image-20260817153802970.png" alt="image-20260817153802970"></p>
+<h3 id="考察残基间的距离与接触"><a href="#考察残基间的距离与接触" class="headerlink" title="考察残基间的距离与接触"></a>考察残基间的距离与接触</h3><p>考察模拟过程中ASP21和LYS29间最小距离随时间的变化，以及两个组的原子间距离小于指定距离(-d指定)的原子对数随时间的变化：</p>
+<ul>
+<li><p>首先构建包含这两个残基的索引文件</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">make_ndx</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.gro</span></span><br></pre></td></tr></table></figure>
+<p>输入r21和r29，然后按q。</p>
+</li>
+<li><p>之后运行</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">mindist</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.xtc</span> <span class="selector-tag">-s</span> <span class="selector-tag">md</span><span class="selector-class">.tpr</span> <span class="selector-tag">-n</span> <span class="selector-tag">index</span><span class="selector-class">.ndx</span> <span class="selector-tag">-d</span> 0<span class="selector-class">.5</span> <span class="selector-tag">-on</span></span><br></pre></td></tr></table></figure>
+<p>依次选择r_21和r_29</p>
+</li>
+<li><p>如果接<code>-o</code>，还会输出atm-pair.out，显示不同时刻两个组间相距最近的原子的编号。</p>
+</li>
+<li><p>mindist.xvg 是两个组之间原子间 最近距离随时间的变化</p>
+</li>
+<li><p>numcont.xvg 是两个组之间原子间距离小于<code>-d</code>指定的距离的原子对数  若不需要此数据则 mindist不需 要写<code>-on</code></p>
+</li>
+<li><p>如果加上<code>-or</code>选项，mindist还会输出第二个组与第一个组当中各个残基在轨迹中最近的距离，记录到mindistres.xvg中。</p>
+<ul>
+<li><p>例如考察4147号NA离子与蛋白中各个残基在模拟过程中最近距离，先在index.ndx末尾加入</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="string">[4147NA]</span></span><br><span class="line"><span class="number">4147</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>然后运行</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">mindist</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.xtc</span> <span class="selector-tag">-s</span> <span class="selector-tag">md</span><span class="selector-class">.tpr</span> <span class="selector-tag">-n</span> <span class="selector-tag">index</span><span class="selector-class">.ndx</span> <span class="selector-tag">-or</span></span><br></pre></td></tr></table></figure>
+<p>选择Protein，再选择4147NA</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>通过<code>pairdist</code>也可以实现<code>mindist</code>功能，且更为灵活</p>
+<ul>
+<li><p>例：计算21和29号残基最小距离随模拟时间的变化</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">gmx pairdist -f md<span class="selector-class">.xtc</span> -s md<span class="selector-class">.tpr</span> -ref <span class="string">&quot;resid 21&quot;</span> -sel <span class="string">&quot;resid 29&quot;</span></span><br></pre></td></tr></table></figure>
+<p>得到的dist.xvg与mindist得到的mindistxvg相同。</p>
+</li>
+</ul>
+<h3 id="测量残基质心、几何中心间的距离变化"><a href="#测量残基质心、几何中心间的距离变化" class="headerlink" title="测量残基质心、几何中心间的距离变化"></a>测量残基质心、几何中心间的距离变化</h3><ul>
+<li><p>考察21与29号残基间质心距离随时间的变化</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">gmx</span> distance -s md.tpr -f md.xtc -<span class="literal">select</span> <span class="string">&quot;com of resid 21plus com of resid 29&quot;</span> -oall</span><br></pre></td></tr></table></figure>
+<p>输出了平均值、标准偏差，同时得到distxvg(因用了<code>-oal</code>)</p>
+</li>
+<li><p>考察21号残基与蛋白质几何中心距离随时间的变化</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">gmx</span> distance -s md.tpr -f md.xtc -<span class="literal">select</span> <span class="string">&quot;cog of resid 21 pluscog of group &quot;</span><span class="string">&quot;protein&quot;</span><span class="string">&quot; -oall</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>亦可用卢天的comdist.tcl脚本来计算质心距离，结果与distance命令相同。</p>
+</li>
+<li><p>pairdist命令也可以</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">gmx pairdist -f md<span class="selector-class">.xtc</span> -s md<span class="selector-class">.tpr</span> -ref <span class="string">&quot;com of resid 21&quot;</span> -sel  <span class="string">&quot;com of resid 29&quot;</span> </span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="考察螺旋的基本结构参数"><a href="#考察螺旋的基本结构参数" class="headerlink" title="考察螺旋的基本结构参数"></a>考察螺旋的基本结构参数</h3><ul>
+<li><p>新建自录helix，进入其中</p>
+</li>
+<li><p>构建索引文件:</p>
+<figure class="highlight gams"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">gmx</span></span> make_ndx -f ../md.gro </span><br><span class="line">选q</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>计算螺旋参数，会产生大量文件</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">gmx helix -f ..<span class="regexp">/md.xtc -s ../m</span>d.tpr -n index.ndx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>由于当前体系就一个螺旋，所以直接选Protein即可，程序也确实判断对了组成螺旋的残基：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">helix <span class="keyword">from</span>: <span class="number">23</span> through <span class="number">34</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>也可以人为用<code>-ahxstart</code>和<code>-ahxend</code>指定螺旋中第一个和最后一个残基号。</p>
+</li>
+</ul>
+<h3 id="螺旋弯曲度的分析"><a href="#螺旋弯曲度的分析" class="headerlink" title="螺旋弯曲度的分析"></a>螺旋弯曲度的分析</h3><p>VMD-Extensions-Visualization-Bendix</p>
+<p><img src="/image-20260817161239837.png" alt="image-20260817161239837"></p>
+<h3 id="考察蛋白质表面附近水的分布"><a href="#考察蛋白质表面附近水的分布" class="headerlink" title="考察蛋白质表面附近水的分布"></a>考察蛋白质表面附近水的分布</h3><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">gmx rdf -f md<span class="selector-class">.xtc</span> -s md<span class="selector-class">.tpr</span> -ref protein -sel <span class="string">&quot;mol com of resname SOL&quot;</span> -surf mol -rmax <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>由于当前盒子较大，要求计算到1nm距离足矣，没必要计算不感兴趣的更远的地方白浪费时间。</p>
+<h3 id="研究高温对蛋白质的影响"><a href="#研究高温对蛋白质的影响" class="headerlink" title="研究高温对蛋白质的影响"></a>研究高温对蛋白质的影响</h3><p>接续之前298.15K的最终状态做400K的动力学。<br>建立400K子目录，将md.mdp拷入其中，把温度改成400K，时间设5ns。在此目录中运行以下命令:</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">gmx grompp -f md<span class="selector-class">.mdp</span> -c ../md<span class="selector-class">.gro</span> -<span class="selector-tag">p</span> ../topol<span class="selector-class">.top</span> -o md<span class="selector-class">.tpr</span> -t ../mnd<span class="selector-class">.cpt</span> -maxwarn <span class="number">10</span></span><br><span class="line">gmx mdrun -v -deffnm md</span><br></pre></td></tr></table></figure>
+<p>按照之前的做法计算RMSF，与298.15K下的情况进行对比。</p>
+<h1 id="钙调素-2BBM-的模拟"><a href="#钙调素-2BBM-的模拟" class="headerlink" title="钙调素 (2BBM) 的模拟"></a>钙调素 (2BBM) 的模拟</h1><h2 id="对pdb文件进行预处理-1"><a href="#对pdb文件进行预处理-1" class="headerlink" title="对pdb文件进行预处理"></a>对pdb文件进行预处理</h2><ul>
+<li>pdb中钙离子残基名为CA,然而在要用的G54A7力场rtp文件中钙离子残基名为CA2+，因此需要做以下替换后保存。</li>
+</ul>
+]]></content>
       <categories>
         <category>计算化学</category>
         <category>软件</category>

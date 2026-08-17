@@ -36,8 +36,21 @@
 <meta property="og:image" content="http://example.com/image-20260817105943601.png">
 <meta property="og:image" content="http://example.com/image-20260817112053710.png">
 <meta property="og:image" content="http://example.com/image-20260817114121311.png">
+<meta property="og:image" content="http://example.com/image-20260817130229571.png">
+<meta property="og:image" content="http://example.com/image-20260817131859054.png">
+<meta property="og:image" content="http://example.com/image-20260817133544793.png">
+<meta property="og:image" content="http://example.com/image-20260817153013416.png">
+<meta property="og:image" content="http://example.com/image-20260817153022023.png">
+<meta property="og:image" content="http://example.com/image-20260817152955094.png">
+<meta property="og:image" content="http://example.com/image-20260817153214928.png">
+<meta property="og:image" content="http://example.com/image-20260817153225815.png">
+<meta property="og:image" content="http://example.com/image-20260817153233935.png">
+<meta property="og:image" content="http://example.com/image-20260817153821807.png">
+<meta property="og:image" content="http://example.com/image-20260817153832851.png">
+<meta property="og:image" content="http://example.com/image-20260817153802970.png">
+<meta property="og:image" content="http://example.com/image-20260817161239837.png">
 <meta property="article:published_time" content="2026-08-13T09:30:31.000Z">
-<meta property="article:modified_time" content="2026-08-17T04:04:03.476Z">
+<meta property="article:modified_time" content="2026-08-17T08:28:50.515Z">
 <meta property="article:author" content="Zhao Jing">
 <meta property="article:tag" content="GROMACS">
 <meta property="article:tag" content="蛋白质">
@@ -231,7 +244,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2026-08-17 12:04:03" itemprop="dateModified" datetime="2026-08-17T12:04:03+08:00">2026-08-17</time>
+                <time title="修改时间：2026-08-17 16:28:50" itemprop="dateModified" datetime="2026-08-17T16:28:50+08:00">2026-08-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -276,14 +289,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>7k</span>
+              <span>11k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>6 分钟</span>
+              <span>10 分钟</span>
             </span>
             <div class="post-description">用Gromacs计算一些蛋白质的例子</div>
 
@@ -485,7 +498,153 @@
 </ul>
 </li>
 </ul>
-<h3 id="考察二级结构的变化"><a href="#考察二级结构的变化" class="headerlink" title="考察二级结构的变化"></a>考察二级结构的变化</h3><h3 id="分析氢键"><a href="#分析氢键" class="headerlink" title="分析氢键"></a>分析氢键</h3>
+<h3 id="考察二级结构的变化"><a href="#考察二级结构的变化" class="headerlink" title="考察二级结构的变化"></a>考察二级结构的变化</h3><p>运行以下命令并选Protein组</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">dssp</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.xtc</span> <span class="selector-tag">-s</span> <span class="selector-tag">md</span><span class="selector-class">.tpr</span></span><br></pre></td></tr></table></figure>
+<p>得到的scount.xvg中记录了各个时刻形成不同二级结构的残基数，运行以下命令绘制之:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">xmgrace</span> <span class="selector-tag">-nxy</span> <span class="selector-tag">scount</span><span class="selector-class">.xvg</span></span><br></pre></td></tr></table></figure>
+<p><img src="/image-20260817130229571.png" alt="image-20260817130229571"></p>
+<p>也可以通过glpt程序绘制：</p>
+<p>安装使用教程：<a target="_blank" rel="noopener" href="https://gplt.readthedocs.io/en/latest/gplt.html">Description — gplt 0.1.12 documentation</a></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install numpy matplotlib colorama pandas openpyxl</span><br><span class="line">pip install --index-url https:<span class="regexp">//</span>test.pypi.org<span class="regexp">/simple/</span> --extra-index-url https:<span class="regexp">//</span>pypi.org<span class="regexp">/simple/</span> gplt</span><br><span class="line">gplt -f ss.xpm</span><br></pre></td></tr></table></figure>
+<p><img src="/image-20260817131859054.png" alt="image-20260817131859054"></p>
+<ul>
+<li>利用 VMD 的 Timeline工具也可以绘 制 二级结构随 时间变化。<code>选Cale Sec. Struct.</code></li>
+</ul>
+<h3 id="考察SASA"><a href="#考察SASA" class="headerlink" title="考察SASA"></a>考察SASA</h3><ul>
+<li>使用sasa命令可以考察蛋白的溶剂可及表面积。</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">gmx</span> sasa -f md.xtc -s md.tpr -surface <span class="string">&quot;group protein&quot;</span> -output &#x27; <span class="string">&quot;Hydrophobic&quot;</span> group protein and charge &#123;-<span class="number">0</span>.<span class="number">2</span> to <span class="number">0</span>.<span class="number">2</span>&#125;; <span class="string">&quot;Hydrophilic&quot;</span> group protein and not charge &#123;-<span class="number">0</span>.<span class="number">2</span> to <span class="number">0</span>.<span class="number">2</span>&#125;&#x27;</span><br><span class="line"><span class="attribute">xmgrace</span> -nxyarea.xvg</span><br></pre></td></tr></table></figure>
+<p><img src="/image-20260817133544793.png" alt="image-20260817133544793"></p>
+<ul>
+<li><p>在VMD中也可以计算总的以及亲水、疏水部分的SASA，但VMD中是按照残基类划分的，因此和GROMACS的SASA命令结果有出入。ALA、LEU、VAL、ILE、PRO、PHE、MET、TRP被当成疏水残基。</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> protein [atomselect <span class="built_in">top</span> <span class="string">&quot;protein&quot;</span>]</span><br><span class="line"><span class="built_in">set</span> phob [atomselect <span class="built_in">top</span> <span class="string">&quot;hydrophobic&quot;</span>]</span><br><span class="line"><span class="built_in">set</span> phil [atomselect <span class="built_in">top</span> <span class="string">&quot;not hydrophobic&#x27;&quot;</span>]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>获得蛋白疏水部分的SASA:</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">measure</span> sasa <span class="number">1</span>.<span class="number">4</span> <span class="variable">$protein</span> -restrict <span class="variable">$phob</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获得蛋白亲水部分的SASA：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">measure</span> sasa <span class="number">1</span>.<span class="number">4</span> <span class="variable">$protein</span> -restrict <span class="variable">$phil</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>这样得到的两部分结果相加等于蛋白质总SASA：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">measure</span> sasa <span class="number">1</span>.<span class="number">4</span> $protein </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>只计算非极性侧链的SASA：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">measure</span> <span class="selector-tag">sasa</span> 1<span class="selector-class">.4</span> <span class="selector-attr">[atomselect top <span class="string">&quot;sidechain&quot;</span>]</span> <span class="selector-tag">-restrict</span> <span class="selector-attr">[atomselect top <span class="string">&quot;hydrophobic&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>利用VMD\scripts\proteinSASA.tcl可计算所有帧的SASA。并行计算脚本:<a target="_blank" rel="noopener" href="http://bbs.keinsci.com/thread-16295-1-1.html">并行计算溶剂可及表面积(SASA)的VMD脚本sasa-dmp.tcl - 分子模拟 (Molecular Modeling) - 计算化学公社</a></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="分析残基间的距离矩阵"><a href="#分析残基间的距离矩阵" class="headerlink" title="分析残基间的距离矩阵"></a>分析残基间的距离矩阵</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">gmx</span> mdmat -f md.xtc -s md.tpr (选择Protein)</span><br><span class="line"><span class="attribute">gmx</span> xpm<span class="number">2</span>ps -f dm.xpm -bx <span class="number">15</span> -by <span class="number">15</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>VMD也可以：Extensions-Analysis - Contact Map。选择Calculate-Calc.res-res Dists后它会计算残基之间Alpha碳的距离并显示在图中。黑色为0埃，白色对应大于10埃。</li>
+</ul>
+<h3 id="分析氢键"><a href="#分析氢键" class="headerlink" title="分析氢键"></a>分析氢键</h3><p>建立hbond目录，进入其中</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gmx hbond -f ..<span class="regexp">/md.xtc -s ../m</span>d.tpr -dist -ang -life -nhbdist</span><br></pre></td></tr></table></figure>
+<ul>
+<li>可以选择两次Protein分析蛋白内氢键整体特征和数目</li>
+<li>也可以选Protein然后SOL分析蛋白质与水之间的氢键整体特征。</li>
+<li>注:当前分析目的是考察氢键总数，是否加<code>-nomerge</code>并不影响氢键总数</li>
+</ul>
+<p>使用 hbond 工具可以对此氢键特征做统计。 在 hbond 目录下输入：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">gmx</span> make_ndx -f ../md.gro</span><br><span class="line"><span class="attribute">r</span> <span class="number">37</span> &amp; <span class="number">7</span> (PR<span class="number">037</span>含氢在内的主链)</span><br><span class="line"><span class="attribute">r</span> <span class="number">41</span> &amp; <span class="number">7</span> (GLN<span class="number">41</span>含氢在内的主链)</span><br><span class="line"><span class="attribute">q</span></span><br></pre></td></tr></table></figure>
+<p>然后输入以下命令 , 并选择刚设的两个组</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gmx hbond -f ..<span class="regexp">/md.xtc -s ../m</span>d.tpr -dist -ang -life -nhbdist -hbm -n index.ndx</span><br></pre></td></tr></table></figure>
+<p>氢键平均寿命 (SPC/E纯水为3.1 ps) :</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">HB</span> lifetime= <span class="number">9</span>.<span class="number">50</span> ps</span><br></pre></td></tr></table></figure>
+<p>(由于当前分析的氢键不涉及一个氢键给体原子 上多个氢同时和一个氢键受体原子形成氢键,所 以加不加-nomerge 不影响结果)</p>
+<p>使用以下命令获得氢键存在性图像文件plot.eps </p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">gmx</span> xpm<span class="number">2</span>ps -f hbmap.xpm -noframe -by <span class="number">50</span> -bx <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>也可以把 hbnum.xvg 里的前两列数据导入到 Origin 里,只对 数值为 1 的时刻绘制散点图,散点符号用 I, 可得到类似效果。</p>
+<h3 id="分析盐桥"><a href="#分析盐桥" class="headerlink" title="分析盐桥"></a>分析盐桥</h3><ul>
+<li>用VMD的Extensions-Analysis -Salt Bridges插件可以搜索出体系中所有正电残基</li>
+</ul>
+<h3 id="蛋白质骨架运动的可视化"><a href="#蛋白质骨架运动的可视化" class="headerlink" title="蛋白质骨架运动的可视化"></a>蛋白质骨架运动的可视化</h3><p>要对backbone做过叠合。且要用Tachyon渲染</p>
+<p><img src="/image-20260817153013416.png" alt="image-20260817153013416"></p>
+<p><img src="/image-20260817153022023.png" alt="image-20260817153022023"></p>
+<p><img src="/image-20260817152955094.png" alt="image-20260817152955094"></p>
+<p><img src="/image-20260817153214928.png" alt="image-20260817153214928"></p>
+<p><img src="/image-20260817153225815.png" alt="image-20260817153225815"></p>
+<p><img src="/image-20260817153233935.png" alt="越红帧数越靠前，越蓝帧数越靠后"></p>
+<h3 id="残基运动的可视化"><a href="#残基运动的可视化" class="headerlink" title="残基运动的可视化"></a>残基运动的可视化</h3><p><img src="/image-20260817153821807.png" alt="image-20260817153821807"></p>
+<p><img src="/image-20260817153832851.png" alt="image-20260817153832851"></p>
+<p><img src="/image-20260817153802970.png" alt="image-20260817153802970"></p>
+<h3 id="考察残基间的距离与接触"><a href="#考察残基间的距离与接触" class="headerlink" title="考察残基间的距离与接触"></a>考察残基间的距离与接触</h3><p>考察模拟过程中ASP21和LYS29间最小距离随时间的变化，以及两个组的原子间距离小于指定距离(-d指定)的原子对数随时间的变化：</p>
+<ul>
+<li><p>首先构建包含这两个残基的索引文件</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">make_ndx</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.gro</span></span><br></pre></td></tr></table></figure>
+<p>输入r21和r29，然后按q。</p>
+</li>
+<li><p>之后运行</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">mindist</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.xtc</span> <span class="selector-tag">-s</span> <span class="selector-tag">md</span><span class="selector-class">.tpr</span> <span class="selector-tag">-n</span> <span class="selector-tag">index</span><span class="selector-class">.ndx</span> <span class="selector-tag">-d</span> 0<span class="selector-class">.5</span> <span class="selector-tag">-on</span></span><br></pre></td></tr></table></figure>
+<p>依次选择r_21和r_29</p>
+</li>
+<li><p>如果接<code>-o</code>，还会输出atm-pair.out，显示不同时刻两个组间相距最近的原子的编号。</p>
+</li>
+<li><p>mindist.xvg 是两个组之间原子间 最近距离随时间的变化</p>
+</li>
+<li><p>numcont.xvg 是两个组之间原子间距离小于<code>-d</code>指定的距离的原子对数  若不需要此数据则 mindist不需 要写<code>-on</code></p>
+</li>
+<li><p>如果加上<code>-or</code>选项，mindist还会输出第二个组与第一个组当中各个残基在轨迹中最近的距离，记录到mindistres.xvg中。</p>
+<ul>
+<li><p>例如考察4147号NA离子与蛋白中各个残基在模拟过程中最近距离，先在index.ndx末尾加入</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[4147NA]</span></span><br><span class="line"><span class="number">4147</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>然后运行</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">mindist</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.xtc</span> <span class="selector-tag">-s</span> <span class="selector-tag">md</span><span class="selector-class">.tpr</span> <span class="selector-tag">-n</span> <span class="selector-tag">index</span><span class="selector-class">.ndx</span> <span class="selector-tag">-or</span></span><br></pre></td></tr></table></figure>
+<p>选择Protein，再选择4147NA</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>通过<code>pairdist</code>也可以实现<code>mindist</code>功能，且更为灵活</p>
+<ul>
+<li><p>例：计算21和29号残基最小距离随模拟时间的变化</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gmx pairdist -f md<span class="selector-class">.xtc</span> -s md<span class="selector-class">.tpr</span> -ref <span class="string">&quot;resid 21&quot;</span> -sel <span class="string">&quot;resid 29&quot;</span></span><br></pre></td></tr></table></figure>
+<p>得到的dist.xvg与mindist得到的mindistxvg相同。</p>
+</li>
+</ul>
+<h3 id="测量残基质心、几何中心间的距离变化"><a href="#测量残基质心、几何中心间的距离变化" class="headerlink" title="测量残基质心、几何中心间的距离变化"></a>测量残基质心、几何中心间的距离变化</h3><ul>
+<li><p>考察21与29号残基间质心距离随时间的变化</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">gmx</span> distance -s md.tpr -f md.xtc -<span class="literal">select</span> <span class="string">&quot;com of resid 21plus com of resid 29&quot;</span> -oall</span><br></pre></td></tr></table></figure>
+<p>输出了平均值、标准偏差，同时得到distxvg(因用了<code>-oal</code>)</p>
+</li>
+<li><p>考察21号残基与蛋白质几何中心距离随时间的变化</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">gmx</span> distance -s md.tpr -f md.xtc -<span class="literal">select</span> <span class="string">&quot;cog of resid 21 pluscog of group &quot;</span><span class="string">&quot;protein&quot;</span><span class="string">&quot; -oall</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>亦可用卢天的comdist.tcl脚本来计算质心距离，结果与distance命令相同。</p>
+</li>
+<li><p>pairdist命令也可以</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gmx pairdist -f md<span class="selector-class">.xtc</span> -s md<span class="selector-class">.tpr</span> -ref <span class="string">&quot;com of resid 21&quot;</span> -sel  <span class="string">&quot;com of resid 29&quot;</span> </span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="考察螺旋的基本结构参数"><a href="#考察螺旋的基本结构参数" class="headerlink" title="考察螺旋的基本结构参数"></a>考察螺旋的基本结构参数</h3><ul>
+<li><p>新建自录helix，进入其中</p>
+</li>
+<li><p>构建索引文件:</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">gmx</span></span> make_ndx -f ../md.gro </span><br><span class="line">选q</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>计算螺旋参数，会产生大量文件</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gmx helix -f ..<span class="regexp">/md.xtc -s ../m</span>d.tpr -n index.ndx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>由于当前体系就一个螺旋，所以直接选Protein即可，程序也确实判断对了组成螺旋的残基：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helix <span class="keyword">from</span>: <span class="number">23</span> through <span class="number">34</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>也可以人为用<code>-ahxstart</code>和<code>-ahxend</code>指定螺旋中第一个和最后一个残基号。</p>
+</li>
+</ul>
+<h3 id="螺旋弯曲度的分析"><a href="#螺旋弯曲度的分析" class="headerlink" title="螺旋弯曲度的分析"></a>螺旋弯曲度的分析</h3><p>VMD-Extensions-Visualization-Bendix</p>
+<p><img src="/image-20260817161239837.png" alt="image-20260817161239837"></p>
+<h3 id="考察蛋白质表面附近水的分布"><a href="#考察蛋白质表面附近水的分布" class="headerlink" title="考察蛋白质表面附近水的分布"></a>考察蛋白质表面附近水的分布</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gmx rdf -f md<span class="selector-class">.xtc</span> -s md<span class="selector-class">.tpr</span> -ref protein -sel <span class="string">&quot;mol com of resname SOL&quot;</span> -surf mol -rmax <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>由于当前盒子较大，要求计算到1nm距离足矣，没必要计算不感兴趣的更远的地方白浪费时间。</p>
+<h3 id="研究高温对蛋白质的影响"><a href="#研究高温对蛋白质的影响" class="headerlink" title="研究高温对蛋白质的影响"></a>研究高温对蛋白质的影响</h3><p>接续之前298.15K的最终状态做400K的动力学。<br>建立400K子目录，将md.mdp拷入其中，把温度改成400K，时间设5ns。在此目录中运行以下命令:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gmx grompp -f md<span class="selector-class">.mdp</span> -c ../md<span class="selector-class">.gro</span> -<span class="selector-tag">p</span> ../topol<span class="selector-class">.top</span> -o md<span class="selector-class">.tpr</span> -t ../mnd<span class="selector-class">.cpt</span> -maxwarn <span class="number">10</span></span><br><span class="line">gmx mdrun -v -deffnm md</span><br></pre></td></tr></table></figure>
+<p>按照之前的做法计算RMSF，与298.15K下的情况进行对比。</p>
+<h1 id="钙调素-2BBM-的模拟"><a href="#钙调素-2BBM-的模拟" class="headerlink" title="钙调素 (2BBM) 的模拟"></a>钙调素 (2BBM) 的模拟</h1><h2 id="对pdb文件进行预处理-1"><a href="#对pdb文件进行预处理-1" class="headerlink" title="对pdb文件进行预处理"></a>对pdb文件进行预处理</h2><ul>
+<li>pdb中钙离子残基名为CA,然而在要用的G54A7力场rtp文件中钙离子残基名为CA2+，因此需要做以下替换后保存。</li>
+</ul>
+
     </div>
 
     
@@ -603,7 +762,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%9B%8B%E7%99%BD%E8%B4%A8%E6%A8%A1%E6%8B%9F%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">蛋白质模拟的标准流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1UBQ-%E6%B3%9B%E7%B4%A0"><span class="nav-number">2.</span> <span class="nav-text">1UBQ 泛素</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E7%BB%93%E6%9E%84"><span class="nav-number">2.1.</span> <span class="nav-text">获取结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9pdb%E6%96%87%E4%BB%B6%E8%BF%9B%E8%A1%8C%E9%A2%84%E5%A4%84%E7%90%86"><span class="nav-number">2.2.</span> <span class="nav-text">对pdb文件进行预处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A7%E7%94%9F%E6%8B%93%E6%89%91%E6%96%87%E4%BB%B6-pdb2gmx"><span class="nav-number">2.3.</span> <span class="nav-text">产生拓扑文件(pdb2gmx)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%9B%92%E5%AD%90-editconf"><span class="nav-number">2.4.</span> <span class="nav-text">设置盒子(editconf)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E6%B0%B4-solvate"><span class="nav-number">2.5.</span> <span class="nav-text">加水(solvate)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0-Na-%E7%A6%BB%E5%AD%90%E4%BD%BF%E4%BD%93%E7%B3%BB%E4%B8%AD%E6%80%A7%E5%8C%96"><span class="nav-number">2.6.</span> <span class="nav-text">添加 Na+离子使体系中性化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%BD%E9%87%8F%E6%9E%81%E5%B0%8F%E5%8C%96"><span class="nav-number">2.7.</span> <span class="nav-text">能量极小化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%9B%8B%E7%99%BD%E8%B4%A8%E9%99%90%E5%88%B6%E6%80%A7MD"><span class="nav-number">2.8.</span> <span class="nav-text">对蛋白质限制性MD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E5%BC%8F%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F"><span class="nav-number">2.9.</span> <span class="nav-text">正式动力学模拟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E8%BD%A8%E8%BF%B9"><span class="nav-number">2.10.</span> <span class="nav-text">分析轨迹</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%BB%E9%99%A4%E6%B0%B4%E7%9A%84%E8%BD%A8%E8%BF%B9"><span class="nav-number">2.10.1.</span> <span class="nav-text">去除水的轨迹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E8%9B%8B%E7%99%BD%E4%B8%8E%E5%85%B6%E9%95%9C%E5%83%8F%E8%B7%9D%E7%A6%BB"><span class="nav-number">2.10.2.</span> <span class="nav-text">检查蛋白与其镜像距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%83%E5%AF%9F%E8%9B%8B%E7%99%BD%E8%B4%A8%E7%9A%84RMSD"><span class="nav-number">2.10.3.</span> <span class="nav-text">考察蛋白质的RMSD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%83%E5%AF%9FRMSF%E5%92%8CB%E5%9B%A0%E5%AD%90"><span class="nav-number">2.10.4.</span> <span class="nav-text">考察RMSF和B因子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%98%E5%88%B6-Ramachandran-%E5%9B%BE"><span class="nav-number">2.10.5.</span> <span class="nav-text">绘制 Ramachandran 图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E9%AA%A8%E6%9E%B6-psi-%E3%80%81-phi-%E8%A7%92%E5%BA%A6"><span class="nav-number">2.10.6.</span> <span class="nav-text">分析骨架 psi 、 phi 角度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%83%E5%AF%9F%E4%BA%8C%E7%BA%A7%E7%BB%93%E6%9E%84%E7%9A%84%E5%8F%98%E5%8C%96"><span class="nav-number">2.10.7.</span> <span class="nav-text">考察二级结构的变化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E6%B0%A2%E9%94%AE"><span class="nav-number">2.10.8.</span> <span class="nav-text">分析氢键</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%9B%8B%E7%99%BD%E8%B4%A8%E6%A8%A1%E6%8B%9F%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">蛋白质模拟的标准流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1UBQ-%E6%B3%9B%E7%B4%A0"><span class="nav-number">2.</span> <span class="nav-text">1UBQ 泛素</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E7%BB%93%E6%9E%84"><span class="nav-number">2.1.</span> <span class="nav-text">获取结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9pdb%E6%96%87%E4%BB%B6%E8%BF%9B%E8%A1%8C%E9%A2%84%E5%A4%84%E7%90%86"><span class="nav-number">2.2.</span> <span class="nav-text">对pdb文件进行预处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A7%E7%94%9F%E6%8B%93%E6%89%91%E6%96%87%E4%BB%B6-pdb2gmx"><span class="nav-number">2.3.</span> <span class="nav-text">产生拓扑文件(pdb2gmx)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%9B%92%E5%AD%90-editconf"><span class="nav-number">2.4.</span> <span class="nav-text">设置盒子(editconf)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E6%B0%B4-solvate"><span class="nav-number">2.5.</span> <span class="nav-text">加水(solvate)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0-Na-%E7%A6%BB%E5%AD%90%E4%BD%BF%E4%BD%93%E7%B3%BB%E4%B8%AD%E6%80%A7%E5%8C%96"><span class="nav-number">2.6.</span> <span class="nav-text">添加 Na+离子使体系中性化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%BD%E9%87%8F%E6%9E%81%E5%B0%8F%E5%8C%96"><span class="nav-number">2.7.</span> <span class="nav-text">能量极小化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%9B%8B%E7%99%BD%E8%B4%A8%E9%99%90%E5%88%B6%E6%80%A7MD"><span class="nav-number">2.8.</span> <span class="nav-text">对蛋白质限制性MD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E5%BC%8F%E5%8A%A8%E5%8A%9B%E5%AD%A6%E6%A8%A1%E6%8B%9F"><span class="nav-number">2.9.</span> <span class="nav-text">正式动力学模拟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E8%BD%A8%E8%BF%B9"><span class="nav-number">2.10.</span> <span class="nav-text">分析轨迹</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%BB%E9%99%A4%E6%B0%B4%E7%9A%84%E8%BD%A8%E8%BF%B9"><span class="nav-number">2.10.1.</span> <span class="nav-text">去除水的轨迹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E8%9B%8B%E7%99%BD%E4%B8%8E%E5%85%B6%E9%95%9C%E5%83%8F%E8%B7%9D%E7%A6%BB"><span class="nav-number">2.10.2.</span> <span class="nav-text">检查蛋白与其镜像距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%83%E5%AF%9F%E8%9B%8B%E7%99%BD%E8%B4%A8%E7%9A%84RMSD"><span class="nav-number">2.10.3.</span> <span class="nav-text">考察蛋白质的RMSD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%83%E5%AF%9FRMSF%E5%92%8CB%E5%9B%A0%E5%AD%90"><span class="nav-number">2.10.4.</span> <span class="nav-text">考察RMSF和B因子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%98%E5%88%B6-Ramachandran-%E5%9B%BE"><span class="nav-number">2.10.5.</span> <span class="nav-text">绘制 Ramachandran 图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E9%AA%A8%E6%9E%B6-psi-%E3%80%81-phi-%E8%A7%92%E5%BA%A6"><span class="nav-number">2.10.6.</span> <span class="nav-text">分析骨架 psi 、 phi 角度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%83%E5%AF%9F%E4%BA%8C%E7%BA%A7%E7%BB%93%E6%9E%84%E7%9A%84%E5%8F%98%E5%8C%96"><span class="nav-number">2.10.7.</span> <span class="nav-text">考察二级结构的变化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%83%E5%AF%9FSASA"><span class="nav-number">2.10.8.</span> <span class="nav-text">考察SASA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E6%AE%8B%E5%9F%BA%E9%97%B4%E7%9A%84%E8%B7%9D%E7%A6%BB%E7%9F%A9%E9%98%B5"><span class="nav-number">2.10.9.</span> <span class="nav-text">分析残基间的距离矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E6%B0%A2%E9%94%AE"><span class="nav-number">2.10.10.</span> <span class="nav-text">分析氢键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E7%9B%90%E6%A1%A5"><span class="nav-number">2.10.11.</span> <span class="nav-text">分析盐桥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%9B%8B%E7%99%BD%E8%B4%A8%E9%AA%A8%E6%9E%B6%E8%BF%90%E5%8A%A8%E7%9A%84%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="nav-number">2.10.12.</span> <span class="nav-text">蛋白质骨架运动的可视化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AE%8B%E5%9F%BA%E8%BF%90%E5%8A%A8%E7%9A%84%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="nav-number">2.10.13.</span> <span class="nav-text">残基运动的可视化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%83%E5%AF%9F%E6%AE%8B%E5%9F%BA%E9%97%B4%E7%9A%84%E8%B7%9D%E7%A6%BB%E4%B8%8E%E6%8E%A5%E8%A7%A6"><span class="nav-number">2.10.14.</span> <span class="nav-text">考察残基间的距离与接触</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E9%87%8F%E6%AE%8B%E5%9F%BA%E8%B4%A8%E5%BF%83%E3%80%81%E5%87%A0%E4%BD%95%E4%B8%AD%E5%BF%83%E9%97%B4%E7%9A%84%E8%B7%9D%E7%A6%BB%E5%8F%98%E5%8C%96"><span class="nav-number">2.10.15.</span> <span class="nav-text">测量残基质心、几何中心间的距离变化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%83%E5%AF%9F%E8%9E%BA%E6%97%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84%E5%8F%82%E6%95%B0"><span class="nav-number">2.10.16.</span> <span class="nav-text">考察螺旋的基本结构参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%9E%BA%E6%97%8B%E5%BC%AF%E6%9B%B2%E5%BA%A6%E7%9A%84%E5%88%86%E6%9E%90"><span class="nav-number">2.10.17.</span> <span class="nav-text">螺旋弯曲度的分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%83%E5%AF%9F%E8%9B%8B%E7%99%BD%E8%B4%A8%E8%A1%A8%E9%9D%A2%E9%99%84%E8%BF%91%E6%B0%B4%E7%9A%84%E5%88%86%E5%B8%83"><span class="nav-number">2.10.18.</span> <span class="nav-text">考察蛋白质表面附近水的分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A0%94%E7%A9%B6%E9%AB%98%E6%B8%A9%E5%AF%B9%E8%9B%8B%E7%99%BD%E8%B4%A8%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="nav-number">2.10.19.</span> <span class="nav-text">研究高温对蛋白质的影响</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%92%99%E8%B0%83%E7%B4%A0-2BBM-%E7%9A%84%E6%A8%A1%E6%8B%9F"><span class="nav-number">3.</span> <span class="nav-text">钙调素 (2BBM) 的模拟</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9pdb%E6%96%87%E4%BB%B6%E8%BF%9B%E8%A1%8C%E9%A2%84%E5%A4%84%E7%90%86-1"><span class="nav-number">3.1.</span> <span class="nav-text">对pdb文件进行预处理</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -699,7 +858,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">421k</span>
+    <span title="站点总字数">430k</span>
 </div>
 
         
