@@ -12196,7 +12196,8 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <li><code>-b</code>、<code>-e</code>：设定轨迹中被考虑的部分是从哪里开始（begin)到哪里结束(end)</li>
 <li><code>-dt</code>：轨迹每多长时间被读入一次</li>
 </ul>
-<h1 id="dump"><a href="#dump" class="headerlink" title="dump"></a>dump</h1><p>用来把GROMACS的各种私有的二进制文件转化成可读形式输出，便于检查和提取数据。</p>
+<h1 id="chi"><a href="#chi" class="headerlink" title="chi"></a>chi</h1><p>计算chi和其他二面角的所有信息</p>
+<h1 id="dssp"><a href="#dssp" class="headerlink" title="dssp"></a>dssp</h1><h1 id="dump"><a href="#dump" class="headerlink" title="dump"></a>dump</h1><p>用来把GROMACS的各种私有的二进制文件转化成可读形式输出，便于检查和提取数据。</p>
 <ul>
 <li><code>-s</code>: .tpr</li>
 <li><code>-f</code>: .xtc/.trr</li>
@@ -12572,12 +12573,15 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <ul>
 <li><a href="http://bbs.keinsci.com/thread-51369-1-1.html">一个到达小分子RMSD阈值自动终止Gromacs模拟的小脚本 - 分子模拟 (Molecular Modeling) - 计算化学公社</a></li>
 </ul>
+<h1 id="rama"><a href="#rama" class="headerlink" title="rama"></a>rama</h1><p>计算Ramachandran拉式构象图</p>
 <h1 id="rmsf"><a href="#rmsf" class="headerlink" title="rmsf"></a>rmsf</h1><p>RMSF (root mean square fluctuation,方均根波动)衡量某个原子在整个轨迹中相对子平均位置的波动程度，对于展现不同区域的柔性很有用。</p>
 <script type="math/tex; mode=display">
 \mathrm{RMSF}_A=\sqrt{\frac{1}{N_{\text {frame}}} \sum_{i}^{N_{\text {frame}}}(\mathbf{r}_{A}^{i}-\mathbf{r}_{A}^{\text {avg}})^{2}}</script><p>可以将RMSF按下式转换为B因子（Tian Lu, et al., Biochemistry, 48, 7986 (2009)）：</p>
 <script type="math/tex; mode=display">
 B_A=(8/3)\times \pi^2 \times \mathrm{RMSF}_A^2</script><p>pdb中的B因子单位是A，GROMACS给出的RMSF单位是nm</p>
-<p><a href="http://sobereva.com/32">原子-残基B因子/rmsf转换小工具ba2r - 思想家公社的门口：量子化学·分子模拟·二次元</a></p>
+<ul>
+<li>可以将蛋白质的pdb文件中的原子B因子转换成残基的RMSF，从而可以和rmsf_protein.xvg里的数据进行对比，判断力场、模拟设定是否合理：<a href="http://sobereva.com/32">原子-残基B因子/rmsf转换小工具ba2r - 思想家公社的门口：量子化学·分子模拟·二次元</a></li>
+</ul>
 <h1 id="solvate"><a href="#solvate" class="headerlink" title="solvate"></a>solvate</h1><p>可以生成一个充满指定分子的盒子，也可以<strong>在<code>-cp</code>指定的结构文件中加溶剂分子把盒子空隙填满。</strong>GROMACS会先把整个模拟盒子用此文件里的体系通过平移复制填满，然后扣掉和溶质有重叠的溶剂分子。</p>
 <ul>
 <li><code>-cp</code>: 带盒子参数的分子坐标文件, 一般是<code>editconf</code>的输出文件</li>
@@ -13086,6 +13090,12 @@ B_A=(8/3)\times \pi^2 \times \mathrm{RMSF}_A^2</script><p>pdb中的B因子单位
 </li>
 </ul>
 <h2 id="Visualization"><a href="#Visualization" class="headerlink" title="Visualization"></a>Visualization</h2><h3 id="Clipping-Plane-Tool"><a href="#Clipping-Plane-Tool" class="headerlink" title="Clipping Plane Tool"></a>Clipping Plane Tool</h3><p><img src="./image-20260814162155397.png" alt="image-20260814162155397"></p>
+<h3 id="Ramachandran-Plot"><a href="#Ramachandran-Plot" class="headerlink" title="Ramachandran Plot"></a>Ramachandran Plot</h3><p><img src="/image-20260817114533619.png" alt="image-20260817114533619"></p>
+<ul>
+<li>此工具不是把所有残基所有帧的点同时叠加绘制。拉动进度条，则会绘制相应帧的rama图。</li>
+<li>点击一个黄点成为红色，界面右侧就会显示对应的残基，并会用黑框把所选的这个残基的所有帧的点全都绘制出来。点击相应的黑框可以切换到相应帧。</li>
+<li>如果点击红点，则会恢复默认状态。</li>
+</ul>
 <h3 id="RMSD-Trajectory-Tool"><a href="#RMSD-Trajectory-Tool" class="headerlink" title="RMSD Trajectory Tool"></a>RMSD Trajectory Tool</h3><p><img src="/image-20260817110111745.png" alt="image-20260817110111745"></p>
 <ul>
 <li>protein：选区语句定义要计算RMSD的组</li>
@@ -13096,15 +13106,27 @@ B_A=(8/3)\times \pi^2 \times \mathrm{RMSF}_A^2</script><p>pdb中的B因子单位
 </ul>
 </li>
 </ul>
-<h3 id="Timeline"><a href="#Timeline" class="headerlink" title="Timeline"></a>Timeline</h3><p>利用VMD还可以绘制每个残基的RMSD来考察对总RMSD的贡献。</p>
-<p>在VMD中将轨迹叠合后，Appearance - Color scale - Rainbow (BGR).然后选Calculate-Calc.RMSD开始计算</p>
-<p><img src="/image-20260817110520353.png" alt="image-20260817110520353"></p>
+<h3 id="Timeline"><a href="#Timeline" class="headerlink" title="Timeline"></a>Timeline</h3><ul>
+<li><p>利用VMD还可以绘制每个残基的RMSD来考察对总RMSD的贡献。</p>
 <ul>
-<li>对于图中一些感兴趣的区域，可以用鼠标右键拖动放大。</li>
-<li>并且可以用鼠标左键点击某个点高亮之，图形窗口就会切换到相应帧，并且将对应的残基显示出来，而且在窗口左下角显示具体信息。如果用左键在色彩条上滑动，还可以观看对应残基在对应轨迹区间的运动。</li>
-<li>恢复完整视图点fit all按钮</li>
-<li>图上点右键可以缩小视图</li>
-<li>点击高亮处可以取消高亮</li>
+<li><p>在VMD中将轨迹叠合后，Appearance - Color scale - Rainbow (BGR).然后选Calculate-Calc.RMSD开始计算</p>
+<p><img src="/image-20260817110520353.png" alt="image-20260817110520353"></p>
+</li>
+<li><p>对于图中一些感兴趣的区域，可以用鼠标右键拖动放大。</p>
+</li>
+<li><p>并且可以用鼠标左键点击某个点高亮之，图形窗口就会切换到相应帧，并且将对应的残基显示出来，而且在窗口左下角显示具体信息。如果用左键在色彩条上滑动，还可以观看对应残基在对应轨迹区间的运动。</p>
+</li>
+<li><p>恢复完整视图点fit all按钮</p>
+</li>
+<li><p>图上点右键可以缩小视图</p>
+</li>
+<li><p>点击高亮处可以取消高亮</p>
+</li>
+</ul>
+</li>
+<li><p>Calc. Phi/Psi:计算各残基Phi/Psi角度随时间的变化</p>
+</li>
+<li>Calc. delta Phi/Psi:计算各残基Phi/Psi角度相对于第一帧时的变化</li>
 </ul>
 ]]></content>
       <categories>
