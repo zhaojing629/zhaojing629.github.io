@@ -29,7 +29,7 @@
 <meta property="og:description" content="Gromacs的命令 &#96;gmx xxx&#96;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-08-12T04:07:17.000Z">
-<meta property="article:modified_time" content="2026-08-17T08:24:42.687Z">
+<meta property="article:modified_time" content="2026-08-18T02:47:00.348Z">
 <meta property="article:author" content="Zhao Jing">
 <meta property="article:tag" content="GROMACS">
 <meta property="article:tag" content="文件">
@@ -222,7 +222,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2026-08-17 16:24:42" itemprop="dateModified" datetime="2026-08-17T16:24:42+08:00">2026-08-17</time>
+                <time title="修改时间：2026-08-18 10:47:00" itemprop="dateModified" datetime="2026-08-18T10:47:00+08:00">2026-08-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -399,6 +399,8 @@
 <li><p><code>-fetemp &lt;real&gt;</code> ：估算自由能时用的参考温度，默认为300 K</p>
 </li>
 </ul>
+<p>例子：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">energy</span> <span class="selector-tag">-f</span> <span class="selector-tag">npt-nopr</span><span class="selector-class">.edr</span> <span class="selector-tag">-o</span> <span class="selector-tag">enrg-npt</span><span class="selector-class">.xvg</span></span><br></pre></td></tr></table></figure>
 <h1 id="genion"><a href="#genion" class="headerlink" title="genion"></a>genion</h1><p>将结构中指定的组(一般是溶剂组)的部分分子随机替换为单原子离子。</p>
 <ul>
 <li><code>-s</code>：<code>.tpr</code>文件</li>
@@ -678,8 +680,8 @@
 <li><code>-ff &lt;string&gt;</code>：设定所用力场，默认是交互式选择</li>
 <li><code>-water &lt;enum&gt;</code>：设定所用水模型，默认是交互式选择</li>
 <li><code>-heavyh</code>：把氢原子质量设为4(并从相连重原子上扣除相应质量)，使氢的运动减缓，从而能用更大步长</li>
-<li><code>-ignh</code>：忽略输入文件里所有氢。NMR测定的pdb里虽然有所有的氢，某些程序(如分子对接程序)产生的结构文件里也往往有氢，但原子名大概率不标准，应当用此选项让pdb2gmx按标准规则加氢<ul>
-<li>通常建议始终带上<code>-ignh</code></li>
+<li><strong><code>-ignh</code>：忽略输入文件里所有氢。NMR测定的pdb里虽然有所有的氢，某些程序(如分子对接程序)产生的结构文件里也往往有氢，但原子名大概率不标准，应当用此选项让pdb2gmx按标准规则加氢</strong><ul>
+<li><strong>通常建议始终带上<code>-ignh</code></strong></li>
 </ul>
 </li>
 <li><code>-ter</code>：交互式选择如何处理末端氨基和羧基，默认是搞成带电状态。对AMBER力场不适用(因为它是直接按照r2b文件对残基处在氮端和碳端的情况进行设定)</li>
@@ -1122,7 +1124,7 @@ B_A=(8/3)\times \pi^2 \times \mathrm{RMSF}_A^2</script><p>pdb中的B因子单位
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">430k</span>
+    <span title="站点总字数">434k</span>
 </div>
 
         

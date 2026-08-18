@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2026/08/11/%E3%80%90GROMACS%E3%80%913.%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B/image-20260811102611572.png">
 <meta property="article:published_time" content="2026-08-11T02:14:28.000Z">
-<meta property="article:modified_time" content="2026-08-13T08:33:41.940Z">
+<meta property="article:modified_time" content="2026-08-18T02:33:23.520Z">
 <meta property="article:author" content="Zhao Jing">
 <meta property="article:tag" content="GROMACS">
 <meta property="article:tag" content="文件">
@@ -224,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2026-08-13 16:33:41" itemprop="dateModified" datetime="2026-08-13T16:33:41+08:00">2026-08-13</time>
+                <time title="修改时间：2026-08-18 10:33:23" itemprop="dateModified" datetime="2026-08-18T10:33:23+08:00">2026-08-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -664,14 +664,14 @@
 </li>
 </ul>
 <h2 id="预处理控制（区分大小写）"><a href="#预处理控制（区分大小写）" class="headerlink" title="预处理控制（区分大小写）"></a>预处理控制（区分大小写）</h2><ul>
-<li><code>define</code>：传递给<code>.top</code>的预处理器的设定。<ul>
+<li><strong><code>define</code>：传递给<code>.top</code>的预处理器的设定。</strong><ul>
 <li><code>-DFLEXIBLE</code> 将在您的拓扑中使用柔性水而不是刚性水，这对于正态模式分析非常有用。</li>
 <li><code>-DPOSRES</code> 将触发将 <code>posre.itp</code> 包含到您的拓扑中，用于实现位置约束。</li>
 </ul>
 </li>
 </ul>
 <h2 id="运行控制"><a href="#运行控制" class="headerlink" title="运行控制"></a>运行控制</h2><ul>
-<li><code>integrator</code>: 决定当前任务干什么<ul>
+<li><strong><code>integrator</code>: 决定当前任务干什么</strong><ul>
 <li><code>md</code>(默认):leap-frog方式做动力学</li>
 <li><code>md-wv</code>:用Velocity-Verlet方式做动力学，在功能上有一些限制</li>
 <li><code>sd</code>:做随机动力学(Langevin动力学)</li>
@@ -706,12 +706,12 @@
 <li><code>mts-level2-factor =2</code>（令level2组每2步算一次受力)</li>
 </ul>
 <h2 id="能量极小化参数"><a href="#能量极小化参数" class="headerlink" title="能量极小化参数"></a>能量极小化参数</h2><ul>
-<li><code>emtol</code>:能量极小化时最大受力小于多少就认为己收敛(kJ/mol/nm)。默认为<br>10.0</li>
-<li><code>emstep</code>:最陡下降法最大步长(nm)，默认0.01</li>
+<li><strong><code>emtol</code>:能量极小化时最大受力小于多少就认为己收敛(kJ/mol/nm)。默认为</strong><br><strong>10.0</strong></li>
+<li><strong><code>emstep</code>:最陡下降法最大步长(nm)，默认0.01</strong></li>
 <li><code>nstcgsteep</code>：每做多少步共轭梯度极小化时做一次最陡下降法极小化，默认为1000。这种组合使用比单独用共轭梯度法效果往往更好</li>
 </ul>
 <h2 id="输出控制"><a href="#输出控制" class="headerlink" title="输出控制"></a>输出控制</h2><ul>
-<li><code>nstxout</code>:每多少步输出一次坐标到trr文件</li>
+<li><strong><code>nstxout</code>:每多少步输出一次坐标到trr文件</strong></li>
 <li><code>nstvout</code>:每多少步输出一次速度到trr文件</li>
 <li><code>nstfout</code>:每多少步输出一次受力到tr文件</li>
 <li><code>nstxout-compressed</code>:每多少步输出一次坐标到xtc文件</li>
@@ -719,8 +719,8 @@
 <p>以上4个默认为0，即不输出</p>
 <ul>
 <li><code>compressed-x-grps</code>:选择输出到xtc文件的group,默认为system</li>
-<li><code>nstlog</code>:每多少步输出一次各种能量、属性信息到log文件，默认为1000</li>
-<li><code>nstenergy</code>:每多少步输出一次能量信息到.edr文件，默认为1000。应是计算能量频率(由<code>nstcalcenergy</code>设定，默认100)的倍数</li>
+<li><strong><code>nstlog</code>:每多少步输出一次各种能量、属性信息到log文件，默认为1000</strong></li>
+<li><strong><code>nstenergy</code>:每多少步输出一次能量信息到.edr文件，默认为1000。应是计算能量频率(由<code>nstcalcenergy</code>设定，默认100)的倍数</strong></li>
 <li><code>energygrps</code>:将哪个group的短程非键作用能输出到.edr文件中。例如设AB则.edr里会包含A、B组自身的以及它们之问的短程非键作用能信息。GPU加速时不支持</li>
 <li>xtc/edr/trr第一帧对应初始时刻信息。初始时刻和最终时刻信息总会被输出到log和edr中</li>
 </ul>
@@ -741,8 +741,8 @@
 </li>
 </ul>
 <h3 id="周期性设定"><a href="#周期性设定" class="headerlink" title="周期性设定"></a>周期性设定</h3><ul>
-<li><code>pbc</code><ul>
-<li><code>xyz</code>(默认):在xly/z方向都用周期性</li>
+<li><strong><code>pbc</code></strong><ul>
+<li><strong><code>xyz</code>(默认):在x/y/z方向都用周期性</strong></li>
 <li><code>xy</code>:只在xy方向上用周期性</li>
 <li><code>no</code>:不用周期性，此时通常应当将所有<code>cutoff</code>设0，即每一步都计算所有粒子间非键作用，且将<code>nstlist</code>也设0，即只在第一步构建一次邻居列表</li>
 </ul>
@@ -754,11 +754,11 @@
 </li>
 </ul>
 <h2 id="静电作用的计算设定"><a href="#静电作用的计算设定" class="headerlink" title="静电作用的计算设定"></a>静电作用的计算设定</h2><ul>
-<li><p><code>coulombtype</code>：设静电作用的计算方式</p>
+<li><p><strong><code>coulombtype</code>：设静电作用的计算方式</strong></p>
 <ul>
 <li><code>cut-off</code>（默认）：简单截断方法</li>
 <li><code>Ewald</code>:Ewald方法</li>
-<li><code>PME</code>:SPME方法</li>
+<li><strong><code>PME</code>:SPME方法</strong></li>
 <li><code>P3M-AD</code>:带解析导数的PPPME方法，精度比PME略微高一点</li>
 <li><code>Reaction-Field</code>:反应场方法，圆球外介电常数用epsilon-rf设定</li>
 <li><code>User</code>:使用用户在table.xvg中定义的静电作用的列表势(从2020版开始不再支持。）</li>
@@ -1126,7 +1126,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">430k</span>
+    <span title="站点总字数">434k</span>
 </div>
 
         
