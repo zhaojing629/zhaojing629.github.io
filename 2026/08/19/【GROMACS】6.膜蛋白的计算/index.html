@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=EB Garamond:300,300italic,400,400italic,700,700italic|Dancing Script:300,300italic,400,400italic,700,700italic|ZCOOL XiaoWei:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.1/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="用Gromacs计算膜蛋白">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【GROMACS】6.膜蛋白的计算">
+<meta property="og:url" content="http://example.com/2026/08/19/%E3%80%90GROMACS%E3%80%916.%E8%86%9C%E8%9B%8B%E7%99%BD%E7%9A%84%E8%AE%A1%E7%AE%97/index.html">
+<meta property="og:site_name" content="Jing&#39;s Notes">
+<meta property="og:description" content="用Gromacs计算膜蛋白">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/image-20260819120623507.png">
+<meta property="og:image" content="http://example.com/image-20260819121451131.png">
+<meta property="og:image" content="http://example.com/image-20260819134513785.png">
+<meta property="og:image" content="http://example.com/image-20260819153915154.png">
+<meta property="og:image" content="http://example.com/image-20260819155506409.png">
+<meta property="og:image" content="http://example.com/image-20260819155913248.png">
+<meta property="og:image" content="http://example.com/image-20260819161823280.png">
+<meta property="og:image" content="http://example.com/image-20260819162005367.png">
+<meta property="article:published_time" content="2026-08-19T03:55:43.000Z">
+<meta property="article:modified_time" content="2026-08-19T08:23:44.154Z">
+<meta property="article:author" content="Zhao Jing">
+<meta property="article:tag" content="GROMACS">
+<meta property="article:tag" content="蛋白质">
+<meta property="article:tag" content="膜">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/image-20260819120623507.png">
+
+<link rel="canonical" href="http://example.com/2026/08/19/%E3%80%90GROMACS%E3%80%916.%E8%86%9C%E8%9B%8B%E7%99%BD%E7%9A%84%E8%AE%A1%E7%AE%97/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+  <title>【GROMACS】6.膜蛋白的计算 | Jing's Notes</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d23c6dd5b34ecbaba18b829b9084946";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jing's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/08/19/%E3%80%90GROMACS%E3%80%916.%E8%86%9C%E8%9B%8B%E7%99%BD%E7%9A%84%E8%AE%A1%E7%AE%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="Zhao Jing">
+      <meta itemprop="description" content="做一棵树，只为岁月而生长。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jing's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【GROMACS】6.膜蛋白的计算
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2026-08-19 11:55:43 / 修改时间：16:23:44" itemprop="dateCreated datePublished" datetime="2026-08-19T11:55:43+08:00">2026-08-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">计算化学</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/%E8%BD%AF%E4%BB%B6/" itemprop="url" rel="index"><span itemprop="name">软件</span></a>
+                </span>
+            </span>
+
+          
+            <br>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2026/08/19/%E3%80%90GROMACS%E3%80%916.%E8%86%9C%E8%9B%8B%E7%99%BD%E7%9A%84%E8%AE%A1%E7%AE%97/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2026/08/19/%E3%80%90GROMACS%E3%80%916.%E8%86%9C%E8%9B%8B%E7%99%BD%E7%9A%84%E8%AE%A1%E7%AE%97/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+            <div class="post-description">用Gromacs计算膜蛋白</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="生物膜相关"><a href="#生物膜相关" class="headerlink" title="生物膜相关"></a>生物膜相关</h1><h2 id="磷脂的结构特征"><a href="#磷脂的结构特征" class="headerlink" title="磷脂的结构特征"></a>磷脂的结构特征</h2><p><img src="/image-20260819120623507.png" alt="image-20260819120623507"></p>
+<p>根据磷脂的头部基团和尾部烃链的不同，磷脂有许多种类，常用四个字母表示：</p>
+<ul>
+<li>前两个字母决定脂肪酸是哪种</li>
+<li>后两个字母决定头部基团是哪种</li>
+</ul>
+<p>比如：</p>
+<ul>
+<li>DPPC： 1,2-Dipalmitoyl-sn-glycero-3-phosphocholine</li>
+<li>DPPE： 1,2-Dipalmitoyl-sn-glycero-3-phosphoethanolamine</li>
+<li>POPC： 1-Palmitoyl-2-oleoyl-sn-glycero-3-phosphocholine</li>
+</ul>
+<p>常见的尾部基团：</p>
+<ul>
+<li>DP：二棕榈酰</li>
+<li>PO：1-棕榈酰-2-油酰</li>
+<li>DM：二肉豆蔻酰</li>
+<li>DL：二月桂酰</li>
+</ul>
+<p>常见的头部基团：</p>
+<p><img src="/image-20260819121451131.png" alt="image-20260819121451131"></p>
+<ul>
+<li>磷酸基是带负电的，而PC、PE头部基团的正电部分与之抵消，此时磷脂是中性的。</li>
+</ul>
+<h2 id="膜蛋白的种类"><a href="#膜蛋白的种类" class="headerlink" title="膜蛋白的种类"></a>膜蛋白的种类</h2><ul>
+<li>整合蛋白<br>多数为跨膜蛋白，跨膜区域为alpha螺旋或者形成桶状的beta折叠。也有些是完全插入膜双层中。与膜结合极为稳定</li>
+<li>脂锚定蛋白<br>与脂质分子以共价键稳定结合</li>
+<li>外周蛋白<br>通过离子键等方式与膜表面蛋白或磷脂的亲水部分结合，不稳定</li>
+</ul>
+<h2 id="常见的膜力场"><a href="#常见的膜力场" class="headerlink" title="常见的膜力场"></a>常见的膜力场</h2><ul>
+<li>Kukol(2009)：JCTC,5,615。完全兼容G53A6，结果很好。支持DPPC、DMPC、POPG、POPC、DMPC。itp文件<br>和预平衡后的结构可从<a target="_blank" rel="noopener" href="https://pubs.acs.org/jctcce/article-abstract/5/3/615/196635/Lipid-Models-for-United-Atom-Molecular-Dynamics?redirectedFrom=fulltext">原文的补充材料</a>里得到。<strong>此力场的POPC不建议使用</strong></li>
+<li>Poger(2010)：JCTC,6,325、JCC,31,1117。完全兼容<br>G53A6。支持DPPC、DLPC、DMPC、DOPC、POPC</li>
+<li>54A8_v1：JCTC,15,5175(2019)。对G54A8用于磷脂头<br>部的残基的电荷做了明确定义，调整了个别范德华参数，使<br>得模拟磷脂有较好的效果。力场目录gromos54a8.ff_v1、<br>DLPC、DMPC、DOPC、DPPC、POPC、POPG的拓扑文<br>件、含512个磷脂平衡后的结构文件可在此下载： <a target="_blank" rel="noopener" href="https://fraternalilab.github.io/biomembrane-simulations/">Biomembrane simulations - Fraternali Lab</a></li>
+</ul>
+<p>用联合原子力场模拟膜体系比全原子力场快得<br>多，在磷脂区域前者的原子数只有后者的1/3</p>
+<ul>
+<li>Stockholm lipids (Slipids) (初f2012, 最新2020) ：全原子，兼容AMBER力场，质量非常好。支持DPPC、DLPC, DMPC. POPC,DOPC, SOPC、 POPE.DOPE等20多种磷脂，以及鞘磷脂、胆固醇，itp文件和致平衡后的结构可从此处下载:<a target="_blank" rel="noopener" href="http://www.fos.su.se/~sasha/SLipids/Downloads.html">http://www.fos.su.se/~sasha/SLipids/Downloads.html</a></li>
+<li><p>Lipid：是AMBER系列力场的扩展，完全兼容AMBER力场。参数来自GAFF，几种头部(PC,PE,PS,PH,P2,PGR,PGS,PI)和几种尾部可以自由搭配(模块化)组成磷脂，还支持胆固醇、鞘磷脂。AmmberTools程序中的leap直接能用此力场</p>
+<ul>
+<li><p>Lipid有以下版本，精度不断提升，支持的分子范围不断扩展<br>.</p>
+<ul>
+<li><p>Lipid11:JPCB, 116, 11124 (2012)</p>
+</li>
+<li><p>Lipid14:JCTC, 10, 865 (2014)</p>
+</li>
+<li><p>Lipid17:未公开发布，AMBER支持，在Lipid14基础上调整了参数和原子电荷，并扩展了头部和尾部的类型。</p>
+<ul>
+<li>GROMACS的拓扑文件可以在此获取:<br><a target="_blank" rel="noopener" href="https://github.com/xiki-tempula/gmx_lipid17.ff">xiki-tempula/gmx_lipid17.ff: a gromacs port of the amber lipid force field LIPID17</a> </li>
+<li>在<a target="_blank" rel="noopener" href="http://bbs.keinsci.com/thread-43558-1-1.html">Gromacs可用的Amber14SB_ROC_lipid17力场包 - 分子模拟 (Molecular Modeling) - 计算化学公社</a>中给了含有各种磷脂定义的rtp文件，以<br>及拉直后的各种磷脂的gro文件。</li>
+</ul>
+</li>
+<li>Lipid21: JCTC, 18, 1726 (2022)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Berger (1997):Biophys. J.,72,2002.联合原子膜力场。成键參数基于GROMOS87，LJ参数基于OPLS-UA，很常用也银好，唯一致命的问题在于不直接兼容如今常用的GROMOS96力场，因此目前不再推荐用。Berger力场本身没直接提供参数和拓扑文件，Tieleman基于Berger的参数制作了DPC、POPC、DPPC、DMPC、DLPC、 DOPC、PLPC、 POPE的itp文件. </p>
+</li>
+<li>CHARMM27及改进版CHARMM36:质量不错的膜力场.在GROMACS的charmm27.ff/lipids.rtp文件中对LPPC. DLPE、 DMPC、 POPC, POPE、 PALM.<br>PCGL等脂类分子做了定义</li>
+<li>G43A1-S3: J. Phys. Chem. B, 113, 2748 (2009)Chiu等人弄的兼容G43A1的膜力场。支持PC、PE、鞘磷脂和胆固醇。非主流</li>
+<li>MARTINI:粗粒化力场，包含磷脂。itp文件可在<a target="_blank" rel="noopener" href="https://cgmartini.nl/docs/downloads/">Downloads – Martini Force Field Initiative</a>下载</li>
+<li>GLYCAM06:支持了少数磷脂分子，非主流</li>
+<li>GAFF:虽然因其普适性也可以处理磷脂，但直接用在膜模拟效果不好。在Soft Matter,8,9617(2012)中提出的GAFFipid是基于GAFF的阶段性的膜力场，现已被Lipid力场取代</li>
+<li>GROMOS96:rtp本身也自带了DPPC参数，结果不好</li>
+<li>FUJI:JCTC, 16, 3664 (2020). 与FUJI蛋白质力场兼容。扭转势基于高精度LCCSD(T)/aug-cc-pVTZ势能曲线进行拟合，原子电荷使用许多构象平均的RESP电荷，原子类型在GAFF基础上进行了扩展。支持PC和PE头部以及LA、MY、OL、PA、ST尾部。此力场强调与严格的PME方式算的范德华作用兼容性好</li>
+</ul>
+<h2 id="与脂质有关的网站"><a href="#与脂质有关的网站" class="headerlink" title="与脂质有关的网站"></a>与脂质有关的网站</h2><ul>
+<li>Limonada (Lipid Membrane Open NetworkAnd Database): <a target="_blank" rel="noopener" href="https://limonada.univ-reims.fr/">Limonada - Home</a>包含以下内容<br>磷脂:<ul>
+<li>有400种以上磷脂的信息，包括简称、完整命名、结构图、分类、化学组成、PubChemID号等</li>
+<li>磷脂的拓扑文件:有超过600个拓扑文件，对应不同磷脂、不同力场、不同程序。力场以CHARMM36为主，也有基于GROMOS的、Slipid的、MARTINI的</li>
+<li>生物膜:包含几十种实际的生物膜(混合膜)，提供了名称、磷脂成份、预平好衡的结构和模拟条件等信息</li>
+</ul>
+</li>
+<li>lipidbook:<a target="_blank" rel="noopener" href="https://www.lipidbook.org/">Lipidbook - A public repository for lipid force field parameters and topologies</a>。包含了A近百个已发表的磷脂及相关分子的拓扑文件，每个对应一种“力场-程序-脂质类型”，可以通过条件搜索。收录的磷脂力场并不全面</li>
+<li>lipidbank:<a target="_blank" rel="noopener" href="https://lipidbank.jp/">LipidBank</a>。脂质数据库，可以分类查询，得到脂质结构、基本参数和实验信息</li>
+<li>LIPID MAPS: <a target="_blank" rel="noopener" href="https://www.lipidmaps.org/databases/lmsd/browse">LIPID MAPS </a>同上</li>
+<li>MemProtMD:<a target="_blank" rel="noopener" href="https://memprotmd.bioch.ox.ac.uk/">MemProtMD</a>跨膜蛋白模拟数据库。数据以流程化方式获得:从RCSB蛋白质数据库中选取跨膜蛋白，加入离子、水、磷脂后用GROMACS结合MARTINI粗粒化力场做1微秒动力学模拟(期间磷脂会自组装成膜)，之后还原成全原子模型进一步分析。数据库中提供了这些膜蛋白的模拟截图、分析统计数据、模拟涉及的全部文件，以及模拟前后的粗粒化和全原子模型的结构文件。数据库里的蛋白一直不断增加，截止到2021年4月已经包含5000个蛋白</li>
+</ul>
+<h2 id="磷脂膜体系模拟要点"><a href="#磷脂膜体系模拟要点" class="headerlink" title="磷脂膜体系模拟要点"></a>磷脂膜体系模拟要点</h2><ul>
+<li><p>起码得用6×6×2共72个磷脂大小的体系，<strong>一般都用8×8×2=128个磷脂的模型</strong></p>
+</li>
+<li><p>应当让膜平面在XY平面上。两层膜间的节面位于盒子Z轴的中间</p>
+</li>
+<li><p>要用semiisotropic控压，使得压浴对X/Y和Z方向分别耦合</p>
+</li>
+<li><p>模拟温度应当高于磷脂的相变温度(熔点)，否则磷脂处于高度有序的晶态而缺乏流动性。相变温度与磷脂自身特征和所用力场有关，实验的相变温度：</p>
+<p><img src="/image-20260819134513785.png" alt="image-20260819134513785"></p>
+</li>
+<li><p>应当注意膜力场与色散的能量-压力校正的兼容性。诸如Kukol、Lipid14膜力场原文里用了这种校正，自行模拟时也应当使用。而CHARMM36磷脂力场则没有使用</p>
+</li>
+<li><p>磷脂与“水+离子”应分别控温，如果再插入蛋白，则共有三个控温组</p>
+</li>
+<li><p>消除平动建议设定为comm_grps = lower upper SOL来对下层、上层膜和水分别消除平动。否则由于两层膜，以及膜与水之间耦合较弱，容易产生虚假的相对滑动。如果是膜蛋白体系，则蛋白和两层膜作为同一组消除平动</p>
+</li>
+<li><p>勿忘去掉疏水区域的水。如果一开始结构较烂，发现水自发钻进疏水区，可尝试给水的Z方向加限制势，等平衡后再放开</p>
+</li>
+<li><p>因为磷脂分子较大，弛豫速度远比小分子慢，通常得模拟好几十ns才能充分平衡。如果是混合膜体系，则往往得跑上百ns</p>
+</li>
+</ul>
+<h2 id="磷脂膜体系的构建"><a href="#磷脂膜体系的构建" class="headerlink" title="磷脂膜体系的构建"></a>磷脂膜体系的构建</h2><ul>
+<li>直接下载:在一些研究磷脂模拟的课题组页面上、一些模拟文章的补充材料中有磷脂膜的结构文件，</li>
+<li>genmixmem:卢天开发，可以生成单一或混合组分的磷脂双层膜初始结构。用户需自行提供磷脂的结构文件。下载地址: <a target="_blank" rel="noopener" href="http://sobereva.com/245">http://sobereva.com/245</a></li>
+<li>Packmol:可以通过恰当设定磷脂分子的堆积方式从而构建双分子膜。但是往往耗时较高或者根本不收敛，磷脂分布往往不均匀容易有窟窿，导致水容易钻进去。用户需自行提供磷脂的结构文件</li>
+<li>PACKMOL-Memgen:自动化构建纯膜、混合膜、膜蛋白体系的工具，会自动调用Packmol。只适合结合Lipid17在Amber下使用或结合CHARMM36在NAMD下使用</li>
+<li><a href="http://www.charmm-gui.org:可以用来构建基于CHARMM36力场的磷脂膜以及膜蛋白体系结构，可以同时加水和离子。构建的质量较好，比:较致密。支持的脂质种类十分丰富。">http://www.charmm-gui.org:可以用来构建基于CHARMM36力场的磷脂膜以及膜蛋白体系结构，可以同时加水和离子。构建的质量较好，比:较致密。支持的脂质种类十分丰富。</a><ul>
+<li>进入界面后择Input Generator-MembraneBuilder-Bilayer Builder可。另外还可以选产生GROMACS的输入文件，这样在所有步骤都结束得到的压缩包里就会有对应CHARMM36力场</li>
+<li>GROMACS的输入文件。<br>必须有edu邮箱才能申请免费的账号并使用。</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="http://memgen.uni-goettingen.de/">MemGen</a>:在线工具，上传单分子结构文件，并输入单层膜面积、每磷脂对应的水数、盐浓度后就可以返回生成好的膜结构</li>
+<li>MemBuilderIl:<a target="_blank" rel="noopener" href="http://bioinf.modares.ac.ir/software/mb2在线工具。可以产生一些磷脂的双层膜，可以定义每种磷脂多少个来混合，同时直接在膜外加上水。但是产生的结构往往并不怎么样比如磷脂是歪的，而且两层膜以及膜与水之间的距离往往也太远。此工具还能产生囊泡、胶束的结构。">http://bioinf.modares.ac.ir/software/mb2在线工具。可以产生一些磷脂的双层膜，可以定义每种磷脂多少个来混合，同时直接在膜外加上水。但是产生的结构往往并不怎么样比如磷脂是歪的，而且两层膜以及膜与水之间的距离往往也太远。此工具还能产生囊泡、胶束的结构。</a></li>
+<li><a target="_blank" rel="noopener" href="https://open.playmolecule.org/tools/membranebuilder">PlayMolecule - Click. Compute. Discover.</a>:构建任意比例、任意尺寸的POPC/POPE/胆固醇的纯膜或混合膜的在线工具。有其它任务在排队执行时可能需要等很长时间才能开始执行</li>
+<li>VMD的Extensions - Modeling - MembraneBuilder:只能产生POPE、POPC的膜结构</li>
+<li>BUMPy: <a target="_blank" rel="noopener" href="https://github.com/MayLab-UConn/bumpy.基于Python，特点是可以构建曲率的双层膜">https://github.com/MayLab-UConn/bumpy.基于Python，特点是可以构建曲率的双层膜</a></li>
+</ul>
+<h1 id="膜的模拟"><a href="#膜的模拟" class="headerlink" title="膜的模拟"></a>膜的模拟</h1><p>以Kukol文件中的dppc128_40ns.pdb为例</p>
+<ul>
+<li><p>建立DPPC目录</p>
+</li>
+<li><p>将dppc128_40ns.pdb拷到当前目录并改名为memwat.pdb。这是Kukol膜力场中作者事先经过40ns充分平衡后的膜结构文件</p>
+</li>
+<li><p>将dppc_53a6.itp拷到当前目录,这是DPPC对应的Kukol力场的itp文件</p>
+</li>
+<li><p>mdp模板\mem\md.mdp：由于当前结构已经充分平衡过，因此可以直接做动力学。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">define =</span><br><span class="line"><span class="attr">integrator</span> = md</span><br><span class="line"><span class="attr">dt</span>         = <span class="number">0.002</span>   <span class="comment">; ps</span></span><br><span class="line"><span class="attr">nsteps</span>     = <span class="number">1000000</span> <span class="comment">; 2ns</span></span><br><span class="line"><span class="attr">comm-grps</span>  = lower upper SOL</span><br><span class="line">energygrps = </span><br><span class="line"><span class="comment">;</span></span><br><span class="line"><span class="attr">nstxout</span> = <span class="number">0</span></span><br><span class="line"><span class="attr">nstvout</span> = <span class="number">0</span></span><br><span class="line"><span class="attr">nstfout</span> = <span class="number">0</span></span><br><span class="line"><span class="attr">nstlog</span>  = <span class="number">1000</span></span><br><span class="line"><span class="attr">nstenergy</span> = <span class="number">1000</span></span><br><span class="line"><span class="attr">nstxout-compressed</span> = <span class="number">1000</span></span><br><span class="line"><span class="attr">compressed-x-grps</span>  = system</span><br><span class="line"><span class="comment">;</span></span><br><span class="line"><span class="attr">pbc</span> = xyz</span><br><span class="line"><span class="attr">cutoff-scheme</span> = Verlet</span><br><span class="line"><span class="attr">coulombtype</span>   = PME</span><br><span class="line"><span class="attr">rcoulomb</span>      = <span class="number">1.0</span></span><br><span class="line"><span class="attr">vdwtype</span>       = cut-<span class="literal">off</span></span><br><span class="line"><span class="attr">rvdw</span>          = <span class="number">1.0</span></span><br><span class="line"><span class="attr">DispCorr</span>      = EnerPres</span><br><span class="line"><span class="comment">;</span></span><br><span class="line"><span class="attr">Tcoupl</span>  = V-rescale</span><br><span class="line"><span class="attr">tau_t</span>   = <span class="number">0.2</span> <span class="number">0.2</span></span><br><span class="line"><span class="attr">tc_grps</span> = DPP SOL</span><br><span class="line"><span class="attr">ref_t</span>   = <span class="number">325</span> <span class="number">325</span></span><br><span class="line"><span class="comment">;</span></span><br><span class="line"><span class="attr">Pcoupl</span>     = parrinello-rahman</span><br><span class="line"><span class="attr">pcoupltype</span> = semiisotropic</span><br><span class="line"><span class="attr">tau_p</span> = <span class="number">2.0</span></span><br><span class="line"><span class="attr">ref_p</span> = <span class="number">1.0</span> <span class="number">1.0</span></span><br><span class="line"><span class="attr">compressibility</span> = <span class="number">4.5</span>e-<span class="number">5</span> <span class="number">4.5</span>e-<span class="number">5</span></span><br><span class="line"><span class="comment">;</span></span><br><span class="line"><span class="attr">gen_vel</span>  = <span class="literal">no</span></span><br><span class="line"><span class="attr">gen_temp</span> = <span class="number">325</span></span><br><span class="line"><span class="attr">gen_seed</span> = -<span class="number">1</span></span><br><span class="line"><span class="comment">;</span></span><br><span class="line">freezegrps  = </span><br><span class="line">freezedim   = </span><br><span class="line"><span class="attr">constraints</span> = hbonds</span><br></pre></td></tr></table></figure>
+<ul>
+<li>参考温度改为325K，因为DPPC的相变温度为315K，应适当设高一些</li>
+<li>注意此mdp文件中DPPC与SOL分别设了控温组，用了半各项同性控压，而且comm-grps=lower upper SOL使得上层磷脂、下层磷脂和水分别消除平动。</li>
+</ul>
+</li>
+<li><p>用此命令产生index.ndx文件</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">make_ndx</span> <span class="selector-tag">-f</span> <span class="selector-tag">memwat</span><span class="selector-class">.pdb</span>  (直接<span class="selector-tag">q</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在VMD中载入memwat.pdb,将卢天的rangeindex.tcl脚本复制到VMD命令行，分别输入：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">range<span class="keyword">index</span> &quot;same residue as resname DPP and z&lt;20&quot;</span><br><span class="line">range<span class="keyword">index</span> &quot;same residue as resname DPP and z&gt;40&quot;</span><br></pre></td></tr></table></figure>
+<p>这会把将下层和上层膜的原子序号导出到D:\range.txt，然后在index.ndx后面增加<code>[ lower ]</code>和<code>[ upper ]</code>组:</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[ lower ]</span></span><br><span class="line"><span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> <span class="number">5</span> <span class="number">6</span>  </span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="string">[ upper ]</span></span><br><span class="line"><span class="number">3201</span> <span class="number">3202</span> <span class="number">3203</span> <span class="number">3204</span> <span class="number">3205</span> <span class="number">3206</span> </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>建立topol.top，内容如下：</p>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;gromos54a7.ff/forcefield.itp&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;gromos54a7.ff/spc.itp&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;dppc_53a6.itp&quot;</span></span></span><br><span class="line"></span><br><span class="line">[ <span class="keyword">system</span> ]</span><br><span class="line"><span class="number">128</span> DPPC, hydrated</span><br><span class="line"></span><br><span class="line">[ molecules ]</span><br><span class="line">DPPC		<span class="number">128</span></span><br><span class="line">SOL		<span class="number">3655</span>		（不知道有多少个水的时候载入VMD会显示）</span><br></pre></td></tr></table></figure>
+<p>虽然Kukol力场提出时对应的是53A6，<br>但与54A7也是兼容的。</p>
+</li>
+<li><p>运行以下命令开始2ns动力学模拟</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">grompp</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.mdp</span> <span class="selector-tag">-c</span> <span class="selector-tag">memwat</span><span class="selector-class">.pdb</span> <span class="selector-tag">-p</span> <span class="selector-tag">topol</span><span class="selector-class">.top</span> <span class="selector-tag">-o</span> <span class="selector-tag">md</span><span class="selector-class">.tpr</span> <span class="selector-tag">-n</span> <span class="selector-tag">index</span><span class="selector-class">.ndx</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gmx mdrun -v -deffnm <span class="built_in">md</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使分子保持完整，顺带去除水（输出组都选择DPPC）</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">trjconv</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.xtc</span> <span class="selector-tag">-s</span> <span class="selector-tag">md</span><span class="selector-class">.tpr</span> <span class="selector-tag">-o</span> <span class="selector-tag">md_fix</span><span class="selector-class">.xtc</span> <span class="selector-tag">-pbc</span> <span class="selector-tag">mol</span></span><br><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">trjconv</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.gro</span> <span class="selector-tag">-s</span> <span class="selector-tag">md</span><span class="selector-class">.tpr</span> <span class="selector-tag">-o</span> <span class="selector-tag">md_fix</span><span class="selector-class">.gro</span> <span class="selector-tag">-pbc</span> <span class="selector-tag">mol</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><h3 id="磷脂头部平均表面积"><a href="#磷脂头部平均表面积" class="headerlink" title="磷脂头部平均表面积"></a>磷脂头部平均表面积</h3><p>最常用的衡量膜模拟质量的参数就是磷脂平均表面积。不过不同实验手段测出来的差异往往不小。323K下DPPC平均每个磷脂面积的实验值在0.629~0.643 nm2。</p>
+<p>使用以下命令提取模拟过程中盒子X、Y尺寸，假设从500ps开始已经进入平衡:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gmx energy -f md<span class="selector-class">.edr</span> -o XY<span class="selector-class">.xvg</span> -<span class="selector-tag">b</span> <span class="number">500</span></span><br></pre></td></tr></table></figure>
+<p>选17 Box-X和18 Box-Y。<br>然后把XY.xvg去掉开头部分，后缀名改为.txt，导入进Origin里，新增一列定义为盒子X与Y尺寸的乘积，统计其平均值，为40.2nm2，因此平均每个DPPC面积为40.2/64=0.628 nm2.</p>
+<h3 id="膜的可压缩度"><a href="#膜的可压缩度" class="headerlink" title="膜的可压缩度"></a>膜的可压缩度</h3><p>等热面积可压缩度衡量模拟过程中膜面积S的波动程度，波动程度越大说明膜越软，和流动性有<br>一定正相关</p>
+<script type="math/tex; mode=display">
+\chi_{T}^{s}=\frac{1}{k_{\mathrm{B}} T} \frac{\left\langle(S-\langle S\rangle)^{2}\right\rangle_{\mathrm{NPT}}}{\langle S\rangle_{\mathrm{NPT}}}</script><p>可以用卢天开发的memstat进行计算。</p>
+<p>启动memstat程序，输入XY.xvg的路径，程序即给出平均膜面积，每一帧的膜的面积输出到了当前目录下的xysize.txt里。然后输入当前模拟的平均温度325，就会输出膜的可压缩度1.187281m2/J。</p>
+<h3 id="数密度分布"><a href="#数密度分布" class="headerlink" title="数密度分布"></a>数密度分布</h3><p>将要统计水和磷脂中磷原子垂直于膜平面的分布。首先在索引文件里增加磷原子(原子名为P)对应的组，运行</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">make_ndx</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.tpr</span> <span class="selector-tag">-n</span> <span class="selector-tag">index</span><span class="selector-class">.ndx</span></span><br></pre></td></tr></table></figure>
+<p>输入a P，然后按q保存。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gmx density -f md<span class="selector-class">.xtc</span> -s md<span class="selector-class">.tpr</span> -ng <span class="number">2</span> -center -n index<span class="selector-class">.ndx</span> -<span class="selector-tag">b</span> <span class="number">500</span> -dens num</span><br></pre></td></tr></table></figure>
+<p>输入0(格子以体系中心为原点定义)、选择磷的组、选择water组</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">xmgrace</span> <span class="selector-tag">-nxy</span> <span class="selector-tag">density</span><span class="selector-class">.xvg</span></span><br></pre></td></tr></table></figure>
+<p><img src="/image-20260819153915154.png" alt="image-20260819153915154"></p>
+<ul>
+<li>有一部分水跨过磷酸基，毕竟更下面的酯基也是亲水的</li>
+<li>双层膜的厚度有不同定义方式，一种计算方式是取头部原<br>子在两侧的密度的峰之间的距离。</li>
+</ul>
+<h3 id="电子密度分布"><a href="#电子密度分布" class="headerlink" title="电子密度分布"></a>电子密度分布</h3><p>将前例统计数密度分布里的<code>-dens num</code>改为<code>-dens electron</code>即可统计电子密度分布。</p>
+<p>在此之前必须先在当前目录下提供electrons.dat文件，里面记录各个原子名对应的电子数，实际统计时用的电子数是此文件里电子数加上原子电荷值。</p>
+<p>此例electrons.dat内容为</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">4</span></span><br><span class="line">P= <span class="number">15</span></span><br><span class="line">HW1 = <span class="number">1</span></span><br><span class="line">HW2 = <span class="number">1</span></span><br><span class="line">OW = <span class="number">8</span></span><br></pre></td></tr></table></figure>
+<h3 id="有序度参数-S-z"><a href="#有序度参数-S-z" class="headerlink" title="有序度参数$S_z$"></a>有序度参数$S_z$</h3><script type="math/tex; mode=display">
+S_{z}=\frac{3\left\langle\cos ^{2} \theta_{z}\right\rangle-1}{2}</script><ul>
+<li>$\theta_{z}$是i+1与i-1之间连线与z轴的夹角，尖括号是时间平均。</li>
+<li>$S_{z}$代表模拟过程中i+1与i-1连线一直严格平行于z轴</li>
+<li>$S_{z}=1/2$代表连线一直垂直于z轴。</li>
+<li>对于磷脂可以依次计算烃链上每个原子的$S_{z}$，然后绘图，用以考察磷脂尾巴的有序度。</li>
+</ul>
+<p>order命令是用来计算有序度参数的工具。如果要对一条链计算，则需要提供索引文件，文件里从第一个组到最后一个组依次是这条链从第一个原子到最后一个原子的序号。每个组可以包含体系中所有等价原子，这样同类分子的有序度参数将被取平均。</p>
+<p>为了能够在make_ndx里选择组，需要先记下烃链上各个原子的名称。将卢天的atmlab.tcl里的内容放到VMD里执行，然后运行atmname “resid 1 “ 0 (假设0为当前体系ID) 使1号残基所有原子名显示出来。</p>
+<p>运行：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">make_ndx</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.gro</span> <span class="selector-tag">-o</span> <span class="selector-tag">order</span><span class="selector-class">.ndx</span></span><br></pre></td></tr></table></figure>
+<p>依次输入</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">del</span> <span class="string">0-5			(删除原有的所有组)</span></span><br><span class="line"><span class="attr">a</span> <span class="string">C11			尾巴前半段</span></span><br><span class="line"><span class="attr">a</span> <span class="string">C12</span></span><br><span class="line"><span class="attr">...</span></span><br><span class="line"><span class="attr">a</span> <span class="string">C19</span></span><br><span class="line"><span class="attr">a</span> <span class="string">C110			尾巴后半段</span></span><br><span class="line"><span class="attr">a</span> <span class="string">C111</span></span><br><span class="line"><span class="attr">...</span></span><br><span class="line"></span><br><span class="line"><span class="attr">a</span> <span class="string">C116</span></span><br><span class="line"><span class="attr">q</span></span><br></pre></td></tr></table></figure>
+<p>也可以将以上要输入的内容写入到某文本文件order.inp里，然后通过重定向方式执行make_ndx命令：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">make_ndx</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.gro</span> <span class="selector-tag">-o</span> <span class="selector-tag">order</span><span class="selector-class">.ndx</span> &lt; <span class="selector-tag">order</span><span class="selector-class">.inp</span></span><br></pre></td></tr></table></figure>
+<p>运行以下命令计算烃链上的$S_{z}$参数(默认以z轴作为参考)</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">order</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.xtc</span> <span class="selector-tag">-s</span> <span class="selector-tag">md</span><span class="selector-class">.tpr</span> <span class="selector-tag">-n</span> <span class="selector-tag">order</span><span class="selector-class">.ndx</span> <span class="selector-tag">-o</span> <span class="selector-tag">order</span><span class="selector-class">.xvg</span> <span class="selector-tag">-szonly</span></span><br></pre></td></tr></table></figure>
+<p>绘图:</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xmgrace <span class="keyword">order</span>.xvg</span><br></pre></td></tr></table></figure>
+<p>考虑的烃链上的原子有16个，故orderxvg里有14个值，对应C11-C13, C12-C14.……C113-C115, C114-C116</p>
+<p><img src="/image-20260819155506409.png" alt="image-20260819155506409"></p>
+<h3 id="氘代有序度参数-S-CD"><a href="#氘代有序度参数-S-CD" class="headerlink" title="氘代有序度参数$S_{CD}$"></a>氘代有序度参数$S_{CD}$</h3><script type="math/tex; mode=display">
+S_{CD}=\frac{3\left\langle\cos ^{2} \theta_{CD}\right\rangle-1}{2}</script><p>氘代有序参数值域为[-1/2,1]，数值越大尾巴无序度越高，数值越小尾巴越有序。$S_{CD}$可以通过将氢原子<br>氛代后实验测定。</p>
+<p>$S_{CD}$用order命令也可以算。步骤同前，去掉<code>-szonly</code>选项，则计算后就会产生deuter.xvg，其中第二列是$-S_{CD}$。而产生的order.xvg文件的最后一列依然是$S_{z}$参数。</p>
+<h3 id="侧向扩散系数"><a href="#侧向扩散系数" class="headerlink" title="侧向扩散系数"></a>侧向扩散系数</h3><p>运行以下命令绘制磷脂的侧向方均位移曲线(选择P 组使磷原子作为磷脂的参考点)</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">msd</span> <span class="selector-tag">-s</span> <span class="selector-tag">md</span><span class="selector-class">.tpr</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.xtc</span> <span class="selector-tag">-n</span> <span class="selector-tag">index</span><span class="selector-class">.ndx</span> <span class="selector-tag">-lateral</span> <span class="selector-tag">z</span> </span><br><span class="line"><span class="selector-tag">xmgrace</span> <span class="selector-tag">msd</span><span class="selector-class">.xvg</span></span><br></pre></td></tr></table></figure>
+<p><img src="/image-20260819155913248.png" alt="image-20260819155913248"></p>
+<h3 id="磷脂的运动轨迹"><a href="#磷脂的运动轨迹" class="headerlink" title="磷脂的运动轨迹"></a>磷脂的运动轨迹</h3><p>产生分子运动保持连续的轨迹和结构文件</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">trjconv</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.xtc</span> <span class="selector-tag">-s</span> <span class="selector-tag">md</span><span class="selector-class">.tpr</span> <span class="selector-tag">-o</span> <span class="selector-tag">md_DPPCnojump</span><span class="selector-class">.xtc</span> <span class="selector-tag">-pbc</span> <span class="selector-tag">nojump</span></span><br><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">trjconv</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.gro</span> <span class="selector-tag">-s</span> <span class="selector-tag">md</span><span class="selector-class">.tpr</span> <span class="selector-tag">-o</span> <span class="selector-tag">md_DPPCnojump</span><span class="selector-class">.gro</span> <span class="selector-tag">-pbc</span> <span class="selector-tag">nojump</span></span><br></pre></td></tr></table></figure>
+<p>输出组都选DPPC。</p>
+<p>在VMD中载入轨迹，然后将卢天的showtrj.tcl里的脚本在控制台执行添加绘制轨迹的命令，然后运行</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">showtrj</span> <span class="string">&quot;name P and resid 1 to 64&quot;</span> <span class="number">0</span> <span class="number">1000</span> <span class="number">10</span></span><br></pre></td></tr></table></figure>
+<p>这便将1001帧轨迹中单层膜当中的磷原子的运动轨迹绘制了出来，每10帧绘制一次。</p>
+<h3 id="特征二面角的统计"><a href="#特征二面角的统计" class="headerlink" title="特征二面角的统计"></a>特征二面角的统计</h3><h1 id="膜蛋白的模拟"><a href="#膜蛋白的模拟" class="headerlink" title="膜蛋白的模拟"></a>膜蛋白的模拟</h1><h2 id="将蛋白质嵌入膜的方法"><a href="#将蛋白质嵌入膜的方法" class="headerlink" title="将蛋白质嵌入膜的方法"></a>将蛋白质嵌入膜的方法</h2><ul>
+<li><p>VMD:直观，但蛋白与磷脂有时空隙大，需要较长时间模拟至平衡，模拟期间盒子会收缩</p>
+</li>
+<li><p>Packmol:不好收敛，不好控制</p>
+</li>
+<li><p>CHARMM-GUI:虽然傻瓜化，但仅限CHARMM力场，且灵活度比较有限</p>
+</li>
+<li><p>inflatgro:有对应的实现脚本，兼容GROMACS。inflatgro2的原理见J. Chem. Inf.Model., 52, 2657 (2012)</p>
+<p><img src="/image-20260819161823280.png" alt="image-20260819161823280"></p>
+<ul>
+<li>inflatgro方法以及传统的蛋白嵌入膜的方法全面讨论:Methods,41,475 (2007)</li>
+</ul>
+</li>
+<li><p>membed:是最理想的嵌入膜的方法，已写入GROMACS。原理见JCC,31,2169 (2010)</p>
+<ul>
+<li><p>先把蛋白与预平衡好的膜的相对位置摆好，然后令蛋白在xy方向收缩，去除与之重叠的磷脂，之后在模拟过程中蛋白逐步膨胀回原样，并不断排挤周围的磷脂，使得磷脂与蛋白紧密接触</p>
+<p><img src="/image-20260819162005367.png" alt="image-20260819162005367"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>将1a11跨膜蛋白嵌入预平衡的DPPC磷脂双层膜</p>
+<ul>
+<li><p>将1a11.pdb、dppc128_40ns.pdb<br>、dppc_53a6.itp复制到1a11目录下</p>
+</li>
+<li><p>产生1a11的拓扑文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">  </span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>有用可戳(●ˇ∀ˇ●)</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="Zhao Jing 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Zhao Jing
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2026/08/19/%E3%80%90GROMACS%E3%80%916.%E8%86%9C%E8%9B%8B%E7%99%BD%E7%9A%84%E8%AE%A1%E7%AE%97/" title="【GROMACS】6.膜蛋白的计算">http://example.com/2026/08/19/【GROMACS】6.膜蛋白的计算/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/GROMACS/" rel="tag"><i class="fa fa-tag"></i> GROMACS</a>
+              <a href="/tags/%E8%9B%8B%E7%99%BD%E8%B4%A8/" rel="tag"><i class="fa fa-tag"></i> 蛋白质</a>
+              <a href="/tags/%E8%86%9C/" rel="tag"><i class="fa fa-tag"></i> 膜</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2026/08/13/%E3%80%90VMD%E3%80%911.%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" rel="prev" title="【VMD】1.基本操作">
+      <i class="fa fa-chevron-left"></i> 【VMD】1.基本操作
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%9F%E7%89%A9%E8%86%9C%E7%9B%B8%E5%85%B3"><span class="nav-number">1.</span> <span class="nav-text">生物膜相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A3%B7%E8%84%82%E7%9A%84%E7%BB%93%E6%9E%84%E7%89%B9%E5%BE%81"><span class="nav-number">1.1.</span> <span class="nav-text">磷脂的结构特征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%86%9C%E8%9B%8B%E7%99%BD%E7%9A%84%E7%A7%8D%E7%B1%BB"><span class="nav-number">1.2.</span> <span class="nav-text">膜蛋白的种类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E8%86%9C%E5%8A%9B%E5%9C%BA"><span class="nav-number">1.3.</span> <span class="nav-text">常见的膜力场</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8E%E8%84%82%E8%B4%A8%E6%9C%89%E5%85%B3%E7%9A%84%E7%BD%91%E7%AB%99"><span class="nav-number">1.4.</span> <span class="nav-text">与脂质有关的网站</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A3%B7%E8%84%82%E8%86%9C%E4%BD%93%E7%B3%BB%E6%A8%A1%E6%8B%9F%E8%A6%81%E7%82%B9"><span class="nav-number">1.5.</span> <span class="nav-text">磷脂膜体系模拟要点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A3%B7%E8%84%82%E8%86%9C%E4%BD%93%E7%B3%BB%E7%9A%84%E6%9E%84%E5%BB%BA"><span class="nav-number">1.6.</span> <span class="nav-text">磷脂膜体系的构建</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%86%9C%E7%9A%84%E6%A8%A1%E6%8B%9F"><span class="nav-number">2.</span> <span class="nav-text">膜的模拟</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C"><span class="nav-number">2.1.</span> <span class="nav-text">结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A3%B7%E8%84%82%E5%A4%B4%E9%83%A8%E5%B9%B3%E5%9D%87%E8%A1%A8%E9%9D%A2%E7%A7%AF"><span class="nav-number">2.1.1.</span> <span class="nav-text">磷脂头部平均表面积</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%86%9C%E7%9A%84%E5%8F%AF%E5%8E%8B%E7%BC%A9%E5%BA%A6"><span class="nav-number">2.1.2.</span> <span class="nav-text">膜的可压缩度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%AF%86%E5%BA%A6%E5%88%86%E5%B8%83"><span class="nav-number">2.1.3.</span> <span class="nav-text">数密度分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%B5%E5%AD%90%E5%AF%86%E5%BA%A6%E5%88%86%E5%B8%83"><span class="nav-number">2.1.4.</span> <span class="nav-text">电子密度分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E5%BA%8F%E5%BA%A6%E5%8F%82%E6%95%B0-S-z"><span class="nav-number">2.1.5.</span> <span class="nav-text">有序度参数$S_z$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B0%98%E4%BB%A3%E6%9C%89%E5%BA%8F%E5%BA%A6%E5%8F%82%E6%95%B0-S-CD"><span class="nav-number">2.1.6.</span> <span class="nav-text">氘代有序度参数$S_{CD}$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%A7%E5%90%91%E6%89%A9%E6%95%A3%E7%B3%BB%E6%95%B0"><span class="nav-number">2.1.7.</span> <span class="nav-text">侧向扩散系数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A3%B7%E8%84%82%E7%9A%84%E8%BF%90%E5%8A%A8%E8%BD%A8%E8%BF%B9"><span class="nav-number">2.1.8.</span> <span class="nav-text">磷脂的运动轨迹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E4%BA%8C%E9%9D%A2%E8%A7%92%E7%9A%84%E7%BB%9F%E8%AE%A1"><span class="nav-number">2.1.9.</span> <span class="nav-text">特征二面角的统计</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%86%9C%E8%9B%8B%E7%99%BD%E7%9A%84%E6%A8%A1%E6%8B%9F"><span class="nav-number">3.</span> <span class="nav-text">膜蛋白的模拟</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%86%E8%9B%8B%E7%99%BD%E8%B4%A8%E5%B5%8C%E5%85%A5%E8%86%9C%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">3.1.</span> <span class="nav-text">将蛋白质嵌入膜的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B"><span class="nav-number">3.2.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhao Jing"
+      src="/images/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">Zhao Jing</p>
+  <div class="site-description" itemprop="description">做一棵树，只为岁月而生长。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">86</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">99</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhaojing629" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhaojing629" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:295483858@qq.com" title="E-Mail → mailto:295483858@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+<div class="sidebar-categories" p align="left">
+  <font size="2">
+  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/">计算化学</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/%E8%BD%AF%E4%BB%B6/">软件</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E5%8C%96%E5%AD%A6/%E5%8E%9F%E7%90%86/">原理</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%AB%99/">网站</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F/">系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%9E%E5%85%AC/">办公</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%9E%E5%85%AC/%E8%BD%AF%E4%BB%B6/">软件</a></li></ul></li></ul>
+  </font>
+  </p /div>
+
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title"></h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ADF/" rel="tag">ADF</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AIM/" rel="tag">AIM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AMS/" rel="tag">AMS</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASPT2/" rel="tag">CASPT2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASSCF/" rel="tag">CASSCF</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDA/" rel="tag">CDA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CP2K/" rel="tag">CP2K</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CT/" rel="tag">CT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Claude/" rel="tag">Claude</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DLPNO/" rel="tag">DLPNO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GROMACS/" rel="tag">GROMACS</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gaussian/" rel="tag">Gaussian</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HF/" rel="tag">HF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hatree-Fock/" rel="tag">Hatree-Fock</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jahn-Teller/" rel="tag">Jahn-Teller</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jmol/" rel="tag">Jmol</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LmodeA/" rel="tag">LmodeA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCSCF/" rel="tag">MCSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MD/" rel="tag">MD</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MOKIT/" rel="tag">MOKIT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Multiwfn/" rel="tag">Multiwfn</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NBO/" rel="tag">NBO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NICS/" rel="tag">NICS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORCA/" rel="tag">ORCA</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Office/" rel="tag">Office</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PIO/" rel="tag">PIO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pyscf/" rel="tag">Pyscf</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RI%E8%BF%91%E4%BC%BC/" rel="tag">RI近似</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SO/" rel="tag">SO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMD/" rel="tag">VMD</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WIPO/" rel="tag">WIPO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Word/" rel="tag">Word</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/compliance/" rel="tag">compliance</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deepseek/" rel="tag">deepseek</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/molcas/" rel="tag">molcas</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/molpro/" rel="tag">molpro</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vscode/" rel="tag">vscode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%93%E5%88%A9/" rel="tag">专利</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%B4%E7%95%8C%E7%82%B9/" rel="tag">临界点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98/" rel="tag">内存</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E8%83%BD/" rel="tag">内能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="tag">几何优化</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%AD%90%E8%BD%A8%E9%81%93/" rel="tag">分子轨道</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%9D%E7%8C%9C/" rel="tag">初猜</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%9B%E5%B8%B8%E6%95%B0/" rel="tag">力常数</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%82%B9/" rel="tag">单点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag">占据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/" rel="tag">变分法</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%90%E6%A0%87/" rel="tag">坐标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%BB%84/" rel="tag">基组</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E5%8F%82%E8%80%83/" rel="tag">多参考</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BB%84%E6%80%81/" rel="tag">多组态</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A7%9C-%E6%B3%B0%E5%8B%92%E6%95%88%E5%BA%94/" rel="tag">姜-泰勒效应</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag">对称性</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7%E7%A0%B4%E7%BC%BA/" rel="tag">对称性破缺</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E6%89%B0%E7%90%86%E8%AE%BA/" rel="tag">微扰理论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%93%E6%89%91%E5%88%86%E6%9E%90/" rel="tag">拓扑分析</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%94%B6%E6%95%9B/" rel="tag">收敛</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6/" rel="tag">文件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%8B%E8%BD%A8%E8%80%A6%E5%90%88/" rel="tag">旋轨耦合</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag">波函</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BF%80%E5%8F%91/" rel="tag">激发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BF%80%E5%8F%91%E6%80%81/" rel="tag">激发态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag">点群</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%84%93/" rel="tag">焓</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%86%B5/" rel="tag">熵</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E5%AD%90%E6%80%81/" rel="tag">电子态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E8%8D%B7/" rel="tag">电荷</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%BB%E5%9B%BE/" rel="tag">画图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA/" rel="tag">相对论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%9F%BA%E7%BB%84/" rel="tag">相对论基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A3%81%E6%80%A7/" rel="tag">磁性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B2%BE%E5%BA%A6/" rel="tag">精度</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%98%E5%9B%BE/" rel="tag">绘图</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%86%9C/" rel="tag">膜</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%8A%B3%E9%A6%99%E6%80%A7/" rel="tag">芳香性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%96%9B%E5%AE%9A%E8%B0%94%E6%96%B9%E7%A8%8B/" rel="tag">薛定谔方程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%9B%8B%E7%99%BD%E8%B4%A8/" rel="tag">蛋白质</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%9D%E5%8A%BF/" rel="tag">赝势</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%A8%E9%81%93/" rel="tag">轨道</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%85%E5%8A%A9%E5%9F%BA%E7%BB%84/" rel="tag">辅助基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5/" rel="tag">输入</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%87%BA/" rel="tag">输出</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%87%E6%B8%A1%E6%80%81/" rel="tag">过渡态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E5%BE%84/" rel="tag">键径</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E7%BA%A7/" rel="tag">键级</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%B6%E7%82%B9%E8%83%BD/" rel="tag">零点能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%91%E7%8E%87/" rel="tag">频率</a><span class="tag-list-count">2</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-flask"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhao Jing</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">453k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='0,0,0' opacity='0.3' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.1/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : '3L90wCaNUKa1MzSQcAhzkLtk-gzGzoHsz',
+      appKey     : 'fQ4t73jXnb71Y9zQWfXj5bIP',
+      placeholder: "可以输入您发现文中的错误或建议~(。・∀・)ノ",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

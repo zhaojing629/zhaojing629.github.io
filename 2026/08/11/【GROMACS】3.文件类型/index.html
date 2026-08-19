@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2026/08/11/%E3%80%90GROMACS%E3%80%913.%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B/image-20260811102611572.png">
 <meta property="article:published_time" content="2026-08-11T02:14:28.000Z">
-<meta property="article:modified_time" content="2026-08-18T02:33:23.520Z">
+<meta property="article:modified_time" content="2026-08-19T04:22:44.669Z">
 <meta property="article:author" content="Zhao Jing">
 <meta property="article:tag" content="GROMACS">
 <meta property="article:tag" content="文件">
@@ -224,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2026-08-18 10:33:23" itemprop="dateModified" datetime="2026-08-18T10:33:23+08:00">2026-08-18</time>
+                <time title="修改时间：2026-08-19 12:22:44" itemprop="dateModified" datetime="2026-08-19T12:22:44+08:00">2026-08-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -339,7 +339,7 @@
 <h2 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h2><p><img src="image-20260811102611572.png" alt="这是模拟蛋白质在水中的行为的典型 GROMACS 分子动力学运行的流程图。过程中可能需要多次进行能量最小化操作，这些步骤包括以下几个循环：gmx grompp -&gt; gmx mdrun。"></p>
 <ol>
 <li>前处理：<ul>
-<li>建立体系结构文件(<code>.gro</code>)和生成拓扑文件 ( <code>.top</code>) 主要涉及的命令: <code>editconf</code>、 <code>solvate</code> 、 <code>insert-molecules</code>、 <code>genion</code> 、 <code>pdb2gmx</code> 、 <code>x2top</code> 。另涉及make_ndx 、 <code>genrestr</code>等</li>
+<li>建立体系结构文件(<code>.gro</code>)和生成拓扑文件 ( <code>.top</code>) 主要涉及的命令： <code>editconf</code>、 <code>solvate</code> 、 <code>insert-molecules</code>、 <code>genion</code> 、 <code>pdb2gmx</code> 、 <code>x2top</code> 。另涉及make_ndx 、 <code>genrestr</code>等</li>
 <li>对于蛋白质：<ol>
 <li>首先可以使用 <code>gmx editconf</code> 程序来定义围绕分子的一个适当大小的盒子。</li>
 <li><code>gmx solvate</code> 可以将溶质分子（即肽分子）溶解在任何溶剂中。<code>gmx solvate</code> 的输出结果是一个包含在水中溶解后的肽分子的结构文件。此外，<code>gmx solvate</code> 还会修改由 <code>gmx pdb2gmx</code> 生成的分子结构文件，以在结构中添加溶剂信息。</li>
@@ -355,7 +355,7 @@
 </li>
 <li>后处理：<ul>
 <li>对<code>mdrun</code>产生的轨迹文件（<code>.trr</code>或<code>.xtc</code>)、结构文件（<code>.gro</code>)及能量文件(<code>.edr</code>)通过各种命令进行分析处理和提取有用的信息，或对轨迹进行合并/分割/转换等操作。</li>
-<li>涉及的命令:<code>energy</code>、<code>trjconv</code>、<code>trjcat</code>、<code>analyze</code>、<code>spatial</code>、<code>cluster</code>、<code>clustersize</code>、<code>traj</code>、<code>mindist</code>、<code>rdf</code>、<code>gyrate</code>,<code>msd</code>、<code>order</code>、<code>hbond</code>、<code>angle</code>、<code>density</code>、<code>densmap</code>、<code>distance</code>、<code>pairdist</code>、<code>velacc</code>、<code>chi</code>、<code>do_dssp</code>、<code>rama</code>、<code>sasa</code>、<code>anaeig</code>、<code>order</code>、<code>rms</code>、<code>rmsf</code>、<code>dipole</code>、<code>helix</code>、<code>freevolume</code>、<code>h2order</code>、<code>mdmat</code>等等数十种</li>
+<li>涉及的命令：<code>energy</code>、<code>trjconv</code>、<code>trjcat</code>、<code>analyze</code>、<code>spatial</code>、<code>cluster</code>、<code>clustersize</code>、<code>traj</code>、<code>mindist</code>、<code>rdf</code>、<code>gyrate</code>，<code>msd</code>、<code>order</code>、<code>hbond</code>、<code>angle</code>、<code>density</code>、<code>densmap</code>、<code>distance</code>、<code>pairdist</code>、<code>velacc</code>、<code>chi</code>、<code>do_dssp</code>、<code>rama</code>、<code>sasa</code>、<code>anaeig</code>、<code>order</code>、<code>rms</code>、<code>rmsf</code>、<code>dipole</code>、<code>helix</code>、<code>freevolume</code>、<code>h2order</code>、<code>mdmat</code>等等数十种</li>
 </ul>
 </li>
 </ol>
@@ -365,46 +365,46 @@
 <ol>
 <li><p>标题部分：</p>
 <ul>
-<li><p><code>HEADER</code>: 在第一行，分子类, 公布日期, ID号</p>
+<li><p><code>HEADER</code>： 在第一行，分子类， 公布日期， ID号</p>
 </li>
-<li><p><code>TITLE</code>: 说明实验方法类型，对记录的体系的描述</p>
+<li><p><code>TITLE</code>： 说明实验方法类型，对记录的体系的描述</p>
 </li>
-<li><p><code>COMPND</code>: 化合物分子组成</p>
+<li><p><code>COMPND</code>： 化合物分子组成</p>
 </li>
-<li><p><code>SOURCE</code>: 描述记录的生物大分子的来源</p>
+<li><p><code>SOURCE</code>： 描述记录的生物大分子的来源</p>
 </li>
-<li><p><code>REMARK</code>: 注释信息</p>
+<li><p><code>REMARK</code>： 注释信息</p>
 </li>
-<li><p><code>JRNL</code>: 本pdb对应的文献</p>
+<li><p><code>JRNL</code>： 本pdb对应的文献</p>
 </li>
-<li><p><code>AUTHOR</code>: 结构测定者</p>
+<li><p><code>AUTHOR</code>： 结构测定者</p>
 </li>
 </ul>
 </li>
 <li><p>一级结构：</p>
 <ul>
-<li><p><code>SEQRES</code>: 骨架的残基序列</p>
+<li><p><code>SEQRES</code>： 骨架的残基序列</p>
 </li>
-<li><p><code>MODRES</code>: 对标准残基的修改</p>
+<li><p><code>MODRES</code>： 对标准残基的修改</p>
 </li>
 </ul>
 </li>
 <li><p>二级结构：</p>
 <ul>
-<li><code>HELIX</code>、<code>SHEET</code>: alpha螺旋、beta折叠涉及的残基范围</li>
+<li><code>HELIX</code>、<code>SHEET</code>： alpha螺旋、beta折叠涉及的残基范围</li>
 </ul>
 </li>
 <li><p>连接注释：</p>
 <ul>
-<li><p><code>SSBOND</code>: 二硫键。定义半胱氨酸CYS残基之间的二硫键</p>
+<li><p><code>SSBOND</code>： 二硫键。定义半胱氨酸CYS残基之间的二硫键</p>
 </li>
-<li><p><code>LINK</code>: 指认的残基间的键</p>
+<li><p><code>LINK</code>： 指认的残基间的键</p>
 </li>
 </ul>
 </li>
 <li><p>晶胞特征：</p>
 <ul>
-<li><code>CRYST1</code>: 晶胞参数。也可以记录模拟体系盒子参数</li>
+<li><code>CRYST1</code>： 晶胞参数。也可以记录模拟体系盒子参数</li>
 </ul>
 </li>
 <li><p>坐标部分</p>
@@ -434,17 +434,17 @@
 </li>
 <li><p>第九列：元素</p>
 </li>
-<li><code>MODEL</code>: 一个pdb文件也可以记录多个结构(常见于NMR得到的pdb)，也因此可以记录动力学轨迹(但精度低、体积大)。每个结构以<code>MODEL</code>行为开头标注帧号，<code>ENDMDL</code>行为结尾。</li>
+<li><code>MODEL</code>： 一个pdb文件也可以记录多个结构(常见于NMR得到的pdb)，也因此可以记录动力学轨迹(但精度低、体积大)。每个结构以<code>MODEL</code>行为开头标注帧号，<code>ENDMDL</code>行为结尾。</li>
 </ul>
 </li>
 <li><p>连接信息</p>
 <ul>
-<li><code>CONECT</code>: 原子间的连接信息</li>
+<li><code>CONECT</code>： 原子间的连接信息</li>
 </ul>
 </li>
 <li><p>其他：</p>
 <ul>
-<li><code>END</code>: 文件结束. 标志PDB文件的结束, 必需记录</li>
+<li><code>END</code>： 文件结束. 标志PDB文件的结束， 必需记录</li>
 </ul>
 </li>
 </ol>
@@ -530,12 +530,12 @@
 <li><p><code>[ atomtypes ]</code>：  原子类型参数</p>
 <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[ atomtypes ]</span></span><br><span class="line">; 	type	mass	charge	ptype	sigma(nm)	epsilon(kJ/mol)</span><br><span class="line">	<span class="number">0</span>W	<span class="number">15.99940</span>	<span class="number">0.0000</span>	A		<span class="number">3.16655E-01</span>	<span class="number">8.903586E-01</span></span><br><span class="line">	HW	 <span class="number">1.00800</span>	<span class="number">0.0000</span>	A 		<span class="number">0.00000E+00</span>	<span class="number">0.00000E+00</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>type：原子类型名,后续 <code>[ atoms ]</code> 会引用。</li>
-<li>mass / charge:类型层面的默认质量和电荷</li>
+<li>type：原子类型名，后续 <code>[ atoms ]</code> 会引用。</li>
+<li>mass / charge：类型层面的默认质量和电荷</li>
 <li>ptype = A：普通原子类型。</li>
 <li>sigma、epsilon：LJ 参数；OW 有 LJ，HW 设置为 0。<ul>
 <li>OW 表示水氧，承担主要范德华相互作用。sigma = 0.316655 nm，epsilon = 0.8903586 kJ/mol  是水氧 LJ 参数。</li>
-<li>HW 表示水氢,通常不设置 LJ,只参与静电与约束几何。</li>
+<li>HW 表示水氢，通常不设置 LJ，只参与静电与约束几何。</li>
 </ul>
 </li>
 </ul>
@@ -545,8 +545,8 @@
 <ul>
 <li>i、j：相互作用的两个原子类型；</li>
 <li>func = 1 表示 LJ 形式。 </li>
-<li>C、A:该文件写法下的势函数参数；OW–HW 与 HW–HW 为 0</li>
-<li><code>[ nonbond_params ]</code> 会改变特定 pair 的非键相互作用,  需与力场格式保持一致。 水模型拓扑应与主力场文件和 mdp 设置配套使用。 修改该段参数会直接影响水–水及水–其他物质的相互作用。</li>
+<li>C、A：该文件写法下的势函数参数；OW–HW 与 HW–HW 为 0</li>
+<li><code>[ nonbond_params ]</code> 会改变特定 pair 的非键相互作用，  需与力场格式保持一致。 水模型拓扑应与主力场文件和 mdp 设置配套使用。 修改该段参数会直接影响水–水及水–其他物质的相互作用。</li>
 </ul>
 </li>
 <li><p><code>[ moleculetype ]</code> ：分子与排除规则。表示开始定义一个新的分子类型，置于文件开头，下面紧接着定义分子名和<code>nrexcl</code>（nrexcl=<em>n</em>表示不计算≤<em>n</em>个键相连的原子间非键作用，一般为3)。</p>
@@ -578,7 +578,7 @@
 <li>第6列cgnr：电荷组编号。</li>
 <li>第7列charge：原子电荷</li>
 <li>第8列mass：原子质量<ul>
-<li>质量用于积分运动方程,与时间步长稳定性有关。 质量在 [ atoms ] 中明确列出，优先用于该分 子。实际模拟中分子数量由 .top 文件的 [ molecules ] 指 定。</li>
+<li>质量用于积分运动方程，与时间步长稳定性有关。 质量在 [ atoms ] 中明确列出，优先用于该分 子。实际模拟中分子数量由 .top 文件的 [ molecules ] 指 定。</li>
 </ul>
 </li>
 </ul>
@@ -612,14 +612,14 @@
 <li><p><code>[ settles/bonds/angles ]</code>  刚性或柔性水</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#ifndef FLEXIBLE					表示默认使用刚性水</span></span><br><span class="line">[ <span class="string">settles</span> ]							<span class="string">用解析算法保持水分子几何</span></span><br><span class="line"><span class="string">;</span>	<span class="string">i</span>	<span class="string">funct</span>	<span class="string">doh</span>		<span class="string">dhh</span>			<span class="string">doh</span> <span class="string">O–H</span> <span class="string">键长;dhh</span> <span class="string">H–H</span> <span class="string">距离。</span></span><br><span class="line">	<span class="number">1</span>	<span class="number">1</span>		<span class="number">0.1</span>		<span class="number">0.16330</span>	</span><br><span class="line"><span class="comment">#else								柔性水：若定义 FLEXIBLE，则改用键伸缩和角弯曲势。</span></span><br><span class="line">[ <span class="string">bonds</span> ] <span class="attr">0-H:</span> <span class="string">r0=0.1000</span> <span class="string">nm,</span> <span class="string">k=3.45E+05</span></span><br><span class="line">[ <span class="string">angles</span> ] <span class="attr">H-0-H:</span> <span class="string">a0=109.47&quot;,</span> <span class="string">k=3.83E+02</span></span><br><span class="line"><span class="comment">#endif</span></span><br><span class="line">[ <span class="string">exclusions</span> ]</span><br><span class="line"><span class="number">1</span> <span class="number">2</span> <span class="number">3</span><span class="string">/</span> <span class="number">2</span> <span class="number">1</span> <span class="number">3</span> <span class="string">/</span> <span class="number">3</span> <span class="number">1</span> <span class="number">2</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>柔性模型计算更重,时间步长通常更保守</li>
+<li>柔性模型计算更重，时间步长通常更保守</li>
 </ul>
 </li>
 <li><p><code>[ exclusions ]</code>：定义哪些原子间的非键作用被忽略掉</p>
 <ul>
 <li>明确排除同一水分子内部 OW 与两个 HW 之间的非键相互作用。 </li>
 <li>避免分子内静电或 LJ 相互作用与约束/键角项重复计入。 </li>
-<li>对刚性小分子水模型,这是保持拓扑一致性的关键段落。</li>
+<li>对刚性小分子水模型，这是保持拓扑一致性的关键段落。</li>
 </ul>
 </li>
 </ul>
@@ -638,7 +638,7 @@
 </ul>
 <h2 id="注意事项-1"><a href="#注意事项-1" class="headerlink" title="注意事项"></a>注意事项</h2><p>拓扑文件与结构文件的对应关系问题：</p>
 <ul>
-<li><p>只有拓扑文件对应的原子顺序与结构文件(一般为gro、pdb)的原子顺序完全一致时计算才有意义，否则参数会匹配错乱，导致结果离谱或者崩溃。为此，必须满足:</p>
+<li><p>只有拓扑文件对应的原子顺序与结构文件(一般为gro、pdb)的原子顺序完全一致时计算才有意义，否则参数会匹配错乱，导致结果离谱或者崩溃。为此，必须满足：</p>
 <ul>
 <li><p>top文件里[molecules ]中分子出现顺序必须和结构文件里严格一致。如</p>
 <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[ molecules ]</span></span><br><span class="line">SOL <span class="number">100</span></span><br><span class="line">MOL <span class="number">8</span></span><br><span class="line">SOL <span class="number">20</span></span><br></pre></td></tr></table></figure>
@@ -671,34 +671,34 @@
 </li>
 </ul>
 <h2 id="运行控制"><a href="#运行控制" class="headerlink" title="运行控制"></a>运行控制</h2><ul>
-<li><strong><code>integrator</code>: 决定当前任务干什么</strong><ul>
-<li><code>md</code>(默认):leap-frog方式做动力学</li>
-<li><code>md-wv</code>:用Velocity-Verlet方式做动力学，在功能上有一些限制</li>
-<li><code>sd</code>:做随机动力学(Langevin动力学)</li>
-<li><code>bd</code>:做布朗动力学</li>
-<li><code>steep</code>:用最陡下降法做能量极小化</li>
-<li><code>cg</code>:用共轭梯度法做能量极小化(不支持约束)</li>
-<li><code>l-bfgs</code>:用L-BFGS准牛顿法做能量极小化，比较准确、收敛性好但耗时高</li>
-<li><code>nm</code>:做正则振动分析(必须双精度版)</li>
+<li><strong><code>integrator</code>： 决定当前任务干什么</strong><ul>
+<li><code>md</code>(默认)：leap-frog方式做动力学</li>
+<li><code>md-wv</code>：用Velocity-Verlet方式做动力学，在功能上有一些限制</li>
+<li><code>sd</code>：做随机动力学(Langevin动力学)</li>
+<li><code>bd</code>：做布朗动力学</li>
+<li><code>steep</code>：用最陡下降法做能量极小化</li>
+<li><code>cg</code>：用共轭梯度法做能量极小化(不支持约束)</li>
+<li><code>l-bfgs</code>：用L-BFGS准牛顿法做能量极小化，比较准确、收敛性好但耗时高</li>
+<li><code>nm</code>：做正则振动分析(必须双精度版)</li>
 </ul>
 </li>
-<li><code>tinit</code>:动力学开始的时间(ps)。默认0</li>
-<li><code>dt</code>:动力学步长(ps)。默认0.001(即1fs)</li>
+<li><code>tinit</code>：动力学开始的时间(ps)。默认0</li>
+<li><code>dt</code>：动力学步长(ps)。默认0.001(即1fs)</li>
 <li><code>nsteps</code>：动力学或能量极小化的步数上限<ul>
 <li>总模拟时长=dt*nsteps</li>
 </ul>
 </li>
-<li><code>comm-mode</code>:设定消除整体运动的方式<ul>
-<li><code>Linear</code>(默认):消除质心平动速度</li>
-<li><code>Angular</code>:消除质心平动速度与绕着质心的转动速度</li>
-<li><code>Linear-acceleration-correction</code>:同Linear,但还假定体系存在质心常加速度并消除之</li>
-<li><code>None</code>:不消除(通常加外力时应当用none)</li>
+<li><code>comm-mode</code>：设定消除整体运动的方式<ul>
+<li><code>Linear</code>(默认)：消除质心平动速度</li>
+<li><code>Angular</code>：消除质心平动速度与绕着质心的转动速度</li>
+<li><code>Linear-acceleration-correction</code>：同Linear，但还假定体系存在质心常加速度并消除之</li>
+<li><code>None</code>：不消除(通常加外力时应当用none)</li>
 </ul>
 </li>
 <li><code>nstcomm</code>：每多少步消除一次整体运动，默认100步</li>
-<li><code>comm-grps</code>:对哪个组消除整体运动，默认是system</li>
+<li><code>comm-grps</code>：对哪个组消除整体运动，默认是system</li>
 </ul>
-<h3 id="多时间步长"><a href="#多时间步长" class="headerlink" title="多时间步长"></a>多时间步长</h3><p>GROMACS2021版开始支持多时间步长(multiple timing-stepping,mts)节约耗时。例如可以成键、1-4作用造成的受力每步都计算，而高耗时的非键作用力每两步更新一次，在相同计算量下可以跑近乎双倍的时间。由于非键作用力随时间变化远小于成键作用的，因此此做法造成的不良影响在一般可容忍范围内。但由于此做法尚未流行，需慎用。</p>
+<h3 id="多时间步长"><a href="#多时间步长" class="headerlink" title="多时间步长"></a>多时间步长</h3><p>GROMACS2021版开始支持多时间步长(multiple timing-stepping，mts)节约耗时。例如可以成键、1-4作用造成的受力每步都计算，而高耗时的非键作用力每两步更新一次，在相同计算量下可以跑近乎双倍的时间。由于非键作用力随时间变化远小于成键作用的，因此此做法造成的不良影响在一般可容忍范围内。但由于此做法尚未流行，需慎用。</p>
 <ul>
 <li><code>mts =yes</code>：默认<code>NO</code></li>
 <li><code>mts-levels=2</code>：默认，而且只能为2</li>
@@ -706,22 +706,22 @@
 <li><code>mts-level2-factor =2</code>（令level2组每2步算一次受力)</li>
 </ul>
 <h2 id="能量极小化参数"><a href="#能量极小化参数" class="headerlink" title="能量极小化参数"></a>能量极小化参数</h2><ul>
-<li><strong><code>emtol</code>:能量极小化时最大受力小于多少就认为己收敛(kJ/mol/nm)。默认为</strong><br><strong>10.0</strong></li>
-<li><strong><code>emstep</code>:最陡下降法最大步长(nm)，默认0.01</strong></li>
+<li><strong><code>emtol</code>：能量极小化时最大受力小于多少就认为己收敛(kJ/mol/nm)。默认为</strong><br><strong>10.0</strong></li>
+<li><strong><code>emstep</code>：最陡下降法最大步长(nm)，默认0.01</strong></li>
 <li><code>nstcgsteep</code>：每做多少步共轭梯度极小化时做一次最陡下降法极小化，默认为1000。这种组合使用比单独用共轭梯度法效果往往更好</li>
 </ul>
 <h2 id="输出控制"><a href="#输出控制" class="headerlink" title="输出控制"></a>输出控制</h2><ul>
-<li><strong><code>nstxout</code>:每多少步输出一次坐标到trr文件</strong></li>
-<li><code>nstvout</code>:每多少步输出一次速度到trr文件</li>
-<li><code>nstfout</code>:每多少步输出一次受力到tr文件</li>
-<li><code>nstxout-compressed</code>:每多少步输出一次坐标到xtc文件</li>
+<li><strong><code>nstxout</code>：每多少步输出一次坐标到trr文件</strong></li>
+<li><code>nstvout</code>：每多少步输出一次速度到trr文件</li>
+<li><code>nstfout</code>：每多少步输出一次受力到tr文件</li>
+<li><code>nstxout-compressed</code>：每多少步输出一次坐标到xtc文件</li>
 </ul>
 <p>以上4个默认为0，即不输出</p>
 <ul>
-<li><code>compressed-x-grps</code>:选择输出到xtc文件的group,默认为system</li>
-<li><strong><code>nstlog</code>:每多少步输出一次各种能量、属性信息到log文件，默认为1000</strong></li>
-<li><strong><code>nstenergy</code>:每多少步输出一次能量信息到.edr文件，默认为1000。应是计算能量频率(由<code>nstcalcenergy</code>设定，默认100)的倍数</strong></li>
-<li><code>energygrps</code>:将哪个group的短程非键作用能输出到.edr文件中。例如设AB则.edr里会包含A、B组自身的以及它们之问的短程非键作用能信息。GPU加速时不支持</li>
+<li><code>compressed-x-grps</code>：选择输出到xtc文件的group，默认为system</li>
+<li><strong><code>nstlog</code>：每多少步输出一次各种能量、属性信息到log文件，默认为1000</strong></li>
+<li><strong><code>nstenergy</code>：每多少步输出一次能量信息到.edr文件，默认为1000。应是计算能量频率(由<code>nstcalcenergy</code>设定，默认100)的倍数</strong></li>
+<li><code>energygrps</code>：将哪个group的短程非键作用能输出到.edr文件中。例如设AB则.edr里会包含A、B组自身的以及它们之问的短程非键作用能信息。GPU加速时不支持</li>
 <li>xtc/edr/trr第一帧对应初始时刻信息。初始时刻和最终时刻信息总会被输出到log和edr中</li>
 </ul>
 <h2 id="邻居列表生成方式"><a href="#邻居列表生成方式" class="headerlink" title="邻居列表生成方式"></a>邻居列表生成方式</h2><p>有verlet和基于charge group两种方式构建邻居列表</p>
@@ -742,14 +742,14 @@
 </ul>
 <h3 id="周期性设定"><a href="#周期性设定" class="headerlink" title="周期性设定"></a>周期性设定</h3><ul>
 <li><strong><code>pbc</code></strong><ul>
-<li><strong><code>xyz</code>(默认):在x/y/z方向都用周期性</strong></li>
-<li><code>xy</code>:只在xy方向上用周期性</li>
-<li><code>no</code>:不用周期性，此时通常应当将所有<code>cutoff</code>设0，即每一步都计算所有粒子间非键作用，且将<code>nstlist</code>也设0，即只在第一步构建一次邻居列表</li>
+<li><strong><code>xyz</code>(默认)：在x/y/z方向都用周期性</strong></li>
+<li><code>xy</code>：只在xy方向上用周期性</li>
+<li><code>no</code>：不用周期性，此时通常应当将所有<code>cutoff</code>设0，即每一步都计算所有粒子间非键作用，且将<code>nstlist</code>也设0，即只在第一步构建一次邻居列表</li>
 </ul>
 </li>
-<li><code>periodic-molecules</code>:说明模拟体系是否有首尾相接的周期性分子(如无限长纳米管)<ul>
-<li><code>no</code>(默认):不是周期性分子</li>
-<li><code>yes</code>:是周期性分子</li>
+<li><code>periodic-molecules</code>：说明模拟体系是否有首尾相接的周期性分子(如无限长纳米管)<ul>
+<li><code>no</code>(默认)：不是周期性分子</li>
+<li><code>yes</code>：是周期性分子</li>
 </ul>
 </li>
 </ul>
@@ -757,45 +757,45 @@
 <li><p><strong><code>coulombtype</code>：设静电作用的计算方式</strong></p>
 <ul>
 <li><code>cut-off</code>（默认）：简单截断方法</li>
-<li><code>Ewald</code>:Ewald方法</li>
-<li><strong><code>PME</code>:SPME方法</strong></li>
-<li><code>P3M-AD</code>:带解析导数的PPPME方法，精度比PME略微高一点</li>
-<li><code>Reaction-Field</code>:反应场方法，圆球外介电常数用epsilon-rf设定</li>
-<li><code>User</code>:使用用户在table.xvg中定义的静电作用的列表势(从2020版开始不再支持。）</li>
+<li><code>Ewald</code>：Ewald方法</li>
+<li><strong><code>PME</code>：SPME方法</strong></li>
+<li><code>P3M-AD</code>：带解析导数的PPPME方法，精度比PME略微高一点</li>
+<li><code>Reaction-Field</code>：反应场方法，圆球外介电常数用epsilon-rf设定</li>
+<li><code>User</code>：使用用户在table.xvg中定义的静电作用的列表势(从2020版开始不再支持。）</li>
 </ul>
 </li>
-<li><p><code>rcoulomb</code>:对截断方法义cutoff值:对Ewald/PME/P3M-AD定义实空间中计算短程静电作用的距离值;对反应场方法定义圆球半径。默认为1nm</p>
+<li><p><code>rcoulomb</code>：对截断方法义cutoff值：对Ewald/PME/P3M-AD定义实空间中计算短程静电作用的距离值;对反应场方法定义圆球半径。默认为1nm</p>
 </li>
-<li><code>epsilon-r</code>:相对介电常数，默认为1。如果设0代表无穷大(等价于忽略体系中静电相互作用，但不能由此达到省时间目的。此时必须用<code>coulombtype=cut-off</code>否则会报错</li>
+<li><code>epsilon-r</code>：相对介电常数，默认为1。如果设0代表无穷大(等价于忽略体系中静电相互作用，但不能由此达到省时间目的。此时必须用<code>coulombtype=cut-off</code>否则会报错</li>
 </ul>
 <h2 id="范德华作用的计算设定"><a href="#范德华作用的计算设定" class="headerlink" title="范德华作用的计算设定"></a>范德华作用的计算设定</h2><ul>
-<li><p><code>vdwtype</code>:设定范德华作用的计算方式</p>
+<li><p><code>vdwtype</code>：设定范德华作用的计算方式</p>
 <ul>
-<li><code>Cut-off</code>:截断方式计算</li>
-<li><code>PME</code>:PME方式计算</li>
-<li><code>User</code>:使用用户在table.xvg中定义的范德华作用的列表势(从2020版开始不再支持)</li>
+<li><code>Cut-off</code>：截断方式计算</li>
+<li><code>PME</code>：PME方式计算</li>
+<li><code>User</code>：使用用户在table.xvg中定义的范德华作用的列表势(从2020版开始不再支持)</li>
 </ul>
 </li>
-<li><p><code>rvdw</code>:范德华作用距离(nm)，默认为1nm</p>
+<li><p><code>rvdw</code>：范德华作用距离(nm)，默认为1nm</p>
 <ul>
-<li>一 般令 rcoulomb=rvdw 。原理上数值越大色散 作用精度越高,越小计算速度越快。建议根 据所用力场参数化时的参数恰当设定数值.</li>
+<li>一 般令 rcoulomb=rvdw 。原理上数值越大色散 作用精度越高，越小计算速度越快。建议根 据所用力场参数化时的参数恰当设定数值.</li>
 </ul>
 </li>
-<li><p><code>vdw-modifier</code>:设定如何修改范德华势</p>
+<li><p><code>vdw-modifier</code>：设定如何修改范德华势</p>
 <ul>
-<li><code>Potential-shift-Verlet</code>(默认):对范德华势进行shif使得cutoff处数值为0，不会增加耗时</li>
-<li><code>None</code>:不对范德华势做任何修改</li>
-<li><code>Force-switch</code>, <code>Potential-switch</code>: 用switchingfunction分别使得范德华力、势从rvdw-switchrvdw范围间平滑切换到0，会增加耗时</li>
+<li><code>Potential-shift-Verlet</code>(默认)：对范德华势进行shif使得cutoff处数值为0，不会增加耗时</li>
+<li><code>None</code>：不对范德华势做任何修改</li>
+<li><code>Force-switch</code>， <code>Potential-switch</code>： 用switchingfunction分别使得范德华力、势从rvdw-switchrvdw范围间平滑切换到0，会增加耗时</li>
 </ul>
 </li>
-<li><p><code>DispCorr</code>:对色散作用的长程校正</p>
+<li><p><code>DispCorr</code>：对色散作用的长程校正</p>
 <ul>
-<li><p><code>no</code>(默认):不做校正</p>
+<li><p><code>no</code>(默认)：不做校正</p>
 </li>
-<li><p><code>EnerPres</code>:对能量和压力都做校正</p>
+<li><p><code>EnerPres</code>：对能量和压力都做校正</p>
 </li>
-<li><p><code>Ener</code>:只对能量做校正</p>
-<p>盒子被原子填满的情况一般建议用<code>EnerPres</code>,其它情况用<code>no</code></p>
+<li><p><code>Ener</code>：只对能量做校正</p>
+<p>盒子被原子填满的情况一般建议用<code>EnerPres</code>，其它情况用<code>no</code></p>
 </li>
 </ul>
 </li>
@@ -803,17 +803,17 @@
 <p>≥2018 版的非键作用通常情况下的推荐设定</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">cutoff-scheme</span>=verlet</span><br><span class="line"><span class="attr">coulombtype</span>=PME</span><br><span class="line"><span class="attr">rcoulomb</span>=<span class="number">1.0</span></span><br><span class="line"><span class="attr">vdwtype</span>=cut-<span class="literal">off</span></span><br><span class="line"><span class="attr">rvdw</span>=<span class="number">1.0</span></span><br><span class="line"><span class="attr">DispCorr</span>=EnerPres</span><br></pre></td></tr></table></figure>
 <h2 id="与键有关的设定"><a href="#与键有关的设定" class="headerlink" title="与键有关的设定"></a>与键有关的设定</h2><ul>
-<li><code>constraints</code>:设定约束方式。约束的参考值是拓扑文件里定义的平衡坐标<ul>
+<li><code>constraints</code>：设定约束方式。约束的参考值是拓扑文件里定义的平衡坐标<ul>
 <li><code>none</code>（默认)：不做约束</li>
-<li><code>h-bonds</code>:约束与氢相连的键。如果还要约束与之相关的键角用<code>h-angles</code></li>
+<li><code>h-bonds</code>：约束与氢相连的键。如果还要约束与之相关的键角用<code>h-angles</code></li>
 <li><code>all-bonds</code>：约束所有的键</li>
-<li><code>all-angles</code>:约束所有键、键角</li>
+<li><code>all-angles</code>：约束所有键、键角</li>
 <li><strong>主流力场普遍是对h-bonds约束做的参数化，对重原子之间都是特意给定了力常数的。</strong></li>
 </ul>
 </li>
 <li><code>constraint-algorithm</code>：设定约束算法<ul>
 <li><code>LINCS</code>(默认)：使用LINCS方法约束，但不能约束键角</li>
-<li><code>SHAKE</code>:使用SHAKE方法约束，没LINCS稳健，且不能用于能量极小化</li>
+<li><code>SHAKE</code>：使用SHAKE方法约束，没LINCS稳健，且不能用于能量极小化</li>
 </ul>
 </li>
 <li>continuation：是否对初始结构做约束。<ul>
@@ -826,66 +826,66 @@
 </ul>
 <p>控压只影响MD过程，在能量极小化过程中叩便用了压浴，盒子尺寸也不会发生变化</p>
 <h2 id="压浴设定"><a href="#压浴设定" class="headerlink" title="压浴设定"></a>压浴设定</h2><ul>
-<li><code>pcoupl</code>:选择压浴<ul>
-<li><code>no</code>(默认):不使用压浴</li>
-<li><code>Berendsen</code>: 使用Berendsen压浴。常用于预平衡,不严格产生 NPT 系综。</li>
-<li><code>Parrinello-Rahman</code>: 用Parrinello-Rahman浴</li>
-<li><code>C-rescale</code>:stochastic cell rescaling压浴 (2021版入)</li>
+<li><code>pcoupl</code>：选择压浴<ul>
+<li><code>no</code>(默认)：不使用压浴</li>
+<li><code>Berendsen</code>： 使用Berendsen压浴。常用于预平衡，不严格产生 NPT 系综。</li>
+<li><code>Parrinello-Rahman</code>： 用Parrinello-Rahman浴</li>
+<li><code>C-rescale</code>：stochastic cell rescaling压浴 (2021版入)</li>
 </ul>
 </li>
-<li><p><code>pcoupltype</code>:选择控压方式</p>
+<li><p><code>pcoupltype</code>：选择控压方式</p>
 <ul>
-<li><code>isotropic</code>:各方向等比例缩放盒子,适合各向同性液体或溶液。</li>
-<li><code>semiisotropic</code>:半各项同性控压，即xy方向上和z方向上分别控压。相关参数(compressibility、ref-p)因此需要设定两套。对于界面体系、膜体系有用</li>
-<li><code>anisotropic</code>:各问异性控压，相关参数需要对xx,Wy,zz,xy/yx;xz/zx,yz/zy分别输入。若非对角元值都设为0则矩形盒子会一直保持矩形而不会歪斜</li>
-<li><code>surface-tension</code>:对xly方向按照指定的表面张力值对盒子进行调节，而z方向还是用普通控压</li>
+<li><code>isotropic</code>：各方向等比例缩放盒子，适合各向同性液体或溶液。</li>
+<li><code>semiisotropic</code>：半各项同性控压，即xy方向上和z方向上分别控压。相关参数(compressibility、ref-p)因此需要设定两套。对于界面体系、膜体系有用</li>
+<li><code>anisotropic</code>：各问异性控压，相关参数需要对xx，Wy，zz，xy/yx;xz/zx，yz/zy分别输入。若非对角元值都设为0则矩形盒子会一直保持矩形而不会歪斜</li>
+<li><code>surface-tension</code>：对xly方向按照指定的表面张力值对盒子进行调节，而z方向还是用普通控压</li>
 </ul>
 </li>
 <li><p><code>nstpcouple</code>：每多少步做一次控压。通常用默认的-1即可，含义对于不同版本有所不同。对于2018版默认值相当于nstpcouple=10，而从2023版开始为了降低耗时面将默认值对应的控压步数间隔设得较大（极个别<br>时候可能导致控压不稳定)</p>
 </li>
 <li><p><code>tau-p</code>：控压的时间常数(ps)，数值较大时体积调节更平缓。</p>
 </li>
-<li><p><code>compressibility</code>:可压缩系数（bar）通常用水在1atm、298.5K下的值4.5E-5bar，0代表不可压缩</p>
+<li><p><code>compressibility</code>：可压缩系数（bar）通常用水在1atm、298.5K下的值4.5E-5bar，0代表不可压缩</p>
 </li>
-<li><p><code>ref-p</code>:控压的参考压力(bar)。通常设1或1.01325</p>
+<li><p><code>ref-p</code>：控压的参考压力(bar)。通常设1或1.01325</p>
 </li>
-<li><p><code>refcoord-scaling</code>:设置使用控压调节盒子尺寸时怎么处理位置限制对应的参考坐标</p>
+<li><p><code>refcoord-scaling</code>：设置使用控压调节盒子尺寸时怎么处理位置限制对应的参考坐标</p>
 <ul>
-<li><p>no:不修改参考坐标</p>
+<li><p>no：不修改参考坐标</p>
 </li>
 <li><p>all：所有参考坐标以盒子为比例调节</p>
 </li>
-<li><p>com:只按照盒子比例调节被限制的部分的质心，</p>
+<li><p>com：只按照盒子比例调节被限制的部分的质心，</p>
 <p>而原子的参考坐标相对于质心的坐标不变。通常使用这个以避免被限制的分子的结构变形</p>
 </li>
 </ul>
 </li>
 </ul>
 <h2 id="热浴设定"><a href="#热浴设定" class="headerlink" title="热浴设定"></a>热浴设定</h2><ul>
-<li><p><code>tcoupl</code>:选择热浴</p>
+<li><p><code>tcoupl</code>：选择热浴</p>
 <ul>
-<li><code>no</code>(默认):不用热浴</li>
-<li><code>berendsen</code>: Berendsen热浴</li>
-<li><code>nose-hoover</code>: Nose-Hoover热浴，适合产生正则系综。</li>
-<li><code>v-rescale</code>:Velocity-rescale热浴</li>
+<li><code>no</code>(默认)：不用热浴</li>
+<li><code>berendsen</code>： Berendsen热浴</li>
+<li><code>nose-hoover</code>： Nose-Hoover热浴，适合产生正则系综。</li>
+<li><code>v-rescale</code>：Velocity-rescale热浴</li>
 </ul>
 </li>
-<li><p><code>nsttcouple</code>:每多少步做一次控温。默认为-1，即使用<code>nstlist</code>的值，通常是合适的</p>
+<li><p><code>nsttcouple</code>：每多少步做一次控温。默认为-1，即使用<code>nstlist</code>的值，通常是合适的</p>
 </li>
-<li><code>tc-grps</code>:控温组，默认为system。可以设定对多个组单独控温，如Protein SOL</li>
-<li><code>tau-t</code>:控温的时间常数(ps)，需要对每个控温组都设定。-1代表不做控温</li>
-<li><code>ref-t</code>:参考温度(K)，需要对每个控温组都设定<br>使用热浴时，每个原子都必须属于一个控温组。但可以把某个组的tau-t设为-1代表对之不控温，由此可以研究诸如热传导问题。</li>
+<li><code>tc-grps</code>：控温组，默认为system。可以设定对多个组单独控温，如Protein SOL</li>
+<li><code>tau-t</code>：控温的时间常数(ps)，需要对每个控温组都设定。-1代表不做控温</li>
+<li><code>ref-t</code>：参考温度(K)，需要对每个控温组都设定<br>使用热浴时，每个原子都必须属于一个控温组。但可以把某个组的tau-t设为-1代表对之不控温，由此可以研究诸如热传导问题。</li>
 </ul>
 <h2 id="退火设定"><a href="#退火设定" class="headerlink" title="退火设定"></a>退火设定</h2><ul>
 <li><code>annealing</code><ul>
-<li><code>no</code>(默认):不做退火</li>
-<li><code>single</code>:单次退火。如果模拟时间超过最后退火点则会一直维持此温度</li>
-<li><code>periodic</code>:每次达到最后退火点时从最初退火点温度重新开始，反复周期性循环直到模拟结束</li>
+<li><code>no</code>(默认)：不做退火</li>
+<li><code>single</code>：单次退火。如果模拟时间超过最后退火点则会一直维持此温度</li>
+<li><code>periodic</code>：每次达到最后退火点时从最初退火点温度重新开始，反复周期性循环直到模拟结束</li>
 </ul>
 </li>
-<li><code>annealing-npoints</code>:对每个控温组设定退火点数目</li>
-<li><code>annealing-time</code>:对每个控温组设定每个退火点的时间(ps)</li>
-<li><code>annealing-temp</code>:对每个控温组设定每个退火点的温度(K)</li>
+<li><code>annealing-npoints</code>：对每个控温组设定退火点数目</li>
+<li><code>annealing-time</code>：对每个控温组设定每个退火点的时间(ps)</li>
+<li><code>annealing-temp</code>：对每个控温组设定每个退火点的温度(K)</li>
 </ul>
 <h2 id="初始速度生成设定"><a href="#初始速度生成设定" class="headerlink" title="初始速度生成设定"></a>初始速度生成设定</h2><ul>
 <li><p><code>gen-vel</code></p>
@@ -895,20 +895,20 @@
 </ul>
 <p>通常情况不是必须用<code>gen-vel</code>产生初速度，哪怕没有初速度信息（即初速度为0）。由于通常都会使用热浴，因此原子速度会自然而然地逐渐变化到指定的参考温度状态。</p>
 <ul>
-<li>有些情况则需要用<code>gen-vel</code>，如:<ul>
+<li>有些情况则需要用<code>gen-vel</code>，如：<ul>
 <li>若能量极小化极其精确，原子受力都将几乎严格为0，因而也不会自发地带来速度。此时在大多数控温算法下，速度会一直很接近0，经过很长时间都升不到期望的温度</li>
 <li>做多次平行模拟以避免单次模拟的偶然性时，应当用<code>gen_vel</code>并结合赝随机数，以在每次模拟时都拥有不同的随机初速度</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p><code>gen-temp</code>:产生的初速度对应的温度(K)，默认为300</p>
+<li><p><code>gen-temp</code>：产生的初速度对应的温度(K)，默认为300</p>
 </li>
-<li><p><code>gen-seed</code>:随机数的种子。默认为-1，对应赝随机数</p>
-<p>注:用<code>gen-vel= yes</code>时不宜结合较高的<code>gen-temp</code>，否则有可能有些原子初速度过大，导致一开始动力学出现不稳定、崩溃。应当用较低的gen-temp(如100K)，然后通过控温的自发过程，或者指定退火方式，使温度最终达到期望值。</p>
+<li><p><code>gen-seed</code>：随机数的种子。默认为-1，对应赝随机数</p>
+<p>注：用<code>gen-vel= yes</code>时不宜结合较高的<code>gen-temp</code>，否则有可能有些原子初速度过大，导致一开始动力学出现不稳定、崩溃。应当用较低的gen-temp(如100K)，然后通过控温的自发过程，或者指定退火方式，使温度最终达到期望值。</p>
 </li>
 </ul>
-<h2 id="外电场设定"><a href="#外电场设定" class="headerlink" title="外电场设定"></a>外电场设定</h2><h2 id=""><a href="#" class="headerlink" title=" "></a> </h2><p><code>ns_type</code>：<code>grid</code>：采用网格法进行邻域搜索,提高非键相互作用搜索效率。</p>
+<h2 id="外电场设定"><a href="#外电场设定" class="headerlink" title="外电场设定"></a>外电场设定</h2><h2 id=""><a href="#" class="headerlink" title=" "></a> </h2><p><code>ns_type</code>：<code>grid</code>：采用网格法进行邻域搜索，提高非键相互作用搜索效率。</p>
 <p>pme_order：PME 插值阶数为 4;常见且稳定的默认选择。</p>
 <p>fourierspacing：PME 傅里叶网格间距;越小通常越精确但更耗时。</p>
 <p>gen_vel no 不重新生成初速度;通常从输入结构/重启文件读取速度。</p>
@@ -1046,7 +1046,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">85</span>
+          <span class="site-state-item-count">86</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1057,7 +1057,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">98</span>
+        <span class="site-state-item-count">99</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1086,7 +1086,7 @@
     <h3 class="widget-title"></h3>
     <div id="myCanvasContainer" class="widget tagcloud">
         <canvas width="250" height="250" id="resCanvas" style="width=100%">
-            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ADF/" rel="tag">ADF</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AIM/" rel="tag">AIM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AMS/" rel="tag">AMS</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASPT2/" rel="tag">CASPT2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASSCF/" rel="tag">CASSCF</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDA/" rel="tag">CDA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CP2K/" rel="tag">CP2K</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CT/" rel="tag">CT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Claude/" rel="tag">Claude</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DLPNO/" rel="tag">DLPNO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GROMACS/" rel="tag">GROMACS</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gaussian/" rel="tag">Gaussian</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HF/" rel="tag">HF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hatree-Fock/" rel="tag">Hatree-Fock</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jahn-Teller/" rel="tag">Jahn-Teller</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jmol/" rel="tag">Jmol</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LmodeA/" rel="tag">LmodeA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCSCF/" rel="tag">MCSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MD/" rel="tag">MD</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MOKIT/" rel="tag">MOKIT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Multiwfn/" rel="tag">Multiwfn</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NBO/" rel="tag">NBO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NICS/" rel="tag">NICS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORCA/" rel="tag">ORCA</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Office/" rel="tag">Office</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PIO/" rel="tag">PIO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pyscf/" rel="tag">Pyscf</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RI%E8%BF%91%E4%BC%BC/" rel="tag">RI近似</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SO/" rel="tag">SO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMD/" rel="tag">VMD</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WIPO/" rel="tag">WIPO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Word/" rel="tag">Word</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/compliance/" rel="tag">compliance</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deepseek/" rel="tag">deepseek</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/molcas/" rel="tag">molcas</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/molpro/" rel="tag">molpro</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vscode/" rel="tag">vscode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%93%E5%88%A9/" rel="tag">专利</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%B4%E7%95%8C%E7%82%B9/" rel="tag">临界点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98/" rel="tag">内存</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E8%83%BD/" rel="tag">内能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="tag">几何优化</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%AD%90%E8%BD%A8%E9%81%93/" rel="tag">分子轨道</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%9D%E7%8C%9C/" rel="tag">初猜</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%9B%E5%B8%B8%E6%95%B0/" rel="tag">力常数</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%82%B9/" rel="tag">单点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag">占据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/" rel="tag">变分法</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%90%E6%A0%87/" rel="tag">坐标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%BB%84/" rel="tag">基组</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E5%8F%82%E8%80%83/" rel="tag">多参考</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BB%84%E6%80%81/" rel="tag">多组态</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A7%9C-%E6%B3%B0%E5%8B%92%E6%95%88%E5%BA%94/" rel="tag">姜-泰勒效应</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag">对称性</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7%E7%A0%B4%E7%BC%BA/" rel="tag">对称性破缺</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E6%89%B0%E7%90%86%E8%AE%BA/" rel="tag">微扰理论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%93%E6%89%91%E5%88%86%E6%9E%90/" rel="tag">拓扑分析</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%94%B6%E6%95%9B/" rel="tag">收敛</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6/" rel="tag">文件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%8B%E8%BD%A8%E8%80%A6%E5%90%88/" rel="tag">旋轨耦合</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag">波函</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BF%80%E5%8F%91/" rel="tag">激发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BF%80%E5%8F%91%E6%80%81/" rel="tag">激发态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag">点群</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%84%93/" rel="tag">焓</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%86%B5/" rel="tag">熵</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E5%AD%90%E6%80%81/" rel="tag">电子态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E8%8D%B7/" rel="tag">电荷</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%BB%E5%9B%BE/" rel="tag">画图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA/" rel="tag">相对论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%9F%BA%E7%BB%84/" rel="tag">相对论基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A3%81%E6%80%A7/" rel="tag">磁性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B2%BE%E5%BA%A6/" rel="tag">精度</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%98%E5%9B%BE/" rel="tag">绘图</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%8A%B3%E9%A6%99%E6%80%A7/" rel="tag">芳香性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%96%9B%E5%AE%9A%E8%B0%94%E6%96%B9%E7%A8%8B/" rel="tag">薛定谔方程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%9B%8B%E7%99%BD%E8%B4%A8/" rel="tag">蛋白质</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%9D%E5%8A%BF/" rel="tag">赝势</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%A8%E9%81%93/" rel="tag">轨道</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%85%E5%8A%A9%E5%9F%BA%E7%BB%84/" rel="tag">辅助基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5/" rel="tag">输入</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%87%BA/" rel="tag">输出</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%87%E6%B8%A1%E6%80%81/" rel="tag">过渡态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E5%BE%84/" rel="tag">键径</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E7%BA%A7/" rel="tag">键级</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%B6%E7%82%B9%E8%83%BD/" rel="tag">零点能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%91%E7%8E%87/" rel="tag">频率</a><span class="tag-list-count">2</span></li></ul>
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ADF/" rel="tag">ADF</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AIM/" rel="tag">AIM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AMS/" rel="tag">AMS</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASPT2/" rel="tag">CASPT2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CASSCF/" rel="tag">CASSCF</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDA/" rel="tag">CDA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/" rel="tag">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CP2K/" rel="tag">CP2K</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CT/" rel="tag">CT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Claude/" rel="tag">Claude</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DLPNO/" rel="tag">DLPNO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GROMACS/" rel="tag">GROMACS</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gaussian/" rel="tag">Gaussian</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HF/" rel="tag">HF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hatree-Fock/" rel="tag">Hatree-Fock</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jahn-Teller/" rel="tag">Jahn-Teller</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jmol/" rel="tag">Jmol</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LmodeA/" rel="tag">LmodeA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MCSCF/" rel="tag">MCSCF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MD/" rel="tag">MD</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MOKIT/" rel="tag">MOKIT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Multiwfn/" rel="tag">Multiwfn</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NBO/" rel="tag">NBO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NICS/" rel="tag">NICS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORCA/" rel="tag">ORCA</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Office/" rel="tag">Office</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PIO/" rel="tag">PIO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pyscf/" rel="tag">Pyscf</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RI%E8%BF%91%E4%BC%BC/" rel="tag">RI近似</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCF/" rel="tag">SCF</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SO/" rel="tag">SO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/" rel="tag">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMD/" rel="tag">VMD</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WIPO/" rel="tag">WIPO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Word/" rel="tag">Word</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/compliance/" rel="tag">compliance</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deepseek/" rel="tag">deepseek</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/molcas/" rel="tag">molcas</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/molpro/" rel="tag">molpro</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vscode/" rel="tag">vscode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%93%E5%88%A9/" rel="tag">专利</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%B4%E7%95%8C%E7%82%B9/" rel="tag">临界点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E8%B0%B1%E9%A1%B9/" rel="tag">光谱项</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98/" rel="tag">内存</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E8%83%BD/" rel="tag">内能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%A0%E4%BD%95%E4%BC%98%E5%8C%96/" rel="tag">几何优化</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%AD%90%E8%BD%A8%E9%81%93/" rel="tag">分子轨道</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%9D%E7%8C%9C/" rel="tag">初猜</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%9B%E5%B8%B8%E6%95%B0/" rel="tag">力常数</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E7%82%B9/" rel="tag">单点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A0%E6%8D%AE/" rel="tag">占据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/" rel="tag">变分法</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%90%E6%A0%87/" rel="tag">坐标</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%BB%84/" rel="tag">基组</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E5%8F%82%E8%80%83/" rel="tag">多参考</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BB%84%E6%80%81/" rel="tag">多组态</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A7%9C-%E6%B3%B0%E5%8B%92%E6%95%88%E5%BA%94/" rel="tag">姜-泰勒效应</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7/" rel="tag">对称性</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E6%80%A7%E7%A0%B4%E7%BC%BA/" rel="tag">对称性破缺</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E6%89%B0%E7%90%86%E8%AE%BA/" rel="tag">微扰理论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%93%E6%89%91%E5%88%86%E6%9E%90/" rel="tag">拓扑分析</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%94%B6%E6%95%9B/" rel="tag">收敛</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6/" rel="tag">文件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%8B%E8%BD%A8%E8%80%A6%E5%90%88/" rel="tag">旋轨耦合</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%A2%E5%87%BD/" rel="tag">波函</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BF%80%E5%8F%91/" rel="tag">激发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BF%80%E5%8F%91%E6%80%81/" rel="tag">激发态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%82%B9%E7%BE%A4/" rel="tag">点群</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%84%93/" rel="tag">焓</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%86%B5/" rel="tag">熵</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E5%AD%90%E6%80%81/" rel="tag">电子态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%B5%E8%8D%B7/" rel="tag">电荷</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%BB%E5%9B%BE/" rel="tag">画图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA/" rel="tag">相对论</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9B%B8%E5%AF%B9%E8%AE%BA%E5%9F%BA%E7%BB%84/" rel="tag">相对论基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A3%81%E6%80%A7/" rel="tag">磁性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B2%BE%E5%BA%A6/" rel="tag">精度</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%98%E5%9B%BE/" rel="tag">绘图</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%83%BD%E9%87%8F%E5%88%86%E8%A7%A3/" rel="tag">能量分解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%86%9C/" rel="tag">膜</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%8A%B3%E9%A6%99%E6%80%A7/" rel="tag">芳香性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%96%9B%E5%AE%9A%E8%B0%94%E6%96%B9%E7%A8%8B/" rel="tag">薛定谔方程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%9B%8B%E7%99%BD%E8%B4%A8/" rel="tag">蛋白质</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%9D%E5%8A%BF/" rel="tag">赝势</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%A8%E9%81%93/" rel="tag">轨道</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%85%E5%8A%A9%E5%9F%BA%E7%BB%84/" rel="tag">辅助基组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5/" rel="tag">输入</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%87%BA/" rel="tag">输出</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%87%E6%B8%A1%E6%80%81/" rel="tag">过渡态</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E5%BE%84/" rel="tag">键径</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%AE%E7%BA%A7/" rel="tag">键级</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%B6%E7%82%B9%E8%83%BD/" rel="tag">零点能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%91%E7%8E%87/" rel="tag">频率</a><span class="tag-list-count">2</span></li></ul>
         </canvas>
     </div>
 </div>
@@ -1126,7 +1126,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">434k</span>
+    <span title="站点总字数">453k</span>
 </div>
 
         
