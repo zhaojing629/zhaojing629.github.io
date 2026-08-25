@@ -11709,7 +11709,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </ol>
 <h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
 <li><p>获得蛋白质的pdb文件后一定要仔细从头看一遍REMARK段落，其中记录了许多信息。尤其注意搜索MISSING，寻找记录了结构缺失的信息，如：</p>
-<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="comment">REMARK 465 MISSING RESIDUES                                                     </span></span><br><span class="line"><span class="comment">REMARK 465 THE FOLLOWING RESIDUES WERE NOT LOCATED IN THE                       </span></span><br><span class="line"><span class="comment">REMARK 465 EXPERIMENT. (M=MODEL NUMBER; RES=RESIDUE NAME; C=CHAIN               </span></span><br><span class="line"><span class="comment">REMARK 465 IDENTIFIER; SSSEQ=SEQUENCE NUMBER; I=INSERTION CODE.)                </span></span><br><span class="line"><span class="comment">REMARK 465                                                                      </span></span><br><span class="line"><span class="comment">REMARK 465   M RES C SSSEQI                                                     </span></span><br><span class="line"><span class="comment">REMARK 465     MET E     0                                                      </span></span><br><span class="line"><span class="comment">REMARK 465     LYS E     1                                                      </span></span><br><span class="line"><span class="comment">REMARK 465     THR E     2                                                    </span></span><br></pre></td></tr></table></figure>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="comment">REMARK 465 MISSING RESIDUES                                 REMARK 465 THE FOLLOWING RESIDUES WERE NOT LOCATED IN THE   REMARK 465 EXPERIMENT. (M=MODEL NUMBER; RES=RESIDUE NAME; C=CHAIN               </span></span><br><span class="line"><span class="comment">REMARK 465 IDENTIFIER; SSSEQ=SEQUENCE NUMBER; I=INSERTION CODE.)                </span></span><br><span class="line"><span class="comment">REMARK 465                                                   REMARK 465   M RES C SSSEQI                                 REMARK 465     MET E     0                                   REMARK 465     LYS E     1                                   REMARK 465     THR E     2                                                   </span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>下载PDB的数据库：</p>
 <ul>
@@ -12338,7 +12338,7 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <li><code>-r</code>：位置限制文件(使用位置限制时才需要)</li>
 <li><code>-n</code>(非必须)：索引文件</li>
 <li><code>-o</code>：<code>.tpr</code>文件</li>
-<li><code>-pp</code>选项可以输出一个<code>processed.top</code>，是预处理器处理top文件后的结果，所有include的文件都会被展开，对ga_1之类参数的引用也直接被实际的参数所替换。</li>
+<li><strong><code>-pp</code>选项可以输出一个<code>processed.top</code>，是预处理器处理top文件后的结果，所有include的文件都会被展开，对ga_1之类参数的引用也直接被实际的参数所替换。</strong></li>
 <li><code>-maxwarn [数目]</code>：可以设允许最多出现多少个Warmning而不终止运行。默认只要出现Wamning则grompp就会终止。<ul>
 <li>grompp给出的所有Warning都应当留意，往往暗示出输入文件里的错误，若轻易无视之可能模拟崩溃或者得到无意义的结果。</li>
 </ul>
@@ -12514,6 +12514,9 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <li>当节点内n核并行时，top命令看到的gmx进程的CPU占用率原理上应接近n*100%</li>
 </ul>
 </li>
+<li><strong><code>-ntmpi</code> (MPI进程数)</strong>：指定<strong>MPI进程（或thread-MPI ranks）</strong> 的数量。默认值<code>0</code>表示：有GPU时，每个GPU分配一个rank；无GPU时，每个物理核心分配一个rank。例如：<code>gmx mdrun -ntmpi 2</code>。</li>
+<li><strong><code>-ntomp</code> (OpenMP线程数)</strong>：指定每个MPI进程内的<strong>OpenMP线程数</strong>。例如：<code>gmx mdrun -ntmpi 2 -ntomp 4</code> 会启动2个MPI进程，每个进程使用4个OpenMP线程。</li>
+<li></li>
 <li><code>-pin on</code>：将线程和CPU核心绑定，避免系统随意调度导致性能损失。</li>
 <li><code>-pinoffset [id]</code>:<code>-pin on</code>时绑定的CPU核心从第id个核开始算，第一个核心id为0。此选项默认为0。如果同时跑多个任务且用<code>-pin on</code>，总应当结合<code>-pinoffset</code>避免有的核心同时做两个任务</li>
 <li><code>-pinstride [int]</code>:<code>-pin on</code>时绑定的核的序号的间隔。通常设为1，使得被绑定的核的序号挨着</li>
@@ -12592,8 +12595,14 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </ul>
 <p>以下如果都要交互式选择，则用<code>-inter</code>选项：</p>
 <ul>
-<li><code>-lys</code>、<code>-arg</code>、<code>-asp</code>、<code>-glu</code>、<code>-gin</code>、<code>-his</code>：交互式选择这些残基的质子化态。默认是除了HIS都设为带电状态，HIS自动根据形成氢键最优方式判断是否两个氮都质子化(带电)或者中性时氢在哪个氮上</li>
-<li><code>-ss</code>：交互式方式选择如何设定二硫键</li>
+<li><code>-[no]ss</code>：交互式地选择二硫键            </li>
+<li><code>-[no]ter</code>：交互式地选择蛋白末端, 默认带电 </li>
+<li><code>-[no]lys</code> ：交互式地选择lys赖氨酸类型, 默认带电            </li>
+<li><code>-[no]arg</code> ：交互式地选择arg精氨酸类型, 默认带电            </li>
+<li><code>-[no]asp</code>：交互式地选择asp天冬氨酸类型, 默认带电          </li>
+<li><code>-[no]glu</code>：交互式地选择glu谷氨酸类型, 默认带电            </li>
+<li><code>-[no]gln</code>：交互式地选择gln谷氨酰胺类型, 默认中性          </li>
+<li><code>-[no]his</code>：交互式地选择his组胺酸类型, 默认通过检查氢键判断</li>
 </ul>
 <h2 id="pdb2gmx利用的文件"><a href="#pdb2gmx利用的文件" class="headerlink" title="pdb2gmx利用的文件"></a><code>pdb2gmx</code>利用的文件</h2><p>（在力场文件夹中，<code>pdb2gmx</code>按照此顺序处理： r2b→hdb→ rtp→tdb）</p>
 <ul>
@@ -13787,7 +13796,7 @@ B_A=(8/3)\times \pi^2 \times \mathrm{RMSF}_A^2</script><p>pdb中的B因子单位
 <figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">gmx genion -s <span class="selector-tag">em</span><span class="selector-class">.tpr</span> -<span class="selector-tag">p</span> topol<span class="selector-class">.top</span> -o system<span class="selector-class">.gro</span> -neutral </span><br></pre></td></tr></table></figure>
 </li>
 <li><p>能量极小化</p>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">gmx grompp -f <span class="selector-tag">em</span><span class="selector-class">.mdp</span> -c system<span class="selector-class">.gro</span> -<span class="selector-tag">p</span> topol<span class="selector-class">.top</span> -o <span class="selector-tag">em</span><span class="selector-class">.tpr</span> -maxwarn <span class="number">1</span></span><br><span class="line">gmx mdrun -v -deffnm em</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">gmx grompp -f <span class="selector-tag">em</span><span class="selector-class">.mdp</span> -c system<span class="selector-class">.gro</span> -<span class="selector-tag">p</span> topol<span class="selector-class">.top</span> -o <span class="selector-tag">em</span><span class="selector-class">.tpr</span> -maxwarn <span class="number">1</span></span><br><span class="line">gmx mdrun -v -deffnm em</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">gmx grompp -f step6.<span class="number">0</span>_minimization<span class="selector-class">.mdp</span> -o step6.<span class="number">0</span><span class="selector-class">.tpr</span> -c step5_input<span class="selector-class">.gro</span> -r step5_input<span class="selector-class">.gro</span> -<span class="selector-tag">p</span> topol<span class="selector-class">.top</span> -n index.ndx</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>对蛋白质施加限制势做短时间动力学模拟，以令溶剂充分弛豫</p>
 <figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">gmx grompp -f pr<span class="selector-class">.mdp</span> -c <span class="selector-tag">em</span><span class="selector-class">.gro</span> -<span class="selector-tag">p</span> topol<span class="selector-class">.top</span> -r <span class="selector-tag">em</span><span class="selector-class">.gro</span> -o pr<span class="selector-class">.tpr</span> -maxwarn <span class="number">1</span></span><br><span class="line">gmx mdrun -v -deffnm pr</span><br></pre></td></tr></table></figure>
@@ -14709,10 +14718,96 @@ S_{CD}=\frac{3\left\langle\cos ^{2} \theta_{CD}\right\rangle-1}{2}</script><p>�
 <ul>
 <li><p>将1a11.pdb、dppc128_40ns.pdb<br>、dppc_53a6.itp复制到1a11目录下</p>
 </li>
-<li><p>产生1a11的拓扑文件：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">  </span><br></pre></td></tr></table></figure>
+<li><p>产生1a11的拓扑文件：(选G54A7力场，SPC水)</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">gmx pdb2gmx -f <span class="number">1</span>a11<span class="selector-class">.pdb</span> -o protein<span class="selector-class">.pdb</span> -<span class="selector-tag">p</span> topol<span class="selector-class">.top</span> -ignh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在topol.top中添加对dppc_53a6.itp的引用，并且在<code>[ molecules ]</code>的<strong><font color=red>开头</font></strong>添加与dppc128_40ns.pdb对应的DPPC 128和SOL 3655</p>
+</li>
+<li><p>把protein.pdb的内容到dppc128_40ns.pdb的最后，保存为mix_prior.pdb。用VMD载入之。用pbcbox显示出盒子边框，关闭水和磷脂的显示，然后建立一个选择范围为protein的描述，然后按数字键9(根据描述方式设定移动对象)，参照盒子边框调整好蛋白相对于磷脂膜的位置和朝向后，重新显示磷脂看插入位置是否合适，确认无误后保存为mix.pdb</p>
+<ul>
+<li><p>pbc box</p>
+</li>
+<li><p>Display→Orthographic</p>
+</li>
+<li><p>确保选中的是protein</p>
+<p><img src="/image-20260819164247470.png" alt="image-20260819164247470"></p>
+<p><img src="/image-20260819164330149.png" alt="image-20260819164330149"></p>
+</li>
+<li><p>通过9和R调整蛋白质，9的时候shift蛋白质可以旋转，最后将蛋白质放在x、y、z三个方向都是中间</p>
+<p><img src="/image-20260819165625672.png" alt="image-20260819165625672"></p>
 </li>
 </ul>
+</li>
+<li><p>基于常规MD的mdp文件编写蛋白插入磷脂过程的mdp文件insert.mdp，要点:</p>
+<ul>
+<li><p>模拟步数设1000</p>
+</li>
+<li><p>xtc保存频率建议设50，以便监控插入过程</p>
+</li>
+<li><p>以下内容必须有:（新版gromacs不支持energygrp_excl = Protein Protein）</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">energygrps = Protein</span><br><span class="line">cutoff-scheme = group</span><br><span class="line">freezegrps = Proteinfreezedim = Y Y Y</span><br><span class="line">energygrp_excl = Protein Protein</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>步长建议设1fs</p>
+</li>
+</ul>
+</li>
+<li><p>编写插入蛋白过程的控制文件membed.dat</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">nxy</span>                      = <span class="number">1000</span></span><br><span class="line"><span class="attr">nz</span>                       = <span class="number">0</span></span><br><span class="line"><span class="attr">xyinit</span>                   = <span class="number">0.100000</span></span><br><span class="line"><span class="attr">xyend</span>                    = <span class="number">1.000000</span></span><br><span class="line"><span class="attr">zinit</span>                    = <span class="number">1.000000</span></span><br><span class="line"><span class="attr">zend</span>                     = <span class="number">1.000000</span></span><br><span class="line"><span class="attr">rad</span>                      = <span class="number">0.200000</span></span><br><span class="line"><span class="attr">ndiff</span>                    = <span class="number">0</span></span><br><span class="line"><span class="attr">maxwarn</span>                  = <span class="number">10</span></span><br><span class="line"><span class="attr">pieces</span>                   = <span class="number">1</span></span><br><span class="line"><span class="attr">asymmetry</span>                = <span class="literal">no</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>这代表一开始把蛋白在xy方向收缩到原本的0.1倍大小(xyinit)，在1000步(nxy)的MD过程中，逐渐膨胀到原先大小(xyend)。z方向尺寸始终不变。允许最多有10个警告。</li>
+<li>如果模拟时提示水不能被SETTLE，在确认建模合理的前提下把rad逐渐调大再试，或尝试重新搭结构。rad是检测膜与被嵌入的组之间的重叠的探针半径。默认0.22nm</li>
+</ul>
+</li>
+<li><p>当前体系不是电中性，加抗衡离子，选择替换掉SOL:</p>
+<ul>
+<li>产生临时tpr文件</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">gmx grompp -f insert<span class="selector-class">.mdp</span> -c mix<span class="selector-class">.pdb</span> -<span class="selector-tag">p</span> topol<span class="selector-class">.top</span> -o insert<span class="selector-class">.tpr</span> -maxwarn <span class="number">10</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>替换离子</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">gmx genion -s insert<span class="selector-class">.tpr</span> -<span class="selector-tag">p</span> topol<span class="selector-class">.top</span> -o init<span class="selector-class">.gro</span> -neutral</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将topol.top复制个备份topol_init.top(免得插入膜时候程序崩溃而此文件又被改乱)</p>
+</li>
+<li><p>执行以下命令把膜插进去</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">gmx grompp -f insert<span class="selector-class">.mdp</span> -c init<span class="selector-class">.gro</span> -<span class="selector-tag">p</span> topol<span class="selector-class">.top</span> -o insert<span class="selector-class">.tpr</span> -maxwarn <span class="number">10</span></span><br><span class="line">gmx mdrun -v -deffnm insert -membed membed<span class="selector-class">.dat</span> -mp topol.<span class="attribute">top</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>第一个组选Protein，第二个组选DPPC(注:如果用自定义组，需要用<code>-mn</code>结合索引文件)</p>
+</li>
+</ul>
+<ul>
+<li><p>运行：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">make_ndx</span> <span class="selector-tag">-f</span> <span class="selector-tag">insert</span><span class="selector-class">.gro</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>输入：将蛋白和DPPC组成新的组Protein DPPC</p>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">10 </span>| <span class="number">2</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将模拟DPPC时候的md.mdp拷来，作如下修改</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">comm</span>-grps = Protein_DPPC Water_and_ions</span><br><span class="line"><span class="attribute">tc_grps</span> = Protein DPPC Water_and_ion</span><br><span class="line"><span class="attribute">stau</span> t =<span class="number">0</span>.<span class="number">2</span> <span class="number">0</span>.<span class="number">2</span> <span class="number">0</span>.<span class="number">2</span></span><br><span class="line"><span class="attribute">ref</span> t = <span class="number">325</span> <span class="number">325</span> <span class="number">325</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>把md.mdp复制成pr.mdp，用来做200 ps限制性动力学，使得模拟过程中给蛋白位置施加限制势，对水在Z方向也施加限制势，免得在磷脂弛豫之前水趁机溜进蛋白与磷脂的缝隙。</p>
+<ul>
+<li><p>在pr.mdp中设置200ps模拟时间，并且做以下设置</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">define</span> = -DPOSRES -DPOSRES_WATER</span><br><span class="line"><span class="attr">refcoord_scaling</span> = com</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在topol.top里把水的限制势的x和y分量都设0</p>
+</li>
+</ul>
+</li>
+<li><p>运行以下命令开始200ps限制性动力学模拟</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">gmx grompp -f pr<span class="selector-class">.mdp</span> -c insert<span class="selector-class">.gro</span> -<span class="selector-tag">p</span> topol<span class="selector-class">.top</span> -o pr<span class="selector-class">.tpr</span> -nindex<span class="selector-class">.ndx</span> -r insert.gro</span><br><span class="line">gmx mdrun -v -deffnm pr</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行以下命令开始2ns动力学模拟</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">gmx grompp -f md<span class="selector-class">.mdp</span> -c pr<span class="selector-class">.gro</span> -<span class="selector-tag">p</span> topol<span class="selector-class">.top</span> -o md<span class="selector-class">.tpr</span> -n</span><br><span class="line">index.ndx</span><br><span class="line">gmx mdrun -v -deffnm md</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>保持磷脂完整并去除水：输出组都选non-Water</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">trjconv</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.gro</span> <span class="selector-tag">-s</span> <span class="selector-tag">md</span><span class="selector-class">.tpr</span> <span class="selector-tag">-o</span> <span class="selector-tag">fixed_nowat</span><span class="selector-class">.gro</span> <span class="selector-tag">-pbc</span> <span class="selector-tag">mol</span></span><br><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">trjconv</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.xtc</span> <span class="selector-tag">-s</span> <span class="selector-tag">md</span><span class="selector-class">.tpr</span> <span class="selector-tag">-o</span> <span class="selector-tag">fixed_nowat</span><span class="selector-class">.xtc</span> <span class="selector-tag">-pbc</span> <span class="selector-tag">mol</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="使用inasne-py"><a href="#使用inasne-py" class="headerlink" title="使用inasne.py"></a>使用inasne.py</h1><p>地址： <a href="https://github.com/Tsjerk/Insane">https://github.com/Tsjerk/Insane</a></p>
+<p>安装：</p>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line">pip <span class="keyword">install</span> insane</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>计算化学</category>
@@ -14722,6 +14817,166 @@ S_{CD}=\frac{3\left\langle\cos ^{2} \theta_{CD}\right\rangle-1}{2}</script><p>�
         <tag>GROMACS</tag>
         <tag>蛋白质</tag>
         <tag>膜</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Pymol】常见指令</title>
+    <url>/2026/08/20/%E3%80%90Pymol%E3%80%91%E5%B8%B8%E8%A7%81%E6%8C%87%E4%BB%A4/</url>
+    <content><![CDATA[<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>pymol有两个版本，<a href="https://pymol.org/">官网</a>：</p>
+<ul>
+<li>官方商业版</li>
+<li>开源版</li>
+</ul>
+<p>安装方法wiki上有：<a href="https://pymolwiki.org/Windows_Install">Windows Install - PyMOL Wiki</a></p>
+<ul>
+<li>直接使用一键安装（只试了这种方法）</li>
+<li></li>
+</ul>
+<h1 id="软件界面"><a href="#软件界面" class="headerlink" title="软件界面"></a>软件界面</h1><p>参考：<a href="https://pengpengyang94.github.io/2020/08/pymol安装及入门笔记/">PyMOL：安装及入门笔记</a></p>
+<p><img src="/hHvMG3aV5nJks1r-17871970420692.png" alt="pymol-1-1.png"></p>
+<ul>
+<li>① 菜单栏</li>
+<li>红框部分为 <strong>External GUI</strong>，可以点击 <code>Display</code> - <code>External GUI</code> - <code>Toggle Floating</code> 或使用快捷键 <code>Ctrl + E</code> 将该部分与初始界面分离或合并。<ul>
+<li>② 操作记录窗口</li>
+<li>③ 常用命令窗口</li>
+<li>④ 命令输入窗口</li>
+</ul>
+</li>
+<li>⑤ 可视化窗口</li>
+<li>⑥ 对象窗口，显示编辑的文件，类似于图层的概念。</li>
+<li>⑦ 模式窗口，主要控制鼠标的控制模式</li>
+</ul>
+<h2 id="①-菜单栏"><a href="#①-菜单栏" class="headerlink" title="① 菜单栏"></a>① 菜单栏</h2><h3 id="File"><a href="#File" class="headerlink" title="File"></a>File</h3><ul>
+<li><p>Get PDB：直接通过PDB序列号载入文件，只需在红框中填入 四字母的 <strong>PDB ID</strong>（如 <strong>4hbk</strong>），点击下方的 <strong>Download</strong> 即可。</p>
+<p><img src="/UNT3iOZIrnuHVWy.png" alt="pymol-1-2.png"></p>
+</li>
+</ul>
+<h3 id="Display"><a href="#Display" class="headerlink" title="Display"></a>Display</h3><ul>
+<li>Background：设置背景颜色</li>
+<li></li>
+</ul>
+<h2 id="⑥-对象窗口"><a href="#⑥-对象窗口" class="headerlink" title="⑥ 对象窗口"></a>⑥ 对象窗口</h2><p><img src="/6zitKXBQgsFdvHr.png" alt="pymol-1-3.png"></p>
+<ul>
+<li><code>all</code> 代表的是其中包含的所有项目</li>
+<li><code>4hbk</code> 是载入的蛋白</li>
+<li><code>（sele）</code>是鼠标目前选中的氨基酸</li>
+</ul>
+<p>每个项目中后面均有A、S、H、L 和 C 五个选项，意义如下：</p>
+<ul>
+<li>A: Action，包含放大、剧中，复制，显示及比对等一系列的操作。</li>
+<li>S: Show，设置不同的显示方式。<ul>
+<li><code>as</code>：改变外观为 xxx</li>
+<li>其他选项：在原有的基础上，添加XXX这一层外观</li>
+</ul>
+</li>
+<li>H: Hide，隐藏显示的方式，与 S 基本对应。</li>
+<li>L: Label，设置不同的标记方式。</li>
+<li>C: Color，设置不同的着色方式。</li>
+</ul>
+<h3 id="A-Action"><a href="#A-Action" class="headerlink" title="A: Action"></a>A: Action</h3><p><img src="/EBNCqgaej2DVO4F.png" alt="pymol-1-4.png"></p>
+<ul>
+<li><p><strong>preset</strong> 可以便捷的修改显示方式，主要有以下几种显示方式：</p>
+<ul>
+<li><p>simple：简单形式</p>
+</li>
+<li><p>ball and stick：球棍模型</p>
+</li>
+<li><p>b-factor putty：基于 b-factor 数值显示蛋白的柔性</p>
+</li>
+<li><p>ligand sites：查看小分子和蛋白的氢键作用</p>
+</li>
+<li><p>pretty：美观的 cartoon 样式</p>
+</li>
+<li><p>publication：高质量出版标准</p>
+</li>
+</ul>
+</li>
+<li><p>generate：显示蛋白的静电势图</p>
+<ul>
+<li>vacuum_electrostatics - protein contact potentia</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li>rename object：重命名</li>
+<li>Copy to object：复制</li>
+<li>delete object：删除</li>
+</ul>
+<hr>
+<ul>
+<li>Hydrogens：氢原子的相关操作<ul>
+<li><code>add</code>：增加所有氢原子</li>
+<li><code>add polar</code>：增加极性氢原子</li>
+<li><code>remove</code>：删除所有氢原子</li>
+<li><code>remove non polar</code>：删除所有非极性氢原子</li>
+</ul>
+</li>
+<li>remove waters：删除水分子</li>
+</ul>
+<hr>
+<h3 id="L-Label"><a href="#L-Label" class="headerlink" title="L: Label"></a>L: Label</h3><p><img src="/image-20260820120801107.png" alt="image-20260820120801107"></p>
+<p>择好需要 <strong>Lable</strong> 的对象后，可以对其进行如下不同方式的标记。</p>
+<ul>
+<li><code>L</code> - <code>clear</code>：删除该对象上所有的 <strong>Label</strong></li>
+<li><code>L</code> - <code>residue</code>：在 α 碳原子上标记其氨基酸残基<strong>三</strong>字母名字和编号</li>
+<li><code>L</code> - <code>residue（oneletter）</code>：标记其氨基酸残基<strong>一</strong>字母名字和编号</li>
+</ul>
+<ul>
+<li><code>L</code> - <code>element symbol</code>：显示对象上所有原子的元素名字</li>
+<li><code>L</code> - <code>one letter code</code>：标记其氨基酸残基<strong>一</strong>字母名字</li>
+<li></li>
+<li><code>L</code> - <code>vdw radius</code>：显示原子的范德华半径</li>
+<li></li>
+</ul>
+<h3 id="C-Color"><a href="#C-Color" class="headerlink" title="C: Color"></a>C: Color</h3><ul>
+<li><code>C</code> - <code>by element</code>：按原子类型着色</li>
+<li><code>C</code> - <code>by chain</code>：按链着色</li>
+<li><code>C</code> - <code>by ss</code>：按二级结构着色</li>
+<li><code>C</code> - <code>reds</code>：整体标红</li>
+</ul>
+<h2 id="⑦-模式窗口"><a href="#⑦-模式窗口" class="headerlink" title="⑦ 模式窗口"></a>⑦ 模式窗口</h2><ul>
+<li>点击<strong>模式窗口</strong>中的 <strong>S</strong>可以显示显示结构序列（或<code>Display</code> - <code>Sequence</code> ）</li>
+</ul>
+<p><img src="/vyENThLGwrKk4Rn.png" alt="pymol-1-7.png"></p>
+<h2 id="切换工作路径及载入文件"><a href="#切换工作路径及载入文件" class="headerlink" title="切换工作路径及载入文件"></a>切换工作路径及载入文件</h2><ul>
+<li><p>不同项目使用不同的工作路径：</p>
+<ul>
+<li><p><code>File</code> - <code>Working Directory</code> - <code>Change...</code> 来切换路径，也可以输入指令进行切换</p>
+<figure class="highlight taggerscript"><table><tr><td class="code"><pre><span class="line"># 切换至 C:<span class="symbol">\U</span>sers<span class="symbol">\D</span>ELL<span class="symbol">\D</span>esktop<span class="symbol">\p</span>ymol<span class="symbol">\p</span>db </span><br><span class="line">cd C:<span class="symbol">\U</span>sers<span class="symbol">\D</span>ELL<span class="symbol">\D</span>esktop<span class="symbol">\p</span>ymol<span class="symbol">\p</span>db</span><br><span class="line"># 查看当前工作路径</span><br><span class="line">pwd</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>载入文件有三种方式：</p>
+<ul>
+<li><p>点击 <code>File</code> - <code>Open...</code> 加载文件</p>
+</li>
+<li><p>拖拽文件至可视化窗口</p>
+</li>
+<li><p>使用 <code>load</code>指令</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"># 加载 <span class="selector-tag">protein</span><span class="selector-class">.pdb</span> </span><br><span class="line"><span class="selector-tag">load</span> <span class="selector-tag">protein</span><span class="selector-class">.pdb</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="常见指令"><a href="#常见指令" class="headerlink" title="常见指令"></a>常见指令</h1><h2 id="align"><a href="#align" class="headerlink" title="align"></a>align</h2><p>对齐两个相似蛋白质结构：</p>
+<figure class="highlight d"><table><tr><td class="code"><pre><span class="line"><span class="keyword">align</span> your_structure, 目标结构</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在 <code>align</code> 命令中，将移动对象指定为 <strong><code>A or L</code></strong>（即同时选中蛋白质和配体）。PyMOL会使用A的原子与B进行匹配计算，但最终会将计算出的旋转平移矩阵，同时应用到A和L这两个对象上。</li>
+</ul>
+<figure class="highlight d"><table><tr><td class="code"><pre><span class="line"><span class="keyword">align</span> (A or L), B</span><br></pre></td></tr></table></figure>
+<h2 id="matrix-copy"><a href="#matrix-copy" class="headerlink" title="matrix_copy"></a>matrix_copy</h2><figure class="highlight dns"><table><tr><td class="code"><pre><span class="line">matrix_copy <span class="keyword">A</span>, L</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这个命令会将对象A的旋转和平移矩阵直接应用到对象L上，配体L会瞬间移动到对齐后的A的正确口袋位置中。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算化学</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>输入</tag>
+        <tag>Pyscf</tag>
       </tags>
   </entry>
 </search>
