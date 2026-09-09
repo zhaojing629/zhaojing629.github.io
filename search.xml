@@ -11227,43 +11227,6 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
       </tags>
   </entry>
   <entry>
-    <title>Claude Code + VS code 安装教程</title>
-    <url>/2026/07/07/Claude%20Code%20+%20VS%20code%20%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</url>
-    <content><![CDATA[<h1 id="安装Claude"><a href="#安装Claude" class="headerlink" title="安装Claude"></a>安装Claude</h1><p>参考来源：<a href="https://zhuanlan.zhihu.com/p/2004150496781410721">https://zhuanlan.zhihu.com/p/2004150496781410721</a></p>
-<ol>
-<li><p>首先安装好<a href="https://git-scm.com/">Git</a>和<a href="https://nodejs.org/en/">Node.js</a></p>
-</li>
-<li><p>使用npm全局安装：</p>
- <figure class="highlight coffeescript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">npm</span> install -g @anthropic-ai/claude-code</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装完成后验证：</p>
-<figure class="highlight ada"><table><tr><td class="code"><pre><span class="line">claude <span class="comment">--version</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="安装VScode-Claude"><a href="#安装VScode-Claude" class="headerlink" title="安装VScode+Claude"></a>安装VScode+Claude</h1><p>参考来源：<a href="https://zhuanlan.zhihu.com/p/2038567190648074568">https://zhuanlan.zhihu.com/p/2038567190648074568</a></p>
-<ol>
-<li><p>VScode官网下载安装即可</p>
-</li>
-<li><p>在扩展里输入“Chinese”下载第一个更改语言</p>
-</li>
-<li><p>在扩展里搜索“claude code”安装“claude code for vs code”</p>
-</li>
-<li><p>进入“claude code for vs code”的设置界面，找到在 settings.json中编辑<br> 下面的json可从提示位置直接复制粘贴，注意代码中记得换上你自己申请的deepseek密钥。<br> 以下添加的配置本质就是更改了claude code的环境变量，让其调用deepseek-v4大模型。</p>
- <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;files.autoSave&quot;</span>: <span class="string">&quot;onWindowChange&quot;</span>,</span><br><span class="line">    <span class="comment">//&quot;python.defaultInterpreterPath&quot;: &quot;D:\\software\\anaconda3\\python.exe&quot;,</span></span><br><span class="line">    <span class="attr">&quot;notebook.output.textLineLimit&quot;</span>: <span class="number">50</span>,</span><br><span class="line">    <span class="attr">&quot;notebook.output.linkifyFilePaths&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;workbench.editor.enablePreview&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;workbench.colorTheme&quot;</span>: <span class="string">&quot;One Dark Modern&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;vscode-office.pasterImgPath&quot;</span>: <span class="string">&quot;$&#123;fileName&#125;.assets/$&#123;now&#125;.png&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;comments.openView&quot;</span>: <span class="string">&quot;never&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;workbench.statusBar.visible&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;vscode-office.openOutline&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;chat.viewSessions.orientation&quot;</span>: <span class="string">&quot;stacked&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;claudeCode.enableNewConversationShortcut&quot;</span>: <span class="literal">true</span>,</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//*************************上面的部分可根据自己需要保留配置，以下部分直接复制粘贴即可******************************</span></span><br><span class="line">    <span class="attr">&quot;claudeCode.environmentVariables&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;ANTHROPIC_BASE_URL&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;https://api.deepseek.com/anthropic&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;ANTHROPIC_AUTH_TOKEN&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;xxxxxxxxxxxxxxxxxxxxxxxxxxx&quot;</span> <span class="comment">//换上你自己申请的API 密钥*****************************************</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;API_TIMEOUT_MS&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;600000&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;ANTHROPIC_MODEL&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;deepseek-v4-pro&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;ANTHROPIC_SMALL_FAST_MODEL&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;deepseek-v4-flash&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;ANTHROPIC_DEFAULT_OPUS_MODEL&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;deepseek-v4-pro&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;ANTHROPIC_DEFAULT_SONNET_MODEL&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;deepseek-v4-pro&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;ANTHROPIC_DEFAULT_HAIKU_MODEL&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;deepseek-v4-flash&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>办公</category>
-        <category>软件</category>
-      </categories>
-      <tags>
-        <tag>Claude</tag>
-        <tag>vscode</tag>
-        <tag>deepseek</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>WIPO检索的一些方便的操作</title>
     <url>/2026/08/05/WIPO%E6%A3%80%E7%B4%A2%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E4%BE%BF%E7%9A%84%E6%93%8D%E4%BD%9C/</url>
     <content><![CDATA[<ul>
@@ -11536,6 +11499,22 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 </tbody>
 </table>
 </div>
+<h1 id="力场"><a href="#力场" class="headerlink" title="力场"></a>力场</h1><h2 id="常见力场"><a href="#常见力场" class="headerlink" title="常见力场"></a>常见力场</h2><p>红色、蓝色的各自相互兼容：</p>
+<ul>
+<li>GROMOS：烷烃、蛋白、核酸、糖、有机小分子<br>相互兼容</li>
+<li>OPLS：蛋白、RNA、糖、有机小分子</li>
+<li><font color ="red" >AMBER：蛋白、核酸、部分有机小分子</font></li>
+<li><font color ="red" >GAFF：各种有机小分子</font></li>
+<li><font color ="red" >GLYCAM：糖、磷脂</font></li>
+<li><font color ="red" >Lipid：磷脂、胆固醇</font></li>
+<li><font color ="blue" >CHARMM：磷脂、核酸、蛋白、糖、部分有机小分子</font></li>
+<li><font color ="blue" >CGenFF：各种有机小分子</font></li>
+<li>Dreiding、UFF;各种类型分子和材料</li>
+<li>COMPASS：有机和一些无机分子、高分子，常用于材料领域的各种性质计算。M$私有，不公开</li>
+<li>MM系列、MMFF94：准确计算各种有机小分子</li>
+<li>ReaxFF：最流行的反应力场</li>
+<li>MARTINI：粗粒化。磷脂、蛋白质、聚合物、糖、胆固醇</li>
+</ul>
 ]]></content>
       <categories>
         <category>计算化学</category>
@@ -12500,6 +12479,9 @@ J=-\frac{E_{\mathrm{HS}}-E_{\mathrm{BS}}}{\left\langle\hat{S}^{2}\right\rangle_{
 <li>使用<code>-rerun</code>计算某个结构文件或轨迹文件里各个结构的能量时，提供的结构/轨迹文件里的原子顺序必须与.tpr文件精确一致</li>
 <li>如果用<code>-reprod</code>，可以避免一些自动优化，使得在相同软硬件环境下(包括GROMACS版本)对相同tpr每次跑的结果精确相同。</li>
 </ul>
+</li>
+<li><p>续算：<code>-cpi md_1.cpt</code>    从检查点文件继续，<code>-append</code>将新轨迹追加到原有 <code>.trr</code>/<code>.xtc</code> 文件，不覆盖</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">gmx</span> mdrun -deffnm md_<span class="number">1</span> -cpi md_<span class="number">1</span>.cpt -append</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h2 id="并行机制"><a href="#并行机制" class="headerlink" title="并行机制"></a>并行机制</h2><ul>
@@ -13916,11 +13898,11 @@ B_A=(8/3)\times \pi^2 \times \mathrm{RMSF}_A^2</script><p>pdb中的B因子单位
 <ul>
 <li><p>如今做蛋白质动力学都最起码跑10ns，为了省时间这里只跑2ns。</p>
 </li>
-<li><p>生物分子模拟温度用298.15K、300K或者体温31QK都有，用哪个皆可，对结果影响不大。</p>
+<li><p>生物分子模拟温度用298.15K、300K或者体温310K都有，用哪个皆可，对结果影响不大。</p>
 </li>
 <li><p>默认是对整个体系消除平动，但是对于模拟生物大分子，在模拟中往往发现生物大分子会移动、旋转，给观看带来不便。所以此.mdp中对Protein组使用<code>comm-mode=angular</code>来消除其平动和转动。但需要用<code>-maxwarn</code>来忽略由此造成的多余的警告。</p>
 <ul>
-<li><p>如果不靠angular消除蛋自整体运动，模拟完后用<code>trjconv</code>后处理轨迹也行。先将蛋自居中并修正周期性：</p>
+<li><p><strong>如果不靠angular消除蛋自整体运动，模拟完后用<code>trjconv</code>后处理轨迹也行。先将蛋自居中并修正周期性：</strong></p>
 <figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">trjconv</span> <span class="selector-tag">-f</span> <span class="selector-tag">md</span><span class="selector-class">.xtc</span> <span class="selector-tag">-s</span> <span class="selector-tag">md</span><span class="selector-class">.tpr</span> <span class="selector-tag">-o</span> <span class="selector-tag">cen</span><span class="selector-class">.xtc</span> <span class="selector-tag">-center</span> <span class="selector-tag">-pbc</span> <span class="selector-tag">mol</span></span><br></pre></td></tr></table></figure>
 <p>其中centering组选Protein，输出组选整体。之后再消除蛋白的平动和转动：</p>
 <figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">gmx</span> <span class="selector-tag">trjconv</span> <span class="selector-tag">-f</span> <span class="selector-tag">cen</span><span class="selector-class">.xtc</span> <span class="selector-tag">-s</span> <span class="selector-tag">md</span><span class="selector-class">.tpr</span> <span class="selector-tag">-fit</span> <span class="selector-tag">rot</span>+<span class="selector-tag">trans</span> <span class="selector-tag">-o</span> <span class="selector-tag">fit</span><span class="selector-class">.xtc</span></span><br></pre></td></tr></table></figure>
@@ -14327,7 +14309,7 @@ B_A=(8/3)\times \pi^2 \times \mathrm{RMSF}_A^2</script><p>pdb中的B因子单位
 <li>把配体的itp文件引入到.top中，并设置好top中各种分子数，和gro文件对应上</li>
 <li>之后加离子、加水、模拟过程和普通蛋白一样。但做限制性动力学的时候应当同时限制蛋白和配体，蛋白和配体要作为同一个控温组。 </li>
 </ul>
-<h2 id="胰蛋白酶-苄眯阳离子复合物的模拟"><a href="#胰蛋白酶-苄眯阳离子复合物的模拟" class="headerlink" title="胰蛋白酶-苄眯阳离子复合物的模拟"></a>胰蛋白酶-苄眯阳离子复合物的模拟</h2><p><img src="image-20260818141936076.png" alt="3ATL"></p>
+<h2 id="胰蛋白酶-苄眯阳离子复合物3ATL的模拟"><a href="#胰蛋白酶-苄眯阳离子复合物3ATL的模拟" class="headerlink" title="胰蛋白酶-苄眯阳离子复合物3ATL的模拟"></a>胰蛋白酶-苄眯阳离子复合物3ATL的模拟</h2><p><img src="image-20260818141936076.png" alt="3ATL"></p>
 <ul>
 <li>其中包含了Ca2+（蓝框）、DMSO（黑框）、苄眯阳离子（红框）</li>
 </ul>
@@ -14353,10 +14335,20 @@ B_A=(8/3)\times \pi^2 \times \mathrm{RMSF}_A^2</script><p>pdb中的B因子单位
 <p><a href="http://sobereva.com/soft/Sobtop/#ex2">Sobtop</a></p>
 <figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line">./acpype.py -i <span class="module-access"><span class="module"><span class="identifier">BEN</span>.</span></span>mol2 -n <span class="number">1</span>			；会生成一个<span class="module-access"><span class="module"><span class="identifier">BEN</span>.</span></span>acpype文件夹</span><br></pre></td></tr></table></figure>
 <ul>
-<li>为稳妥起见，最好凭化学直觉检查一下产生的.itp中的原子电荷是否合理，并且对照”GAFF原子类型.txt”检验原子类型指认是否合理。</li>
-<li>原子电荷最好替换成自己用Multiwfn算的RESP或RESP2电荷比自动产生的AM1-BCC明显更好。<ul>
-<li>要先用Gaussian计算完：<code># B3LYP/6-311G** em=GD3BJ opt scrf=solvent=water</code></li>
-<li>进入Multiwfn主功能7的子功能18（RESP计算模块）1 //计算标准RESP电荷</li>
+<li><p>为稳妥起见，最好凭化学直觉检查一下产生的.itp中的原子电荷是否合理，并且对照”GAFF原子类型.txt”检验原子类型指认是否合理。</p>
+</li>
+<li><p><strong>原子电荷最好替换成自己用Multiwfn算的RESP或RESP2电荷比自动产生的AM1-BCC明显更好。</strong><a href="http://sobereva.com/441">RESP拟合静电势电荷的原理以及在Multiwfn中的计算 - 思想家公社的门口：量子化学·分子模拟·二次元</a></p>
+<ul>
+<li><p>要先用Gaussian计算完：<code># B3LYP/6-311G** em=GD3BJ opt scrf=solvent=water</code></p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"># B3LYP/def2SVP em=GD3BJ opt=loose</span><br><span class="line"># B3LYP/def2TZVP em=GD3BJ pop=MK IOp(<span class="number">6</span>/<span class="number">33</span>=<span class="number">2</span>,<span class="number">6</span>/<span class="number">42</span>=<span class="number">6</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>若你计算拟合静电势电荷最终是打算结合可极化力场去用，那么拟合静电势的时候就别再用隐式溶剂模型了，因为外环境对溶质的可极化效果此时不需要由原子电荷等效地体现，而是有专门的项（如可极化偶极、Drude振子）来体现。</p>
+</li>
+<li><p>CHARMM/CGenFF 的电荷约定是 HF/6-31G（气相 ESP），</p>
+</li>
+<li><p>进入Multiwfn主功能7的子功能18（RESP计算模块）1 //计算标准RESP电荷</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="number">7</span></span><br><span class="line"><span class="number">18</span></span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 </li>
 </ul>
@@ -14959,16 +14951,42 @@ S_{CD}=\frac{3\left\langle\cos ^{2} \theta_{CD}\right\rangle-1}{2}</script><p>�
 </ul>
 </li>
 </ul>
-<h1 id="常见指令"><a href="#常见指令" class="headerlink" title="常见指令"></a>常见指令</h1><h2 id="align"><a href="#align" class="headerlink" title="align"></a>align</h2><p>对齐两个相似蛋白质结构：</p>
-<figure class="highlight d"><table><tr><td class="code"><pre><span class="line"><span class="keyword">align</span> your_structure, 目标结构</span><br></pre></td></tr></table></figure>
+<h1 id="常见指令"><a href="#常见指令" class="headerlink" title="常见指令"></a>常见指令</h1><p><a href="https://pymolwiki.org/Category:Commands">Category:Commands - PyMOL Wiki</a></p>
+<h2 id="align"><a href="#align" class="headerlink" title="align"></a><a href="https://pymolwiki.org/Align">align</a></h2><p>先进行序列比对，随后进行结构叠加， 对序列相似度（同一性&gt;30%）的蛋白质表现不错。 对于序列同一性较低的蛋白质，<a href="https://pymolwiki.org/Super">super</a>和<a href="https://pymolwiki.org/Cealign">cealign</a>命令表现更好。</p>
+<p>对齐两个相似蛋白质结构：</p>
+<figure class="highlight llvm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">align</span> mobile, <span class="keyword">target</span> </span><br></pre></td></tr></table></figure>
+<h2 id="Alter-Iterate"><a href="#Alter-Iterate" class="headerlink" title="Alter/Iterate"></a><a href="https://pymolwiki.org/Alter">Alter</a>/<a href="https://pymolwiki.org/Iterate">Iterate</a></h2><p><strong><code>alter</code></strong> 命令等效于 <strong><code>iterate</code></strong> 命令，但它提供了对公开变量的读写访问权限。如果更改的标识符会影响原子排序，则需要调用 <a href="https://pymolwiki.org/Sort"><code>sort</code></a> 命令根据新的标识符重新排序。</p>
+<h2 id="Count-Atoms"><a href="#Count-Atoms" class="headerlink" title="Count_Atoms"></a><a href="https://pymolwiki.org/Count_Atoms">Count_Atoms</a></h2><p><strong>count_atoms</strong> 返回所选区域中原子的数量。</p>
+<figure class="highlight lisp"><table><tr><td class="code"><pre><span class="line">count_atoms (<span class="name">selection</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="Create"><a href="#Create" class="headerlink" title="Create"></a><a href="https://pymolwiki.org/Create">Create</a></h2><p>可以根据选定的对象创建一个新的分子对象。它也可以用于在现有对象中创建状态。</p>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="type">name</span>, (selection) </span><br></pre></td></tr></table></figure>
+<h2 id="extract"><a href="#extract" class="headerlink" title="extract"></a><a href="https://pymolwiki.org/Extract">extract</a></h2><p><code>extract</code> 命令的作用是把选中的原子从原对象中“剪切”出来，并生成一个新对象</p>
+<figure class="highlight inform7"><table><tr><td class="code"><pre><span class="line">extract name, selection <span class="comment">[, source_state <span class="comment">[, target_state ]</span>]</span></span><br></pre></td></tr></table></figure>
+<h2 id="h-add"><a href="#h-add" class="headerlink" title="h_add"></a>h_add</h2><figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">alter</span> <span class="string">sele, formal_charge=1</span></span><br><span class="line"><span class="attr">h_add</span> <span class="string">sele</span></span><br></pre></td></tr></table></figure>
+<h2 id="matrix-copy"><a href="#matrix-copy" class="headerlink" title="matrix_copy"></a><a href="https://pymolwiki.org/Matrix_Copy">matrix_copy</a></h2><p>Matrix_copy 将对象矩阵从一个对象复制到另一个对象。该命令通常在蛋白质结构比对之后使用，目的是将其他相关对象置于同一参考系中。</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">matrix_copy</span> source_name, target_name</span><br></pre></td></tr></table></figure>
+<h2 id="Select"><a href="#Select" class="headerlink" title="Select"></a><a href="https://pymolwiki.org/Select">Select</a></h2><p><strong><code>select</code> 函数</strong>会根据原子选择创建一个命名选择。</p>
+<figure class="highlight inform7"><table><tr><td class="code"><pre><span class="line">select name <span class="comment">[, selection <span class="comment">[, enable <span class="comment">[, quiet <span class="comment">[, merge <span class="comment">[, state ]</span>]</span>]</span>]</span>]</span></span><br></pre></td></tr></table></figure>
+<p>创建名为“sele”的选区的便捷快捷方式：</p>
+<figure class="highlight lisp"><table><tr><td class="code"><pre><span class="line">select (<span class="name">selection</span>)</span><br></pre></td></tr></table></figure>
+<p>PyMOL 最基本的选择逻辑是：<code>属性 值</code>，<code>resn POPC</code>residue name 是 POPC 的所有原子。<code>resi 7</code>residue ID 是 7 的所有原子。组合条件用<code>and</code>。<code>resn POPC and resi 7</code>residue name = POPC，并且 residue ID = 7。</p>
+<h2 id="Show"><a href="#Show" class="headerlink" title="Show"></a><a href="https://pymolwiki.org/Show">Show</a></h2><figure class="highlight gauss"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span></span><br><span class="line"><span class="keyword">show</span> reprentation [,object]</span><br><span class="line"><span class="keyword">show</span> reprentation [,(selection)]</span><br><span class="line"><span class="keyword">show</span> (selection)</span><br></pre></td></tr></table></figure>
+<p>例子：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 用线条表示主干结构</span></span><br><span class="line">show lines,(name ca <span class="keyword">or</span> name c <span class="keyword">or</span> name n)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示所有对象的带状表示</span></span><br><span class="line">show ribbon</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将所有hetero atoms显示为球体</span></span><br><span class="line">show spheres, het</span><br><span class="line"></span><br><span class="line"><span class="comment"># 仅显示极性氢</span></span><br><span class="line">hide everything, ele h</span><br><span class="line">show lines, ele h <span class="keyword">and</span><span class="built_in"> neighbor </span>(ele n+o)</span><br><span class="line"><span class="comment"># 显示行、ele h 和邻居 (ele n+o)</span></span><br><span class="line">hide (h. <span class="keyword">and</span> (e. c extend 1))</span><br><span class="line"></span><br><span class="line"><span class="comment">#上述代码隐藏了所有非极性氢的表示形式，包括表面表示形式，导致表面表示形式损坏。或许更好的做法是直接移除非极性氢</span></span><br><span class="line">hide everything, ele h</span><br><span class="line">show lines, ele h <span class="keyword">and</span><span class="built_in"> neighbor </span>(ele n+o)</span><br><span class="line"><span class="builtin-name">remove</span> (h. <span class="keyword">and</span> (e. c extend 1))</span><br></pre></td></tr></table></figure>
 <ul>
-<li>在 <code>align</code> 命令中，将移动对象指定为 <strong><code>A or L</code></strong>（即同时选中蛋白质和配体）。PyMOL会使用A的原子与B进行匹配计算，但最终会将计算出的旋转平移矩阵，同时应用到A和L这两个对象上。</li>
+<li><p>找出距离 bad_popc 中任意原子 4 Å 以内的蛋白原子。</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">polymer.protein within <span class="number">4</span> of bad_popc</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>找到 4 Å 内的蛋白原子以后，把这些原子所属的整个 residue 都选进来。这对于观察蛋白—配体相互作用特别有用。</p>
+<figure class="highlight lisp"><table><tr><td class="code"><pre><span class="line">byres (<span class="name">polymer</span>.protein within <span class="number">4</span> of bad_popc)</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
-<figure class="highlight d"><table><tr><td class="code"><pre><span class="line"><span class="keyword">align</span> (A or L), B</span><br></pre></td></tr></table></figure>
-<h2 id="matrix-copy"><a href="#matrix-copy" class="headerlink" title="matrix_copy"></a>matrix_copy</h2><figure class="highlight dns"><table><tr><td class="code"><pre><span class="line">matrix_copy <span class="keyword">A</span>, L</span><br></pre></td></tr></table></figure>
-<ul>
-<li>这个命令会将对象A的旋转和平移矩阵直接应用到对象L上，配体L会瞬间移动到对齐后的A的正确口袋位置中。</li>
-</ul>
+<h2 id="zoom"><a href="#zoom" class="headerlink" title="zoom"></a><a href="https://pymolwiki.org/Zoom">zoom</a></h2><p><strong>缩放</strong>操作会调整窗口和原点的大小，使其覆盖所选原子。</p>
+<figure class="highlight pf"><table><tr><td class="code"><pre><span class="line">zoom [ selection [,buffer [, <span class="keyword">state</span> [, complete ]]]]</span><br></pre></td></tr></table></figure>
+<p>例子：</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 根据PyMOL中加载的内容自动缩放</span></span><br><span class="line"><span class="attr">zoom</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="attr">zoom</span> <span class="string">complete=1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 仅对链A进行缩放</span></span><br><span class="line"><span class="attr">zoom</span> <span class="string">(chain A)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在残基142上缩放</span></span><br><span class="line"><span class="attr">zoom</span> <span class="string">142/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 中心处对每个对象均匀缩放20埃</span></span><br><span class="line"><span class="attr">center</span> <span class="string">prot1</span></span><br><span class="line"><span class="attr">zoom</span> <span class="string">center, 20</span></span><br></pre></td></tr></table></figure>
+<p>通常情况下，缩放命令会尝试猜测一个最佳的可视化缩放级别，在保证清晰显示的同时，避免原子偶尔被裁剪出视野。您可以通过将“complete ”选项设置为 1 来更改此行为，这将确保整个选区的原子位置都能完整地显示在正交视图的视野中。为了完全防止裁剪，您可能还需要添加一个缓冲区（通常为 2 Å），以补偿透视变换以及超出原子坐标范围的图形表示。</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">complete = <span class="number">0</span> <span class="keyword">or</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>计算化学</category>
@@ -14977,6 +14995,61 @@ S_{CD}=\frac{3\left\langle\cos ^{2} \theta_{CD}\right\rangle-1}{2}</script><p>�
       <tags>
         <tag>输入</tag>
         <tag>Pyscf</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【VScode】Claude Code + VS code 安装教程</title>
+    <url>/2026/07/07/%E3%80%90VScode%E3%80%91Claude%20Code%20+%20VS%20code%20%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<h1 id="安装Claude"><a href="#安装Claude" class="headerlink" title="安装Claude"></a>安装Claude</h1><p>参考来源：<a href="https://zhuanlan.zhihu.com/p/2004150496781410721">https://zhuanlan.zhihu.com/p/2004150496781410721</a></p>
+<ol>
+<li><p>首先安装好<a href="https://git-scm.com/">Git</a>和<a href="https://nodejs.org/en/">Node.js</a></p>
+</li>
+<li><p>使用npm全局安装：</p>
+ <figure class="highlight coffeescript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">npm</span> install -g @anthropic-ai/claude-code</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装完成后验证：</p>
+<figure class="highlight ada"><table><tr><td class="code"><pre><span class="line">claude <span class="comment">--version</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="安装VScode-Claude"><a href="#安装VScode-Claude" class="headerlink" title="安装VScode+Claude"></a>安装VScode+Claude</h1><p>参考来源：<a href="https://zhuanlan.zhihu.com/p/2038567190648074568">https://zhuanlan.zhihu.com/p/2038567190648074568</a></p>
+<ol>
+<li><p>VScode官网下载安装即可</p>
+</li>
+<li><p>在扩展里输入“Chinese”下载第一个更改语言</p>
+</li>
+<li><p>在扩展里搜索“claude code”安装“claude code for vs code”</p>
+</li>
+<li><p>进入“claude code for vs code”的设置界面，找到在 settings.json中编辑<br> 下面的json可从提示位置直接复制粘贴，注意代码中记得换上你自己申请的deepseek密钥。<br> 以下添加的配置本质就是更改了claude code的环境变量，让其调用deepseek-v4大模型。</p>
+ <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;files.autoSave&quot;</span>: <span class="string">&quot;onWindowChange&quot;</span>,</span><br><span class="line">    <span class="comment">//&quot;python.defaultInterpreterPath&quot;: &quot;D:\\software\\anaconda3\\python.exe&quot;,</span></span><br><span class="line">    <span class="attr">&quot;notebook.output.textLineLimit&quot;</span>: <span class="number">50</span>,</span><br><span class="line">    <span class="attr">&quot;notebook.output.linkifyFilePaths&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;workbench.editor.enablePreview&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;workbench.colorTheme&quot;</span>: <span class="string">&quot;One Dark Modern&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;vscode-office.pasterImgPath&quot;</span>: <span class="string">&quot;$&#123;fileName&#125;.assets/$&#123;now&#125;.png&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;comments.openView&quot;</span>: <span class="string">&quot;never&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;workbench.statusBar.visible&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;vscode-office.openOutline&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;chat.viewSessions.orientation&quot;</span>: <span class="string">&quot;stacked&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;claudeCode.enableNewConversationShortcut&quot;</span>: <span class="literal">true</span>,</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//*************************上面的部分可根据自己需要保留配置，以下部分直接复制粘贴即可******************************</span></span><br><span class="line">    <span class="attr">&quot;claudeCode.environmentVariables&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;ANTHROPIC_BASE_URL&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;https://api.deepseek.com/anthropic&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;ANTHROPIC_AUTH_TOKEN&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;xxxxxxxxxxxxxxxxxxxxxxxxxxx&quot;</span> <span class="comment">//换上你自己申请的API 密钥*****************************************</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;API_TIMEOUT_MS&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;600000&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;ANTHROPIC_MODEL&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;deepseek-v4-pro&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;ANTHROPIC_SMALL_FAST_MODEL&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;deepseek-v4-flash&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;ANTHROPIC_DEFAULT_OPUS_MODEL&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;deepseek-v4-pro&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;ANTHROPIC_DEFAULT_SONNET_MODEL&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;deepseek-v4-pro&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;ANTHROPIC_DEFAULT_HAIKU_MODEL&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;deepseek-v4-flash&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="VS-code插件等记录"><a href="#VS-code插件等记录" class="headerlink" title="VS code插件等记录"></a>VS code插件等记录</h1><h2 id="修改settings-json"><a href="#修改settings-json" class="headerlink" title="修改settings.json"></a>修改settings.json</h2><p>按Ctrl + Shift + P，然后输入：<br><code>Preferences: Open User Settings (JSON)</code><br>，点进去就会直接打开 <code>settings.json</code>。</p>
+<p>如果是中文界面，可以搜：<code>首选项: 打开用户设置(JSON)</code></p>
+<h2 id="修改资源管理器缩进"><a href="#修改资源管理器缩进" class="headerlink" title="修改资源管理器缩进"></a>修改资源管理器缩进</h2><p>打开 <code>settings.json</code>，加入：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;workbench.tree.indent&quot;</span>: <span class="number">20</span>,</span><br><span class="line">    <span class="attr">&quot;workbench.tree.renderIndentGuides&quot;</span>: <span class="string">&quot;always&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;explorer.compactFolders&quot;</span>: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>workbench.tree.indent</code>: 增大每一级目录的缩进。默认层级比较挤，改成 <code>18~24</code> 会明显很多。VS Code 官方支持这个设置。</li>
+<li><code>workbench.tree.renderIndentGuides: &quot;always&quot;</code>：始终显示目录树的竖向层级线，而不是只有鼠标放上去时才显示。</li>
+<li><code>explorer.compactFolders: false</code>：我非常建议你关闭。VS Code 默认会把只有一个子目录的连续目录压缩到一行，比如：</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">src<span class="regexp">/main/</span>java<span class="regexp">/com/</span>example</span><br></pre></td></tr></table></figure>
+<p>关闭以后会变成：</p>
+<figure class="highlight avrasm"><table><tr><td class="code"><pre><span class="line">src</span><br><span class="line">└─ main</span><br><span class="line">   └─ java</span><br><span class="line">      └─ <span class="keyword">com</span></span><br><span class="line">         └─ example</span><br></pre></td></tr></table></figure>
+<p>层级会清楚很多。这个“Compact Folders”本来就是 VS Code 默认开启的。</p>
+<h2 id="终端美化"><a href="#终端美化" class="headerlink" title="终端美化"></a>终端美化</h2><p><a href="https://glitchbone.github.io/vscode-base16-term/#/">Base16 Terminal Colors for Visual Studio Code</a></p>
+<p>把在里面复制的代码复制到 <code>settings.json</code>，</p>
+<figure class="highlight livescript"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;workbench.colorCustomizations&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;terminal.background&quot;</span>:<span class="string">&quot;#090300&quot;</span>,</span><br><span class="line">    <span class="string">&quot;terminal.foreground&quot;</span>:<span class="string">&quot;<span class="subst">#A5A2A2</span>&quot;</span>,</span><br><span class="line">    <span class="string">&quot;terminalCursor.background&quot;</span>:<span class="string">&quot;<span class="subst">#A5A2A2</span>&quot;</span>,</span><br><span class="line">    <span class="string">&quot;terminalCursor.foreground&quot;</span>:<span class="string">&quot;<span class="subst">#A5A2A2</span>&quot;</span>,</span><br><span class="line">    <span class="string">&quot;terminal.ansiBlack&quot;</span>:<span class="string">&quot;#090300&quot;</span>,</span><br><span class="line">    <span class="string">&quot;terminal.ansiBlue&quot;</span>:<span class="string">&quot;#01A0E4&quot;</span>,</span><br><span class="line">    <span class="string">&quot;terminal.ansiBrightBlack&quot;</span>:<span class="string">&quot;#5C5855&quot;</span>,</span><br><span class="line">    <span class="string">&quot;terminal.ansiBrightBlue&quot;</span>:<span class="string">&quot;#01A0E4&quot;</span>,</span><br><span class="line">    <span class="string">&quot;terminal.ansiBrightCyan&quot;</span>:<span class="string">&quot;<span class="subst">#B5E4F4</span>&quot;</span>,</span><br><span class="line">    <span class="string">&quot;terminal.ansiBrightGreen&quot;</span>:<span class="string">&quot;#01A252&quot;</span>,</span><br><span class="line">    <span class="string">&quot;terminal.ansiBrightMagenta&quot;</span>:<span class="string">&quot;<span class="subst">#A16A94</span>&quot;</span>,</span><br><span class="line">    <span class="string">&quot;terminal.ansiBrightRed&quot;</span>:<span class="string">&quot;<span class="subst">#DB2D20</span>&quot;</span>,</span><br><span class="line">    <span class="string">&quot;terminal.ansiBrightWhite&quot;</span>:<span class="string">&quot;<span class="subst">#F7F7F7</span>&quot;</span>,</span><br><span class="line">    <span class="string">&quot;terminal.ansiBrightYellow&quot;</span>:<span class="string">&quot;<span class="subst">#FDED02</span>&quot;</span>,</span><br><span class="line">    <span class="string">&quot;terminal.ansiCyan&quot;</span>:<span class="string">&quot;<span class="subst">#B5E4F4</span>&quot;</span>,</span><br><span class="line">    <span class="string">&quot;terminal.ansiGreen&quot;</span>:<span class="string">&quot;#01A252&quot;</span>,</span><br><span class="line">    <span class="string">&quot;terminal.ansiMagenta&quot;</span>:<span class="string">&quot;<span class="subst">#A16A94</span>&quot;</span>,</span><br><span class="line">    <span class="string">&quot;terminal.ansiRed&quot;</span>:<span class="string">&quot;<span class="subst">#DB2D20</span>&quot;</span>,</span><br><span class="line">    <span class="string">&quot;terminal.ansiWhite&quot;</span>:<span class="string">&quot;<span class="subst">#A5A2A2</span>&quot;</span>,</span><br><span class="line">    <span class="string">&quot;terminal.ansiYellow&quot;</span>:<span class="string">&quot;<span class="subst">#FDED02</span>&quot;</span>      </span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<h2 id="插件：Material-Icon-Theme"><a href="#插件：Material-Icon-Theme" class="headerlink" title="插件：Material Icon Theme"></a>插件：Material Icon Theme</h2><p>给不同类型的目录和文件加上明显不同的图标</p>
+<p>安装好后：Ctrl + Shift + P，搜索 <code>Material Icons: Activate Icon Theme</code>就可以启用了。</p>
+]]></content>
+      <categories>
+        <category>办公</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>Claude</tag>
+        <tag>vscode</tag>
+        <tag>deepseek</tag>
       </tags>
   </entry>
 </search>
