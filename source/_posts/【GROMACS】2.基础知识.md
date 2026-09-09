@@ -37,3 +37,26 @@ description: Gromacs的一般知识
 
 
 
+# 力场
+
+## 常见力场
+
+红色、蓝色的各自相互兼容：
+
+- GROMOS：烷烃、蛋白、核酸、糖、有机小分子
+  相互兼容
+- OPLS：蛋白、RNA、糖、有机小分子
+- <font color ="red" >AMBER：蛋白、核酸、部分有机小分子</font>
+- <font color ="red" >GAFF：各种有机小分子</font>
+- <font color ="red" >GLYCAM：糖、磷脂</font>
+- <font color ="red" >Lipid：磷脂、胆固醇</font>
+- <font color ="blue" >CHARMM：磷脂、核酸、蛋白、糖、部分有机小分子</font>
+- <font color ="blue" >CGenFF：各种有机小分子</font>
+- Dreiding、UFF;各种类型分子和材料
+- COMPASS：有机和一些无机分子、高分子，常用于材料领域的各种性质计算。M$私有，不公开
+- MM系列、MMFF94：准确计算各种有机小分子
+- ReaxFF：最流行的反应力场
+- MARTINI：粗粒化。磷脂、蛋白质、聚合物、糖、胆固醇
+
+
+

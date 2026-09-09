@@ -20,6 +20,34 @@
               "icon": "lucide-file",
               "title": "搭建网站教程"
             }
+          },
+          {
+            "id": "b6ede8b5f2aa10f7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "source/_posts/【GROMACS】3.文件类型.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "【GROMACS】3.文件类型"
+            }
+          },
+          {
+            "id": "101b17fc12418430",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "source/_posts/【GROMACS】4.GROMACS中的命令.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "【GROMACS】4.GROMACS中的命令"
+            }
           }
         ]
       }
@@ -89,12 +117,12 @@
               "title": "File Tree"
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "ca501d0799ddd6ee",
@@ -110,6 +138,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "source/_posts/搭建网站教程.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -182,8 +211,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -197,6 +225,10 @@
       "file-tree-alternative:File Tree Alternative Plugin": false
     }
   },
-  "active": "043d90e689edd209",
-  "lastOpenFiles": []
+  "active": "44bbadf9ce73cc06",
+  "lastOpenFiles": [
+    "source/_posts/【GROMACS】3.文件类型.md",
+    "source/_posts/【GROMACS】4.GROMACS中的命令.md",
+    "source/_posts/搭建网站教程.md"
+  ]
 }

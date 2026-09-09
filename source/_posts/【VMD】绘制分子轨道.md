@@ -1,6 +1,6 @@
 ---
-title: 【VMD】01.绘制分子轨道
-typora-root-url: 【VMD】01.绘制分子轨道
+title: 【VMD】绘制分子轨道
+typora-root-url: 【VMD】绘制分子轨道
 mathjax: true
 date: 2020-09-29 10:46:39
 updated:

@@ -1,12 +1,12 @@
 ---
-title: 【VMD】常见命令
-typora-root-url: 【VMD】常见命令
+title: 【VMD】2.常见命令
+typora-root-url: 【VMD】2.常见命令
 mathjax: true
 date: 2020-09-29 10:46:39
 updated:
 tags: [VMD, 绘图]
 categories: [计算化学, 软件]
-description: VMD中的Tk命令ji
+description: VMD中的TK console。VMD 命令本质上是TCL language。
 ---
 
 
@@ -141,6 +141,13 @@ description: VMD中的Tk命令ji
   display rendermode GLSL
   ```
 
+# `label`
+
+
+
+- 标记 Bond（385-356）：`label add Bonds 0/384 0/355`
+- 标记 Angle（385-386-356）：`label add Angles 0/384 0/385 0/355`
+
 # `mol`
 
 在VMD中加载、修改或删除一个分子。
@@ -191,7 +198,7 @@ description: VMD中的Tk命令ji
 
 - `modrep <rep_number> <molecule_number> `：将给定分子的给定rep的方法设置为默认设置。
 
-- `modselect <rep_number> <molecule_number> <select_method>`：更改指定分子、指定的Rep所包含的部分。select_method可以是（更多可以查看Graphics→Representations→Selections）
+- `modselect <rep_number> <molecule_number> <select_method>`：更改指定分子、指定的Rep所包含的部分。select_method可以是（更多可以查看Graphics→Representations→Selections）选择的语法可以见<a href="{% post_path '【VMD】1.基本操作' %}#范围选择语句基本语法">范围选择语句基本语法</a>
 
   - `all`、`none`……
   - 逻辑`and`、`or`、`not`
@@ -202,6 +209,8 @@ description: VMD中的Tk命令ji
   
   mol modselect 1 top name U74 Ce75 C73
   ```
+
+
 
 图形相关设置：
 
@@ -261,7 +270,29 @@ description: VMD中的Tk命令ji
   }
   ```
 
-  
+
+# `pbc`
+
+显示盒子：
+
+```
+pbc box
+```
+
+关闭盒子：
+
+```
+pbc box -off
+```
+
+修改盒子颜色和盒子线的宽度：
+
+```
+用红色、粗细为10的虚线绘制盒子
+pbc box -color red -width 10 -style dashed
+```
+
+
 
 # `render`
 
@@ -309,6 +340,8 @@ tachyon_WIN32.exe XXXX.dat -format BMP -o XXXX.bmp -trans_raster3d -res 2000 150
 - `-numthreads`设定渲染时的线程数（建议设为CPU的实际物理核心数）。
 - `-aasamples`是抗锯齿设定，数值越大抗锯齿效果越好。
 - `-shadow_filter_off`：绘制出的图也有阴影效果，但透明的材质的物体，即轨道等值面，不会产生阴影。
+
+
 
 
 

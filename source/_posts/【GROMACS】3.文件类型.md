@@ -32,6 +32,7 @@ description: Gromacs的文件介绍
 - `.top`：主拓扑文件
   - 由 `gmx pdb2gmx` 程序生成的。`gmx pdb2gmx` 能够将任何肽或蛋白质的 pdb 结构文件转换为分子拓扑文件。该拓扑文件包含了你所研究的肽或蛋白质中所有相互作用的详细信息。
 - `.itp`：被引用的拓扑文件
+- `rtp` ：残基拓扑(文本) 
 
 ## 运行输入文件 
 
@@ -48,7 +49,7 @@ description: Gromacs的文件介绍
 
 ## 能量文件 
 
-- **<u>`.edr`：能量文仵，记录了模拟过程中的各种信息（能量、体积、压力、温度等）**</u>
+- **<u>`.edr`：能量文仵，记录了模拟过程中的各种信息（能量、体积、压力、温度等）</u>**
 
 ## 其他文件
 
@@ -56,6 +57,8 @@ description: Gromacs的文件介绍
 - **<u>`.cpt`：可移植的 checkpoint 文件。用于续算，延长计算</u>**
 - `.ndx`：索引文件，设定各个组里包含哪些原子
 - `.xvg`：被grace程序读取来对其中的数据绘图
+
+
 
 
 
@@ -69,10 +72,10 @@ gmx grompp-f md1.mdp -o md1.tpr -c eq2.gro -t eq2.cpt -p memwat.top -maxwarn 10
 
 ## 流程图
 
-![这是模拟蛋白质在水中的行为的典型 GROMACS 分子动力学运行的流程图。过程中可能需要多次进行能量最小化操作，这些步骤包括以下几个循环：gmx grompp -> gmx mdrun。](/image-20260811102611572.png)
+![这是模拟蛋白质在水中的行为的典型 GROMACS 分子动力学运行的流程图。过程中可能需要多次进行能量最小化操作，这些步骤包括以下几个循环：gmx grompp -> gmx mdrun。](image-20260811102611572.png)
 
 1. 前处理：
-   - 建立体系结构文件(`.gro`)和生成拓扑文件 ( `.top`) 主要涉及的命令: `editconf`、 `solvate` 、 `insert-molecules`、 `genion` 、 `pdb2gmx` 、 `x2top` 。另涉及make_ndx 、 `genrestr`等
+   - 建立体系结构文件(`.gro`)和生成拓扑文件 ( `.top`) 主要涉及的命令： `editconf`、 `solvate` 、 `insert-molecules`、 `genion` 、 `pdb2gmx` 、 `x2top` 。另涉及make_ndx 、 `genrestr`等
    - 对于蛋白质：
      1. 首先可以使用 `gmx editconf` 程序来定义围绕分子的一个适当大小的盒子。
      2. `gmx solvate` 可以将溶质分子（即肽分子）溶解在任何溶剂中。`gmx solvate` 的输出结果是一个包含在水中溶解后的肽分子的结构文件。此外，`gmx solvate` 还会修改由 `gmx pdb2gmx` 生成的分子结构文件，以在结构中添加溶剂信息。
@@ -82,13 +85,15 @@ gmx grompp-f md1.mdp -o md1.tpr -c eq2.gro -t eq2.cpt -p memwat.top -maxwarn 10
    3. `mdrun`：运行`.tpr`开始能量极小化、动力学等计算，期间可以监控`.log`输出信息。
 3. 后处理：
    - 对`mdrun`产生的轨迹文件（`.trr`或`.xtc`)、结构文件（`.gro`)及能量文件(`.edr`)通过各种命令进行分析处理和提取有用的信息，或对轨迹进行合并/分割/转换等操作。
-   - 涉及的命令:`energy`、`trjconv`、`trjcat`、`analyze`、`spatial`、`cluster`、`clustersize`、`traj`、`mindist`、`rdf`、`gyrate`,`msd`、`order`、`hbond`、`angle`、`density`、`densmap`、`distance`、`pairdist`、`velacc`、`chi`、`do_dssp`、`rama`、`sasa`、`anaeig`、`order`、`rms`、`rmsf`、`dipole`、`helix`、`freevolume`、`h2order`、`mdmat`等等数十种
+   - 涉及的命令：`energy`、`trjconv`、`trjcat`、`analyze`、`spatial`、`cluster`、`clustersize`、`traj`、`mindist`、`rdf`、`gyrate`，`msd`、`order`、`hbond`、`angle`、`density`、`densmap`、`distance`、`pairdist`、`velacc`、`chi`、`do_dssp`、`rama`、`sasa`、`anaeig`、`order`、`rms`、`rmsf`、`dipole`、`helix`、`freevolume`、`h2order`、`mdmat`等等数十种
 
 
 
 # 结构文件
 
 ## PDB文件
+
+是上世纪70年代提出的记录X光衍射或NMR等手段测定的生物大分子体系结构的标准文件格式。目前也是被支持得最广泛的通用的记录分子结构的格式。
 
 ```
 HEADER    EXTRACELLULAR MATRIX                    22-JAN-98   1A3I
@@ -120,19 +125,89 @@ HETATM  132  OXT ACY   401       4.306  23.101  12.291  1.00 21.19           O
 ...
 ```
 
-- 第一列：
-  - `ATOM`：描述构成蛋白质的各个原子的坐标。
-  - `TER` ：记录标识了多肽链的结束
-  - `HETATM`：描述杂原子的坐标，即那些不属于蛋白质分子的原子。
-- 第二列：原子序号
-- 第三列：原子名
-- 第四列：残基名
-- 第五列：链名
-- 第六列：残基号
-- 第5-7列：原子xyz坐标（埃）
-- 第七列：占有率，代表这个原子在当前三维坐标位置的出现概率。1.00 意味着 100%，即在所有被解析的分子颗粒中，这个原子完全存在于这个位置。
-- 第八列：温度因子。反映了该原子在空间中的“动态柔性”或“位置不确定度”。数值越大，代表这个原子晃动得越厉害，或者在实验图谱中越模糊。
-- 第九列：元素
+pdb文件当中不同字段用于	录不同信息：
+
+1. 标题部分：
+
+   - `HEADER`： 在第一行，分子类， 公布日期， ID号
+
+   - `TITLE`： 说明实验方法类型，对记录的体系的描述
+
+   - `COMPND`： 化合物分子组成
+   - `SOURCE`： 描述记录的生物大分子的来源
+
+   - `REMARK `： 注释信息
+
+   - `JRNL`： 本pdb对应的文献
+
+   - `AUTHOR`： 结构测定者
+
+2. 一级结构：
+
+   - `SEQRES`： 骨架的残基序列
+
+   - `MODRES`： 对标准残基的修改
+
+3. 二级结构：
+   - `HELIX`、`SHEET`： alpha螺旋、beta折叠涉及的残基范围
+
+4. 连接注释：
+
+   - `SSBOND`： 二硫键。定义半胱氨酸CYS残基之间的二硫键
+
+   - `LINK`： 指认的残基间的键
+
+5. 晶胞特征：
+   - `CRYST1`： 晶胞参数。也可以记录模拟体系盒子参数
+
+6. 坐标部分
+
+   - 第一列：
+     - `ATOM`：描述构成蛋白质的各个原子的坐标。（必有）
+     - `TER` ：记录标识了多肽链的结束
+     - `HETATM`：描述杂原子的坐标，即那些不属于蛋白质分子的原子。
+
+   - 第二列：原子序号
+
+   - 第三列：原子名
+
+   - 第四列：残基名
+
+   - 第五列：链名
+
+   - 第六列：残基号
+
+   - 第5-7列：原子xyz坐标（埃）
+
+   - 第七列：占有率，代表这个原子在当前三维坐标位置的出现概率。1.00 意味着 100%，即在所有被解析的分子颗粒中，这个原子完全存在于这个位置。
+
+   - 第八列：温度因子B因子。反映了该原子在空间中的“动态柔性”或“位置不确定度”。数值越大，代表这个原子晃动得越厉害，或者在实验图谱中越模糊。
+
+   - 第九列：元素
+   - `MODEL`： 一个pdb文件也可以记录多个结构(常见于NMR得到的pdb)，也因此可以记录动力学轨迹(但精度低、体积大)。每个结构以`MODEL`行为开头标注帧号，`ENDMDL`行为结尾。
+
+7. 连接信息
+
+   - `CONECT`： 原子间的连接信息
+
+8. 其他：
+   - `END`： 文件结束. 标志PDB文件的结束， 必需记录
+
+### 注意事项
+
+- 获得蛋白质的pdb文件后一定要仔细从头看一遍REMARK段落，其中记录了许多信息。尤其注意搜索MISSING，寻找记录了结构缺失的信息，如：
+
+  ```
+  REMARK 465 MISSING RESIDUES                                 REMARK 465 THE FOLLOWING RESIDUES WERE NOT LOCATED IN THE   REMARK 465 EXPERIMENT. (M=MODEL NUMBER; RES=RESIDUE NAME; C=CHAIN               
+  REMARK 465 IDENTIFIER; SSSEQ=SEQUENCE NUMBER; I=INSERTION CODE.)                
+  REMARK 465                                                   REMARK 465   M RES C SSSEQI                                 REMARK 465     MET E     0                                   REMARK 465     LYS E     1                                   REMARK 465     THR E     2                                                   
+  ```
+  
+- 下载PDB的数据库：
+  - [RCSB PDB: Homepage](https://www.rcsb.org/)
+- 不对称单元与装配：一些生物大分子整体是多聚体结构，并且有对称性，整体结构可以通过不对称单元通过对称性操作来装配得到。此时pdb文件里只给出不对称单元的结构，并且同时记录对称操作信息(REMARK300和350，前者记录作者注释，后者记录构建各重复单元所需的旋转+平移变换矩阵)，借助某些工具可以装配成完整的结构。RCSB库中也可以直接下载到事先装配好的完整结构。
+
+
 
 ## gro文件
 
@@ -232,12 +307,12 @@ MD of 2 waters, t= 0.0
   	HW	 1.00800	0.0000	A 		0.00000E+00	0.00000E+00
   ```
 
-  - type：原子类型名,后续 `[ atoms ]` 会引用。
-  - mass / charge:类型层面的默认质量和电荷
+  - type：原子类型名，后续 `[ atoms ]` 会引用。
+  - mass / charge：类型层面的默认质量和电荷
   - ptype = A：普通原子类型。
   -  sigma、epsilon：LJ 参数；OW 有 LJ，HW 设置为 0。
     - OW 表示水氧，承担主要范德华相互作用。sigma = 0.316655 nm，epsilon = 0.8903586 kJ/mol  是水氧 LJ 参数。
-    - HW 表示水氢,通常不设置 LJ,只参与静电与约束几何。
+    - HW 表示水氢，通常不设置 LJ，只参与静电与约束几何。
 
 - `[ nonbond_params ]`  特定非键相互作用。用于覆盖或指定某些原子类型对之间的非键参数。
 
@@ -251,8 +326,8 @@ MD of 2 waters, t= 0.0
 
   -  i、j：相互作用的两个原子类型；
   - func = 1 表示 LJ 形式。 
-  - C、A:该文件写法下的势函数参数；OW–HW 与 HW–HW 为 0
-  - `[ nonbond_params ]` 会改变特定 pair 的非键相互作用,  需与力场格式保持一致。 水模型拓扑应与主力场文件和 mdp 设置配套使用。 修改该段参数会直接影响水–水及水–其他物质的相互作用。
+  - C、A：该文件写法下的势函数参数；OW–HW 与 HW–HW 为 0
+  - `[ nonbond_params ]` 会改变特定 pair 的非键相互作用，  需与力场格式保持一致。 水模型拓扑应与主力场文件和 mdp 设置配套使用。 修改该段参数会直接影响水–水及水–其他物质的相互作用。
 
 - `[ moleculetype ]` ：分子与排除规则。表示开始定义一个新的分子类型，置于文件开头，下面紧接着定义分子名和`nrexcl`（nrexcl=*n*表示不计算≤*n*个键相连的原子间非键作用，一般为3)。
 
@@ -328,7 +403,7 @@ MD of 2 waters, t= 0.0
   - 第6列cgnr：电荷组编号。
   - 第7列charge：原子电荷
   - 第8列mass：原子质量
-    - 质量用于积分运动方程,与时间步长稳定性有关。 质量在 [ atoms ] 中明确列出，优先用于该分 子。实际模拟中分子数量由 .top 文件的 [ molecules ] 指 定。
+    - 质量用于积分运动方程，与时间步长稳定性有关。 质量在 [ atoms ] 中明确列出，优先用于该分 子。实际模拟中分子数量由 .top 文件的 [ molecules ] 指 定。
 
 - **以下字段可以定义多次，效果累加：**
 
@@ -402,18 +477,18 @@ MD of 2 waters, t= 0.0
     [ exclusions ]
     1 2 3/ 2 1 3 / 3 1 2
     ```
-    - 柔性模型计算更重,时间步长通常更保守
+    - 柔性模型计算更重，时间步长通常更保守
   
   - `[ exclusions ]`：定义哪些原子间的非键作用被忽略掉
   
     - 明确排除同一水分子内部 OW 与两个 HW 之间的非键相互作用。 
     - 避免分子内静电或 LJ 相互作用与约束/键角项重复计入。 
-    - 对刚性小分子水模型,这是保持拓扑一致性的关键段落。
+    - 对刚性小分子水模型，这是保持拓扑一致性的关键段落。
 
 
 ## 例子
 
-- gromos54a7.ff下的spc.itp
+- `gromos54a7.ff`下的`spc.itp`
 
   ```
   [ moleculetype ]
@@ -453,7 +528,7 @@ MD of 2 waters, t= 0.0
   #endif
   ```
 
-- gromos54a7.ff下的 ions.itp 的一部分
+- `gromos54a7.ff`下的 `ions.itp` 的一部分
 
   ```
   ...
@@ -481,7 +556,7 @@ MD of 2 waters, t= 0.0
 
 拓扑文件与结构文件的对应关系问题：
 
-- 只有拓扑文件对应的原子顺序与结构文件(一般为gro、pdb)的原子顺序完全一致时计算才有意义，否则参数会匹配错乱，导致结果离谱或者崩溃。为此，必须满足:
+- 只有拓扑文件对应的原子顺序与结构文件(一般为gro、pdb)的原子顺序完全一致时计算才有意义，否则参数会匹配错乱，导致结果离谱或者崩溃。为此，必须满足：
 
   - top文件里[molecules ]中分子出现顺序必须和结构文件里严格一致。如
 
@@ -506,6 +581,8 @@ MD of 2 waters, t= 0.0
     若`include`了GROMACS自带力场目录下的spce.itp，由于此itp里的`[atoms]`中原子出现顺序是O、H、H，因此结构文件里每个水的原子顺序也必须是O、H、H。如果不符，应当在使用packmol或insert-molecules等工具将水加入体系前将被插入的水的结构文件里的原子顺序手动调整成O、H、H。
 
 # mdp文件
+
+常用的mdp选项：[Molecular dynamics parameters (.mdp options) - GROMACS 2026.3 documentation](https://manual.gromacs.org/current/user-guide/mdp-options.html)
 
 - mdp参数一般不区分大小写，顺序无所谓，但如果输入两次相同的内容，则使用最后一次输入的内容（ `gmx grompp` 会在值被覆盖时发出提示）。左侧的破折号和下划线将被忽略。
 
@@ -548,57 +625,64 @@ MD of 2 waters, t= 0.0
 
 - [mdpeditor · PyPI](https://pypi.org/project/mdpeditor/)：该工具可以根据简单的指令，帮助用户按照最佳实践生成 mdp 文件。
 
-常用的mdp选项：[Molecular dynamics parameters (.mdp options) - GROMACS 2026.3 documentation](https://manual.gromacs.org/current/user-guide/mdp-options.html)
-
 ## 预处理控制（区分大小写）
 
-- `define`：传递给`.top`的预处理器的设定。
+- **`define`：传递给`.top`的预处理器的设定。**
   - `-DFLEXIBLE` 将在您的拓扑中使用柔性水而不是刚性水，这对于正态模式分析非常有用。
   - `-DPOSRES` 将触发将 `posre.itp` 包含到您的拓扑中，用于实现位置约束。
 
 ## 运行控制 
 
-- `integrator`: 决定当前任务干什么
-  - `md`(默认):leap-frog方式做动力学
-  - `md-wv`:用Velocity-Verlet方式做动力学，在功能上有一些限制
-  - `sd`:做随机动力学(Langevin动力学)
-  - `bd`:做布朗动力学
-  - `steep`:用最陡下降法做能量极小化
-  - `cg`:用共轭梯度法做能量极小化(不支持约束)
-  - `l-bfgs`:用L-BFGS准牛顿法做能量极小化，比较准确、收敛性好但耗时高
-  - `nm`:做正则振动分析(必须双精度版)
-- `tinit`:动力学开始的时间(ps)。默认0
-- `dt`:动力学步长(ps)。默认0.001(即1fs)
+- **`integrator`： 决定当前任务干什么**
+  - `md`(默认)：leap-frog方式做动力学
+  - `md-wv`：用Velocity-Verlet方式做动力学，在功能上有一些限制
+  - `sd`：做随机动力学(Langevin动力学)
+  - `bd`：做布朗动力学
+  - `steep`：用最陡下降法做能量极小化
+  - `cg`：用共轭梯度法做能量极小化(不支持约束)
+  - `l-bfgs`：用L-BFGS准牛顿法做能量极小化，比较准确、收敛性好但耗时高
+  - `nm`：做正则振动分析(必须双精度版)
+- `tinit`：动力学开始的时间(ps)。默认0
+- `dt`：动力学步长(ps)。默认0.001(即1fs)
 - `nsteps`：动力学或能量极小化的步数上限
   - 总模拟时长=dt*nsteps
-- `comm-mode`:设定消除整体运动的方式
-  - `Linear`(默认):消除质心平动速度
-  - `Angular`:消除质心平动速度与绕着质心的转动速度
-  - `Linear-acceleration-correction`:同Linear,但还假定体系存在质心常加速度并消除之
-  - `None`:不消除(通常加外力时应当用none)
+- `comm-mode`：设定消除整体运动的方式
+  - `Linear`(默认)：消除质心平动速度
+  - `Angular`：消除质心平动速度与绕着质心的转动速度
+  - `Linear-acceleration-correction`：同Linear，但还假定体系存在质心常加速度并消除之
+  - `None`：不消除(通常加外力时应当用none)
 - `nstcomm`：每多少步消除一次整体运动，默认100步
-- `comm-grps`:对哪个组消除整体运动，默认是system
+- `comm-grps`：对哪个组消除整体运动，默认是system
+
+### 多时间步长
+
+GROMACS2021版开始支持多时间步长(multiple timing-stepping，mts)节约耗时。例如可以成键、1-4作用造成的受力每步都计算，而高耗时的非键作用力每两步更新一次，在相同计算量下可以跑近乎双倍的时间。由于非键作用力随时间变化远小于成键作用的，因此此做法造成的不良影响在一般可容忍范围内。但由于此做法尚未流行，需慎用。
+
+- `mts =yes`：默认`NO`
+- `mts-levels=2`：默认，而且只能为2
+- `mts-level2-forces = nonbonded longrange-nonbonded`：定义哪些组作为level2组。这样令非键作用的实空间和倒易空间部分都纳入才能起到明显节约时间的效果
+- `mts-level2-factor =2`（令level2组每2步算一次受力)
 
 ## 能量极小化参数
 
-- `emtol`:能量极小化时最大受力小于多少就认为己收敛(kJ/mol/nm)。默认为
-  10.0
-- `emstep`:最陡下降法最大步长(nm)，默认0.01
+- **`emtol`：能量极小化时最大受力小于多少就认为己收敛(kJ/mol/nm)。默认为**
+  **10.0**
+- **`emstep`：最陡下降法最大步长(nm)，默认0.01**
 - `nstcgsteep`：每做多少步共轭梯度极小化时做一次最陡下降法极小化，默认为1000。这种组合使用比单独用共轭梯度法效果往往更好
 
 ## 输出控制
 
-- `nstxout`:每多少步输出一次坐标到trr文件
-- `nstvout`:每多少步输出一次速度到trr文件
-- `nstfout`:每多少步输出一次受力到tr文件
-- `nstxout-compressed`:每多少步输出一次坐标到xtc文件
+- **`nstxout`：每多少步输出一次坐标到trr文件**
+- `nstvout`：每多少步输出一次速度到trr文件
+- `nstfout`：每多少步输出一次受力到tr文件
+- `nstxout-compressed`：每多少步输出一次坐标到xtc文件
 
 以上4个默认为0，即不输出
 
-- `compressed-x-grps`:选择输出到xtc文件的group,默认为system
-- `nstlog`:每多少步输出一次各种能量、属性信息到log文件，默认为1000
-- `nstenergy`:每多少步输出一次能量信息到.edr文件，默认为1000。应是计算能量频率(由`nstcalcenergy`设定，默认100)的倍数
-- `energygrps`:将哪个group的短程非键作用能输出到.edr文件中。例如设AB则.edr里会包含A、B组自身的以及它们之问的短程非键作用能信息。GPU加速时不支持
+- `compressed-x-grps`：选择输出到xtc文件的group，默认为system
+- **`nstlog`：每多少步输出一次各种能量、属性信息到log文件，默认为1000**
+- **`nstenergy`：每多少步输出一次能量信息到.edr文件，默认为1000。应是计算能量频率(由`nstcalcenergy`设定，默认100)的倍数**
+- `energygrps`：将哪个group的短程非键作用能输出到.edr文件中。例如设AB则.edr里会包含A、B组自身的以及它们之问的短程非键作用能信息。GPU加速时不支持
 - xtc/edr/trr第一帧对应初始时刻信息。初始时刻和最终时刻信息总会被输出到log和edr中
 
 ## 邻居列表生成方式
@@ -619,56 +703,56 @@ MD of 2 waters, t= 0.0
 
 ### 周期性设定
 
-- `pbc`
-  - `xyz`(默认):在xly/z方向都用周期性
-  - `xy`:只在xy方向上用周期性
-  - `no`:不用周期性，此时通常应当将所有`cutoff`设0，即每一步都计算所有粒子间非键作用，且将`nstlist`也设0，即只在第一步构建一次邻居列表
-- `periodic-molecules`:说明模拟体系是否有首尾相接的周期性分子(如无限长纳米管)
-  - `no`(默认):不是周期性分子
-  - `yes`:是周期性分子
+- **`pbc`**
+  - **`xyz`(默认)：在x/y/z方向都用周期性**
+  - `xy`：只在xy方向上用周期性
+  - `no`：不用周期性，此时通常应当将所有`cutoff`设0，即每一步都计算所有粒子间非键作用，且将`nstlist`也设0，即只在第一步构建一次邻居列表
+- `periodic-molecules`：说明模拟体系是否有首尾相接的周期性分子(如无限长纳米管)
+  - `no`(默认)：不是周期性分子
+  - `yes`：是周期性分子
 
 
 
 ## 静电作用的计算设定
 
-- `coulombtype`：设静电作用的计算方式
+- **`coulombtype`：设静电作用的计算方式**
   - `cut-off`（默认）：简单截断方法
-  - `Ewald`:Ewald方法
-  - `PME`:SPME方法
-  - `P3M-AD`:带解析导数的PPPME方法，精度比PME略微高一点
-  - `Reaction-Field`:反应场方法，圆球外介电常数用epsilon-rf设定
-  - `User`:使用用户在table.xvg中定义的静电作用的列表势(从2020版开始不再支持。）
+  - `Ewald`：Ewald方法
+  - **`PME`：SPME方法**
+  - `P3M-AD`：带解析导数的PPPME方法，精度比PME略微高一点
+  - `Reaction-Field`：反应场方法，圆球外介电常数用epsilon-rf设定
+  - `User`：使用用户在table.xvg中定义的静电作用的列表势(从2020版开始不再支持。）
 
-- `rcoulomb`:对截断方法义cutoff值:对Ewald/PME/P3M-AD定义实空间中计算短程静电作用的距离值;对反应场方法定义圆球半径。默认为1nm
-- `epsilon-r`:相对介电常数，默认为1。如果设0代表无穷大(等价于忽略体系中静电相互作用，但不能由此达到省时间目的。此时必须用`coulombtype=cut-off`否则会报错
+- `rcoulomb`：对截断方法义cutoff值：对Ewald/PME/P3M-AD定义实空间中计算短程静电作用的距离值;对反应场方法定义圆球半径。默认为1nm
+- `epsilon-r`：相对介电常数，默认为1。如果设0代表无穷大(等价于忽略体系中静电相互作用，但不能由此达到省时间目的。此时必须用`coulombtype=cut-off`否则会报错
 
 ## 范德华作用的计算设定
 
-- `vdwtype`:设定范德华作用的计算方式
+- `vdwtype`：设定范德华作用的计算方式
 
-  - `Cut-off`:截断方式计算
-  - `PME`:PME方式计算
-  - `User`:使用用户在table.xvg中定义的范德华作用的列表势(从2020版开始不再支持)
+  - `Cut-off`：截断方式计算
+  - `PME`：PME方式计算
+  - `User`：使用用户在table.xvg中定义的范德华作用的列表势(从2020版开始不再支持)
 
-- `rvdw`:范德华作用距离(nm)，默认为1nm
+- `rvdw`：范德华作用距离(nm)，默认为1nm
 
-  - 一 般令 rcoulomb=rvdw 。原理上数值越大色散 作用精度越高,越小计算速度越快。建议根 据所用力场参数化时的参数恰当设定数值.
+  - 一 般令 rcoulomb=rvdw 。原理上数值越大色散 作用精度越高，越小计算速度越快。建议根 据所用力场参数化时的参数恰当设定数值.
 
-- `vdw-modifier`:设定如何修改范德华势
+- `vdw-modifier`：设定如何修改范德华势
 
-  - `Potential-shift-Verlet`(默认):对范德华势进行shif使得cutoff处数值为0，不会增加耗时
-  - `None`:不对范德华势做任何修改
-  - `Force-switch`, `Potential-switch`: 用switchingfunction分别使得范德华力、势从rvdw-switchrvdw范围间平滑切换到0，会增加耗时
+  - `Potential-shift-Verlet`(默认)：对范德华势进行shif使得cutoff处数值为0，不会增加耗时
+  - `None`：不对范德华势做任何修改
+  - `Force-switch`， `Potential-switch`： 用switchingfunction分别使得范德华力、势从rvdw-switchrvdw范围间平滑切换到0，会增加耗时
 
-- `DispCorr`:对色散作用的长程校正
+- `DispCorr`：对色散作用的长程校正
 
-  - `no`(默认):不做校正
+  - `no`(默认)：不做校正
 
-  - `EnerPres`:对能量和压力都做校正
+  - `EnerPres`：对能量和压力都做校正
 
-  - `Ener`:只对能量做校正
+  - `Ener`：只对能量做校正
 
-    盒子被原子填满的情况一般建议用`EnerPres`,其它情况用`no`
+    盒子被原子填满的情况一般建议用`EnerPres`，其它情况用`no`
 
 
 ≥2018 版的非键作用通常情况下的推荐设定
@@ -686,15 +770,15 @@ DispCorr=EnerPres
 
 ## 与键有关的设定
 
-- `constraints`:设定约束方式。约束的参考值是拓扑文件里定义的平衡坐标
+- `constraints`：设定约束方式。约束的参考值是拓扑文件里定义的平衡坐标
   - `none`（默认)：不做约束
-  - `h-bonds`:约束与氢相连的键。如果还要约束与之相关的键角用`h-angles`
+  - `h-bonds`：约束与氢相连的键。如果还要约束与之相关的键角用`h-angles`
   - `all-bonds`：约束所有的键
-  - `all-angles`:约束所有键、键角
+  - `all-angles`：约束所有键、键角
   - **主流力场普遍是对h-bonds约束做的参数化，对重原子之间都是特意给定了力常数的。**
 - `constraint-algorithm`：设定约束算法
   - `LINCS`(默认)：使用LINCS方法约束，但不能约束键角
-  - `SHAKE`:使用SHAKE方法约束，没LINCS稳健，且不能用于能量极小化
+  - `SHAKE`：使用SHAKE方法约束，没LINCS稳健，且不能用于能量极小化
 - continuation：是否对初始结构做约束。
   - 默认的no代表对初始结构做约束。
   - yes代表对初始结构不做约束，对于续跑、rerun的目的应当设此值（但用默认的no一般也没什么不良影响）
@@ -709,33 +793,33 @@ DispCorr=EnerPres
 
 ## 压浴设定
 
-- `pcoupl`:选择压浴
-  - `no`(默认):不使用压浴
-  - `Berendsen`: 使用Berendsen压浴。常用于预平衡,不严格产生 NPT 系综。
-  - `Parrinello-Rahman`: 用Parrinello-Rahman浴
-  - `C-rescale`:stochastic cell rescaling压浴 (2021版入)
-- `pcoupltype`:选择控压方式
-  - `isotropic`:各方向等比例缩放盒子,适合各向同性液体或溶液。
-  - `semiisotropic`:半各项同性控压，即xy方向上和z方向上分别控压。相关参数(compressibility、ref-p)因此需要设定两套。对于界面体系、膜体系有用
-  - `anisotropic`:各问异性控压，相关参数需要对xx,Wy,zz,xy/yx;xz/zx,yz/zy分别输入。若非对角元值都设为0则矩形盒子会一直保持矩形而不会歪斜
-  - `surface-tension`:对xly方向按照指定的表面张力值对盒子进行调节，而z方向还是用普通控压
+- `pcoupl`：选择压浴
+  - `no`(默认)：不使用压浴
+  - `Berendsen`： 使用Berendsen压浴。常用于预平衡，不严格产生 NPT 系综。
+  - `Parrinello-Rahman`： 用Parrinello-Rahman浴
+  - `C-rescale`：stochastic cell rescaling压浴 (2021版入)
+- `pcoupltype`：选择控压方式
+  - `isotropic`：各方向等比例缩放盒子，适合各向同性液体或溶液。
+  - `semiisotropic`：半各项同性控压，即xy方向上和z方向上分别控压。相关参数(compressibility、ref-p)因此需要设定两套。对于界面体系、膜体系有用
+  - `anisotropic`：各问异性控压，相关参数需要对xx，Wy，zz，xy/yx;xz/zx，yz/zy分别输入。若非对角元值都设为0则矩形盒子会一直保持矩形而不会歪斜
+  - `surface-tension`：对xly方向按照指定的表面张力值对盒子进行调节，而z方向还是用普通控压
 
 - `nstpcouple`：每多少步做一次控压。通常用默认的-1即可，含义对于不同版本有所不同。对于2018版默认值相当于nstpcouple=10，而从2023版开始为了降低耗时面将默认值对应的控压步数间隔设得较大（极个别
   时候可能导致控压不稳定)
 
 - `tau-p`：控压的时间常数(ps)，数值较大时体积调节更平缓。
 
-- `compressibility`:可压缩系数（bar）通常用水在1atm、298.5K下的值4.5E-5bar，0代表不可压缩
+- `compressibility`：可压缩系数（bar）通常用水在1atm、298.5K下的值4.5E-5bar，0代表不可压缩
 
-- `ref-p`:控压的参考压力(bar)。通常设1或1.01325
+- `ref-p`：控压的参考压力(bar)。通常设1或1.01325
 
-- `refcoord-scaling`:设置使用控压调节盒子尺寸时怎么处理位置限制对应的参考坐标
+- `refcoord-scaling`：设置使用控压调节盒子尺寸时怎么处理位置限制对应的参考坐标
 
-  - no:不修改参考坐标
+  - no：不修改参考坐标
 
   - all：所有参考坐标以盒子为比例调节
 
-  - com:只按照盒子比例调节被限制的部分的质心，
+  - com：只按照盒子比例调节被限制的部分的质心，
 
     而原子的参考坐标相对于质心的坐标不变。通常使用这个以避免被限制的分子的结构变形
 
@@ -743,46 +827,56 @@ DispCorr=EnerPres
 
 ## 热浴设定
 
-- `tcoupl`:选择热浴
-  - `no`(默认):不用热浴
-  - `berendsen`: Berendsen热浴
-  - `nose-hoover`: Nose-Hoover热浴，适合产生正则系综。
-  - `v-rescale`:Velocity-rescale热浴
+- `tcoupl`：选择热浴
+  - `no`(默认)：不用热浴
+  - `berendsen`： Berendsen热浴
+  - `nose-hoover`： Nose-Hoover热浴，适合产生正则系综。
+  - `v-rescale`：Velocity-rescale热浴
 
-- `nsttcouple`:每多少步做一次控温。默认为-1，即使用`nstlist`的值，通常是合适的
-- `tc-grps`:控温组，默认为system。可以设定对多个组单独控温，如Protein SOL
-- `tau-t`:控温的时间常数(ps)，需要对每个控温组都设定。-1代表不做控温
-- `ref-t`:参考温度(K)，需要对每个控温组都设定
+- `nsttcouple`：每多少步做一次控温。默认为-1，即使用`nstlist`的值，通常是合适的
+- `tc-grps`：控温组，默认为system。可以设定对多个组单独控温，如Protein SOL
+- `tau-t`：控温的时间常数(ps)，需要对每个控温组都设定。-1代表不做控温
+- `ref-t`：参考温度(K)，需要对每个控温组都设定
   使用热浴时，每个原子都必须属于一个控温组。但可以把某个组的tau-t设为-1代表对之不控温，由此可以研究诸如热传导问题。
 
 ## 退火设定
 
 - `annealing`
-  - `no`(默认):不做退火
-  - `single`:单次退火。如果模拟时间超过最后退火点则会一直维持此温度
-  - `periodic`:每次达到最后退火点时从最初退火点温度重新开始，反复周期性循环直到模拟结束
-- `annealing-npoints`:对每个控温组设定退火点数目
-- `annealing-time`:对每个控温组设定每个退火点的时间(ps)
-- `annealing-temp`:对每个控温组设定每个退火点的温度(K)
+  - `no`(默认)：不做退火
+  - `single`：单次退火。如果模拟时间超过最后退火点则会一直维持此温度
+  - `periodic`：每次达到最后退火点时从最初退火点温度重新开始，反复周期性循环直到模拟结束
+- `annealing-npoints`：对每个控温组设定退火点数目
+- `annealing-time`：对每个控温组设定每个退火点的时间(ps)
+- `annealing-temp`：对每个控温组设定每个退火点的温度(K)
 
 ## 初始速度生成设定
 
 - `gen-vel`
 
-  - `no`(默认):如果输入文件里有速度信息则使用其作为初速度，里面没有速度信息则初速度为0
-  - `yes`:令grompp按照Maxwell分布产生随机的初速度
+  - `no`(默认)：如果输入文件里有速度信息则使用其作为初速度，里面没有速度信息则初速度为0
+  - `yes`：令`grompp`按照Maxwell分布产生随机的初速度
 
-- `gen-temp`:产生的初速度对应的温度(K)，默认为300
+  通常情况不是必须用`gen-vel`产生初速度，哪怕没有初速度信息（即初速度为0）。由于通常都会使用热浴，因此原子速度会自然而然地逐渐变化到指定的参考温度状态。
 
-- gen-seed:随机数的种子。默认为-1，对应赝随机数注:用gen-vel= yes时不宜结合较高的gen-temp,否则有可能有些原子初速度过大，导致一开始动力学出现不稳定、崩溃。应当用较低的gen-temp(如100K)，然后通过控温的自发过程，或者指定退火方式，使温度最终达到期望值。
+  - 有些情况则需要用`gen-vel`，如：
+    - 若能量极小化极其精确，原子受力都将几乎严格为0，因而也不会自发地带来速度。此时在大多数控温算法下，速度会一直很接近0，经过很长时间都升不到期望的温度
+    - 做多次平行模拟以避免单次模拟的偶然性时，应当用`gen_vel`并结合赝随机数，以在每次模拟时都拥有不同的随机初速度
 
-  注:用`gen-vel= yes`时不宜结合较高的`gen-temp`,否则有可能有些原子初速度过大，导致一开始动力学出现不稳定、崩溃。应当用较低的gen-temp(如100K)，然后通过控温的自发过程，或者指定退火方式，使温度最终达到期望值。
+- `gen-temp`：产生的初速度对应的温度(K)，默认为300
+
+- `gen-seed`：随机数的种子。默认为-1，对应赝随机数
+
+  注：用`gen-vel= yes`时不宜结合较高的`gen-temp`，否则有可能有些原子初速度过大，导致一开始动力学出现不稳定、崩溃。应当用较低的gen-temp(如100K)，然后通过控温的自发过程，或者指定退火方式，使温度最终达到期望值。
+
+## 外电场设定
 
 
 
+## 
 
 
-`ns_type`：`grid`：采用网格法进行邻域搜索,提高非键相互作用搜索效率。
+
+`ns_type`：`grid`：采用网格法进行邻域搜索，提高非键相互作用搜索效率。
 
 pme_order：PME 插值阶数为 4;常见且稳定的默认选择。
 
